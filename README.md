@@ -7,7 +7,7 @@ This is a replacement for the stock ui on nspanel, it can be controlled via cust
 
 # Custom Protocol
 ```
-55 BB [payload length] [payload] [crc]
+55 BB [payload length] [payload] [crc] [crc]
 ```
 
 Payload length contains the number of bytes of the payload.
@@ -20,5 +20,11 @@ Instead the commands are plain text commands with parameters.
 ## Example for valid Message
 This message has to be generated for the Message "1337" (1337 is not a valid command, this is just an example)
 ```
-55 BB  04  31 33 33 37  AB F1 00
+55 BB  04  31 33 33 37  AB F1
 ```
+## Message to Nextion Display
+
+| Payload | Example | Parameters | Description |
+|---|---|---|---|
+| widget <id> <type> <status> <name> | widget b0 shutter 1 name | <id> of the Button to be enabled <type> - Type of the Button / Page <status> - Disable or Enable (0/1) <name> - Name below the Button |  |
+|  |  |  |  |
