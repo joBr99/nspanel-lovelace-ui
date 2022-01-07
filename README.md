@@ -28,3 +28,10 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 |---|---|---|---|
 | widget <id> <type> <status> <name> | widget b0 shutter 1 name | <id> of the Button to be enabled <type> - Type of the Button / Page <status> - Disable or Enable (0/1) <name> - Name below the Button |  |
 |  |  |  |  |
+
+## Message from Nextion Display
+
+| Payload | Example | Parameters | Description |
+|---|---|---|---|
+| event widgetPage <page> | event widgetPage 0 | <page> is the number of the current page, there is currently only page 0 | Is fired, after switching to widgetPage, has to be answered with widget message |
+|  |  |  |  |
