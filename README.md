@@ -10,5 +10,14 @@ This is a replacement for the stock ui on nspanel, it can be controlled via cust
 55 BB [payload length] [payload] [crc]
 ```
 
+Payload length contains the number of bytes of the payload.
+CRC is "CRC-16 (MODBUS) Big Endian" calculated over the payload
+
 This protocol does not try to implement broken JSON Commands with a specified type (lol).
 Instead the commands are plain text commands with parameters.
+
+## Example for valid Message
+This message has to be generated for the Message "1337" (1337 is not a valid command, this is just an example)
+```
+55 BB  04  31 33 33 37  AB F1 00
+```
