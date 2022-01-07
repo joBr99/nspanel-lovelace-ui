@@ -11,6 +11,7 @@ This is a replacement for the stock ui on nspanel, it can be controlled via cust
 ```
 
 Payload length contains the number of bytes of the payload.
+
 CRC is "CRC-16 (MODBUS) Big Endian" calculated over the payload
 
 This protocol does not try to implement broken JSON Commands with a specified type (lol).
