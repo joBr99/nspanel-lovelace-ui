@@ -28,7 +28,7 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 
 | Payload | Example | Parameter 1 | Parameter 2 | Parameter 3 | Parameter 4 | Description |
 |---|---|---|---|---|---|---|
-| widget *id* *type* *status* *name* | widget b0 shutter 1 name | *id* of widget Possible values: - b[0-7] | type of the action the widget should do Possible values: - shutter - opens shutter page  | enable or disable Possible values: - 0 - disbale/hide - 1 - enable/show | name of the widget, will be displayed below the widget | Modify Widgets on Page |
+| widget,*id*,*type*,*status*,*name* | widget,b0,shutter,1,name | *id* of widget Possible values: - b[0-7] | type of the action the widget should do Possible values: - shutter - opens shutter page  | enable or disable Possible values: - 0 - disbale/hide - 1 - enable/show | name of the widget, will be displayed below the widget | Modify Widgets on Page |
 |  |  |  |  |  |  |  |
 |  |  |  |  |  |  |  |
 
