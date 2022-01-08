@@ -22,12 +22,15 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 ```
 55 BB  04  31 33 33 37  5F 5B
 ```
-## Message to Nextion Display
+## Messages to Nextion Display
 
-| Payload | Example | Parameters | Description |
-|---|---|---|---|
-| `widget <id> <type> <status> <name>` | `widget b0 shutter 1 name` | `<id>` of the Button to be enabled `<type>` - Type of the Button / Page `<status>` - Disable or Enable (0/1) <name> - Name below the Button |  |
-|  |  |  |  |
+# Widget Page
+
+| Payload | Example | Parameter 1 | Parameter 2 | Parameter 3 | Parameter 4 | Description |
+|---|---|---|---|---|---|---|
+| widget *id* *type* *status* *name* | widget b0 shutter 1 name | *id* of widget Possible values: - b[0-7] | type of the action the widget should do Possible values: - shutter - opens shutter page  | enable or disable - 0 - disbale/hide - 1 - enable/show | name of the widget, will be displayed below the widget | Modify Widgets on Page |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
 
 ## Message from Nextion Display
 
