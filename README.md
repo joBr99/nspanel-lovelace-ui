@@ -32,11 +32,20 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 | widget,debug,dc,*status* | widget,debug,dc,1 | debug | don't care | enable or disable Possible values: - 0 - disbale/hide - 1 - enable/show | don't care | Enables/Disables text fields at the bottom of the widget page to see the parsed command's |
 |  |  |  |  |  |  |  |
 
-## Message from Nextion Display
+## Messages from Nextion Display
+
+# Widget Page
 
 | Payload | Example | Parameters | Description |
 |---|---|---|---|
 | `event widgetPage <page>` | `event widgetPage 0` | `<page>` is the number of the current page, there is currently only page 0 | Is fired, after switching to widgetPage, has to be answered with widget message |
+|  |  |  |  |
+
+# Shutter Page
+
+| Payload | Example | Parameters | Description |
+|---|---|---|---|
+| `event shutterPage <heading> <buttonname> <value>` | `event shutter Page bOpenShutter name1` | `<buttonname>` is the name of the clicked button | |
 |  |  |  |  |
 
 # Design Guidelines for Nextion HMI Project
