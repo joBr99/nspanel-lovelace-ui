@@ -38,3 +38,8 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 |---|---|---|---|
 | `event widgetPage <page>` | `event widgetPage 0` | `<page>` is the number of the current page, there is currently only page 0 | Is fired, after switching to widgetPage, has to be answered with widget message |
 |  |  |  |  |
+
+# Design Guidelines for Nextion HMI Project
+
+Background Color is 
+- RGB565: 4226 (HEX: #101010, RGB: 16,16,16)
