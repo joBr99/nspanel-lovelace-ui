@@ -43,3 +43,12 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 
 Background Color is 
 - RGB565: 4226 (HEX: #101010, RGB: 16,16,16)
+
+Source for Images:
+https://materialdesignicons.com/
+
+Settings for Advanced Export (Big Images):
+- Background: #101010
+- Opacity: 1
+- Size: 72
+- Padding: 12
