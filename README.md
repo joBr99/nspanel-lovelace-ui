@@ -38,8 +38,8 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 
 | Payload | Example | Parameters | Description |
 |---|---|---|---|
-| `event widgetPage <page>` | `event widgetPage 0` | `<page>` is the number of the current page, there is currently only page 0 | Is fired, after switching to widgetPage, has to be answered with widget message |
-|  |  |  |  |
+| event widgetPage *page* | event widgetPage 0 | *<page>* is the number of the current page, there is currently only page 0 | Is fired, after switching to widgetPage, has to be answered with widget message |
+| event widgetButton *page* *buttonId* | event widgetButton 0 b0 | *page* is the number of the current page, there is currently only page 0 *buttonId* is the id of the button b[0-7] | Is fired, after pressing a button on the widget page |
 
 # Shutter Page
 
