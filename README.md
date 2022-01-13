@@ -24,6 +24,31 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 ```
 ## Messages to Nextion Display
 
+## Messages from Nextion Display
+
+### x
+
+  
+# Design Guidelines for Nextion HMI Project
+
+Background Color is 
+- RGB565: 4226 (HEX: #101010, RGB: 16,16,16)
+
+Source for Images:
+https://materialdesignicons.com/
+
+Settings for Advanced Export (Big Images):
+- Background: #101010
+- Opacity: 1
+- Size: 72
+- Padding: 12
+
+
+
+
+
+
+# OLD STUFF
 # Widget Page
 
 | Payload | Example | Parameter 1 | Parameter 2 | Parameter 3 | Parameter 4 | Description |
@@ -47,18 +72,3 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 |---|---|---|---|
 | event,shutterPage,*buttonname* | event,shutterPage,bOpenShutter | *buttonname* is the name of the clicked button | |
 | event,shutterPage,*buttonname*,*value* | event,shutterPage,bSlider,50 | *buttonname* is the name of the clicked button | |
-  
-  
-# Design Guidelines for Nextion HMI Project
-
-Background Color is 
-- RGB565: 4226 (HEX: #101010, RGB: 16,16,16)
-
-Source for Images:
-https://materialdesignicons.com/
-
-Settings for Advanced Export (Big Images):
-- Background: #101010
-- Opacity: 1
-- Size: 72
-- Padding: 12
