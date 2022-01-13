@@ -26,7 +26,13 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 
 ## Messages from Nextion Display
 
-### x
+### cardEntities Page
+
+event,*PageNumber*,*PageHeading*,*entityName*,*buttonId*,*actionName*,*optionalValue*
+
+event,1,tHeading,tEntityName,1,up
+event,1,tHeading,tEntityName,1,down
+event,1,tHeading,tEntityName,1,stop
 
   
 # Design Guidelines for Nextion HMI Project
