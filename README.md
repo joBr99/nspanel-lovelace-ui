@@ -44,6 +44,8 @@ entityUpd,2,0,Shutter2,shutter
 
 ### cardEntities Page
 
+event,pageOpen,0
+
 event,*PageNumber*,*PageHeading*,*entityName*,*buttonId*,*actionName*,*optionalValue*
 
 event,1,tHeading,tEntityName,1,up
