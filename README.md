@@ -24,6 +24,19 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 ```
 ## Messages to Nextion Display
 
+### cardEntities Page
+
+The following message can be used to update the content on the cardEntities Page
+
+entityUpdHeading,heading1337
+
+entityUpd,*id*,*iconId*,*nameOfEntity*,*type*,*optionalValue*
+
+entityUpd,1,1,Light1,light,0
+
+entityUpd,2,0,Shutter2,shutter
+
+
 ## Messages from Nextion Display
 
 ### cardEntities Page
