@@ -5,6 +5,7 @@ If you are changeing the page the nextion display will send and event to the esp
 
 # Current State
 This is at a early stage, it is possible to set entities on the pages on the nspanel through custom commands.
+And the buttons are also sending an event in case they are pressed.
 
 ![image](https://user-images.githubusercontent.com/29555657/149628697-1f440086-fe67-498f-ac73-a2293af7a479.png)
 
