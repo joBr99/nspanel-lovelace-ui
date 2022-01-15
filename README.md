@@ -1,3 +1,6 @@
+# NSPanel Lovelance UI
+This is a custom UI for the NSPanel, with HomeAssistant Lovelance UI Design.
+
 # Current State
 This is at a really early stage, I started on the implementation of a gui that looks like lovelance. The Nextion HMI Project File will be uploaded soon and also an ESP Home Component to control this UI.
 
