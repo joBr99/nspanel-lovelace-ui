@@ -1,0 +1,208 @@
+# Set some variables for convenience
+substitutions:
+  node_name: nspanel-test
+  device_name: Test NSPanel
+
+external_components:
+  - source: github://joBr99/nspanel-lovelance-ui@main
+    components: [nextion_custom]
+    refresh: 1h
+
+web_server:
+  port: 80
+
+esphome:
+  name: $node_name
+  comment: $device_name
+
+esp32:
+  board: esp32dev
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+# Enable logging
+logger:
+
+# Enable wireless updates
+ota:
+
+# A reboot button is always useful
+button:
+  - platform: restart
+    name: Restart $device_name
+
+# Define some inputs
+binary_sensor:
+  - platform: gpio
+    name: $device_name Left Button
+    pin:
+      number: 14
+      inverted: true
+    on_click:
+      - switch.toggle: relay_1
+
+  - platform: gpio
+    name: $device_name Right Button
+    pin:
+      number: 27
+      inverted: true
+    on_click:
+      - switch.toggle: relay_2
+
+sensor:
+  - platform: wifi_signal
+    name: $device_name WiFi Signal
+    update_interval: 60s
+
+  - platform: ntc
+    id: temperature
+    sensor: resistance_sensor
+    calibration:
+      b_constant: 3950
+      reference_temperature: 25°C
+      reference_resistance: 10kOhm
+    name: $device_name Temperature
+
+  - platform: resistance
+    id: resistance_sensor
+    sensor: ntc_source
+    configuration: DOWNSTREAM
+    resistor: 11.2kOhm
+
+  - platform: adc
+    id: ntc_source
+    pin: 38
+    update_interval: 10s
+    attenuation: 11db
+
+
+# Define some outputs
+switch:
+  # The two relays
+  - platform: gpio
+    name: $device_name Relay 1
+    id: relay_1
+    pin:
+      number: 22
+  - platform: gpio
+    name: $device_name Relay 2
+    id: relay_2
+    pin:
+      number: 19
+
+  # Pin 4 always needs to be on to power up the display
+  - platform: gpio
+    id: screen_power
+    entity_category: config
+    pin:
+      number: 4
+      inverted: true
+    restore_mode: ALWAYS_ON
+
+#number:
+#  platform: template
+#  name: $device_name Brightness
+#  id: brightness
+#  entity_category: config
+#  unit_of_measurement: '%'
+#  min_value: 0
+#  max_value: 100
+#  step: 1
+#  initial_value: 30
+#  set_action:
+#    then:
+#      - lambda: 'id(disp1).set_backlight_brightness(x/100);'
+
+# Configure the internal bleeper
+output:
+  - platform: ledc
+    id: buzzer_out
+    pin:
+      number: 21
+
+# Enable ringtone music support
+rtttl:
+  id: buzzer
+  output: buzzer_out
+
+# Configure UART for communicating with the screen
+uart:
+  id: tf_uart
+  tx_pin: 16
+  rx_pin: 17
+  baud_rate: 115200
+
+
+# Configure the screen itself
+#display:
+#  - platform: nextion
+#    id: disp1
+#    uart_id: tf_uart
+#    tft_url: http://192.168.75.30:8123/local/nspanel-custom.tft
+#api:
+#  services:
+#    - service: upload_tft
+#      then:
+#        - lambda: 'id(disp1)->upload_tft();'
+
+nextion_custom:
+  id: nextcustom_id
+  on_incoming_msg:
+    then:
+    - lambda: |-
+        ESP_LOGD("KEKW", "Got incoming message from nextion panel %s", x.c_str());
+
+        std::string input = x;
+        std::string word = "";
+        std::vector<std::string> args;
+        
+        while (input.compare(word) != 0)
+        {
+           auto index = input.find_first_of(",");
+           word = input.substr(0,index);
+           input = input.substr(index+1, input.length());
+           args.push_back(word);
+        }
+
+        int pages = 2;
+        if(args.at(0) == "event"){
+          if(args.at(1) == "pageOpen"){
+            int recvPage = std::atoi(args.at(2).c_str());
+            int destPage = abs(recvPage%pages);
+            ESP_LOGD("KEKW", "navigate to page: %d", destPage);
+
+            if(destPage == 0 ){
+              id(nextcustom_id).send_custom_command("entityUpdHeading,Rolladen");
+              id(nextcustom_id).send_custom_command("entityUpd,1,0,Fenster Eingang,shutter");
+              id(nextcustom_id).send_custom_command("entityUpd,2,0,Fenster Terrasse,shutter");
+              id(nextcustom_id).send_custom_command("entityUpd,3,0,Terrassentür,shutter");
+            }
+            if(destPage == 1 ){
+              id(nextcustom_id).send_custom_command("entityUpdHeading,Page2");
+              id(nextcustom_id).send_custom_command("entityUpd,1,1,test,light,0");
+              id(nextcustom_id).send_custom_command("entityUpd,2,0,test,shutter");
+              id(nextcustom_id).send_custom_command("entityUpd,3,1,test,light,1");
+              id(nextcustom_id).send_custom_command("entityUpd,4,1,test,light,1");
+            }
+          }
+        }
+        
+
+ 
+# Enable Home Assistant API
+api:
+  services:
+    - service: send_nextion_custom
+      variables:
+        cmd: string
+      then:
+        - lambda: |-
+            id(nextcustom_id).send_custom_command(cmd);
+    - service: send_nextion_cmd
+      variables:
+        cmd: string
+      then:
+        - lambda: |-
+            id(nextcustom_id).send_command_(cmd);
