@@ -1,4 +1,4 @@
-# Note Current State
+# Current State
 This is at a really early stage, I started on the implementation of a gui that looks like lovelance. The Nextion HMI Project File will be uploaded soon and also an ESP Home Component to control this UI.
 
 ![image](https://user-images.githubusercontent.com/29555657/149571247-683bd807-066a-456d-959a-025d82caa16f.png)
