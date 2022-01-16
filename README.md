@@ -9,6 +9,15 @@ And the buttons are also sending an event in case they are pressed.
 
 ![image](https://user-images.githubusercontent.com/29555657/149628697-1f440086-fe67-498f-ac73-a2293af7a479.png)
 
+## Halfway done upcoming pages :)
+
+![image](https://user-images.githubusercontent.com/29555657/149677879-a6a0bb07-fcc6-4736-b59a-cb8b9495763a.png)
+
+Yes, I implemented a circle drawing algorithim for this in nextion ...
+
+![image](https://user-images.githubusercontent.com/29555657/149677888-3840fb50-26e5-43e9-86dc-203df1c65a26.png)
+
+
 # EspHome component
 
 See my esphome.yaml for the config used on the nspanel device.
