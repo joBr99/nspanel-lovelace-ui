@@ -65,6 +65,8 @@ entityUpd,1,1,Light1,light,0
 
 entityUpd,2,0,Shutter2,shutter
 
+entityUpd,3,0,dc,delete
+
 
 ## Messages from Nextion Display
 
