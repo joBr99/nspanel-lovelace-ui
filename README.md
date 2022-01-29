@@ -25,6 +25,10 @@ Use autoexec.be from tasmota folder like you would use with the stock tft file.
 Driver behaves similar to the stock implementation, messages are published over mqtt.
 
 See nodered example flow for my implementation.
+Pages on nspanel are generated from the array at the begin of the pages function in the flow:
+
+![image](https://user-images.githubusercontent.com/29555657/151675593-dadd53cb-a38e-49bd-9f40-832fc8edd017.png)
+
 
 # EspHome component
 
