@@ -38,9 +38,7 @@ class Nextion : Driver
     def encode(payload)
       var b = bytes()
       b += self.header
-      var nsp_type = 0 # not used
-      b.add(nsp_type)       # add a single byte
-      b.add(size(payload), 2)   # add size as 2 bytes, little endian
+      b.add(size(payload), 1)   # add size as 1 byte
       b += bytes().fromstring(payload)
       var msg_crc = self.crc16(b)
       b.add(msg_crc, 2)       # crc 2 bytes, little endian
@@ -117,7 +115,7 @@ class Nextion : Driver
     def init()
         log("NSP: Initializing Driver")
         self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
-        self.sendnx('DRAKJHSUYDGBNCJHGJKSHBDN')
+        #self.sendnx('DRAKJHSUYDGBNCJHGJKSHBDN')
         self.flash_mode = 0
     end
 
@@ -231,29 +229,6 @@ class Nextion : Driver
         self.begin_nextion_flash()
     end
 
-    def set_power()
-      var ps = tasmota.get_power()
-      for i:0..1
-        if ps[i] == true
-          ps[i] = "1"
-        else 
-          ps[i] = "0"
-        end
-      end
-      var json_payload = '{ "switches": { "switch1": ' + ps[0] + ' , "switch2": ' + ps[1] +  ' } }'
-      log('NSP: Switch state updated with ' + json_payload)
-      self.send(json_payload)
-    end
-
-    def set_clock()
-      var now = tasmota.rtc()
-      var time_raw = now['local']
-      var nsp_time = tasmota.time_dump(time_raw)
-      var time_payload = '{ "clock": { "date":' + str(nsp_time['day']) + ',"month":' + str(nsp_time['month']) + ',"year":' + str(nsp_time['year']) + ',"weekday":' + str(nsp_time['weekday']) + ',"hour":' + str(nsp_time['hour']) + ',"min":' + str(nsp_time['min']) + ' } }'
-      log('NSP: Time and date synced with ' + time_payload, 3)
-      self.send(time_payload)
-    end
-
 end
 
 var nextion = Nextion()
@@ -284,10 +259,7 @@ end
 
 tasmota.add_cmd('Screen', send_cmd2)
 
-tasmota.add_rule("power1#state", /-> nextion.set_power())
-tasmota.add_rule("power2#state", /-> nextion.set_power())
 tasmota.cmd("Rule3 1") # needed until Berry bug fixed
-tasmota.add_rule("Time#Minute", /-> nextion.set_clock())
 tasmota.cmd("State")
 
 
