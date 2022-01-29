@@ -1,16 +1,26 @@
 # NSPanel Lovelance UI
 This is a custom UI for the NSPanel, with HomeAssistant Lovelance UI Design.
-The general idea is that the Nextion Display cycles though a page counter and the esp32 will tell the display what to do.
+The general idea is that the Nextion Display cycles though a page counter and the esp32 tells the display what to do.
 If you are changeing the page the nextion display will send and event to the esp32 and it has to answer with the messages, that will update the current page with it's desired components. This enables easy changes, without touching the HMI Project.
 
 # Current State
 This is at a early stage, it is possible to set entities on the pages on the nspanel through custom commands.
+And the buttons are also sending an event in case they are pressed.
 
 ![image](https://user-images.githubusercontent.com/29555657/149628697-1f440086-fe67-498f-ac73-a2293af7a479.png)
 
+## Halfway done upcoming pages :)
+
+![image](https://user-images.githubusercontent.com/29555657/149677879-a6a0bb07-fcc6-4736-b59a-cb8b9495763a.png)
+
+Yes, I implemented a circle drawing algorithim for this in nextion ...
+
+![image](https://user-images.githubusercontent.com/29555657/149677888-3840fb50-26e5-43e9-86dc-203df1c65a26.png)
+
+
 # Tasmota
 
-x
+Coming soon
 
 # EspHome component
 
