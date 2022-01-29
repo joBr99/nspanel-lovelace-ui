@@ -1,0 +1,576 @@
+[
+    {
+        "id": "ba6c8bb20b9aa4cc",
+        "type": "tab",
+        "label": "NsPanelTest",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "052fd99a211925df",
+        "type": "mqtt out",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "topic": "cmnd/nspanelTest/Screen",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "aeedd16f1f009dd0",
+        "x": 1050,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "18f314835090d302",
+        "type": "debug",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "df42e19d07582858",
+        "type": "mqtt in",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "topic": "tele/nspanelTest/RESULT",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "aeedd16f1f009dd0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 40,
+        "wires": [
+            [
+                "1d856f40c8269b5d"
+            ]
+        ]
+    },
+    {
+        "id": "1d856f40c8269b5d",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "check for '\"{\"csv\":'",
+        "func": "if(msg.payload.startsWith('\\{\"csv\":')){\n    obj = JSON.parse(msg.payload)\n    msg.payload = obj.csv\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 40,
+        "wires": [
+            [
+                "18f314835090d302",
+                "849608f486fde47c"
+            ]
+        ]
+    },
+    {
+        "id": "99ce3ff2cbdb8946",
+        "type": "server-state-changed",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "cover.nspterrasse_cover_1",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 240,
+        "y": 140,
+        "wires": [
+            [
+                "d88c79558c101384"
+            ]
+        ]
+    },
+    {
+        "id": "849608f486fde47c",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "pages",
+        "func": "var pages = \n[\n    {\n        heading: \"Rolladen\",\n        items: [\"cover.rolladenfenster_cover_1\", \"cover.nspterrasse_cover_1\", \"cover.rolladenterasse_cover_1\", \"delete\"]   \n    },\n    {\n        heading: \"TestPage\",\n        items: [\"light.schreibtischlampe\", \"cover.rolladenterasse_cover_1\", \"delete\", \"delete\"]   \n    }\n]\n\nfunction genPage(pageNum){\n    var out_msgs = [ { payload: \"entityUpdHeading,\"+pages[pageNum].heading } ]\n\n    pages[pageNum].items.forEach(function (id, i) {\n        \n        var type = \"delete\"\n        var iconId = 0\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        \n        if(id.startsWith(\"cover\")){\n            type = \"shutter\"\n            iconId = 0\n            out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type})\n        }\n        if(id.startsWith(\"light\")){\n            type = \"light\"\n            iconId = 1\n            var optVal = \"0\"\n            if(global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].state\") == \"on\")\n                optVal = \"1\"\n            out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type+\",\"+optVal})\n        }\n        if(id == \"delete\"){\n            type = \"delete\"\n            out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",0,dc,\"+type})\n        }\n        \n        \n        }\n    )\n\n\n    \n    return out_msgs\n    \n}\n\nfunction handleButtonEvent(pageNum, words){\n    var out_msgs = [ ]\n    pages[pageNum].items.forEach(function (id, i) {\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        if(words[4]==name){\n            if(words[6]==\"OnOff\"){\n                var domain = \"switch\"\n                if(id.startsWith(\"light\"))\n                    domain = \"light\"\n                var action = \"turn_off\"\n                if(words[7]==\"1\")\n                    action = \"turn_on\"\n                out_msgs.push( {payload: id, action: action, domain: domain})\n            }\n            \n            if(words[6]==\"up\")\n                out_msgs.push( {payload: id, action: \"open_cover\", domain: \"cover\"})\n            if(words[6]==\"stop\")\n                out_msgs.push( {payload: id, action: \"stop_cover\", domain: \"cover\"})\n            if(words[6]==\"down\")\n                out_msgs.push( {payload: id, action: \"close_cover\", domain: \"cover\"})\n            \n        }\n    }\n        \n    )\n    return out_msgs\n}\n\nwords = msg.payload.split(',')\nif(words[0]=='event'){\n    var pageNum = parseInt(words[2])\n    pageNum = (pageNum % pages.length)\n    pageNum = Math.abs(pageNum)\n    context.set(\"currentPage\", pageNum)\n    \n    if(words[1]=='pageOpen'){\n        return [genPage(pageNum), null]\n    }\n    if(words[1]=='buttonPress'){\n        return [null, handleButtonEvent(pageNum, words)]\n    }\n    \n}\nif(words[0]=='extUpd'){\n    if (context.get(\"currentPage\") === undefined) {\n        context.set(\"currentPage\", 0)\n    }\n    \n    return [genPage(context.get(\"currentPage\")), null]\n    \n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 80,
+        "wires": [
+            [
+                "052fd99a211925df",
+                "18f314835090d302"
+            ],
+            [
+                "0b70cd75a6d41665",
+                "d6e07a29c223130d"
+            ]
+        ]
+    },
+    {
+        "id": "3ed79a6caf585c59",
+        "type": "server-state-changed",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "cover.rolladenfenster_cover_1",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 210,
+        "y": 180,
+        "wires": [
+            [
+                "d88c79558c101384"
+            ]
+        ]
+    },
+    {
+        "id": "5b2f799c3a7f35f4",
+        "type": "server-state-changed",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "cover.rolladenterasse_cover_1",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 210,
+        "y": 220,
+        "wires": [
+            [
+                "d88c79558c101384"
+            ]
+        ]
+    },
+    {
+        "id": "3414f15a3307fbf5",
+        "type": "server-state-changed",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "light.schreibtischlampe",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 230,
+        "y": 260,
+        "wires": [
+            [
+                "d88c79558c101384"
+            ]
+        ]
+    },
+    {
+        "id": "0b70cd75a6d41665",
+        "type": "debug",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a50a1e9fc3bf78b5",
+        "type": "api-call-service",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "{{action}}",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1310,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d6e07a29c223130d",
+        "type": "switch",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "property": "domain",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "light",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "switch",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "cover",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 1090,
+        "y": 240,
+        "wires": [
+            [
+                "a50a1e9fc3bf78b5"
+            ],
+            [
+                "0b6ad0f2656e74d7"
+            ],
+            [
+                "71e4c21eb50c9af2"
+            ]
+        ]
+    },
+    {
+        "id": "0b6ad0f2656e74d7",
+        "type": "api-call-service",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "{{action}}",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1320,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d88c79558c101384",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "extUpd",
+        "func": "msg.payload = \"extUpd\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 140,
+        "wires": [
+            [
+                "849608f486fde47c"
+            ]
+        ]
+    },
+    {
+        "id": "416addca2587c3d7",
+        "type": "inject",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 300,
+        "wires": [
+            [
+                "d88c79558c101384"
+            ]
+        ]
+    },
+    {
+        "id": "71e4c21eb50c9af2",
+        "type": "api-call-service",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "{{action}}",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1310,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aeedd16f1f009dd0",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.75.30",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "7b975ed1.2c58d",
+        "type": "server",
+        "name": "HomeAssistant",
+        "version": 2,
+        "addon": true,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": "30"
+    }
+]

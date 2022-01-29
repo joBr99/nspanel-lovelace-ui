@@ -20,7 +20,11 @@ Yes, I implemented a circle drawing algorithim for this in nextion ...
 
 # Tasmota
 
-Coming soon
+Use autoexec.be from tasmota folder like you would use with the stock tft file.
+
+Driver behaves similar to the stock implementation, messages are published over mqtt.
+
+See nodered example flow for my implementation.
 
 # EspHome component
 
