@@ -139,7 +139,7 @@ class Nextion : Driver
       return ret
     end
 
-    def every_100ms()
+    def every_50ms()
         import string
         if self.ser.available() > 0
             var msg = self.ser.read()
