@@ -4,10 +4,12 @@ The general idea is that the Nextion Display cycles though a page counter and th
 If you are changeing the page the nextion display will send and event to the esp32 and it has to answer with the messages, that will update the current page with it's desired components. This enables easy changes, without touching the HMI Project.
 
 # Current State
-This is at a early stage, it is possible to set entities on the pages on the nspanel through custom commands.
-And the buttons are also sending an event in case they are pressed.
+It's currently possible to set the content of the pages through homeassistant/nodered. (Shutter and Lights supported) And the detail page for lights is working.
 
 ![image](https://user-images.githubusercontent.com/29555657/149628697-1f440086-fe67-498f-ac73-a2293af7a479.png)
+
+![image](https://user-images.githubusercontent.com/29555657/151697993-49ef4d99-d85b-4275-af46-026b1cd4c0be.png)
+
 
 ## Halfway done upcoming pages :)
 
