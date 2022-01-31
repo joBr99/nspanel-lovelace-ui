@@ -8,7 +8,7 @@ It's currently possible to set the content of the pages through homeassistant/no
 
 ![image](https://user-images.githubusercontent.com/29555657/151848276-30254f2f-318b-445f-ba94-25ed44541522.png)
 
-![image](https://user-images.githubusercontent.com/29555657/151697993-49ef4d99-d85b-4275-af46-026b1cd4c0be.png)
+![image](https://user-images.githubusercontent.com/29555657/151848537-6da58d5b-20fa-4032-947e-942476cc1b58.png)
 
 
 ## Halfway done upcoming pages :)
