@@ -1,18 +1,18 @@
 [
     {
-        "id": "ba6c8bb20b9aa4cc",
+        "id": "1b16bf0e99b71548",
         "type": "tab",
-        "label": "NsPanelTest",
+        "label": "nspdebug",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "052fd99a211925df",
+        "id": "fc261f2d1db2acab",
         "type": "mqtt out",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
-        "topic": "cmnd/nspanelTest/Screen",
+        "topic": "cmnd/tasmota_nspdebugtest/Screen",
         "qos": "",
         "retain": "",
         "respTopic": "",
@@ -21,16 +21,16 @@
         "correl": "",
         "expiry": "",
         "broker": "aeedd16f1f009dd0",
-        "x": 1050,
-        "y": 100,
+        "x": 1190,
+        "y": 140,
         "wires": []
     },
     {
-        "id": "18f314835090d302",
+        "id": "3adbb7a87040adcb",
         "type": "debug",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -38,16 +38,16 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 970,
-        "y": 40,
+        "x": 1070,
+        "y": 80,
         "wires": []
     },
     {
-        "id": "df42e19d07582858",
+        "id": "3f8b47affabd553d",
         "type": "mqtt in",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
-        "topic": "tele/nspanelTest/RESULT",
+        "topic": "tele/tasmota_nspdebugtest/RESULT",
         "qos": "2",
         "datatype": "auto",
         "broker": "aeedd16f1f009dd0",
@@ -55,18 +55,18 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 130,
-        "y": 40,
+        "x": 260,
+        "y": 80,
         "wires": [
             [
-                "1d856f40c8269b5d"
+                "799924b71e358164"
             ]
         ]
     },
     {
-        "id": "1d856f40c8269b5d",
+        "id": "799924b71e358164",
         "type": "function",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "check for '\"{\"csv\":'",
         "func": "if(msg.payload.startsWith('\\{\"csv\":')){\n    obj = JSON.parse(msg.payload)\n    msg.payload = obj.csv\n    return msg;\n}",
         "outputs": 1,
@@ -74,232 +74,43 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 350,
-        "y": 40,
+        "x": 530,
+        "y": 80,
         "wires": [
             [
-                "18f314835090d302",
-                "849608f486fde47c"
+                "3adbb7a87040adcb",
+                "85003e2af29ab409"
             ]
         ]
     },
     {
-        "id": "99ce3ff2cbdb8946",
-        "type": "server-state-changed",
-        "z": "ba6c8bb20b9aa4cc",
-        "name": "",
-        "server": "7b975ed1.2c58d",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "cover.nspterrasse_cover_1",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "for": 0,
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 240,
-        "y": 140,
-        "wires": [
-            [
-                "d88c79558c101384"
-            ]
-        ]
-    },
-    {
-        "id": "849608f486fde47c",
+        "id": "85003e2af29ab409",
         "type": "function",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "pages",
-        "func": "var pages = \n[\n    {\n        heading: \"Rolladen\",\n        items: [\"cover.rolladenfenster_cover_1\", \"cover.nspterrasse_cover_1\", \"cover.rolladenterasse_cover_1\", \"delete\"]   \n    },\n    {\n        heading: \"TestPage\",\n        items: [\"light.schreibtischlampe\", \"cover.rolladenterasse_cover_1\", \"delete\", \"delete\"]   \n    }\n]\n\nfunction genPage(pageNum){\n    var out_msgs = [ { payload: \"entityUpdHeading,\"+pages[pageNum].heading } ]\n\n    pages[pageNum].items.forEach(function (id, i) {\n        \n        var type = \"delete\"\n        var iconId = 0\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        \n        if(id.startsWith(\"cover\")){\n            type = \"shutter\"\n            iconId = 0\n            out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type})\n        }\n        if(id.startsWith(\"light\")){\n            type = \"light\"\n            iconId = 1\n            var optVal = \"0\"\n            if(global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].state\") == \"on\")\n                optVal = \"1\"\n            out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type+\",\"+optVal})\n        }\n        if(id == \"delete\"){\n            type = \"delete\"\n            out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",0,dc,\"+type})\n        }\n        \n        \n        }\n    )\n\n\n    \n    return out_msgs\n    \n}\n\nfunction handleButtonEvent(pageNum, words){\n    var out_msgs = [ ]\n    pages[pageNum].items.forEach(function (id, i) {\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        if(words[4]==name){\n            if(words[6]==\"OnOff\"){\n                var domain = \"switch\"\n                if(id.startsWith(\"light\"))\n                    domain = \"light\"\n                var action = \"turn_off\"\n                if(words[7]==\"1\")\n                    action = \"turn_on\"\n                out_msgs.push( {payload: id, action: action, domain: domain})\n            }\n            \n            if(words[6]==\"up\")\n                out_msgs.push( {payload: id, action: \"open_cover\", domain: \"cover\"})\n            if(words[6]==\"stop\")\n                out_msgs.push( {payload: id, action: \"stop_cover\", domain: \"cover\"})\n            if(words[6]==\"down\")\n                out_msgs.push( {payload: id, action: \"close_cover\", domain: \"cover\"})\n            \n        }\n    }\n        \n    )\n    return out_msgs\n}\n\nwords = msg.payload.split(',')\nif(words[0]=='event'){\n    var pageNum = parseInt(words[2])\n    pageNum = (pageNum % pages.length)\n    pageNum = Math.abs(pageNum)\n    context.set(\"currentPage\", pageNum)\n    \n    if(words[1]=='pageOpen'){\n        return [genPage(pageNum), null]\n    }\n    if(words[1]=='buttonPress'){\n        return [null, handleButtonEvent(pageNum, words)]\n    }\n    \n}\nif(words[0]=='extUpd'){\n    if (context.get(\"currentPage\") === undefined) {\n        context.set(\"currentPage\", 0)\n    }\n    \n    return [genPage(context.get(\"currentPage\")), null]\n    \n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "func": "var pages = \n[\n    {\n        heading: \"Rolladen\",\n        items: [\"cover.rolladenfenster_cover_1\", \"cover.nspterrasse_cover_1\", \"cover.rolladenterasse_cover_1\", \"delete\"]   \n    },\n    {\n        heading: \"TestPage\",\n        items: [\"light.schreibtischlampe\", \"cover.rolladenterasse_cover_1\", \"delete\", \"delete\"]   \n    }\n]\n\nfunction genPage(pageNum){\n    var out_msgs = [ { payload: \"entityUpdHeading,\"+pages[pageNum].heading } ]\n\n    pages[pageNum].items.forEach(function (id, i) {\n        \n        var type = \"delete\"\n        var iconId = 0\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        \n        if(id.startsWith(\"cover\")){\n            type = \"shutter\"\n            iconId = 0\n            out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type})\n        }\n        if(id.startsWith(\"light\")){\n            type = \"light\"\n            iconId = 1\n            var optVal = \"0\"\n            if(global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].state\") == \"on\")\n                optVal = \"1\"\n            out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type+\",\"+optVal})\n        }\n        if(id == \"delete\"){\n            type = \"delete\"\n            out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",0,dc,\"+type})\n        }\n        \n        \n        }\n    )\n\n\n    \n    return out_msgs\n    \n}\n\nfunction handleButtonEvent(pageNum, words){\n    var out_msgs = [ ]\n    pages[pageNum].items.forEach(function (id, i) {\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        if(words[4]==name){\n            if(words[6]==\"OnOff\"){\n                var domain = \"switch\"\n                if(id.startsWith(\"light\"))\n                    domain = \"light\"\n                var action = \"turn_off\"\n                if(words[7]==\"1\")\n                    action = \"turn_on\"\n                out_msgs.push( {payload: id, action: action, domain: domain})\n            }\n            \n            if(words[6]==\"up\")\n                out_msgs.push( {payload: id, action: \"open_cover\", domain: \"cover\"})\n            if(words[6]==\"stop\")\n                out_msgs.push( {payload: id, action: \"stop_cover\", domain: \"cover\"})\n            if(words[6]==\"down\")\n                out_msgs.push( {payload: id, action: \"close_cover\", domain: \"cover\"})\n                \n            if(words[6]==\"brightnessSlider\")\n                out_msgs.push( {payload: id, action: \"turn_on\", domain: \"lightBrightness\", brightness: parseInt(words[7])})\n            if(words[6]==\"colorTempSlider\")\n                out_msgs.push( {payload: id, action: \"turn_on\", domain: \"lightTemperature\", temperature: parseInt(words[7])})\n                \n        }\n    }\n        \n    )\n    return out_msgs\n}\n\nwords = msg.payload.split(',')\nif(words[0]=='event'){\n    var pageNum = parseInt(words[2])\n    pageNum = (pageNum % pages.length)\n    pageNum = Math.abs(pageNum)\n    context.set(\"currentPage\", pageNum)\n    \n    if(words[1]=='pageOpen'){\n        return [genPage(pageNum), null]\n    }\n    if(words[1]=='buttonPress'){\n        return [null, handleButtonEvent(pageNum, words)]\n    }\n    \n}\nif(words[0]=='extUpd'){\n    if (context.get(\"currentPage\") === undefined) {\n        context.set(\"currentPage\", 0)\n    }\n    \n    return [genPage(context.get(\"currentPage\")), null]\n    \n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
-        "y": 80,
+        "x": 850,
+        "y": 120,
         "wires": [
             [
-                "052fd99a211925df",
-                "18f314835090d302"
+                "fc261f2d1db2acab",
+                "3adbb7a87040adcb"
             ],
             [
-                "0b70cd75a6d41665",
-                "d6e07a29c223130d"
+                "9e65c8b0a6164b41",
+                "c2ce60ae97237e54"
             ]
         ]
     },
     {
-        "id": "3ed79a6caf585c59",
+        "id": "ad12712f4d203754",
         "type": "server-state-changed",
-        "z": "ba6c8bb20b9aa4cc",
-        "name": "",
-        "server": "7b975ed1.2c58d",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "cover.rolladenfenster_cover_1",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "for": 0,
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 210,
-        "y": 180,
-        "wires": [
-            [
-                "d88c79558c101384"
-            ]
-        ]
-    },
-    {
-        "id": "5b2f799c3a7f35f4",
-        "type": "server-state-changed",
-        "z": "ba6c8bb20b9aa4cc",
-        "name": "",
-        "server": "7b975ed1.2c58d",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "cover.rolladenterasse_cover_1",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "for": 0,
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 210,
-        "y": 220,
-        "wires": [
-            [
-                "d88c79558c101384"
-            ]
-        ]
-    },
-    {
-        "id": "3414f15a3307fbf5",
-        "type": "server-state-changed",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
         "server": "7b975ed1.2c58d",
         "version": 3,
@@ -351,18 +162,18 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 230,
-        "y": 260,
+        "x": 330,
+        "y": 300,
         "wires": [
             [
-                "d88c79558c101384"
+                "cd7f5a96eb38397f"
             ]
         ]
     },
     {
-        "id": "0b70cd75a6d41665",
+        "id": "9e65c8b0a6164b41",
         "type": "debug",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -372,14 +183,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1090,
-        "y": 180,
+        "x": 1070,
+        "y": 200,
         "wires": []
     },
     {
-        "id": "a50a1e9fc3bf78b5",
+        "id": "05197826ebe7c1af",
         "type": "api-call-service",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
         "server": "7b975ed1.2c58d",
         "version": 3,
@@ -393,16 +204,16 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1310,
-        "y": 180,
+        "x": 1290,
+        "y": 200,
         "wires": [
             []
         ]
     },
     {
-        "id": "d6e07a29c223130d",
+        "id": "c2ce60ae97237e54",
         "type": "switch",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
         "property": "domain",
         "propertyType": "msg",
@@ -410,6 +221,16 @@
             {
                 "t": "eq",
                 "v": "light",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "lightBrightness",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "lightTemperature",
                 "vt": "str"
             },
             {
@@ -425,25 +246,31 @@
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 3,
-        "x": 1090,
-        "y": 240,
+        "outputs": 5,
+        "x": 1070,
+        "y": 260,
         "wires": [
             [
-                "a50a1e9fc3bf78b5"
+                "05197826ebe7c1af"
             ],
             [
-                "0b6ad0f2656e74d7"
+                "20f5ee9a5622c10c"
             ],
             [
-                "71e4c21eb50c9af2"
+                "967e2ba5ebf31f47"
+            ],
+            [
+                "e51c68a584fd494f"
+            ],
+            [
+                "b64afa1882d55eaf"
             ]
         ]
     },
     {
-        "id": "0b6ad0f2656e74d7",
+        "id": "e51c68a584fd494f",
         "type": "api-call-service",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
         "server": "7b975ed1.2c58d",
         "version": 3,
@@ -457,16 +284,16 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1320,
-        "y": 240,
+        "x": 1300,
+        "y": 360,
         "wires": [
             []
         ]
     },
     {
-        "id": "d88c79558c101384",
+        "id": "cd7f5a96eb38397f",
         "type": "function",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "extUpd",
         "func": "msg.payload = \"extUpd\"\nreturn msg;",
         "outputs": 1,
@@ -474,18 +301,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 560,
-        "y": 140,
+        "x": 660,
+        "y": 180,
         "wires": [
             [
-                "849608f486fde47c"
+                "85003e2af29ab409"
             ]
         ]
     },
     {
-        "id": "416addca2587c3d7",
+        "id": "06ee793a02d15ff6",
         "type": "inject",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
         "props": [
             {
@@ -503,18 +330,18 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 320,
-        "y": 300,
+        "x": 420,
+        "y": 340,
         "wires": [
             [
-                "d88c79558c101384"
+                "cd7f5a96eb38397f"
             ]
         ]
     },
     {
-        "id": "71e4c21eb50c9af2",
+        "id": "b64afa1882d55eaf",
         "type": "api-call-service",
-        "z": "ba6c8bb20b9aa4cc",
+        "z": "1b16bf0e99b71548",
         "name": "",
         "server": "7b975ed1.2c58d",
         "version": 3,
@@ -528,7 +355,72 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 1310,
+        "x": 1290,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "20f5ee9a5622c10c",
+        "type": "api-call-service",
+        "z": "1b16bf0e99b71548",
+        "name": "lightBrightness",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"brightness_pct\":{{brightness}}}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1280,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "967e2ba5ebf31f47",
+        "type": "function",
+        "z": "1b16bf0e99b71548",
+        "name": "calcMireds",
+        "func": "function scale(number, inMin, inMax, outMin, outMax) {\n    return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;\n}\n\nvar id = msg.payload\nvar attr = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes\")\n\nvar mireds = scale(msg.temperature, 0, 100, attr.min_mireds, attr.max_mireds)\n\nmsg.temperature = mireds\nreturn msg\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1270,
+        "y": 300,
+        "wires": [
+            [
+                "41eac1fcf4784c53"
+            ]
+        ]
+    },
+    {
+        "id": "41eac1fcf4784c53",
+        "type": "api-call-service",
+        "z": "1b16bf0e99b71548",
+        "name": "lightTemperature",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"color_temp\":{{temperature}}}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1450,
         "y": 300,
         "wires": [
             []
