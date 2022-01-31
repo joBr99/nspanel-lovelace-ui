@@ -23,6 +23,8 @@ Yes, I implemented a circle drawing algorithim for this in nextion ...
 # Tasmota
 
 Use autoexec.be from tasmota folder like you would use with the stock tft file.
+You will need the java app from to flash the tft file, thanks a lot to @peepshow-21
+ https://github.com/peepshow-21/ns-flash
 
 Driver behaves similar to the stock implementation, messages are published over mqtt.
 
@@ -30,6 +32,7 @@ See nodered example flow for my implementation.
 Pages on nspanel are generated from the array at the begin of the pages function in the flow:
 
 ![image](https://user-images.githubusercontent.com/29555657/151675593-dadd53cb-a38e-49bd-9f40-832fc8edd017.png)
+
 
 
 # EspHome component
@@ -73,6 +76,9 @@ entityUpd,2,0,Shutter2,shutter
 
 entityUpd,3,0,dc,delete
 
+entityUpd,4,3,Temperature,text,content
+
+entityUpd,4,3,bt-name,button,bt-text
 
 ## Messages from Nextion Display
 
@@ -90,7 +96,8 @@ event,buttonPress,1,tHeading,tEntityName,1,stop
 
 event,buttonPress,1,tHeading,tEntityName,1,OnOff,1
 
-  
+event,buttonPress,1,tHeading,tEntityName,1,button
+
 # Design Guidelines for Nextion HMI Project
 
 Background Color is 
