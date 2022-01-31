@@ -6,16 +6,12 @@ If you are changeing the page the nextion display will send and event to the esp
 # Current State
 It's currently possible to set the content of the pages through homeassistant/nodered. (Shutter and Lights supported) And the detail page for lights is working.
 
-![image](https://user-images.githubusercontent.com/29555657/149628697-1f440086-fe67-498f-ac73-a2293af7a479.png)
+![image](https://user-images.githubusercontent.com/29555657/151848276-30254f2f-318b-445f-ba94-25ed44541522.png)
 
-![image](https://user-images.githubusercontent.com/29555657/151697993-49ef4d99-d85b-4275-af46-026b1cd4c0be.png)
+![image](https://user-images.githubusercontent.com/29555657/151848537-6da58d5b-20fa-4032-947e-942476cc1b58.png)
 
 
 ## Halfway done upcoming pages :)
-
-![image](https://user-images.githubusercontent.com/29555657/149677879-a6a0bb07-fcc6-4736-b59a-cb8b9495763a.png)
-
-Yes, I implemented a circle drawing algorithim for this in nextion ...
 
 ![image](https://user-images.githubusercontent.com/29555657/149677888-3840fb50-26e5-43e9-86dc-203df1c65a26.png)
 
