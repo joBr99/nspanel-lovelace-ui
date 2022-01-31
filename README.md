@@ -76,6 +76,9 @@ entityUpd,2,0,Shutter2,shutter
 
 entityUpd,3,0,dc,delete
 
+entityUpd,4,3,Temperature,text,content
+
+entityUpd,4,3,bt-name,button,bt-text
 
 ## Messages from Nextion Display
 
@@ -93,7 +96,8 @@ event,buttonPress,1,tHeading,tEntityName,1,stop
 
 event,buttonPress,1,tHeading,tEntityName,1,OnOff,1
 
-  
+event,buttonPress,1,tHeading,tEntityName,1,button
+
 # Design Guidelines for Nextion HMI Project
 
 Background Color is 
