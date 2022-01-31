@@ -62,6 +62,15 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 ```
 ## Messages to Nextion Display
 
+The following message should be implemented on all pages
+
+wake screen:
+wake
+
+change the page type:
+pageType,cardEntities
+pageType,cardThermo
+
 ### cardEntities Page
 
 The following message can be used to update the content on the cardEntities Page
