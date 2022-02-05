@@ -109,6 +109,12 @@ event,buttonPress,1,tHeading,tEntityName,1,OnOff,1
 
 event,buttonPress,1,tHeading,tEntityName,1,button
 
+### cardThermo Page
+
+event,pageOpen,0
+
+event,tempUpd,*pageNumber*,*entityName*,*temperature*
+
 # Design Guidelines for Nextion HMI Project
 
 Background Color is 
