@@ -64,7 +64,9 @@ wake screen:
 wake
 
 change the page type:
+
 pageType,cardEntities
+
 pageType,cardThermo
 
 ### cardEntities Page
