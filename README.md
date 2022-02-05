@@ -87,6 +87,10 @@ entityUpd,4,3,Temperature,text,content
 
 entityUpd,4,3,bt-name,button,bt-text
 
+### cardThermo Page
+
+entityUpd,*name*,*currentTemp*,*destTemp*,*status*
+
 ## Messages from Nextion Display
 
 ### cardEntities Page
