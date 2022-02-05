@@ -89,7 +89,7 @@ entityUpd,4,3,bt-name,button,bt-text
 
 ### cardThermo Page
 
-entityUpd,*name*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*
+entityUpd,*name*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*
 
 ## Messages from Nextion Display
 
