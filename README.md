@@ -64,7 +64,9 @@ wake screen:
 wake
 
 change the page type:
+
 pageType,cardEntities
+
 pageType,cardThermo
 
 ### cardEntities Page
@@ -85,6 +87,10 @@ entityUpd,4,3,Temperature,text,content
 
 entityUpd,4,3,bt-name,button,bt-text
 
+### cardThermo Page
+
+entityUpd,*name*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*
+
 ## Messages from Nextion Display
 
 ### cardEntities Page
@@ -102,6 +108,12 @@ event,buttonPress,1,tHeading,tEntityName,1,stop
 event,buttonPress,1,tHeading,tEntityName,1,OnOff,1
 
 event,buttonPress,1,tHeading,tEntityName,1,button
+
+### cardThermo Page
+
+event,pageOpen,0
+
+event,tempUpd,*pageNumber*,*entityName*,*temperature*
 
 # Design Guidelines for Nextion HMI Project
 
