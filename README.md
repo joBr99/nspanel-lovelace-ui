@@ -82,6 +82,10 @@ entityUpd,4,3,Temperature,text,content
 
 entityUpd,4,3,bt-name,button,bt-text
 
+### popupLight Page
+
+entityUpdateDetail,1,100,78
+
 ### cardThermo Page
 
 entityUpd,*name*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*
@@ -103,6 +107,10 @@ event,buttonPress,1,tHeading,tEntityName,1,stop
 event,buttonPress,1,tHeading,tEntityName,1,OnOff,1
 
 event,buttonPress,1,tHeading,tEntityName,1,button
+
+### popupLight Page
+
+event,pageOpenDetail,popupLight,Schreibtischlampe
 
 ### cardThermo Page
 
