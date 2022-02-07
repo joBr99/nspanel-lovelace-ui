@@ -53,6 +53,7 @@ This message has to be generated for the Message "1337" (1337 is not a valid com
 The following message should be implemented on all pages
 
 wake screen:
+
 wake
 
 change the page type:
@@ -60,6 +61,8 @@ change the page type:
 pageType,cardEntities
 
 pageType,cardThermo
+
+pageType,popupLight,Schreibtischlampe
 
 ### cardEntities Page
 
