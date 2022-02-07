@@ -30,11 +30,6 @@ Pages on nspanel are generated from the array at the begin of the pages function
 ![image](https://user-images.githubusercontent.com/29555657/151675593-dadd53cb-a38e-49bd-9f40-832fc8edd017.png)
 
 
-
-# EspHome component
-
-See Readme in esphome folder.
-
 # NsPanel Custom UI
 
 This is a replacement for the stock ui on nspanel, it can be controlled via custom serial command, like the stock one (but with different commands). This enables a user experiance, where it's possible to use nspanel with custom UI, but without messing around with Nextion Editor, because it's possible to configure widgets.
