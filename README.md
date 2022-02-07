@@ -3,6 +3,7 @@ This is a custom UI for the NSPanel, with HomeAssistant Lovelance UI Design.
 The general idea is that the Nextion Display cycles though a page counter and the esp32 tells the display what to do.
 If you are changeing the page the nextion display will send and event to the esp32 and it has to answer with the messages, that will update the current page with it's desired components. This enables easy changes, without touching the HMI Project.
 
+
 # Current State
 It's currently possible to set the content of the pages through homeassistant/nodered. (Shutter and Lights supported) And the detail page for lights is working.
 
@@ -29,10 +30,6 @@ Pages on nspanel are generated from the array at the begin of the pages function
 
 ![image](https://user-images.githubusercontent.com/29555657/151675593-dadd53cb-a38e-49bd-9f40-832fc8edd017.png)
 
-
-# NsPanel Custom UI
-
-This is a replacement for the stock ui on nspanel, it can be controlled via custom serial command, like the stock one (but with different commands). This enables a user experiance, where it's possible to use nspanel with custom UI, but without messing around with Nextion Editor, because it's possible to configure widgets.
 
 # Custom Protocol
 ```
