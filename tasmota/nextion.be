@@ -1,4 +1,4 @@
-# Sonoff NSPanel Lovelance UI Serial Protocol driver by joBr99 + nextion upload protocol implementation using http range and tcpclient
+# Sonoff NSPanel Lovelance UI Serial Protocol driver by joBr99 + nextion upload protocol 1.2 (test fast one yay) implementation using http range and tcpclient
 # based on;
 # Sonoff NSPanel Tasmota driver v0.47 | code by blakadder and s-hadinger
 
@@ -108,6 +108,7 @@ class Nextion : Driver
     var ser
 	var flash_size
 	var flash_mode
+	var flash_skip
 	var flash_current_byte
 	var tftd
 	var progress_percentage_last
@@ -117,6 +118,7 @@ class Nextion : Driver
         log("NSP: Initializing Driver")
         self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
         self.flash_mode = 0
+		self.flash_skip = false
 		tasmota.add_driver(self)
     end
 	
@@ -235,6 +237,23 @@ class Nextion : Driver
         return chunk.size()
     end
 	
+	def flash_nextion()
+		import string
+	    var x = self.write_chunk(self.flash_current_byte)
+		self.flash_current_byte = self.flash_current_byte + x
+		var progress_percentage = (self.flash_current_byte*100/self.flash_size)
+        if (self.progress_percentage_last!=progress_percentage)
+			print(string.format("Flashing Progress ( %d / %d ) [ %d ]", self.flash_current_byte, self.flash_size, progress_percentage))
+            self.progress_percentage_last = progress_percentage
+            tasmota.publish_result(string.format("{\"Flashing\":{\"complete\": %d}}",progress_percentage), "RESULT") 
+        end
+        if (self.flash_current_byte==self.flash_size)
+            log("NSP: Flashing complete")
+            self.flash_mode = 0
+        end
+        tasmota.yield()
+	end
+	
 	def every_100ms()
         import string
         if self.ser.available() > 0
@@ -244,23 +263,20 @@ class Nextion : Driver
                 if (self.flash_mode==1)
                     var str = msg[0..-4].asstring()
                     log(str, 3)
-                    if (string.find(str,"comok 2")==0) 
-                        self.sendnx(string.format("whmi-wri %d,115200,res0",self.flash_size))
+                    if (string.find(str,"comok 2")==0)
+                        self.sendnx(string.format("whmi-wris %d,115200,1",self.flash_size))
+					
+					elif (size(msg)==1 && msg[0]==0x08)
+						self.flash_skip = true
+						print("rec 0x08")
+					elif (size(msg)==4 && self.flash_skip)
+						var skip_to_byte = msg[0..4].get(0,4)
+						print("skip to ", skip_to_byte)
+						self.flash_current_byte = skip_to_byte
+						self.flash_nextion()
                     elif (size(msg)==1 && msg[0]==0x05)
 						print("rec 0x05")
-                        var x = self.write_chunk(self.flash_current_byte)
-						self.flash_current_byte = self.flash_current_byte + x
-						var progress_percentage = (self.flash_current_byte*100/self.flash_size)
-                        if (self.progress_percentage_last!=progress_percentage)
-							print(string.format("Flashing Progress ( %d / %d ) [ %d ]", self.flash_current_byte, self.flash_size, progress_percentage))
-                            self.progress_percentage_last = progress_percentage
-                            tasmota.publish_result(string.format("{\"Flashing\":{\"complete\": %d}}",progress_percentage), "RESULT") 
-                        end
-                        if (self.flash_current_byte==self.flash_size)
-                            log("NSP: Flashing complete")
-                            self.flash_mode = 0
-                        end
-                        tasmota.yield()
+						self.flash_nextion()
                     end
                 else
 					# Recive messages using custom protocol 55 BB [payload length] [payload] [crc] [crc]
