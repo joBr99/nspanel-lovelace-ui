@@ -1,0 +1,23 @@
+# Nextion Berry Driver
+
+This berry driver is intended for the usage with a custom HMI/TFT firmware on nspanel.
+
+It adds the following commands to Tasmota:
+
+- Nextion *Payload*
+
+Send's normal Nextion Commands to the Screen (suffixed by 0xFFFFFF)
+
+- CustomSend *Payload*
+
+Send's normal Custom Commands to the Screen in the following format
+
+55 BB [payload length] [payload] [crc] [crc]
+
+- FlashNextion *URL*
+
+Start's flashing a tft file to the nextion screen via Nextion Upload Protocol 1.2
+
+Webserver must be reachable via HTTP and support Range Header
+
+Example: FlashNextion http://192.168.75.30:8123/local/nspanel.tft
