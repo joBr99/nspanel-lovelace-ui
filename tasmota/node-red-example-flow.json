@@ -1,11 +1,5452 @@
 [
     {
+        "id": "6ac21a5bccc4f4aa",
+        "type": "tab",
+        "label": "Schalter Bett",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c6c0e39795a740d6",
+        "type": "tab",
+        "label": "Schalter Schreibtisch",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ce543ed835b321b6",
+        "type": "tab",
+        "label": "Blind Schalter",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1e57bfd1e625c8d4",
+        "type": "tab",
+        "label": "Schalter Bad",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "82a690d6147dee52",
+        "type": "tab",
+        "label": "RGB Switches",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "27b477bf09d00791",
+        "type": "tab",
+        "label": "Trigger",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a669a7d105d30a43",
+        "type": "tab",
+        "label": "Rolladen",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1095d804ba7660cf",
+        "type": "tab",
+        "label": "nspanel",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ba6c8bb20b9aa4cc",
+        "type": "tab",
+        "label": "NSP_Kueche",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "1b16bf0e99b71548",
         "type": "tab",
         "label": "nspdebug",
         "disabled": false,
         "info": "",
         "env": []
+    },
+    {
+        "id": "6c95d9f2c2806a4c",
+        "type": "tab",
+        "label": "Temperature",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7b975ed1.2c58d",
+        "type": "server",
+        "name": "HomeAssistant",
+        "version": 2,
+        "addon": true,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": "30"
+    },
+    {
+        "id": "aeedd16f1f009dd0",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.75.30",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "fadcfda41631958d",
+        "type": "position-config",
+        "name": "",
+        "isValide": "true",
+        "longitude": "0",
+        "latitude": "0",
+        "angleType": "deg",
+        "timeZoneOffset": 99,
+        "timeZoneDST": 0,
+        "stateTimeFormat": "3",
+        "stateDateFormat": "12",
+        "contextStore": ""
+    },
+    {
+        "id": "e5c10ae217a2b850",
+        "type": "position-config",
+        "name": "",
+        "isValide": "true",
+        "longitude": "0",
+        "latitude": "0",
+        "angleType": "deg",
+        "timeZoneOffset": "99",
+        "timeZoneDST": "0",
+        "stateTimeFormat": "3",
+        "stateDateFormat": "12",
+        "contextStore": ""
+    },
+    {
+        "id": "161bb087.35566f",
+        "type": "server",
+        "name": "Home Assistant",
+        "version": 2,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": 30
+    },
+    {
+        "id": "46eb3326389e67fb",
+        "type": "trigger-state",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "Schalter Bett",
+        "server": "7b975ed1.2c58d",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.0x00158d000429ab59_action",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "None",
+                "propertyValue": "old_state.state"
+            }
+        ],
+        "inputs": 0,
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "enableInput": false,
+        "x": 90,
+        "y": 200,
+        "wires": [
+            [],
+            [
+                "d9f2b27f4179197b"
+            ]
+        ]
+    },
+    {
+        "id": "d9f2b27f4179197b",
+        "type": "switch",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "Spilt Button Events",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "single_right",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "double_right",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hold_right",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "single_left",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "double_left",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hold_left",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "single_both",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "double_both",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hold_both",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 9,
+        "x": 270,
+        "y": 200,
+        "wires": [
+            [
+                "5fe21b09376620ff"
+            ],
+            [
+                "3f44895e5c27e860"
+            ],
+            [],
+            [
+                "713226368bda2679"
+            ],
+            [],
+            [],
+            [
+                "0a241622bfaa2e22",
+                "ba867b337fa04a5b",
+                "900ee4c045c74302"
+            ],
+            [
+                "6841c5c7c9c7350c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5fe21b09376620ff",
+        "type": "api-call-service",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "Toggle kleiderschrank Spots",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "light.kleiderschrankspots",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 520,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c6824de23136a71f",
+        "type": "api-call-service",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "Brightness kleiderschrank Spots",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.kleiderschrankspots",
+        "data": "{\"brightness\":\"{{payload}}\",\"transition\":1}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1070,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3f44895e5c27e860",
+        "type": "api-current-state",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "light.kleiderschrankspots",
+        "state_type": "num",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 590,
+        "y": 80,
+        "wires": [
+            [
+                "ef4cb58b383e815b"
+            ]
+        ]
+    },
+    {
+        "id": "ef4cb58b383e815b",
+        "type": "function",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "calcBrightness",
+        "func": "var brightness = msg.data.attributes.brightness\n\n\n// set default brightness in case lamp was off or back to default at max\nif (brightness == null || brightness == 255){\n    brightness = 1\n}else{\n    // cap to 255\n    if (brightness >= 255)\n        brightness = 255\n    // increase brightness\n    brightness = brightness + 51\n    \n}\n\nvar newMsg = { transition: 1, payload: brightness }\nreturn newMsg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 80,
+        "wires": [
+            [
+                "c6824de23136a71f"
+            ]
+        ]
+    },
+    {
+        "id": "713226368bda2679",
+        "type": "api-call-service",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "Toggle kleiderschrank Spots",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "light.nachttischschlampe",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 560,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0a241622bfaa2e22",
+        "type": "api-call-service",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "Turn All off Bett Switch",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.deckenbeleuchtung_vorne, switch.deckenbeleuchtung_hinten",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 820,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba867b337fa04a5b",
+        "type": "api-call-service",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "Turn All off Bett Light",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "light.lampe_schrank, light.schreibtischlampe, light.bad_lights, light.kueche_lights, light.spiegelschrankbad",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 820,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3a586673a13d25a0",
+        "type": "link in",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "TurnAllOff",
+        "links": [
+            "fa3123105eb83843",
+            "03c3479b15ab13cd"
+        ],
+        "x": 675,
+        "y": 320,
+        "wires": [
+            [
+                "ba867b337fa04a5b",
+                "0a241622bfaa2e22"
+            ]
+        ]
+    },
+    {
+        "id": "6841c5c7c9c7350c",
+        "type": "api-call-service",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "Power TV IR",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "button",
+        "service": "press",
+        "entityId": "button.tv_power_on_off",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 470,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "900ee4c045c74302",
+        "type": "api-call-service",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "Turn All off Bett Light",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "light.kleiderschrank1, light.kleiderschrank2",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 820,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e1f3bc8445bc09a6",
+        "type": "inject",
+        "z": "6ac21a5bccc4f4aa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 690,
+        "y": 440,
+        "wires": [
+            [
+                "900ee4c045c74302"
+            ]
+        ]
+    },
+    {
+        "id": "e22860e01975a1de",
+        "type": "trigger-state",
+        "z": "c6c0e39795a740d6",
+        "name": "Schalter Schreibtisch",
+        "server": "7b975ed1.2c58d",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.schalter_schreibtisch_action",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "None",
+                "propertyValue": "old_state.state"
+            }
+        ],
+        "inputs": 0,
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "enableInput": false,
+        "x": 120,
+        "y": 220,
+        "wires": [
+            [],
+            [
+                "0257e2c5f2f8aa82"
+            ]
+        ]
+    },
+    {
+        "id": "0257e2c5f2f8aa82",
+        "type": "switch",
+        "z": "c6c0e39795a740d6",
+        "name": "Spilt Button Events",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "single_right",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "double_right",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hold_right",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "single_left",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "double_left",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hold_left",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "single_both",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "double_both",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hold_both",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 9,
+        "x": 330,
+        "y": 220,
+        "wires": [
+            [
+                "8144900fdbd9a9c4"
+            ],
+            [
+                "344cb1b60fff8004"
+            ],
+            [],
+            [
+                "71367dd4f5e0d388"
+            ],
+            [
+                "a8f82be3cde72e75"
+            ],
+            [],
+            [
+                "03c3479b15ab13cd"
+            ],
+            [
+                "4ae159bcfb25092d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8144900fdbd9a9c4",
+        "type": "api-call-service",
+        "z": "c6c0e39795a740d6",
+        "name": "Toggle Schreibtsichlampe",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "light.schreibtischlampe",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 610,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "71367dd4f5e0d388",
+        "type": "api-call-service",
+        "z": "c6c0e39795a740d6",
+        "name": "Toggle Lampe Schrank",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "light.lampe_schrank",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 600,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03c3479b15ab13cd",
+        "type": "link out",
+        "z": "c6c0e39795a740d6",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "3a586673a13d25a0"
+        ],
+        "x": 515,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4ae159bcfb25092d",
+        "type": "api-call-service",
+        "z": "c6c0e39795a740d6",
+        "name": "Toggle Deckenbeleuchtung",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "toggle",
+        "entityId": "switch.deckenbeleuchtung_hinten, switch.deckenbeleuchtung_vorne",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 620,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "344cb1b60fff8004",
+        "type": "api-call-service",
+        "z": "c6c0e39795a740d6",
+        "name": "Toggle KVM HDMI 2",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "toggle",
+        "entityId": "switch.hdmi_2",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 600,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a8f82be3cde72e75",
+        "type": "api-call-service",
+        "z": "c6c0e39795a740d6",
+        "name": "Toggle KVM HDMI 1",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "toggle",
+        "entityId": "switch.hdmi_1",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 600,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "52bc423772386f07",
+        "type": "trigger-state",
+        "z": "ce543ed835b321b6",
+        "name": "Schalter Bett Blind",
+        "server": "7b975ed1.2c58d",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.schalter_blind_bett_action",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "None",
+                "propertyValue": "old_state.state"
+            }
+        ],
+        "inputs": 0,
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "enableInput": false,
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [],
+            [
+                "da5ce9d9f90a7ba0"
+            ]
+        ]
+    },
+    {
+        "id": "da5ce9d9f90a7ba0",
+        "type": "switch",
+        "z": "ce543ed835b321b6",
+        "name": "Spilt Button Events",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "open",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "close",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "1860080478b006c4"
+            ],
+            [
+                "54156386a9a0b913"
+            ]
+        ]
+    },
+    {
+        "id": "54156386a9a0b913",
+        "type": "api-call-service",
+        "z": "ce543ed835b321b6",
+        "name": "Close All Covers",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "close_cover",
+        "entityId": "cover.blind_fenster_links, cover.blind_fenster_rechts, cover.blind_fenster_terrasse, cover.blind_terrasse",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 560,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1860080478b006c4",
+        "type": "api-call-service",
+        "z": "ce543ed835b321b6",
+        "name": "Open All Covers",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "open_cover",
+        "entityId": "cover.blind_fenster_links, cover.blind_fenster_rechts, cover.blind_fenster_terrasse, cover.blind_terrasse",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 560,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3ff73409b53a144f",
+        "type": "trigger-state",
+        "z": "ce543ed835b321b6",
+        "name": "Schalter Terrasse Blind",
+        "server": "7b975ed1.2c58d",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.schalter_blind_terasse_action",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "None",
+                "propertyValue": "old_state.state"
+            }
+        ],
+        "inputs": 0,
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "enableInput": false,
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [],
+            [
+                "3d0b55b51054d45f"
+            ]
+        ]
+    },
+    {
+        "id": "3d0b55b51054d45f",
+        "type": "switch",
+        "z": "ce543ed835b321b6",
+        "name": "Spilt Button Events",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "open",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "close",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 240,
+        "wires": [
+            [
+                "4998cd4bc8c0e33b"
+            ],
+            [
+                "8497522e2f07de64"
+            ]
+        ]
+    },
+    {
+        "id": "4998cd4bc8c0e33b",
+        "type": "api-call-service",
+        "z": "ce543ed835b321b6",
+        "name": "Open Terrasse Covers",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "open_cover",
+        "entityId": "cover.blind_terrasse",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 580,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8497522e2f07de64",
+        "type": "api-call-service",
+        "z": "ce543ed835b321b6",
+        "name": "Close Terrasse Covers",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "close_cover",
+        "entityId": "cover.blind_terrasse",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 580,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c5f975120bcd4bda",
+        "type": "trigger-state",
+        "z": "1e57bfd1e625c8d4",
+        "name": "Schalter Spiegelschrank",
+        "server": "7b975ed1.2c58d",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.schalter_spiegelschrank_action",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "current_state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "",
+                "propertyValue": "new_state.state"
+            }
+        ],
+        "inputs": 0,
+        "outputs": 4,
+        "customoutputs": [
+            {
+                "messageType": "payload",
+                "messageValue": "on",
+                "messageValueType": "str",
+                "comparatorPropertyType": "previous_state",
+                "comparatorType": "is",
+                "comparatorValue": "off",
+                "comparatorValueDataType": "str",
+                "comparatorPropertyValue": "old_state.state"
+            },
+            {
+                "messageType": "payload",
+                "messageValue": "off",
+                "messageValueType": "str",
+                "comparatorPropertyType": "previous_state",
+                "comparatorType": "is",
+                "comparatorValue": "on",
+                "comparatorValueDataType": "str",
+                "comparatorPropertyValue": "old_state.state"
+            }
+        ],
+        "outputinitially": false,
+        "state_type": "str",
+        "enableInput": false,
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [],
+            [
+                "d4e4b9335773f890"
+            ],
+            [
+                "e74e25d77d4a69ac"
+            ],
+            [
+                "3e3915799dd4404c"
+            ]
+        ]
+    },
+    {
+        "id": "e74e25d77d4a69ac",
+        "type": "api-call-service",
+        "z": "1e57bfd1e625c8d4",
+        "name": "Spiegelschrank ON",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.spiegelschrankbad",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 410,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3e3915799dd4404c",
+        "type": "api-call-service",
+        "z": "1e57bfd1e625c8d4",
+        "name": "Spiegelschrank OFF",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "light.spiegelschrankbad",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 420,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d4e4b9335773f890",
+        "type": "switch",
+        "z": "1e57bfd1e625c8d4",
+        "name": "Spilt Button Events",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "brightness_move_up",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "brightness_move_down",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "brightness_stop",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 410,
+        "y": 80,
+        "wires": [
+            [
+                "fb1b5bc2e9892427"
+            ],
+            [
+                "eaaf8b841b98756f"
+            ],
+            [
+                "e5a75d013da20fa4"
+            ]
+        ]
+    },
+    {
+        "id": "35aab01292b816dd",
+        "type": "api-call-service",
+        "z": "1e57bfd1e625c8d4",
+        "name": "Spiegelschrank ON",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.spiegelschrankbad",
+        "data": "{\"brightness_step\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1010,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fb1b5bc2e9892427",
+        "type": "trigger",
+        "z": "1e57bfd1e625c8d4",
+        "name": "send 8 every 100ms",
+        "op1": "8",
+        "op2": "10",
+        "op1type": "num",
+        "op2type": "num",
+        "duration": "-100",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "brightness_stop",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 800,
+        "y": 40,
+        "wires": [
+            [
+                "35aab01292b816dd"
+            ]
+        ]
+    },
+    {
+        "id": "e5a75d013da20fa4",
+        "type": "change",
+        "z": "1e57bfd1e625c8d4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 120,
+        "wires": [
+            [
+                "fb1b5bc2e9892427",
+                "eaaf8b841b98756f"
+            ]
+        ]
+    },
+    {
+        "id": "eaaf8b841b98756f",
+        "type": "trigger",
+        "z": "1e57bfd1e625c8d4",
+        "name": "send -8 every 100ms",
+        "op1": "-8",
+        "op2": "10",
+        "op1type": "num",
+        "op2type": "num",
+        "duration": "-100",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "brightness_stop",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 800,
+        "y": 80,
+        "wires": [
+            [
+                "35aab01292b816dd"
+            ]
+        ]
+    },
+    {
+        "id": "b35931682491ca27",
+        "type": "trigger-state",
+        "z": "82a690d6147dee52",
+        "name": "RGB Schalter 1",
+        "server": "7b975ed1.2c58d",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.rgb_switch_1_action",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "",
+                "propertyValue": "old_state.state"
+            }
+        ],
+        "inputs": 0,
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "enableInput": false,
+        "x": 140,
+        "y": 560,
+        "wires": [
+            [
+                "40d0c5cee6235718"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "40d0c5cee6235718",
+        "type": "switch",
+        "z": "82a690d6147dee52",
+        "name": "Spilt Button Events",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "toggle",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "brightness_up_click",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "brightness_up_hold",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "brightness_up_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "brightness_down_click",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "brightness_down_hold",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "brightness_down_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "arrow_right_click",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "arrow_right_hold",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "arrow_right_release",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "arrow_left_click",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "arrow_left_hold",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "arrow_left_release",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 13,
+        "x": 350,
+        "y": 560,
+        "wires": [
+            [
+                "01a886c4c32e1cde"
+            ],
+            [
+                "714f998e7ec358e0"
+            ],
+            [
+                "6fa4e53007203af5"
+            ],
+            [
+                "21328f072495ccec"
+            ],
+            [
+                "4c6b387147ee7d9b"
+            ],
+            [
+                "4575757b0d9f5677"
+            ],
+            [
+                "ddbe433f6a9ec169"
+            ],
+            [
+                "8e56a71d2dd891f4"
+            ],
+            [
+                "492f21673d666103"
+            ],
+            [
+                "717a5743a3cab3ca"
+            ],
+            [
+                "e79eebeccc168907"
+            ],
+            [
+                "40697f3e55babc95"
+            ],
+            [
+                "86ed32cebd5f8d57"
+            ]
+        ]
+    },
+    {
+        "id": "faa4b43942a5bace",
+        "type": "trigger-state",
+        "z": "82a690d6147dee52",
+        "name": "RGB Schalter 2",
+        "server": "7b975ed1.2c58d",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.rgb_switch_2_action",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "",
+                "propertyValue": "old_state.state"
+            }
+        ],
+        "inputs": 0,
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "enableInput": false,
+        "x": 140,
+        "y": 620,
+        "wires": [
+            [
+                "40d0c5cee6235718"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cef7e6ad9f9ba6e8",
+        "type": "counter",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "init": "0",
+        "step": "1",
+        "lower": "0",
+        "upper": "5",
+        "mode": "increment",
+        "outputs": 1,
+        "x": 820,
+        "y": 320,
+        "wires": [
+            [
+                "fa8a6b1ffdf05ee3"
+            ]
+        ]
+    },
+    {
+        "id": "fa8a6b1ffdf05ee3",
+        "type": "change",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "count",
+                "pt": "msg",
+                "from": "0",
+                "fromt": "num",
+                "to": "light.schreibtischlampe",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "count",
+                "pt": "msg",
+                "from": "1",
+                "fromt": "num",
+                "to": "light.lampe_schrank",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "count",
+                "pt": "msg",
+                "from": "2",
+                "fromt": "num",
+                "to": "light.kleiderschrankspots",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "count",
+                "pt": "msg",
+                "from": "3",
+                "fromt": "num",
+                "to": "light.nachttischschlampe",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "count",
+                "pt": "msg",
+                "from": "4",
+                "fromt": "num",
+                "to": "light.kleiderschrank1",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "count",
+                "pt": "msg",
+                "from": "5",
+                "fromt": "num",
+                "to": "light.kleiderschrank2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 360,
+        "wires": [
+            [
+                "aaecda9d4866f415"
+            ]
+        ]
+    },
+    {
+        "id": "8e56a71d2dd891f4",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "increment+blink",
+        "func": "var newMsg = {};\nnewMsg.increment = 1;\nnewMsg.payload = \"blink\"\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 600,
+        "wires": [
+            [
+                "cef7e6ad9f9ba6e8"
+            ]
+        ]
+    },
+    {
+        "id": "e79eebeccc168907",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "decrement+blink",
+        "func": "var newMsg = {}\nnewMsg.decrement = 1;\nnewMsg.payload = \"blink\"\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 720,
+        "wires": [
+            [
+                "cef7e6ad9f9ba6e8"
+            ]
+        ]
+    },
+    {
+        "id": "e750d3a13bd1d6e2",
+        "type": "api-call-service",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"brightness\":\"{{brightness}}\",\"transition\":\"{{transition}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "all",
+        "x": 1610,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a7323e2adb03807a",
+        "type": "api-current-state",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "{{payload}}",
+        "state_type": "num",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 230,
+        "y": 40,
+        "wires": [
+            [
+                "e3ebc1defa72e698"
+            ]
+        ]
+    },
+    {
+        "id": "9201e59a63b6e7b9",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "calcBrightnessBlink",
+        "func": "var brightness = msg.data.attributes.brightness\n\n\n// set default brightness in case lamp was off or back to default at max\nif (brightness == null || brightness == 255){\n    brightness = 1\n}else{\n    // cap to 255\n    if (brightness >= 255)\n        brightness = 255\n    // dst brightness for blink, depending on current brightness\n    if (brightness >= 127)\n        brightness = brightness - 40\n    else\n        brightness = brightness + 40\n    \n}\n\nvar newMsg = { payload: msg.payload, transition: 1, brightness: brightness }\n//newMsg.remainingRecurrences = 3\nreturn newMsg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1390,
+        "y": 40,
+        "wires": [
+            [
+                "e750d3a13bd1d6e2"
+            ]
+        ]
+    },
+    {
+        "id": "ddf78a7d2a8fe266",
+        "type": "delay",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1200,
+        "y": 80,
+        "wires": [
+            [
+                "4b0575c6ccead45b"
+            ]
+        ]
+    },
+    {
+        "id": "4b0575c6ccead45b",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "restoreBrightness",
+        "func": "var brightness = msg.data.attributes.brightness\n\nif (brightness == null || brightness == 255)\n    brightness = 1\n\nvar newMsg = { payload: msg.payload, transition: 1, brightness: brightness }\nreturn newMsg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1390,
+        "y": 80,
+        "wires": [
+            [
+                "e750d3a13bd1d6e2"
+            ]
+        ]
+    },
+    {
+        "id": "4642832bd7356e74",
+        "type": "comment",
+        "z": "82a690d6147dee52",
+        "name": "blink",
+        "info": "",
+        "x": 130,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b5efb3ca9cd38fa9",
+        "type": "link in",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "links": [
+            "e9e1d5c3df911a12",
+            "701bf5ace0e94b39",
+            "d5322a15c384af61"
+        ],
+        "x": 75,
+        "y": 40,
+        "wires": [
+            [
+                "a7323e2adb03807a"
+            ]
+        ]
+    },
+    {
+        "id": "e9e1d5c3df911a12",
+        "type": "link out",
+        "z": "82a690d6147dee52",
+        "name": "blink",
+        "mode": "link",
+        "links": [
+            "b5efb3ca9cd38fa9"
+        ],
+        "x": 1195,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "01a886c4c32e1cde",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "stay+toggle",
+        "func": "var newMsg = {};\nnewMsg.decrement = 0;\nnewMsg.payload = \"toggle\"\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 320,
+        "wires": [
+            [
+                "cef7e6ad9f9ba6e8"
+            ]
+        ]
+    },
+    {
+        "id": "c2021adb12dc0c48",
+        "type": "api-call-service",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "{{payload}}",
+        "data": "{\"transition\":1}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "all",
+        "x": 1260,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "845df17fe468d432",
+        "type": "switch",
+        "z": "82a690d6147dee52",
+        "name": "Spilt Events",
+        "property": "action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "blink",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "toggle",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "increase",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "decrease",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "temp_up",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "temp_down",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "color_up",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "color_down",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 8,
+        "x": 990,
+        "y": 460,
+        "wires": [
+            [
+                "e9e1d5c3df911a12"
+            ],
+            [
+                "c2021adb12dc0c48",
+                "28947e6bd4f8419c"
+            ],
+            [
+                "792c3a99f62cef25"
+            ],
+            [
+                "e85fbe1106f33efd"
+            ],
+            [
+                "87b4786a2a22779b"
+            ],
+            [
+                "75574c2b8802f50f"
+            ],
+            [
+                "837b04f5cf1531ee"
+            ],
+            [
+                "6ef1eb0d50cc436d"
+            ]
+        ]
+    },
+    {
+        "id": "792c3a99f62cef25",
+        "type": "api-call-service",
+        "z": "82a690d6147dee52",
+        "name": "increase brightness 10%",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"brightness_step_pct\":10}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "all",
+        "x": 1290,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "714f998e7ec358e0",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "stay+increase",
+        "func": "var newMsg = {};\nnewMsg.decrement = 0;\nnewMsg.payload = \"increase\"\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 360,
+        "wires": [
+            [
+                "cef7e6ad9f9ba6e8"
+            ]
+        ]
+    },
+    {
+        "id": "4c6b387147ee7d9b",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "stay+decrease",
+        "func": "var newMsg = {};\nnewMsg.decrement = 0;\nnewMsg.payload = \"decrease\"\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 480,
+        "wires": [
+            [
+                "cef7e6ad9f9ba6e8"
+            ]
+        ]
+    },
+    {
+        "id": "aaecda9d4866f415",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "mod",
+        "func": "var newMsg = { payload: msg.count, action: msg.payload }\nreturn newMsg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 400,
+        "wires": [
+            [
+                "845df17fe468d432"
+            ]
+        ]
+    },
+    {
+        "id": "a3da312ff23b4cb0",
+        "type": "switch",
+        "z": "82a690d6147dee52",
+        "name": "Spilt Events",
+        "property": "missing",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 650,
+        "y": 40,
+        "wires": [
+            [
+                "9201e59a63b6e7b9",
+                "ddf78a7d2a8fe266"
+            ],
+            [
+                "33f9208759dc824f"
+            ]
+        ]
+    },
+    {
+        "id": "33f9208759dc824f",
+        "type": "api-call-service",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "all",
+        "x": 350,
+        "y": 120,
+        "wires": [
+            [
+                "7a57e382580cbb7c"
+            ]
+        ]
+    },
+    {
+        "id": "7a57e382580cbb7c",
+        "type": "api-current-state",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "{{payload}}",
+        "state_type": "num",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 590,
+        "y": 120,
+        "wires": [
+            [
+                "36dfea3a8124ca35"
+            ]
+        ]
+    },
+    {
+        "id": "36dfea3a8124ca35",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "checkBrightness",
+        "func": "var brightness = msg.data.attributes.brightness\n\nmsg.missing = false\n\n// set default brightness in case lamp was off\nif (brightness == null){\n    msg.missing = true\n}\nmsg.wasoff = true\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 120,
+        "wires": [
+            [
+                "1eefb216230aee24",
+                "3ef12c2896ff8cdc"
+            ]
+        ]
+    },
+    {
+        "id": "e3ebc1defa72e698",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "checkBrightness",
+        "func": "var brightness = msg.data.attributes.brightness\n\nmsg.missing = false\n\n// set default brightness in case lamp was off or back to default at max\nif (brightness == null || brightness == 255){\n    msg.missing = true\n}\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 40,
+        "wires": [
+            [
+                "a3da312ff23b4cb0"
+            ]
+        ]
+    },
+    {
+        "id": "1eefb216230aee24",
+        "type": "switch",
+        "z": "82a690d6147dee52",
+        "name": "Spilt Events",
+        "property": "missing",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 810,
+        "y": 180,
+        "wires": [
+            [
+                "1d4846fd005f6f1c",
+                "323e8e9e07772bf6"
+            ],
+            [
+                "7a57e382580cbb7c"
+            ]
+        ]
+    },
+    {
+        "id": "1d4846fd005f6f1c",
+        "type": "delay",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1100,
+        "y": 120,
+        "wires": [
+            [
+                "9201e59a63b6e7b9"
+            ]
+        ]
+    },
+    {
+        "id": "323e8e9e07772bf6",
+        "type": "delay",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1100,
+        "y": 160,
+        "wires": [
+            [
+                "4b0575c6ccead45b",
+                "35f76b53801c20ac"
+            ]
+        ]
+    },
+    {
+        "id": "35f76b53801c20ac",
+        "type": "delay",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "400",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1400,
+        "y": 160,
+        "wires": [
+            [
+                "aa0d53851c284a7b"
+            ]
+        ]
+    },
+    {
+        "id": "aa0d53851c284a7b",
+        "type": "api-call-service",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "{{payload}}",
+        "data": "{\"transition\":1}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "all",
+        "x": 1610,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e85fbe1106f33efd",
+        "type": "api-call-service",
+        "z": "82a690d6147dee52",
+        "name": "decrease brightness 10%",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"brightness_step_pct\":-10}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "all",
+        "x": 1290,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aef7e7206dc0fa61",
+        "type": "trigger",
+        "z": "82a690d6147dee52",
+        "name": "send every 100ms",
+        "op1": "",
+        "op2": "10",
+        "op1type": "pay",
+        "op2type": "num",
+        "duration": "-100",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 850,
+        "y": 600,
+        "wires": [
+            [
+                "cef7e6ad9f9ba6e8"
+            ]
+        ]
+    },
+    {
+        "id": "21328f072495ccec",
+        "type": "change",
+        "z": "82a690d6147dee52",
+        "name": "set reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "decrement",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 440,
+        "wires": [
+            [
+                "aef7e7206dc0fa61"
+            ]
+        ]
+    },
+    {
+        "id": "86ed32cebd5f8d57",
+        "type": "change",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 800,
+        "wires": [
+            [
+                "aef7e7206dc0fa61"
+            ]
+        ]
+    },
+    {
+        "id": "6fa4e53007203af5",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "stay+temp_up",
+        "func": "var newMsg = {};\nnewMsg.decrement = 0;\nnewMsg.payload = \"temp_up\"\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 400,
+        "wires": [
+            [
+                "aef7e7206dc0fa61"
+            ]
+        ]
+    },
+    {
+        "id": "4575757b0d9f5677",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "stay+temp_down",
+        "func": "var newMsg = {};\nnewMsg.decrement = 0;\nnewMsg.payload = \"temp_down\"\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 520,
+        "wires": [
+            [
+                "aef7e7206dc0fa61"
+            ]
+        ]
+    },
+    {
+        "id": "ddbe433f6a9ec169",
+        "type": "change",
+        "z": "82a690d6147dee52",
+        "name": "set reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "decrement",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 560,
+        "wires": [
+            [
+                "aef7e7206dc0fa61"
+            ]
+        ]
+    },
+    {
+        "id": "717a5743a3cab3ca",
+        "type": "change",
+        "z": "82a690d6147dee52",
+        "name": "set reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "decrement",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 680,
+        "wires": [
+            [
+                "aef7e7206dc0fa61"
+            ]
+        ]
+    },
+    {
+        "id": "492f21673d666103",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "stay+color_up",
+        "func": "var newMsg = {};\nnewMsg.decrement = 0;\nnewMsg.payload = \"color_up\"\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 640,
+        "wires": [
+            [
+                "aef7e7206dc0fa61"
+            ]
+        ]
+    },
+    {
+        "id": "40697f3e55babc95",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "stay+color_down",
+        "func": "var newMsg = {};\nnewMsg.decrement = 0;\nnewMsg.payload = \"color_down\"\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 760,
+        "wires": [
+            [
+                "aef7e7206dc0fa61"
+            ]
+        ]
+    },
+    {
+        "id": "baf092aa39fd876e",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "calcColor",
+        "func": "var color = msg.data.attributes.hs_color[0]\n\ncolor = color+msg.step\n// cap color to 359\nif(color > 360)\n    color = 359\n    \n// cap to higher than 1\nif(color < 1)\n    color = 1\n    \n// set sat to 100\nsat = 100\n\nmsg.transition = 1\nmsg.hs_color = color\nmsg.hs_sat = sat\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 740,
+        "wires": [
+            [
+                "9dd60c146e5ba51b"
+            ]
+        ]
+    },
+    {
+        "id": "837b04f5cf1531ee",
+        "type": "change",
+        "z": "82a690d6147dee52",
+        "name": "set step 6",
+        "rules": [
+            {
+                "t": "set",
+                "p": "step",
+                "pt": "msg",
+                "to": "6",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1200,
+        "y": 600,
+        "wires": [
+            [
+                "a7d5993606472d85"
+            ]
+        ]
+    },
+    {
+        "id": "6ef1eb0d50cc436d",
+        "type": "change",
+        "z": "82a690d6147dee52",
+        "name": "set step -6",
+        "rules": [
+            {
+                "t": "set",
+                "p": "step",
+                "pt": "msg",
+                "to": "-6",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1210,
+        "y": 640,
+        "wires": [
+            [
+                "a7d5993606472d85"
+            ]
+        ]
+    },
+    {
+        "id": "9dd60c146e5ba51b",
+        "type": "api-call-service",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"hs_color\":[{{hs_color}},{{hs_sat}}],\"transition\":1}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "all",
+        "x": 1410,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a7d5993606472d85",
+        "type": "api-current-state",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "{{payload}}",
+        "state_type": "num",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1430,
+        "y": 680,
+        "wires": [
+            [
+                "baf092aa39fd876e"
+            ]
+        ]
+    },
+    {
+        "id": "87b4786a2a22779b",
+        "type": "change",
+        "z": "82a690d6147dee52",
+        "name": "set step 4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "step",
+                "pt": "msg",
+                "to": "4",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1200,
+        "y": 520,
+        "wires": [
+            [
+                "63987438e50b7bf8"
+            ]
+        ]
+    },
+    {
+        "id": "75574c2b8802f50f",
+        "type": "change",
+        "z": "82a690d6147dee52",
+        "name": "set step -4",
+        "rules": [
+            {
+                "t": "set",
+                "p": "step",
+                "pt": "msg",
+                "to": "-4",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1210,
+        "y": 560,
+        "wires": [
+            [
+                "63987438e50b7bf8"
+            ]
+        ]
+    },
+    {
+        "id": "63987438e50b7bf8",
+        "type": "api-current-state",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "{{payload}}",
+        "state_type": "num",
+        "blockInputOverrides": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1430,
+        "y": 480,
+        "wires": [
+            [
+                "611084761d9517fd"
+            ]
+        ]
+    },
+    {
+        "id": "611084761d9517fd",
+        "type": "function",
+        "z": "82a690d6147dee52",
+        "name": "calcColorTemp",
+        "func": "var temp = msg.data.attributes.color_temp\nvar min_mireds = msg.data.attributes.min_mireds\nvar max_mireds = msg.data.attributes.max_mireds\n\nif(temp == null)\ntemp = max_mireds-min_mireds\n\ntemp = temp+msg.step\n// cap color to 359\nif(temp > max_mireds)\n    temp = max_mireds\n    \n// cap to higher than 1\nif(temp < min_mireds)\n    temp = min_mireds\n    \nmsg.transition = 1\nmsg.color_temp = temp\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 540,
+        "wires": [
+            [
+                "3a18915164e20b3b",
+                "f9ef405a5945cc0c"
+            ]
+        ]
+    },
+    {
+        "id": "3a18915164e20b3b",
+        "type": "api-call-service",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"color_temp\":{{color_temp}},\"transition\":1}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "all",
+        "x": 1410,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f9ef405a5945cc0c",
+        "type": "debug",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1570,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "28947e6bd4f8419c",
+        "type": "debug",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1490,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "3ef12c2896ff8cdc",
+        "type": "debug",
+        "z": "82a690d6147dee52",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b61ff34a86cd7856",
+        "type": "mqtt in",
+        "z": "27b477bf09d00791",
+        "name": "",
+        "topic": "RuleTrigger/#",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "aeedd16f1f009dd0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 40,
+        "wires": [
+            [
+                "ec365e8789272db9"
+            ]
+        ]
+    },
+    {
+        "id": "ec365e8789272db9",
+        "type": "switch",
+        "z": "27b477bf09d00791",
+        "name": "Spilt MQTT Topics",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "RuleTrigger/AllOffRuleTrigger/state",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "RuleTrigger/AußenbeleuchtungEingangRuleTrigger/state",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "RuleTrigger/TerrasseSwitchRuleTrigger/state",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "RuleTrigger/BadSwitchRuleTrigger/state",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "RuleTrigger/KuecheSwitchRuleTrigger/state",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 5,
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "fa3123105eb83843"
+            ],
+            [
+                "227ba6f8bc6c99f8"
+            ],
+            [
+                "74b8f83d2c8d1a0f"
+            ],
+            [
+                "522b7860927b1033"
+            ],
+            [
+                "b337b9d30ef146ea"
+            ]
+        ]
+    },
+    {
+        "id": "fa3123105eb83843",
+        "type": "link out",
+        "z": "27b477bf09d00791",
+        "name": "TurnAllOff",
+        "mode": "link",
+        "links": [
+            "3a586673a13d25a0",
+            "815cd0e80742835d"
+        ],
+        "x": 255,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "05bfb7e32aab2bdf",
+        "type": "api-call-service",
+        "z": "27b477bf09d00791",
+        "name": "Eingang ON",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.beleuchtung_eingang_2",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 670,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "227ba6f8bc6c99f8",
+        "type": "switch",
+        "z": "27b477bf09d00791",
+        "name": "Spilt OFF ON",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 340,
+        "y": 60,
+        "wires": [
+            [
+                "edb324ef57ecaff2"
+            ],
+            [
+                "05bfb7e32aab2bdf"
+            ]
+        ]
+    },
+    {
+        "id": "edb324ef57ecaff2",
+        "type": "api-call-service",
+        "z": "27b477bf09d00791",
+        "name": "Eingang OFF",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "light.beleuchtung_eingang_2",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 670,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3dc115cd6de1bab6",
+        "type": "function",
+        "z": "27b477bf09d00791",
+        "name": "20",
+        "func": "msg.brightness = 20\nmsg.transition = 1\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 280,
+        "wires": [
+            [
+                "ea2cedf677aed301"
+            ]
+        ]
+    },
+    {
+        "id": "ea2cedf677aed301",
+        "type": "api-call-service",
+        "z": "27b477bf09d00791",
+        "name": "Toggle Light",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "{{payload}}",
+        "data": "{\"brightness_pct\":\"{{brightness}}\",\"transition\":\"{{transition}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1010,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3c07adb6bb29ac6e",
+        "type": "time-range-switch",
+        "z": "27b477bf09d00791",
+        "name": "",
+        "lat": "49.99987",
+        "lon": "8.00604",
+        "startTime": "sunrise",
+        "endTime": "sunset",
+        "startOffset": "-120",
+        "endOffset": 0,
+        "x": 640,
+        "y": 200,
+        "wires": [
+            [
+                "6c5992e9ad2d2222"
+            ],
+            [
+                "3dc115cd6de1bab6"
+            ]
+        ]
+    },
+    {
+        "id": "b337b9d30ef146ea",
+        "type": "function",
+        "z": "27b477bf09d00791",
+        "name": "light.kueche_lights",
+        "func": "msg.payload = \"light.kueche_lights\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 180,
+        "wires": [
+            [
+                "92e44f05a7a47224"
+            ]
+        ]
+    },
+    {
+        "id": "6c5992e9ad2d2222",
+        "type": "function",
+        "z": "27b477bf09d00791",
+        "name": "100",
+        "func": "msg.brightness = 100\nmsg.transition = 1\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 240,
+        "wires": [
+            [
+                "ea2cedf677aed301"
+            ]
+        ]
+    },
+    {
+        "id": "522b7860927b1033",
+        "type": "function",
+        "z": "27b477bf09d00791",
+        "name": "light.bad_lights",
+        "func": "msg.payload = \"light.bad_lights\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "3c07adb6bb29ac6e",
+                "244725441187d7fc"
+            ]
+        ]
+    },
+    {
+        "id": "74b8f83d2c8d1a0f",
+        "type": "function",
+        "z": "27b477bf09d00791",
+        "name": "light.beleuchtung_terrasse",
+        "func": "msg.payload = \"light.beleuchtung_terrasse\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 100,
+        "wires": [
+            [
+                "3c07adb6bb29ac6e"
+            ]
+        ]
+    },
+    {
+        "id": "3d0a43dec81d6c91",
+        "type": "api-call-service",
+        "z": "27b477bf09d00791",
+        "name": "Spiegelschrank",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "light.spiegelschrankbad",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 860,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "244725441187d7fc",
+        "type": "time-range-switch",
+        "z": "27b477bf09d00791",
+        "name": "",
+        "lat": "49.99987",
+        "lon": "8.00604",
+        "startTime": "sunrise",
+        "endTime": "9:00",
+        "startOffset": "-120",
+        "endOffset": 0,
+        "x": 640,
+        "y": 140,
+        "wires": [
+            [
+                "3d0a43dec81d6c91"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f2e24eedca16fcb1",
+        "type": "trigger-state",
+        "z": "27b477bf09d00791",
+        "name": "Klingel",
+        "server": "7b975ed1.2c58d",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "binary_sensor.sensor_klingel_contact",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "off",
+                "propertyValue": "old_state.state"
+            },
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "current_state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "on",
+                "propertyValue": "new_state.state"
+            }
+        ],
+        "inputs": 0,
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "enableInput": false,
+        "x": 70,
+        "y": 540,
+        "wires": [
+            [
+                "9ab3ef7d26772c71"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "40928f63.2537",
+        "type": "exec",
+        "z": "27b477bf09d00791",
+        "command": "curl http://192.168.62.5:888/",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1060,
+        "y": 540,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9ab3ef7d26772c71",
+        "type": "debounce-leading-trailing",
+        "z": "27b477bf09d00791",
+        "time": "3000",
+        "debouncetype": "leading",
+        "name": "debounce-leading",
+        "x": 270,
+        "y": 540,
+        "wires": [
+            [
+                "77bc3c4dc51df80e"
+            ]
+        ]
+    },
+    {
+        "id": "92e44f05a7a47224",
+        "type": "time-range-switch",
+        "z": "27b477bf09d00791",
+        "name": "",
+        "lat": "49.99987",
+        "lon": "8.00604",
+        "startTime": "23:30",
+        "endTime": "sunset",
+        "startOffset": "",
+        "endOffset": 0,
+        "x": 640,
+        "y": 260,
+        "wires": [
+            [
+                "6c5992e9ad2d2222"
+            ],
+            [
+                "3dc115cd6de1bab6"
+            ]
+        ]
+    },
+    {
+        "id": "182ea94132e76fc4",
+        "type": "function",
+        "z": "27b477bf09d00791",
+        "name": "10",
+        "func": "msg.brightness = 10\nmsg.transition = 1\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 320,
+        "wires": [
+            [
+                "ea2cedf677aed301"
+            ]
+        ]
+    },
+    {
+        "id": "76dec314c329b7e7",
+        "type": "inject",
+        "z": "27b477bf09d00791",
+        "name": "block on deploy",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "block",
+        "payload": "change-state",
+        "payloadType": "str",
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "77bc3c4dc51df80e",
+                "e21a393ad43b83ce"
+            ]
+        ]
+    },
+    {
+        "id": "b8e4a67a927a0c7c",
+        "type": "debug",
+        "z": "27b477bf09d00791",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "77bc3c4dc51df80e",
+        "type": "state-machine",
+        "z": "27b477bf09d00791",
+        "name": "",
+        "triggerProperty": "topic",
+        "triggerPropertyType": "msg",
+        "stateProperty": "topic",
+        "statePropertyType": "msg",
+        "initialDelay": "0",
+        "persistOnReload": false,
+        "outputStateChangeOnly": false,
+        "throwException": false,
+        "states": [
+            "block",
+            "accepting"
+        ],
+        "transitions": [
+            {
+                "name": "accept",
+                "from": "block",
+                "to": "accepting"
+            },
+            {
+                "name": "block",
+                "from": "accepting",
+                "to": "block"
+            }
+        ],
+        "x": 580,
+        "y": 540,
+        "wires": [
+            [
+                "a5f592fe9b2c06c9"
+            ]
+        ]
+    },
+    {
+        "id": "1d89a4f8cff5ae37",
+        "type": "inject",
+        "z": "27b477bf09d00791",
+        "name": "accept",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "accept",
+        "payload": "change-state",
+        "payloadType": "str",
+        "x": 310,
+        "y": 600,
+        "wires": [
+            [
+                "77bc3c4dc51df80e"
+            ]
+        ]
+    },
+    {
+        "id": "a5f592fe9b2c06c9",
+        "type": "function",
+        "z": "27b477bf09d00791",
+        "name": "filter accepting topic",
+        "func": "if(msg.topic == 'accepting' && msg.payload != 'change-state')\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 540,
+        "wires": [
+            [
+                "b8e4a67a927a0c7c",
+                "40928f63.2537"
+            ]
+        ]
+    },
+    {
+        "id": "7053352d26410454",
+        "type": "inject",
+        "z": "27b477bf09d00791",
+        "name": "ring",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 310,
+        "y": 640,
+        "wires": [
+            [
+                "77bc3c4dc51df80e"
+            ]
+        ]
+    },
+    {
+        "id": "0770baa844598f61",
+        "type": "function",
+        "z": "27b477bf09d00791",
+        "name": "send accept",
+        "func": "msg.topic = 'accept'\nmsg.payload = 'change-state'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 480,
+        "wires": [
+            [
+                "77bc3c4dc51df80e"
+            ]
+        ]
+    },
+    {
+        "id": "e21a393ad43b83ce",
+        "type": "delay",
+        "z": "27b477bf09d00791",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 480,
+        "wires": [
+            [
+                "0770baa844598f61"
+            ]
+        ]
+    },
+    {
+        "id": "eab3b05f10c2ee22",
+        "type": "sunrise",
+        "z": "a669a7d105d30a43",
+        "name": "ganz dunkel, ganz hell",
+        "lat": "50.00069",
+        "lon": "7.99212",
+        "start": "goldenHourEnd",
+        "end": "night",
+        "soff": 0,
+        "eoff": 0,
+        "x": 120,
+        "y": 100,
+        "wires": [
+            [
+                "cf01af4051a352d1"
+            ],
+            [
+                "cc0b157d50993f5e"
+            ]
+        ]
+    },
+    {
+        "id": "cf94899baec8a3c4",
+        "type": "api-call-service",
+        "z": "a669a7d105d30a43",
+        "name": "rolläden 0% auf",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "set_cover_position",
+        "entityId": "cover.rolladenfenster_cover_1, cover.nspterrasse_cover_1",
+        "data": "{\"position\": 0}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 940,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8ff8477d3301e5f7",
+        "type": "inject",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 790,
+        "y": 80,
+        "wires": [
+            [
+                "cf94899baec8a3c4"
+            ]
+        ]
+    },
+    {
+        "id": "349776b03c80b456",
+        "type": "api-call-service",
+        "z": "a669a7d105d30a43",
+        "name": "rolläden 10% auf",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "set_cover_position",
+        "entityId": "cover.rolladenfenster_cover_1, cover.nspterrasse_cover_1",
+        "data": "{\"position\": 10}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 950,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf01af4051a352d1",
+        "type": "debug",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "cc0b157d50993f5e",
+        "type": "switch",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 120,
+        "wires": [
+            [
+                "cf94899baec8a3c4"
+            ],
+            [
+                "dd0d61f2f5fa8141"
+            ]
+        ]
+    },
+    {
+        "id": "aa88cab3742c148c",
+        "type": "sunrise",
+        "z": "a669a7d105d30a43",
+        "name": "wird dunkel, wird hell",
+        "lat": "50.00069",
+        "lon": "7.99212",
+        "start": "nightEnd",
+        "end": "dusk",
+        "soff": 0,
+        "eoff": 0,
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "f23876ece24152b1"
+            ],
+            [
+                "8e31156790c8e45a"
+            ]
+        ]
+    },
+    {
+        "id": "8e31156790c8e45a",
+        "type": "switch",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 240,
+        "wires": [
+            [
+                "349776b03c80b456"
+            ],
+            [
+                "3ab098a3992af543"
+            ]
+        ]
+    },
+    {
+        "id": "f23876ece24152b1",
+        "type": "debug",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "dd0d61f2f5fa8141",
+        "type": "api-call-service",
+        "z": "a669a7d105d30a43",
+        "name": "rolläden 100% auf",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "set_cover_position",
+        "entityId": "cover.rolladenfenster_cover_1, cover.nspterrasse_cover_1",
+        "data": "{\"position\": 100}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 950,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3ab098a3992af543",
+        "type": "api-call-service",
+        "z": "a669a7d105d30a43",
+        "name": "rolläden 60% auf",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "set_cover_position",
+        "entityId": "cover.rolladenfenster_cover_1, cover.nspterrasse_cover_1",
+        "data": "{\"position\": 60}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 950,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "158def8be44c3849",
+        "type": "inject",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 790,
+        "y": 260,
+        "wires": [
+            [
+                "3ab098a3992af543"
+            ]
+        ]
+    },
+    {
+        "id": "7cc039123553baf7",
+        "type": "inject",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 790,
+        "y": 140,
+        "wires": [
+            [
+                "dd0d61f2f5fa8141"
+            ]
+        ]
+    },
+    {
+        "id": "5fa204a9271ea46d",
+        "type": "inject",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 790,
+        "y": 200,
+        "wires": [
+            [
+                "349776b03c80b456"
+            ]
+        ]
+    },
+    {
+        "id": "2e62b6559a4a37ac",
+        "type": "inject",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 310,
+        "y": 380,
+        "wires": [
+            [
+                "7db42b.e3de6bd4"
+            ]
+        ]
+    },
+    {
+        "id": "7db42b.e3de6bd4",
+        "type": "api-call-service",
+        "z": "a669a7d105d30a43",
+        "name": "1%",
+        "server": "161bb087.35566f",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.kleiderschrank2",
+        "data": "{\"brightness\":1}",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 230,
+        "y": 480,
+        "wires": [
+            [
+                "5f30d3cb.1aadac"
+            ]
+        ]
+    },
+    {
+        "id": "5f30d3cb.1aadac",
+        "type": "looptimer",
+        "z": "a669a7d105d30a43",
+        "duration": "20",
+        "units": "Second",
+        "maxloops": "40",
+        "maxtimeout": "15",
+        "maxtimeoutunits": "Minute",
+        "name": "",
+        "x": 300,
+        "y": 540,
+        "wires": [
+            [
+                "de710702.9a2d98"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "de710702.9a2d98",
+        "type": "api-render-template",
+        "z": "a669a7d105d30a43",
+        "name": "Get new light setting",
+        "server": "161bb087.35566f",
+        "version": 0,
+        "template": "{{ [250, state_attr('light.kleiderschrank2', 'brightness') + 9] | min }}",
+        "resultsLocation": "payload",
+        "resultsLocationType": "msg",
+        "templateLocation": "template",
+        "templateLocationType": "msg",
+        "x": 360,
+        "y": 600,
+        "wires": [
+            [
+                "3df7037a.2f373c",
+                "a14ff921410310dd"
+            ]
+        ]
+    },
+    {
+        "id": "3df7037a.2f373c",
+        "type": "api-call-service",
+        "z": "a669a7d105d30a43",
+        "name": "Increase light",
+        "server": "161bb087.35566f",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.kleiderschrank2",
+        "data": "{\"brightness\":{{ payload }}}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "data"
+            }
+        ],
+        "queue": "none",
+        "x": 370,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "def6df1b6ced88b2",
+        "type": "api-call-service",
+        "z": "a669a7d105d30a43",
+        "name": "licht an",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.kleiderschrank2",
+        "data": "{\"brightness_pct\": 25, \"transition\": 10}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 520,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a14ff921410310dd",
+        "type": "debug",
+        "z": "a669a7d105d30a43",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "0406144a8517cec9",
+        "type": "mqtt out",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "topic": "cmnd/tasmota_NsPanelTerrasse/NSPSend",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "aeedd16f1f009dd0",
+        "x": 1750,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "a0d8f1eaf39022f8",
+        "type": "inject",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Backlog NSPSend {\"HMI_resources\":[{\"index\":1,\"ctype\":\"group\",\"id\":\"1\",\"uiid\":10}]}; NSPSend {\"HMI_resources\":[{\"index\":2,\"ctype\":\"group\",\"id\":\"2\",\"uiid\":11}]}; NSPSend {\"HMI_resources\":[{\"index\":3,\"ctype\":\"group\",\"id\":\"3\",\"uiid\":12}]}; NSPSend {\"HMI_resources\":[{\"index\":4,\"ctype\":\"group\",\"id\":\"4\",\"uiid\":13}]}; NSPSend {\"HMI_resources\":[{\"index\":5,\"ctype\":\"group\",\"id\":\"5\",\"uiid\":14}]}; NSPSend {\"HMI_resources\":[{\"index\":6,\"ctype\":\"group\",\"id\":\"6\",\"uiid\":15}]}; NSPSend {\"HMI_resources\":[{\"index\":7,\"ctype\":\"group\",\"id\":\"7\",\"uiid\":16}]}; NSPSend {\"HMI_resources\":[{\"index\":8,\"ctype\":\"group\",\"id\":\"8\",\"uiid\":17}]}",
+        "payloadType": "str",
+        "x": 1390,
+        "y": 1260,
+        "wires": [
+            [
+                "0406144a8517cec9"
+            ]
+        ]
+    },
+    {
+        "id": "efe70144433fa22a",
+        "type": "inject",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"relation\":[{\"id\":\"2\",\"online\":true,\"params\":{\"switch\":\"on\"}}]}",
+        "payloadType": "str",
+        "x": 1360,
+        "y": 1320,
+        "wires": [
+            [
+                "0406144a8517cec9"
+            ]
+        ]
+    },
+    {
+        "id": "eb8b7ad2eea3a9b4",
+        "type": "function",
+        "z": "1095d804ba7660cf",
+        "name": "InitWidgets",
+        "func": "var widgets = [{type: 11, name: \"test\"}]\n\nvar messages = []\n\nfor(var i in widgets){\n    pos = parseInt(i)+1\n    type = widgets[i][\"type\"]\n    msg = { payload:'{\"HMI_resources\":[{\"index\":'+pos+',\"ctype\":\"device\",\"id\":\"'+pos+'\",\"uiid\":'+type+'}]}' }\n    messages.push(msg);\n}\n\nfor (let i = widgets.length; i <= 8; i++) {\n    //msg = { payload:'{\"index\":'+(i+1)+',\"type\":\"delete\"}' }\n    //msg = { payload:'{\"HMI_resources\":[{\"index\":'+(i+1)+',\"type\":\"delete\"}]}' }\n    msg = { payload:'{\"HMI_resources\":[{\"index\":'+pos+',\"ctype\":\"device\",\"id\":\"'+pos+'\",\"uiid\":1}]}' }\n    messages.push(msg);\n}\n\n//for(var j in widgets){\n//    pos = j+1\n//    type = widgets[i][\"type\"]\n//    msg = { payload:'{\"relation\":[{\"id\":\"'+pos+'\",\"online\":true}]}' }\n//    messages.push(msg);\n//}\n\nreturn [messages];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1860,
+        "y": 1300,
+        "wires": [
+            [
+                "ed05bd42131f434a",
+                "0406144a8517cec9"
+            ]
+        ]
+    },
+    {
+        "id": "fa41aa7e30f8ca15",
+        "type": "inject",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "11",
+        "payloadType": "str",
+        "x": 1550,
+        "y": 1300,
+        "wires": [
+            [
+                "eb8b7ad2eea3a9b4"
+            ]
+        ]
+    },
+    {
+        "id": "ed05bd42131f434a",
+        "type": "debug",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2090,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "ce92ba2dd30d18b5",
+        "type": "mqtt in",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "topic": "tele/tasmota_NsPanelTerrasse/RESULT",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "aeedd16f1f009dd0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 80,
+        "wires": [
+            [
+                "d932fa74aac36dae",
+                "760998e7025450dd"
+            ]
+        ]
+    },
+    {
+        "id": "ced9fe90e59b1a20",
+        "type": "mqtt out",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "topic": "cmnd/tasmota_NsPanelTerrasse/CustomSend",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "aeedd16f1f009dd0",
+        "x": 1200,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "5b15e207af7b04ad",
+        "type": "function",
+        "z": "1095d804ba7660cf",
+        "name": "wrap in relation",
+        "func": "msg.payload = '{\"relation\":' + msg.payload + '}'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1860,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8ae6cb2ef939f32e",
+        "type": "json",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 1510,
+        "y": 1020,
+        "wires": [
+            [
+                "801e698fef52c523"
+            ]
+        ]
+    },
+    {
+        "id": "5341740d5b2eea7b",
+        "type": "debug",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1690,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "acd902ead01a3ee6",
+        "type": "api-call-service",
+        "z": "1095d804ba7660cf",
+        "name": "control cover",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "{{action}}",
+        "entityId": "{{entityId}}",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2110,
+        "y": 1040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "801e698fef52c523",
+        "type": "function",
+        "z": "1095d804ba7660cf",
+        "name": "convertNSPanelCover",
+        "func": "var newMsg = { payload: \"\" }\n\nswitch (msg.payload.NSPanel.id) {\n  case \"1\":\n    newMsg.entityId = \"cover.rolladenfenster_cover_1\"\n    break;\n  case \"2\":\n    newMsg.entityId = \"cover.nspterrasse_cover_1\"\n    break;\n  case \"3\":\n    newMsg.entityId = \"cover.rolladenterasse_cover_1\"\n    break;\n}\n\nif (\"switch\" in msg.payload.NSPanel.params){\n  switch (msg.payload.NSPanel.params.switch) {\n    case \"pause\":\n      newMsg.action = \"stop_cover\"\n      break;\n    case \"off\":\n      newMsg.action = \"close_cover\"\n      break;\n    case \"on\":\n      newMsg.action = \"open_cover\"\n      break;\n  }\n  return [ newMsg, null ];\n}\n\nif (\"setclose\" in msg.payload.NSPanel.params){\n  newMsg.action = \"set_cover_position\"\n  newMsg.args = msg.payload.NSPanel.params.setclose\n  //newMsg.args = '{\"position\":\"'+msg.payload.NSPanel.params.setclose+'\"}'\n  return [ null, newMsg ];\n\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1900,
+        "y": 1080,
+        "wires": [
+            [
+                "acd902ead01a3ee6"
+            ],
+            [
+                "9fe9c9447763dd75"
+            ]
+        ]
+    },
+    {
+        "id": "cc63cfa5c9ae6db5",
+        "type": "function",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "func": "if(!msg.payload.includes(\"error\")){\n    msg.payload = msg.payload.replace(\"\u0005}\", \"\");\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1640,
+        "y": 960,
+        "wires": [
+            [
+                "5b15e207af7b04ad",
+                "8ae6cb2ef939f32e",
+                "5341740d5b2eea7b"
+            ]
+        ]
+    },
+    {
+        "id": "9fe9c9447763dd75",
+        "type": "api-call-service",
+        "z": "1095d804ba7660cf",
+        "name": "set pos",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "set_cover_position",
+        "entityId": "{{entityId}}",
+        "data": "{\"position\":\"{{args}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2100,
+        "y": 1120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2140d330acaedb32",
+        "type": "debug",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d932fa74aac36dae",
+        "type": "function",
+        "z": "1095d804ba7660cf",
+        "name": "check for '\"{\"CustomRecv\":'",
+        "func": "if(msg.payload.startsWith('\\{\"CustomRecv\":')){\n    obj = JSON.parse(msg.payload)\n    msg.payload = obj.CustomRecv\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 80,
+        "wires": [
+            [
+                "2140d330acaedb32",
+                "8c55fa4e04afcc7e"
+            ]
+        ]
+    },
+    {
+        "id": "8c55fa4e04afcc7e",
+        "type": "function",
+        "z": "1095d804ba7660cf",
+        "name": "pages",
+        "func": "var pages = \n[\n    {   \n        type: \"cardEntities\",\n        heading: \"Rolladen\",\n        items: [\"cover.rolladenfenster_cover_1\", \"cover.nspterrasse_cover_1\", \"cover.rolladenterasse_cover_1\", \"sensor.nspterrasse_analog_temperature1\"]   \n    },\n    {\n        type: \"cardEntities\",\n        heading: \"TestPage\",\n        items: [\"button.beamer_key_left\", \"cover.rolladenterasse_cover_1\", \"light.schreibtischlampe\", \"sensor.kleiderschrank1_si7021_temperature\"]   \n    }\n]\n\nfunction genEntitiesPage(pageNum){\n    var out_msgs = [ {payload:\"pageType,cardEntities\"}, { payload: \"entityUpdHeading,\"+pages[pageNum].heading } ]\n\n    pages[pageNum].items.forEach(function (id, i) {\n        \n        var type = \"delete\"\n        var iconId = 0\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        \n        switch (id.substring(0,id.indexOf('.'))) {\n            case \"cover\":\n                type = \"shutter\"\n                iconId = 0\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type})\n                break\n            case \"light\":\n                type = \"light\"\n                iconId = 1\n                var optVal = \"0\"\n                if(global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].state\") == \"on\")\n                    optVal = \"1\"\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type+\",\"+optVal})\n                break\n            case \"sensor\":\n                type = \"text\"\n                if(global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.device_class\") == \"temperature\"){\n                    iconId = 2\n                }\n                var optVal = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].state\") + \" \" + global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.unit_of_measurement\")\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type+\",\"+optVal})\n                break\n            case \"button\":\n                type = \"button\"\n                iconId = 3\n                var optVal = \"PRESS\"\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type+\",\"+optVal})\n                break\n            case \"delete\":\n                type = \"delete\"\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",0,dc,\"+type})\n                break\n            default:\n                break\n        }\n\n    })\n\n\n    \n    return out_msgs\n    \n}\n\nfunction genThermoPage(pageNum){\n    id = pages[pageNum].item\n    var out_msgs = [ {payload:\"pageType,cardThermo\"} ]\n    \n    let heading     = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n    let currentTemp = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.current_temperature\")*10\n    let destTemp    = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.temperature\")*10\n    let status      = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.hvac_action\")\n    let minTemp     = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.min_temp\")*10\n    let maxTemp     = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.max_temp\")*10\n    //let stepTemp     = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.target_temp_step\")*10\n    let stepTemp     = 0.5*10\n    \n    out_msgs.push({ payload: \"entityUpd,\"+heading+\",\"+currentTemp+\",\"+destTemp+\",\"+status+\",\"+minTemp+\",\"+maxTemp+\",\"+stepTemp })\n    \n    \n    return out_msgs\n}\n\n\nfunction handleButtonEvent(pageNum, words){\n    var out_msgs = [ ]\n    pages[pageNum].items.forEach(function (id, i) {\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        if(words[4]==name){\n            if(words[6]==\"OnOff\"){\n                var domain = \"switch\"\n                if(id.startsWith(\"light\"))\n                    domain = \"light\"\n                var action = \"turn_off\"\n                if(words[7]==\"1\")\n                    action = \"turn_on\"\n                out_msgs.push( {payload: id, action: action, domain: domain})\n            }\n            \n            if(words[6]==\"up\")\n                out_msgs.push( {payload: id, action: \"open_cover\", domain: \"cover\"})\n            if(words[6]==\"stop\")\n                out_msgs.push( {payload: id, action: \"stop_cover\", domain: \"cover\"})\n            if(words[6]==\"down\")\n                out_msgs.push( {payload: id, action: \"close_cover\", domain: \"cover\"})\n                \n            if(words[6]==\"brightnessSlider\")\n                out_msgs.push( {payload: id, action: \"turn_on\", domain: \"lightBrightness\", brightness: parseInt(words[7])})\n            if(words[6]==\"colorTempSlider\")\n                out_msgs.push( {payload: id, action: \"turn_on\", domain: \"lightTemperature\", temperature: parseInt(words[7])})\n                \n        }\n    }\n        \n    )\n    return out_msgs\n}\n\nfunction searchIdInPages(friendlyName){\n    let id_ret = \"\"\n    // search entity in pages\n    pages.forEach(page => {\n        if(\"items\" in page){\n            page.items.forEach(function (id, i) {\n                var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n                if(name == friendlyName){\n                    id_ret = id\n                }\n            })\n        }\n    })\n    return id_ret\n}\n\nfunction scale(number, inMin, inMax, outMin, outMax) {\n    return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;\n}\n\nfunction genDetailPage(type, friendlyName){\n    var out_msgs = [ ]\n    \n    let id = searchIdInPages(friendlyName)\n    if(type == \"popupLight\"){\n        let switchVal = \"0\"\n        if(global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].state\") == \"on\")\n            switchVal = \"1\"\n            \n        let attr = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes\")\n            \n        let brightness = Math.trunc(scale(attr.brightness, 0, 255, 0, 100))\n        \n        let colortemp = Math.trunc(scale(attr.color_temp, attr.min_mireds, attr.max_mireds, 0, 100))\n        \n        out_msgs.push({ payload: \"entityUpdateDetail,\"+switchVal+\",\"+brightness+\",\"+colortemp})\n    }\n\n\n    \n    return out_msgs\n    \n}\n\n\nwords = msg.payload.split(',')\nif(words[0]=='event'){\n    var pageNum = parseInt(words[2])\n    pageNum = (pageNum % pages.length)\n    pageNum = Math.abs(pageNum)\n    context.set(\"currentPage\", pageNum)\n    \n    if(words[1]=='pageOpen'){\n        var retMsgs = []\n        \n        if(pages[pageNum].type == \"cardEntities\"){\n            retMsgs = genEntitiesPage(pageNum)\n        }else if(pages[pageNum].type == \"cardThermo\")\n        {\n            retMsgs = genThermoPage(pageNum)\n        }\n        \n        return [retMsgs, null]\n    }\n    if(words[1]=='buttonPress'){\n        return [null, handleButtonEvent(pageNum, words)]\n    }\n    if(words[1]=='pageOpenDetail'){\n        return [genDetailPage(words[2], words[3]), null]\n    }\n    \n}\nif(words[0]=='extUpd'){\n    if (context.get(\"currentPage\") === undefined) {\n        context.set(\"currentPage\", 0)\n    }\n    \n    return [genPage(context.get(\"currentPage\")), null]\n    \n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 120,
+        "wires": [
+            [
+                "2140d330acaedb32",
+                "ced9fe90e59b1a20"
+            ],
+            [
+                "ae6d506a1008c205",
+                "9c8ab27f51037aa3"
+            ]
+        ]
+    },
+    {
+        "id": "7db7ae0f4d1fe069",
+        "type": "server-state-changed",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "light.schreibtischlampe",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "8a3085aa19cd3c6d"
+            ]
+        ]
+    },
+    {
+        "id": "ae6d506a1008c205",
+        "type": "debug",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "602c4f7a025d61a3",
+        "type": "api-call-service",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "{{action}}",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1310,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c8ab27f51037aa3",
+        "type": "switch",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "property": "domain",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "light",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "lightBrightness",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "lightTemperature",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "switch",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "cover",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 5,
+        "x": 1090,
+        "y": 260,
+        "wires": [
+            [
+                "602c4f7a025d61a3"
+            ],
+            [
+                "ba9a8d410af75a64"
+            ],
+            [
+                "343b75acbe526882"
+            ],
+            [
+                "e6a9a4a3944c7b8e"
+            ],
+            [
+                "3873d586c01f7b45"
+            ]
+        ]
+    },
+    {
+        "id": "e6a9a4a3944c7b8e",
+        "type": "api-call-service",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "{{action}}",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1320,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8a3085aa19cd3c6d",
+        "type": "function",
+        "z": "1095d804ba7660cf",
+        "name": "extUpd",
+        "func": "msg.payload = \"extUpd\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "79787e0e3fb0e1f5",
+        "type": "inject",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 440,
+        "y": 340,
+        "wires": [
+            [
+                "8a3085aa19cd3c6d"
+            ]
+        ]
+    },
+    {
+        "id": "3873d586c01f7b45",
+        "type": "api-call-service",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "{{action}}",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1310,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba9a8d410af75a64",
+        "type": "api-call-service",
+        "z": "1095d804ba7660cf",
+        "name": "lightBrightness",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"brightness_pct\":{{brightness}}}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1300,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "343b75acbe526882",
+        "type": "function",
+        "z": "1095d804ba7660cf",
+        "name": "calcMireds",
+        "func": "function scale(number, inMin, inMax, outMin, outMax) {\n    return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;\n}\n\nvar id = msg.payload\nvar attr = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes\")\n\nvar mireds = scale(msg.temperature, 0, 100, attr.min_mireds, attr.max_mireds)\n\nmsg.temperature = mireds\nreturn msg\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 300,
+        "wires": [
+            [
+                "3348538675dd1031"
+            ]
+        ]
+    },
+    {
+        "id": "3348538675dd1031",
+        "type": "api-call-service",
+        "z": "1095d804ba7660cf",
+        "name": "lightTemperature",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"color_temp\":{{temperature}}}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1470,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "760998e7025450dd",
+        "type": "debug",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "df42e19d07582858",
+        "type": "mqtt in",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "topic": "tele/tasmota_nspkueche/RESULT",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "aeedd16f1f009dd0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "a44b586b7fd6c26d"
+            ]
+        ]
+    },
+    {
+        "id": "f1c977fd5eacc769",
+        "type": "debug",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a44b586b7fd6c26d",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "check for CustomRecv",
+        "func": "if(msg.payload.startsWith('\\{\"CustomRecv\":')){\n    obj = JSON.parse(msg.payload)\n    msg.payload = obj.CustomRecv\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 80,
+        "wires": [
+            [
+                "f1c977fd5eacc769",
+                "86dcef64cf01cad1"
+            ]
+        ]
+    },
+    {
+        "id": "86dcef64cf01cad1",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "pages",
+        "func": "var pages = flow.get(\"ns-config\")\n\nfunction genEntitiesPage(pageNum){\n    var out_msgs = [ {payload:\"pageType,cardEntities\"}, { payload: \"entityUpdHeading,\"+pages[pageNum].heading } ]\n\n    pages[pageNum].items.forEach(function (id, i) {\n        \n        var type = \"delete\"\n        var iconId = 0\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        \n        switch (id.substring(0,id.indexOf('.'))) {\n            case \"cover\":\n                type = \"shutter\"\n                iconId = 0\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type})\n                break\n            case \"light\":\n                type = \"light\"\n                iconId = 1\n                var optVal = \"0\"\n                if(global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].state\") == \"on\")\n                    optVal = \"1\"\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type+\",\"+optVal})\n                break\n            case \"sensor\":\n                type = \"text\"\n                if(global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.device_class\") == \"temperature\"){\n                    iconId = 2\n                }\n                var optVal = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].state\") + \" \" + global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.unit_of_measurement\")\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type+\",\"+optVal})\n                break\n            case \"button\":\n                type = \"button\"\n                iconId = 3\n                var optVal = \"PRESS\"\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",\"+iconId+\",\"+name+\",\"+type+\",\"+optVal})\n                break\n            case \"delete\":\n                type = \"delete\"\n                out_msgs.push({ payload: \"entityUpd,\"+(i+1)+\",0,dc,\"+type})\n                break\n            default:\n                break\n        }\n\n    })\n\n\n    \n    return out_msgs\n    \n}\n\nfunction genThermoPage(pageNum){\n    id = pages[pageNum].item\n    var out_msgs = [ {payload:\"pageType,cardThermo\"} ]\n    \n    let heading     = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n    let currentTemp = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.current_temperature\")*10\n    let destTemp    = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.temperature\")*10\n    let status      = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.hvac_action\")\n    let minTemp     = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.min_temp\")*10\n    let maxTemp     = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.max_temp\")*10\n    //let stepTemp     = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.target_temp_step\")*10\n    let stepTemp     = 0.5*10\n    \n    out_msgs.push({ payload: \"entityUpd,\"+heading+\",\"+currentTemp+\",\"+destTemp+\",\"+status+\",\"+minTemp+\",\"+maxTemp+\",\"+stepTemp })\n    \n    \n    return out_msgs\n}\n\n\nfunction handleButtonEvent(pageNum, words){\n    var out_msgs = [ ]\n    pages[pageNum].items.forEach(function (id, i) {\n        var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n        if(words[4]==name){\n            if(words[6]==\"OnOff\"){\n                var domain = \"switch\"\n                if(id.startsWith(\"light\"))\n                    domain = \"light\"\n                var action = \"turn_off\"\n                if(words[7]==\"1\")\n                    action = \"turn_on\"\n                out_msgs.push( {payload: id, action: action, domain: domain})\n            }\n            \n            if(words[6]==\"up\")\n                out_msgs.push( {payload: id, action: \"open_cover\", domain: \"cover\"})\n            if(words[6]==\"stop\")\n                out_msgs.push( {payload: id, action: \"stop_cover\", domain: \"cover\"})\n            if(words[6]==\"down\")\n                out_msgs.push( {payload: id, action: \"close_cover\", domain: \"cover\"})\n                \n            if(words[6]==\"brightnessSlider\")\n                out_msgs.push( {payload: id, action: \"turn_on\", domain: \"lightBrightness\", brightness: parseInt(words[7])})\n            if(words[6]==\"colorTempSlider\")\n                out_msgs.push( {payload: id, action: \"turn_on\", domain: \"lightTemperature\", temperature: parseInt(words[7])})\n                \n        }\n    }\n        \n    )\n    return out_msgs\n}\n\nfunction searchIdInPages(friendlyName){\n    let id_ret = \"\"\n    // search entity in pages\n    pages.forEach(page => {\n        if(\"items\" in page){\n            page.items.forEach(function (id, i) {\n                var name = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes.friendly_name\")\n                if(name == friendlyName){\n                    id_ret = id\n                }\n            })\n        }\n    })\n    return id_ret\n}\n\nfunction scale(number, inMin, inMax, outMin, outMax) {\n    return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;\n}\n\nfunction genDetailPage(type, friendlyName){\n    var out_msgs = [ ]\n    \n    let id = searchIdInPages(friendlyName)\n    if(type == \"popupLight\"){\n        let switchVal = \"0\"\n        if(global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].state\") == \"on\")\n            switchVal = \"1\"\n            \n        let attr = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes\")\n            \n        let brightness = Math.trunc(scale(attr.brightness, 0, 255, 0, 100))\n        \n        let colortemp = Math.trunc(scale(attr.color_temp, attr.min_mireds, attr.max_mireds, 0, 100))\n        \n        out_msgs.push({ payload: \"entityUpdateDetail,\"+switchVal+\",\"+brightness+\",\"+colortemp})\n    }\n\n\n    \n    return out_msgs\n    \n}\n\n\nwords = msg.payload.split(',')\nif(words[0]=='event'){\n    var pageNum = parseInt(words[2])\n    pageNum = (pageNum % pages.length)\n    pageNum = Math.abs(pageNum)\n    flow.set(\"ns-currentPage\", pageNum)\n    \n    if(words[1]=='pageOpen'){\n        var retMsgs = []\n        \n        if(pages[pageNum].type == \"cardEntities\"){\n            retMsgs = genEntitiesPage(pageNum)\n        }else if(pages[pageNum].type == \"cardThermo\")\n        {\n            retMsgs = genThermoPage(pageNum)\n        }\n        \n        return [retMsgs, null]\n    }\n    if(words[1]=='buttonPress'){\n        return [null, handleButtonEvent(pageNum, words)]\n    }\n    if(words[1]=='pageOpenDetail'){\n        return [genDetailPage(words[2], words[3]), null]\n    }\n    \n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 120,
+        "wires": [
+            [
+                "f1c977fd5eacc769",
+                "1c40e3fbed77566a"
+            ],
+            [
+                "bea462f25c2d6594",
+                "bb5a45a85294d141"
+            ]
+        ]
+    },
+    {
+        "id": "23673f9ed21f9314",
+        "type": "server-state-changed",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "light.kueche_lights",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 200,
+        "y": 300,
+        "wires": [
+            [
+                "056cb9e82f6134a5"
+            ]
+        ]
+    },
+    {
+        "id": "bea462f25c2d6594",
+        "type": "debug",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d89d65da2c861934",
+        "type": "api-call-service",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "{{action}}",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1210,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bb5a45a85294d141",
+        "type": "switch",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "property": "domain",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "light",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "lightBrightness",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "lightTemperature",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "switch",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "cover",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 5,
+        "x": 990,
+        "y": 260,
+        "wires": [
+            [
+                "d89d65da2c861934"
+            ],
+            [
+                "1ddde5e25ac783b8"
+            ],
+            [
+                "1207b113e1e44be4"
+            ],
+            [
+                "f494954196883dd7"
+            ],
+            [
+                "0cea8c43c493c215"
+            ]
+        ]
+    },
+    {
+        "id": "f494954196883dd7",
+        "type": "api-call-service",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "{{action}}",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1220,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0cea8c43c493c215",
+        "type": "api-call-service",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "{{action}}",
+        "entityId": "{{payload}}",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1210,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ddde5e25ac783b8",
+        "type": "api-call-service",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "lightBrightness",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"brightness_pct\":{{brightness}}}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1200,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1207b113e1e44be4",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "calcMireds",
+        "func": "function scale(number, inMin, inMax, outMin, outMax) {\n    return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;\n}\n\nvar id = msg.payload\nvar attr = global.get(\"homeassistant.homeAssistant.states['\"+id+\"'].attributes\")\n\nvar mireds = scale(msg.temperature, 0, 100, attr.min_mireds, attr.max_mireds)\n\nmsg.temperature = mireds\nreturn msg\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1190,
+        "y": 300,
+        "wires": [
+            [
+                "8f0f6a771251ef17"
+            ]
+        ]
+    },
+    {
+        "id": "8f0f6a771251ef17",
+        "type": "api-call-service",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "lightTemperature",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "{{payload}}",
+        "data": "{\"color_temp\":{{temperature}}}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1370,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b968e02c88f3500d",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "pages",
+        "func": "msg.payload = global.get(\"homeassistant.homeAssistant.states['sensor.kleiderschrank1_si7021_temperature']\")\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 580,
+        "wires": [
+            [
+                "b51a0f5849d2a1a0"
+            ]
+        ]
+    },
+    {
+        "id": "1f1d39ecab559597",
+        "type": "inject",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 640,
+        "y": 580,
+        "wires": [
+            [
+                "b968e02c88f3500d"
+            ]
+        ]
+    },
+    {
+        "id": "b51a0f5849d2a1a0",
+        "type": "debug",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "1c40e3fbed77566a",
+        "type": "mqtt out",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "topic": "cmnd/tasmota_nspkueche/Screen",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "aeedd16f1f009dd0",
+        "x": 1060,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "06345c11ce5d62fe",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "config",
+        "func": "//see start tab",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "if (flow.get(\"ns-config\") === undefined) {\n    \n    var pages = \n    [\n        {\n            type: \"cardEntities\",\n            heading: \"TestPage\",\n            items: [\"light.kueche_lights\", \"sensor.nsp_kueche_analog_temperature1\", \"delete\", \"delete\"]   \n        },\n        {\n            type: \"cardThermo\",\n            item: \"climate.kuche_boden\"\n        }\n    ]\n\n\n    flow.set(\"ns-config\", pages)\n}",
+        "finalize": "",
+        "libs": [],
+        "x": 1390,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cac2f4129b2e5a4f",
+        "type": "inject",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "event,pageOpen,0",
+        "payloadType": "str",
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "86dcef64cf01cad1"
+            ]
+        ]
+    },
+    {
+        "id": "056cb9e82f6134a5",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "externalUpdates",
+        "func": "let currentPageNr = flow.get(\"ns-currentPage\")\n\nlet currentPageConfig = flow.get(\"ns-config\")[currentPageNr]\n\nif(\"items\" in currentPageConfig){\n    if(msg.topic in currentPageConfig.items){\n        \n    }\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "if (flow.get(\"ns-currentPage\") === undefined) {\n    flow.set(\"ns-currentPage\", 0)\n}",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "946aaade2d1f150a",
+        "type": "server-state-changed",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "light.kueche_lights",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 760,
+        "y": 440,
+        "wires": [
+            [
+                "962b6a55abf0113e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "962b6a55abf0113e",
+        "type": "function",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "wake&display",
+        "func": "var out_msgs = \n[ {payload:\"wake\"}, \n  {payload: \"pageType,popupLight,Kueche\"} \n]\n\n\n\nreturn [out_msgs]",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "if (flow.get(\"ns-currentPage\") === undefined) {\n    flow.set(\"ns-currentPage\", 0)\n}",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 380,
+        "wires": [
+            [
+                "1c40e3fbed77566a",
+                "f1c977fd5eacc769"
+            ]
+        ]
+    },
+    {
+        "id": "f3a47d87b237c392",
+        "type": "inject",
+        "z": "ba6c8bb20b9aa4cc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "pageType,popupLight,Kueche",
+        "payloadType": "str",
+        "x": 730,
+        "y": 340,
+        "wires": [
+            [
+                "1c40e3fbed77566a"
+            ]
+        ]
     },
     {
         "id": "fc261f2d1db2acab",
@@ -490,42 +5931,86 @@
         "wires": []
     },
     {
-        "id": "aeedd16f1f009dd0",
-        "type": "mqtt-broker",
+        "id": "4b7c3b76828028e4",
+        "type": "inject",
+        "z": "6c95d9f2c2806a4c",
         "name": "",
-        "broker": "192.168.75.30",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "sessionExpiry": ""
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 19 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "15",
+        "payloadType": "num",
+        "x": 210,
+        "y": 240,
+        "wires": [
+            [
+                "8bd149c892e229db"
+            ]
+        ]
     },
     {
-        "id": "7b975ed1.2c58d",
-        "type": "server",
-        "name": "HomeAssistant",
-        "version": 2,
-        "addon": true,
-        "rejectUnauthorizedCerts": true,
-        "ha_boolean": "y|yes|true|on|home|open",
-        "connectionDelay": true,
-        "cacheJson": true,
-        "heartbeat": false,
-        "heartbeatInterval": "30"
+        "id": "8bd149c892e229db",
+        "type": "api-call-service",
+        "z": "6c95d9f2c2806a4c",
+        "name": "set temp",
+        "server": "7b975ed1.2c58d",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_temperature",
+        "entityId": "climate.bad_boden, climate.wohnzimmer_boden, climate.kuche_boden",
+        "data": "{\"temperature\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 460,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7ecaaac3c22fb89",
+        "type": "inject",
+        "z": "6c95d9f2c2806a4c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 04 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "21.5",
+        "payloadType": "num",
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "8bd149c892e229db"
+            ]
+        ]
     }
 ]
