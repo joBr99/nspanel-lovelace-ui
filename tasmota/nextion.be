@@ -264,16 +264,23 @@ class Nextion : Driver
                     var str = msg[0..-4].asstring()
                     log(str, 3)
                     if (string.find(str,"comok 2")==0)
-                        self.sendnx(string.format("whmi-wris %d,115200,1",self.flash_size))
-					
+                        self.sendnx(string.format("whmi-wris %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.2, needs some more testing
+						#self.sendnx(string.format("whmi-wri %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.1
+						
+					# skip to byte (upload protocol 1.2)
 					elif (size(msg)==1 && msg[0]==0x08)
 						self.flash_skip = true
 						print("rec 0x08")
 					elif (size(msg)==4 && self.flash_skip)
 						var skip_to_byte = msg[0..4].get(0,4)
-						print("skip to ", skip_to_byte)
-						self.flash_current_byte = skip_to_byte
+						if(skip_to_byte == 0)
+							print("don't skip, offset is 0")
+						else
+							print("skip to ", skip_to_byte)
+							self.flash_current_byte = skip_to_byte
+						end
 						self.flash_nextion()
+					# send next 4096 bytes (proto 1.1/1.2)
                     elif (size(msg)==1 && msg[0]==0x05)
 						print("rec 0x05")
 						self.flash_nextion()
@@ -287,7 +294,7 @@ class Nextion : Driver
 							var j = msg[2]+2
 							msg = msg[3..j]
 							if size(msg) > 2
-								var jm = string.format("{\"CustomRecv\":%s}",msg.asstring())
+								var jm = string.format("{\"CustomRecv\":\"%s\"}",msg.asstring())
 								tasmota.publish_result(jm, "RESULT")
 							end
 						end
