@@ -6,7 +6,7 @@ If you are changeing the page the nextion display will send and event to the esp
 
 # How to install
 
-## Install Nextion Berry Driver
+## Install Nextion Tasmota Berry Driver
 
 Create and edit new file named autoexec.be with a line load("nextion.be") and upload nextion.be from tasmota folder of this repo.
 
