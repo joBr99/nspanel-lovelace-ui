@@ -30,7 +30,7 @@ The following screenshots are from the custom NSPanel UI that will be displayed 
 
 ![screen_cardEntities](doc-pics/screen_cardEntities.png)
 ![screen_popupLight](doc-pics/screen_popupLight.png)
-![screen_popupShutter](doc-pics/screen_cardEntities.png)
+![screen_popupShutter](doc-pics/screen_popupShutter.png)
 ![screen_cardThermo](doc-pics/screen_cardThermo.png)
 
 
