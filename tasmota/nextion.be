@@ -1,4 +1,4 @@
-# Sonoff NSPanel Lovelance UI Serial Protocol driver by joBr99 + nextion upload protocol 1.2 (test fast one yay) implementation using http range and tcpclient
+# Nextion Serial Protocol driver by joBr99 + nextion upload protocol 1.2 (test fast one yay) implementation using http range and tcpclient
 # based on;
 # Sonoff NSPanel Tasmota driver v0.47 | code by blakadder and s-hadinger
 
