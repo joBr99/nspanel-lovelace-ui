@@ -6,7 +6,7 @@ If you are changeing the page the nextion display will send and event to the esp
 
 # How to install
 
-## Install Nextion Tasmota Berry Driver
+## 1. Install Nextion Tasmota Berry Driver
 
 Create and edit new file named autoexec.be with a line load("nextion.be") and upload nextion.be from tasmota folder of this repo.
 
@@ -14,7 +14,13 @@ or
 
 Upload "nextion.be" from tasmota folder of this repository and rename to "autoexec.be"
 
-## Setup Node-Red Flow
+## 2. Flash tft File
+
+Upload the tft file from HMI folder to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console.
+
+`FlashNextion http://192.168.75.30:8123/local/nspanel.tft`
+
+## 3. Setup Node-Red Flow
 
 Import the example node-red flow from "node-red-example-flow.json" file and adjust to your needs.
 
