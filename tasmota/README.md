@@ -22,7 +22,7 @@ Might be required to send the command twice (known issue, didn't investigate yet
 
 Webserver must be reachable via HTTP and support Range Header
 
-Example: FlashNextion http://192.168.75.30:8123/local/nspanel.tft
+Example: `FlashNextion http://192.168.75.30:8123/local/nspanel.tft`
 
 
 Besides the commands, serial input will be published on 'RESULT' Topic, depending on the input in one of the following formats:
