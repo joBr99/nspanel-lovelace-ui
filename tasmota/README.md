@@ -18,6 +18,7 @@ Send's normal Custom Commands to the Screen in the following format:
 - `FlashNextion URL`
 
 Start's flashing a tft file to the nextion screen via Nextion Upload Protocol 1.2
+Might be required to send the command twice (known issue, didn't investigate yet)
 
 Webserver must be reachable via HTTP and support Range Header
 

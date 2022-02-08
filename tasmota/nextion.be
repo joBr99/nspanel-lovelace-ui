@@ -263,6 +263,7 @@ class Nextion : Driver
                 if (self.flash_mode==1)
                     var str = msg[0..-4].asstring()
                     log(str, 3)
+					# TODO: add check for firmware versions < 126 and send proto 1.1 command for thoose
                     if (string.find(str,"comok 2")==0)
 						#self.sendnx(string.format("whmi-wri %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.1
 						self.sendnx(string.format("whmi-wris %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.2
