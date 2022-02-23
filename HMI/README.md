@@ -25,6 +25,15 @@ wake screen:
 
 wake
 
+set brightness of screensaver:
+
+dimmode,0 - (screen off)
+dimmode,100 - (screen on with full brightness)
+
+set current time:
+
+time, 22 : 26
+
 change the page type:
 
 pageType,cardEntities
