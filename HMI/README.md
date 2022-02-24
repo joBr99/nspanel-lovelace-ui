@@ -32,11 +32,11 @@ dimmode,100 - (screen on with full brightness)
 
 set current time:
 
-time, 22 : 26
+time,22 : 26
 
 set current date:
 
-date, Di 24. Februar
+date?Di 24. Februar
 
 change the page type:
 
