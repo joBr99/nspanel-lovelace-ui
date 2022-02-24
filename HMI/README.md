@@ -34,6 +34,10 @@ set current time:
 
 time, 22 : 26
 
+set current date:
+
+date, Di 24. Februar
+
 change the page type:
 
 pageType,cardEntities
