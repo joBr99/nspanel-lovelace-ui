@@ -1,0 +1,14 @@
+on: push
+name: Publish tft file to http webserver
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy Stage
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: ${{ secrets.UPLOAD_URL }}
+        method: 'POST'
+        username: ${{ secrets.UPLOAD_USER }}
+        password: ${{ secrets.UPLOAD_PASSWORD }}
+        file: "HMI/nspanel.tft"
