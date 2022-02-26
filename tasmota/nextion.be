@@ -31,6 +31,7 @@ class TftDownloader
 		self.tcp.connect(self.host, self.port)
 		print("connected:", self.tcp.connected())
 		self.s = "GET " + self.file + " HTTP/1.0\r\n"
+		self.s += "HOST: " + self.host + "\r\n"
 		self.s += string.format("Range: bytes=%d-%d\r\n", b_start, (b_start+b_length-1))
 		print(string.format("Downloading Byte %d - %d", b_start, (b_start+b_length-1)))
 		self.s += "\r\n"
