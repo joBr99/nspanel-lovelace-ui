@@ -50,6 +50,15 @@ class TftDownloader
 	
 		var content_length = 0
 	
+		# check for 206 status code
+		if(string.find(header, '206 Partial Content') != -1)
+			# download was sucessful
+		else
+			print("Error while downloading")
+			print(header)
+			return nil
+		end
+	
 		# convert header to list
 		header = string.split(header, '\r\n')
 		for i : header.iter()
@@ -214,6 +223,7 @@ class Nextion : Driver
         #print(host,port,file)
 		
 		self.tftd = TftDownloader(host, port, file, 32768)
+		#self.tftd = TftDownloader("192.168.75.30", 8123, "/local/test.tft", 32768)
 		
 		# get size of tft file
 		self.flash_size = self.tftd.get_file_size()
