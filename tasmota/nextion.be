@@ -214,7 +214,6 @@ class Nextion : Driver
         #print(host,port,file)
 		
 		self.tftd = TftDownloader(host, port, file, 32768)
-		#self.tftd = TftDownloader("192.168.75.30", 8123, "/local/test.tft", 32768)
 		
 		# get size of tft file
 		self.flash_size = self.tftd.get_file_size()
@@ -265,8 +264,8 @@ class Nextion : Driver
                     log(str, 3)
 					# TODO: add check for firmware versions < 126 and send proto 1.1 command for thoose
                     if (string.find(str,"comok 2")==0)
-						#self.sendnx(string.format("whmi-wri %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.1
-						self.sendnx(string.format("whmi-wris %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.2
+						self.sendnx(string.format("whmi-wri %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.1
+						#self.sendnx(string.format("whmi-wris %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.2
 						
 					# skip to byte (upload protocol 1.2)
 					elif (size(msg)==1 && msg[0]==0x08)
