@@ -485,8 +485,8 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
-        "crontab": "00 12 * * *",
+        "repeat": "60",
+        "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -669,7 +669,7 @@
         "repeat": "",
         "crontab": "00 00 * * *",
         "once": false,
-        "onceDelay": 0.1,
+        "onceDelay": "5",
         "topic": "",
         "payload": "",
         "payloadType": "date",
@@ -714,6 +714,35 @@
             [
                 "e038718f48e4b5b4",
                 "a9571b3ad08027d6"
+            ]
+        ]
+    },
+    {
+        "id": "a3a9cf753a414c52",
+        "type": "inject",
+        "z": "1095d804ba7660cf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 310,
+        "y": 680,
+        "wires": [
+            [
+                "e0eb13c55bb592c9"
             ]
         ]
     },
