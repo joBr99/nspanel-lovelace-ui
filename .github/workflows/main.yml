@@ -1,14 +1,11 @@
 on: push
 name: Publish tft file to http webserver
 jobs:
-  deployment:
+  curl:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy Stage
-      uses: fjogeleit/http-request-action@master
+    - uses: actions/checkout@master
+    - name: curl
+      uses: wei/curl@v1
       with:
-        url: ${{ secrets.UPLOAD_URL }}
-        method: 'POST'
-        username: ${{ secrets.UPLOAD_USER }}
-        password: ${{ secrets.UPLOAD_PASSWORD }}
-        file: "HMI/nspanel.tft"
+        args: -u $UPLOAD_USER:$UPLOAD_PASSWORD --upload-file HMI/nspanel.tft $UPLOAD_URL 
