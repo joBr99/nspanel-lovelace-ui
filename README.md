@@ -17,6 +17,7 @@ Upload "nextion.be" from tasmota folder of this repository and rename to "autoex
 ## 2. Flash tft File
 
 Upload the tft file from HMI folder to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console.
+**Webserver needs to support HTTP Range Header Requests, python2/3 http server doesn't work**
 
 `FlashNextion http://192.168.75.30:8123/local/nspanel.tft`
 
