@@ -66,7 +66,11 @@ entityUpd,4,3,bt-name,button,bt-text
 
 ### popupLight Page
 
+entityUpdateDetail,*buttonState*,*sliderBrightnessPos*,*sliderColorTempPos*
+
 entityUpdateDetail,1,100,78
+
+entityUpdateDetail,1,100,disable
 
 ### cardThermo Page
 
