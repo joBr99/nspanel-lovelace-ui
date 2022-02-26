@@ -41,7 +41,7 @@ HomeAssistant / NodeRed -- MQTT -- Tasmota -- Nextion Screen
 
 See the following picture to get an Idea for the messages send and recived from the screen during cycling though pages.
 
-![image](https://user-images.githubusercontent.com/29555657/153164821-bacc1e3b-9636-4f24-a5e0-bda59635f0bd.png)
+![message_flow](doc-pics/message-flow.png)
 
 
 # Custom Protocol
