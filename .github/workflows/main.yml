@@ -8,4 +8,4 @@ jobs:
     - name: curl
       uses: wei/curl@v1
       with:
-        args: -u $UPLOAD_USER:$UPLOAD_PASSWORD --upload-file HMI/nspanel.tft $UPLOAD_URL 
+        args: -u ${{secrets.UPLOAD_USER}}:${{secrets.UPLOAD_PASSWORD}} --upload-file HMI/nspanel.tft ${{secrets.UPLOAD_URL}}
