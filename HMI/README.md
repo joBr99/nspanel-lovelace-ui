@@ -111,6 +111,19 @@ event,pageOpen,0
 
 event,tempUpd,*pageNumber*,*entityName*,*temperature*
 
+# Icon IDs
+
+# Icons IDs
+
+ID | Icon
+-- | ----
+0  | ![window-open](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/window-open.svg)
+1  | ![lightbulb](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/lightbulb.svg)  
+2  | ![thermometer](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/thermometer.svg)
+3  | ![gesture-tap-button](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/gesture-tap-button.svg)
+4  | ![flash](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/flash.svg)
+
+
 # Design Guidelines for Nextion HMI Project
 
 Background Color is 
