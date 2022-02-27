@@ -111,8 +111,6 @@ event,pageOpen,0
 
 event,tempUpd,*pageNumber*,*entityName*,*temperature*
 
-# Icon IDs
-
 # Icons IDs
 
 ID | Icon
