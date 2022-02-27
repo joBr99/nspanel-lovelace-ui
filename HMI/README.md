@@ -46,6 +46,7 @@ pageType,cardThermo
 
 pageType,popupLight,Schreibtischlampe
 
+
 ### cardEntities Page
 
 The following message can be used to update the content on the cardEntities Page
@@ -77,6 +78,10 @@ entityUpdateDetail,1,100,disable
 entityUpd,*name*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*
 
 ## Messages from Nextion Display
+
+### screensaver page
+
+event,screensaverOpen
 
 ### cardEntities Page
 
