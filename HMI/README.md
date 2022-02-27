@@ -65,6 +65,8 @@ entityUpd,4,3,Temperature,text,content
 
 entityUpd,4,3,bt-name,button,bt-text
 
+entityUpd,1,4,Switch1,switch,0
+
 ### popupLight Page
 
 entityUpdateDetail,*buttonState*,*sliderBrightnessPos*,*sliderColorTempPos*
