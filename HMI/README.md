@@ -38,6 +38,10 @@ set current date:
 
 date,?Di 24. Februar
 
+set screensaver timeout (set time in ms limited from 50 to 65535:
+
+timeout,15000
+
 change the page type:
 
 pageType,cardEntities
