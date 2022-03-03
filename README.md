@@ -6,6 +6,12 @@ If you are changeing the page the nextion display will send and event to the esp
 
 # How to install
 
+## 0. Flash Tasmota
+
+Follow the inststructions to flash tasmota onto the esp32 of your nspanel, make sure to use 'tasmota32-nspanel.bin'.
+
+https://templates.blakadder.com/sonoff_NSPanel.html
+
 ## 1. Install Nextion Tasmota Berry Driver
 
 Create and edit new file named autoexec.be with a line load("nextion.be") and upload nextion.be from tasmota folder of this repo.
