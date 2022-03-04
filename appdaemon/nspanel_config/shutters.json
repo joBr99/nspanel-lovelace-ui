@@ -1,6 +1,9 @@
 {
 	"panelRecvTopic": "tele/tasmota_NsPanelTerrasse/RESULT",
 	"panelSendTopic": "cmnd/tasmota_NsPanelTerrasse/CustomSend",
+	"locale": "de_DE",
+	"timeFormat": "%H : %M",
+	"dateFormat": "%A, %d. %B %Y",
 	"pages": [{
 			"type": "cardEntities",
 			"heading": "Rolladen",
