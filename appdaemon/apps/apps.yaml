@@ -1,0 +1,4 @@
+---
+nspanel:
+  module: nspanel
+  class: NsPanelLovelanceUIManager
