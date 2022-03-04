@@ -1,5 +1,7 @@
 import os
 import json
+import datetime
+import locale
 import appdaemon.plugins.hass.hassapi as hass
 
 class NsPanelLovelanceUIManager(hass.Hass):
@@ -30,14 +32,22 @@ class NsPanelLovelanceUI:
     self.config = config
     self.current_page_nr = 0
 
-    #Setup, mqtt subscription and callbacks
+    # Setup, mqtt subscription and callback
     self.mqtt = self.api.get_plugin_api("MQTT")
     self.mqtt.mqtt_subscribe(topic=self.config["panelRecvTopic"])
     self.mqtt.listen_event(self.handle_mqtt_incoming_message, "MQTT_MESSAGE", topic=self.config["panelRecvTopic"], namespace='mqtt')
 
+    # Setup time callback
+    time = datetime.time(0, 0, 0)
+    self.api.run_minutely(self.update_time, time)
+
+    # Setup date callback
+    time = datetime.time(0, 0, 0)
+    self.api.run_daily(self.update_date, time)
+    self.update_date("")
 
   def handle_mqtt_incoming_message(self, event_name, data, kwargs):
-    #Parse Json Message from Tasmota and strip out message from nextion display
+    # Parse Json Message from Tasmota and strip out message from nextion display
     msg = json.loads(data["payload"])["CustomRecv"]
     self.api.log("Recived Message from Tasmota: %s", msg)
     
@@ -47,6 +57,11 @@ class NsPanelLovelanceUI:
     # run action based on received command
     # TODO: replace with match case after appdeamon container swiched to python 3.10 - https://pakstech.com/blog/python-switch-case/ - https://www.python.org/dev/peps/pep-0636/
     if msg[0] == "event":
+
+      if msg[1] == "startup":
+        self.api.log("received startup command")
+        # TODO: implement startup actions
+
       if msg[1] == "pageOpen":
         # Calculate current page
         recv_page = int(msg[2])
@@ -70,6 +85,13 @@ class NsPanelLovelanceUI:
   def send_mqtt_msg(self,msg):
     self.mqtt.mqtt_publish(self.config["panelSendTopic"], msg)
 
+  def update_time(self, kwargs):
+    time = datetime.datetime.now().strftime(self.config["timeFormat"])
+    self.send_mqtt_msg("time,{0}".format(time))
+
+  def update_date(self, kwargs):
+    date = datetime.datetime.now().strftime(self.config["dateFormat"])
+    self.send_mqtt_msg("date,?{0}".format(date))
 
   def generate_entities_item(self, item, item_nr, item_type):
     self.api.log("generating item command for %s with type %s", item, item_type)
