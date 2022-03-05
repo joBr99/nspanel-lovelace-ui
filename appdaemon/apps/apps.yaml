@@ -7,20 +7,41 @@ nspanel:
   locale: "de_DE"
   timeFormat: "%H : %M"
   dateFormat: "%A, %d. %B %Y"
-  pages:
-    page1:
-      type: cardEntities
-      heading: Rolladen
-      items:
-        - cover.rolladenfenster_cover_1
-        - cover.nspterrasse_cover_1
-        - cover.rolladenterasse_cover_1
-        - sensor.nspterrasse_analog_temperature1
-    page2:
-      type: cardEntities
-      heading: TestPage
-      items:
-        - button.beamer_key_left
-        - cover.rolladenterasse_cover_1
-        - light.schreibtischlampe
-        - delete
+  panels:
+    panel1:
+      pages:
+        page1:
+          type: cardEntities
+          heading: Rolladen
+          items:
+            - cover.rolladenfenster_cover_1
+            - cover.nspterrasse_cover_1
+            - cover.rolladenterasse_cover_1
+            - sensor.nspterrasse_analog_temperature1
+        page2:
+          type: cardEntities
+          heading: TestPage
+          items:
+            - button.beamer_key_left
+            - cover.rolladenterasse_cover_1
+            - light.schreibtischlampe
+            - delete
+    ## Example for second panel
+    # panel2:
+    #   pages:
+    #     page1:
+    #       type: cardEntities
+    #       heading: Rolladen2
+    #       items:
+    #         - cover.rolladenfenster_cover_2
+    #         - cover.nspterrasse_cover_2
+    #         - cover.rolladenterasse_cover_2
+    #         - sensor.nspterrasse_analog_temperature2
+    #     page2:
+    #       type: cardEntities
+    #       heading: TestPage2
+    #       items:
+    #         - button.beamer_key_left2
+    #         - cover.rolladenterasse_cover_2
+    #         - light.schreibtischlampe2
+    #         - delete
