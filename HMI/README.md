@@ -85,6 +85,10 @@ entityUpd,*name*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp
 
 ## Messages from Nextion Display
 
+### startup page
+
+event,startup
+
 ### screensaver page
 
 event,screensaverOpen
