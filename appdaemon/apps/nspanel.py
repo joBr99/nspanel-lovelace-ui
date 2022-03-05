@@ -7,23 +7,8 @@ import appdaemon.plugins.hass.hassapi as hass
 class NsPanelLovelanceUIManager(hass.Hass):
   def initialize(self):
 
-    # Check if config folder exists
-    config_folder = "/config/appdaemon/nspanel_config"
-    if not os.path.exists(config_folder):
-      self.log("Config folder not found, creating ...")
-      os.makedirs(config_folder)
-
-    # Check config folder for config files
-    for file in os.listdir(config_folder):
-      filename = os.fsdecode(file)
-      if filename.endswith(".json"): 
-        filename = os.path.join(config_folder, filename)
-        self.log("Found Config file: %s", filename)
-        # Parse config file
-        with open(filename, 'r') as f:
-          data = json.loads(f.read())
-          # Create Instance of NsPanelLovelanceUI class
-          NsPanelLovelanceUI(self, data)
+    data = self.args["config"]
+    NsPanelLovelanceUI(self, data)
 
 
 class NsPanelLovelanceUI:
@@ -124,6 +109,7 @@ class NsPanelLovelanceUI:
           switch_val = 1 if entity.state == "on" else 0
           # scale 0-255 brightness from ha to 0-100
           brightness = int(self.scale(entity.attributes.brightness,(0,255),(0,100)))
+          # TODO: Check if color temp feature is avalible
           # scale ha color temp range to 0-100
           color_temp = self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100))
           self.send_mqtt_msg("entityUpdateDetail,{0},{1},{2}".format(switch_val,brightness,color_temp))

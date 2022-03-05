@@ -2,3 +2,24 @@
 nspanel:
   module: nspanel
   class: NsPanelLovelanceUIManager
+  config:
+    panelRecvTopic: "tele/tasmota_NsPanelTerrasse/RESULT"
+    panelSendTopic: "cmnd/tasmota_NsPanelTerrasse/CustomSend"
+    locale: "de_DE"
+    timeFormat: "%H : %M"
+    dateFormat: "%A, %d. %B %Y"
+    pages:
+      - type: cardEntities
+        heading: Rolladen
+        items:
+          - cover.rolladenfenster_cover_1
+          - cover.nspterrasse_cover_1
+          - cover.rolladenterasse_cover_1
+          - sensor.nspterrasse_analog_temperature1
+      - type: cardEntities
+        heading: TestPage
+        items:
+          - button.beamer_key_left
+          - cover.rolladenterasse_cover_1
+          - light.schreibtischlampe
+          - delete
