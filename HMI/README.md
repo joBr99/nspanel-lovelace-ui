@@ -111,7 +111,19 @@ event,buttonPress,1,tHeading,internalNameEntity,1,button
 
 ### popupLight Page
 
-event,pageOpenDetail,popupLight,Schreibtischlampe
+event,pageOpenDetail,popupLight,internalNameEntity
+
+event,buttonPress,D,nameEntity,internalNameEntity,1,OnOff,1
+
+event,buttonPress,D,nameEntity,internalNameEntity,1,brightnessSlider,50
+
+event,buttonPress,D,nameEntity,internalNameEntity,1,colorTempSlider,50
+
+### popupShutter Page
+
+event,pageOpenDetail,popupShutter,internalNameEntity
+
+event,buttonPress,D,nameEntity,internalNameEntity,1,positionSlider,50
 
 ### cardThermo Page
 
