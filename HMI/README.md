@@ -87,7 +87,7 @@ entityUpdateDetail,1,77
 
 ### cardThermo Page
 
-entityUpd,*name*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*
+entityUpd,*internalNameEntiy*,*heading*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*
 
 ## Messages from Nextion Display
 
