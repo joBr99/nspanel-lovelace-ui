@@ -145,7 +145,9 @@ class NsPanelLovelanceUI:
 
     if item_type == "delete":
       return "entityUpd,{0},{1}".format(item_nr, item_type)
-      
+    
+    if not self.api.entity_exists(item):
+      return
     entity = self.api.get_entity(item)
     name = entity.attributes.friendly_name
 
@@ -187,10 +189,17 @@ class NsPanelLovelanceUI:
   def generate_media_page(self, item):
     entity       = self.api.get_entity(item)
     heading      = entity.attributes.friendly_name
-    icon         = 5
-    title        = "test_title"
-    author       = "test_author"
-    volume       = 75
+    if "media_content_type" in entity.attributes:
+      if entity.attributes.media_content_type == "music":
+        icon = 5
+      else:
+        icon = 5
+    if "media_title" in entity.attributes:
+      title  = entity.attributes.media_title
+    if "media_artist" in entity.attributes:
+      author = entity.attributes.media_artist
+    if "volume_level" in entity.attributes:
+      volume = int(entity.attributes.volume_level*100)
 
     return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item, heading, icon, title, author, volume)
 
