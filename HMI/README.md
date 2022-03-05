@@ -79,6 +79,12 @@ entityUpdateDetail,1,100,78
 
 entityUpdateDetail,1,100,disable
 
+### popupShutter Page
+
+entityUpdateDetail,*ignored*,*sliderPos*
+
+entityUpdateDetail,1,77
+
 ### cardThermo Page
 
 entityUpd,*name*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*
