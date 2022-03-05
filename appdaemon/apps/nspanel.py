@@ -79,7 +79,22 @@ class NsPanelLovelanceUI:
 
       if msg[1] == "buttonPress":
         self.api.log("received buttonPress command")
-        # TODO: implement button press function
+        entity_id = msg[4]
+        if(msg[6] == "OnOff"):
+          if(msg[7] == "1"):
+            self.api.turn_on(entity_id)
+          else:
+            self.api.turn_off(entity_id)
+        if(msg[6] == "up"):
+          self.api.get_entity(entity_id).call_service("open_cover")
+        if(msg[6] == "stop"):
+          self.api.get_entity(entity_id).call_service("stop_cover")
+        if(msg[6] == "down"):
+          self.api.get_entity(entity_id).call_service("close_cover")
+
+        if(msg[6] == "button"):
+          self.api.get_entity(entity_id).call_service("press")
+
 
       if msg[1] == "pageOpenDetail":
         self.api.log("received pageOpenDetail command")
