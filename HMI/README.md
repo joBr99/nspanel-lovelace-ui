@@ -91,6 +91,10 @@ entityUpdateDetail,1,77
 
 entityUpd,*internalNameEntiy*,*heading*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*
 
+### cardMedia Page
+
+entityUpd,*internalNameEntiy*,*heading*,*icon*,*title*,*author*,*volume*
+
 ## Messages from Nextion Display
 
 ### startup page
