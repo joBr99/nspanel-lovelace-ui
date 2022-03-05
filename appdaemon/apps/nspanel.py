@@ -150,6 +150,8 @@ class NsPanelLovelanceUI:
   def generate_page(self, page_number, page_type):
     self.api.log("generating page commands for page %i with type %s", self.current_page_nr, page_type)
     if page_type == "cardEntities":
+      # Send page type
+      self.send_mqtt_msg("pageType,{0}".format(page_type))
       # Set Heading of Page
       self.send_mqtt_msg("entityUpdHeading,{0}".format(self.config["pages"][self.current_page_nr]["heading"]))
 
@@ -163,5 +165,7 @@ class NsPanelLovelanceUI:
         self.send_mqtt_msg(command)
 
     if page_type == "cardThermo":
+      # Send page type
+      self.send_mqtt_msg("pageType,{0}".format(page_type))
       command = self.generate_thermo_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
