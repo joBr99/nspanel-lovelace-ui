@@ -48,6 +48,8 @@ pageType,cardEntities
 
 pageType,cardThermo
 
+pageType,cardMedia
+
 pageType,popupLight,Schreibtischlampe
 
 
@@ -135,7 +137,7 @@ event,buttonPress,D,nameEntity,internalNameEntity,1,positionSlider,50
 
 event,pageOpen,0
 
-event,tempUpd,*entityName*,*temperature*
+event,tempUpd,*pageNumber*,*entityName*,*temperature*
 
 # Icons IDs
 
