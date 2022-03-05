@@ -99,15 +99,15 @@ event,*eventName*,*PageNumber*,*PageHeading*,*entityName*,*buttonId*,*actionName
 
 event,pageOpen,0
 
-event,buttonPress,1,tHeading,tEntityName,1,up
+event,buttonPress,1,tHeading,internalNameEntity,1,up
 
-event,buttonPress,1,tHeading,tEntityName,1,down
+event,buttonPress,1,tHeading,internalNameEntity,1,down
 
-event,buttonPress,1,tHeading,tEntityName,1,stop
+event,buttonPress,1,tHeading,internalNameEntity,1,stop
 
-event,buttonPress,1,tHeading,tEntityName,1,OnOff,1
+event,buttonPress,1,tHeading,internalNameEntity,1,OnOff,1
 
-event,buttonPress,1,tHeading,tEntityName,1,button
+event,buttonPress,1,tHeading,internalNameEntity,1,button
 
 ### popupLight Page
 
