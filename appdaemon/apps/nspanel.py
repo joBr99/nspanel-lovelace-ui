@@ -60,7 +60,14 @@ class NsPanelLovelanceUI:
 
       if msg[1] == "startup":
         self.api.log("received startup command")
-        # TODO: implement startup actions
+        
+        # send date and time
+        self.update_time("")
+        self.update_date("")
+
+        # send messages for current page
+        page_type = self.config["pages"][self.current_page_nr]["type"]
+        self.generate_page(self.current_page_nr, page_type)
 
       if msg[1] == "pageOpen":
         # Calculate current page
@@ -90,6 +97,7 @@ class NsPanelLovelanceUI:
     self.send_mqtt_msg("time,{0}".format(time))
 
   def update_date(self, kwargs):
+    # TODO: implement localization of date
     date = datetime.datetime.now().strftime(self.config["dateFormat"])
     self.send_mqtt_msg("date,?{0}".format(date))
 
