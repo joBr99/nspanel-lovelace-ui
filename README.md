@@ -1,4 +1,7 @@
 # NSPanel Lovelance UI
+
+<a href="https://paypal.me/joBr99" target="_blank"><img src="https://img.shields.io/static/v1?logo=paypal&label=&message=donate&color=slategrey"></a>
+
 This is a custom UI for the NSPanel, with HomeAssistant Lovelance UI Design.
 
 The general idea is that the Nextion Display cycles though a page counter and the esp32 tells the display what to do.
