@@ -184,6 +184,16 @@ class NsPanelLovelanceUI:
 
     return "entityUpd,{0},{1},{2},{3},{4},{5},{6},{7}".format(item, heading, current_temp, dest_temp, status, min_temp, max_temp, step_temp)
 
+  def generate_media_page(self, item):
+    entity       = self.api.get_entity(item)
+    heading      = entity.attributes.friendly_name
+    icon         = 5
+    title        = "test_title"
+    author       = "test_author"
+    volume       = 75
+
+    return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item, heading, icon, title, author, volume)
+
 
   def generate_page(self, page_number, page_type):
     self.api.log("generating page commands for page %i with type %s", self.current_page_nr, page_type)
@@ -211,5 +221,5 @@ class NsPanelLovelanceUI:
     if page_type == "cardMedia":
       # Send page type
       self.send_mqtt_msg("pageType,{0}".format(page_type))
-      command = self.generate_thermo_page(self.config["pages"][self.current_page_nr]["item"])
+      command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
