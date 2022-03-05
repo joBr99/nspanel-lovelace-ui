@@ -160,7 +160,7 @@ class NsPanelLovelanceUI:
     name = entity.attributes.friendly_name
 
     if item_type == "cover":
-      return "entityUpd,{0},{1},{2},{3},{4}".format(item_nr, "shutter", item, 0, name) # TODO: shutter should be renamed to cover in the nextion project
+      return "entityUpd,{0},{1},{2},{3},{4}".format(item_nr, "shutter", item, 0, name)
 
     if item_type == "light":
       switch_val = 1 if entity.state == "on" else 0
@@ -192,7 +192,7 @@ class NsPanelLovelanceUI:
     max_temp     = entity.attributes.max_temp*10
     step_temp    = 0.5*10
 
-    return "entityUpd,{0},{1},{2},{3},{4},{5},{6}".format(heading, current_temp, dest_temp, status, min_temp, max_temp, step_temp)
+    return "entityUpd,{0},{1},{2},{3},{4},{5},{6},{7}".format(item, heading, current_temp, dest_temp, status, min_temp, max_temp, step_temp)
 
 
   def generate_page(self, page_number, page_type):
