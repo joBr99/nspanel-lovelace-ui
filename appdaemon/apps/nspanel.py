@@ -117,7 +117,6 @@ class NsPanelLovelanceUI:
           pos = 100 - pos
           self.api.get_entity(entity_id).call_service("set_cover_position", position=pos)
 
-
       if msg[1] == "pageOpenDetail":
         self.api.log("received pageOpenDetail command")
         if(msg[2] == "popupLight"):
