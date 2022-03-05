@@ -135,7 +135,7 @@ event,buttonPress,D,nameEntity,internalNameEntity,1,positionSlider,50
 
 event,pageOpen,0
 
-event,tempUpd,*pageNumber*,*entityName*,*temperature*
+event,tempUpd,*entityName*,*temperature*
 
 # Icons IDs
 
