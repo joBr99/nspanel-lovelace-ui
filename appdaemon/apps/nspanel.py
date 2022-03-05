@@ -136,7 +136,8 @@ class NsPanelLovelanceUI:
 
       if msg[1] == "tempUpd":
         self.api.log("received tempUpd command")
-        # TODO: implement tempUpd function
+        temp = int(msg[4])/10
+        self.api.get_entity(msg[3]).call_service("set_temperature", temperature=temp)
 
   def send_mqtt_msg(self,msg):
     self.mqtt.mqtt_publish(self.config["panelSendTopic"], msg)
@@ -185,12 +186,12 @@ class NsPanelLovelanceUI:
   def generate_thermo_page(self, item):
     entity       = self.api.get_entity(item)
     heading      = entity.attributes.friendly_name
-    current_temp = entity.attributes.current_temperature*10
-    dest_temp    = entity.attributes.temperature*10
+    current_temp = int(entity.attributes.current_temperature*10)
+    dest_temp    = int(entity.attributes.temperature*10)
     status       = entity.attributes.hvac_action
-    min_temp     = entity.attributes.min_temp*10
-    max_temp     = entity.attributes.max_temp*10
-    step_temp    = 0.5*10
+    min_temp     = int(entity.attributes.min_temp*10)
+    max_temp     = int(entity.attributes.max_temp*10)
+    step_temp    = int(0.5*10)
 
     return "entityUpd,{0},{1},{2},{3},{4},{5},{6},{7}".format(item, heading, current_temp, dest_temp, status, min_temp, max_temp, step_temp)
 
