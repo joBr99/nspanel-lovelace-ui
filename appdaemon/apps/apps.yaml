@@ -23,3 +23,9 @@ nspanel:
           - cover.rolladenterasse_cover_1
           - light.schreibtischlampe
           - delete
+      - type: cardThermo
+        heading: TestThermo
+        item: climate.kuche_boden
+      - type: cardMedia
+        heading: TestThermo
+        item: media_player.spotify_user

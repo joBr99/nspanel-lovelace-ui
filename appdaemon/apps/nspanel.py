@@ -10,7 +10,6 @@ class NsPanelLovelanceUIManager(hass.Hass):
     data = self.args["config"]
     NsPanelLovelanceUI(self, data)
 
-
 class NsPanelLovelanceUI:
   def __init__(self, api, config):
     self.api = api
@@ -39,7 +38,11 @@ class NsPanelLovelanceUI:
 
   def handle_mqtt_incoming_message(self, event_name, data, kwargs):
     # Parse Json Message from Tasmota and strip out message from nextion display
-    msg = json.loads(data["payload"])["CustomRecv"]
+    data = json.loads(data["payload"])
+    if("CustomRecv" not in data):
+      self.api.log("Recived unknown msg")
+      return
+    msg = data["CustomRecv"]
     self.api.log("Recived Message from Tasmota: %s", msg)
     
     # Split message into parts seperated by ","
@@ -200,6 +203,12 @@ class NsPanelLovelanceUI:
         self.send_mqtt_msg(command)
 
     if page_type == "cardThermo":
+      # Send page type
+      self.send_mqtt_msg("pageType,{0}".format(page_type))
+      command = self.generate_thermo_page(self.config["pages"][self.current_page_nr]["item"])
+      self.send_mqtt_msg(command)
+      
+    if page_type == "cardMedia":
       # Send page type
       self.send_mqtt_msg("pageType,{0}".format(page_type))
       command = self.generate_thermo_page(self.config["pages"][self.current_page_nr]["item"])
