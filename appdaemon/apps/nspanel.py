@@ -105,22 +105,21 @@ class NsPanelLovelanceUI:
     self.api.log("generating item command for %s with type %s", item, item_type)
 
     if item_type == "delete":
-      return "entityUpd,{0},{1},{2},{3}".format(item_nr, 0, "dc", item_type)
+      return "entityUpd,{0},{1}".format(item_nr, item_type)
       
-
     entity = self.api.get_entity(item)
     name = entity.attributes.friendly_name
 
     if item_type == "cover":
-      return "entityUpd,{0},{1},{2},{3}".format(item_nr, 0, name, "shutter") # TODO: shutter should be renamed to cover in the nextion project
+      return "entityUpd,{0},{1},{2},{3},{4}".format(item_nr, "shutter", item, 0, name) # TODO: shutter should be renamed to cover in the nextion project
 
     if item_type == "light":
       switch_val = 1 if entity.state == "on" else 0
-      return "entityUpd,{0},{1},{2},{3},{4}".format(item_nr, 1, name, item_type, switch_val)
+      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, item_type, item, 1, name, switch_val)
 
     if item_type == "switch":
       switch_val = 1 if entity.state == "on" else 0
-      return "entityUpd,{0},{1},{2},{3},{4}".format(item_nr, 4, name, item_type, switch_val)
+      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, item_type, item, 4, name, switch_val)
 
     if item_type == "sensor":
       icon_id = 0
@@ -129,10 +128,10 @@ class NsPanelLovelanceUI:
       }[entity.attributes.device_class]
       
       value = entity.state + " " + entity.attributes.unit_of_measurement
-      return "entityUpd,{0},{1},{2},{3},{4}".format(item_nr, icon_id, name, "text", value)
+      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "text", item, icon_id, name, value)
 
     if item_type == "button":
-      return "entityUpd,{0},{1},{2},{3},{4}".format(item_nr, 3, name, item_type, "PRESS")
+      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, item_type, item, 3, name, "PRESS")
 
   def generate_thermo_page(self, item):
     entity       = self.api.get_entity(item)
