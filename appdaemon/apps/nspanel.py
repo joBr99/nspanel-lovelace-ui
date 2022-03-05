@@ -46,6 +46,12 @@ class NsPanelLovelanceUI:
     self.api.run_daily(self.update_date, time)
     self.update_date("")
 
+  def scale(self, val, src, dst):
+    """
+    Scale the given value from the scale of src to the scale of dst.
+    """
+    return ((val - src[0]) / (src[1]-src[0])) * (dst[1]-dst[0]) + dst[0]
+
   def handle_mqtt_incoming_message(self, event_name, data, kwargs):
     # Parse Json Message from Tasmota and strip out message from nextion display
     msg = json.loads(data["payload"])["CustomRecv"]
@@ -79,11 +85,55 @@ class NsPanelLovelanceUI:
 
       if msg[1] == "buttonPress":
         self.api.log("received buttonPress command")
-        # TODO: implement button press function
+        entity_id = msg[4]
+        if(msg[6] == "OnOff"):
+          if(msg[7] == "1"):
+            self.api.turn_on(entity_id)
+          else:
+            self.api.turn_off(entity_id)
+        if(msg[6] == "up"):
+          self.api.get_entity(entity_id).call_service("open_cover")
+        if(msg[6] == "stop"):
+          self.api.get_entity(entity_id).call_service("stop_cover")
+        if(msg[6] == "down"):
+          self.api.get_entity(entity_id).call_service("close_cover")
+
+        if(msg[6] == "button"):
+          self.api.get_entity(entity_id).call_service("press")
+
+        if(msg[6] == "brightnessSlider"):
+          # scale 0-100 to ha brightness range
+          brightness = int(self.scale(int(msg[7]),(0,100),(0,255)))
+          self.api.get_entity(entity_id).call_service("turn_on", brightness=brightness)
+
+        if(msg[6] == "colorTempSlider"):
+          entity = self.api.get_entity(entity_id)
+          #scale 0-100 from slider to color range of lamp
+          color_val = self.scale(int(msg[7]), (0, 100), (entity.attributes.min_mireds, entity.attributes.max_mireds))
+          self.api.get_entity(entity_id).call_service("turn_on", color_temp=color_val)
+
+        if(msg[6] == "positionSlider"):
+          pos = int(msg[7])
+          pos = 100 - pos
+          self.api.get_entity(entity_id).call_service("set_cover_position", position=pos)
+
 
       if msg[1] == "pageOpenDetail":
         self.api.log("received pageOpenDetail command")
-        # TODO: implement pageOpenDetail function
+        if(msg[2] == "popupLight"):
+          entity = self.api.get_entity(msg[3])
+          switch_val = 1 if entity.state == "on" else 0
+          # scale 0-255 brightness from ha to 0-100
+          brightness = int(self.scale(entity.attributes.brightness,(0,255),(0,100)))
+          # scale ha color temp range to 0-100
+          color_temp = self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100))
+          self.send_mqtt_msg("entityUpdateDetail,{0},{1},{2}".format(switch_val,brightness,color_temp))
+
+        if(msg[2] == "popupShutter"):
+          pos = self.api.get_entity(msg[3]).attributes.current_position
+          # reverse position for slider
+          pos = 100-pos
+          self.send_mqtt_msg("entityUpdateDetail,{0}".format(pos))
 
       if msg[1] == "tempUpd":
         self.api.log("received tempUpd command")
