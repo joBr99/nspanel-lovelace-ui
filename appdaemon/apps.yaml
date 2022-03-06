@@ -8,7 +8,7 @@ nspanel:
     locale: "de_DE"
     timeFormat: "%H : %M"
     dateFormat: "%A, %d. %B %Y"
-    timeoutScreensaver: 15000 # value in ms, must be between 50 and 65535
+    timeoutScreensaver: 15 #in seconds, values between 5 and 60 are allowed
     #brightnessScreensaver: 10
     brightnessScreensaver:
       - time: "7:00:00"

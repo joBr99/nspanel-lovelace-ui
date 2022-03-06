@@ -41,16 +41,6 @@ class NsPanelLovelanceUI:
     # register callbacks
     self.register_callbacks()
 
-  def update_screensaver_brightness(self, kwargs):
-    self.current_screensaver_brightness = kwargs['value']
-    self.send_mqtt_msg(f"dimmode,{self.current_screensaver_brightness}")
-
-  def scale(self, val, src, dst):
-    """
-    Scale the given value from the scale of src to the scale of dst.
-    """
-    return ((val - src[0]) / (src[1]-src[0])) * (dst[1]-dst[0]) + dst[0]
-
   def handle_mqtt_incoming_message(self, event_name, data, kwargs):
     t = time.process_time()
     # Parse Json Message from Tasmota and strip out message from nextion display
@@ -77,14 +67,15 @@ class NsPanelLovelanceUI:
 
         # set screensaver timeout
         timeout = self.config["timeoutScreensaver"]
-        if timeout > 65535:
-          timeout = 65535
-        if timeout < 50:
-          timeout = 50
+        if timeout > 60:
+          timeout = 60
+        if timeout < 5:
+          timeout = 5
+        timeout = timeout * 1000
         self.send_mqtt_msg("timeout,{0}".format(timeout))
 
         # send screensaver brightness
-        self.update_screensaver_brightness()
+        self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
 
         # send messages for current page
         page_type = self.config["pages"][self.current_page_nr]["type"]
@@ -154,6 +145,16 @@ class NsPanelLovelanceUI:
     date = datetime.datetime.now().strftime(self.config["dateFormat"])
     self.send_mqtt_msg("date,?{0}".format(date))
 
+  def update_screensaver_brightness(self, kwargs):
+    self.current_screensaver_brightness = kwargs['value']
+    self.send_mqtt_msg(f"dimmode,{self.current_screensaver_brightness}")
+
+  def scale(self, val, src, dst):
+    """
+    Scale the given value from the scale of src to the scale of dst.
+    """
+    return ((val - src[0]) / (src[1]-src[0])) * (dst[1]-dst[0]) + dst[0]
+
   def handle_button_press(self, entity_id, btype, optVal=None):
     if(btype == "OnOff"):
       if(optVal == "1"):
@@ -175,7 +176,7 @@ class NsPanelLovelanceUI:
     if(btype == "media-back"):
       self.api.get_entity(entity_id).call_service("media_previous_track")
     if(btype == "media-pause"):
-      self.api.get_entity(entity_id).call_service("media_player.media_pause")
+      self.api.get_entity(entity_id).call_service("media_play_pause")
 
 
     if(btype == "brightnessSlider"):
