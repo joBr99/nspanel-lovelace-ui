@@ -41,16 +41,6 @@ class NsPanelLovelanceUI:
     # register callbacks
     self.register_callbacks()
 
-  def update_screensaver_brightness(self, kwargs):
-    self.current_screensaver_brightness = kwargs['value']
-    self.send_mqtt_msg(f"dimmode,{self.current_screensaver_brightness}")
-
-  def scale(self, val, src, dst):
-    """
-    Scale the given value from the scale of src to the scale of dst.
-    """
-    return ((val - src[0]) / (src[1]-src[0])) * (dst[1]-dst[0]) + dst[0]
-
   def handle_mqtt_incoming_message(self, event_name, data, kwargs):
     t = time.process_time()
     # Parse Json Message from Tasmota and strip out message from nextion display
@@ -84,7 +74,7 @@ class NsPanelLovelanceUI:
         self.send_mqtt_msg("timeout,{0}".format(timeout))
 
         # send screensaver brightness
-        self.update_screensaver_brightness()
+        self.update_screensaver_brightness(value=self.current_screensaver_brightness)
 
         # send messages for current page
         page_type = self.config["pages"][self.current_page_nr]["type"]
@@ -153,6 +143,16 @@ class NsPanelLovelanceUI:
     # TODO: implement localization of date
     date = datetime.datetime.now().strftime(self.config["dateFormat"])
     self.send_mqtt_msg("date,?{0}".format(date))
+
+  def update_screensaver_brightness(self, kwargs):
+    self.current_screensaver_brightness = kwargs['value']
+    self.send_mqtt_msg(f"dimmode,{self.current_screensaver_brightness}")
+
+  def scale(self, val, src, dst):
+    """
+    Scale the given value from the scale of src to the scale of dst.
+    """
+    return ((val - src[0]) / (src[1]-src[0])) * (dst[1]-dst[0]) + dst[0]
 
   def handle_button_press(self, entity_id, btype, optVal=None):
     if(btype == "OnOff"):
@@ -342,4 +342,3 @@ class NsPanelLovelanceUI:
       self.send_mqtt_msg("pageType,{0}".format(page_type))
       command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
-
