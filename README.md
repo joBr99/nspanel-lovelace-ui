@@ -14,7 +14,7 @@ To control the panel and update it with content from HomeAssistant there is an [
 - [How It Works](#how-it-works)
 - [Requirements](#requirements)
 
-- [Installation - Home Automation Part](#installation-home-automation-part)
+- [Installation - Home Automation Part](#installation---home-automation-part)
    - [Installing Home Assistant](#installing-home-assistant)
    - [Installing an MQTT Broker](#installing-an-mqtt-broker)
    - [Installing AppDaemon](#installing-appdaemon)
@@ -23,7 +23,7 @@ To control the panel and update it with content from HomeAssistant there is an [
    - [Installing AppDeamon Backend Application](#installing-appdeamon-backend-application)
       - [With HACS (recommended)](#with-hacs-recommended)
       - [Manually](#manually)
-   - [Installing Tasmota to your NSPanel](#installing-tasmota-to-your-nspanel)
+   - [Installing Tasmota to your NSPanel](#installing---tasmota-to-your-nspanel)
 
 - [Installation - NSPanel Part](#installation-nspanel-part)
    - [Flash Tasmota to your NSPanel](#flash-tasmota-to-your-nspanel)
