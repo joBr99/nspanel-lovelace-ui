@@ -1,4 +1,4 @@
-# NsPanel Lovelance UI
+# NSPanel Lovelance UI
 
 Checkout [README](https://github.com/joBr99/nspanel-lovelance-ui/blob/main/README.md) for detailed Instructions.
 
