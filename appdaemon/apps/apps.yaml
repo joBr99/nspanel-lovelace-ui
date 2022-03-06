@@ -5,6 +5,7 @@ nspanel:
   config:
     panelRecvTopic: "tele/tasmota_NsPanelTerrasse/RESULT"
     panelSendTopic: "cmnd/tasmota_NsPanelTerrasse/CustomSend"
+    timeoutScreensaver: 15000 # value in ms, must be between 50 and 65535
     locale: "de_DE"
     timeFormat: "%H : %M"
     dateFormat: "%A, %d. %B %Y"
