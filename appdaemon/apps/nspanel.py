@@ -103,7 +103,7 @@ class NsPanelLovelanceUI:
             if entity.attributes.get("brightness"):
               brightness = int(self.scale(entity.attributes.brightness,(0,255),(0,100)))
             else:
-              brightness = 255 # light can't be dimmed so show brightness as 100%
+              brightness = "disable"
             if "color_temp" in entity.attributes.supported_color_modes:
               # scale ha color temp range to 0-100
               color_temp = self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100))
