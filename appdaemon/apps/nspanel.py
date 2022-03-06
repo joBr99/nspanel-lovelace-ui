@@ -15,6 +15,7 @@ class NsPanelLovelanceUI:
     self.api = api
     self.config = config
     self.current_page_nr = 0
+    self.current_screensaver_brightness = 10
 
     # Setup, mqtt subscription and callback
     self.mqtt = self.api.get_plugin_api("MQTT")
@@ -30,8 +31,19 @@ class NsPanelLovelanceUI:
     self.api.run_daily(self.update_date, time)
     self.update_date("")
 
+    # set brightness of screensaver
+    if type(self.config["brightnessScreensaver"]) == int:
+      self.current_screensaver_brightness = self.config["brightnessScreensaver"]
+    elif type(self.config["brightnessScreensaver"]) == list:
+      for timeset in self.config["brightnessScreensaver"]:
+        self.api.run_daily(self.update_screensaver_brightness, timeset["time"], value=timeset["value"])
+
     # register callbacks
     self.register_callbacks()
+
+  def update_screensaver_brightness(self, kwargs):
+    self.current_screensaver_brightness = kwargs['value']
+    self.send_mqtt_msg(f"dimmode,{self.current_screensaver_brightness}")
 
   def scale(self, val, src, dst):
     """
@@ -70,6 +82,9 @@ class NsPanelLovelanceUI:
         if timeout < 50:
           timeout = 50
         self.send_mqtt_msg("timeout,{0}".format(timeout))
+
+        # send screensaver brightness
+        self.update_screensaver_brightness()
 
         # send messages for current page
         page_type = self.config["pages"][self.current_page_nr]["type"]
