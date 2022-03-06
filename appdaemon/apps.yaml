@@ -5,6 +5,7 @@ nspanel:
   config:
     panelRecvTopic: "tele/tasmota_NsPanelTerrasse/RESULT"
     panelSendTopic: "cmnd/tasmota_NsPanelTerrasse/CustomSend"
+    logMessages: False
     locale: "de_DE"
     timeFormat: "%H : %M"
     dateFormat: "%A, %d. %B %Y"
