@@ -74,7 +74,7 @@ class NsPanelLovelanceUI:
         self.send_mqtt_msg("timeout,{0}".format(timeout))
 
         # send screensaver brightness
-        self.update_screensaver_brightness(value=self.current_screensaver_brightness)
+        self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
 
         # send messages for current page
         page_type = self.config["pages"][self.current_page_nr]["type"]
@@ -342,3 +342,4 @@ class NsPanelLovelanceUI:
       self.send_mqtt_msg("pageType,{0}".format(page_type))
       command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
+
