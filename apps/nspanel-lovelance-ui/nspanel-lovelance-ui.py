@@ -16,6 +16,7 @@ class NsPanelLovelanceUI:
     self.config = config
     self.current_page_nr = 0
     self.current_screensaver_brightness = 10
+    self.log_messages = self.config.get("logMessages", False)
 
     # Setup, mqtt subscription and callback
     self.mqtt = self.api.get_plugin_api("MQTT")
@@ -46,10 +47,11 @@ class NsPanelLovelanceUI:
     # Parse Json Message from Tasmota and strip out message from nextion display
     data = json.loads(data["payload"])
     if("CustomRecv" not in data):
-      self.api.log("Recived unknown msg %s", data)
+      self.api.log("Received unknown message %s", data)
       return
     msg = data["CustomRecv"]
-    self.api.log("Recived Message from Tasmota: %s", msg)
+    if self.log_messages:
+      self.api.log("Received message from Tasmota: %s", msg)
     
     # Split message into parts seperated by ","
     msg = msg.split(",")
@@ -59,7 +61,8 @@ class NsPanelLovelanceUI:
     if msg[0] == "event":
 
       if msg[1] == "startup":
-        self.api.log("received startup command")
+        if self.log_messages:
+          self.api.log("Received startup command")
         
         # send date and time
         self.update_time("")
@@ -85,7 +88,8 @@ class NsPanelLovelanceUI:
         # Calculate current page
         recv_page = int(msg[2])
         self.current_page_nr = recv_page % len(self.config["pages"])
-        self.api.log("received pageOpen command, raw page: %i, calc page: %i", recv_page, self.current_page_nr)
+        if self.log_messages:
+          self.api.log("Received pageOpen command, raw page: %i, calc page: %i", recv_page, self.current_page_nr)
         # get type of current page
         page_type = self.config["pages"][self.current_page_nr]["type"]
         # generate commands for current page
@@ -101,7 +105,8 @@ class NsPanelLovelanceUI:
         self.handle_button_press(entity_id, btype, value)
 
       if msg[1] == "pageOpenDetail":
-        self.api.log("received pageOpenDetail command")
+        if self.log_messages:
+          self.api.log("Received pageOpenDetail command")
         if(msg[2] == "popupLight"):
           entity = self.api.get_entity(msg[3])
           switch_val = 1 if entity.state == "on" else 0
@@ -128,10 +133,12 @@ class NsPanelLovelanceUI:
           self.send_mqtt_msg("entityUpdateDetail,{0}".format(pos))
 
       if msg[1] == "tempUpd":
-        self.api.log("received tempUpd command")
+        if self.log_messages:
+          self.api.log("Received tempUpd command")
         temp = int(msg[4])/10
         self.api.get_entity(msg[3]).call_service("set_temperature", temperature=temp)
-    self.api.log("time_taken to answer %s : %s", data["CustomRecv"], time.process_time()-t)
+    if self.log_messages:
+      self.api.log("Time_taken to answer %s : %s", data["CustomRecv"], time.process_time()-t)
 
   def send_mqtt_msg(self,msg):
     self.mqtt.mqtt_publish(self.config["panelSendTopic"], msg)
@@ -204,7 +211,8 @@ class NsPanelLovelanceUI:
         items.extend(page["items"])
     
     for item in items:
-      self.api.log("enable state callback for %s", item)
+      if self.log_messages:
+        self.api.log("Enable state callback for %s", item)
       self.api.handle = self.api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
 
   def state_change_callback(self, entity, attribute, old, new, kwargs):
@@ -212,13 +220,14 @@ class NsPanelLovelanceUI:
 
     page_type = current_page_config["type"]
 
-    self.api.log("got state_callback from {0}".format(entity))
-    
-    
+    if self.log_messages:
+      self.api.log("Got state_callback from {0}".format(entity))
+
     if page_type == "cardEntities":
       items = current_page_config["items"]
       if entity in items:
-        self.api.log("State change on current page for {0}".format(entity))
+        if self.log_messages:
+          self.api.log("State change on current page for {0}".format(entity))
         # send update of the item on page
         command = self.generate_entities_item(entity, items.index(entity)+1)
         self.send_mqtt_msg(command)
@@ -227,7 +236,8 @@ class NsPanelLovelanceUI:
     
     if page_type == "cardThermo" or page_type == "cardMedia":
       if entity == current_page_config["item"]:
-        self.api.log("State change on current page for {0}".format(entity))
+        if self.log_messages:
+          self.api.log("State change on current page for {0}".format(entity))
         # send update of the whole page
         if page_type == "cardThermo":
           self.send_mqtt_msg(self.generate_thermo_page(entity))
@@ -237,8 +247,6 @@ class NsPanelLovelanceUI:
           return
       return
 
-
-
     # TODO: Call Method for refresh of the item/page of the current entity 
 
   def generate_entities_item(self, item, item_nr):
@@ -246,7 +254,8 @@ class NsPanelLovelanceUI:
     # type of item is the string before the "." in the item name
     item_type = item.split(".")[0]
 
-    self.api.log("generating item command for %s with type %s", item, item_type)
+    if self.log_messages:
+      self.api.log("Generating item command for %s with type %s", item, item_type)
 
     if item_type == "delete":
       return "entityUpd,{0},{1}".format(item_nr, item_type)
@@ -318,7 +327,8 @@ class NsPanelLovelanceUI:
 
 
   def generate_page(self, page_number, page_type):
-    self.api.log("generating page commands for page %i with type %s", self.current_page_nr, page_type)
+    if self.log_messages:
+      self.api.log("Generating page commands for page %i with type %s", self.current_page_nr, page_type)
     if page_type == "cardEntities":
       # Send page type
       self.send_mqtt_msg("pageType,{0}".format(page_type))
@@ -343,4 +353,3 @@ class NsPanelLovelanceUI:
       self.send_mqtt_msg("pageType,{0}".format(page_type))
       command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
-
