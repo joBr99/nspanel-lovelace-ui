@@ -67,10 +67,11 @@ class NsPanelLovelanceUI:
 
         # set screensaver timeout
         timeout = self.config["timeoutScreensaver"]
-        if timeout > 65535:
-          timeout = 65535
-        if timeout < 50:
-          timeout = 50
+        if timeout > 60:
+          timeout = 60
+        if timeout < 5:
+          timeout = 5
+        timeout = timeout * 1000
         self.send_mqtt_msg("timeout,{0}".format(timeout))
 
         # send screensaver brightness
