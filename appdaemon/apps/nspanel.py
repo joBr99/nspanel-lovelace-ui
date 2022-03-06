@@ -59,6 +59,10 @@ class NsPanelLovelanceUI:
         self.update_time("")
         self.update_date("")
 
+        # set screensaver timeout
+        self.send_mqtt_msg("timeout,{0}".format(self.config["timeoutScreensaver"]))
+
+
         # send messages for current page
         page_type = self.config["pages"][self.current_page_nr]["type"]
         self.generate_page(self.current_page_nr, page_type)
