@@ -5,10 +5,16 @@ nspanel:
   config:
     panelRecvTopic: "tele/tasmota_NsPanelTerrasse/RESULT"
     panelSendTopic: "cmnd/tasmota_NsPanelTerrasse/CustomSend"
-    timeoutScreensaver: 15000 # value in ms, must be between 50 and 65535
     locale: "de_DE"
     timeFormat: "%H : %M"
     dateFormat: "%A, %d. %B %Y"
+    timeoutScreensaver: 15000 # value in ms, must be between 50 and 65535
+    #brightnessScreensaver: 10
+    brightnessScreensaver:
+      - time: "7:00:00"
+        value: 10
+      - time: "23:00:00"
+        value: 0
     pages:
       - type: cardEntities
         heading: TestPage1
