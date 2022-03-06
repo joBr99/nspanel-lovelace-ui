@@ -208,9 +208,15 @@ class NsPanelLovelanceUI:
       switch_val = 1 if entity.state == "on" else 0
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, item_type, item, 1, name, switch_val)
 
-    if item_type == "switch":
+    if item_type == "switch" or item_type == "input_boolean":
       switch_val = 1 if entity.state == "on" else 0
-      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, item_type, item, 4, name, switch_val)
+      icon_id = 4
+      if item_type == "input_boolean" and switch_val == 1:
+        icon_id = 6
+      else:
+        icon_id = 7
+      
+      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "switch", item, icon_id, name, switch_val)
 
     if item_type == "sensor":
       icon_id = 0
