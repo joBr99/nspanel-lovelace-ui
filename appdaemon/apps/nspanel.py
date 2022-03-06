@@ -30,6 +30,9 @@ class NsPanelLovelanceUI:
     self.api.run_daily(self.update_date, time)
     self.update_date("")
 
+    # register callbacks
+    self.register_callbacks()
+
   def scale(self, val, src, dst):
     """
     Scale the given value from the scale of src to the scale of dst.
@@ -72,42 +75,19 @@ class NsPanelLovelanceUI:
         recv_page = int(msg[2])
         self.current_page_nr = recv_page % len(self.config["pages"])
         self.api.log("received pageOpen command, raw page: %i, calc page: %i", recv_page, self.current_page_nr)
+        # get type of current page
         page_type = self.config["pages"][self.current_page_nr]["type"]
+        # generate commands for current page
         self.generate_page(self.current_page_nr, page_type)
 
       if msg[1] == "buttonPress":
-        self.api.log("received buttonPress command")
         entity_id = msg[4]
-        if(msg[6] == "OnOff"):
-          if(msg[7] == "1"):
-            self.api.turn_on(entity_id)
-          else:
-            self.api.turn_off(entity_id)
-        if(msg[6] == "up"):
-          self.api.get_entity(entity_id).call_service("open_cover")
-        if(msg[6] == "stop"):
-          self.api.get_entity(entity_id).call_service("stop_cover")
-        if(msg[6] == "down"):
-          self.api.get_entity(entity_id).call_service("close_cover")
-
-        if(msg[6] == "button"):
-          self.api.get_entity(entity_id).call_service("press")
-
-        if(msg[6] == "brightnessSlider"):
-          # scale 0-100 to ha brightness range
-          brightness = int(self.scale(int(msg[7]),(0,100),(0,255)))
-          self.api.get_entity(entity_id).call_service("turn_on", brightness=brightness)
-
-        if(msg[6] == "colorTempSlider"):
-          entity = self.api.get_entity(entity_id)
-          #scale 0-100 from slider to color range of lamp
-          color_val = self.scale(int(msg[7]), (0, 100), (entity.attributes.min_mireds, entity.attributes.max_mireds))
-          self.api.get_entity(entity_id).call_service("turn_on", color_temp=color_val)
-
-        if(msg[6] == "positionSlider"):
-          pos = int(msg[7])
-          pos = 100 - pos
-          self.api.get_entity(entity_id).call_service("set_cover_position", position=pos)
+        btype = msg[6]
+        if len(msg) > 7:
+          value = msg[7]
+        else:
+          value = None
+        self.handle_button_press(entity_id, btype, value)
 
       if msg[1] == "pageOpenDetail":
         self.api.log("received pageOpenDetail command")
@@ -152,6 +132,59 @@ class NsPanelLovelanceUI:
     # TODO: implement localization of date
     date = datetime.datetime.now().strftime(self.config["dateFormat"])
     self.send_mqtt_msg("date,?{0}".format(date))
+
+  def handle_button_press(self, entity_id, btype, optVal=None):
+    if(btype == "OnOff"):
+      if(optVal == "1"):
+        self.api.turn_on(entity_id)
+      else:
+        self.api.turn_off(entity_id)
+    if(btype == "up"):
+      self.api.get_entity(entity_id).call_service("open_cover")
+    if(btype == "stop"):
+      self.api.get_entity(entity_id).call_service("stop_cover")
+    if(btype == "down"):
+      self.api.get_entity(entity_id).call_service("close_cover")
+      
+    if(btype == "button"):
+      self.api.get_entity(entity_id).call_service("press")
+      
+    if(btype == "brightnessSlider"):
+      # scale 0-100 to ha brightness range
+      brightness = int(self.scale(int(optVal),(0,100),(0,255)))
+      self.api.get_entity(entity_id).call_service("turn_on", brightness=brightness)
+      
+    if(btype == "colorTempSlider"):
+      entity = self.api.get_entity(entity_id)
+      #scale 0-100 from slider to color range of lamp
+      color_val = self.scale(int(optVal), (0, 100), (entity.attributes.min_mireds, entity.attributes.max_mireds))
+      self.api.get_entity(entity_id).call_service("turn_on", color_temp=color_val)
+      
+    if(btype == "positionSlider"):
+      pos = int(optVal)
+      pos = 100 - pos
+      self.api.get_entity(entity_id).call_service("set_cover_position", position=pos)
+
+  def register_callbacks(self):
+    items = []
+    for page in self.config["pages"]:
+      if "item" in page:
+        items.append(page["item"])
+      if "items" in page:
+        items.extend(page["items"])
+    
+    for item in items:
+      self.api.handle = self.api.listen_state(self.state_change_callback, entity_id=item)
+
+  def state_change_callback(self, entity, attribute, old, new, kwargs):
+    current_page_config = self.config["pages"][self.current_page_nr]
+    if "items" in current_page_config:
+      if entity in current_page_config["items"]:
+        self.api.log("State change on current page")
+    if "item" in current_page_config:
+      if entity == current_page_config["item"]:
+        self.api.log("State change on current page")
+    # TODO: Call Method for refresh of the item/page of the current entity 
 
   def generate_entities_item(self, item, item_nr, item_type):
     self.api.log("generating item command for %s with type %s", item, item_type)
@@ -202,10 +235,12 @@ class NsPanelLovelanceUI:
   def generate_media_page(self, item):
     entity       = self.api.get_entity(item)
     heading      = entity.attributes.friendly_name
+    icon         = 0
+    title        = ""
+    author       = ""
+    volume       = 0
     if "media_content_type" in entity.attributes:
       if entity.attributes.media_content_type == "music":
-        icon = 5
-      else:
         icon = 5
     if "media_title" in entity.attributes:
       title  = entity.attributes.media_title
@@ -245,3 +280,4 @@ class NsPanelLovelanceUI:
       self.send_mqtt_msg("pageType,{0}".format(page_type))
       command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
+
