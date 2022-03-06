@@ -6,14 +6,13 @@
 
 NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in the Design of [HomeAssistant](https://www.home-assistant.io/)'s Lovelace UI Design.
 
+It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
+To control the panel and update it with content from HomeAssistant there is an [AppDeamon](https://github.com/AppDaemon/appdaemon) App.
+
 See the following picture to get an idea of the look of this firmware for NSPanel.
 
 ![screens](doc-pics/screens.png)
-
-It works with [Tasmota](https://tasmota.github.io/docs/) over MQTT. 
-To control the panel and update it with content from HomeAssistant there is an [AppDeamon](https://github.com/AppDaemon/appdaemon) App.
-
-
+´
 
 - [How It Works](#how-it-works)
 - [Requirements](#requirements)
