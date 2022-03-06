@@ -169,7 +169,15 @@ class NsPanelLovelanceUI:
       
     if(btype == "button"):
       self.api.get_entity(entity_id).call_service("press")
-      
+
+    if(btype == "media-next"):
+      self.api.get_entity(entity_id).call_service("media_next_track")
+    if(btype == "media-back"):
+      self.api.get_entity(entity_id).call_service("media_previous_track")
+    if(btype == "media-pause"):
+      self.api.get_entity(entity_id).call_service("media_player.media_pause")
+
+
     if(btype == "brightnessSlider"):
       # scale 0-100 to ha brightness range
       brightness = int(self.scale(int(optVal),(0,100),(0,255)))
