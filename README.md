@@ -38,6 +38,12 @@ To control the panel and update it with content from HomeAssistant there is an [
 
 ## How It Works
 
+The NSPanel has two components an esp32 which runs Tasmota in this project and the nextion display, which is controlled by the esp32 via serial.
+This project contains a display firmware, which can be controlled over serial/mqtt. 
+It's controlled by an AppDeamon Application, which crafts the required commands from your HomeAssistant Instance.
+
+For more details on how the display firmware works see the [README File in the HMI Folder](HMI/README.md)
+
 ## Requirements
 
 ## Installation - Home Automation Part
@@ -147,6 +153,8 @@ You can use the following template or copy the one on the [Tasmota Template Repo
 
 `{"NAME":"NSPanel","GPIO":[0,0,0,0,3872,0,0,0,0,0,32,0,0,0,0,225,0,480,224,1,0,0,0,33,0,0,0,0,0,0,0,0,0,0,4736,0],"FLAG":0,"BASE":1,"CMND":"ADCParam 2,11200,10000,3950 | Sleep 0 | BuzzerPWM 1"}`
 
+After a reboot of tasmota your screen will light up with the stock display firmware.
+
 ### Setup your MQTT Server in Tasmota
 
 Configure your MQTT Server in Tasmota.
@@ -154,8 +162,20 @@ See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more 
 
 ### Upload Berry Driver to Tasmota
 
+1. Download the [Berry Driver from this Repository](tasmota/autoexec.be).
+
+2. Go to `Consoles` > `Manage File System` in Tasmota and upload the previously downloaded file.
+
+3. Restart your NSPanel
+
 ### Flash Firmware to Nextion Screen
 
+#### Use your own Webserver
+
+Upload the [tft file from HMI folder](HMI/nspanel.tft) to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console.
+**Webserver needs to support HTTP Range Header Requests, python2/3 http server doesn't work**
+
+`FlashNextion http://ip-address-of-your-homeassistant:8123/local/nspanel.tft`
 
 ## Configuration
 
@@ -184,34 +204,6 @@ See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more 
 # Old Docs
 
 
-
-The general idea is that the Nextion Display cycles though a page counter and the esp32 tells the display what to do.
-If you are changeing the page the nextion display will send and event to the esp32 and it has to answer with the messages, that will update the current page with it's desired components. This enables easy changes, without touching the HMI Project.
-
-# How to install
-
-## 0. Flash Tasmota
-
-Follow the inststructions to flash tasmota onto the esp32 of your nspanel, make sure to use 'tasmota32-nspanel.bin'.
-
-Before uploading berry driver (nspanel.be/autoexec.be) continue with this guide.
-
-https://templates.blakadder.com/sonoff_NSPanel.html
-
-## 1. Install Nextion Tasmota Berry Driver
-
-Create and edit new file named autoexec.be with a line load("nextion.be") and upload nextion.be from tasmota folder of this repo.
-
-or
-
-Upload "nextion.be" from tasmota folder of this repository and rename to "autoexec.be"
-
-## 2. Flash tft File
-
-Upload the tft file from HMI folder to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console.
-**Webserver needs to support HTTP Range Header Requests, python2/3 http server doesn't work**
-
-`FlashNextion http://192.168.75.30:8123/local/nspanel.tft`
 
 ## 3. Setup your Backend
 
@@ -284,15 +276,6 @@ The following screenshots are from the custom NSPanel UI that will be displayed 
 ![screen_popupLight](doc-pics/screen_popupLight.png)
 ![screen_popupShutter](doc-pics/screen_popupShutter.png)
 ![screen_cardThermo](doc-pics/screen_cardThermo.png)
-
-
-# Message Flow
-
-HomeAssistant / NodeRed -- MQTT -- Tasmota -- Nextion Screen
-
-See the following picture to get an Idea for the messages send and recived from the screen during cycling though pages.
-
-![message_flow](doc-pics/message-flow.png)
 
 
 # Custom Protocol

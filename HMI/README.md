@@ -1,5 +1,17 @@
 # NSPanel Lovelance UI
 
+The general idea is that the Nextion Display cycles though a page counter and the esp32 tells the display what to do.
+If you are changeing the page the nextion display will send and event to the esp32 and it has to answer with the messages, that will update the current page with it's desired components. This enables easy changes, without touching the HMI Project.
+
+# Message Flow
+
+HomeAssistant / NodeRed -- MQTT -- Tasmota -- Nextion Screen
+
+See the following picture to get an Idea for the messages send and recived from the screen during cycling though pages.
+
+![message_flow](doc-pics/message-flow.png)
+
+
 # Custom Protocol
 ```
 55 BB [payload length] [payload] [crc] [crc]
