@@ -6,8 +6,14 @@
 
 NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in the Design of [HomeAssistant](https://www.home-assistant.io/)'s Lovelace UI Design.
 
+See the following picture to get an idea of the look of this firmware for NSPanel.
+
+![screens](doc-pics/screens.png)
+
 It works with [Tasmota](https://tasmota.github.io/docs/) over MQTT. 
 To control the panel and update it with content from HomeAssistant there is an [AppDeamon](https://github.com/AppDaemon/appdaemon) App.
+
+
 
 - [How It Works](#how-it-works)
 - [Requirements](#requirements)
@@ -181,41 +187,32 @@ Upload the [tft file from HMI folder](HMI/nspanel.tft) to a Webserver (for examp
 
 ### Configuring the MQTT integration in AppDaemon
 
+For the app to work you need a working MQTT Configuration in AppDaemon. Please configure mqtt server, user and password in `appdaemon.yaml`
+
+```yaml
+.
+.
+.
+  plugins:
+    HASS:
+      type: hass
+    MQTT:
+      type: mqtt
+      namespace: mqtt
+      client_id: "appdaemon"
+      client_host: 192.168.75.30
+      client_port: 1883
+      client_user: "mqttuser"
+      client_password: "mqttpassword"
+      client_topics: NONE
+.
+.
+.
+```
+
 ### Configure your NSPanel in AppDaemon
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Old Docs
-
-
-
-## 3. Setup your Backend
-
-The Backend answers to commands from NsPanel and send's content to display on the screen.
-
-## 3a. AppDeamon Backend (Recommended)
-
-### Installation
-
-
-
-### App Configuration
+Confiure your NSPanel as you like, you need to edit the `apps.yaml` inside of your appdeamon config folder.
 
 ```yaml
 nspanel-1:
@@ -262,6 +259,20 @@ key | optional | type | default | description
 `module` | False | string | | The module name of the app.
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 3b. Node Red Flow (Deprecated, but functional with limited Feature Set)
