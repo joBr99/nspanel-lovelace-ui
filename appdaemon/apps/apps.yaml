@@ -11,14 +11,14 @@ nspanel:
     dateFormat: "%A, %d. %B %Y"
     pages:
       - type: cardEntities
-        heading: Rolladen
+        heading: TestPage1
         items:
           - cover.rolladenfenster_cover_1
           - cover.nspterrasse_cover_1
-          - cover.rolladenterasse_cover_1
+          - input_boolean.notify_home
           - sensor.nspterrasse_analog_temperature1
       - type: cardEntities
-        heading: TestPage
+        heading: TestPage2
         items:
           - button.beamer_key_left
           - cover.rolladenterasse_cover_1
@@ -28,5 +28,6 @@ nspanel:
         heading: TestThermo
         item: climate.kuche_boden
       - type: cardMedia
-        heading: TestThermo
+        heading: TestMedia
         item: media_player.spotify_user
+

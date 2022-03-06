@@ -93,7 +93,7 @@ entityUpd,*internalNameEntiy*,*heading*,*currentTemp*,*destTemp*,*status*,*minTe
 
 ### cardMedia Page
 
-entityUpd,*internalNameEntiy*,*heading*,*icon*,*title*,*author*,*volume*
+entityUpd,|*internalNameEntiy*|*heading*|*icon*|*title*|*author*|*volume*
 
 ## Messages from Nextion Display
 

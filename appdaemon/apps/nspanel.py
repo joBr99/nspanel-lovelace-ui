@@ -180,14 +180,16 @@ class NsPanelLovelanceUI:
         items.extend(page["items"])
     
     for item in items:
-      self.api.handle = self.api.listen_state(self.state_change_callback, entity_id=item)
+      self.api.log("enable state callback for %s", item)
+      self.api.handle = self.api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
 
   def state_change_callback(self, entity, attribute, old, new, kwargs):
     current_page_config = self.config["pages"][self.current_page_nr]
 
     page_type = current_page_config["type"]
 
-    self.api.log("test {0}".format(entity))
+    self.api.log("got state_callback from {0}".format(entity))
+    
     
     if page_type == "cardEntities":
       items = current_page_config["items"]
@@ -288,7 +290,7 @@ class NsPanelLovelanceUI:
     if "volume_level" in entity.attributes:
       volume = int(entity.attributes.volume_level*100)
 
-    return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item, heading, icon, title, author, volume)
+    return "entityUpd,|{0}|{1}|{2}|{3}|{4}|{5}".format(item, heading, icon, title, author, volume)
 
 
   def generate_page(self, page_number, page_type):
@@ -317,3 +319,4 @@ class NsPanelLovelanceUI:
       self.send_mqtt_msg("pageType,{0}".format(page_type))
       command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
+
