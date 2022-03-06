@@ -143,6 +143,16 @@ event,pageOpen,0
 
 event,tempUpd,*pageNumber*,*entityName*,*temperature*
 
+### cardMedia Page
+
+event,buttonPress,1,tHeading,internalNameEntity,1,media-back
+
+event,buttonPress,1,tHeading,internalNameEntity,1,media-pause
+
+event,buttonPress,1,tHeading,internalNameEntity,1,media-next
+
+event,buttonPress,1,tHeading,internalNameEntity,1,volumeSlider,75
+
 # Icons IDs
 
 ID | Icon
