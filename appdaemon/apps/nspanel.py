@@ -112,9 +112,11 @@ class NsPanelLovelanceUI:
           switch_val = 1 if entity.state == "on" else 0
           # scale 0-255 brightness from ha to 0-100
           brightness = int(self.scale(entity.attributes.brightness,(0,255),(0,100)))
-          # TODO: Check if color temp feature is avalible
-          # scale ha color temp range to 0-100
-          color_temp = self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100))
+          if "color_temp" in entity.attributes.supported_color_modes:
+            # scale ha color temp range to 0-100
+            color_temp = self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100))
+          else:
+            color_temp = "disable"
           self.send_mqtt_msg("entityUpdateDetail,{0},{1},{2}".format(switch_val,brightness,color_temp))
 
         if(msg[2] == "popupShutter"):
