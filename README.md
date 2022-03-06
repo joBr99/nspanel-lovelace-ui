@@ -129,11 +129,28 @@ directory of your AppDaemon installation.
 
 ## Installation - NSPanel Part
 
+This section describes how to free your nspanel from stock firmware and get it ready for Lovelace UI 🎉
+
 ### Flash Tasmota to your NSPanel
+
+You need to connect to your nspanel via serial and flash the `tasmota32-nspanel.bin` to your NSPanel.
+Make sure to come back to this guide, before uploading the nspanel.be/autoexec.be files.
+For more deatils see the [NSPanel Page of the Tasmota Template Repository](https://templates.blakadder.com/sonoff_NSPanel.html).
 
 ### Configure Tasmota Template for NSPanel
 
+Configure the NSPanel template for Tasmota. (Go to Configuration and Configure Other and paste the template there, make sure to tick the activate checkbox)
+
+![tasmota-template-config](doc-pics/tasmota-template-config.png)
+
+You can use the following template or copy the one on the [Tasmota Template Repo Site](https://templates.blakadder.com/sonoff_NSPanel.html).
+
+`{"NAME":"NSPanel","GPIO":[0,0,0,0,3872,0,0,0,0,0,32,0,0,0,0,225,0,480,224,1,0,0,0,33,0,0,0,0,0,0,0,0,0,0,4736,0],"FLAG":0,"BASE":1,"CMND":"ADCParam 2,11200,10000,3950 | Sleep 0 | BuzzerPWM 1"}`
+
 ### Setup your MQTT Server in Tasmota
+
+Configure your MQTT Server in Tasmota.
+See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more details.
 
 ### Upload Berry Driver to Tasmota
 
