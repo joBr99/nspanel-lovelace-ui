@@ -175,7 +175,7 @@ class NsPanelLovelanceUI:
     if(btype == "media-back"):
       self.api.get_entity(entity_id).call_service("media_previous_track")
     if(btype == "media-pause"):
-      self.api.get_entity(entity_id).call_service("media_player.media_pause")
+      self.api.get_entity(entity_id).call_service("media_play_pause")
 
 
     if(btype == "brightnessSlider"):
