@@ -19,7 +19,7 @@ nspanel-1:
       - time: "23:00:00"
         value: 0
     locale: "de_DE"
-    timeFormat: "%H : %M"
+    timeFormat: "%H:%M"
     dateFormat: "%A, %d. %B %Y"
     pages:
       - type: cardEntities
