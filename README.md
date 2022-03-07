@@ -108,7 +108,7 @@ AppDaemon automations in HACS, as these are not enabled by default:
    you won't be able to proceed to the next steps until HACS is ready.
 
 The Backend Application for this project is not yet in the default applications available in HACS.
-You will need to add Qolsys Gateway as a custom repository in HACS. In order
+You will need to add this repository as a custom repository in HACS. In order
 to do so:
 
 1. Click on `HACS` on the left menu bar in Home Assistant Web UI
