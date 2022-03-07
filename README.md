@@ -85,7 +85,7 @@ The easiest way to install it is through Home Assistant's Supervisor Add-on Stor
 
 ### Installing Studio Code Server (optional, recommended)
 
-You will need a way a way to edit the `apps.yaml` config file in the Appdaemon folder. 
+You will need a way to edit the `apps.yaml` config file in the Appdaemon folder. 
 Install Studio Code Server from Home Assistant's Supervisor Add-on Store to easily edit configuration Files on your HomeAssistant Instance.
 
 ### Installing HACS (optional, recommended)
