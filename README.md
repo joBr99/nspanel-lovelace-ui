@@ -93,7 +93,7 @@ If you want to use HACS, you will have to follow [their documentation on how to 
 
 #### With HACS (recommended)
 
-To install Qolsys Gateway with HACS, you will need to make sure that you enabled
+To install Lovelace UI Backend App with HACS, you will need to make sure that you enabled
 AppDaemon automations in HACS, as these are not enabled by default:
 
 1. Click on `Configuration` on the left menu bar in Home Assistant Web UI
