@@ -262,36 +262,3 @@ key | optional | type | default | description
 `module` | False | string | | The module name of the app.
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 3b. Node Red Flow (Deprecated, but functional with limited Feature Set)
-
-Import the example node-red flow from "node-red-example-flow.json" file and adjust to your needs.
-
-# Screens from UI
-
-The following screenshots are from the custom NSPanel UI that will be displayed on NSPanel.
-
-![screen_cardEntities](doc-pics/screen_cardEntities.png)
-![screen_popupLight](doc-pics/screen_popupLight.png)
-![screen_popupShutter](doc-pics/screen_popupShutter.png)
-![screen_cardThermo](doc-pics/screen_cardThermo.png)
-
-
-# Custom Protocol
-
-See Readme in HMI Folder for more details on HMI Project / Custom Protocol
