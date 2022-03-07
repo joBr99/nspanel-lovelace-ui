@@ -278,7 +278,7 @@ class NsPanelLovelanceUI:
     if item_type == "sensor":
       icon_id = 0
       icon_mapping = {
-        "temperature": 2
+        "temperature": 2,
         "power": 4
       }
       if entity.attributes.device_class in icon_mapping:
