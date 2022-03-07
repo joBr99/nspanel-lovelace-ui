@@ -304,6 +304,7 @@ class NsPanelLovelanceUI:
     title        = ""
     author       = ""
     volume       = 0
+    iconplaypause = 8
     if "media_content_type" in entity.attributes:
       if entity.attributes.media_content_type == "music":
         icon = 5
@@ -313,8 +314,13 @@ class NsPanelLovelanceUI:
       author = entity.attributes.media_artist
     if "volume_level" in entity.attributes:
       volume = int(entity.attributes.volume_level*100)
+      
+    if entity.state == "playing":
+      iconplaypause = 8
+    else:
+      iconplaypause = 9
 
-    return "entityUpd,|{0}|{1}|{2}|{3}|{4}|{5}".format(item, heading, icon, title, author, volume)
+    return f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}"
 
 
   def generate_page(self, page_number, page_type):

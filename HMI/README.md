@@ -105,7 +105,7 @@ entityUpd,*internalNameEntiy*,*heading*,*currentTemp*,*destTemp*,*status*,*minTe
 
 ### cardMedia Page
 
-entityUpd,|*internalNameEntiy*|*heading*|*icon*|*title*|*author*|*volume*
+entityUpd,|*internalNameEntiy*|*heading*|*icon*|*title*|*author*|*volume*|*playpauseicon*
 
 ## Messages from Nextion Display
 
@@ -177,6 +177,8 @@ ID | Icon
 5  | ![music](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/music.svg)
 6  | ![check-circle-outline](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/check-circle-outline.svg)
 7  | ![close-circle-outline](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/close-circle-outline.svg)
+8  | ![pause](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/pause.svg)
+9  | ![play](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/play.svg)
 
 
 # Design Guidelines for Nextion HMI Project
