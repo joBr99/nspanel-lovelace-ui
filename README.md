@@ -118,14 +118,14 @@ to do so:
 5. In the form that appears, write `joBr99/nspanel-lovelace-ui` as repository,
    and select `AppDaemon` as category
 6. Click on `ADD`
-7. Qolsys Gateway is now available to be installed and managed with HACS
+NSPanel Lovelance UI Backend is now available to be installed and managed with HACS
 
-Now, to install Qolsys Gateway with HACS, follow these steps:
+Now, to install NSPanel Lovelance UI Backend with HACS, follow these steps:
 
 1. Click on `HACS` on the left menu bar in Home Assistant Web UI
 2. Click on `Automations` in the right panel
 3. Click on `Explore & download repositories` in the bottom right corner
-4. Search for `nspanel-lovelace-ui`, and click on `NSPanel Lovelance UI` in the list that appears
+4. Search for `nspanel-lovelace-ui`, and click on `NSPanel Lovelance UI Backend` in the list that appears
 5. In the bottom right corner of the panel that appears, click on
    `Download this repository with HACS`
 6. A confirmation panel will appear, click on `Download`, and wait for HACS to
