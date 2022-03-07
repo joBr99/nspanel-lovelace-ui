@@ -12,7 +12,7 @@ To control the panel and update it with content from HomeAssistant there is an [
 See the following picture to get an idea of the look of this firmware for NSPanel.
 
 ![screens](doc-pics/screens.png)
-´
+
 
 - [How It Works](#how-it-works)
 - [Requirements](#requirements)
