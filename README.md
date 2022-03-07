@@ -216,6 +216,7 @@ For the app to work you need a working MQTT Configuration in AppDaemon. Please c
 ### Configure your NSPanel in AppDaemon
 
 Confiure your NSPanel as you like, you need to edit the `apps.yaml` inside of your appdeamon config folder.
+You can have multiple nspanel sections.
 
 ```yaml
 nspanel-1:
