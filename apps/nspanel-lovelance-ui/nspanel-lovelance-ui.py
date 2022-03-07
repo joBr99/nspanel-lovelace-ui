@@ -35,8 +35,20 @@ class NsPanelLovelanceUI:
     if type(self.config["brightnessScreensaver"]) == int:
       self.current_screensaver_brightness = self.config["brightnessScreensaver"]
     elif type(self.config["brightnessScreensaver"]) == list:
-      for timeset in self.config["brightnessScreensaver"]:
+      sorted_timesets = sorted(self.config["brightnessScreensaver"], key=lambda d: self.api.parse_time(d['time']))
+      found_current_dim_value = False
+      for timeset in sorted_timesets:
         self.api.run_daily(self.update_screensaver_brightness, timeset["time"], value=timeset["value"])
+        if self.api.parse_time(timeset["time"]) > self.api.get_now().time() and not found_current_dim_value:
+          # first time after current time, set dim value
+          self.current_screensaver_brightness = timeset["value"]
+          found_current_dim_value = True
+          # send screensaver brightness in case config has changed
+          self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
+    
+    # send date update in case config has been changed
+    self.update_date("")
+
 
     # register callbacks
     self.register_callbacks()
