@@ -192,8 +192,10 @@ class NsPanelLovelanceUI:
       
     if(btype == "positionSlider"):
       pos = int(optVal)
-      pos = 100 - pos
-      self.api.get_entity(entity_id).call_service("set_cover_position", position=pos)
+      self.api.get_entity(entity_id).call_service("volume_set", volume_level=pos)
+
+    if(btype == "volumeSlider"):
+      self.api.get_entity(entity_id).call_service("", position=pos)
 
   def register_callbacks(self):
     items = []
