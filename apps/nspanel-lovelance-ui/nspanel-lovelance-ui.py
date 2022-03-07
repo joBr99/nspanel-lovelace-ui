@@ -307,7 +307,7 @@ class NsPanelLovelanceUI:
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 3, name, "PRESS")
     
     if item_type == "scene":
-      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 5, name, "ACTIVATE")
+      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 10, name, "ACTIVATE")
 
   def generate_thermo_page(self, item):
     entity       = self.api.get_entity(item)
