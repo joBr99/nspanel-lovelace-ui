@@ -179,6 +179,7 @@ ID | Icon
 7  | ![close-circle-outline](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/close-circle-outline.svg)
 8  | ![pause](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/pause.svg)
 9  | ![play](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/play.svg)
+10  | ![palette](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/palette.svg)
 
 
 # Design Guidelines for Nextion HMI Project
