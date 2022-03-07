@@ -290,8 +290,8 @@ class NsPanelLovelanceUI:
       value = entity.state + " " + entity.attributes.unit_of_measurement
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "text", item, icon_id, name, value)
 
-    if item_type == "button":
-      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, item_type, item, 3, name, "PRESS")
+    if item_type == "button" or item_type == "input_button":
+      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 3, name, "PRESS")
 
   def generate_thermo_page(self, item):
     entity       = self.api.get_entity(item)
