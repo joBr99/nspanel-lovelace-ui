@@ -2,6 +2,7 @@
 
 <a href="https://paypal.me/joBr99" target="_blank"><img src="https://img.shields.io/static/v1?logo=paypal&label=&message=donate&color=slategrey"></a>
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 ![hacs validation](https://github.com/joBr99/nspanel-lovelace-ui/actions/workflows/hacs-validation.yaml/badge.svg)
 
 NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in the Design of [HomeAssistant](https://www.home-assistant.io/)'s Lovelace UI Design.
@@ -115,25 +116,12 @@ AppDaemon automations in HACS, as these are not enabled by default:
    then require you to wait a few hours for HACS to be fully configured. In this case,
    you won't be able to proceed to the next steps until HACS is ready.
 
-The Backend Application for this project is not yet in the default applications available in HACS.
-You will need to add this repository as a custom repository in HACS. In order
-to do so:
-
-1. Click on `HACS` on the left menu bar in Home Assistant Web UI
-2. Click on `Automations` in the right panel
-3. Click on the three dots in the top right corner
-4. Select `Custom repositories`
-5. In the form that appears, write `joBr99/nspanel-lovelace-ui` as repository,
-   and select `AppDaemon` as category
-6. Click on `ADD`
-NSPanel Lovelance UI Backend is now available to be installed and managed with HACS
-
 Now, to install NSPanel Lovelance UI Backend with HACS, follow these steps:
 
 1. Click on `HACS` on the left menu bar in Home Assistant Web UI
 2. Click on `Automations` in the right panel
 3. Click on `Explore & download repositories` in the bottom right corner
-4. Search for `nspanel-lovelace-ui`, and click on `NSPanel Lovelance UI Backend` in the list that appears
+4. Search for `NSPanel`, and click on `NSPanel Lovelance UI Backend` in the list that appears
 5. In the bottom right corner of the panel that appears, click on
    `Download this repository with HACS`
 6. A confirmation panel will appear, click on `Download`, and wait for HACS to
