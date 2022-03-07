@@ -241,10 +241,10 @@ nspanel-1:
           - input_boolean.example_input_boolean
           - sensor.example_sensor
       - type: cardEntities
-        heading: Example Page 1
+        heading: Example Page 2
         items:
           - button.example_button
-          - delete
+          - input_button.example_input_button
           - light.light_example
           - delete
       - type: cardThermo
