@@ -196,6 +196,8 @@ class NsPanelLovelanceUI:
 
     if(btype == "volumeSlider"):
       pos = int(optVal)
+      # HA wants this value between 0 and 1 as float
+      pos = pos/100
       self.api.get_entity(entity_id).call_service("volume_set", volume_level=pos)
 
   def register_callbacks(self):
