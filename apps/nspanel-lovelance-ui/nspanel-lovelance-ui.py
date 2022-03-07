@@ -167,6 +167,9 @@ class NsPanelLovelanceUI:
       self.api.get_entity(entity_id).call_service("close_cover")
       
     if(btype == "button"):
+      if(entity_id.startswith('scene')):
+        self.api.get_entity(entity_id).call_service("turn_on")
+    else:
       self.api.get_entity(entity_id).call_service("press")
 
     if(btype == "media-next"):
@@ -290,6 +293,9 @@ class NsPanelLovelanceUI:
 
     if item_type == "button" or item_type == "input_button":
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 3, name, "PRESS")
+    
+    if item_type == "scene":
+      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 5, name, "ACTIVATE")
 
   def generate_thermo_page(self, item):
     entity       = self.api.get_entity(item)
