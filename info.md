@@ -35,6 +35,13 @@ nspanel-1:
           - button.example_button
           - input_button.example_input_button
           - light.light_example
+          - delete # To make sure we don't keep buttons from previous page (read this as 'empty')
+      - type: cardEntities
+        heading: Example Page 3
+        items:
+          - scene.some_scene
+          - scene.moodlights
+          - delete
           - delete
       - type: cardThermo
         heading: Exmaple Thermostat
