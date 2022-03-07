@@ -16,7 +16,7 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 - Screensaver Page with Time and Date
 
 It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
-To control the panel and update it with content from HomeAssistant there is an [AppDeamon](https://github.com/AppDaemon/appdaemon) App.
+To control the panel and update it with content from HomeAssistant there is an [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
 
 See the following picture to get an idea of the look of this firmware for NSPanel.
 
@@ -26,7 +26,7 @@ See the following picture to get an idea of the look of this firmware for NSPane
 1. Install Tasmota to NSPanel
 2. Install Berry Driver in Tasmota and setup MQTT
 3. Flash Nextion Firmware
-4. Install AppDeamon, setup MQTT and install Backend Application
+4. Install AppDaemon, setup MQTT and install Backend Application
 
 For more detailed Instructions see the following Sections:
 
@@ -59,7 +59,7 @@ For more detailed Instructions see the following Sections:
 
 The NSPanel has two components an esp32 which runs Tasmota in this project and the nextion display, which is controlled by the esp32 via serial.
 This project contains a display firmware, which can be controlled over serial/mqtt. 
-It's controlled by an AppDeamon Application, which crafts the required commands from your HomeAssistant Instance.
+It's controlled by an AppDaemon Application, which crafts the required commands from your HomeAssistant Instance.
 
 For more details on how the display firmware works see the [README File in the HMI Folder](HMI/README.md)
 
@@ -76,29 +76,29 @@ For more details on how the display firmware works see the [README File in the H
 
 ### Installing AppDaemon
 
-The recommended backend application for this firmware is written in a python for [AppDeamon](https://github.com/AppDaemon/appdaemon). 
+The recommended backend application for this firmware is written in a python for [AppDaemon](https://github.com/AppDaemon/appdaemon). 
 This means it requires a working and running version of AppDaemon.
 
-The easiest way to install it is through HomeAssistant's Supervisor Add-on Store, it will be automaticly connected to your HomeAssistant Instance.
+The easiest way to install it is through Home Assistant's Supervisor Add-on Store, it will be automaticly connected to your Home Assistant Instance.
 
 ![hass-add-on-store](doc-pics/hass-add-on-store.png)
 
 ### Installing Studio Code Server (optional, recommended)
 
-You will need a way a way to edit the `apps.yaml` config file in the appdeamon folder. 
+You will need a way to edit the `apps.yaml` config file in the Appdaemon folder. 
 Install Studio Code Server from Home Assistant's Supervisor Add-on Store to easily edit configuration Files on your HomeAssistant Instance.
 
 ### Installing HACS (optional, recommended)
 
 HACS is the Home Assistant Community Store and allows for community integrations and
 automations to be updated cleanly and easily from the Home Assistant web user interface.
-It's simple to install the appdeamon app without HACS, but keeping up to date requires
+It's simple to install the AppDaemon app without HACS, but keeping up to date requires
 manual steps that HACS will handle for you: you will be notified of updates, and they
 can be installed by a click on a button.
 
 If you want to use HACS, you will have to follow [their documentation on how to install HACS](https://hacs.xyz/docs/setup/download).
 
-### Installing AppDeamon Backend Application 
+### Installing AppDaemon Backend Application 
 
 #### With HACS (recommended)
 
@@ -208,7 +208,7 @@ For the app to work you need a working MQTT Configuration in AppDaemon. Please c
 
 ### Configure your NSPanel in AppDaemon
 
-Confiure your NSPanel as you like, you need to edit the `apps.yaml` inside of your appdeamon config folder.
+Confiure your NSPanel as you like, you need to edit the `apps.yaml` inside of your Appdaemon config folder.
 You can have multiple nspanel sections.
 
 ```yaml
