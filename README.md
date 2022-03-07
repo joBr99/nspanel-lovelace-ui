@@ -13,6 +13,7 @@ See the following picture to get an idea of the look of this firmware for NSPane
 
 ![screens](doc-pics/screens.png)
 
+Don't ne afraid of the long Guide, you probably already have a ton of the required stuff like Homeassistant or MQTT.
 
 - [How It Works](#how-it-works)
 - [Requirements](#requirements)
@@ -50,6 +51,9 @@ It's controlled by an AppDeamon Application, which crafts the required commands 
 For more details on how the display firmware works see the [README File in the HMI Folder](HMI/README.md)
 
 ## Requirements
+
+ - NSPanel
+ - USB to Serial TTL Adapter
 
 ## Installation - Home Automation Part
 
