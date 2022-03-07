@@ -275,9 +275,12 @@ class NsPanelLovelanceUI:
 
     if item_type == "sensor":
       icon_id = 0
-      icon_id = {
+      icon_mapping = {
         "temperature": 2
-      }[entity.attributes.device_class]
+        "power": 4
+      }
+      if entity.attributes.device_class in icon_mapping:
+        icon_id = icon_mapping[entity.attributes.device_class]
       
       value = entity.state + " " + entity.attributes.unit_of_measurement
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "text", item, icon_id, name, value)
@@ -314,7 +317,7 @@ class NsPanelLovelanceUI:
       author = entity.attributes.media_artist
     if "volume_level" in entity.attributes:
       volume = int(entity.attributes.volume_level*100)
-      
+
     if entity.state == "playing":
       iconplaypause = 8
     else:
