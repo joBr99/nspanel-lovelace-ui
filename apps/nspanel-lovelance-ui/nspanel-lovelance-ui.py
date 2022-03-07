@@ -186,8 +186,8 @@ class NsPanelLovelanceUI:
     if(btype == "button"):
       if(entity_id.startswith('scene')):
         self.api.get_entity(entity_id).call_service("turn_on")
-    else:
-      self.api.get_entity(entity_id).call_service("press")
+      else:
+        self.api.get_entity(entity_id).call_service("press")
 
     if(btype == "media-next"):
       self.api.get_entity(entity_id).call_service("media_next_track")
