@@ -138,7 +138,7 @@ Now, to install Qolsys Gateway with HACS, follow these steps:
 #### Manually
 
 Installing the Backend Application manually can be summarized by putting the content of the
-`apps/` directory of this repository (the `qolsysgw/` directory) into the `apps/`
+`apps/` directory of this repository (the `nspanel-lovelance-ui/` directory) into the `apps/`
 directory of your AppDaemon installation.
 
 
