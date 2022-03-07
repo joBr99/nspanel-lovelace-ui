@@ -13,14 +13,18 @@ See the following picture to get an idea of the look of this firmware for NSPane
 
 ![screens](doc-pics/screens.png)
 
-Don't ne afraid of the long Guide, you probably already have a ton of the required stuff like Homeassistant or MQTT.
+## TLDR
+1. Install Tasmota to NSPanel
+2. Install Berry Driver in Tasmota and setup MQTT
+3. Flash Nextion Firmware
+4. Install AppDeamon, setup MQTT and install Backend Application
+
+For more detailed Instructions see the following Sections:
 
 - [How It Works](#how-it-works)
 - [Requirements](#requirements)
 
 - [Installation - Home Automation Part](#installation---home-automation-part)
-   - [Installing Home Assistant](#installing-home-assistant)
-   - [Installing an MQTT Broker](#installing-an-mqtt-broker)
    - [Installing AppDaemon](#installing-appdaemon)
    - [Installing Studio Code Server (optional, recommended)](#installing-studio-code-server-optional-recommended)
    - [Installing HACS (optional, recommended)](#installing-hacs-optional-recommended)
@@ -54,19 +58,12 @@ For more details on how the display firmware works see the [README File in the H
 
  - NSPanel
  - USB to Serial TTL Adapter
+ - Running [Home Assistant Instance](https://www.home-assistant.io/installation/)
+ - Installed [MQTT Broker](https://www.home-assistant.io/docs/mqtt/broker) alongside Homeassistant
 
 ## Installation - Home Automation Part
 
 ### Installing Home Assistant
-
-You can get to the [Home Assistant documentation for installation](https://www.home-assistant.io/installation/)
-page in order to setup Home Assistant for your needs.
-
-### Installing an MQTT Broker
-
-You will require a working MQTT broker alongside your HomeAssistant
-installation. HomeAssistant provides [documentation on how to install
-and configure an MQTT broker](https://www.home-assistant.io/docs/mqtt/broker).
 
 ### Installing AppDaemon
 
