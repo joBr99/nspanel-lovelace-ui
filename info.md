@@ -33,8 +33,8 @@ nspanel-1:
         heading: Example Page 1
         items:
           - button.example_button
-          - cover.rolladenterasse_cover_1
-          - light.schreibtischlampe
+          - delete
+          - light.light_example
           - delete
       - type: cardThermo
         heading: Exmaple Thermostat
