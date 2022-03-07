@@ -17,6 +17,9 @@ class NsPanelLovelanceUI:
     self.current_page_nr = 0
     self.current_screensaver_brightness = 10
 
+    # check configured items
+    self.check_items()
+
     # Setup, mqtt subscription and callback
     self.mqtt = self.api.get_plugin_api("MQTT")
     self.mqtt.mqtt_subscribe(topic=self.config["panelRecvTopic"])
@@ -212,6 +215,21 @@ class NsPanelLovelanceUI:
       # HA wants this value between 0 and 1 as float
       pos = pos/100
       self.api.get_entity(entity_id).call_service("volume_set", volume_level=pos)
+
+  def check_items(self):
+    items = []
+    for page in self.config["pages"]:
+      if "item" in page:
+        items.append(page["item"])
+      if "items" in page:
+        items.extend(page["items"])
+    
+    for item in items:
+      if self.api.entity_exists(item) or item == "delete":
+        self.api.log("found configured item in homeassistant %s", item, level="DEBUG")
+      else:
+        self.api.error("the following item does not exist in homeassistant, configuration error: %s", item)
+        raise Exception('Entity not found')
 
   def register_callbacks(self):
     items = []
