@@ -228,6 +228,7 @@ nspanel-1:
     locale: "de_DE"
     timeFormat: "%H:%M"
     dateFormat: "%A, %d. %B %Y"
+	weatherEntity: weather.example
     pages:
       - type: cardEntities
         heading: Example Page 1

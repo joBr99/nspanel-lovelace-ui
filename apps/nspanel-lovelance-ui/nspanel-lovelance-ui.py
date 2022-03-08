@@ -34,6 +34,12 @@ class NsPanelLovelanceUI:
     self.api.run_daily(self.update_date, time)
     self.update_date("")
 
+    # Setup weather callback # TODO: change to a less often callback
+    time = datetime.time(0, 0, 0)
+    self.api.run_minutely(self.update_screensaver_weather, time)
+
+    self.update_screensaver_weather("")
+
     # set brightness of screensaver
     if type(self.config["brightnessScreensaver"]) == int:
       self.current_screensaver_brightness = self.config["brightnessScreensaver"]
@@ -163,6 +169,39 @@ class NsPanelLovelanceUI:
   def update_screensaver_brightness(self, kwargs):
     self.current_screensaver_brightness = kwargs['value']
     self.send_mqtt_msg(f"dimmode,{self.current_screensaver_brightness}")
+
+  def update_screensaver_weather(self, kwargs):
+    if not ("weatherEntity" in self.config and self.api.entity_exists(self.config["weatherEntity"])):
+      return
+    we = self.api.get_entity(self.config["weatherEntity"])
+    unit = "°C"
+
+    weathericons = {
+      'clear-night': 17,
+      'cloudy': 12,
+      'exceptional': 11,
+      'fog': 13,
+      'hail': 14,
+      'lightning': 15,
+      'lightning-rainy': 16,
+      'partlycloudy': 18,
+      'pouring': 19,
+      'rainy': 20,
+      'snowy': 21,
+      'snowy-rainy': 22,
+      'sunny': 23,
+      'windy': 24,
+      'windy-variant': 25
+    }
+
+    # TODO: Weekday's instead of +1, +2
+    o1 = "Day +1"
+    i1 = weathericons[we.attributes.forecast[0]['condition']]
+    u1 = we.attributes.forecast[0]['temperature']
+    o2 = "Day +2"
+    i2 = weathericons[we.attributes.forecast[1]['condition']]
+    u2 = we.attributes.forecast[1]['temperature']
+    self.send_mqtt_msg(f"weatherUpdate,?{weathericons[we.state]}?{we.attributes.temperature}{unit}?{26}?{we.attributes.humidity} %?{o1}?{i1}?{u1}?{o2}?{i2}?{u2}")
 
   def scale(self, val, src, dst):
     """
