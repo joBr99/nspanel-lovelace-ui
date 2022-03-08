@@ -201,6 +201,7 @@ ID | Icon
 23  | ![weather-sunny](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/weather-sunny.svg)
 24  | ![weather-windy](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/weather-windy.svg)
 25  | ![weather-windy-variant](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/weather-windy-variant.svg)
+26  | ![water-percent](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/water-percent.svg)
 
 # Design Guidelines for Nextion HMI Project
 
