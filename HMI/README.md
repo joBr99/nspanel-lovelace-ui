@@ -52,7 +52,8 @@ date,?Di 24. Februar
 
 set screensaver timeout (set time in ms limited from 50 to 65535:
 
-timeout,15000
+timeout,15000,0 - timeout after 15000 disable screensaver
+timeout,15000,1 - timeout after 15000 enable screensaver
 
 change the page type:
 
@@ -64,6 +65,11 @@ pageType,cardMedia
 
 pageType,popupLight,Schreibtischlampe
 
+### screensaver page
+
+weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val
+
+weatherUpdate,?0?2,3 C?0?0 mm?Mi?0?9,3 C?Do?0?11,5 C
 
 ### cardEntities Page
 
