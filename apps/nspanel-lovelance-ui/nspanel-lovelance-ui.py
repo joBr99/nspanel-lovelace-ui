@@ -88,7 +88,7 @@ class NsPanelLovelanceUI:
         if timeout < 5:
           timeout = 5
         timeout = timeout * 1000
-        self.send_mqtt_msg("timeout,{0}".format(timeout))
+        self.send_mqtt_msg("timeout,{0},{1}".format(timeout, 1))
 
         # send screensaver brightness
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
