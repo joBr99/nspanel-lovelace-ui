@@ -33,8 +33,8 @@ class NsPanelLovelanceUI:
     self.update_date("")
 
     # Setup weather callback - send/update weather information every 10 minutes
-    time = datetime.time(0, 0, 0)
-    self.api.run_every(self.update_screensaver_weather, "now", 10 * 60)
+    weather_interval = 15 * 60 # 15 minutes
+    self.api.run_every(self.update_screensaver_weather, "now", weather_interval)
 
     self.update_screensaver_weather("")
 
