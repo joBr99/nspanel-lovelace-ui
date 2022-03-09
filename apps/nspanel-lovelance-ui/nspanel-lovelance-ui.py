@@ -36,8 +36,6 @@ class NsPanelLovelanceUI:
     weather_interval = 15 * 60 # 15 minutes
     self.api.run_every(self.update_screensaver_weather, "now", weather_interval)
 
-    self.update_screensaver_weather("")
-
     # set brightness of screensaver
     if type(self.config["brightnessScreensaver"]) == int:
       self.current_screensaver_brightness = self.config["brightnessScreensaver"]
