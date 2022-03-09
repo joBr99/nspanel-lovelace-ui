@@ -57,6 +57,8 @@ timeout,15000,1 - timeout after 15000 enable screensaver
 
 change the page type:
 
+pageType,pageStartup
+
 pageType,cardEntities
 
 pageType,cardThermo
@@ -117,7 +119,7 @@ entityUpd,|*internalNameEntiy*|*heading*|*icon*|*title*|*author*|*volume*|*playp
 
 ### startup page
 
-event,startup
+event,startup,version
 
 ### screensaver page
 
