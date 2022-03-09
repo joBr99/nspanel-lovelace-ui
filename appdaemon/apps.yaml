@@ -1,13 +1,10 @@
 ---
 nspanel:
-  module: nspanel
+  module: nspanel-lovelance-ui
   class: NsPanelLovelanceUIManager
   config:
-    panelRecvTopic: "tele/tasmota_NsPanelTerrasse/RESULT"
-    panelSendTopic: "cmnd/tasmota_NsPanelTerrasse/CustomSend"
-    locale: "de_DE"
-    timeFormat: "%H : %M"
-    dateFormat: "%A, %d. %B %Y"
+    panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
+    panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
     timeoutScreensaver: 15 #in seconds, values between 5 and 60 are allowed
     #brightnessScreensaver: 10
     brightnessScreensaver:
@@ -15,25 +12,36 @@ nspanel:
         value: 10
       - time: "23:00:00"
         value: 0
+    locale: "de_DE"
+    timeFormat: "%H:%M"
+    dateFormat: "%A, %d. %B %Y"
+    weatherEntity: weather.example
     pages:
       - type: cardEntities
-        heading: TestPage1
+        heading: Example Page 1
         items:
-          - cover.rolladenfenster_cover_1
-          - cover.nspterrasse_cover_1
-          - input_boolean.notify_home
-          - sensor.nspterrasse_analog_temperature1
+          - cover.example_cover
+          - switch.example_switch
+          - input_boolean.example_input_boolean
+          - sensor.example_sensor
       - type: cardEntities
-        heading: TestPage2
+        heading: Example Page 2
         items:
-          - button.beamer_key_left
-          - cover.rolladenterasse_cover_1
-          - light.schreibtischlampe
+          - button.example_button
+          - input_button.example_input_button
+          - light.light_example
+          - delete # To make sure we don't keep buttons from previous page (read this as 'empty')
+      - type: cardEntities
+        heading: Example Page 3
+        items:
+          - scene.some_scene
+          - scene.moodlights
+          - delete
           - delete
       - type: cardThermo
-        heading: TestThermo
-        item: climate.kuche_boden
+        heading: Exmaple Thermostat
+        item: climate.example_climate
       - type: cardMedia
-        heading: TestMedia
+        heading: Exampe Media
         item: media_player.spotify_user
 
