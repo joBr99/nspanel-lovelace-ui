@@ -1,7 +1,5 @@
-import os
 import json
 import datetime
-import time
 import hassapi as hass
 
 class NsPanelLovelanceUIManager(hass.Hass):
@@ -52,7 +50,7 @@ class NsPanelLovelanceUI:
         if self.api.parse_time(timeset["time"]) > self.api.get_now().time() and not found_current_dim_value:
           # first time after current time, set dim value
           self.current_screensaver_brightness = sorted_timesets[index-1]["value"]
-          self.api.log("Setting dim value to %s", sorted_timesets[index-1])
+          self.api.log("Setting dim value to %s", sorted_timesets[index-1], level="DEBUG")
           found_current_dim_value = True
           # send screensaver brightness in case config has changed
           self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
@@ -389,7 +387,7 @@ class NsPanelLovelanceUI:
     title        = ""
     author       = ""
     volume       = 0
-    iconplaypause = 8
+    #iconplaypause = 9
     if "media_content_type" in entity.attributes:
       if entity.attributes.media_content_type == "music":
         icon = 5
@@ -434,4 +432,3 @@ class NsPanelLovelanceUI:
       self.send_mqtt_msg("pageType,{0}".format(page_type))
       command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
-
