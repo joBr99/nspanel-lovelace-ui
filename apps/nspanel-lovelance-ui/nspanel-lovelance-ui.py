@@ -194,11 +194,14 @@ class NsPanelLovelanceUI:
       'windy-variant': 25
     }
 
-    # TODO: Weekday's instead of +1, +2
-    o1 = "Day +1"
+    o1 = we.attributes.forecast[0]['datetime']
+    o1 = datetime.datetime.fromisoformat(o1)
+    o1 = o1.strftime("%a")
     i1 = weathericons[we.attributes.forecast[0]['condition']]
     u1 = we.attributes.forecast[0]['temperature']
-    o2 = "Day +2"
+    o2 = we.attributes.forecast[1]['datetime']
+    o2 = datetime.datetime.fromisoformat(o2)
+    o2 = o2.strftime("%a")
     i2 = weathericons[we.attributes.forecast[1]['condition']]
     u2 = we.attributes.forecast[1]['temperature']
     self.send_mqtt_msg(f"weatherUpdate,?{weathericons[we.state]}?{we.attributes.temperature}{unit}?{26}?{we.attributes.humidity} %?{o1}?{i1}?{u1}?{o2}?{i2}?{u2}")
