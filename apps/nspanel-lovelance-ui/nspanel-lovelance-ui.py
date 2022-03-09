@@ -152,6 +152,9 @@ class NsPanelLovelanceUI:
         temp = int(msg[4])/10
         self.api.get_entity(msg[3]).call_service("set_temperature", temperature=temp)
 
+      if msg[1] == "screensaverOpen":
+        self.update_screensaver_weather("")
+
   def send_mqtt_msg(self,msg):
     self.mqtt.mqtt_publish(self.config["panelSendTopic"], msg)
 
