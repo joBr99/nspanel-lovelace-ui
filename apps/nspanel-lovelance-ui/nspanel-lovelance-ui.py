@@ -32,11 +32,9 @@ class NsPanelLovelanceUI:
     self.api.run_daily(self.update_date, time)
     self.update_date("")
 
-    # Setup weather callback # TODO: change to a less often callback
-    time = datetime.time(0, 0, 0)
-    self.api.run_minutely(self.update_screensaver_weather, time)
-
-    self.update_screensaver_weather("")
+    # Setup weather callback
+    weather_interval = 15 * 60 # 15 minutes
+    self.api.run_every(self.update_screensaver_weather, "now", weather_interval)
 
     # set brightness of screensaver
     if type(self.config["brightnessScreensaver"]) == int:
