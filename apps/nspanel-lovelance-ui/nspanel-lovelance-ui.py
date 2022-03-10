@@ -23,6 +23,10 @@ class NsPanelLovelanceUI:
     self.mqtt.mqtt_subscribe(topic=self.config["panelRecvTopic"])
     self.mqtt.listen_event(self.handle_mqtt_incoming_message, "MQTT_MESSAGE", topic=self.config["panelRecvTopic"], namespace='mqtt')
 
+    # send panel back to startup page on restart of this script
+    self.send_mqtt_msg("pageType,pageStartup")
+
+
     # Setup time callback
     time = datetime.time(0, 0, 0)
     self.api.run_minutely(self.update_time, time)
@@ -48,7 +52,7 @@ class NsPanelLovelanceUI:
         if self.api.parse_time(timeset["time"]) > self.api.get_now().time() and not found_current_dim_value:
           # first time after current time, set dim value
           self.current_screensaver_brightness = sorted_timesets[index-1]["value"]
-          self.api.log("Setting dim value to %s", sorted_timesets[index-1], level="DEBUG")
+          self.api.log("Setting dim value to %s", sorted_timesets[index-1]) #level="DEBUG"
           found_current_dim_value = True
           # send screensaver brightness in case config has changed
           self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
@@ -272,7 +276,6 @@ class NsPanelLovelanceUI:
         self.api.log("Found configured item in Home Assistant %s", item, level="DEBUG")
       else:
         self.api.error("The following item does not exist in Home Assistant, configuration error: %s", item)
-        raise Exception('Entity not found')
 
   def register_callbacks(self):
     items = []
@@ -283,6 +286,8 @@ class NsPanelLovelanceUI:
         items.extend(page["items"])
     
     for item in items:
+      if not self.api.entity_exists(item):
+        continue
       self.api.log("Enable state callback for %s", item, level="DEBUG")
       self.api.handle = self.api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
 
@@ -370,6 +375,10 @@ class NsPanelLovelanceUI:
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 10, name, "ACTIVATE")
 
   def generate_thermo_page(self, item):
+
+    if not self.api.entity_exists(item):
+      return
+
     entity       = self.api.get_entity(item)
     heading      = entity.attributes.friendly_name
     current_temp = int(entity.attributes.current_temperature*10)
@@ -382,6 +391,10 @@ class NsPanelLovelanceUI:
     return "entityUpd,{0},{1},{2},{3},{4},{5},{6},{7}".format(item, heading, current_temp, dest_temp, status, min_temp, max_temp, step_temp)
 
   def generate_media_page(self, item):
+
+    if not self.api.entity_exists(item):
+      return
+
     entity       = self.api.get_entity(item)
     heading      = entity.attributes.friendly_name
     icon         = 0
