@@ -176,7 +176,10 @@ See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more 
 #### Use your own Webserver
 
 Upload the [tft file from HMI folder](HMI/nspanel.tft) to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console.
+
 **Webserver needs to support HTTP Range Header Requests, python2/3 http server doesn't work**
+
+**Webserver must be HTTP, HTTPS is not supported, due to limitations of berry lang on tasmota**
 
 `FlashNextion http://ip-address-of-your-homeassistant:8123/local/nspanel.tft`
 
