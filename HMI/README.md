@@ -52,8 +52,8 @@ date,?Di 24. Februar
 
 set screensaver timeout (set time in ms limited from 50 to 65535:
 
-timeout,15000,0 - timeout after 15000 disable screensaver
-timeout,15000,1 - timeout after 15000 enable screensaver
+timeout,15 - timeout after 15 seconds
+timeout,0 - disable screensaver
 
 change the page type:
 
