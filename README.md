@@ -53,7 +53,7 @@ For more detailed Instructions see the following Sections:
 - [Configuration](#configuration)
    - [Configuring the MQTT integration in AppDaemon](#configuring-the-mqtt-integration-in-appdaemon)
    - [Configure your NSPanel in AppDaemon](#configure-your-nspanel-in-appdaemon)
-
+- [FAQ](#faq---frequently-asked-questions)
 
 
 ## How It Works
@@ -142,7 +142,7 @@ This section describes how to free your nspanel from stock firmware and get it r
 
 ### Flash Tasmota to your NSPanel
 
-You need to connect to your nspanel via serial and flash the `tasmota32-nspanel.bin` to your NSPanel.
+You need to connect to your nspanel via serial and flash the [tasmota32-nspanel.bin](https://github.com/tasmota/install/raw/main/firmware/unofficial/tasmota32-nspanel.bin) to your NSPanel.
 Make sure to come back to this guide, before uploading the nspanel.be/autoexec.be files.
 For more deatils see the [NSPanel Page of the Tasmota Template Repository](https://templates.blakadder.com/sonoff_NSPanel.html).
 
@@ -269,3 +269,26 @@ key | optional | type | default | description
 `module` | False | string | | The module name of the app.
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
+
+
+## FAQ - Frequently Asked Questions
+
+### Flashing of the Display Firmware with FlashNextion doesn't work
+
+1. Make sure to use the [tasmota32-nspanel.bin](https://github.com/tasmota/install/raw/main/firmware/unofficial/tasmota32-nspanel.bin) Tasmota build.
+2. Make sure to use an WebServer which supports http range requests HomeAssistant, apache2 or nginx for exmaple.
+3. Make sure to use HTTP and **not HTTPS**
+
+### My flashing doesn't start at all
+
+Try to send the FlashNextion command a second time.
+
+### My flashing got interrupted and the loading bar does not longer change.
+
+Reboot Tasmota and try to flash it a second time.
+
+### Waiting for content - This is taking longer than usual on the screen
+
+Please check your MQTT Topics in your apps.yaml and your mqtt configuration on tasmota.
+
+
