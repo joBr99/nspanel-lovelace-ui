@@ -187,7 +187,7 @@ Upload the [tft file from HMI folder](HMI/nspanel.tft) to a Webserver (for examp
 
 ### Configuring the MQTT integration in AppDaemon
 
-For the app to work you need a working MQTT Configuration in AppDaemon. Please configure mqtt server, user and password in `appdaemon.yaml`
+For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml`
 
 ```yaml
 .
@@ -209,6 +209,7 @@ For the app to work you need a working MQTT Configuration in AppDaemon. Please c
 .
 .
 ```
+Please see [appdaemon.yaml](appdaemon/appdaemon.yaml) as an exmaple.
 
 ### Configure your NSPanel in AppDaemon
 
