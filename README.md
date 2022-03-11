@@ -163,6 +163,8 @@ After a reboot of tasmota your screen will light up with the stock display firmw
 Configure your MQTT Server in Tasmota.
 See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more details.
 
+![tasmota-mqtt-config](doc-pics/tasmota-mqtt-config.png)
+
 ### Upload Berry Driver to Tasmota
 
 1. Download the [Berry Driver from this Repository](tasmota/autoexec.be).
