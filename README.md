@@ -190,9 +190,13 @@ Upload the [tft file from HMI folder](HMI/nspanel.tft) to a Webserver (for examp
 For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml`
 
 ```yaml
-.
-.
-.
+---
+secrets: /config/secrets.yaml
+appdaemon:
+  latitude: 52.0
+  longitude: 4.0
+  elevation: 2
+  time_zone: Europe/Berlin
   plugins:
     HASS:
       type: hass
@@ -205,9 +209,11 @@ For the app to work you need a working MQTT Configuration in AppDaemon. Please a
       client_user: "mqttuser"
       client_password: "mqttpassword"
       client_topics: NONE
-.
-.
-.
+http:
+  url: http://127.0.0.1:5050
+admin:
+api:
+hadashboard:
 ```
 Please see [appdaemon.yaml](appdaemon/appdaemon.yaml) as an exmaple.
 
