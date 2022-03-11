@@ -13,7 +13,7 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 - Detail Pages for Lights (Brightness and Temperature of the Light) and for Covers (Position)
 - Thermostat Page 
 - Media Player Card
-- Screensaver Page with Time and Date
+- Screensaver Page with Time, Date and Weather Information
 
 It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
 To control the panel and update it with content from HomeAssistant there is an [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
@@ -53,7 +53,7 @@ For more detailed Instructions see the following Sections:
 - [Configuration](#configuration)
    - [Configuring the MQTT integration in AppDaemon](#configuring-the-mqtt-integration-in-appdaemon)
    - [Configure your NSPanel in AppDaemon](#configure-your-nspanel-in-appdaemon)
-
+- [FAQ](#faq---frequently-asked-questions)
 
 
 ## How It Works
@@ -142,7 +142,7 @@ This section describes how to free your nspanel from stock firmware and get it r
 
 ### Flash Tasmota to your NSPanel
 
-You need to connect to your nspanel via serial and flash the `tasmota32-nspanel.bin` to your NSPanel.
+You need to connect to your nspanel via serial and flash the [tasmota32-nspanel.bin](https://github.com/tasmota/install/raw/main/firmware/unofficial/tasmota32-nspanel.bin) to your NSPanel.
 Make sure to come back to this guide, before uploading the nspanel.be/autoexec.be files.
 For more deatils see the [NSPanel Page of the Tasmota Template Repository](https://templates.blakadder.com/sonoff_NSPanel.html).
 
@@ -163,6 +163,8 @@ After a reboot of tasmota your screen will light up with the stock display firmw
 Configure your MQTT Server in Tasmota.
 See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more details.
 
+![tasmota-mqtt-config](doc-pics/tasmota-mqtt-config.png)
+
 ### Upload Berry Driver to Tasmota
 
 1. Download the [Berry Driver from this Repository](tasmota/autoexec.be).
@@ -176,7 +178,10 @@ See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more 
 #### Use your own Webserver
 
 Upload the [tft file from HMI folder](HMI/nspanel.tft) to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console.
+
 **Webserver needs to support HTTP Range Header Requests, python2/3 http server doesn't work**
+
+**Webserver must be HTTP, HTTPS is not supported, due to limitations of berry lang on tasmota**
 
 `FlashNextion http://ip-address-of-your-homeassistant:8123/local/nspanel.tft`
 
@@ -184,12 +189,16 @@ Upload the [tft file from HMI folder](HMI/nspanel.tft) to a Webserver (for examp
 
 ### Configuring the MQTT integration in AppDaemon
 
-For the app to work you need a working MQTT Configuration in AppDaemon. Please configure mqtt server, user and password in `appdaemon.yaml`
+For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml`
 
 ```yaml
-.
-.
-.
+---
+secrets: /config/secrets.yaml
+appdaemon:
+  latitude: 52.0
+  longitude: 4.0
+  elevation: 2
+  time_zone: Europe/Berlin
   plugins:
     HASS:
       type: hass
@@ -202,10 +211,13 @@ For the app to work you need a working MQTT Configuration in AppDaemon. Please c
       client_user: "mqttuser"
       client_password: "mqttpassword"
       client_topics: NONE
-.
-.
-.
+http:
+  url: http://127.0.0.1:5050
+admin:
+api:
+hadashboard:
 ```
+Please see [appdaemon.yaml](appdaemon/appdaemon.yaml) as an exmaple.
 
 ### Configure your NSPanel in AppDaemon
 
@@ -265,3 +277,26 @@ key | optional | type | default | description
 `module` | False | string | | The module name of the app.
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
+
+
+## FAQ - Frequently Asked Questions
+
+### Flashing of the Display Firmware with FlashNextion doesn't work
+
+1. Make sure to use the [tasmota32-nspanel.bin](https://github.com/tasmota/install/raw/main/firmware/unofficial/tasmota32-nspanel.bin) Tasmota build.
+2. Make sure to use an WebServer which supports http range requests like HomeAssistant, apache2 or nginx for exmaple.
+3. Make sure to use HTTP and **not HTTPS**
+
+### My flashing doesn't start at all
+
+Try to send the FlashNextion command a second time.
+
+### My flashing got interrupted and the loading bar does not longer change.
+
+Reboot Tasmota and try to flash it a second time.
+
+### Waiting for content - This is taking longer than usual on the screen
+
+Please check your MQTT Topics in your apps.yaml and your mqtt configuration on tasmota.
+
+
