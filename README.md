@@ -13,7 +13,7 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 - Detail Pages for Lights (Brightness and Temperature of the Light) and for Covers (Position)
 - Thermostat Page 
 - Media Player Card
-- Screensaver Page with Time and Date and Weather Information
+- Screensaver Page with Time, Date and Weather Information
 
 It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
 To control the panel and update it with content from HomeAssistant there is an [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
