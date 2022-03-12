@@ -117,7 +117,7 @@ Button b0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : newtxt
+        Text                                : bck
         Max. Text Size                      : 10
     
     Events
