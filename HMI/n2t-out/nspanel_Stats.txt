@@ -1,0 +1,58 @@
+Program.s
+	0    Component(s)
+	17   Line(s) of event code
+	17   Unique line(s) of event code
+pageIcons
+	6    Component(s)
+	0    Line(s) of event code
+	0    Unique line(s) of event code
+pageSerialTest
+	13   Component(s)
+	48   Line(s) of event code
+	43   Unique line(s) of event code
+pageTest
+	12   Component(s)
+	12   Line(s) of event code
+	12   Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	133  Line(s) of event code
+	103  Unique line(s) of event code
+pageSwipeTest
+	18   Component(s)
+	62   Line(s) of event code
+	44   Unique line(s) of event code
+popupNotify
+	15   Component(s)
+	143  Line(s) of event code
+	95   Unique line(s) of event code
+screensaver
+	25   Component(s)
+	145  Line(s) of event code
+	115  Unique line(s) of event code
+cardThermo
+	27   Component(s)
+	200  Line(s) of event code
+	119  Unique line(s) of event code
+popupLight
+	27   Component(s)
+	296  Line(s) of event code
+	152  Unique line(s) of event code
+popupShutter
+	19   Component(s)
+	148  Line(s) of event code
+	84   Unique line(s) of event code
+cardMedia
+	22   Component(s)
+	212  Line(s) of event code
+	109  Unique line(s) of event code
+cardEntities
+	55   Component(s)
+	823  Line(s) of event code
+	312  Unique line(s) of event code
+
+Total
+	12   Page(s)
+	258  Component(s)
+	2239 Line(s) of event code
+	577  Unique line(s) of event code
