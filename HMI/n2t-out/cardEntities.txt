@@ -212,7 +212,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î–°
+        Text                                : î°
         Max. Text Size                      : 10
     
 Text tIcon2
@@ -223,7 +223,7 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î–°
+        Text                                : î°
         Max. Text Size                      : 10
     
 Text tIcon3
@@ -234,7 +234,7 @@ Text tIcon3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î–°
+        Text                                : î°
         Max. Text Size                      : 10
     
 Text tIcon4
@@ -245,7 +245,7 @@ Text tIcon4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î–°
+        Text                                : î°
         Max. Text Size                      : 30
     
 Text tSend
@@ -308,7 +308,7 @@ Button bDown1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î„
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -341,7 +341,7 @@ Button bUp1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : îœ
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -374,7 +374,7 @@ Button bStop1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î“š
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -407,7 +407,7 @@ Button bStop2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î“š
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -440,7 +440,7 @@ Button bDown2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î„
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -473,7 +473,7 @@ Button bUp2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : îœ
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -506,7 +506,7 @@ Button bStop3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î“š
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -539,7 +539,7 @@ Button bDown3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î„
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -572,7 +572,7 @@ Button bUp3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : îœ
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -605,7 +605,7 @@ Button bStop4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î“š
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -638,7 +638,7 @@ Button bDown4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î„
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -671,7 +671,7 @@ Button bUp4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : îœ
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
@@ -704,7 +704,7 @@ Button bPrev
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : îœ°
+        Text                                : î°
         Max. Text Size                      : 10
     
     Events
@@ -737,7 +737,7 @@ Button bNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : îœ³
+        Text                                : î³
         Max. Text Size                      : 10
     
     Events
