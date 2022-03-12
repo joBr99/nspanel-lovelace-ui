@@ -329,8 +329,8 @@ end
 
 def get_current_version(cmd, idx, payload, payload_json)
 	import string
-	var version_of_this_script = 1
-	var jm = string.format("{\"berry_version\":\"%s\"}", version_of_this_script)
+	var version_of_this_script = 2
+	var jm = string.format("{\"nlui_driver_version\":\"%s\"}", version_of_this_script)
 	tasmota.publish_result(jm, "RESULT")
 end
 
@@ -354,10 +354,10 @@ def update_berry_driver(cmd, idx, payload, payload_json)
 			print("Scucessfully written nspanel-lovelace-ui berry driver")
 			var s = load('autoexec.be')
 			if s == true
-				var jm = string.format("{\"berry_update\":\"%s\"}", "succeeded")
+				var jm = string.format("{\"nlui_driver_update\":\"%s\"}", "succeeded")
 				tasmota.publish_result(jm, "RESULT")
 			else 
-				var jm = string.format("{\"berry_update\":\"%s\"}", "failed")
+				var jm = string.format("{\"nlui_driver_update\":\"%s\"}", "failed")
 				tasmota.publish_result(jm, "RESULT")
 			end
 			
