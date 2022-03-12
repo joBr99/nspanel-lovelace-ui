@@ -52,6 +52,7 @@ For more detailed Instructions see the following Sections:
 - [Configuration](#configuration)
    - [Configuring the MQTT integration in AppDaemon](#configuring-the-mqtt-integration-in-appdaemon)
    - [Configure your NSPanel in AppDaemon](#configure-your-nspanel-in-appdaemon)
+- [How to update](#how-to-update)
 - [FAQ](#faq---frequently-asked-questions)
 
 
@@ -166,7 +167,7 @@ See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more 
 
 ### Upload Berry Driver to Tasmota
 
-1. Download the [Berry Driver from this Repository](tasmota/autoexec.be).
+1. Download the autoexec.be berry driver from the latest release. (Development Version [Berry Driver from this Repository](tasmota/autoexec.be))
 
 2. Go to `Consoles` > `Manage File System` in Tasmota and upload the previously downloaded file.
 
@@ -176,13 +177,21 @@ See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more 
 
 #### Use your own Webserver
 
-Upload the [tft file from HMI folder](HMI/nspanel.tft) to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console.
+Upload the nspanel.tft from the lastest release to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console. (Development Version: [tft file from HMI folder](HMI/nspanel.tft))
 
 **Webserver needs to support HTTP Range Header Requests, python2/3 http server doesn't work**
 
 **Webserver must be HTTP, HTTPS is not supported, due to limitations of berry lang on tasmota**
 
 `FlashNextion http://ip-address-of-your-homeassistant:8123/local/nspanel.tft`
+
+#### Use my webserver
+
+Due the limitations of Berry, it's not possible to download the tft file directly from github, so I'm also renting a small server where you can download the file via HTTP.
+
+The following Link has always the latest version from this repository, just execute the following Command in Tasmota:
+
+`FlashNextion http://nspanel.pky.eu/lui.tft`
 
 ## Configuration
 
@@ -276,6 +285,36 @@ key | optional | type | default | description
 `module` | False | string | | The module name of the app.
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
+
+## How to update
+
+Updating involves mainly already descriped steps from installation, so this is a short summary.
+
+This project has three main parts, on a new release you usally need to update at least two of them, the AppDaemon Backend and the firmware of the display.
+Sometimes there are also changes to the berry driver script on tasmota.
+
+*Note the commands in the following section will update to the current development version of this repository, use the command from release page if you want to use a release version*
+
+### Update AppDaemon Script
+
+HACS will show you that there is an update avalible and ask you to update.
+
+### Update Display Firmware
+
+Use the following command to update or use your own webserver. FlashNextionFast will use Nextion Upload Protocol 1.2 and try to skip unchanged parts of the firmware.
+
+`FlashNextionFast http://nspanel.pky.eu/lui.tft`
+
+In case this Update failes, reboot tasmota and use the following command:
+
+`FlashNextion http://nspanel.pky.eu/lui.tft`
+
+### Update Tasmota Berry Driver
+
+Since release 1.1 you can update the berry driver directly from the Tasmota Console with the following command.
+
+`UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be`
+
 
 
 ## FAQ - Frequently Asked Questions
