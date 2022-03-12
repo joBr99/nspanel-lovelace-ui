@@ -327,6 +327,48 @@ class Nextion : Driver
     end
 end
 
+def get_current_version(cmd, idx, payload, payload_json)
+	import string
+	var version_of_this_script = 1
+	var jm = string.format("{\"berry_version\":\"%s\"}", version_of_this_script)
+	tasmota.publish_result(jm, "RESULT")
+end
+
+tasmota.add_cmd('GetDriverVersion', get_current_version)
+
+def update_berry_driver(cmd, idx, payload, payload_json)
+	def task()
+		import string
+		var cl = webclient()
+		cl.begin(payload)
+		var r = cl.GET()
+		if r == 200
+			print("Sucessfully downloaded nspanel-lovelace-ui berry driver")
+		else
+			print("Error while downloading nspanel-lovelace-ui berry driver")
+		end
+		r = cl.write_file("autoexec.be")
+		if r < 0
+			print("Error while writeing nspanel-lovelace-ui berry driver")
+		else
+			print("Scucessfully written nspanel-lovelace-ui berry driver")
+			var s = load('autoexec.be')
+			if s == true
+				var jm = string.format("{\"berry_update\":\"%s\"}", "succeeded")
+				tasmota.publish_result(jm, "RESULT")
+			else 
+				var jm = string.format("{\"berry_update\":\"%s\"}", "failed")
+				tasmota.publish_result(jm, "RESULT")
+			end
+			
+		end
+	end
+	tasmota.set_timer(0,task)
+	tasmota.resp_cmnd_done()
+end
+
+tasmota.add_cmd('UpdateDriverVersion', update_berry_driver)
+
 var nextion = Nextion()
 
 def flash_nextion(cmd, idx, payload, payload_json)
