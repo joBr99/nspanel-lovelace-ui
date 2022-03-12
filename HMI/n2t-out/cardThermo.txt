@@ -50,21 +50,21 @@ Page cardThermo
         
 Variable (string) strCommand
     Attributes
-        ID            : 8
+        ID            : 7
         Scope         : local
         Text          : 
         Max. Text Size: 100
     
 Variable (string) entn
     Attributes
-        ID            : 26
+        ID            : 25
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Number nPageDisp
     Attributes
-        ID                                  : 6
+        ID                                  : 5
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -74,7 +74,7 @@ Number nPageDisp
     
 XFloat xTempCurr
     Attributes
-        ID                                  : 18
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -84,7 +84,7 @@ XFloat xTempCurr
     
 XFloat xTempDest
     Attributes
-        ID                                  : 20
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -94,7 +94,7 @@ XFloat xTempDest
     
 XFloat xTempMin
     Attributes
-        ID                                  : 21
+        ID                                  : 20
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -104,7 +104,7 @@ XFloat xTempMin
     
 XFloat xTempMax
     Attributes
-        ID                                  : 22
+        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -114,7 +114,7 @@ XFloat xTempMax
     
 XFloat xTempStep
     Attributes
-        ID                                  : 23
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -146,7 +146,7 @@ Text tTmp
     
 Text tInstruction
     Attributes
-        ID                                  : 9
+        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -157,7 +157,7 @@ Text tInstruction
     
 Text tId
     Attributes
-        ID                                  : 10
+        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -168,7 +168,7 @@ Text tId
     
 Text tHeading
     Attributes
-        ID                                  : 11
+        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -179,7 +179,7 @@ Text tHeading
     
 Text tStatus
     Attributes
-        ID                                  : 12
+        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -190,7 +190,7 @@ Text tStatus
     
 Text t5
     Attributes
-        ID                                  : 13
+        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -201,7 +201,7 @@ Text t5
     
 Text t6
     Attributes
-        ID                                  : 14
+        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -212,7 +212,7 @@ Text t6
     
 Text t7
     Attributes
-        ID                                  : 15
+        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -223,7 +223,7 @@ Text t7
     
 Text t2
     Attributes
-        ID                                  : 19
+        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -273,42 +273,9 @@ Button bNext
             prints tSend.txt,0
             prints crcval,2
         
-Button bPrev
-    Attributes
-        ID                                  : 5
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î°
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            nPage=nPage-1
-            nPageDisp.val=nPage
-            //page open event
-            // event,pageOpen,cardEntities,pageNumber
-            // craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,pageOpen,"+tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
 Button bDown
     Attributes
-        ID                                  : 16
+        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -347,7 +314,7 @@ Button bDown
         
 Button bUp
     Attributes
-        ID                                  : 17
+        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -382,9 +349,42 @@ Button bUp
             prints tSend.txt,0
             prints crcval,2
         
+Button bPrev
+    Attributes
+        ID                                  : 26
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î°
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            nPage=nPage-1
+            nPageDisp.val=nPage
+            //page open event
+            // event,pageOpen,cardEntities,pageNumber
+            // craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,pageOpen,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Timer tmSerial
     Attributes
-        ID         : 7
+        ID         : 6
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -541,7 +541,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 24
+        ID         : 23
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -561,7 +561,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 25
+        ID   : 24
         Scope: local
         Value: 0
     
