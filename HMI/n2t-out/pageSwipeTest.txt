@@ -1,0 +1,283 @@
+Page pageSwipeTest
+    Attributes
+        ID                                  : 0
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Locked                              : no
+        Swide up page ID                    : disabled
+        Swide down page ID                  : disabled
+        Swide left page ID                  : disabled
+        Swide right page ID                 : disabled
+    
+Number nXS
+    Attributes
+        ID                                  : 7
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number nYE
+    Attributes
+        ID                                  : 8
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number nYS
+    Attributes
+        ID                                  : 9
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number nXE
+    Attributes
+        ID                                  : 10
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number nYR
+    Attributes
+        ID                                  : 12
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number nXR
+    Attributes
+        ID                                  : 13
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Text tDesc1
+    Attributes
+        ID                                  : 2
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : X-Start:\r\nX-End:\r\nY-Start:\r\nY-End:
+        Max. Text Size                      : 70
+    
+Text t2
+    Attributes
+        ID                                  : 3
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Swipe Dir\r\nold: 
+        Max. Text Size                      : 70
+    
+Text tDirection
+    Attributes
+        ID                                  : 6
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : newtxt
+        Max. Text Size                      : 10
+    
+Text t0
+    Attributes
+        ID                                  : 11
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Difference\r\n\r\nX\r\nY
+        Max. Text Size                      : 60
+    
+Text tStatusNew
+    Attributes
+        ID                                  : 14
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : newtxt
+        Max. Text Size                      : 40
+    
+Text t3
+    Attributes
+        ID                                  : 15
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : new status:\r\nnew direction:
+        Max. Text Size                      : 50
+    
+Text tDirNew
+    Attributes
+        ID                                  : 16
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : newtxt
+        Max. Text Size                      : 40
+    
+Picture p0
+    Attributes
+        ID                                  : 1
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+Button b8
+    Attributes
+        ID                                  : 17
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : back
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            page pageTest
+        
+Timer tm0
+    Attributes
+        ID         : 5
+        Scope      : local
+        Period (ms): 50
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            if(tc0.val!=0)
+            {
+                xc2=tch0
+                yc2=tch1
+                //debug
+                nXE.val=xc2
+                nYE.val=yc2
+            }
+        
+TouchCap tc0
+    Attributes
+        ID   : 4
+        Scope: local
+        Value: 0
+    
+    Events
+        Touch Press Event
+            if(tc0.val==9) // This is the location of the brightness slider
+            {
+                xc1=0
+                yc1=0
+            }else
+            {
+                xc1=tch0
+                yc1=tch1
+                //debug
+                nXS.val=xc1
+                nYS.val=yc1
+                tm0.en=1
+            }
+        
+        Touch Release Event
+            tm0.en=0
+            if(tc0.val==9) // This is the location of the brightness slider
+            {
+            }else
+            {
+                if(tch0==0)
+                // When this is zero we can interpret that as the real end of the drag event
+                {
+                    xcR=xc1-xc2
+                    ycR=yc1-yc2
+                    //    //debug
+                    //    nXR.val=xcR
+                    //    nYR.val=ycR
+                    //    if(xcR>125)
+                    //    {
+                    //      tDirection.txt="left"
+                    //    }else if(xcR<-125)
+                    //    {
+                    //      tDirection.txt="right"
+                    //    }else if(ycR>125)
+                    //    {
+                    //      tDirection.txt="up"
+                    //    }else if(ycR<-125)
+                    //    {
+                    //      tDirection.txt="down"
+                    //    }else
+                    //    {
+                    //      tDirection.txt="invalid"
+                    //    }
+                    // new method
+                    // one of the difference values should be low to be a valid direction, in case it has a high value it's not a valid swipe, because it's diagonal
+                    // x difference between -125 and 125 (swipe on y-axis)
+                    if(xcR>ixLimit&&xcR<xLimit)
+                    {
+                        tStatusNew.txt="x low, -> y"
+                        // check if below minimum value (change is negative)
+                        if(ycR<iyLimitMin)
+                        {
+                            tDirNew.txt="down"
+                        }else if(ycR>yLimitMin)
+                        {
+                            tDirNew.txt="up"
+                        }else
+                        {
+                            tDirNew.txt="invalid"
+                        }
+                        // y difference between -125 and 125 (swipe on x-axis)
+                    }else if(ycR>iyLimit&&ycR<yLimit)
+                    {
+                        tStatusNew.txt="y low, -> x"
+                        if(xcR<ixLimitMin)
+                        {
+                            tDirNew.txt="right"
+                        }else if(xcR>xLimitMin)
+                        {
+                            tDirNew.txt="left"
+                        }else
+                        {
+                            tDirNew.txt="invalid"
+                        }
+                        //diagonal swipe invalid
+                    }else
+                    {
+                        tStatusNew.txt="invalid"
+                        tDirNew.txt="diagonal"
+                    }
+                }
+            }
+        

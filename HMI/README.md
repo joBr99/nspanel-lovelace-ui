@@ -14,7 +14,7 @@ See the following picture to get an Idea for the messages send and recived from 
 
 # Custom Protocol
 ```
-55 BB [payload length] [payload] [crc] [crc]
+55 BB [payload length] [payload length] [payload] [crc] [crc]
 ```
 
 Payload length contains the number of bytes of the payload.
@@ -27,7 +27,7 @@ Instead the commands are plain text commands with parameters.
 ## Example for valid Message
 This message has to be generated for the Message "1337" (1337 is not a valid command, this is just an example)
 ```
-55 BB  04  31 33 33 37  5F 5B
+55 BB  04 00  31 33 33 37  5F 5B
 ```
 ## Messages to Nextion Display
 
@@ -95,9 +95,9 @@ entityUpd,1,switch,switch.entityName,4,Switch1,0
 
 ### popupLight Page
 
-entityUpdateDetail,*buttonState*,*sliderBrightnessPos*,*sliderColorTempPos*
+entityUpdateDetail,*buttonState*,*sliderBrightnessPos*,*sliderColorTempPos*,*colorMode*
 
-entityUpdateDetail,1,100,78
+entityUpdateDetail,1,100,78,enable
 
 entityUpdateDetail,1,100,disable
 
@@ -106,6 +106,10 @@ entityUpdateDetail,1,100,disable
 entityUpdateDetail,*ignored*,*sliderPos*
 
 entityUpdateDetail,1,77
+
+### popupNotify Page
+
+entityUpdateDetail,*tHeading*,*b1*,*b2*,*tText*
 
 ### cardThermo Page
 
@@ -151,11 +155,19 @@ event,buttonPress,D,nameEntity,internalNameEntity,1,brightnessSlider,50
 
 event,buttonPress,D,nameEntity,internalNameEntity,1,colorTempSlider,50
 
+event,buttonPress,D,nameEntity,internalNameEntity,1,colorWheel,x|y
+
 ### popupShutter Page
 
 event,pageOpenDetail,popupShutter,internalNameEntity
 
 event,buttonPress,D,nameEntity,internalNameEntity,1,positionSlider,50
+
+### popupNotify Page
+
+event,buttonPress,D,D,D,1,notifyAction,yes
+
+event,buttonPress,D,D,D,1,notifyAction,no
 
 ### cardThermo Page
 
@@ -172,6 +184,8 @@ event,buttonPress,1,tHeading,internalNameEntity,1,media-pause
 event,buttonPress,1,tHeading,internalNameEntity,1,media-next
 
 event,buttonPress,1,tHeading,internalNameEntity,1,volumeSlider,75
+
+
 
 # Icons IDs
 
