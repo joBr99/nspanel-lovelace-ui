@@ -67,6 +67,8 @@ pageType,cardMedia
 
 pageType,popupLight,Schreibtischlampe
 
+pageType,popupNotify
+
 ### screensaver page
 
 weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val
