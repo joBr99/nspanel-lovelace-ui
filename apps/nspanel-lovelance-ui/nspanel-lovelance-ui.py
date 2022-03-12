@@ -451,7 +451,11 @@ class NsPanelLovelanceUI:
           if "color_temp" in entity.attributes:
             # scale ha color temp range to 0-100
             color_temp = int(self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100)))
-
+          else:
+            color_temp = 0
+        else:
+          color_temp = "disable"
+          
         if "xy" in entity.attributes.supported_color_modes:
           color = "enable"
         else:
