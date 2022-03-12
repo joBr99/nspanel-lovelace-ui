@@ -35,157 +35,159 @@ The following message should be implemented on all pages
 
 wake screen:
 
-wake
+`wake`
 
 set brightness of screensaver:
 
-dimmode,0 - (screen off)
-dimmode,100 - (screen on with full brightness)
+`dimmode,0 - (screen off)`
+
+`dimmode,100 - (screen on with full brightness)`
 
 set current time:
 
-time,22 : 26
+`time,22 : 26`
 
 set current date:
 
-date,?Di 24. Februar
+`date,?Di 24. Februar`
 
-set screensaver timeout (set time in ms limited from 50 to 65535:
+set screensaver timeout (set time in sec, max 65):
 
-timeout,15 - timeout after 15 seconds
-timeout,0 - disable screensaver
+`timeout,15 - timeout after 15 seconds`
+
+`timeout,0 - disable screensaver`
 
 change the page type:
 
-pageType,pageStartup
+`pageType,pageStartup`
 
-pageType,cardEntities
+`pageType,cardEntities`
 
-pageType,cardThermo
+`pageType,cardThermo`
 
-pageType,cardMedia
+`pageType,cardMedia`
 
-pageType,popupLight,Schreibtischlampe
+`pageType,popupLight,Schreibtischlampe`
 
-pageType,popupNotify
+`pageType,popupNotify`
 
 ### screensaver page
 
-weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val
+`weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val`
 
-weatherUpdate,?0?2,3 C?0?0 mm?Mi?0?9,3 C?Do?0?11,5 C
+`weatherUpdate,?0?2,3 C?0?0 mm?Mi?0?9,3 C?Do?0?11,5 C`
 
 ### cardEntities Page
 
 The following message can be used to update the content on the cardEntities Page
 
-entityUpdHeading,heading1337
+`entityUpdHeading,heading1337`
 
-entityUpd,*id*,*type*,*internalNameEntity*,*iconId*,*displayNameEntity*,*optionalValue*
+`entityUpd,*id*,*type*,*internalNameEntity*,*iconId*,*displayNameEntity*,*optionalValue*`
 
-entityUpd,1,light,light.entityName,1,Light1,0
+`entityUpd,1,light,light.entityName,1,Light1,0`
 
-entityUpd,2,shutter,cover.entityName,0,Shutter2
+`entityUpd,2,shutter,cover.entityName,0,Shutter2`
 
-entityUpd,3,delete
+`entityUpd,3,delete`
 
-entityUpd,4,text,sensor.entityName,3,Temperature,content
+`entityUpd,4,text,sensor.entityName,3,Temperature,content`
 
-entityUpd,4,button,button.entityName,3,bt-name,bt-text
+`entityUpd,4,button,button.entityName,3,bt-name,bt-text`
 
-entityUpd,1,switch,switch.entityName,4,Switch1,0
+`entityUpd,1,switch,switch.entityName,4,Switch1,0`
 
 ### popupLight Page
 
-entityUpdateDetail,*buttonState*,*sliderBrightnessPos*,*sliderColorTempPos*,*colorMode*
+`entityUpdateDetail,*buttonState*,*sliderBrightnessPos*,*sliderColorTempPos*,*colorMode*`
 
-entityUpdateDetail,1,100,78,enable
+`entityUpdateDetail,1,100,78,enable`
 
-entityUpdateDetail,1,100,disable
+`entityUpdateDetail,1,100,disable`
 
 ### popupShutter Page
 
-entityUpdateDetail,*ignored*,*sliderPos*
+`entityUpdateDetail,*ignored*,*sliderPos*`
 
-entityUpdateDetail,1,77
+`entityUpdateDetail,1,77`
 
 ### popupNotify Page
 
-entityUpdateDetail,*tHeading*,*b1*,*b2*,*tText*
+`entityUpdateDetail,*tHeading*,*b1*,*b2*,*tText*`
 
 ### cardThermo Page
 
-entityUpd,*internalNameEntiy*,*heading*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*
+`entityUpd,*internalNameEntiy*,*heading*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*`
 
 ### cardMedia Page
 
-entityUpd,|*internalNameEntiy*|*heading*|*icon*|*title*|*author*|*volume*|*playpauseicon*
+`entityUpd,|*internalNameEntiy*|*heading*|*icon*|*title*|*author*|*volume*|*playpauseicon*`
 
 ## Messages from Nextion Display
 
 ### startup page
 
-event,startup,version
+`event,startup,version`
 
 ### screensaver page
 
-event,screensaverOpen
+`event,screensaverOpen`
 
 ### cardEntities Page
 
-event,*eventName*,*PageNumber*,*PageHeading*,*entityName*,*buttonId*,*actionName*,*optionalValue*
+`event,*eventName*,*PageNumber*,*PageHeading*,*entityName*,*buttonId*,*actionName*,*optionalValue*`
 
-event,pageOpen,0
+`event,pageOpen,0`
 
-event,buttonPress,1,tHeading,internalNameEntity,1,up
+`event,buttonPress,1,tHeading,internalNameEntity,1,up`
 
-event,buttonPress,1,tHeading,internalNameEntity,1,down
+`event,buttonPress,1,tHeading,internalNameEntity,1,down`
 
-event,buttonPress,1,tHeading,internalNameEntity,1,stop
+`event,buttonPress,1,tHeading,internalNameEntity,1,stop`
 
-event,buttonPress,1,tHeading,internalNameEntity,1,OnOff,1
+`event,buttonPress,1,tHeading,internalNameEntity,1,OnOff,1`
 
-event,buttonPress,1,tHeading,internalNameEntity,1,button
+`event,buttonPress,1,tHeading,internalNameEntity,1,button`
 
 ### popupLight Page
 
-event,pageOpenDetail,popupLight,internalNameEntity
+`event,pageOpenDetail,popupLight,internalNameEntity`
 
-event,buttonPress,D,nameEntity,internalNameEntity,1,OnOff,1
+`event,buttonPress,D,nameEntity,internalNameEntity,1,OnOff,1`
 
-event,buttonPress,D,nameEntity,internalNameEntity,1,brightnessSlider,50
+`event,buttonPress,D,nameEntity,internalNameEntity,1,brightnessSlider,50`
 
-event,buttonPress,D,nameEntity,internalNameEntity,1,colorTempSlider,50
+`event,buttonPress,D,nameEntity,internalNameEntity,1,colorTempSlider,50`
 
-event,buttonPress,D,nameEntity,internalNameEntity,1,colorWheel,x|y
+`event,buttonPress,D,nameEntity,internalNameEntity,1,colorWheel,x|y`
 
 ### popupShutter Page
 
-event,pageOpenDetail,popupShutter,internalNameEntity
+`event,pageOpenDetail,popupShutter,internalNameEntity`
 
-event,buttonPress,D,nameEntity,internalNameEntity,1,positionSlider,50
+`event,buttonPress,D,nameEntity,internalNameEntity,1,positionSlider,50`
 
 ### popupNotify Page
 
-event,buttonPress,D,D,D,1,notifyAction,yes
+`event,buttonPress,D,D,D,1,notifyAction,yes`
 
-event,buttonPress,D,D,D,1,notifyAction,no
+`event,buttonPress,D,D,D,1,notifyAction,no`
 
 ### cardThermo Page
 
-event,pageOpen,0
+`event,pageOpen,0`
 
-event,tempUpd,*pageNumber*,*entityName*,*temperature*
+`event,tempUpd,*pageNumber*,*entityName*,*temperature*`
 
 ### cardMedia Page
 
-event,buttonPress,1,tHeading,internalNameEntity,1,media-back
+`event,buttonPress,1,tHeading,internalNameEntity,1,media-back`
 
-event,buttonPress,1,tHeading,internalNameEntity,1,media-pause
+`event,buttonPress,1,tHeading,internalNameEntity,1,media-pause`
 
-event,buttonPress,1,tHeading,internalNameEntity,1,media-next
+`event,buttonPress,1,tHeading,internalNameEntity,1,media-next`
 
-event,buttonPress,1,tHeading,internalNameEntity,1,volumeSlider,75
+`event,buttonPress,1,tHeading,internalNameEntity,1,volumeSlider,75`
 
 
 
