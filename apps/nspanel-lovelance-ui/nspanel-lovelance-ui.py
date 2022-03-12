@@ -2,6 +2,9 @@ import json
 import datetime
 import hassapi as hass
 
+import math
+import colorsys
+
 class NsPanelLovelanceUIManager(hass.Hass):
   def initialize(self):
 
@@ -48,7 +51,7 @@ class NsPanelLovelanceUI:
       found_current_dim_value = False
       for index, timeset in enumerate(sorted_timesets):
         self.api.run_daily(self.update_screensaver_brightness, timeset["time"], value=timeset["value"])
-        self.api.log("Current time %s", self.api.get_now().time())
+        self.api.log("Current time %s", self.api.get_now().time(), level="DEBUG")
         if self.api.parse_time(timeset["time"]) > self.api.get_now().time() and not found_current_dim_value:
           # first time after current time, set dim value
           self.current_screensaver_brightness = sorted_timesets[index-1]["value"]
@@ -119,30 +122,7 @@ class NsPanelLovelanceUI:
 
       if msg[1] == "pageOpenDetail":
         self.api.log("Received pageOpenDetail command", level="DEBUG")
-        if(msg[2] == "popupLight"):
-          entity = self.api.get_entity(msg[3])
-          switch_val = 1 if entity.state == "on" else 0
-          # scale 0-255 brightness from ha to 0-100
-          if entity.state == "on":
-            if entity.attributes.get("brightness"):
-              brightness = int(self.scale(entity.attributes.brightness,(0,255),(0,100)))
-            else:
-              brightness = "disable"
-            if "color_temp" in entity.attributes.supported_color_modes:
-              # scale ha color temp range to 0-100
-              color_temp = self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100))
-            else:
-              color_temp = "disable"
-          else:
-            brightness = 0
-            color_temp = "disable"
-          self.send_mqtt_msg("entityUpdateDetail,{0},{1},{2}".format(switch_val,brightness,color_temp))
-
-        if(msg[2] == "popupShutter"):
-          pos = self.api.get_entity(msg[3]).attributes.current_position
-          # reverse position for slider
-          pos = 100-pos
-          self.send_mqtt_msg("entityUpdateDetail,{0}".format(pos))
+        self.generate_detail_page(msg[2], msg[3])
 
       if msg[1] == "tempUpd":
         self.api.log("Received tempUpd command", level="DEBUG")
@@ -153,6 +133,7 @@ class NsPanelLovelanceUI:
         self.update_screensaver_weather("")
 
   def send_mqtt_msg(self,msg):
+    self.api.log("Send Message from Tasmota: %s", msg, level="DEBUG")
     self.mqtt.mqtt_publish(self.config["panelSendTopic"], msg)
 
   def update_time(self, kwargs):
@@ -247,6 +228,13 @@ class NsPanelLovelanceUI:
       #scale 0-100 from slider to color range of lamp
       color_val = self.scale(int(optVal), (0, 100), (entity.attributes.min_mireds, entity.attributes.max_mireds))
       self.api.get_entity(entity_id).call_service("turn_on", color_temp=color_val)
+
+    if(btype == "colorWheel"):
+      self.api.log(optVal)
+      optVal = optVal.split('|')
+      color = self.pos_to_color(int(optVal[0]), int(optVal[1]))
+      self.api.log(color)
+      self.api.get_entity(entity_id).call_service("turn_on", rgb_color=color)
       
     if(btype == "positionSlider"):
       pos = int(optVal)
@@ -300,7 +288,11 @@ class NsPanelLovelanceUI:
         # send update of the item on page
         command = self.generate_entities_item(entity, items.index(entity)+1)
         self.send_mqtt_msg(command)
-        # TODO: Send data of detail page, just in case this page is currently open
+        if(entity.startswith("cover")):
+          self.generate_detail_page("popupShutter", entity)
+        if(entity.startswith("light")):
+          self.generate_detail_page("popupLight", entity)
+
       return
     
     if page_type == "cardThermo" or page_type == "cardMedia":
@@ -441,3 +433,54 @@ class NsPanelLovelanceUI:
       self.send_mqtt_msg("pageType,{0}".format(page_type))
       command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
+
+  def generate_detail_page(self, page_type, entity):
+    if(page_type == "popupLight"):
+      entity = self.api.get_entity(entity)
+      switch_val = 1 if entity.state == "on" else 0
+      brightness = "disable"
+      color_temp = "disable"
+      color = "disable"
+      # scale 0-255 brightness from ha to 0-100
+      if entity.state == "on":
+        if "brightness" in entity.attributes:
+          brightness = int(self.scale(entity.attributes.brightness,(0,255),(0,100)))
+        else:
+          brightness = "disable"
+        if "color_temp" in entity.attributes.supported_color_modes:
+          if "color_temp" in entity.attributes:
+            # scale ha color temp range to 0-100
+            color_temp = int(self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100)))
+          else:
+            color_temp = 0
+        else:
+          color_temp = "disable"
+        if "xy" in entity.attributes.supported_color_modes:
+          color = "enable"
+        else:
+          color = "disable"
+      self.send_mqtt_msg(f"entityUpdateDetail,{switch_val},{brightness},{color_temp},{color}")
+
+    if(page_type == "popupShutter"):
+      pos = self.api.get_entity(msg[3]).attributes.current_position
+      # reverse position for slider
+      pos = 100-pos
+      self.send_mqtt_msg("entityUpdateDetail,{0}".format(pos))
+
+  def hsv2rgb(self, h, s, v):
+      hsv = colorsys.hsv_to_rgb(h,s,v)
+      return tuple(round(i * 255) for i in hsv)
+  def pos_to_color(self, x, y):
+      r = 213/2
+      x = round((x - r) / r * 100) / 100
+      y = round((r - y) / r * 100) / 100
+      
+      r = math.sqrt(x*x + y*y)
+      sat = 0
+      if (r > 1):
+          sat = 0
+      else:
+          sat = r
+      hsv = (math.degrees(math.atan2(y, x))%360/360, sat, 1)
+      rgb = self.hsv2rgb(hsv[0],hsv[1],hsv[2])
+      return rgb
