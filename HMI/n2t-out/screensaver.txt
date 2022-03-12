@@ -151,7 +151,7 @@ Text tMainIcon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î–˜
+        Text                                : î
         Max. Text Size                      : 10
     
 Text tMainText
@@ -173,7 +173,7 @@ Text tMRIcon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î––
+        Text                                : î
         Max. Text Size                      : 10
     
 Text tMR
@@ -217,7 +217,7 @@ Text tF1Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î–˜
+        Text                                : î
         Max. Text Size                      : 10
     
 Text tForecast2
@@ -239,7 +239,7 @@ Text tF2Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î–˜
+        Text                                : î
         Max. Text Size                      : 10
     
 Text tForecast2Val
