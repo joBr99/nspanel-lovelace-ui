@@ -543,6 +543,7 @@ Timer tmSerial
                                             vis t2,1
                                             vis hBrightness,1
                                             mode_bright.val=1
+                                            covx tTmp.txt,sys0,0,0
                                             hBrightness.val=sys0
                                         }
                                         // get ColorTemp value
