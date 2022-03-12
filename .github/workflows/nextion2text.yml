@@ -2,9 +2,13 @@ name: nextion2text
 
 on:
   pull_request:
+    paths:
+      - HMI/nspanel.HMI
   push:
     branches:
       - main
+    paths:
+      - HMI/nspanel.HMI
 
 jobs:
   gen-nextion-to-text:
