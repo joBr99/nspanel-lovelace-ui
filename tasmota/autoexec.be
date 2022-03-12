@@ -15,10 +15,11 @@ class TftDownloader
 	var current_chunk
 	var current_chunk_start
 	var download_range
+
 	
     def init(host, port, file, download_range)
         self.tft_file_size = 0
-		
+
 		self.host = host
 		self.port = port
 		self.file = file
@@ -118,6 +119,7 @@ class Nextion : Driver
     var ser
 	var flash_size
 	var flash_mode
+	var flash_version
 	var flash_skip
 	var flash_current_byte
 	var tftd
@@ -128,6 +130,7 @@ class Nextion : Driver
         log("NSP: Initializing Driver")
         self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
         self.flash_mode = 0
+		self.flash_version = 1
 		self.flash_skip = false
 		tasmota.add_driver(self)
     end
@@ -199,8 +202,7 @@ class Nextion : Driver
         end
     end
 	
-    def start_flash(url)
-		
+    def start_flash(url)		
 		import string
         var host
         var port
@@ -224,7 +226,6 @@ class Nextion : Driver
         #print(host,port,file)
 		
 		self.tftd = TftDownloader(host, port, file, 32768)
-		#self.tftd = TftDownloader("192.168.75.30", 8123, "/local/test.tft", 32768)
 		
 		# get size of tft file
 		self.flash_size = self.tftd.get_file_size()
@@ -270,13 +271,18 @@ class Nextion : Driver
             var msg = self.ser.read()
             if size(msg) > 0
                 print("NSP: Received Raw =", msg)
-                if (self.flash_mode==1)
+                if self.flash_mode==1
                     var str = msg[0..-4].asstring()
                     log(str, 3)
 					# TODO: add check for firmware versions < 126 and send proto 1.1 command for thoose
                     if (string.find(str,"comok 2")==0)
-						self.sendnx(string.format("whmi-wri %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.1
-						#self.sendnx(string.format("whmi-wris %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.2
+						if self.flash_version==1
+							log("NSP: Flashing 1.1")
+							self.sendnx(string.format("whmi-wri %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.1
+						else
+							log("NSP: Flashing 1.2")
+							self.sendnx(string.format("whmi-wris %d,115200,1",self.flash_size)) # Nextion Upload Protocol 1.2
+						end
 						
 					# skip to byte (upload protocol 1.2)
 					elif (size(msg)==1 && msg[0]==0x08)
@@ -324,7 +330,8 @@ end
 var nextion = Nextion()
 
 def flash_nextion(cmd, idx, payload, payload_json)
-    def task()
+	def task()
+		nextion.flash_version = 1
         nextion.start_flash(payload)
     end
     tasmota.set_timer(0,task)
@@ -332,6 +339,17 @@ def flash_nextion(cmd, idx, payload, payload_json)
 end
 
 tasmota.add_cmd('FlashNextion', flash_nextion)
+
+def flash_nextion_1_2(cmd, idx, payload, payload_json)
+	def task()
+		nextion.flash_version = 2
+        nextion.start_flash(payload)
+    end
+    tasmota.set_timer(0,task)
+    tasmota.resp_cmnd_done()
+end
+
+tasmota.add_cmd('FlashNextionFast', flash_nextion_1_2)
 
 def send_cmd(cmd, idx, payload, payload_json)
     nextion.sendnx(payload)
