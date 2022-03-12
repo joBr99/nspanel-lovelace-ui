@@ -1583,6 +1583,10 @@ Timer tmSerial
                                         {
                                             page pageStartup
                                         }
+                                        if(tId.txt=="pageNotify")
+                                        {
+                                            page popupNotify
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {

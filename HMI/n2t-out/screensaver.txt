@@ -416,6 +416,10 @@ Timer tmSerial
                                         {
                                             page pageStartup
                                         }
+                                        if(tId.txt=="pageNotify")
+                                        {
+                                            page popupNotify
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
