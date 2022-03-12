@@ -5,13 +5,13 @@ import hassapi as hass
 import math
 import colorsys
 
-class NsPanelLovelanceUIManager(hass.Hass):
+class NsPanelLovelaceUIManager(hass.Hass):
   def initialize(self):
 
     data = self.args["config"]
-    NsPanelLovelanceUI(self, data)
+    NsPanelLovelaceUI(self, data)
 
-class NsPanelLovelanceUI:
+class NsPanelLovelaceUI:
   def __init__(self, api, config):
     self.api = api
     self.config = config

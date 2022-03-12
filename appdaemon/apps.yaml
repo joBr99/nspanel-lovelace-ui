@@ -1,7 +1,7 @@
 ---
 nspanel:
-  module: nspanel-lovelance-ui
-  class: NsPanelLovelanceUIManager
+  module: nspanel-lovelace-ui
+  class: NsPanelLovelaceUIManager
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
