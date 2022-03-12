@@ -68,7 +68,7 @@ Variable (int32) mode
     Attributes
         ID   : 23
         Scope: local
-        Value: 0
+        Value: 1
     
 Variable (int32) mode_bright
     Attributes
@@ -384,9 +384,10 @@ Button bColor
     
     Events
         Touch Press Event
-            if(mode.val==0)
+            if(mode.val==1)
             {
-                mode.val=1
+                mode.val=0
+                //enable color wheel
                 vis pColorWheel,1
                 vis t0,1
                 //disable brightness
@@ -399,7 +400,8 @@ Button bColor
                 vis hTempSlider,0
             }else
             {
-                mode.val=0
+                mode.val=1
+                //disable color wheel
                 vis pColorWheel,0
                 vis t0,0
                 if(mode_bright.val==1)
@@ -529,7 +531,7 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,sys0,0,0
                                         btOnOff1.val=sys0
-                                        if(mode.val==0)
+                                        if(mode.val==1)
                                         {
                                             // get Brightness value
                                             spstr strCommand.txt,tTmp.txt,",",2
