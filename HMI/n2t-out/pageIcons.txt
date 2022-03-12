@@ -30,7 +30,7 @@ Text tIcons
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î–°îŒ´î”ŽïŠ§î‰€î™î— î…™î£î‰î—î—•î–î–î–‘î–’î™½î–“î–”î–•î––î–—î™¾î–˜î–œî–î–
+        Text                                : î°î´îï§îîî îî£îîîîîîîî½îîîîîî¾îîîî
         Max. Text Size                      : 100
     
 Text tTmp1

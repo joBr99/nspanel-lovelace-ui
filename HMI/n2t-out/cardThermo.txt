@@ -207,7 +207,7 @@ Text t6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : îˆ·
+        Text                                : î·
         Max. Text Size                      : 10
     
 Text t7
@@ -229,7 +229,7 @@ Text t2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î”ƒ
+        Text                                : î
         Max. Text Size                      : 10
     
 Picture p0
@@ -248,7 +248,7 @@ Button bNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : îœ³
+        Text                                : î³
         Max. Text Size                      : 10
     
     Events
@@ -281,7 +281,7 @@ Button bPrev
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : îœ°
+        Text                                : î°
         Max. Text Size                      : 10
     
     Events
