@@ -529,39 +529,42 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,sys0,0,0
                                         btOnOff1.val=sys0
-                                        // get Brightness value
-                                        spstr strCommand.txt,tTmp.txt,",",2
-                                        if(tTmp.txt=="disable")
+                                        if(mode.val==0)
                                         {
-                                            vis t1,0
-                                            vis t2,0
-                                            vis hBrightness,0
-                                            mode_bright.val=0
-                                        }else
-                                        {
-                                            vis t1,1
-                                            vis t2,1
-                                            vis hBrightness,1
-                                            mode_bright.val=1
-                                            covx tTmp.txt,sys0,0,0
-                                            hBrightness.val=sys0
-                                        }
-                                        // get ColorTemp value
-                                        spstr strCommand.txt,tTmp.txt,",",3
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            vis t4,0
-                                            vis t3,0
-                                            vis hTempSlider,0
-                                            mode_temp.val=0
-                                        }else
-                                        {
-                                            vis t4,1
-                                            vis t3,1
-                                            vis hTempSlider,1
-                                            mode_temp.val=1
-                                            covx tTmp.txt,sys0,0,0
-                                            hTempSlider.val=sys0
+                                            // get Brightness value
+                                            spstr strCommand.txt,tTmp.txt,",",2
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                vis t1,0
+                                                vis t2,0
+                                                vis hBrightness,0
+                                                mode_bright.val=0
+                                            }else
+                                            {
+                                                vis t1,1
+                                                vis t2,1
+                                                vis hBrightness,1
+                                                mode_bright.val=1
+                                                covx tTmp.txt,sys0,0,0
+                                                hBrightness.val=sys0
+                                            }
+                                            // get ColorTemp value
+                                            spstr strCommand.txt,tTmp.txt,",",3
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                vis t4,0
+                                                vis t3,0
+                                                vis hTempSlider,0
+                                                mode_temp.val=0
+                                            }else
+                                            {
+                                                vis t4,1
+                                                vis t3,1
+                                                vis hTempSlider,1
+                                                mode_temp.val=1
+                                                covx tTmp.txt,sys0,0,0
+                                                hTempSlider.val=sys0
+                                            }
                                         }
                                         // get ColorWheel value
                                         spstr strCommand.txt,tTmp.txt,",",4
