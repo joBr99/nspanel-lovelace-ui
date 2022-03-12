@@ -167,11 +167,11 @@ class Nextion : Driver
       return ret
     end
 
-	# encode using custom protocol 55 BB [payload length] [payload] [crc] [crc]
+	# encode using custom protocol 55 BB [payload length] [payload length] [payload] [crc] [crc]
     def encode(payload)
       var b = bytes()
       b += self.header
-      b.add(size(payload), 1)   # add size as 1 byte
+      b.add(size(payload), 2)   # add size as 2 bytes, little endian
       b += bytes().fromstring(payload)
       var msg_crc = self.crc16(b)
       b.add(msg_crc, 2)       # crc 2 bytes, little endian
@@ -303,13 +303,14 @@ class Nextion : Driver
 						self.flash_nextion()
                     end
                 else
-					# Recive messages using custom protocol 55 BB [payload length] [payload] [crc] [crc]
+					# Recive messages using custom protocol 55 BB [payload length] [payload length] [payload] [crc] [crc]
 					if msg[0..1] == self.header
 						var lst = self.split_55(msg)
 						for i:0..size(lst)-1
 							msg = lst[i]
-							var j = msg[2]+2
-							msg = msg[3..j]
+							#var j = msg[2]+2
+							var j = size(msg) - 3
+							msg = msg[4..j]
 							if size(msg) > 2
 								var jm = string.format("{\"CustomRecv\":\"%s\"}",msg.asstring())
 								tasmota.publish_result(jm, "RESULT")
