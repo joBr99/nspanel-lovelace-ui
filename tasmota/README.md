@@ -17,12 +17,25 @@ Send's normal Custom Commands to the Screen in the following format:
 
 - `FlashNextion URL`
 
+Start's flashing a tft file to the nextion screen via Nextion Upload Protocol 1.1
+Might be required to send the command twice (known issue, didn't investigate yet)
+
+- `FlashNextionFast URL`
+
 Start's flashing a tft file to the nextion screen via Nextion Upload Protocol 1.2
 Might be required to send the command twice (known issue, didn't investigate yet)
 
 Webserver must be reachable via HTTP and support Range Header
 
 Example: `FlashNextion http://192.168.75.30:8123/local/nspanel.tft`
+
+- `GetDriverVersion`
+
+Returns the version currently defined in the berry script
+
+- `UpdateDriverVersion URL`
+
+Downloads the autoexec.be script from the specified URL and loads it.
 
 
 Besides the commands, serial input will be published on 'RESULT' Topic, depending on the input in one of the following formats:
