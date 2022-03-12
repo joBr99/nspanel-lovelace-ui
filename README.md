@@ -21,7 +21,6 @@ To control the panel and update it with content from HomeAssistant there is an [
 See the following picture to get an idea of the look of this firmware for NSPanel.
 
 ![screens](doc-pics/screens.png)
-![screensaver](doc-pics/screensaver.png)
 
 ## TLDR
 1. Install Tasmota to NSPanel
