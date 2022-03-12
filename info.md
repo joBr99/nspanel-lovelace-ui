@@ -1,13 +1,13 @@
-# NSPanel Lovelance UI
+# NSPanel Lovelace UI
 
-Checkout [README](https://github.com/joBr99/nspanel-lovelance-ui/blob/main/README.md) for detailed Instructions.
+Checkout [README](https://github.com/joBr99/nspanel-lovelace-ui/blob/main/README.md) for detailed Instructions.
 
 ### App Configuration
 
 ```yaml
 nspanel-1:
-  module: nspanel-lovelance-ui
-  class: NsPanelLovelanceUIManager
+  module: nspanel-lovelace-ui
+  class: NsPanelLovelaceUIManager
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"

@@ -117,12 +117,12 @@ AppDaemon automations in HACS, as these are not enabled by default:
    then require you to wait a few hours for HACS to be fully configured. In this case,
    you won't be able to proceed to the next steps until HACS is ready.
 
-Now, to install NSPanel Lovelance UI Backend with HACS, follow these steps:
+Now, to install NSPanel Lovelace UI Backend with HACS, follow these steps:
 
 1. Click on `HACS` on the left menu bar in Home Assistant Web UI
 2. Click on `Automations` in the right panel
 3. Click on `Explore & download repositories` in the bottom right corner
-4. Search for `NSPanel`, and click on `NSPanel Lovelance UI Backend` in the list that appears
+4. Search for `NSPanel`, and click on `NSPanel Lovelace UI Backend` in the list that appears
 5. In the bottom right corner of the panel that appears, click on
    `Download this repository with HACS`
 6. A confirmation panel will appear, click on `Download`, and wait for HACS to
@@ -132,7 +132,7 @@ Now, to install NSPanel Lovelance UI Backend with HACS, follow these steps:
 #### Manually
 
 Installing the Backend Application manually can be summarized by putting the content of the
-`apps/` directory of this repository (the `nspanel-lovelance-ui/` directory) into the `apps/`
+`apps/` directory of this repository (the `nspanel-lovelace-ui/` directory) into the `apps/`
 directory of your AppDaemon installation.
 
 
@@ -234,8 +234,8 @@ You can have multiple nspanel sections.
 
 ```yaml
 nspanel-1:
-  module: nspanel-lovelance-ui
-  class: NsPanelLovelanceUIManager
+  module: nspanel-lovelace-ui
+  class: NsPanelLovelaceUIManager
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
