@@ -27,7 +27,7 @@ header = binascii.unhexlify('55BB')
 
 print("length:", len(value))
 
-length = len(value).to_bytes(1, 'little')
+length = len(value).to_bytes(2, 'little')
 
 bytes_payload = header + length + payload
 
