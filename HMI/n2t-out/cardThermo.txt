@@ -493,7 +493,7 @@ Timer tmSerial
                                         }else
                                         {
                                             //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-                                            udelete u[2]+3
+                                            udelete payloadLength-1
                                             bufferPos=0
                                         }
                                         if(tId.txt=="popupLight")
