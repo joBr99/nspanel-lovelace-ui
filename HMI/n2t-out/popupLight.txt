@@ -533,8 +533,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",2
                                         if(tTmp.txt=="disable")
                                         {
-                                            vis t4,0
-                                            vis t3,0
+                                            vis t1,0
+                                            vis t2,0
                                             vis hBrightness,0
                                             mode_bright.val=0
                                         }else
@@ -565,7 +565,7 @@ Timer tmSerial
                                         }
                                         // get ColorWheel value
                                         spstr strCommand.txt,tTmp.txt,",",4
-                                        if(tTmp.txt=="enable")
+                                        if(tTmp.txt!="disable")
                                         {
                                             vis bColor,1
                                         }
