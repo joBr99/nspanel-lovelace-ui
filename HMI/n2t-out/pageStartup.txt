@@ -459,6 +459,7 @@ Button bSendStartup
     
     Events
         Touch Press Event
+            recmod=1
             bauds=115200
             // startup event
             tSend.txt="event,startup,"+tVersion.txt
