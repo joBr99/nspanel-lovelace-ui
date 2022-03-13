@@ -462,11 +462,11 @@ class NsPanelLovelanceUI:
           color = "disable"
       self.send_mqtt_msg(f"entityUpdateDetail,{switch_val},{brightness},{color_temp},{color}")
 
-    if(page_type == "popupShutter"):
-      pos = self.api.get_entity(msg[3]).attributes.current_position
-      # reverse position for slider
-      pos = 100-pos
-      self.send_mqtt_msg("entityUpdateDetail,{0}".format(pos))
+      if(page_type == "popupShutter"):
+        pos = self.api.get_entity(msg[3]).attributes.current_position
+        # reverse position for slider
+        pos = 100-pos
+        self.send_mqtt_msg("entityUpdateDetail,{0}".format(pos))
 
   def hsv2rgb(self, h, s, v):
       hsv = colorsys.hsv_to_rgb(h,s,v)
