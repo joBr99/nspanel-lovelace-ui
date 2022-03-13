@@ -2326,6 +2326,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tId.txt,",",1
                                         //save second arg if there's one
                                         spstr strCommand.txt,tTmp.txt,",",2
+                                        //save third arg if there's one
+                                        spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
                                         if(tId.txt=="cardEntities")
                                         {
                                             //yay, we are already on the correct page

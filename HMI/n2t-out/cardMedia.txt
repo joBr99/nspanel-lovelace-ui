@@ -764,6 +764,10 @@ Timer tmSerial
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,",",1
+                                        //save second arg if there's one
+                                        spstr strCommand.txt,tTmp.txt,",",2
+                                        //save third arg if there's one
+                                        spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
                                         if(tId.txt=="cardMedia")
                                         {
                                             //yay, we are already on the correct page
@@ -772,6 +776,11 @@ Timer tmSerial
                                             //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                             udelete payloadLength-1
                                             bufferPos=0
+                                        }
+                                        if(tId.txt=="popupLight")
+                                        {
+                                            pageIcons.tTmp1.txt=tTmp.txt
+                                            page popupLight
                                         }
                                         if(tId.txt=="cardEntities")
                                         {
