@@ -366,21 +366,22 @@ class NsPanelLovelaceUI:
     if item_type == "scene":
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 10, name, "ACTIVATE")
 
-  def generate_thermo_page(self, item):
+  def get_safe_ha_attribute(self, eattr, attr, default):
+    return eattr[attr] if attr in eattr else default
 
+  def generate_thermo_page(self, item):
+    
     if not self.api.entity_exists(item):
       return f"entityUpd,{item},Not found,220,220,Not found,150,300,5"
 
     entity       = self.api.get_entity(item)
     heading      = entity.attributes.friendly_name
-    current_temp = int(entity.attributes.current_temperature*10)
-    dest_temp    = int(entity.attributes.temperature*10)
-    status       = ""
-    if "hvac_action" in entity.attributes:
-      status = entity.attributes.hvac_action
-    min_temp     = int(entity.attributes.min_temp*10)
-    max_temp     = int(entity.attributes.max_temp*10)
-    step_temp    = int(0.5*10)
+    current_temp = int(self.get_safe_ha_attribute(entity.attributes, "current_temperature", 0)*10)
+    dest_temp    = int(self.get_safe_ha_attribute(entity.attributes, "temperature", 0)*10)
+    status       = self.get_safe_ha_attribute(entity.attributes, "hvac_action", "")
+    min_temp     = int(self.get_safe_ha_attribute(entity.attributes, "min_temp", 0)*10) 
+    max_temp     = int(self.get_safe_ha_attribute(entity.attributes, "max_temp", 0)*10) 
+    step_temp    = int(self.get_safe_ha_attribute(entity.attributes, "target_temp_step", 0.5)*10) 
 
     return f"entityUpd,{item},{heading},{current_temp},{dest_temp},{status},{min_temp},{max_temp},{step_temp}"
 
@@ -492,3 +493,4 @@ class NsPanelLovelaceUI:
       hsv = (math.degrees(math.atan2(y, x))%360/360, sat, 1)
       rgb = self.hsv2rgb(hsv[0],hsv[1],hsv[2])
       return rgb
+    
