@@ -35,6 +35,7 @@ Page pageStartup
             vis tMsg2,0
             vis tMsg3,0
             vis tVersion,0
+            dim=100
         
         Postinitialize Event
             //send messages by clicking button
