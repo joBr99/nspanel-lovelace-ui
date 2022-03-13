@@ -354,7 +354,10 @@ class NsPanelLovelaceUI:
         if entity.attributes.device_class in icon_mapping:
           icon_id = icon_mapping[entity.attributes.device_class]
       
-      value = entity.state + " " + entity.attributes.unit_of_measurement
+      if "unit_of_measurement" in entity.attributes:
+        unit_of_measurement = entity.attributes.unit_of_measurement
+
+      value = entity.state + " " + unit_of_measurement
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "text", item, icon_id, name, value)
 
     if item_type == "button" or item_type == "input_button":
