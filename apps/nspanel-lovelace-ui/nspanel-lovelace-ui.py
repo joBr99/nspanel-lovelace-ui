@@ -345,12 +345,14 @@ class NsPanelLovelaceUI:
 
     if item_type == "sensor":
       icon_id = 0
+      unit_of_measurement = ""
       icon_mapping = {
         "temperature": 2,
         "power": 4
       }
-      if entity.attributes.device_class in icon_mapping:
-        icon_id = icon_mapping[entity.attributes.device_class]
+      if "device_class" in entity.attributes:
+        if entity.attributes.device_class in icon_mapping:
+          icon_id = icon_mapping[entity.attributes.device_class]
       
       value = entity.state + " " + entity.attributes.unit_of_measurement
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "text", item, icon_id, name, value)
