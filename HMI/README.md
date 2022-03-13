@@ -67,7 +67,7 @@ change the page type:
 
 `pageType,cardMedia`
 
-`pageType,popupLight,Schreibtischlampe`
+`pageType,popupLight,Schreibtischlampe,light.schreibtischlampe`
 
 `pageType,popupNotify`
 
