@@ -345,19 +345,14 @@ class NsPanelLovelaceUI:
 
     if item_type == "sensor":
       icon_id = 0
-      unit_of_measurement = ""
       icon_mapping = {
         "temperature": 2,
         "power": 4
       }
-      if "device_class" in entity.attributes:
-        if entity.attributes.device_class in icon_mapping:
-          icon_id = icon_mapping[entity.attributes.device_class]
+      if entity.attributes.device_class in icon_mapping:
+        icon_id = icon_mapping[entity.attributes.device_class]
       
-      if "unit_of_measurement" in entity.attributes:
-        unit_of_measurement = entity.attributes.unit_of_measurement
-
-      value = entity.state + " " + unit_of_measurement
+      value = entity.state + " " + entity.attributes.unit_of_measurement
       return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "text", item, icon_id, name, value)
 
     if item_type == "button" or item_type == "input_button":
@@ -375,12 +370,14 @@ class NsPanelLovelaceUI:
     heading      = entity.attributes.friendly_name
     current_temp = int(entity.attributes.current_temperature*10)
     dest_temp    = int(entity.attributes.temperature*10)
-    status       = entity.attributes.hvac_action
+    status       = ""
+    if "hvac_action" in entity.attributes:
+      status = entity.attributes.hvac_action
     min_temp     = int(entity.attributes.min_temp*10)
     max_temp     = int(entity.attributes.max_temp*10)
     step_temp    = int(0.5*10)
 
-    return "entityUpd,{0},{1},{2},{3},{4},{5},{6},{7}".format(item, heading, current_temp, dest_temp, status, min_temp, max_temp, step_temp)
+    return f"entityUpd,{item},{heading},{current_temp},{dest_temp},{status},{min_temp},{max_temp},{step_temp}"
 
   def generate_media_page(self, item):
 
