@@ -322,7 +322,7 @@ class NsPanelLovelaceUI:
       return "entityUpd,{0},{1}".format(item_nr, item_type)
     
     if not self.api.entity_exists(item):
-      return
+      return f"entityUpd,{item_nr},text,{item},11,Not found check, apps.yaml"
     entity = self.api.get_entity(item)
     name = entity.attributes.friendly_name
 
@@ -364,7 +364,7 @@ class NsPanelLovelaceUI:
   def generate_thermo_page(self, item):
 
     if not self.api.entity_exists(item):
-      return
+      return f"entityUpd,{item},Not found,220,220,Not found,150,300,5"
 
     entity       = self.api.get_entity(item)
     heading      = entity.attributes.friendly_name
@@ -380,7 +380,7 @@ class NsPanelLovelaceUI:
   def generate_media_page(self, item):
 
     if not self.api.entity_exists(item):
-      return
+      return f"entityUpd,|{item}|Not found|11|Please check your|apps.yaml in AppDaemon|50|11"
 
     entity       = self.api.get_entity(item)
     heading      = entity.attributes.friendly_name
