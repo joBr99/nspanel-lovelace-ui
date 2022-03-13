@@ -381,7 +381,7 @@ Text tIcon2
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : î°
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
