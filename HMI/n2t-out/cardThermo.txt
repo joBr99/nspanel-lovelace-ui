@@ -1084,8 +1084,7 @@ Timer tmSerial
                                             substr pageIcons.tIcons.txt,bt0.pco2,sys0,1
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",11
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bt0.val,sys0,1
+                                            covx tTmp.txt,bt0.val,0,0
                                             //enable
                                             vis bt0,1
                                         }
@@ -1101,8 +1100,7 @@ Timer tmSerial
                                             substr pageIcons.tIcons.txt,bt1.pco2,sys0,1
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",14
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bt1.val,sys0,1
+                                            covx tTmp.txt,bt1.val,0,0
                                             //enable
                                             vis bt1,1
                                         }
@@ -1118,8 +1116,7 @@ Timer tmSerial
                                             substr pageIcons.tIcons.txt,bt2.pco2,sys0,1
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",17
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bt2.val,sys0,1
+                                            covx tTmp.txt,bt2.val,0,0
                                             //enable
                                             vis bt2,1
                                         }
@@ -1135,8 +1132,7 @@ Timer tmSerial
                                             substr pageIcons.tIcons.txt,bt3.pco2,sys0,1
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",20
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bt3.val,sys0,1
+                                            covx tTmp.txt,bt3.val,0,0
                                             //enable
                                             vis bt3,1
                                         }
@@ -1152,8 +1148,7 @@ Timer tmSerial
                                             substr pageIcons.tIcons.txt,bt4.pco2,sys0,1
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",23
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bt4.val,sys0,1
+                                            covx tTmp.txt,bt4.val,0,0
                                             //enable
                                             vis bt4,1
                                         }
@@ -1169,8 +1164,7 @@ Timer tmSerial
                                             substr pageIcons.tIcons.txt,bt5.pco2,sys0,1
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",26
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bt5.val,sys0,1
+                                            covx tTmp.txt,bt5.val,0,0
                                             //enable
                                             vis bt5,1
                                         }
@@ -1186,8 +1180,7 @@ Timer tmSerial
                                             substr pageIcons.tIcons.txt,bt6.pco2,sys0,1
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",29
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bt6.val,sys0,1
+                                            covx tTmp.txt,bt6.val,0,0
                                             //enable
                                             vis bt6,1
                                         }
@@ -1203,8 +1196,7 @@ Timer tmSerial
                                             substr pageIcons.tIcons.txt,bt7.pco2,sys0,1
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",32
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bt7.val,sys0,1
+                                            covx tTmp.txt,bt7.val,0,0
                                             //enable
                                             vis bt7,1
                                         }
@@ -1220,8 +1212,7 @@ Timer tmSerial
                                             substr pageIcons.tIcons.txt,bt8.pco2,sys0,1
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",35
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bt8.val,sys0,1
+                                            covx tTmp.txt,bt8.val,0,0
                                             //enable
                                             vis bt8,1
                                         }
