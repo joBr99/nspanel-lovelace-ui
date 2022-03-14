@@ -96,7 +96,8 @@ class Nextion : Driver
     end
 
     def screeninit()
-        log("NXP: Screen Initialized") 
+        log("NXP: Screen Initialized")
+		self.sendnx("recmod=1")		
     end
 
     def write_block()
@@ -227,8 +228,8 @@ class Nextion : Driver
         self.tcp = tcpclient()
         self.tcp.connect(host,port)
         log("FLH: Connected:"+str(self.tcp.connected()),3)
-        var get_req = "GET "+url+" HTTP/1.0\r\n"
-		get_req += "HOST: " + host + "\r\n\r\n"
+        var get_req = "GET "+get+" HTTP/1.0\r\n"
+		get_req += string.format("HOST: %s:%s\r\n\r\n",host,port)
         self.tcp.write(get_req)
         var a = self.tcp.available()
         i = 1
