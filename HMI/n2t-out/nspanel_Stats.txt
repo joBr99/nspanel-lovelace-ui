@@ -43,9 +43,9 @@ popupShutter
 	148  Line(s) of event code
 	84   Unique line(s) of event code
 cardThermo
-	27   Component(s)
-	201  Line(s) of event code
-	120  Unique line(s) of event code
+	33   Component(s)
+	333  Line(s) of event code
+	200  Unique line(s) of event code
 cardEntities
 	55   Component(s)
 	824  Line(s) of event code
@@ -53,6 +53,6 @@ cardEntities
 
 Total
 	12   Page(s)
-	258  Component(s)
-	2256 Line(s) of event code
-	578  Unique line(s) of event code
+	264  Component(s)
+	2388 Line(s) of event code
+	658  Unique line(s) of event code

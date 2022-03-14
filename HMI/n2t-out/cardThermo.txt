@@ -30,11 +30,16 @@ Page cardThermo
             vis xTempMax,0
             vis xTempStep,0
             //tEntity.txt=tHeading.txt
-            //disable buttons that are not implemented
-            vis t7,0
-            vis t6,0
-            vis t5,0
-            //
+            // disable all buttons
+            vis bt0,0
+            vis bt1,0
+            vis bt2,0
+            vis bt3,0
+            vis bt4,0
+            vis bt5,0
+            vis bt6,0
+            vis bt7,0
+            vis bt8,0
             //page open event
             // event,pageOpen,cardThermo,pageNumber
             // craft command
@@ -64,7 +69,7 @@ Variable (string) strCommand
     
 Variable (string) entn
     Attributes
-        ID            : 25
+        ID            : 22
         Scope         : local
         Text          : 
         Max. Text Size: 50
@@ -101,7 +106,7 @@ Number nPageDisp
     
 XFloat xTempCurr
     Attributes
-        ID                                  : 17
+        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -122,7 +127,7 @@ XFloat xTempCurr
         Font Color                          : 65535
         Horizontal Alignment                : center
         Vertical Alignment                  : center
-        Value                               : 215
+        Value                               : 0
         Significant digits left             : 0
         Significant digits right            : 1
         Word wrap                           : enabled
@@ -131,7 +136,7 @@ XFloat xTempCurr
     
 XFloat xTempDest
     Attributes
-        ID                                  : 19
+        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -152,7 +157,7 @@ XFloat xTempDest
         Font Color                          : 65535
         Horizontal Alignment                : center
         Vertical Alignment                  : center
-        Value                               : 215
+        Value                               : 0
         Significant digits left             : 0
         Significant digits right            : 1
         Word wrap                           : enabled
@@ -161,7 +166,7 @@ XFloat xTempDest
     
 XFloat xTempMin
     Attributes
-        ID                                  : 20
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -191,7 +196,7 @@ XFloat xTempMin
     
 XFloat xTempMax
     Attributes
-        ID                                  : 21
+        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -221,7 +226,7 @@ XFloat xTempMax
     
 XFloat xTempStep
     Attributes
-        ID                                  : 22
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -423,97 +428,7 @@ Text tStatus
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : Heizung
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text t5
-    Attributes
-        ID                                  : 12
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 263
-        y coordinate                        : 218
-        Width                               : 30
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 6371
-        Font Color                          : 50712
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : î¤
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text t6
-    Attributes
-        ID                                  : 13
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 211
-        y coordinate                        : 218
-        Width                               : 30
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 6371
-        Font Color                          : 64512
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : î·
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text t7
-    Attributes
-        ID                                  : 14
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 160
-        y coordinate                        : 218
-        Width                               : 30
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 6371
-        Font Color                          : 50712
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : îº
+        Text                                : 
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -521,7 +436,7 @@ Text t7
     
 Text t2
     Attributes
-        ID                                  : 18
+        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -622,7 +537,7 @@ Button bNext
         
 Button bDown
     Attributes
-        ID                                  : 15
+        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -678,7 +593,7 @@ Button bDown
         
 Button bUp
     Attributes
-        ID                                  : 16
+        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -732,7 +647,7 @@ Button bUp
         
 Button bPrev
     Attributes
-        ID                                  : 26
+        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -784,6 +699,294 @@ Button bPrev
             prints tSend.txt,0
             prints crcval,2
         
+Dual-state Button bt0
+    Attributes
+        ID                                  : 24
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 115
+        y coordinate                        : 223
+        Width                               : 31
+        Height                              : 31
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color (Unpressed)             : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 6371
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 64512
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Dual-state Button bt1
+    Attributes
+        ID                                  : 25
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 162
+        y coordinate                        : 223
+        Width                               : 31
+        Height                              : 31
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color (Unpressed)             : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 6371
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 64512
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Dual-state Button bt2
+    Attributes
+        ID                                  : 26
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 209
+        y coordinate                        : 223
+        Width                               : 31
+        Height                              : 31
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color (Unpressed)             : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 6371
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 64512
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Dual-state Button bt3
+    Attributes
+        ID                                  : 27
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 256
+        y coordinate                        : 223
+        Width                               : 31
+        Height                              : 31
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color (Unpressed)             : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 6371
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 64512
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Dual-state Button bt4
+    Attributes
+        ID                                  : 28
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 303
+        y coordinate                        : 223
+        Width                               : 31
+        Height                              : 31
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color (Unpressed)             : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 6371
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 64512
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Dual-state Button bt5
+    Attributes
+        ID                                  : 29
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 136
+        y coordinate                        : 223
+        Width                               : 31
+        Height                              : 31
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color (Unpressed)             : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 6371
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 64512
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : pressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Dual-state Button bt6
+    Attributes
+        ID                                  : 30
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 183
+        y coordinate                        : 223
+        Width                               : 31
+        Height                              : 31
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color (Unpressed)             : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 6371
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 64512
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : pressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Dual-state Button bt7
+    Attributes
+        ID                                  : 31
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 230
+        y coordinate                        : 223
+        Width                               : 31
+        Height                              : 31
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color (Unpressed)             : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 6371
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 64512
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : pressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Dual-state Button bt8
+    Attributes
+        ID                                  : 32
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 277
+        y coordinate                        : 223
+        Width                               : 31
+        Height                              : 31
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color (Unpressed)             : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 6371
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 64512
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : pressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
 Timer tmSerial
     Attributes
         ID         : 6
@@ -859,6 +1062,169 @@ Timer tmSerial
                                         //tempStep
                                         spstr strCommand.txt,tTmp.txt,",",8
                                         covx tTmp.txt,xTempStep.val,0,0
+                                        // disable all buttons
+                                        vis bt0,0
+                                        vis bt1,0
+                                        vis bt2,0
+                                        vis bt3,0
+                                        vis bt4,0
+                                        vis bt5,0
+                                        vis bt6,0
+                                        vis bt7,0
+                                        vis bt8,0
+                                        //bt0
+                                        spstr strCommand.txt,tTmp.txt,",",9
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt0.txt,sys0,1
+                                            // set text color on active state
+                                            spstr strCommand.txt,tTmp.txt,",",10
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt0.pco2,sys0,1
+                                            // set state
+                                            spstr strCommand.txt,tTmp.txt,",",11
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt0.val,sys0,1
+                                            //enable
+                                            vis bt0,1
+                                        }
+                                        //bt1
+                                        spstr strCommand.txt,tTmp.txt,",",12
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt1.txt,sys0,1
+                                            // set text color on active state
+                                            spstr strCommand.txt,tTmp.txt,",",13
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt1.pco2,sys0,1
+                                            // set state
+                                            spstr strCommand.txt,tTmp.txt,",",14
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt1.val,sys0,1
+                                            //enable
+                                            vis bt1,1
+                                        }
+                                        //bt2
+                                        spstr strCommand.txt,tTmp.txt,",",15
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt2.txt,sys0,1
+                                            // set text color on active state
+                                            spstr strCommand.txt,tTmp.txt,",",16
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt2.pco2,sys0,1
+                                            // set state
+                                            spstr strCommand.txt,tTmp.txt,",",17
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt2.val,sys0,1
+                                            //enable
+                                            vis bt2,1
+                                        }
+                                        //bt3
+                                        spstr strCommand.txt,tTmp.txt,",",18
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt3.txt,sys0,1
+                                            // set text color on active state
+                                            spstr strCommand.txt,tTmp.txt,",",19
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt3.pco2,sys0,1
+                                            // set state
+                                            spstr strCommand.txt,tTmp.txt,",",20
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt3.val,sys0,1
+                                            //enable
+                                            vis bt3,1
+                                        }
+                                        //bt4
+                                        spstr strCommand.txt,tTmp.txt,",",21
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt4.txt,sys0,1
+                                            // set text color on active state
+                                            spstr strCommand.txt,tTmp.txt,",",22
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt4.pco2,sys0,1
+                                            // set state
+                                            spstr strCommand.txt,tTmp.txt,",",23
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt4.val,sys0,1
+                                            //enable
+                                            vis bt4,1
+                                        }
+                                        //bt5
+                                        spstr strCommand.txt,tTmp.txt,",",24
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt5.txt,sys0,1
+                                            // set text color on active state
+                                            spstr strCommand.txt,tTmp.txt,",",25
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt5.pco2,sys0,1
+                                            // set state
+                                            spstr strCommand.txt,tTmp.txt,",",26
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt5.val,sys0,1
+                                            //enable
+                                            vis bt5,1
+                                        }
+                                        //bt6
+                                        spstr strCommand.txt,tTmp.txt,",",27
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt6.txt,sys0,1
+                                            // set text color on active state
+                                            spstr strCommand.txt,tTmp.txt,",",28
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt6.pco2,sys0,1
+                                            // set state
+                                            spstr strCommand.txt,tTmp.txt,",",29
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt6.val,sys0,1
+                                            //enable
+                                            vis bt6,1
+                                        }
+                                        //bt7
+                                        spstr strCommand.txt,tTmp.txt,",",30
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt7.txt,sys0,1
+                                            // set text color on active state
+                                            spstr strCommand.txt,tTmp.txt,",",31
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt7.pco2,sys0,1
+                                            // set state
+                                            spstr strCommand.txt,tTmp.txt,",",32
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt7.val,sys0,1
+                                            //enable
+                                            vis bt7,1
+                                        }
+                                        //bt8
+                                        spstr strCommand.txt,tTmp.txt,",",33
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt8.txt,sys0,1
+                                            // set text color on active state
+                                            spstr strCommand.txt,tTmp.txt,",",34
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt8.pco2,sys0,1
+                                            // set state
+                                            spstr strCommand.txt,tTmp.txt,",",35
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bt8.val,sys0,1
+                                            //enable
+                                            vis bt8,1
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -945,7 +1311,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 23
+        ID         : 20
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -965,7 +1331,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 24
+        ID   : 21
         Scope: local
         Value: 0
     
