@@ -399,18 +399,18 @@ class NsPanelLovelaceUI:
         color_on = 64512
       if mode == "off":
         icon_id = 27
-        color_on = 50712
+        color_on = 35921
 
 
       if mode == "cool":
         icon_id = 31
-        color_on = 50712
+        color_on = 11487
       if mode == "dry":
         icon_id = 26
-        color_on = 50712
+        color_on = 60897
       if mode == "fan_only":
         icon_id = 30
-        color_on = 50712
+        color_on = 35921
 
 
       state = 0
