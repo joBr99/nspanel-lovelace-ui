@@ -802,7 +802,7 @@ Dual-state Button bt0
             tSend.txt="event,buttonPress,"+tTmp.txt+","
             tSend.txt+=tHeading.txt+","
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,"+va0.txt
+            tSend.txt+="1,hvac_action,"+va0.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -855,7 +855,7 @@ Dual-state Button bt1
             tSend.txt="event,buttonPress,"+tTmp.txt+","
             tSend.txt+=tHeading.txt+","
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,"+va1.txt
+            tSend.txt+="1,hvac_action,"+va1.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -908,7 +908,7 @@ Dual-state Button bt2
             tSend.txt="event,buttonPress,"+tTmp.txt+","
             tSend.txt+=tHeading.txt+","
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,"+va2.txt
+            tSend.txt+="1,hvac_action,"+va2.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -961,7 +961,7 @@ Dual-state Button bt3
             tSend.txt="event,buttonPress,"+tTmp.txt+","
             tSend.txt+=tHeading.txt+","
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,"+va3.txt
+            tSend.txt+="1,hvac_action,"+va3.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1014,7 +1014,7 @@ Dual-state Button bt4
             tSend.txt="event,buttonPress,"+tTmp.txt+","
             tSend.txt+=tHeading.txt+","
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,"+va4.txt
+            tSend.txt+="1,hvac_action,"+va4.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1067,7 +1067,7 @@ Dual-state Button bt5
             tSend.txt="event,buttonPress,"+tTmp.txt+","
             tSend.txt+=tHeading.txt+","
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,"+va5.txt
+            tSend.txt+="1,hvac_action,"+va5.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1120,7 +1120,7 @@ Dual-state Button bt6
             tSend.txt="event,buttonPress,"+tTmp.txt+","
             tSend.txt+=tHeading.txt+","
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,"+va6.txt
+            tSend.txt+="1,hvac_action,"+va6.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1173,7 +1173,7 @@ Dual-state Button bt7
             tSend.txt="event,buttonPress,"+tTmp.txt+","
             tSend.txt+=tHeading.txt+","
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,"+va7.txt
+            tSend.txt+="1,hvac_action,"+va7.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1226,7 +1226,7 @@ Dual-state Button bt8
             tSend.txt="event,buttonPress,"+tTmp.txt+","
             tSend.txt+=tHeading.txt+","
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,"+va8.txt
+            tSend.txt+="1,hvac_action,"+va8.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
