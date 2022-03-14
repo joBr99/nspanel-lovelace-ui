@@ -74,6 +74,69 @@ Variable (string) entn
         Text          : 
         Max. Text Size: 50
     
+Variable (string) va0
+    Attributes
+        ID            : 33
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) va1
+    Attributes
+        ID            : 34
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) va2
+    Attributes
+        ID            : 35
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) va3
+    Attributes
+        ID            : 36
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) va4
+    Attributes
+        ID            : 37
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) va5
+    Attributes
+        ID            : 38
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) va6
+    Attributes
+        ID            : 39
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) va7
+    Attributes
+        ID            : 40
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) va8
+    Attributes
+        ID            : 41
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
 Number nPageDisp
     Attributes
         ID                                  : 5
@@ -731,6 +794,27 @@ Dual-state Button bt0
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn.txt+","
+            tSend.txt+="1,"+va0.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Dual-state Button bt1
     Attributes
         ID                                  : 25
@@ -763,6 +847,27 @@ Dual-state Button bt1
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn.txt+","
+            tSend.txt+="1,"+va1.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Dual-state Button bt2
     Attributes
         ID                                  : 26
@@ -795,6 +900,27 @@ Dual-state Button bt2
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn.txt+","
+            tSend.txt+="1,"+va2.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Dual-state Button bt3
     Attributes
         ID                                  : 27
@@ -827,6 +953,27 @@ Dual-state Button bt3
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn.txt+","
+            tSend.txt+="1,"+va3.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Dual-state Button bt4
     Attributes
         ID                                  : 28
@@ -859,6 +1006,27 @@ Dual-state Button bt4
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn.txt+","
+            tSend.txt+="1,"+va4.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Dual-state Button bt5
     Attributes
         ID                                  : 29
@@ -891,6 +1059,27 @@ Dual-state Button bt5
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn.txt+","
+            tSend.txt+="1,"+va5.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Dual-state Button bt6
     Attributes
         ID                                  : 30
@@ -923,6 +1112,27 @@ Dual-state Button bt6
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn.txt+","
+            tSend.txt+="1,"+va6.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Dual-state Button bt7
     Attributes
         ID                                  : 31
@@ -955,6 +1165,27 @@ Dual-state Button bt7
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn.txt+","
+            tSend.txt+="1,"+va7.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Dual-state Button bt8
     Attributes
         ID                                  : 32
@@ -987,6 +1218,27 @@ Dual-state Button bt8
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn.txt+","
+            tSend.txt+="1,"+va8.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Timer tmSerial
     Attributes
         ID         : 6
@@ -1085,134 +1337,152 @@ Timer tmSerial
                                             // set state
                                             spstr strCommand.txt,tTmp.txt,",",11
                                             covx tTmp.txt,bt0.val,0,0
+                                            // save action
+                                            spstr strCommand.txt,va0.txt,",",12
                                             //enable
                                             vis bt0,1
                                         }
                                         //bt1
-                                        spstr strCommand.txt,tTmp.txt,",",12
+                                        spstr strCommand.txt,tTmp.txt,",",13
                                         if(tTmp.txt!="")
                                         {
                                             // set icon
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bt1.txt,sys0,1
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,",",13
+                                            spstr strCommand.txt,tTmp.txt,",",14
                                             covx tTmp.txt,bt1.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,",",14
+                                            spstr strCommand.txt,tTmp.txt,",",15
                                             covx tTmp.txt,bt1.val,0,0
+                                            // save action
+                                            spstr strCommand.txt,va1.txt,",",16
                                             //enable
                                             vis bt1,1
                                         }
                                         //bt2
-                                        spstr strCommand.txt,tTmp.txt,",",15
+                                        spstr strCommand.txt,tTmp.txt,",",17
                                         if(tTmp.txt!="")
                                         {
                                             // set icon
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bt2.txt,sys0,1
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,",",16
+                                            spstr strCommand.txt,tTmp.txt,",",18
                                             covx tTmp.txt,bt2.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,",",17
+                                            spstr strCommand.txt,tTmp.txt,",",19
                                             covx tTmp.txt,bt2.val,0,0
+                                            // save action
+                                            spstr strCommand.txt,va2.txt,",",20
                                             //enable
                                             vis bt2,1
                                         }
                                         //bt3
-                                        spstr strCommand.txt,tTmp.txt,",",18
+                                        spstr strCommand.txt,tTmp.txt,",",21
                                         if(tTmp.txt!="")
                                         {
                                             // set icon
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bt3.txt,sys0,1
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,",",19
+                                            spstr strCommand.txt,tTmp.txt,",",22
                                             covx tTmp.txt,bt3.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,",",20
+                                            spstr strCommand.txt,tTmp.txt,",",23
                                             covx tTmp.txt,bt3.val,0,0
+                                            // save action
+                                            spstr strCommand.txt,va3.txt,",",24
                                             //enable
                                             vis bt3,1
                                         }
                                         //bt4
-                                        spstr strCommand.txt,tTmp.txt,",",21
+                                        spstr strCommand.txt,tTmp.txt,",",25
                                         if(tTmp.txt!="")
                                         {
                                             // set icon
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bt4.txt,sys0,1
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,",",22
+                                            spstr strCommand.txt,tTmp.txt,",",26
                                             covx tTmp.txt,bt4.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,",",23
+                                            spstr strCommand.txt,tTmp.txt,",",27
                                             covx tTmp.txt,bt4.val,0,0
+                                            // save action
+                                            spstr strCommand.txt,va4.txt,",",28
                                             //enable
                                             vis bt4,1
                                         }
                                         //bt5
-                                        spstr strCommand.txt,tTmp.txt,",",24
+                                        spstr strCommand.txt,tTmp.txt,",",29
                                         if(tTmp.txt!="")
                                         {
                                             // set icon
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bt5.txt,sys0,1
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,",",25
+                                            spstr strCommand.txt,tTmp.txt,",",30
                                             covx tTmp.txt,bt5.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,",",26
+                                            spstr strCommand.txt,tTmp.txt,",",31
                                             covx tTmp.txt,bt5.val,0,0
+                                            // save action
+                                            spstr strCommand.txt,va5.txt,",",32
                                             //enable
                                             vis bt5,1
                                         }
                                         //bt6
-                                        spstr strCommand.txt,tTmp.txt,",",27
+                                        spstr strCommand.txt,tTmp.txt,",",33
                                         if(tTmp.txt!="")
                                         {
                                             // set icon
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bt6.txt,sys0,1
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,",",28
+                                            spstr strCommand.txt,tTmp.txt,",",34
                                             covx tTmp.txt,bt6.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,",",29
+                                            spstr strCommand.txt,tTmp.txt,",",35
                                             covx tTmp.txt,bt6.val,0,0
+                                            // save action
+                                            spstr strCommand.txt,va6.txt,",",36
                                             //enable
                                             vis bt6,1
                                         }
                                         //bt7
-                                        spstr strCommand.txt,tTmp.txt,",",30
+                                        spstr strCommand.txt,tTmp.txt,",",37
                                         if(tTmp.txt!="")
                                         {
                                             // set icon
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bt7.txt,sys0,1
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,",",31
+                                            spstr strCommand.txt,tTmp.txt,",",38
                                             covx tTmp.txt,bt7.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,",",32
+                                            spstr strCommand.txt,tTmp.txt,",",39
                                             covx tTmp.txt,bt7.val,0,0
+                                            // save action
+                                            spstr strCommand.txt,va7.txt,",",40
                                             //enable
                                             vis bt7,1
                                         }
                                         //bt8
-                                        spstr strCommand.txt,tTmp.txt,",",33
+                                        spstr strCommand.txt,tTmp.txt,",",41
                                         if(tTmp.txt!="")
                                         {
                                             // set icon
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bt8.txt,sys0,1
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,",",34
+                                            spstr strCommand.txt,tTmp.txt,",",42
                                             covx tTmp.txt,bt8.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,",",35
+                                            spstr strCommand.txt,tTmp.txt,",",43
                                             covx tTmp.txt,bt8.val,0,0
+                                            // save action
+                                            spstr strCommand.txt,va8.txt,",",44
                                             //enable
                                             vis bt8,1
                                         }
