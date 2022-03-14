@@ -74,7 +74,7 @@ class NsPanelLovelaceUI:
       self.api.log("Received Message from Tasmota: %s", data, level="DEBUG")
       return
     msg = data["CustomRecv"]
-    self.api.log("Received Message from Tasmota: %s", msg, level="DEBUG")
+    self.api.log("Received Message from Tasmota: %s", msg) #, level="DEBUG"
     
     # Split message into parts seperated by ","
     msg = msg.split(",")
@@ -133,7 +133,7 @@ class NsPanelLovelaceUI:
         self.update_screensaver_weather("")
 
   def send_mqtt_msg(self,msg):
-    self.api.log("Send Message from Tasmota: %s", msg, level="DEBUG")
+    self.api.log("Send Message from Tasmota: %s", msg) #, level="DEBUG"
     self.mqtt.mqtt_publish(self.config["panelSendTopic"], msg)
 
   def update_time(self, kwargs):
@@ -216,6 +216,9 @@ class NsPanelLovelaceUI:
       self.api.get_entity(entity_id).call_service("media_previous_track")
     if(btype == "media-pause"):
       self.api.get_entity(entity_id).call_service("media_play_pause")
+
+    if(btype == "hvac_action"):
+      self.api.get_entity(entity_id).call_service("set_hvac_mode", hvac_mode=optVal)
 
 
     if(btype == "brightnessSlider"):
@@ -383,7 +386,54 @@ class NsPanelLovelaceUI:
     max_temp     = int(self.get_safe_ha_attribute(entity.attributes, "max_temp", 0)*10) 
     step_temp    = int(self.get_safe_ha_attribute(entity.attributes, "target_temp_step", 0.5)*10) 
 
-    return f"entityUpd,{item},{heading},{current_temp},{dest_temp},{status},{min_temp},{max_temp},{step_temp}"
+    icon_res = ""
+    hvac_modes = self.get_safe_ha_attribute(entity.attributes, "hvac_modes", [])
+    for mode in hvac_modes:
+      icon_id = 11
+      color_on = 64512
+      if mode == "auto":
+        icon_id = 29
+        color_on = 1024
+      if mode == "heat":
+        icon_id = 28
+        color_on = 64512
+      if mode == "off":
+        icon_id = 27
+        color_on = 50712
+
+
+      if mode == "cool":
+        icon_id = 31
+        color_on = 50712
+      if mode == "dry":
+        icon_id = 26
+        color_on = 50712
+      if mode == "fan_only":
+        icon_id = 30
+        color_on = 50712
+
+
+      state = 0
+      if(mode == entity.state):
+        state = 1
+      
+      icon_res += f",{icon_id},{color_on},{state},{mode}"
+
+    len_hvac_modes = len(hvac_modes)
+    if len_hvac_modes%2 == 0:
+      # even
+      padding_len = int((4-len_hvac_modes)/2)
+      icon_res =  ","*4*padding_len + icon_res + ","*4*padding_len
+      # use last 4 icons
+      icon_res =  ","*4*5 + icon_res
+    else:
+      # uneven
+      padding_len = int((5-len_hvac_modes)/2)
+      icon_res =  ","*4*padding_len + icon_res + ","*4*padding_len
+      # uneven use first 5 icons
+      icon_res = icon_res + ","*4*4
+    
+    return f"entityUpd,{item},{heading},{current_temp},{dest_temp},{status},{min_temp},{max_temp},{step_temp}{icon_res}"
 
   def generate_media_page(self, item):
 
@@ -493,4 +543,3 @@ class NsPanelLovelaceUI:
       hsv = (math.degrees(math.atan2(y, x))%360/360, sat, 1)
       rgb = self.hsv2rgb(hsv[0],hsv[1],hsv[2])
       return rgb
-    
