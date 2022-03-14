@@ -181,7 +181,7 @@ The following message can be used to update the content on the cardEntities Page
 
 `event,tempUpd,*pageNumber*,*entityName*,*temperature*`
 
-`event,buttonPress,*pageNumber*,*tHeading*,*entityName,1,*hvac_action*
+`event,buttonPress,*pageNumber*,*tHeading*,*entityName,1,hvac_action,*hvac_action*
 
 ### cardMedia Page
 
