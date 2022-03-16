@@ -33,7 +33,7 @@ For more detailed Instructions see the following Sections:
 - [How It Works](#how-it-works)
 - [Requirements](#requirements)
 
-- [Installation - Home Automation Part](#installation---home-automation-part)
+- [Installation - Home Automation Part (Homeassistant)](#installation---home-automation-part-home-assistant)
    - [Installing AppDaemon](#installing-appdaemon)
    - [Installing Studio Code Server (optional, recommended)](#installing-studio-code-server-optional-recommended)
    - [Installing HACS (optional, recommended)](#installing-hacs-optional-recommended)
@@ -41,6 +41,8 @@ For more detailed Instructions see the following Sections:
       - [With HACS (recommended)](#with-hacs-recommended)
       - [Manually](#manually)
    - [Installing Tasmota to your NSPanel](#installing---tasmota-to-your-nspanel)
+
+- [Installation - Home Automation Part (IoBroker)](#installation---home-automation-part-iobroker)
 
 - [Installation - NSPanel Part](#installation-nspanel-part)
    - [Flash Tasmota to your NSPanel](#flash-tasmota-to-your-nspanel)
@@ -71,9 +73,7 @@ For more details on how the display firmware works see the [README File in the H
  - Running [Home Assistant Instance](https://www.home-assistant.io/installation/)
  - Installed [MQTT Broker](https://www.home-assistant.io/docs/mqtt/broker) alongside Homeassistant
 
-## Installation - Home Automation Part
-
-### Installing Home Assistant
+## Installation - Home Automation Part (Home Assistant)
 
 ### Installing AppDaemon
 
@@ -135,6 +135,11 @@ Installing the Backend Application manually can be summarized by putting the con
 `apps/` directory of this repository (the `nspanel-lovelace-ui/` directory) into the `apps/`
 directory of your AppDaemon installation.
 
+
+## Installation - Home Automation Part (IoBroker)
+
+If you are looking for ioBroker Integration instead of HomeAssistant take a look into the [Readme](ioBroker/README.md) in the iobroker folder.
+Thanks to @britzelpuf for this integration.
 
 ## Installation - NSPanel Part
 
