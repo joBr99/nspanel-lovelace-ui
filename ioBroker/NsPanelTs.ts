@@ -93,12 +93,14 @@ on([config.pvEntity, config.batEntity], function () {
 })
 
 
+
 on({ id: config.panelRecvTopic }, function (obj) {
     if (obj.state.val.startsWith('\{"CustomRecv":')) {
         var json = JSON.parse(obj.state.val);
 
         var split = json.CustomRecv.split(",");
         if (split[1] == "pageOpenDetail") {
+            UnsubscribeWatcher();
             SendToPanel(GenerateDetailPage(split[2], split[3]));
         }
         else {
@@ -107,7 +109,7 @@ on({ id: config.panelRecvTopic }, function (obj) {
     }
 });
 
-function SendToPanel(val: Payload | Payload[]) {
+function SendToPanel(val: Payload | Payload[]): void {
 
     if (Array.isArray(val)) {
         val.forEach(function (id, i) {
@@ -146,14 +148,14 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
     }
 }
 
-function HandleStartupProcess() {
+function HandleStartupProcess(): void {
     SendDate();
     SendTime();
     SendToPanel({ payload: "timeout," + config.timeoutScreensaver });
     SendToPanel({ payload: "dimmode," + config.dimmode });
 }
 
-function SendDate() {
+function SendDate(): void {
     var months = ["Jan", "Feb", "Mar", "Apr", "Mai", "Juni", "Juli", "Aug", "Sep", "Okt", "Nov", "Dez"];
     var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
     var d = new Date();
@@ -166,7 +168,7 @@ function SendDate() {
 
 }
 
-function SendTime() {
+function SendTime(): void {
     var d = new Date();
     var hr = d.getHours().toString();
     var min = d.getMinutes().toString();
@@ -279,13 +281,22 @@ function CreateEntity(id: string, placeId: number): Payload {
     return { payload: "entityUpd," + placeId + "," + type };
 }
 
-function RegisterEntityWatcher(id: string, entityId: string, placeId: number) {
+function RegisterEntityWatcher(id: string, entityId: string, placeId: number): void {
     if (subscriptions.hasOwnProperty(id)) {
         return;
     }
     subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {
-        log(CreateEntity(entityId, placeId).payload)
         SendToPanel(CreateEntity(entityId, placeId));
+    }))
+}
+
+
+function RegisterDetailEntityWatcher(id: string, entityId: string, type: string): void {
+    if (subscriptions.hasOwnProperty(id)) {
+        return;
+    }
+    subscriptions[id] = (on({ id: id, change: 'any' }, function () {
+        SendToPanel(GenerateDetailPage(type, entityId));
     }))
 }
 
@@ -304,7 +315,7 @@ function GetUnitOfMeasurement(id: string): string {
     return "";
 }
 
-function GenerateThermoPage(pageNum: number, page: PageThermo) {
+function GenerateThermoPage(pageNum: number, page: PageThermo): Payload[] {
     var id = page.item
     var out_msgs: Array<Payload> = [];
     out_msgs.push({ payload: "pageType,cardThermo" });
@@ -335,8 +346,7 @@ function GenerateThermoPage(pageNum: number, page: PageThermo) {
     return out_msgs
 }
 
-function HandleButtonEvent(words) {
-    var out_msgs: Array<Payload> = [];
+function HandleButtonEvent(words): void {
     let id = words[4]
 
     if (words[6] == "OnOff" && existsObject(id)) {
@@ -375,10 +385,8 @@ function HandleButtonEvent(words) {
     // if (words[6] == "colorTempSlider")
     //     out_msgs.push({ payload: id, action: "turn_on", domain: "lightTemperature", temperature: parseInt(words[7]) })
     if (words[1] == "tempUpd") {
-        log(words[1] + " " + words[3])
         setState(words[3] + ".SET", parseInt(words[4]) / 10)
     }
-    return out_msgs
 }
 
 function GenerateDetailPage(type: string, entityId: string): Payload[] {
@@ -392,9 +400,16 @@ function GenerateDetailPage(type: string, entityId: string): Payload[] {
             let switchVal = "0"
             if (o.common.role == "light") {
                 if (existsState(id + ".GET"))
+                {
                     val = getState(id + ".GET").val;
+                    RegisterDetailEntityWatcher(id + ".GET", id, type);
+                }
                 else if (existsState(id + ".SET"))
+                {
                     val = getState(id + ".SET").val;
+                    RegisterDetailEntityWatcher(id + ".SET", id, type);
+                }
+                    
                 if (val)
                     switchVal = "1"
 
@@ -403,13 +418,27 @@ function GenerateDetailPage(type: string, entityId: string): Payload[] {
 
             if (o.common.role == "dimmer") {
                 if (existsState(id + ".ON_ACTUAL"))
+                {
                     val = getState(id + ".ON_ACTUAL").val;
+                    RegisterDetailEntityWatcher(id + ".ON_ACTUAL", id, type);
+                }
+                    
                 else if (existsState(id + ".ON_SET"))
+                {
                     val = getState(id + ".ON_SET").val;
+                    RegisterDetailEntityWatcher(id + ".ON_SET", id, type);
+                }
+                    
                 if (val === true || val === "true")
                     switchVal = "1"
-
-                let brightness = Math.trunc(scale(getState(id + ".ACTUAL").val, 0, 100, 0, 100))
+                    let brightness = 0;
+                    if (existsState(id + ".ACTUAL"))
+                    {
+                        brightness =  Math.trunc(scale(getState(id + ".ACTUAL").val, 0, 100, 0, 100))
+                        RegisterDetailEntityWatcher(id + ".ACTUAL", id, type);
+                    }
+    
+                    
 
                 let colortemp = "disable"
                 //let attr_support_color = attr.supported_color_modes
@@ -429,29 +458,28 @@ function GenerateDetailPage(type: string, entityId: string): Payload[] {
                 val = getState(id + ".SET").val;
 
             out_msgs.push({ payload: "entityUpdateDetail," + val })
-            log("entityUpdateDetail," + val)
         }
     }
     return out_msgs
 }
 
-function scale(number, inMin, inMax, outMin, outMax) {
+function scale(number: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
     return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
 
-function UnsubscribeWatcher() {
+function UnsubscribeWatcher(): void {
     for (const [key, value] of Object.entries(subscriptions)) {
         unsubscribe(value);
         delete subscriptions[key]
     }
 }
 
-function HandleScreensaver() {
+function HandleScreensaver(): void {
     UnsubscribeWatcher();
     HandleScreensaverUpdate();
 }
 
-function HandleScreensaverUpdate() {
+function HandleScreensaverUpdate(): void {
     if (config.weatherEntity != null && existsObject(config.weatherEntity)) {
         var icon = getState(config.weatherEntity + ".ICON").val;
 
@@ -460,7 +488,7 @@ function HandleScreensaverUpdate() {
         let u1 = getState(config.batEntity).val;
         let u2 = getState(config.pvEntity).val;
 
-        SendToPanel(<Payload>{ payload: "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?" + temperature.toString() + " " + config.temperatureUnit + "?26?" + humidity + " %?Batterie?4?" + u1 + "%?PV?23?" + u2 + "W" })
+        //SendToPanel(<Payload>{ payload: "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?" + temperature.toString() + " " + config.temperatureUnit + "?26?" + humidity + " %?Batterie?4?" + u1 + "%?PV?23?" + u2 + "W" })
     }
 }
 
@@ -491,6 +519,5 @@ function GetAccuWeatherIcon(icon: number): number {
             return 1;
             break;
     }
-
 }
 
