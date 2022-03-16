@@ -233,7 +233,7 @@ ID | Icon
 31  | ![snowflake](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/snowflake.svg)
 32  | ![solar-power](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/solar-power.svg)
 33  | ![battery-charging-medium](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/battery-charging-medium.svg)
-
+34  | ![battery-medium](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/battery-medium.svg)
 
 # Design Guidelines for Nextion HMI Project
 
