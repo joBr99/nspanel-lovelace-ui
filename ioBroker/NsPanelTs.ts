@@ -488,7 +488,7 @@ function HandleScreensaverUpdate(): void {
         let u1 = getState(config.batEntity).val;
         let u2 = getState(config.pvEntity).val;
 
-        //SendToPanel(<Payload>{ payload: "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?" + temperature.toString() + " " + config.temperatureUnit + "?26?" + humidity + " %?Batterie?4?" + u1 + "%?PV?23?" + u2 + "W" })
+        SendToPanel(<Payload>{ payload: "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?" + temperature.toString() + " " + config.temperatureUnit + "?26?" + humidity + " %?Batterie?4?" + u1 + "%?PV?23?" + u2 + "W" })
     }
 }
 
