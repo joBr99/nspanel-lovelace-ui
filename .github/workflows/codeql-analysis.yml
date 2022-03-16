@@ -20,8 +20,8 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ main ]
-    paths:
-      - '**.py'
+#    paths:
+#      - '**.py'
   schedule:
     - cron: '36 14 * * 3'
 
