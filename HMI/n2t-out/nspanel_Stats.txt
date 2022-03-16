@@ -26,10 +26,6 @@ popupNotify
 	15   Component(s)
 	143  Line(s) of event code
 	95   Unique line(s) of event code
-popupLight
-	27   Component(s)
-	284  Line(s) of event code
-	145  Unique line(s) of event code
 cardMedia
 	22   Component(s)
 	219  Line(s) of event code
@@ -42,6 +38,10 @@ popupShutter
 	19   Component(s)
 	148  Line(s) of event code
 	84   Unique line(s) of event code
+popupLight
+	27   Component(s)
+	290  Line(s) of event code
+	149  Unique line(s) of event code
 cardThermo
 	42   Component(s)
 	450  Line(s) of event code
@@ -54,5 +54,5 @@ cardEntities
 Total
 	12   Page(s)
 	273  Component(s)
-	2493 Line(s) of event code
-	666  Unique line(s) of event code
+	2499 Line(s) of event code
+	670  Unique line(s) of event code
