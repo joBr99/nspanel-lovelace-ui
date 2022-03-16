@@ -138,8 +138,8 @@ directory of your AppDaemon installation.
 
 ## Installation - Home Automation Part (IoBroker)
 
-If you are looking for ioBroker Integration instead of HomeAssistant take a look into the [Readme](ioBroker/README.md) of the iobroker folder.
-Thanks to @britzelpuf for this integration.
+If you are looking for an ioBroker Integration instead of HomeAssistant take a look into the [Readme](ioBroker/README.md) of the iobroker folder.
+Thanks to [britzelpuf](https://github.com/britzelpuf) for this integration.
 
 ## Installation - NSPanel Part
 
