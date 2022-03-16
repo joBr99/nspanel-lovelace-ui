@@ -36,6 +36,23 @@ There are several icons which joBr99 included into the display file. You can use
 
 ![image](https://user-images.githubusercontent.com/101716456/158641891-2aca2d98-39b5-4763-b323-c4aec945a66c.png)
 
+You can change the string in this function:
+```
+function HandleScreensaverUpdate(): void {
+    if (config.weatherEntity != null && existsObject(config.weatherEntity)) {
+        var icon = getState(config.weatherEntity + ".ICON").val;
+
+        let temperature: string = getState(config.weatherEntity + ".TEMP").val;
+        let humidity = getState(config.weatherEntity + ".HUMIDITY").val;
+        let u1 = getState(config.batEntity).val;
+        let u2 = getState(config.pvEntity).val;
+
+        SendToPanel(<Payload>{ payload: "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?" + temperature.toString() + " " + config.temperatureUnit + "?26?" + humidity + " %?Batterie?4?" + u1 + "%?PV?23?" + u2 + "W" })
+    }
+}
+
+```
+
 ## The config element in the script which needs to be configured
 ```
 var config: Config = {
