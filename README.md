@@ -86,7 +86,7 @@ The easiest way to install it is through Home Assistant's Supervisor Add-on Stor
 
 #### Add babel package to AppDaemon Container (Optional)
 
-For localisation format (date in your local language) you need to add the python package babel to your AppDaemon Installation.
+For localisation (date in your local language) you need to add the python package babel to your AppDaemon Installation.
 
 ![appdaemon-babel](doc-pics/appdaemon-babel.png)
 
