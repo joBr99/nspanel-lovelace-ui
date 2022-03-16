@@ -1,7 +1,6 @@
 import json
 import datetime
 import hassapi as hass
-
 import math
 import colorsys
 
@@ -141,9 +140,22 @@ class NsPanelLovelaceUI:
     self.send_mqtt_msg("time,{0}".format(time))
 
   def update_date(self, kwargs):
-    # TODO: implement localization of date
-    date = datetime.datetime.now().strftime(self.config["dateFormat"])
-    self.send_mqtt_msg("date,?{0}".format(date))
+
+    import importlib
+    babel_spec = importlib.util.find_spec("babel")
+    if babel_spec is not None:
+      self.api.log("babel package found", level="DEBUG")
+      import babel.dates
+      if "dateFormatBabel" in self.config:
+        dateformat = self.config["dateFormatBabel"]
+      else:
+        dateformat = "full"
+      date = babel.dates.format_date(datetime.datetime.now(), dateformat, locale=self.config["locale"])
+      self.send_mqtt_msg(f"date,?{date}")
+    else:
+      self.api.log("babel package not found", level="DEBUG")
+      date = datetime.datetime.now().strftime(self.config["dateFormat"])
+      self.send_mqtt_msg(f"date,?{date}")
 
   def update_screensaver_brightness(self, kwargs):
     self.current_screensaver_brightness = kwargs['value']

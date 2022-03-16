@@ -18,9 +18,10 @@ nspanel-1:
         value: 10
       - time: "23:00:00"
         value: 0
-    locale: "de_DE"
+    locale: "de_DE" # only used if babel python package is installed
+    dateFormatBabel: "full" # only used if babel python package is installed
     timeFormat: "%H:%M"
-    dateFormat: "%A, %d. %B %Y"
+    dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
     weatherEntity: weather.example
     pages:
       - type: cardEntities

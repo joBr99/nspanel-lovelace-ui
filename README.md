@@ -84,6 +84,13 @@ The easiest way to install it is through Home Assistant's Supervisor Add-on Stor
 
 ![hass-add-on-store](doc-pics/hass-add-on-store.png)
 
+#### Add babel package to AppDaemon Container (Optional)
+
+For localisation format (date in your local language) you need to add the python package babel to your AppDaemon Installation.
+
+![appdaemon-babel](doc-pics/appdaemon-babel.png)
+
+
 ### Installing Studio Code Server (optional, recommended)
 
 You will need a way to edit the `apps.yaml` config file in the Appdaemon folder. 
@@ -251,9 +258,10 @@ nspanel-1:
         value: 10
       - time: "23:00:00"
         value: 0
-    locale: "de_DE"
+    locale: "de_DE" # only used if babel python package is installed
+    dateFormatBabel: "full" # only used if babel python package is installed
     timeFormat: "%H:%M"
-    dateFormat: "%A, %d. %B %Y"
+    dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
     weatherEntity: weather.example
     pages:
       - type: cardEntities
