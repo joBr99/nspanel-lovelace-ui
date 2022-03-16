@@ -92,56 +92,56 @@ Variable (string) strCommand
     
 Variable (string) type1
     Attributes
-        ID            : 47
+        ID            : 46
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type2
     Attributes
-        ID            : 48
+        ID            : 47
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type3
     Attributes
-        ID            : 49
+        ID            : 48
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type4
     Attributes
-        ID            : 50
+        ID            : 49
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) entn1
     Attributes
-        ID            : 51
+        ID            : 50
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) entn2
     Attributes
-        ID            : 52
+        ID            : 51
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) entn3
     Attributes
-        ID            : 53
+        ID            : 52
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) entn4
     Attributes
-        ID            : 54
+        ID            : 53
         Scope         : local
         Text          : 
         Max. Text Size: 50
@@ -1341,7 +1341,7 @@ Button bNext
         
 Button bText1
     Attributes
-        ID                                  : 39
+        ID                                  : 38
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1395,7 +1395,7 @@ Button bText1
         
 Button bText2
     Attributes
-        ID                                  : 40
+        ID                                  : 39
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1449,7 +1449,7 @@ Button bText2
         
 Button bText3
     Attributes
-        ID                                  : 41
+        ID                                  : 40
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1503,7 +1503,7 @@ Button bText3
         
 Button bText4
     Attributes
-        ID                                  : 42
+        ID                                  : 41
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1791,7 +1791,7 @@ Hotspot mSpecial
         
 Hotspot m2
     Attributes
-        ID                                  : 43
+        ID                                  : 42
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1806,7 +1806,7 @@ Hotspot m2
         Effect Time                         : 300
     
     Events
-        Touch Release Event
+        Touch Press Event
             pageIcons.tTmp1.txt=tEntity3.txt
             pageIcons.tTmp2.txt=entn3.txt
             if(type3.txt=="shutter")
@@ -1822,7 +1822,7 @@ Hotspot m2
         
 Hotspot m1
     Attributes
-        ID                                  : 44
+        ID                                  : 43
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1837,7 +1837,7 @@ Hotspot m1
         Effect Time                         : 300
     
     Events
-        Touch Release Event
+        Touch Press Event
             pageIcons.tTmp1.txt=tEntity2.txt
             pageIcons.tTmp2.txt=entn2.txt
             if(type2.txt=="shutter")
@@ -1853,7 +1853,7 @@ Hotspot m1
         
 Hotspot m0
     Attributes
-        ID                                  : 45
+        ID                                  : 44
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1868,7 +1868,7 @@ Hotspot m0
         Effect Time                         : 300
     
     Events
-        Touch Release Event
+        Touch Press Event
             pageIcons.tTmp1.txt=tEntity1.txt
             pageIcons.tTmp2.txt=entn1.txt
             if(type1.txt=="shutter")
@@ -1884,7 +1884,7 @@ Hotspot m0
         
 Hotspot m3
     Attributes
-        ID                                  : 46
+        ID                                  : 45
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1899,7 +1899,7 @@ Hotspot m3
         Effect Time                         : 300
     
     Events
-        Touch Release Event
+        Touch Press Event
             pageIcons.tTmp1.txt=tEntity4.txt
             pageIcons.tTmp2.txt=entn4.txt
             if(type4.txt=="shutter")
@@ -2424,7 +2424,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 38
+        ID   : 54
         Scope: local
         Value: 0
     

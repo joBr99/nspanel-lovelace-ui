@@ -54,6 +54,7 @@ Page popupLight
             vis hTempSlider,0
             //disable color wheel components by default
             vis bColor,0
+            vis t0,0
             vis pColorWheel,0
             //vis t0,0
         
@@ -873,7 +874,11 @@ Timer tmSerial
                                         {
                                             // get ColorTemp value
                                             spstr strCommand.txt,tTmp.txt,",",3
-                                            if(tTmp.txt=="disable")
+                                            if(tTmp.txt=="unknown")
+                                            {
+                                                click bColor,1
+                                                mode_temp.val=1
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 vis t4,0
                                                 vis t3,0
@@ -894,6 +899,7 @@ Timer tmSerial
                                         if(tTmp.txt!="disable")
                                         {
                                             vis bColor,1
+                                            vis t0,1
                                         }
                                     }
                                     if(tInstruction.txt=="time")
