@@ -35,7 +35,7 @@ weatherUpdate,?Icon?Text?Icon (default humidity)?Text next to the last icon?Text
 
 See the icons currently usable in the following table:
 
-[Icon Table](https://github.com/joBr99/nspanel-lovelace-ui/tree/main/HMI#icons-ids)
+[Icon Table](HMI#icons-ids)
 
 You can change the string in this function:
 ```
