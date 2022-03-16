@@ -510,7 +510,7 @@ class NsPanelLovelaceUI:
             # scale ha color temp range to 0-100
             color_temp = int(self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100)))
           else:
-            color_temp = 0
+            color_temp = "unknown"
         else:
           color_temp = "disable"
           
@@ -530,7 +530,7 @@ class NsPanelLovelaceUI:
       hsv = colorsys.hsv_to_rgb(h,s,v)
       return tuple(round(i * 255) for i in hsv)
   def pos_to_color(self, x, y):
-      r = 213/2
+      r = 160/2
       x = round((x - r) / r * 100) / 100
       y = round((r - y) / r * 100) / 100
       
