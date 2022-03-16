@@ -32,9 +32,10 @@ The screensaver string which is send to the display looks something like this:
 weatherUpdate,?23?11 °C?26?54%?Batterie?4?12 %?PV?23?123W
 All fields are seperated by a question mark. In detail the fields are:
 weatherUpdate,?Icon?Text?Icon (default humidity)?Text next to the last icon?Text for the left icon on the right side?Icon?Text under the icon?Text for the right icon on the left side?Icon?Text under the icon
-There are several icons which joBr99 included into the display file. You can use all of them starting with position 0 on the left side.
 
-![image](https://user-images.githubusercontent.com/101716456/158641891-2aca2d98-39b5-4763-b323-c4aec945a66c.png)
+See the icons currently usable in the following table:
+
+![Icon Table](https://github.com/joBr99/nspanel-lovelace-ui/tree/main/HMI#icons-ids)
 
 You can change the string in this function:
 ```
