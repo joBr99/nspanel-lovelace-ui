@@ -260,6 +260,7 @@ nspanel-1:
         value: 0
     locale: "de_DE" # only used if babel python package is installed
     dateFormatBabel: "full" # only used if babel python package is installed
+                            # formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
     timeFormat: "%H:%M"
     dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
     weatherEntity: weather.example
