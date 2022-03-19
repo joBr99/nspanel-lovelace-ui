@@ -328,10 +328,7 @@ class NsPanelLovelaceUI:
       return
 
 
-
-    # TODO: Call Method for refresh of the item/page of the current entity 
-
-  def generate_entities_item(self, item, item_nr):
+  def generate_entities_item(self, item):
 
     # type of item is the string before the "." in the item name
     item_type = item.split(".")[0]
@@ -339,19 +336,19 @@ class NsPanelLovelaceUI:
     self.api.log("Generating item command for %s with type %s", item, item_type, level="DEBUG")
 
     if item_type == "delete":
-      return "entityUpd,{0},{1}".format(item_nr, item_type)
+      return f",{item_type},,,,"
     
     if not self.api.entity_exists(item):
-      return f"entityUpd,{item_nr},text,{item},11,Not found check, apps.yaml"
+      return f",text,{item},11,Not found check, apps.yaml"
     entity = self.api.get_entity(item)
     name = entity.attributes.friendly_name
 
     if item_type == "cover":
-      return "entityUpd,{0},{1},{2},{3},{4}".format(item_nr, "shutter", item, 0, name)
+      return f",shutter,{item},0,{name},"
 
     if item_type == "light":
       switch_val = 1 if entity.state == "on" else 0
-      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, item_type, item, 1, name, switch_val)
+      return f",{item_type},{item},1,{name},{switch_val}"
 
     if item_type == "switch" or item_type == "input_boolean":
       switch_val = 1 if entity.state == "on" else 0
@@ -361,7 +358,7 @@ class NsPanelLovelaceUI:
       else:
         icon_id = 7
       
-      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "switch", item, icon_id, name, switch_val)
+      return f",switch,{item},{icon_id},{name},{switch_val}"
 
     if item_type == "sensor":
       icon_id = 0
@@ -378,13 +375,14 @@ class NsPanelLovelaceUI:
         unit_of_measurement = entity.attributes.unit_of_measurement
 
       value = entity.state + " " + unit_of_measurement
-      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "text", item, icon_id, name, value)
+      return f",text,{item},{icon_id},{name},{value}"
 
     if item_type == "button" or item_type == "input_button":
-      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 3, name, "PRESS")
+      return f",button,{item},3,{name},PRESS"
     
     if item_type == "scene":
-      return "entityUpd,{0},{1},{2},{3},{4},{5}".format(item_nr, "button", item, 10, name, "ACTIVATE")
+      return f",button,{item},10,{name},ACTIVATE"
+
 
   def get_safe_ha_attribute(self, eattr, attr, default):
     return eattr[attr] if attr in eattr else default
@@ -491,11 +489,10 @@ class NsPanelLovelaceUI:
       self.send_mqtt_msg("entityUpdHeading,{0}".format(self.config["pages"][self.current_page_nr]["heading"]))
 
       # Set Items of Page
-      current_item_nr = 0
+      command = "entityUpd"
       for item in self.config["pages"][self.current_page_nr]["items"]:
-        current_item_nr += 1
-        command = self.generate_entities_item(item, current_item_nr)
-        self.send_mqtt_msg(command)
+        command += self.generate_entities_item(item)
+      self.send_mqtt_msg(command)
 
     if page_type == "cardThermo":
       # Send page type
