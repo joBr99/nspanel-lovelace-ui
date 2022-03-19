@@ -27,8 +27,6 @@ class NsPanelLovelaceUI:
     # check configured items
     self.check_items()
 
-    self.babel_spec = importlib.util.find_spec("babel")
-
     # Setup, mqtt subscription and callback
     self.mqtt = self.api.get_plugin_api("MQTT")
     self.mqtt.mqtt_subscribe(topic=self.config["panelRecvTopic"])
@@ -37,7 +35,6 @@ class NsPanelLovelaceUI:
     # send panel back to startup page on restart of this script
     self.send_mqtt_msg("pageType,pageStartup")
 
-
     # Setup time callback
     time = datetime.time(0, 0, 0)
     self.api.run_minutely(self.update_time, time)
@@ -45,6 +42,7 @@ class NsPanelLovelaceUI:
     # Setup date callback
     time = datetime.time(0, 0, 0)
     self.api.run_daily(self.update_date, time)
+    # send date update in case config has been changed
     self.update_date("")
 
     # Setup weather callback
@@ -68,10 +66,6 @@ class NsPanelLovelaceUI:
           # send screensaver brightness in case config has changed
           self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
     
-    # send date update in case config has been changed
-    self.update_date("")
-
-
     # register callbacks
     self.register_callbacks()
 
