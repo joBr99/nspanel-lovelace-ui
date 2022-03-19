@@ -730,7 +730,7 @@ Timer tmSerial
                                         //pagenumber
                                         spstr strCommand.txt,tTmp.txt,"?",1
                                         covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,nPage,sys0,1
+                                        nPage=sys0
                                         //don't send current page number, wake will do
                                     }
                                     if(tInstruction.txt=="pageType")
