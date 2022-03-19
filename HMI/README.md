@@ -101,11 +101,11 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupLight Page
 
-`entityUpdateDetail,*buttonState*,*sliderBrightnessPos*,*sliderColorTempPos*,*colorMode*`
+`entityUpdateDetail,*iconId*,*iconColor*,*buttonState*,*sliderBrightnessPos*,*sliderColorTempPos*,*colorMode*`
 
-`entityUpdateDetail,1,100,78,enable`
+`entityUpdateDetail,1,17299,1,100,78,enable`
 
-`entityUpdateDetail,1,100,disable`
+`entityUpdateDetail,1,17299,1,100,disable`
 
 ### popupShutter Page
 
