@@ -728,7 +728,7 @@ Timer tmSerial
                                     if(tInstruction.txt=="page")
                                     {
                                         //pagenumber
-                                        spstr strCommand.txt,tTmp.txt,"?",1
+                                        spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,sys0,0,0
                                         nPage=sys0
                                         //don't send current page number, wake will do
