@@ -146,7 +146,7 @@ class NsPanelLovelaceUI:
 
   def update_time(self, kwargs):
     time = datetime.datetime.now().strftime(self.config["timeFormat"])
-    self.send_mqtt_msg("time,{0}".format(time))
+    self.send_mqtt_msg(f"time,{time}")
 
   def update_date(self, kwargs):
     if self.babel_spec is not None:
@@ -299,12 +299,12 @@ class NsPanelLovelaceUI:
 
     page_type = current_page_config["type"]
 
-    self.api.log("Got state_callback from {0}".format(entity), level="DEBUG")
+    self.api.log(f"Got state_callback from {entity}", level="DEBUG")
 
     if page_type == "cardEntities":
       items = current_page_config["items"]
       if entity in items:
-        self.api.log("State change on current page for {0}".format(entity), level="DEBUG")
+        self.api.log(f"State change on current page for {entity}", level="DEBUG")
         # send update of the page
         command = self.generate_entities_page(items)
         self.send_mqtt_msg(command)
@@ -317,7 +317,7 @@ class NsPanelLovelaceUI:
     
     if page_type == "cardThermo" or page_type == "cardMedia":
       if entity == current_page_config["item"]:
-        self.api.log("State change on current page for {0}".format(entity), level="DEBUG")
+        self.api.log(f"State change on current page for {entity}", level="DEBUG")
         # send update of the whole page
         if page_type == "cardThermo":
           self.send_mqtt_msg(self.generate_thermo_page(entity))
@@ -331,16 +331,16 @@ class NsPanelLovelaceUI:
     self.api.log("Generating page commands for page %i with type %s", self.current_page_nr, page_type, level="DEBUG")
     if page_type == "cardEntities":
       # Send page type
-      self.send_mqtt_msg("pageType,{0}".format(page_type))
+      self.send_mqtt_msg(f"pageType,{page_type}")
       # Set Heading of Page
-      self.send_mqtt_msg("entityUpdHeading,{0}".format(self.config["pages"][self.current_page_nr]["heading"]))
+      self.send_mqtt_msg(f"entityUpdHeading,{self.config['pages'][self.current_page_nr]['heading']}")
 
       command = self.generate_entities_page(self.config["pages"][self.current_page_nr]["items"])
       self.send_mqtt_msg(command)
 
     if page_type == "cardThermo":
       # Send page type
-      self.send_mqtt_msg("pageType,{0}".format(page_type))
+      self.send_mqtt_msg(f"pageType,{page_type}")
       command = self.generate_thermo_page(self.config["pages"][self.current_page_nr]["item"])
       self.send_mqtt_msg(command)
       
@@ -542,7 +542,7 @@ class NsPanelLovelaceUI:
         pos = self.api.get_entity(msg[3]).attributes.current_position
         # reverse position for slider
         pos = 100-pos
-        self.send_mqtt_msg("entityUpdateDetail,{0}".format(pos))
+        self.send_mqtt_msg(f"entityUpdateDetail,{pos}")
 
   def hsv2rgb(self, h, s, v):
       hsv = colorsys.hsv_to_rgb(h,s,v)
