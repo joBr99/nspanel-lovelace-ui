@@ -1,9 +1,15 @@
 import json
 import datetime
 import hassapi as hass
-
 import math
 import colorsys
+
+# check Babel
+import importlib
+babel_spec = importlib.util.find_spec("babel")
+if babel_spec is not None:
+  import babel.dates
+
 
 class NsPanelLovelaceUIManager(hass.Hass):
   def initialize(self):
@@ -20,6 +26,8 @@ class NsPanelLovelaceUI:
 
     # check configured items
     self.check_items()
+
+    self.babel_spec = importlib.util.find_spec("babel")
 
     # Setup, mqtt subscription and callback
     self.mqtt = self.api.get_plugin_api("MQTT")
@@ -141,9 +149,18 @@ class NsPanelLovelaceUI:
     self.send_mqtt_msg("time,{0}".format(time))
 
   def update_date(self, kwargs):
-    # TODO: implement localization of date
-    date = datetime.datetime.now().strftime(self.config["dateFormat"])
-    self.send_mqtt_msg("date,?{0}".format(date))
+    if self.babel_spec is not None:
+      self.api.log("Babel package found", level="DEBUG")
+      if "dateFormatBabel" in self.config:
+        dateformat = self.config["dateFormatBabel"]
+      else:
+        dateformat = "full"
+      date = babel.dates.format_date(datetime.datetime.now(), dateformat, locale=self.config["locale"])
+      self.send_mqtt_msg(f"date,?{date}")
+    else:
+      self.api.log("Babel package not found", level="DEBUG")
+      date = datetime.datetime.now().strftime(self.config["dateFormat"])
+      self.send_mqtt_msg(f"date,?{date}")
 
   def update_screensaver_brightness(self, kwargs):
     self.current_screensaver_brightness = kwargs['value']
@@ -175,12 +192,12 @@ class NsPanelLovelaceUI:
 
     o1 = we.attributes.forecast[0]['datetime']
     o1 = datetime.datetime.fromisoformat(o1)
-    o1 = o1.strftime("%a")
+    o1 = babel.dates.format_date(o1, "E", locale=self.config["locale"])
     i1 = weathericons[we.attributes.forecast[0]['condition']]
     u1 = we.attributes.forecast[0]['temperature']
     o2 = we.attributes.forecast[1]['datetime']
     o2 = datetime.datetime.fromisoformat(o2)
-    o2 = o2.strftime("%a")
+    o2 = babel.dates.format_date(o2, "E", locale=self.config["locale"])
     i2 = weathericons[we.attributes.forecast[1]['condition']]
     u2 = we.attributes.forecast[1]['temperature']
     self.send_mqtt_msg(f"weatherUpdate,?{weathericons[we.state]}?{we.attributes.temperature}{unit}?{26}?{we.attributes.humidity} %?{o1}?{i1}?{u1}?{o2}?{i2}?{u2}")

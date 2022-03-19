@@ -10,7 +10,7 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 ## Features
 
 - Entities Page with support for cover, switch, input_boolean, sensor, button, input_button and light
-- Detail Pages for Lights (Brightness and Temperature of the Light) and for Covers (Position)
+- Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
 - Thermostat Page 
 - Media Player Card
 - Screensaver Page with Time, Date and Weather Information
@@ -84,6 +84,13 @@ The easiest way to install it is through Home Assistant's Supervisor Add-on Stor
 
 ![hass-add-on-store](doc-pics/hass-add-on-store.png)
 
+#### Add babel package to AppDaemon Container (Optional)
+
+For localisation (date in your local language) you need to add the python package babel to your AppDaemon Installation.
+
+![appdaemon-babel](doc-pics/appdaemon-babel.png)
+
+
 ### Installing Studio Code Server (optional, recommended)
 
 You will need a way to edit the `apps.yaml` config file in the Appdaemon folder. 
@@ -138,8 +145,8 @@ directory of your AppDaemon installation.
 
 ## Installation - Home Automation Part (IoBroker)
 
-If you are looking for ioBroker Integration instead of HomeAssistant take a look into the [Readme](ioBroker/README.md) in the iobroker folder.
-Thanks to @britzelpuf for this integration.
+If you are looking for an ioBroker Integration instead of HomeAssistant take a look into the [Readme](ioBroker/README.md) of the iobroker folder.
+Thanks to [britzelpuf](https://github.com/britzelpuf) for this integration.
 
 ## Installation - NSPanel Part
 
@@ -251,9 +258,11 @@ nspanel-1:
         value: 10
       - time: "23:00:00"
         value: 0
-    locale: "de_DE"
+    locale: "de_DE" # only used if babel python package is installed
+    dateFormatBabel: "full" # only used if babel python package is installed
+                            # formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
     timeFormat: "%H:%M"
-    dateFormat: "%A, %d. %B %Y"
+    dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
     weatherEntity: weather.example
     pages:
       - type: cardEntities
