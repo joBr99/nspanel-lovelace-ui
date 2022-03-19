@@ -880,12 +880,12 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="entityUpd")
                                     {
-                                        // command format: entityUpd[,type,internalName,iconId,displayName,optionalValue]x4
+                                        // command format: entityUpd[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
                                         // get Type
                                         spstr strCommand.txt,type1.txt,",",1
                                         // get internal name
                                         spstr strCommand.txt,entn1.txt,",",2
-                                        if(type1.txt=="delete")
+                                        if(type1.txt=="delete"||type1.txt=="")
                                         {
                                             vis tEntity1,0
                                             vis bEntity1,0
@@ -908,7 +908,7 @@ Timer tmSerial
                                         spstr strCommand.txt,type2.txt,",",7
                                         // get internal name
                                         spstr strCommand.txt,entn2.txt,",",8
-                                        if(type1.txt=="delete")
+                                        if(type2.txt=="delete"||type2.txt=="")
                                         {
                                             vis tEntity2,0
                                             vis bEntity2,0
@@ -931,7 +931,7 @@ Timer tmSerial
                                         spstr strCommand.txt,type3.txt,",",13
                                         // get internal name
                                         spstr strCommand.txt,entn3.txt,",",14
-                                        if(type1.txt=="delete")
+                                        if(type3.txt=="delete"||type3.txt=="")
                                         {
                                             vis tEntity3,0
                                             vis bEntity3,0
@@ -954,7 +954,7 @@ Timer tmSerial
                                         spstr strCommand.txt,type4.txt,",",19
                                         // get internal name
                                         spstr strCommand.txt,entn4.txt,",",20
-                                        if(type1.txt=="delete")
+                                        if(type4.txt=="delete"||type4.txt=="")
                                         {
                                             vis tEntity4,0
                                             vis bEntity4,0
@@ -977,7 +977,7 @@ Timer tmSerial
                                         spstr strCommand.txt,type5.txt,",",25
                                         // get internal name
                                         spstr strCommand.txt,entn5.txt,",",26
-                                        if(type1.txt=="delete")
+                                        if(type5.txt=="delete"||type5.txt=="")
                                         {
                                             vis tEntity5,0
                                             vis bEntity5,0
@@ -1000,7 +1000,7 @@ Timer tmSerial
                                         spstr strCommand.txt,type6.txt,",",31
                                         // get internal name
                                         spstr strCommand.txt,entn6.txt,",",32
-                                        if(type1.txt=="delete")
+                                        if(type6.txt=="delete"||type6.txt=="")
                                         {
                                             vis tEntity6,0
                                             vis bEntity6,0

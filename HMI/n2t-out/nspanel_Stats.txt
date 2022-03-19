@@ -30,14 +30,14 @@ pageSwipeTest
 	18   Component(s)
 	62   Line(s) of event code
 	44   Unique line(s) of event code
+cardGrid
+	38   Component(s)
+	275  Line(s) of event code
+	186  Unique line(s) of event code
 pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-cardGrid
-	38   Component(s)
-	275  Line(s) of event code
-	181  Unique line(s) of event code
 cardAlarm
 	28   Component(s)
 	159  Line(s) of event code
@@ -63,4 +63,4 @@ Total
 	14   Page(s)
 	341  Component(s)
 	2963 Line(s) of event code
-	742  Unique line(s) of event code
+	748  Unique line(s) of event code
