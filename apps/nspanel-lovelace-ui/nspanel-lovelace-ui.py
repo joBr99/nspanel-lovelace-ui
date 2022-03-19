@@ -143,7 +143,8 @@ class NsPanelLovelaceUI:
     self.send_mqtt_msg(f"time,{time}")
 
   def update_date(self, kwargs):
-    if self.babel_spec is not None:
+    global babel_spec
+    if babel_spec is not None:
       self.api.log("Babel package found", level="DEBUG")
       if "dateFormatBabel" in self.config:
         dateformat = self.config["dateFormatBabel"]
