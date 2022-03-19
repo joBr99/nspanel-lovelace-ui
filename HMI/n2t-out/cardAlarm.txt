@@ -939,15 +939,9 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",2
                                         //save third arg if there's one
                                         spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
-                                        if(tId.txt=="cardMedia")
-                                        {
-                                            //yay, we are already on the correct page
-                                        }else
-                                        {
-                                            //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-                                            udelete payloadLength-1
-                                            bufferPos=0
-                                        }
+                                        //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
+                                        udelete payloadLength-1
+                                        bufferPos=0
                                         if(tId.txt=="popupLight")
                                         {
                                             pageIcons.tTmp1.txt=tTmp.txt
@@ -969,6 +963,14 @@ Timer tmSerial
                                         {
                                             page popupNotify
                                         }
+                                        if(tId.txt=="cardGrid")
+                                        {
+                                            page cardGrid
+                                        }
+                                        if(tId.txt=="cardMedia")
+                                        {
+                                            page cardMedia
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
@@ -979,15 +981,6 @@ Timer tmSerial
                     }
                     // next character
                     bufferPos++
-                }
-                if(bufferPos==usize)
-                {
-                    // copy whole buffer to t1.txt, for debugging
-                    //ucopy t2.txt,0,usize,0
-                    // ucopy n2.val,0,usize,0
-                    // clear whole buffer
-                    //code_c
-                    //bufferPos=0
                 }
             }
         

@@ -612,6 +612,14 @@ Timer tmSerial
                                         {
                                             page cardMedia
                                         }
+                                        if(tId.txt=="cardGrid")
+                                        {
+                                            page cardGrid
+                                        }
+                                        if(tId.txt=="cardAlarm")
+                                        {
+                                            page cardAlarm
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
@@ -622,15 +630,6 @@ Timer tmSerial
                     }
                     // next character
                     bufferPos++
-                }
-                if(bufferPos==usize)
-                {
-                    // copy whole buffer to t1.txt, for debugging
-                    //ucopy t2.txt,0,usize,0
-                    // ucopy n2.val,0,usize,0
-                    // clear whole buffer
-                    //code_c
-                    //bufferPos=0
                 }
             }
         
