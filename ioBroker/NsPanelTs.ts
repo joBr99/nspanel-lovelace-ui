@@ -53,13 +53,12 @@ var config: Config = {
     pages: [
         {
             "type": "cardEntities",
-            "heading": "Testseite",
+            "heading": "Haus",
             "items": [
                 "alias.0.Rolladen_Eltern",
                 "alias.0.Erker",
                 "alias.0.Küche",
                 "alias.0.Wand"
-
             ]
         },
         {
@@ -70,7 +69,6 @@ var config: Config = {
                 "alias.0.Hausverbrauch",
                 "alias.0.Pv",
                 "alias.0.Batterie"
-
             ]
         },
         {
@@ -91,8 +89,6 @@ schedule("0 * * * *", function () {
 on([config.pvEntity, config.batEntity], function () {
     HandleScreensaverUpdate();
 })
-
-
 
 on({ id: config.panelRecvTopic }, function (obj) {
     if (obj.state.val.startsWith('\{"CustomRecv":')) {
@@ -156,14 +152,14 @@ function HandleStartupProcess(): void {
 }
 
 function SendDate(): void {
-    var months = ["Jan", "Feb", "Mar", "Apr", "Mai", "Juni", "Juli", "Aug", "Sep", "Okt", "Nov", "Dez"];
+    var months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
     var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
     var d = new Date();
     var day = days[d.getDay()];
     var date = d.getDate();
     var month = months[d.getMonth()];
     var year = d.getFullYear();
-    var _sendDate = "date,?" + day + " " + date + "." + month + "." + year + "";
+    var _sendDate = "date,?" + day + " " + date + " " + month + " " + year;
     SendToPanel(<Payload>{ payload: _sendDate });
 
 }
@@ -200,13 +196,6 @@ function CreateEntity(id: string, placeId: number): Payload {
         return { payload: "entityUpd," + placeId + "," + type };
     }
 
-    // case "button":
-    //     type = "button"
-    //     iconId = 3
-    //     var optVal = "PRESS"
-    //     out_msgs.push({ payload: "entityUpd," + (i + 1) + "," + type + "," + id + "," + iconId + "," + name + "," + optVal })
-    //     break
-
     // ioBroker
     if (existsObject(id)) {
         let o = getObject(id)
@@ -229,7 +218,7 @@ function CreateEntity(id: string, placeId: number): Payload {
                 if (val === true || val === "true")
                     optVal = "1"
                 return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name + "," + optVal }
-                break
+
             case "dimmer":
                 type = "light"
                 iconId = 1
@@ -245,12 +234,12 @@ function CreateEntity(id: string, placeId: number): Payload {
                 if (val === true || val === "true")
                     optVal = "1"
                 return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name + "," + optVal }
-                break
+
             case "blind":
                 type = "shutter"
                 iconId = 0
                 return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name }
-                break
+
             case "info":
             case "value.temperature":
                 type = "text"
@@ -266,14 +255,20 @@ function CreateEntity(id: string, placeId: number): Payload {
                 }
 
                 if (o.common.role == "value.temperature") {
-                    iconId = 2
+                    iconId = 2;
                     optVal += config.temperatureUnit;
                 }
                 else {
                     optVal += GetUnitOfMeasurement(id + ".ACTUAL");
                 }
-                return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name + "," + optVal }
-                break
+                return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name + "," + optVal };
+
+            case "button":
+                type = "button";
+                iconId = 3;
+                var optVal = "PRESS";
+                return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name + "," + optVal };
+
             default:
                 break
         }
@@ -332,7 +327,6 @@ function GenerateThermoPage(pageNum: number, page: PageThermo): Payload[] {
         if (existsState(id + ".SET"))
             destTemp = parseInt(getState(id + ".SET").val) * 10;
 
-
         let status = ""
         if (existsState(id + ".MODE"))
             status = destTemp = getState(id + ".MODE").val;
@@ -373,6 +367,8 @@ function HandleButtonEvent(words): void {
         setState(id + ".STOP", true)
     if (words[6] == "down")
         setState(id + ".CLOSE", true)
+    if (words[6] == "button")
+        setState(id + ".SET", true)
     if (words[6] == "positionSlider")
         setState(id + ".SET", parseInt(words[7]))
 
@@ -399,17 +395,15 @@ function GenerateDetailPage(type: string, entityId: string): Payload[] {
         if (type == "popupLight") {
             let switchVal = "0"
             if (o.common.role == "light") {
-                if (existsState(id + ".GET"))
-                {
+                if (existsState(id + ".GET")) {
                     val = getState(id + ".GET").val;
                     RegisterDetailEntityWatcher(id + ".GET", id, type);
                 }
-                else if (existsState(id + ".SET"))
-                {
+                else if (existsState(id + ".SET")) {
                     val = getState(id + ".SET").val;
                     RegisterDetailEntityWatcher(id + ".SET", id, type);
                 }
-                    
+
                 if (val)
                     switchVal = "1"
 
@@ -417,29 +411,23 @@ function GenerateDetailPage(type: string, entityId: string): Payload[] {
             }
 
             if (o.common.role == "dimmer") {
-                if (existsState(id + ".ON_ACTUAL"))
-                {
+                if (existsState(id + ".ON_ACTUAL")) {
                     val = getState(id + ".ON_ACTUAL").val;
                     RegisterDetailEntityWatcher(id + ".ON_ACTUAL", id, type);
                 }
-                    
-                else if (existsState(id + ".ON_SET"))
-                {
+
+                else if (existsState(id + ".ON_SET")) {
                     val = getState(id + ".ON_SET").val;
                     RegisterDetailEntityWatcher(id + ".ON_SET", id, type);
                 }
-                    
+
                 if (val === true || val === "true")
                     switchVal = "1"
-                    let brightness = 0;
-                    if (existsState(id + ".ACTUAL"))
-                    {
-                        brightness =  Math.trunc(scale(getState(id + ".ACTUAL").val, 0, 100, 0, 100))
-                        RegisterDetailEntityWatcher(id + ".ACTUAL", id, type);
-                    }
-    
-                    
-
+                let brightness = 0;
+                if (existsState(id + ".ACTUAL")) {
+                    brightness = Math.trunc(scale(getState(id + ".ACTUAL").val, 0, 100, 0, 100))
+                    RegisterDetailEntityWatcher(id + ".ACTUAL", id, type);
+                }
                 let colortemp = "disable"
                 //let attr_support_color = attr.supported_color_modes
                 //if (attr_support_color.includes("color_temp"))
@@ -451,12 +439,10 @@ function GenerateDetailPage(type: string, entityId: string): Payload[] {
         }
 
         if (type == "popupShutter") {
-
             if (existsState(id + ".ACTUAL"))
                 val = getState(id + ".ACTUAL").val;
             else if (existsState(id + ".SET"))
                 val = getState(id + ".SET").val;
-
             out_msgs.push({ payload: "entityUpdateDetail," + val })
         }
     }
@@ -488,36 +474,82 @@ function HandleScreensaverUpdate(): void {
         let u1 = getState(config.batEntity).val;
         let u2 = getState(config.pvEntity).val;
 
-        SendToPanel(<Payload>{ payload: "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?" + temperature.toString() + " " + config.temperatureUnit + "?26?" + humidity + " %?Batterie?4?" + u1 + "%?PV?23?" + u2 + "W" })
+        SendToPanel(<Payload>{ payload: "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?" + temperature.toString() + " " + config.temperatureUnit + "?26?" + humidity + " %?Batterie?34?" + u1 + "%?PV?32?" + u2 + "W" })
     }
 }
 
 function GetAccuWeatherIcon(icon: number): number {
     switch (icon) {
-        case 6: // stark bewölkt
-        case 38:
-            return 12;
-            break;
-        case 1: // Sonnig
-        case 2:
-        case 3:
-            return 23;
-        case 12: // pouring
-            return 19;
-        case 18: // rainy
-            return 20;
-        case 32: // windig
-            return 24;
-        case 33: // klar
-        case 34:
+        case 24:        // Ice        
+        case 30:        // Hot    
+        case 31:        // Cold    
+            return 11;  // exceptional
+
+        case 7:         // Cloudy
+        case 8:         // Dreary (Overcast)        
+        case 38:        // Mostly Cloudy
+            return 12;  // cloudy
+
+        case 11:        // fog
+            return 13;  // fog
+
+        case 25:        // Sleet    
+            return 14;  // Hail
+
+        case 15:        // T-Storms    
+            return 15;  // lightning
+
+        case 16:        // Mostly Cloudy w/ T-Storms
+        case 17:        // Partly Sunny w/ T-Storms
+        case 41:        // Partly Cloudy w/ T-Storms       
+        case 42:        // Mostly Cloudy w/ T-Storms
+            return 16;  // lightning-rainy
+
+        case 33:        // Clear
+        case 34:        // Mostly Clear
+        case 37:        // Hazy Moonlight
             return 17;
-        case 35: // partlycloudy
-            return 18;
-        case 11: // fog
-            return 13;
+
+        case 3:         // Partly Sunny
+        case 4:         // Intermittent Clouds
+        case 6:         // Mostly Cloudy
+        case 35: 	    // Partly Cloudy
+        case 36: 	    // Intermittent Clouds
+            return 18;  // partlycloudy 
+
+        case 18:        // pouring
+            return 19;  // pouring
+
+        case 12:        // Showers
+        case 13:        // Mostly Cloudy w/ Showers
+        case 14:        // Partly Sunny w/ Showers      
+        case 26:        // Freezing Rain
+        case 39:        // Partly Cloudy w/ Showers
+        case 40:        // Mostly Cloudy w/ Showers
+            return 20;  // rainy
+
+        case 19:        // Flurries
+        case 20:        // Mostly Cloudy w/ Flurries
+        case 21:        // Partly Sunny w/ Flurries
+        case 22:        // Snow
+        case 23:        // Mostly Cloudy w/ Snow
+        case 43:        // Mostly Cloudy w/ Flurries
+        case 44:        // Mostly Cloudy w/ Snow
+            return 21;  // snowy
+
+        case 29:        // Rain and Snow
+            return 22;  // snowy-rainy
+
+        case 1:         // Sunny
+        case 2: 	    // Mostly Sunny
+        case 5:         // Hazy Sunshine
+            return 23;  // sunny
+
+        case 32:        // windy
+            return 24;  // windy
+
         default:
             return 1;
-            break;
     }
 }
 
