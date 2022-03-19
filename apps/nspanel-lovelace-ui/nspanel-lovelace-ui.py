@@ -332,6 +332,15 @@ class NsPanelLovelaceUI:
       command = self.generate_entities_page(self.config["pages"][self.current_page_nr]["items"])
       self.send_mqtt_msg(command)
 
+    if page_type == "cardGrid":
+      # Send page type
+      self.send_mqtt_msg(f"pageType,{page_type}")
+      # Set Heading of Page
+      self.send_mqtt_msg(f"entityUpdHeading,{self.config['pages'][self.current_page_nr]['heading']}")
+
+      command = self.generate_entities_page(self.config["pages"][self.current_page_nr]["items"])
+      self.send_mqtt_msg(command)
+
     if page_type == "cardThermo":
       # Send page type
       self.send_mqtt_msg(f"pageType,{page_type}")
