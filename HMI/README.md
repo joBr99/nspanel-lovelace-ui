@@ -85,19 +85,19 @@ The following message can be used to update the content on the cardEntities Page
 
 `entityUpdHeading,heading1337`
 
-`entityUpd[,*type*,*internalNameEntity*,*iconId*,*displayNameEntity*,*optionalValue*]x4`
+`entityUpd[,*type*,*internalNameEntity*,*iconId*,*iconColor*,*displayNameEntity*,*optionalValue*]x4`
 
-`entityUpd,light,light.entityName,1,Light1,0`
+`,light,light.entityName,1,17299,Light1,0`
 
-`entityUpd,shutter,cover.entityName,0,Shutter2`
+`,shutter,cover.entityName,0,17299,Shutter2,`
 
-`entityUpd,delete`
+`,delete,,,,`
 
-`entityUpd,text,sensor.entityName,3,Temperature,content`
+`,text,sensor.entityName,3,17299,Temperature,content`
 
-`entityUpd,button,button.entityName,3,bt-name,bt-text`
+`button,button.entityName,3,17299,bt-name,bt-text`
 
-`entityUpd,switch,switch.entityName,4,Switch1,0`
+`,switch,switch.entityName,4,17299,Switch1,0`
 
 ### popupLight Page
 
