@@ -564,8 +564,8 @@ class NsPanelLovelaceUI:
           color = "disable"
       self.send_mqtt_msg(f"entityUpdateDetail,1,{icon_color},{switch_val},{brightness},{color_temp},{color}")
 
-      if page_type == "popupShutter":
-        pos = self.api.get_entity(entity).attributes.current_position
-        # reverse position for slider
-        pos = 100-pos
-        self.send_mqtt_msg(f"entityUpdateDetail,{pos}")
+    if page_type == "popupShutter":
+      pos = self.api.get_entity(entity).attributes.current_position
+      # reverse position for slider
+      pos = 100-pos
+      self.send_mqtt_msg(f"entityUpdateDetail,{pos}")
