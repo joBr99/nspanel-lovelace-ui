@@ -27,21 +27,84 @@ type Config = {
     dateFormat: string,
     weatherEntity: string | null,
     temperatureUnit: string,
-    batEntity: string,
-    pvEntity: string,
-    pages: (PageThermo | PageEntities)[]
+    leftEntity: string,
+    leftEntityIcon: number,
+    leftEntityText: string,
+    leftEntityUnitText: string | null,
+    rightEntity: string,
+    rightEntityIcon: number,
+    rightEntityText: string,
+    rightEntityUnitText: string | null,
+    pages: (PageThermo | PageEntities)[],
+    button1Page: (PageThermo | PageEntities | null),
+    button2Page: (PageThermo | PageEntities | null),
 }
-
 
 var subscriptions: any = {};
 
 var pageId = 0;
 
+var page1: PageEntities =
+{
+    "type": "cardEntities",
+    "heading": "Haus",
+    "items": [
+        "alias.0.Rolladen_Eltern",
+        "alias.0.Erker",
+        "alias.0.Küche",
+        "alias.0.Wand"
+    ]
+};
+
+var page2: PageEntities =
+{
+    "type": "cardEntities",
+    "heading": "Strom",
+    "items": [
+        "alias.0.Netz",
+        "alias.0.Hausverbrauch",
+        "alias.0.Pv",
+        "alias.0.Batterie"
+    ]
+};
+
+var button1Page: PageEntities =
+{
+    "type": "cardEntities",
+    "heading": "Knopf1",
+    "items": [
+        "alias.0.Schlafen",
+        "alias.0.Stern",
+        "delete",
+        "delete"
+    ]
+};
+
+
+var button2Page: PageEntities =
+{
+    "type": "cardEntities",
+    "heading": "Knopf2",
+    "items": [
+        "delete",
+        "delete",
+        "alias.0.Schlafen",
+        "alias.0.Stern"
+
+    ]
+};
+
 var config: Config = {
     panelRecvTopic: "mqtt.0.tele.WzDisplay.RESULT",
     panelSendTopic: "mqtt.0.cmnd.WzDisplay.CustomSend",
-    batEntity: "alias.0.Batterie.ACTUAL",
-    pvEntity: "alias.0.Pv.ACTUAL",
+    leftEntity: "alias.0.Batterie.ACTUAL",
+    leftEntityIcon: 34,
+    leftEntityText: "Batterie",
+    leftEntityUnitText: "%",
+    rightEntity: "alias.0.Pv.ACTUAL",
+    rightEntityIcon: 32,
+    rightEntityText: "PV",
+    rightEntityUnitText: "W",
     timeoutScreensaver: 15,
     dimmode: 8,
     locale: "de_DE",
@@ -50,33 +113,16 @@ var config: Config = {
     weatherEntity: "alias.0.Wetter",
 
     temperatureUnit: "°C",
-    pages: [
-        {
-            "type": "cardEntities",
-            "heading": "Haus",
-            "items": [
-                "alias.0.Rolladen_Eltern",
-                "alias.0.Erker",
-                "alias.0.Küche",
-                "alias.0.Wand"
-            ]
-        },
-        {
-            "type": "cardEntities",
-            "heading": "Strom",
-            "items": [
-                "alias.0.Netz",
-                "alias.0.Hausverbrauch",
-                "alias.0.Pv",
-                "alias.0.Batterie"
-            ]
-        },
+    pages: [page1, page2,
+
         {
             "type": "cardThermo",
             "heading": "Thermostat",
             "item": "alias.0.WzNsPanel"
         }
-    ]
+    ],
+    button1Page: button1Page,
+    button2Page: button2Page
 };
 
 schedule("* * * * *", function () {
@@ -86,10 +132,20 @@ schedule("0 * * * *", function () {
     SendDate();
 });
 
-on([config.pvEntity, config.batEntity], function () {
-    HandleScreensaverUpdate();
-})
+// Only monitor the extra nodes if one or both are present
+var updateArray: string[] = [];
+if (config.rightEntity !== null && existsState(config.rightEntity)) {
+    updateArray.push(config.rightEntity)
+}
 
+if (config.leftEntity !== null && existsState(config.leftEntity)) {
+    updateArray.push(config.leftEntity)
+}
+if (updateArray.length > 0) {
+    on(updateArray, function () {
+        HandleScreensaverUpdate();
+    })
+}
 on({ id: config.panelRecvTopic }, function (obj) {
     if (obj.state.val.startsWith('\{"CustomRecv":')) {
         var json = JSON.parse(obj.state.val);
@@ -123,15 +179,11 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
 
         if (method == 'pageOpen' || method == 'startup') {
             UnsubscribeWatcher();
-            var retMsgs: Array<Payload> = [];
-            if (config.pages[pageId].type == "cardEntities") {
-                retMsgs = GenerateEntitiesPage(pageId, <PageEntities>config.pages[pageId])
-            } else if (config.pages[pageId].type == "cardThermo") {
-                retMsgs = GenerateThermoPage(pageId, <PageThermo>config.pages[pageId])
-            }
+
             if (method == 'startup')
                 HandleStartupProcess();
-            SendToPanel(retMsgs)
+
+            GeneratePage(config.pages[pageId]);
         }
 
         if (method == 'buttonPress' || method == "tempUpd") {
@@ -141,6 +193,43 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
         if (method == 'screensaverOpen') {
             HandleScreensaver()
         }
+
+        if (method == 'button1' || method == 'button2') {
+            HandleHardwareButton(method);
+        }
+    }
+}
+
+function GeneratePage(page: Page): void {
+    var retMsgs: Array<Payload> = [];
+    if (page.type == "cardEntities") {
+        retMsgs = GenerateEntitiesPage(<PageEntities>config.pages[pageId])
+    } else if (page.type == "cardThermo") {
+        retMsgs = GenerateThermoPage(pageId, <PageThermo>config.pages[pageId])
+    }
+
+    SendToPanel(retMsgs)
+}
+
+function HandleHardwareButton(method: string): void {
+    let page: (PageThermo | PageEntities);
+    if (config.button1Page !== null && method == "button1") {
+        page = config.button1Page;
+    }
+    else if (config.button2Page !== null && method == "button2") {
+        page = config.button2Page;
+    }
+    else {
+        return;
+    }
+    SendToPanel({ payload: "wake" });
+    switch (page.type) {
+        case "cardEntities":
+            SendToPanel(GenerateEntitiesPage(page));
+            break;
+        case "cardThermo":
+            SendToPanel(GenerateThermoPage(0, page));
+            break;
     }
 }
 
@@ -178,22 +267,23 @@ function SendTime(): void {
     SendToPanel(<Payload>{ payload: "time," + hr + ":" + min });
 }
 
-function GenerateEntitiesPage(pageNum: number, page: PageEntities): Payload[] {
+function GenerateEntitiesPage(page: PageEntities): Payload[] {
     var out_msgs: Array<Payload> = [];
-    out_msgs = [{ payload: "pageType,cardEntities" }, { payload: "entityUpdHeading," + config.pages[pageNum].heading }]
-
+    out_msgs = [{ payload: "pageType,cardEntities" }, { payload: "entityUpdHeading," + page.heading }]
+    let pageData = "entityUpd";
     page.items.forEach(function (id, i) {
-        out_msgs.push(CreateEntity(id, i + 1));
+        pageData += CreateEntity(id, i + 1);
     })
+    out_msgs.push({ payload: pageData });
     return out_msgs
 }
 
-function CreateEntity(id: string, placeId: number): Payload {
+function CreateEntity(id: string, placeId: number): string {
     var type = "delete"
     var iconId = 0
     var name = "FriendlyName"
     if (id == "delete") {
-        return { payload: "entityUpd," + placeId + "," + type };
+        return ",delete,,,,"
     }
 
     // ioBroker
@@ -217,7 +307,7 @@ function CreateEntity(id: string, placeId: number): Payload {
                 var optVal = "0"
                 if (val === true || val === "true")
                     optVal = "1"
-                return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name + "," + optVal }
+                return "," + type + "," + id + "," + iconId + "," + "17299," + name + "," + optVal
 
             case "dimmer":
                 type = "light"
@@ -233,12 +323,12 @@ function CreateEntity(id: string, placeId: number): Payload {
                 }
                 if (val === true || val === "true")
                     optVal = "1"
-                return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name + "," + optVal }
+                return "," + type + "," + id + "," + iconId + "," + "17299," + name + "," + optVal
 
             case "blind":
                 type = "shutter"
                 iconId = 0
-                return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name }
+                return "," + type + "," + id + "," + iconId + "," + "17299," + name + ","
 
             case "info":
             case "value.temperature":
@@ -261,19 +351,21 @@ function CreateEntity(id: string, placeId: number): Payload {
                 else {
                     optVal += GetUnitOfMeasurement(id + ".ACTUAL");
                 }
-                return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name + "," + optVal };
+                return "," + type + "," + id + "," + iconId + "," + "17299," + name + "," + optVal;
 
             case "button":
                 type = "button";
                 iconId = 3;
                 var optVal = "PRESS";
-                return { payload: "entityUpd," + placeId + "," + type + "," + id + "," + iconId + "," + name + "," + optVal };
+                return "," + type + "," + id + "," + iconId + "," + "17299," + name + "," + optVal;
 
             default:
-                break
+                return ",delete,,,,"
+                
         }
     }
-    return { payload: "entityUpd," + placeId + "," + type };
+
+    return ",delete,,,,"
 }
 
 function RegisterEntityWatcher(id: string, entityId: string, placeId: number): void {
@@ -281,7 +373,7 @@ function RegisterEntityWatcher(id: string, entityId: string, placeId: number): v
         return;
     }
     subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {
-        SendToPanel(CreateEntity(entityId, placeId));
+        GeneratePage(config.pages[pageId]);
     }))
 }
 
@@ -392,6 +484,7 @@ function GenerateDetailPage(type: string, entityId: string): Payload[] {
     if (existsObject(id)) {
         var o = getObject(id)
         var val = null;
+        let icon = 1;    
         if (type == "popupLight") {
             let switchVal = "0"
             if (o.common.role == "light") {
@@ -406,8 +499,8 @@ function GenerateDetailPage(type: string, entityId: string): Payload[] {
 
                 if (val)
                     switchVal = "1"
-
-                out_msgs.push({ payload: "entityUpdateDetail," + switchVal + ",disable,disable,disable" })
+                
+                out_msgs.push({ payload: "entityUpdateDetail," + icon + "," + "17299," + switchVal +  ",disable,disable,disable" })
             }
 
             if (o.common.role == "dimmer") {
@@ -433,7 +526,7 @@ function GenerateDetailPage(type: string, entityId: string): Payload[] {
                 //if (attr_support_color.includes("color_temp"))
                 // colortemp = Math.trunc(scale(attr.color_temp, attr.min_mireds, attr.max_mireds, 0, 100))
 
-                out_msgs.push({ payload: "entityUpdateDetail," + switchVal + "," + brightness + "," + colortemp })
+                out_msgs.push({ payload: "entityUpdateDetail," + icon + "," + "17299," + switchVal + "," + brightness + "," + colortemp })
             }
 
         }
@@ -469,12 +562,37 @@ function HandleScreensaverUpdate(): void {
     if (config.weatherEntity != null && existsObject(config.weatherEntity)) {
         var icon = getState(config.weatherEntity + ".ICON").val;
 
-        let temperature: string = getState(config.weatherEntity + ".TEMP").val;
+        let temperature: string = 
+            existsState(config.weatherEntity + ".ACTUAL") ? getState(config.weatherEntity + ".ACTUAL").val : 
+            existsState(config.weatherEntity + ".TEMP") ? getState(config.weatherEntity + ".TEMP").val: "null";
         let humidity = getState(config.weatherEntity + ".HUMIDITY").val;
-        let u1 = getState(config.batEntity).val;
-        let u2 = getState(config.pvEntity).val;
 
-        SendToPanel(<Payload>{ payload: "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?" + temperature.toString() + " " + config.temperatureUnit + "?26?" + humidity + " %?Batterie?34?" + u1 + "%?PV?32?" + u2 + "W" })
+       
+        let payloadString = 
+        "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?" 
+        + temperature + " " + config.temperatureUnit + "?26?" 
+        + humidity + " %?" ;
+
+        if(existsState(config.leftEntity))
+        {
+            let u1 = getState(config.leftEntity).val;
+            payloadString += config.leftEntityText + "?" + config.leftEntityIcon + "?" + u1 + " " + config.leftEntityUnitText + "?";
+        }
+        else
+        {
+            payloadString += "???";
+        }
+
+        if(existsState(config.rightEntity))
+        {
+            let u2 = getState(config.rightEntity).val;
+            payloadString += config.rightEntityText + "?" + config.rightEntityIcon + "?" + u2 + " " + config.rightEntityUnitText;
+        }
+        else
+        {
+            payloadString += "??";
+        }
+        SendToPanel(<Payload>{ payload:  payloadString});
     }
 }
 

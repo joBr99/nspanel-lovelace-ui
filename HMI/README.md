@@ -95,7 +95,7 @@ The following message can be used to update the content on the cardEntities Page
 
 `,text,sensor.entityName,3,17299,Temperature,content`
 
-`button,button.entityName,3,17299,bt-name,bt-text`
+`,button,button.entityName,3,17299,bt-name,bt-text`
 
 `,switch,switch.entityName,4,17299,Switch1,0`
 
