@@ -65,7 +65,7 @@ Variable (string) strCommand
         ID            : 4
         Scope         : local
         Text          : 
-        Max. Text Size: 350
+        Max. Text Size: 500
     
 Variable (string) type1
     Attributes
@@ -995,6 +995,29 @@ Timer tmSerial
                                             // set name
                                             spstr strCommand.txt,tEntity5.txt,",",29
                                             vis tEntity5,1
+                                        }
+                                        // get Type
+                                        spstr strCommand.txt,type6.txt,",",31
+                                        // get internal name
+                                        spstr strCommand.txt,entn6.txt,",",32
+                                        if(type1.txt=="delete")
+                                        {
+                                            vis tEntity6,0
+                                            vis bEntity6,0
+                                        }else
+                                        {
+                                            // change icon
+                                            spstr strCommand.txt,tTmp.txt,",",33
+                                            covx tTmp.txt,sys0,0,0
+                                            substr pageIcons.tIcons.txt,bEntity6.txt,sys0,1
+                                            vis bEntity6,1
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,",",34
+                                            covx tTmp.txt,sys0,0,0
+                                            bEntity6.pco=sys0
+                                            // set name
+                                            spstr strCommand.txt,tEntity6.txt,",",35
+                                            vis tEntity6,1
                                         }
                                     }
                                     if(tInstruction.txt=="pageType")
