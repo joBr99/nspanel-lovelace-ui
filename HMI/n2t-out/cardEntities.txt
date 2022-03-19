@@ -88,7 +88,7 @@ Variable (string) strCommand
         ID            : 27
         Scope         : local
         Text          : 
-        Max. Text Size: 250
+        Max. Text Size: 350
     
 Variable (string) type1
     Attributes
