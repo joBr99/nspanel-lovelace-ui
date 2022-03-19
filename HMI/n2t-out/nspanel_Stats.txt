@@ -38,25 +38,25 @@ pageSwipeTest
 	18   Component(s)
 	62   Line(s) of event code
 	44   Unique line(s) of event code
-screensaver
-	25   Component(s)
-	152  Line(s) of event code
-	118  Unique line(s) of event code
 cardThermo
 	42   Component(s)
 	450  Line(s) of event code
 	220  Unique line(s) of event code
 cardEntities
 	55   Component(s)
-	824  Line(s) of event code
-	313  Unique line(s) of event code
+	811  Line(s) of event code
+	312  Unique line(s) of event code
 cardAlarm
 	28   Component(s)
 	159  Line(s) of event code
 	105  Unique line(s) of event code
+screensaver
+	25   Component(s)
+	152  Line(s) of event code
+	118  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	302  Component(s)
-	2665 Line(s) of event code
-	684  Unique line(s) of event code
+	2652 Line(s) of event code
+	682  Unique line(s) of event code
