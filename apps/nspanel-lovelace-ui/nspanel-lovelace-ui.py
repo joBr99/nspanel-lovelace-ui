@@ -371,6 +371,9 @@ class NsPanelLovelaceUI:
         if "brightness" in entity.attributes:
           color = rgb_brightness(color, entity.attributes.brightness)
         icon_color = rgb_dec565(color)
+      elif "brightness" in entity.attributes:
+        color = rgb_brightness(color, [253, 216, 53])
+        icon_color = rgb_dec565(color)
 
       return f",{item_type},{item},1,{icon_color},{name},{switch_val}"
 
