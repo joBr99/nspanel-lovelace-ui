@@ -849,12 +849,21 @@ Timer tmSerial
                                     spstr strCommand.txt,tInstruction.txt,",",0
                                     if(tInstruction.txt=="entityUpdateDetail")
                                     {
-                                        // get Button State
+                                        // change icon
                                         spstr strCommand.txt,tTmp.txt,",",1
+                                        covx tTmp.txt,sys0,0,0
+                                        substr pageIcons.tIcons.txt,tIcon1.txt,sys0,1
+                                        vis tIcon1,1
+                                        // change icon color
+                                        spstr strCommand.txt,tTmp.txt,",",2
+                                        covx tTmp.txt,sys0,0,0
+                                        tIcon1.pco=sys0
+                                        // get Button State
+                                        spstr strCommand.txt,tTmp.txt,",",3
                                         covx tTmp.txt,sys0,0,0
                                         btOnOff1.val=sys0
                                         // get Brightness value
-                                        spstr strCommand.txt,tTmp.txt,",",2
+                                        spstr strCommand.txt,tTmp.txt,",",4
                                         if(tTmp.txt=="disable")
                                         {
                                             vis t1,0
@@ -873,7 +882,7 @@ Timer tmSerial
                                         if(mode.val==1)
                                         {
                                             // get ColorTemp value
-                                            spstr strCommand.txt,tTmp.txt,",",3
+                                            spstr strCommand.txt,tTmp.txt,",",5
                                             if(tTmp.txt=="unknown")
                                             {
                                                 click bColor,1
@@ -895,7 +904,7 @@ Timer tmSerial
                                             }
                                         }
                                         // get ColorWheel value
-                                        spstr strCommand.txt,tTmp.txt,",",4
+                                        spstr strCommand.txt,tTmp.txt,",",6
                                         if(tTmp.txt!="disable")
                                         {
                                             vis bColor,1
