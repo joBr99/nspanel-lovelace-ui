@@ -770,6 +770,14 @@ Timer tmSerial
                                         {
                                             page popupNotify
                                         }
+                                        if(tId.txt=="cardGrid")
+                                        {
+                                            page cardGrid
+                                        }
+                                        if(tId.txt=="cardAlarm")
+                                        {
+                                            page cardAlarm
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
