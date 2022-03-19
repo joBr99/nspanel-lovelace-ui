@@ -475,7 +475,7 @@ Button bSendStartup
             prints tSend.txt,0
             prints crcval,2
         
-Hotspot mSpecial
+Hotspot mSpinner
     Attributes
         ID                                  : 16
         Scope                               : local
@@ -483,10 +483,10 @@ Hotspot mSpecial
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 87
-        y coordinate                        : 33
-        Width                               : 288
-        Height                              : 187
+        x coordinate                        : 154
+        y coordinate                        : 49
+        Width                               : 140
+        Height                              : 140
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -643,7 +643,7 @@ Timer tmSpinner
     
     Events
         Timer Event
-            xpic 154,49,spinner_w.val,140,frame_ptr.val,0,11 // draw the current frame
+            xpic mSpinner.x,mSpinner.y,spinner_w.val,140,frame_ptr.val,0,11 // draw the current frame
             frame_ptr.val+=spinner_w.val%frapic_w.val // advance the pointer to the next frame in the pic resource and roll over at the end
             doevents // finish drawing before next timer event triggers
             if(frame_ptr.val==1820)
