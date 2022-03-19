@@ -305,8 +305,8 @@ class NsPanelLovelaceUI:
       items = current_page_config["items"]
       if entity in items:
         self.api.log("State change on current page for {0}".format(entity), level="DEBUG")
-        # send update of the item on page
-        command = self.generate_entities_item(entity, items.index(entity)+1)
+        # send update of the page
+        command = self.generate_
         self.send_mqtt_msg(command)
         if(entity.startswith("cover")):
           self.generate_detail_page("popupShutter", entity)
@@ -327,6 +327,28 @@ class NsPanelLovelaceUI:
           return
       return
 
+  def generate_page(self, page_number, page_type):
+    self.api.log("Generating page commands for page %i with type %s", self.current_page_nr, page_type, level="DEBUG")
+    if page_type == "cardEntities":
+      # Send page type
+      self.send_mqtt_msg("pageType,{0}".format(page_type))
+      # Set Heading of Page
+      self.send_mqtt_msg("entityUpdHeading,{0}".format(self.config["pages"][self.current_page_nr]["heading"]))
+
+      command = self.generate_entities_page(self.config["pages"][self.current_page_nr]["items"])
+      self.send_mqtt_msg(command)
+
+    if page_type == "cardThermo":
+      # Send page type
+      self.send_mqtt_msg("pageType,{0}".format(page_type))
+      command = self.generate_thermo_page(self.config["pages"][self.current_page_nr]["item"])
+      self.send_mqtt_msg(command)
+      
+    if page_type == "cardMedia":
+      # Send page type
+      self.send_mqtt_msg("pageType,{0}".format(page_type))
+      command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
+      self.send_mqtt_msg(command)
 
   def generate_entities_item(self, item):
 
@@ -382,6 +404,14 @@ class NsPanelLovelaceUI:
     
     if item_type == "scene":
       return f",button,{item},10,{name},ACTIVATE"
+
+  def generate_entities_page(self, items):
+    # Set Items of Page
+    command = "entityUpd"
+    for item in items:
+      command += self.generate_entities_item(item)
+    return command
+
 
 
   def get_safe_ha_attribute(self, eattr, attr, default):
@@ -479,32 +509,6 @@ class NsPanelLovelaceUI:
 
     return f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}"
 
-
-  def generate_page(self, page_number, page_type):
-    self.api.log("Generating page commands for page %i with type %s", self.current_page_nr, page_type, level="DEBUG")
-    if page_type == "cardEntities":
-      # Send page type
-      self.send_mqtt_msg("pageType,{0}".format(page_type))
-      # Set Heading of Page
-      self.send_mqtt_msg("entityUpdHeading,{0}".format(self.config["pages"][self.current_page_nr]["heading"]))
-
-      # Set Items of Page
-      command = "entityUpd"
-      for item in self.config["pages"][self.current_page_nr]["items"]:
-        command += self.generate_entities_item(item)
-      self.send_mqtt_msg(command)
-
-    if page_type == "cardThermo":
-      # Send page type
-      self.send_mqtt_msg("pageType,{0}".format(page_type))
-      command = self.generate_thermo_page(self.config["pages"][self.current_page_nr]["item"])
-      self.send_mqtt_msg(command)
-      
-    if page_type == "cardMedia":
-      # Send page type
-      self.send_mqtt_msg("pageType,{0}".format(page_type))
-      command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
-      self.send_mqtt_msg(command)
 
   def generate_detail_page(self, page_type, entity):
     if(page_type == "popupLight"):
