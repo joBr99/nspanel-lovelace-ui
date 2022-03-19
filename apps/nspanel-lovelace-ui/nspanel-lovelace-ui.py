@@ -519,6 +519,18 @@ class NsPanelLovelaceUI:
     if(page_type == "popupLight"):
       entity = self.api.get_entity(entity)
       switch_val = 1 if entity.state == "on" else 0
+
+      icon_color = 17299
+
+      if "rgb_color" in entity.attributes:
+        color = entity.attributes.rgb_color
+        if "brightness" in entity.attributes:
+          color = rgb_brightness(color, entity.attributes.brightness)
+        icon_color = rgb_dec565(color)
+      elif "brightness" in entity.attributes:
+        color = rgb_brightness(color, [253, 216, 53])
+        icon_color = rgb_dec565(color)
+
       brightness = "disable"
       color_temp = "disable"
       color = "disable"
@@ -541,7 +553,7 @@ class NsPanelLovelaceUI:
           color = "enable"
         else:
           color = "disable"
-      self.send_mqtt_msg(f"entityUpdateDetail,{switch_val},{brightness},{color_temp},{color}")
+      self.send_mqtt_msg(f"entityUpdateDetail,1,{icon_color},{switch_val},{brightness},{color_temp},{color}")
 
       if(page_type == "popupShutter"):
         pos = self.api.get_entity(msg[3]).attributes.current_position
