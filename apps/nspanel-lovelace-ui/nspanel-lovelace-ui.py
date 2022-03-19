@@ -2,7 +2,7 @@ import json
 import datetime
 import hassapi as hass
 import math
-import colorsys
+from color import hsv2rgb,pos_to_color
 
 # check Babel
 import importlib
@@ -363,9 +363,13 @@ class NsPanelLovelaceUI:
     if item_type == "cover":
       return f",shutter,{item},0,17299,{name},"
 
-    if item_type == "light":
+    if item_type == "light":     
       switch_val = 1 if entity.state == "on" else 0
-      return f",{item_type},{item},1,17299,{name},{switch_val}"
+      icon_color = 17299
+
+
+
+      return f",{item_type},{item},1,{icon_color},{name},{switch_val}"
 
     if item_type == "switch" or item_type == "input_boolean":
       switch_val = 1 if entity.state == "on" else 0
@@ -538,21 +542,3 @@ class NsPanelLovelaceUI:
         # reverse position for slider
         pos = 100-pos
         self.send_mqtt_msg(f"entityUpdateDetail,{pos}")
-
-  def hsv2rgb(self, h, s, v):
-      hsv = colorsys.hsv_to_rgb(h,s,v)
-      return tuple(round(i * 255) for i in hsv)
-  def pos_to_color(self, x, y):
-      r = 160/2
-      x = round((x - r) / r * 100) / 100
-      y = round((r - y) / r * 100) / 100
-      
-      r = math.sqrt(x*x + y*y)
-      sat = 0
-      if (r > 1):
-          sat = 0
-      else:
-          sat = r
-      hsv = (math.degrees(math.atan2(y, x))%360/360, sat, 1)
-      rgb = self.hsv2rgb(hsv[0],hsv[1],hsv[2])
-      return rgb
