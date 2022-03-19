@@ -1,8 +1,7 @@
 import json
 import datetime
 import hassapi as hass
-import math
-from color import hsv2rgb,pos_to_color
+from color import pos_to_color, rgb_dec565
 
 # check Babel
 import importlib
@@ -247,7 +246,7 @@ class NsPanelLovelaceUI:
     if(btype == "colorWheel"):
       self.api.log(optVal)
       optVal = optVal.split('|')
-      color = self.pos_to_color(int(optVal[0]), int(optVal[1]))
+      color = pos_to_color(int(optVal[0]), int(optVal[1]))
       self.api.log(color)
       self.api.get_entity(entity_id).call_service("turn_on", rgb_color=color)
       
@@ -367,7 +366,8 @@ class NsPanelLovelaceUI:
       switch_val = 1 if entity.state == "on" else 0
       icon_color = 17299
 
-
+      if "rgb_color" in entity.attributes:
+        icon_color = rgb_dec565(entity.attributes.rgb_color)
 
       return f",{item_type},{item},1,{icon_color},{name},{switch_val}"
 
