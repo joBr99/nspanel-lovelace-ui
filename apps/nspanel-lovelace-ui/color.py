@@ -19,6 +19,12 @@ def pos_to_color(x, y):
     rgb = hsv2rgb(hsv[0],hsv[1],hsv[2])
     return rgb
 
+def rgb_brightness(rgb_color, brightness):
+    red = rgb_color[0]/255*brightness
+    green = rgb_color[1]/255*brightness
+    blue = rgb_color[2]/255*brightness
+    return [red, green, blue]
+
 def rgb_dec565(rgb_color):
     red = rgb_color[0]
     green = rgb_color[1]
