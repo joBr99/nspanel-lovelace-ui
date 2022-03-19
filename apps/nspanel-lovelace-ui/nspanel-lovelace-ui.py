@@ -1,7 +1,7 @@
 import json
 import datetime
 import hassapi as hass
-from color import pos_to_color, rgb_dec565
+from color import pos_to_color, rgb_dec565, rgb_brightness
 
 # check Babel
 import importlib
@@ -367,7 +367,10 @@ class NsPanelLovelaceUI:
       icon_color = 17299
 
       if "rgb_color" in entity.attributes:
-        icon_color = rgb_dec565(entity.attributes.rgb_color)
+        color = entity.attributes.rgb_color
+        if "brightness" in entity.attributes:
+          color = rgb_brightness(color, entity.attributes.brightness)
+        icon_color = rgb_dec565(color)
 
       return f",{item_type},{item},1,{icon_color},{name},{switch_val}"
 
