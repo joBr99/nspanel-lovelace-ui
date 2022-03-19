@@ -85,7 +85,7 @@ The following message can be used to update the content on the cardEntities Page
 
 `entityUpdHeading,heading1337`
 
-`entityUpd,*type*,*internalNameEntity*,*iconId*,*displayNameEntity*,*optionalValue*`
+`entityUpd[,*type*,*internalNameEntity*,*iconId*,*displayNameEntity*,*optionalValue*]x4`
 
 `entityUpd,light,light.entityName,1,Light1,0`
 
