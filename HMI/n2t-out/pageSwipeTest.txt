@@ -36,7 +36,7 @@ Number nXS
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -66,7 +66,7 @@ Number nYE
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -96,7 +96,7 @@ Number nYS
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -126,7 +126,7 @@ Number nXE
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -156,7 +156,7 @@ Number nYR
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -186,7 +186,7 @@ Number nXR
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -216,7 +216,7 @@ Text tDesc1
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -246,7 +246,7 @@ Text t2
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -276,7 +276,7 @@ Text tDirection
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -306,7 +306,7 @@ Text t0
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -336,7 +336,7 @@ Text tStatusNew
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -366,7 +366,7 @@ Text t3
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -396,7 +396,7 @@ Text tDirNew
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -442,7 +442,7 @@ Button b8
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024

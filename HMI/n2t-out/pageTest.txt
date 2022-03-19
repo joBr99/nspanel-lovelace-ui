@@ -56,7 +56,7 @@ Button b0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024
@@ -92,7 +92,7 @@ Button b1
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024
@@ -128,7 +128,7 @@ Button b2
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024
@@ -164,7 +164,7 @@ Button b3
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 0
         Back. Color (Pressed)               : 1024
@@ -200,7 +200,7 @@ Button b6
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024
@@ -236,7 +236,7 @@ Button b4
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024
@@ -272,7 +272,7 @@ Button b5
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024
@@ -308,7 +308,7 @@ Button b7
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024
@@ -344,7 +344,7 @@ Button b8
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024
@@ -381,7 +381,7 @@ Button b9
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024
@@ -417,7 +417,7 @@ Button b10
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 1024

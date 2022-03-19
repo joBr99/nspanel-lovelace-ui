@@ -193,7 +193,7 @@ Text tTime
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 6
+        Font ID                             : 5
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -283,7 +283,7 @@ Text tMainIcon
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 4
+        Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center

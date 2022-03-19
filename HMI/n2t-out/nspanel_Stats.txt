@@ -6,26 +6,18 @@ pageIcons
 	6    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
-pageSerialTest
-	13   Component(s)
-	48   Line(s) of event code
-	43   Unique line(s) of event code
-screensaver
-	25   Component(s)
-	152  Line(s) of event code
-	118  Unique line(s) of event code
-pageSwipeTest
-	18   Component(s)
-	62   Line(s) of event code
-	44   Unique line(s) of event code
-popupNotify
-	15   Component(s)
-	143  Line(s) of event code
-	95   Unique line(s) of event code
 pageTest
 	13   Component(s)
 	13   Line(s) of event code
 	13   Unique line(s) of event code
+popupNotify
+	15   Component(s)
+	143  Line(s) of event code
+	95   Unique line(s) of event code
+pageSerialTest
+	13   Component(s)
+	48   Line(s) of event code
+	43   Unique line(s) of event code
 cardMedia
 	22   Component(s)
 	219  Line(s) of event code
@@ -42,6 +34,14 @@ popupLight
 	27   Component(s)
 	290  Line(s) of event code
 	149  Unique line(s) of event code
+pageSwipeTest
+	18   Component(s)
+	62   Line(s) of event code
+	44   Unique line(s) of event code
+screensaver
+	25   Component(s)
+	152  Line(s) of event code
+	118  Unique line(s) of event code
 cardThermo
 	42   Component(s)
 	450  Line(s) of event code

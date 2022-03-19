@@ -42,7 +42,7 @@ Number nCrcRecv
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -72,7 +72,7 @@ Number nCrcCalc
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -102,7 +102,7 @@ Number nIt
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -162,7 +162,7 @@ Text tStatus
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -192,7 +192,7 @@ Text tCmd
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -222,7 +222,7 @@ Text tBuffer
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -252,7 +252,7 @@ Text tDesc
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -298,7 +298,7 @@ Button b0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 0
         Back. Color (Pressed)               : 1024
@@ -335,7 +335,7 @@ Button b1
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : 3D auto
-        Font ID                             : 5
+        Font ID                             : 4
         Back. Color                         : 50712
         Back. Picture ID (Pressed)          : 0
         Back. Color (Pressed)               : 1024

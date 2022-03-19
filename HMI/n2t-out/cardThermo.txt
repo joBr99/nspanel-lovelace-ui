@@ -185,7 +185,7 @@ XFloat xTempCurr
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 4
+        Font ID                             : 3
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -614,7 +614,7 @@ Button bDown
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : image
-        Font ID                             : 3
+        Font ID                             : 0
         Background Picture ID (Unpressed)   : 7
         Back. Picture ID (Pressed)          : 7
         Horizontal Alignment                : center
@@ -670,7 +670,7 @@ Button bUp
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : image
-        Font ID                             : 3
+        Font ID                             : 0
         Background Picture ID (Unpressed)   : 9
         Back. Picture ID (Pressed)          : 9
         Horizontal Alignment                : center
