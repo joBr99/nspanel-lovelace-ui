@@ -77,6 +77,8 @@ change the page type:
 
 `weatherUpdate,?0?2,3 C?0?0 mm?Mi?0?9,3 C?Do?0?11,5 C`
 
+`page,0`
+
 ### cardEntities Page
 
 The following message can be used to update the content on the cardEntities Page
