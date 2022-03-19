@@ -381,7 +381,7 @@ class NsPanelLovelaceUI:
           color = rgb_brightness(color, entity.attributes.brightness)
         icon_color = rgb_dec565(color)
       elif "brightness" in entity.attributes:
-        color = rgb_brightness(color, [253, 216, 53])
+        color = rgb_brightness([253, 216, 53], entity.attributes.brightness)
         icon_color = rgb_dec565(color)
 
       return f",{item_type},{item},1,{icon_color},{name},{switch_val}"
@@ -525,7 +525,7 @@ class NsPanelLovelaceUI:
 
 
   def generate_detail_page(self, page_type, entity):
-    if(page_type == "popupLight"):
+    if page_type == "popupLight":
       entity = self.api.get_entity(entity)
       switch_val = 1 if entity.state == "on" else 0
 
@@ -537,7 +537,7 @@ class NsPanelLovelaceUI:
           color = rgb_brightness(color, entity.attributes.brightness)
         icon_color = rgb_dec565(color)
       elif "brightness" in entity.attributes:
-        color = rgb_brightness(color, [253, 216, 53])
+        color = rgb_brightness([253, 216, 53], entity.attributes.brightness)
         icon_color = rgb_dec565(color)
 
       brightness = "disable"
@@ -564,8 +564,8 @@ class NsPanelLovelaceUI:
           color = "disable"
       self.send_mqtt_msg(f"entityUpdateDetail,1,{icon_color},{switch_val},{brightness},{color_temp},{color}")
 
-      if(page_type == "popupShutter"):
-        pos = self.api.get_entity(msg[3]).attributes.current_position
+      if page_type == "popupShutter":
+        pos = self.api.get_entity(entity).attributes.current_position
         # reverse position for slider
         pos = 100-pos
         self.send_mqtt_msg(f"entityUpdateDetail,{pos}")
