@@ -353,19 +353,19 @@ class NsPanelLovelaceUI:
     self.api.log("Generating item command for %s with type %s", item, item_type, level="DEBUG")
 
     if item_type == "delete":
-      return f",{item_type},,,,"
+      return f",{item_type},,,,,"
     
     if not self.api.entity_exists(item):
-      return f",text,{item},11,Not found check, apps.yaml"
+      return f",text,{item},11,17299,Not found check, apps.yaml"
     entity = self.api.get_entity(item)
     name = entity.attributes.friendly_name
 
     if item_type == "cover":
-      return f",shutter,{item},0,{name},"
+      return f",shutter,{item},0,17299,{name},"
 
     if item_type == "light":
       switch_val = 1 if entity.state == "on" else 0
-      return f",{item_type},{item},1,{name},{switch_val}"
+      return f",{item_type},{item},1,17299,{name},{switch_val}"
 
     if item_type == "switch" or item_type == "input_boolean":
       switch_val = 1 if entity.state == "on" else 0
@@ -375,7 +375,7 @@ class NsPanelLovelaceUI:
       else:
         icon_id = 7
       
-      return f",switch,{item},{icon_id},{name},{switch_val}"
+      return f",switch,{item},{icon_id},17299,{name},{switch_val}"
 
     if item_type == "sensor":
       icon_id = 0
@@ -392,13 +392,13 @@ class NsPanelLovelaceUI:
         unit_of_measurement = entity.attributes.unit_of_measurement
 
       value = entity.state + " " + unit_of_measurement
-      return f",text,{item},{icon_id},{name},{value}"
+      return f",text,{item},{icon_id},17299,{name},{value}"
 
     if item_type == "button" or item_type == "input_button":
-      return f",button,{item},3,{name},PRESS"
+      return f",button,{item},3,17299,{name},PRESS"
     
     if item_type == "scene":
-      return f",button,{item},10,{name},ACTIVATE"
+      return f",button,{item},10,17299,{name},ACTIVATE"
 
   def generate_entities_page(self, items):
     # Set Items of Page
