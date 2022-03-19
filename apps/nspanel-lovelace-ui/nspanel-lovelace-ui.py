@@ -306,7 +306,7 @@ class NsPanelLovelaceUI:
       if entity in items:
         self.api.log("State change on current page for {0}".format(entity), level="DEBUG")
         # send update of the page
-        command = self.generate_
+        command = self.generate_page(items)
         self.send_mqtt_msg(command)
         if(entity.startswith("cover")):
           self.generate_detail_page("popupShutter", entity)
