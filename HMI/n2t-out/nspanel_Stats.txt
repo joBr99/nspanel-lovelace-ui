@@ -12,8 +12,8 @@ pageSerialTest
 	43   Unique line(s) of event code
 screensaver
 	25   Component(s)
-	146  Line(s) of event code
-	116  Unique line(s) of event code
+	152  Line(s) of event code
+	118  Unique line(s) of event code
 pageSwipeTest
 	18   Component(s)
 	62   Line(s) of event code
@@ -58,5 +58,5 @@ cardAlarm
 Total
 	13   Page(s)
 	302  Component(s)
-	2659 Line(s) of event code
-	682  Unique line(s) of event code
+	2665 Line(s) of event code
+	684  Unique line(s) of event code
