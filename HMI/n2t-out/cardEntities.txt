@@ -1992,8 +1992,12 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,tIcon1.txt,sys0,1
                                             vis tIcon1,1
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,",",4
+                                            covx tTmp.txt,sys0,0,0
+                                            tIcon1.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity1.txt,",",4
+                                            spstr strCommand.txt,tEntity1.txt,",",5
                                             vis tEntity1,1
                                         }
                                         if(type1.txt=="shutter")
@@ -2012,7 +2016,7 @@ Timer tmSerial
                                             vis btOnOff1,1
                                             vis bText1,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,",",5
+                                            spstr strCommand.txt,tTmp.txt,",",6
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff1.val=sys0
                                         }
@@ -2024,7 +2028,7 @@ Timer tmSerial
                                             vis btOnOff1,1
                                             vis bText1,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,",",5
+                                            spstr strCommand.txt,tTmp.txt,",",6
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff1.val=sys0
                                         }
@@ -2039,7 +2043,7 @@ Timer tmSerial
                                             bText1.pco=65535
                                             bText1.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText1.txt,",",5
+                                            spstr strCommand.txt,bText1.txt,",",6
                                         }
                                         if(type1.txt=="button")
                                         {
@@ -2052,13 +2056,13 @@ Timer tmSerial
                                             bText1.pco=1374
                                             bText1.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText1.txt,",",5
+                                            spstr strCommand.txt,bText1.txt,",",6
                                         }
                                         // id2
                                         // get Type
-                                        spstr strCommand.txt,type2.txt,",",6
+                                        spstr strCommand.txt,type2.txt,",",7
                                         // get internal name
-                                        spstr strCommand.txt,entn2.txt,",",7
+                                        spstr strCommand.txt,entn2.txt,",",8
                                         if(type2.txt=="delete")
                                         {
                                             vis bUp2,0
@@ -2071,12 +2075,16 @@ Timer tmSerial
                                         }else
                                         {
                                             //change icon
-                                            spstr strCommand.txt,tTmp.txt,",",8
+                                            spstr strCommand.txt,tTmp.txt,",",9
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,tIcon2.txt,sys0,1
                                             vis tIcon2,1
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,",",10
+                                            covx tTmp.txt,sys0,0,0
+                                            tIcon2.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity2.txt,",",9
+                                            spstr strCommand.txt,tEntity2.txt,",",11
                                             vis tEntity2,1
                                         }
                                         if(type2.txt=="shutter")
@@ -2095,7 +2103,7 @@ Timer tmSerial
                                             vis btOnOff2,1
                                             vis bText2,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,",",10
+                                            spstr strCommand.txt,tTmp.txt,",",12
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff2.val=sys0
                                         }
@@ -2107,7 +2115,7 @@ Timer tmSerial
                                             vis btOnOff2,1
                                             vis bText2,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,",",10
+                                            spstr strCommand.txt,tTmp.txt,",",12
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff2.val=sys0
                                         }
@@ -2122,7 +2130,7 @@ Timer tmSerial
                                             bText2.pco=65535
                                             bText2.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText2.txt,",",10
+                                            spstr strCommand.txt,bText2.txt,",",12
                                         }
                                         if(type2.txt=="button")
                                         {
@@ -2135,13 +2143,13 @@ Timer tmSerial
                                             bText2.pco=1374
                                             bText2.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText2.txt,",",10
+                                            spstr strCommand.txt,bText2.txt,",",12
                                         }
                                         // id3
                                         // get Type
-                                        spstr strCommand.txt,type3.txt,",",11
+                                        spstr strCommand.txt,type3.txt,",",13
                                         // get internal name
-                                        spstr strCommand.txt,entn3.txt,",",12
+                                        spstr strCommand.txt,entn3.txt,",",14
                                         if(type3.txt=="delete")
                                         {
                                             vis bUp3,0
@@ -2154,12 +2162,16 @@ Timer tmSerial
                                         }else
                                         {
                                             //change icon
-                                            spstr strCommand.txt,tTmp.txt,",",13
+                                            spstr strCommand.txt,tTmp.txt,",",15
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,tIcon3.txt,sys0,1
                                             vis tIcon3,1
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,",",16
+                                            covx tTmp.txt,sys0,0,0
+                                            tIcon3.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity3.txt,",",14
+                                            spstr strCommand.txt,tEntity3.txt,",",17
                                             vis tEntity3,1
                                         }
                                         if(type3.txt=="shutter")
@@ -2178,7 +2190,7 @@ Timer tmSerial
                                             vis bText3,0
                                             vis btOnOff3,1
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,",",15
+                                            spstr strCommand.txt,tTmp.txt,",",18
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff3.val=sys0
                                         }
@@ -2190,7 +2202,7 @@ Timer tmSerial
                                             vis bText3,0
                                             vis btOnOff3,1
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,",",15
+                                            spstr strCommand.txt,tTmp.txt,",",18
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff3.val=sys0
                                         }
@@ -2205,7 +2217,7 @@ Timer tmSerial
                                             bText3.pco=65535
                                             bText3.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText3.txt,",",15
+                                            spstr strCommand.txt,bText3.txt,",",18
                                         }
                                         if(type3.txt=="button")
                                         {
@@ -2218,13 +2230,13 @@ Timer tmSerial
                                             bText3.pco=1374
                                             bText3.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText3.txt,",",15
+                                            spstr strCommand.txt,bText3.txt,",",18
                                         }
                                         // id4
                                         // get Type
-                                        spstr strCommand.txt,type4.txt,",",16
+                                        spstr strCommand.txt,type4.txt,",",19
                                         // get internal name
-                                        spstr strCommand.txt,entn4.txt,",",17
+                                        spstr strCommand.txt,entn4.txt,",",20
                                         if(type4.txt=="delete")
                                         {
                                             vis bUp4,0
@@ -2237,12 +2249,16 @@ Timer tmSerial
                                         }else
                                         {
                                             //change icon
-                                            spstr strCommand.txt,tTmp.txt,",",18
+                                            spstr strCommand.txt,tTmp.txt,",",21
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,tIcon4.txt,sys0,1
                                             vis tIcon4,1
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,",",22
+                                            covx tTmp.txt,sys0,0,0
+                                            tIcon4.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity4.txt,",",19
+                                            spstr strCommand.txt,tEntity4.txt,",",23
                                             vis tEntity4,1
                                         }
                                         if(type4.txt=="shutter")
@@ -2261,7 +2277,7 @@ Timer tmSerial
                                             vis bText4,0
                                             vis btOnOff4,1
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,",",20
+                                            spstr strCommand.txt,tTmp.txt,",",24
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff4.val=sys0
                                         }
@@ -2273,7 +2289,7 @@ Timer tmSerial
                                             vis bText4,0
                                             vis btOnOff4,1
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,",",20
+                                            spstr strCommand.txt,tTmp.txt,",",24
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff4.val=sys0
                                         }
@@ -2288,7 +2304,7 @@ Timer tmSerial
                                             bText4.pco=65535
                                             bText4.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText4.txt,",",20
+                                            spstr strCommand.txt,bText4.txt,",",24
                                         }
                                         if(type4.txt=="button")
                                         {
@@ -2301,7 +2317,7 @@ Timer tmSerial
                                             bText4.pco=1374
                                             bText4.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText4.txt,",",20
+                                            spstr strCommand.txt,bText4.txt,",",24
                                         }
                                     }
                                     if(tInstruction.txt=="pageType")
