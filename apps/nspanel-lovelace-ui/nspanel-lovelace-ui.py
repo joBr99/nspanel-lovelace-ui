@@ -35,8 +35,8 @@ class Updater:
   def check_pre_req(self):
     # we need to know both versions to continue
     if self.current_tasmota_driver_version is not None and self.current_display_firmware_version is not None:
-      # tasmota driver has to be at least version 2 for Update command and panel has to be at version 5 for notify commands
-      if self.current_tasmota_driver_version >= 2 and self.current_display_firmware_version >= 5:
+      # tasmota driver has to be at least version 2 for Update command and panel has to be at version 11 for notify commands
+      if self.current_tasmota_driver_version >= 2 and self.current_display_firmware_version >= 11:
         return True
     return False
   def check_updates(self):
