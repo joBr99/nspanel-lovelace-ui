@@ -577,6 +577,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
+                                        dim=100
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,",",1
