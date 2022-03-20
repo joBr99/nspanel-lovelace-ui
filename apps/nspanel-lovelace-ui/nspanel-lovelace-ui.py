@@ -189,14 +189,15 @@ class NsPanelLovelaceUI:
     o1 = we.attributes.forecast[0]['datetime']
     o1 = datetime.datetime.fromisoformat(o1)
     o1 = babel.dates.format_date(o1, "E", locale=self.config["locale"])
-    i1 = weathericons[we.attributes.forecast[0]['condition']]
+    i1 = get_icon_id(weathericons[we.attributes.forecast[0]['condition']])
     u1 = we.attributes.forecast[0]['temperature']
     o2 = we.attributes.forecast[1]['datetime']
     o2 = datetime.datetime.fromisoformat(o2)
     o2 = babel.dates.format_date(o2, "E", locale=self.config["locale"])
-    i2 = weathericons[we.attributes.forecast[1]['condition']]
+    i2 = get_icon_id(weathericons[we.attributes.forecast[1]['condition']])
     u2 = we.attributes.forecast[1]['temperature']
     self.send_mqtt_msg(f"weatherUpdate,?{get_icon_id(weathericons[we.state])}?{we.attributes.temperature}{unit}?{26}?{we.attributes.humidity} %?{o1}?{i1}?{u1}?{o2}?{i2}?{u2}")
+
 
   def handle_button_press(self, entity_id, btype, optVal=None):
     if(btype == "OnOff"):
