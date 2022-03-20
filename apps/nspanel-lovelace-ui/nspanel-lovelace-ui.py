@@ -16,13 +16,57 @@ class NsPanelLovelaceUIManager(hass.Hass):
     data = self.args["config"]
     NsPanelLovelaceUI(self, data)
 
+class Updater:
+  def __init__(self, nsplui, mode):
+    self.desired_display_firmware_version = 6
+    self.desired_display_firmware_url     = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-a023d2e.tft"
+    self.desired_tasmota_driver_version   = 3
+    self.desired_tasmota_driver_url       = "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be"
+
+    self.mode = mode
+    self.nsplui = nsplui
+    self.current_tasmota_driver_version = None
+    self.current_panel_version          = None
+
+  def set_tasmota_driver_version(self, driver_version):
+    self.current_tasmota_driver_version = driver_version
+  def set_current_panel_version(self, panel_version):
+    self.current_panel_version = panel_version
+  def check_pre_req(self):
+    # we need to know both versions to continue
+    if self.current_tasmota_driver_version is not None and self.current_panel_version is not None:
+      # tasmota driver has to be at least version 2 for Update command and panel has to be at version 5 for notify commands
+      if self.current_tasmota_driver_version >= 2 and self.current_panel_version >= 5:
+        return True
+    return False
+  def check_updates(self):
+    # run pre req check
+    if self.check_pre_req():
+      self.nsplui.api.log("Update Pre-Check sucessful Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_panel_version, level="DEBUG")
+      # tasmota driver needs update
+      if self.current_tasmota_driver_version < self.desired_tasmota_driver_version:
+        self.nsplui.api.log("Update of Tasmota Driver needed")
+        # in auto mode just do the update
+        if self.mode == "auto":
+          self.update_berry_driver()
+          return
+        # send notification about the update
+        if self.mode == "auto-notify":
+          self.nsplui.send_message_page("updateBerryNoYes", "Driver Update available!", "There's an update avalible for the tasmota      berry driver, do you want to start the update  now?", "Dismiss", "Yes")
+          return
+    else:
+      self.nsplui.api.log("Update Pre-Check failed Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_panel_version)
+  def update_berry_driver(self):
+    self.nsplui.mqtt.mqtt_publish(self.config["panelSendTopic"].replace("CustomSend", "UpdateDriverVersion"), desired_tasmota_driver_url)
+  def update_panel_driver(self):
+    self.nsplui.mqtt.mqtt_publish(self.config["panelSendTopic"].replace("CustomSend", "FlashNextion"), desired_display_firmware_url)
 class NsPanelLovelaceUI:
   def __init__(self, api, config):
     self.api = api
     self.config = config
     self.current_page_nr = 0
     self.current_screensaver_brightness = 10
-
+    
     # check configured items
     self.check_items()
 
@@ -30,6 +74,16 @@ class NsPanelLovelaceUI:
     self.mqtt = self.api.get_plugin_api("MQTT")
     self.mqtt.mqtt_subscribe(topic=self.config["panelRecvTopic"])
     self.mqtt.listen_event(self.handle_mqtt_incoming_message, "MQTT_MESSAGE", topic=self.config["panelRecvTopic"], namespace='mqtt')
+
+    if "update_mode" in self.config:
+      update_mode = self.config["update_mode"]
+    else:
+      update_mode = "manual"
+    self.updater = Updater(self, update_mode)
+
+
+    # Request Tasmota Driver Version
+    self.mqtt.mqtt_publish(self.config["panelSendTopic"].replace("CustomSend", "GetDriverVersion"), "x")
 
     # send panel back to startup page on restart of this script
     self.send_mqtt_msg("pageType,pageStartup")
@@ -75,6 +129,12 @@ class NsPanelLovelaceUI:
   def handle_mqtt_incoming_message(self, event_name, data, kwargs):
     # Parse Json Message from Tasmota and strip out message from nextion display
     data = json.loads(data["payload"])
+    # pass tasmota driver version to updater class
+    if("nlui_driver_version" in data):
+      msg = data["nlui_driver_version"]
+      self.api.log("Received Driver Version from Tasmota: %s", int(msg), level="DEBUG")
+      self.updater.set_tasmota_driver_version(int(msg))
+      return
     if("CustomRecv" not in data):
       self.api.log("Received Message from Tasmota, but not from nextion screen: %s", data, level="DEBUG")
       return
@@ -90,6 +150,9 @@ class NsPanelLovelaceUI:
       if msg[1] == "startup":
         self.api.log("Handling startup event", level="DEBUG")
 
+        # grab version from screen and pass to updater class
+        self.updater.set_current_panel_version(int(msg[2]))
+
         # send date and time
         self.update_time("")
         self.update_date("")
@@ -102,18 +165,18 @@ class NsPanelLovelaceUI:
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
 
         # send messages for current page
-        page_type = self.config["pages"][self.current_page_nr]["type"]
-        self.generate_page(self.current_page_nr, page_type)
+        self.generate_page(self.current_page_nr)
+
+        # check for updates
+        self.updater.check_updates()
 
       if msg[1] == "pageOpen":
         # Calculate current page
         recv_page = int(msg[2])
         self.current_page_nr = recv_page % len(self.config["pages"])
         self.api.log("Received pageOpen command, raw page: %i, calc page: %i", recv_page, self.current_page_nr, level="DEBUG")
-        # get type of current page
-        page_type = self.config["pages"][self.current_page_nr]["type"]
         # generate commands for current page
-        self.generate_page(self.current_page_nr, page_type)
+        self.generate_page(self.current_page_nr)
 
       if msg[1] == "buttonPress":
         entity_id = msg[4]
@@ -198,9 +261,17 @@ class NsPanelLovelaceUI:
 
 
   def handle_button_press(self, entity_id, btype, optVal=None):
-    if entity_id == "updateNoYes" and optVal == "yes":
-      self.api.log("Sending update command")
-      self.mqtt.mqtt_publish(self.config["panelSendTopic"].replace("CustomSend", "FlashNextion"), release_config_desired_display_firmware_url)
+
+    if entity_id == "updateBerryNoYes" and optVal == "yes":
+      self.update.update_berry_driver()
+      self.generate_page(self.current_page_nr)
+    elif entity_id == "updateBerryNoYes" and optVal == "no":
+      self.generate_page(self.current_page_nr)
+
+    if entity_id == "updatePanelNoYes" and optVal == "yes":
+      self.update.update_panel_driver()
+    elif entity_id == "updatePanelNoYes" and optVal == "no":
+      self.generate_page(self.current_page_nr)
 
     if btype == "OnOff":
       if optVal == "1":
@@ -322,7 +393,9 @@ class NsPanelLovelaceUI:
           return
       return
 
-  def generate_page(self, page_number, page_type):
+  def generate_page(self, page_number):
+    # get type of current page
+    page_type = self.config["pages"][self.current_page_nr]["type"]
     self.api.log("Generating page commands for page %i with type %s", self.current_page_nr, page_type, level="DEBUG")
     if page_type == "cardEntities":
       # Send page type
