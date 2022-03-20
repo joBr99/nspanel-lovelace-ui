@@ -642,6 +642,10 @@ Button bEntity1
             tTmp.txt=type1.txt
             pageIcons.tTmp1.txt=tEntity1.txt
             pageIcons.tTmp2.txt=entn1.txt
+            if(tEntity1.txt=="shutter")
+            {
+                page popupShutter
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -703,6 +707,10 @@ Button bEntity2
             tTmp.txt=type2.txt
             pageIcons.tTmp1.txt=tEntity2.txt
             pageIcons.tTmp2.txt=entn2.txt
+            if(tEntity2.txt=="shutter")
+            {
+                page popupShutter
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -764,6 +772,10 @@ Button bEntity3
             tTmp.txt=type3.txt
             pageIcons.tTmp1.txt=tEntity3.txt
             pageIcons.tTmp2.txt=entn3.txt
+            if(tEntity3.txt=="shutter")
+            {
+                page popupShutter
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -825,6 +837,10 @@ Button bEntity4
             tTmp.txt=type4.txt
             pageIcons.tTmp1.txt=tEntity4.txt
             pageIcons.tTmp2.txt=entn4.txt
+            if(tEntity4.txt=="shutter")
+            {
+                page popupShutter
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -886,6 +902,10 @@ Button bEntity5
             tTmp.txt=type5.txt
             pageIcons.tTmp1.txt=tEntity5.txt
             pageIcons.tTmp2.txt=entn5.txt
+            if(tEntity5.txt=="shutter")
+            {
+                page popupShutter
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -947,6 +967,10 @@ Button bEntity6
             tTmp.txt=type6.txt
             pageIcons.tTmp1.txt=tEntity6.txt
             pageIcons.tTmp2.txt=entn6.txt
+            if(tEntity6.txt=="shutter")
+            {
+                page popupShutter
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -1299,10 +1323,6 @@ Timer tmLP
     
     Events
         Timer Event
-            if(tTmp.txt=="shutter")
-            {
-                page popupShutter
-            }
             if(tTmp.txt=="light")
             {
                 page popupLight
