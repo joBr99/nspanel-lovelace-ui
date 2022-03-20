@@ -462,20 +462,36 @@ Timer tmSerial
                                         spstr strCommand.txt,entn.txt,",",1
                                         // get Heading
                                         spstr strCommand.txt,tHeading.txt,",",2
+                                        // heading color
+                                        spstr strCommand.txt,tTmp.txt,",",3
+                                        covx tTmp.txt,sys0,0,0
+                                        tHeading.pco=sys0
                                         // get b1
-                                        spstr strCommand.txt,b1.txt,",",3
+                                        spstr strCommand.txt,b1.txt,",",4
                                         if(b1.txt!="")
                                         {
                                             vis b1,1
                                         }
+                                        // b1 color
+                                        spstr strCommand.txt,tTmp.txt,",",5
+                                        covx tTmp.txt,sys0,0,0
+                                        b1.pco=sys0
                                         // get b2
-                                        spstr strCommand.txt,b2.txt,",",4
+                                        spstr strCommand.txt,b2.txt,",",6
                                         if(b2.txt!="")
                                         {
                                             vis b2,1
                                         }
+                                        // b2 color
+                                        spstr strCommand.txt,tTmp.txt,",",7
+                                        covx tTmp.txt,sys0,0,0
+                                        b2.pco=sys0
                                         // get tText
-                                        spstr strCommand.txt,tText.txt,",",5
+                                        spstr strCommand.txt,tText.txt,",",8
+                                        // tText color
+                                        spstr strCommand.txt,tTmp.txt,",",9
+                                        covx tTmp.txt,sys0,0,0
+                                        tText.pco=sys0
                                     }
                                     if(tInstruction.txt=="time")
                                     {
