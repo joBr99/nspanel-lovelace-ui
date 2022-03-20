@@ -91,7 +91,7 @@ The following message can be used to update the content on the cardEntities Page
 
 `,shutter,cover.entityName,0,17299,Shutter2,`
 
-`,delete,,,,`
+`,delete,,,,,`
 
 `,text,sensor.entityName,3,17299,Temperature,content`
 

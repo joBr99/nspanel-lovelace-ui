@@ -942,7 +942,6 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,dimValue,0,0
-                                        dim=dimValue
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
