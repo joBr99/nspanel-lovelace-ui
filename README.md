@@ -9,7 +9,8 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 
 ## Features
 
-- Entities Page with support for cover, switch, input_boolean, sensor, button, input_button and light
+- Entities Page with support for cover, switch, input_boolean, sensor, button, scenes, input_button and light
+- Grid Page with support for cover, switch, input_boolean, button, scenes, and light
 - Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
 - Thermostat Page 
 - Media Player Card
@@ -278,13 +279,22 @@ nspanel-1:
           - button.example_button
           - input_button.example_input_button
           - light.light_example
-          - delete # To make sure we don't keep buttons from previous page (read this as 'empty')
+          - delete # (read this as 'empty')
       - type: cardEntities
         heading: Example Page 3
         items:
-          - scene.some_scene
-          - scene.moodlights
+          - scene.example_scene
           - delete
+          - delete
+          - delete
+      - type: cardGrid
+        heading: Example Page 4
+        items:
+          - light.light_example
+          - button.example_button
+          - cover.example_cover
+          - scene.example_scene
+          - switch.example_switch
           - delete
       - type: cardThermo
         heading: Exmaple Thermostat
