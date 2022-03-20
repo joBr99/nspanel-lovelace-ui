@@ -34,10 +34,6 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-cardGrid
-	39   Component(s)
-	397  Line(s) of event code
-	219  Unique line(s) of event code
 cardAlarm
 	28   Component(s)
 	159  Line(s) of event code
@@ -58,6 +54,10 @@ cardThermo
 	42   Component(s)
 	450  Line(s) of event code
 	221  Unique line(s) of event code
+cardGrid
+	39   Component(s)
+	397  Line(s) of event code
+	219  Unique line(s) of event code
 
 Total
 	14   Page(s)
