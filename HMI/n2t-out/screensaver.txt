@@ -666,8 +666,8 @@ Timer tmSerial
                                     spstr strCommand.txt,tInstruction.txt,",",0
                                     if(tInstruction.txt=="wake")
                                     {
-                                        dim=100
-                                        page originPage.val
+                                        //dim=100
+                                        click tc0,1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
@@ -735,6 +735,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
+                                        dim=100
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,",",1
