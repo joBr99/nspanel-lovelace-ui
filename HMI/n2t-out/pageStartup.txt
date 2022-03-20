@@ -402,7 +402,7 @@ Text tVersion
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 9
+        Text                                : 10
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -605,7 +605,7 @@ Timer tmSerial
                                         {
                                             page pageStartup
                                         }
-                                        if(tId.txt=="pageNotify")
+                                        if(tId.txt=="popupNotify")
                                         {
                                             page popupNotify
                                         }
