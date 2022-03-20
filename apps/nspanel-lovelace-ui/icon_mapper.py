@@ -36,7 +36,7 @@ icons = {
     'battery-medium': 34,
 }
 
-def get_icon(ma_name):
+def get_icon_id(ma_name):
     if ma_name in icons:
         return icons[ma_name]
     else:
