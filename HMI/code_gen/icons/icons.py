@@ -85,7 +85,7 @@ ID | MD Icon Name | Icon
 -- | ------------ | ----
 """)
     for idx, val in enumerate(icon_name_list):
-        f.write(f"{idx} | {val} | ![{val}](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/{val})\n")
+        f.write(f"{idx} | {val} | ![{val}](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/{val}.svg)\n")
 
 
 print("=== STRING for HMI Project ===")
