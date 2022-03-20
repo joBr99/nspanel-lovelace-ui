@@ -353,7 +353,7 @@ class NsPanelLovelaceUI:
 
   def generate_entities_item(self, item):
 
-    # type of item is the string before the "." in the item name
+    # type of the item is the string before the "." in the item name
     item_type = item.split(".")[0]
 
     self.api.log("Generating item command for %s with type %s", item, item_type, level="DEBUG")
@@ -362,17 +362,17 @@ class NsPanelLovelaceUI:
       return f",{item_type},,,,,"
     
     if not self.api.entity_exists(item):
-      return f",text,{item},11,17299,Not found check, apps.yaml"
+      return f",text,{item},{get_icon_id('alert-circle-outline')},17299,Not found check, apps.yaml"
+
     entity = self.api.get_entity(item)
     name = entity.attributes.friendly_name
 
     if item_type == "cover":
-      return f",shutter,{item},0,17299,{name},"
+      return f",shutter,{item},{get_icon_id('window-open')},17299,{name},"
 
     if item_type == "light":     
       switch_val = 1 if entity.state == "on" else 0
       icon_color = 17299
-
       if "rgb_color" in entity.attributes:
         color = entity.attributes.rgb_color
         if "brightness" in entity.attributes:
@@ -381,52 +381,51 @@ class NsPanelLovelaceUI:
       elif "brightness" in entity.attributes:
         color = rgb_brightness([253, 216, 53], entity.attributes.brightness)
         icon_color = rgb_dec565(color)
-
-      return f",{item_type},{item},1,{icon_color},{name},{switch_val}"
+      return f",{item_type},{item},{get_icon_id('lightbulb')},{icon_color},{name},{switch_val}"
 
     if item_type == "switch" or item_type == "input_boolean":
       switch_val = 1 if entity.state == "on" else 0
-      icon_id = 4
+      icon_id = get_icon_id("flash")
       self.api.log("test_test: %s", item_type)
       if item_type == "input_boolean":
         if switch_val == 1:
-          icon_id = 6
+          icon_id = get_icon_id("check-circle-outline")
         else:
-          icon_id = 7
-      
+          icon_id = get_icon_id("close-circle-outline")
       return f",switch,{item},{icon_id},17299,{name},{switch_val}"
 
     if item_type == "sensor":
-      icon_id = 0
-      unit_of_measurement = ""
+      # maps ha device classes to material design icons
       icon_mapping = {
-        "temperature": 2,
-        "power": 4
+        "temperature": "thermometer",
+        "power": "flash"
       }
       if "device_class" in entity.attributes:
         if entity.attributes.device_class in icon_mapping:
           icon_id = icon_mapping[entity.attributes.device_class]
-      
+        else:
+          self.api.log("No Icon found for device_class: %s. Please open a issue on github to report the missing mapping.", entity.attributes.device_class)
+          icon_id = get_icon_id('alert-circle-outline')
+      else:
+        icon_id = get_icon_id('alert-circle-outline')
+      unit_of_measurement = ""
       if "unit_of_measurement" in entity.attributes:
         unit_of_measurement = entity.attributes.unit_of_measurement
-
       value = entity.state + " " + unit_of_measurement
       return f",text,{item},{icon_id},17299,{name},{value}"
 
     if item_type == "button" or item_type == "input_button":
-      return f",button,{item},3,17299,{name},PRESS"
+      return f",button,{item},{get_icon_id('gesture-tap-button')},17299,{name},PRESS"
     
     if item_type == "scene":
-      return f",button,{item},10,17299,{name},ACTIVATE"
+      return f",button,{item},{get_icon_id('palette')},17299,{name},ACTIVATE"
 
   def generate_entities_page(self, items):
-    # Set Items of Page
+    # Get items and construct cmd string
     command = "entityUpd"
     for item in items:
       command += self.generate_entities_item(item)
     return command
-
-
 
   def get_safe_ha_attribute(self, eattr, attr, default):
     return eattr[attr] if attr in eattr else default
@@ -448,29 +447,27 @@ class NsPanelLovelaceUI:
     icon_res = ""
     hvac_modes = self.get_safe_ha_attribute(entity.attributes, "hvac_modes", [])
     for mode in hvac_modes:
-      icon_id = 11
+      icon_id = get_icon_id('alert-circle-outline')
       color_on = 64512
       if mode == "auto":
-        icon_id = 29
+        icon_id = get_icon_id("calendar-sync")
         color_on = 1024
       if mode == "heat":
-        icon_id = 28
+        icon_id = get_icon_id("fire")
         color_on = 64512
       if mode == "off":
-        icon_id = 27
+        icon_id = get_icon_id("power")
         color_on = 35921
-
 
       if mode == "cool":
-        icon_id = 31
+        icon_id = get_icon_id("snowflake")
         color_on = 11487
       if mode == "dry":
-        icon_id = 26
+        icon_id = get_icon_id("water-percent")
         color_on = 60897
       if mode == "fan_only":
-        icon_id = 30
+        icon_id = get_icon_id("fan")
         color_on = 35921
-
 
       state = 0
       if(mode == entity.state):
@@ -489,7 +486,7 @@ class NsPanelLovelaceUI:
       # uneven
       padding_len = int((5-len_hvac_modes)/2)
       icon_res =  ","*4*padding_len + icon_res + ","*4*padding_len
-      # uneven use first 5 icons
+      # use first 5 icons
       icon_res = icon_res + ","*4*4
     
     return f"entityUpd,{item},{heading},{current_temp},{dest_temp},{status},{min_temp},{max_temp},{step_temp}{icon_res}"
@@ -497,7 +494,7 @@ class NsPanelLovelaceUI:
   def generate_media_page(self, item):
 
     if not self.api.entity_exists(item):
-      return f"entityUpd,|{item}|Not found|11|Please check your|apps.yaml in AppDaemon|50|11"
+      return f"entityUpd,|{item}|Not found|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|11"
 
     entity       = self.api.get_entity(item)
     heading      = entity.attributes.friendly_name
@@ -505,10 +502,9 @@ class NsPanelLovelaceUI:
     title        = ""
     author       = ""
     volume       = 0
-    #iconplaypause = 9
     if "media_content_type" in entity.attributes:
       if entity.attributes.media_content_type == "music":
-        icon = 5
+        icon = get_icon_id("music")
     if "media_title" in entity.attributes:
       title  = entity.attributes.media_title
     if "media_artist" in entity.attributes:
@@ -517,9 +513,9 @@ class NsPanelLovelaceUI:
       volume = int(entity.attributes.volume_level*100)
 
     if entity.state == "playing":
-      iconplaypause = 8
+      iconplaypause = get_icon_id("pause")
     else:
-      iconplaypause = 9
+      iconplaypause = get_icon_id("play")
 
     return f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}"
 
@@ -563,7 +559,7 @@ class NsPanelLovelaceUI:
           color = "enable"
         else:
           color = "disable"
-      self.send_mqtt_msg(f"entityUpdateDetail,1,{icon_color},{switch_val},{brightness},{color_temp},{color}")
+      self.send_mqtt_msg(f"entityUpdateDetail,{get_icon_id('lightbulb')},{icon_color},{switch_val},{brightness},{color_temp},{color}")
 
     if page_type == "popupShutter":
       pos = self.api.get_entity(entity).attributes.current_position
