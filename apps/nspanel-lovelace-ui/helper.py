@@ -1,7 +1,7 @@
 import colorsys
 import math
 
-  def scale(val, src, dst):
+def scale(val, src, dst):
     """
     Scale the given value from the scale of src to the scale of dst.
     """
