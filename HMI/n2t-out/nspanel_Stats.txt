@@ -14,13 +14,13 @@ cardMedia
 	22   Component(s)
 	210  Line(s) of event code
 	116  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	145  Line(s) of event code
-	110  Unique line(s) of event code
 popupNotify
 	16   Component(s)
 	167  Line(s) of event code
+	111  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	146  Line(s) of event code
 	111  Unique line(s) of event code
 pageSwipeTest
 	18   Component(s)
@@ -62,5 +62,5 @@ popupLight
 Total
 	14   Page(s)
 	342  Component(s)
-	3169 Line(s) of event code
+	3170 Line(s) of event code
 	787  Unique line(s) of event code
