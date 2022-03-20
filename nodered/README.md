@@ -1,11 +1,6 @@
 # Node-Red Flow
 
-## Note: 
-**This flow has been deprecated in favour of the AppDaemon Backend.**
-**It's still functioning with a limited feature set.**
+There is no node-red backend, but for some advanced scenarios nodered can become handy, like remote controlling your nspanel.
 
+![nodered-remote-control](../doc-pics/nodered-remote-control.png)
 
-
-This is the exmaple node red flow which an be used to control the screen over MQTT.
-
-Import the example node-red flow from "node-red-example-flow.json" file and adjust to your needs.
