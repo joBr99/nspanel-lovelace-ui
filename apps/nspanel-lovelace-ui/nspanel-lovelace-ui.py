@@ -18,8 +18,8 @@ class NsPanelLovelaceUIManager(hass.Hass):
 
 class Updater:
   def __init__(self, nsplui, mode):
-    self.desired_display_firmware_version = 11
-    self.desired_display_firmware_url     = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-b0027d4.tft"
+    self.desired_display_firmware_version = 12
+    self.desired_display_firmware_url     = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-d1165ef.tft"
     self.desired_tasmota_driver_version   = 3
     self.desired_tasmota_driver_url       = "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be"
 
