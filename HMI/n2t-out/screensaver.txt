@@ -774,6 +774,10 @@ Timer tmSerial
                                         {
                                             page cardGrid
                                         }
+                                        if(tId.txt=="cardEntities")
+                                        {
+                                            page cardEntities
+                                        }
                                         if(tId.txt=="cardAlarm")
                                         {
                                             page cardAlarm
@@ -799,6 +803,23 @@ TouchCap tc0
     
     Events
         Touch Press Event
-            dim=100
-            page originPage.val
+            //page open event
+            // event,pageOpen,cardEntities,pageNumber
+            // craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,pageOpen,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            //dim=100
+            //page originPage.val
         

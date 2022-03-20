@@ -639,7 +639,7 @@ Button b0
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 6371
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -675,7 +675,7 @@ Button bColor
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 6371
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
