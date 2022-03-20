@@ -505,7 +505,7 @@ Timer tmSerial
                                         //preserve old sleepTimeout
                                         vaOldSleepT.val=sleepTimeout
                                         // sleep timeout
-                                        spstr strCommand.txt,tTmp.txt,"|",9
+                                        spstr strCommand.txt,tTmp.txt,"|",10
                                         covx tTmp.txt,sys0,0,0
                                         sleepTimeout=sys0
                                     }
