@@ -18,48 +18,65 @@ class NsPanelLovelaceUIManager(hass.Hass):
 
 class Updater:
   def __init__(self, nsplui, mode):
-    self.desired_display_firmware_version = 6
-    self.desired_display_firmware_url     = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-a023d2e.tft"
+    self.desired_display_firmware_version = 11
+    self.desired_display_firmware_url     = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-b0027d4.tft"
     self.desired_tasmota_driver_version   = 3
     self.desired_tasmota_driver_url       = "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be"
 
     self.mode = mode
     self.nsplui = nsplui
-    self.current_tasmota_driver_version = None
-    self.current_panel_version          = None
+    self.current_tasmota_driver_version   = None
+    self.current_display_firmware_version = None
 
   def set_tasmota_driver_version(self, driver_version):
     self.current_tasmota_driver_version = driver_version
-  def set_current_panel_version(self, panel_version):
-    self.current_panel_version = panel_version
+  def set_current_display_firmware_version(self, panel_version):
+    self.current_display_firmware_version = panel_version
   def check_pre_req(self):
     # we need to know both versions to continue
-    if self.current_tasmota_driver_version is not None and self.current_panel_version is not None:
+    if self.current_tasmota_driver_version is not None and self.current_display_firmware_version is not None:
       # tasmota driver has to be at least version 2 for Update command and panel has to be at version 5 for notify commands
-      if self.current_tasmota_driver_version >= 2 and self.current_panel_version >= 5:
+      if self.current_tasmota_driver_version >= 2 and self.current_display_firmware_version >= 5:
         return True
     return False
   def check_updates(self):
+    # return's true if a notification was send to the panel
     # run pre req check
     if self.check_pre_req():
-      self.nsplui.api.log("Update Pre-Check sucessful Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_panel_version, level="DEBUG")
-      # tasmota driver needs update
+      self.nsplui.api.log("Update Pre-Check sucessful Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_display_firmware_version, level="DEBUG")
+      # check if tasmota driver needs update
       if self.current_tasmota_driver_version < self.desired_tasmota_driver_version:
         self.nsplui.api.log("Update of Tasmota Driver needed")
         # in auto mode just do the update
         if self.mode == "auto":
           self.update_berry_driver()
-          return
+          return False
         # send notification about the update
         if self.mode == "auto-notify":
-          self.nsplui.send_message_page("updateBerryNoYes", "Driver Update available!", "There's an update avalible for the tasmota      berry driver, do you want to start the update  now?", "Dismiss", "Yes")
-          return
+          update_msg = "There's an update avalible for the tasmota      berry driver, do you want to start the update  now?                                                                      If you encounter issues after the update or      this message appears frequently, please checkthe manual and repeat the installation steps   for the tasmota berry driver. "
+          self.nsplui.send_message_page("updateBerryNoYes", "Driver Update available!", update_msg, "Dismiss", "Yes")
+          return True
+        return False
+      # check if display firmware needs an update
+      if self.current_display_firmware_version < self.desired_display_firmware_version:
+        self.nsplui.api.log("Update of Display Firmware needed")
+        # in auto mode just do the update
+        if self.mode == "auto":
+          self.update_panel_driver()
+          return False
+        # send notification about the update
+        if self.mode == "auto-notify":
+          update_msg = "There's a firmware update avalible for the       nextion sceen inside of nspanel, do you want  to start the update now?                                     If the update fails check the installation         manual and flash again over the tasmota console. Be pationed the update will take a while."
+          self.nsplui.send_message_page("updateDisplayNoYes", "Display Update available!", update_msg, "Dismiss", "Yes")
+          return True
+        return False
     else:
-      self.nsplui.api.log("Update Pre-Check failed Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_panel_version)
+      self.nsplui.api.log("Update Pre-Check failed Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_display_firmware_version)
+      return False
   def update_berry_driver(self):
-    self.nsplui.mqtt.mqtt_publish(self.config["panelSendTopic"].replace("CustomSend", "UpdateDriverVersion"), desired_tasmota_driver_url)
+    self.nsplui.mqtt.mqtt_publish(self.nsplui.config["panelSendTopic"].replace("CustomSend", "UpdateDriverVersion"), self.desired_tasmota_driver_url)
   def update_panel_driver(self):
-    self.nsplui.mqtt.mqtt_publish(self.config["panelSendTopic"].replace("CustomSend", "FlashNextion"), desired_display_firmware_url)
+    self.nsplui.mqtt.mqtt_publish(self.nsplui.config["panelSendTopic"].replace("CustomSend", "FlashNextion"), self.desired_display_firmware_url)
 class NsPanelLovelaceUI:
   def __init__(self, api, config):
     self.api = api
@@ -123,7 +140,7 @@ class NsPanelLovelaceUI:
     self.register_callbacks()
 
   def send_mqtt_msg(self,msg):
-    self.api.log("Send Message from Tasmota: %s", msg) #, level="DEBUG"
+    self.api.log("Send Message to Tasmota: %s", msg) #, level="DEBUG"
     self.mqtt.mqtt_publish(self.config["panelSendTopic"], msg)
 
   def handle_mqtt_incoming_message(self, event_name, data, kwargs):
@@ -151,7 +168,7 @@ class NsPanelLovelaceUI:
         self.api.log("Handling startup event", level="DEBUG")
 
         # grab version from screen and pass to updater class
-        self.updater.set_current_panel_version(int(msg[2]))
+        self.updater.set_current_display_firmware_version(int(msg[2]))
 
         # send date and time
         self.update_time("")
@@ -164,11 +181,12 @@ class NsPanelLovelaceUI:
         # send screensaver brightness
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
 
-        # send messages for current page
-        self.generate_page(self.current_page_nr)
-
         # check for updates
-        self.updater.check_updates()
+        msg_send = self.updater.check_updates()
+
+        # send messages for current page 
+        if not msg_send:
+          self.generate_page(self.current_page_nr)
 
       if msg[1] == "pageOpen":
         # Calculate current page
@@ -263,14 +281,15 @@ class NsPanelLovelaceUI:
   def handle_button_press(self, entity_id, btype, optVal=None):
 
     if entity_id == "updateBerryNoYes" and optVal == "yes":
-      self.update.update_berry_driver()
+      # go back to main page before starting the update
       self.generate_page(self.current_page_nr)
+      self.updater.update_berry_driver()
     elif entity_id == "updateBerryNoYes" and optVal == "no":
       self.generate_page(self.current_page_nr)
 
-    if entity_id == "updatePanelNoYes" and optVal == "yes":
-      self.update.update_panel_driver()
-    elif entity_id == "updatePanelNoYes" and optVal == "no":
+    if entity_id == "updateDisplayNoYes" and optVal == "yes":
+      self.updater.update_panel_driver()
+    elif entity_id == "updateDisplayNoYes" and optVal == "no":
       self.generate_page(self.current_page_nr)
 
     if btype == "OnOff":
@@ -462,7 +481,6 @@ class NsPanelLovelaceUI:
     if item_type == "switch" or item_type == "input_boolean":
       switch_val = 1 if entity.state == "on" else 0
       icon_id = get_icon_id("flash")
-      self.api.log("test_test: %s", item_type)
       if item_type == "input_boolean":
         if switch_val == 1:
           icon_id = get_icon_id("check-circle-outline")
