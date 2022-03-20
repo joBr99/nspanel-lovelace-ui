@@ -28,7 +28,7 @@ Page popupLight
             vis tSend,0
             vis tTmp,0
             vis tInstruction,0
-            vis tItem,0
+            vis tId,0
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
@@ -360,7 +360,7 @@ Text tInstruction
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tItem
+Text tId
     Attributes
         ID                                  : 19
         Scope                               : local
@@ -653,7 +653,23 @@ Button b0
     
     Events
         Touch Press Event
-            page cardEntities
+            //page open event
+            // event,pageOpen,cardEntities,pageNumber
+            // craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,pageOpen,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
 Button bColor
     Attributes
@@ -937,6 +953,43 @@ Timer tmSerial
                                     // end of user code
                                     udelete payloadLength-1
                                     bufferPos=0
+                                }
+                                if(tInstruction.txt=="pageType")
+                                {
+                                    //command format pageType,specialPageName
+                                    //write name of speical page to tId
+                                    spstr strCommand.txt,tId.txt,",",1
+                                    //save second arg if there's one
+                                    spstr strCommand.txt,tTmp.txt,",",2
+                                    //save third arg if there's one
+                                    spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
+                                    //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
+                                    udelete payloadLength-1
+                                    bufferPos=0
+                                    if(tId.txt=="cardEntities")
+                                    {
+                                        page cardEntities
+                                    }
+                                    if(tId.txt=="cardMedia")
+                                    {
+                                        page cardMedia
+                                    }
+                                    if(tId.txt=="pageStartup")
+                                    {
+                                        page pageStartup
+                                    }
+                                    if(tId.txt=="popupNotify")
+                                    {
+                                        page popupNotify
+                                    }
+                                    if(tId.txt=="cardGrid")
+                                    {
+                                        page cardGrid
+                                    }
+                                    if(tId.txt=="cardAlarm")
+                                    {
+                                        page cardAlarm
+                                    }
                                 }
                             }
                         }
