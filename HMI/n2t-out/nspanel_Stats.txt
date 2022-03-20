@@ -6,10 +6,6 @@ pageIcons
 	6    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
-popupNotify
-	15   Component(s)
-	143  Line(s) of event code
-	95   Unique line(s) of event code
 pageSerialTest
 	13   Component(s)
 	48   Line(s) of event code
@@ -30,6 +26,10 @@ pageSwipeTest
 	18   Component(s)
 	62   Line(s) of event code
 	44   Unique line(s) of event code
+popupNotify
+	16   Component(s)
+	152  Line(s) of event code
+	100  Unique line(s) of event code
 pageTest
 	14   Component(s)
 	14   Line(s) of event code
@@ -61,6 +61,6 @@ cardGrid
 
 Total
 	14   Page(s)
-	342  Component(s)
-	3105 Line(s) of event code
-	765  Unique line(s) of event code
+	343  Component(s)
+	3114 Line(s) of event code
+	769  Unique line(s) of event code

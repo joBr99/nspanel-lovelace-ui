@@ -46,7 +46,14 @@ Variable (string) strCommand
         ID            : 8
         Scope         : local
         Text          : 
-        Max. Text Size: 500
+        Max. Text Size: 600
+    
+Variable (string) entn
+    Attributes
+        ID            : 15
+        Scope         : local
+        Text          : 
+        Max. Text Size: 30
     
 Text tSend
     Attributes
@@ -316,7 +323,7 @@ Button b2
     Events
         Touch Press Event
             //craft command
-            tSend.txt="event,buttonPress,D,D,D,1,notifyAction,yes"
+            tSend.txt="event,buttonPress,D,D,"+entn.txt+",1,notifyAction,yes"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -364,7 +371,7 @@ Button b1
     Events
         Touch Press Event
             //craft command
-            tSend.txt="event,buttonPress,D,D,D,1,notifyAction,no"
+            tSend.txt="event,buttonPress,D,D,"+entn.txt+",1,notifyAction,no"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -451,14 +458,24 @@ Timer tmSerial
                                     spstr strCommand.txt,tInstruction.txt,",",0
                                     if(tInstruction.txt=="entityUpdateDetail")
                                     {
+                                        // get entn
+                                        spstr strCommand.txt,entn.txt,",",1
                                         // get Heading
-                                        spstr strCommand.txt,tHeading.txt,",",1
+                                        spstr strCommand.txt,tHeading.txt,",",2
                                         // get b1
-                                        spstr strCommand.txt,b1.txt,",",2
+                                        spstr strCommand.txt,b1.txt,",",3
+                                        if(b1.txt!="")
+                                        {
+                                            vis b1,1
+                                        }
                                         // get b2
-                                        spstr strCommand.txt,b2.txt,",",3
+                                        spstr strCommand.txt,b2.txt,",",4
+                                        if(b2.txt!="")
+                                        {
+                                            vis b2,1
+                                        }
                                         // get tText
-                                        spstr strCommand.txt,tText.txt,",",4
+                                        spstr strCommand.txt,tText.txt,",",5
                                     }
                                     if(tInstruction.txt=="time")
                                     {
