@@ -558,7 +558,8 @@ class NsPanelLovelaceUI:
         else:
           color_temp = "disable"
           
-        if "xy" in entity.attributes.supported_color_modes or "rgb" in entity.attributes.supported_color_modes or "rgbw" in entity.attributes.supported_color_modes or "hs" in entity.attributes.supported_color_modes:
+        list_color_modes = ["xy", "rgb", "rgbw", "hs"]
+        if any(item in list_color_modes for item in entity.attributes.supported_color_modes):
           color = "enable"
         else:
           color = "disable"
