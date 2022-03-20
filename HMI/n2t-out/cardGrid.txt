@@ -638,16 +638,13 @@ Button bEntity1
     
     Events
         Touch Press Event
+            tmLP.en=1
+            tTmp.txt=type1.txt
             pageIcons.tTmp1.txt=tEntity1.txt
             pageIcons.tTmp2.txt=entn1.txt
-            if(type1.txt=="shutter")
-            {
-                page popupShutter
-            }
-            if(type1.txt=="light")
-            {
-                page popupLight
-            }
+        
+        Touch Release Event
+            tmLP.en=0
             // event,1,tHeading,tEntityName,1,up
             //craft command
             // convert pageNumber and write to tTmp
@@ -702,16 +699,13 @@ Button bEntity2
     
     Events
         Touch Press Event
+            tmLP.en=1
+            tTmp.txt=type2.txt
             pageIcons.tTmp1.txt=tEntity2.txt
             pageIcons.tTmp2.txt=entn2.txt
-            if(type2.txt=="shutter")
-            {
-                page popupShutter
-            }
-            if(type2.txt=="light")
-            {
-                page popupLight
-            }
+        
+        Touch Release Event
+            tmLP.en=0
             // event,1,tHeading,tEntityName,1,up
             //craft command
             // convert pageNumber and write to tTmp
@@ -766,16 +760,13 @@ Button bEntity3
     
     Events
         Touch Press Event
+            tmLP.en=1
+            tTmp.txt=type3.txt
             pageIcons.tTmp1.txt=tEntity3.txt
             pageIcons.tTmp2.txt=entn3.txt
-            if(type3.txt=="shutter")
-            {
-                page popupShutter
-            }
-            if(type3.txt=="light")
-            {
-                page popupLight
-            }
+        
+        Touch Release Event
+            tmLP.en=0
             // event,1,tHeading,tEntityName,1,up
             //craft command
             // convert pageNumber and write to tTmp
@@ -830,16 +821,13 @@ Button bEntity4
     
     Events
         Touch Press Event
+            tmLP.en=1
+            tTmp.txt=type4.txt
             pageIcons.tTmp1.txt=tEntity4.txt
             pageIcons.tTmp2.txt=entn4.txt
-            if(type4.txt=="shutter")
-            {
-                page popupShutter
-            }
-            if(type4.txt=="light")
-            {
-                page popupLight
-            }
+        
+        Touch Release Event
+            tmLP.en=0
             // event,1,tHeading,tEntityName,1,up
             //craft command
             // convert pageNumber and write to tTmp
@@ -894,16 +882,13 @@ Button bEntity5
     
     Events
         Touch Press Event
+            tmLP.en=1
+            tTmp.txt=type5.txt
             pageIcons.tTmp1.txt=tEntity5.txt
             pageIcons.tTmp2.txt=entn5.txt
-            if(type5.txt=="shutter")
-            {
-                page popupShutter
-            }
-            if(type5.txt=="light")
-            {
-                page popupLight
-            }
+        
+        Touch Release Event
+            tmLP.en=0
             // event,1,tHeading,tEntityName,1,up
             //craft command
             // convert pageNumber and write to tTmp
@@ -958,16 +943,13 @@ Button bEntity6
     
     Events
         Touch Press Event
+            tmLP.en=1
+            tTmp.txt=type6.txt
             pageIcons.tTmp1.txt=tEntity6.txt
             pageIcons.tTmp2.txt=entn6.txt
-            if(type6.txt=="shutter")
-            {
-                page popupShutter
-            }
-            if(type6.txt=="light")
-            {
-                page popupLight
-            }
+        
+        Touch Release Event
+            tmLP.en=0
             // event,1,tHeading,tEntityName,1,up
             //craft command
             // convert pageNumber and write to tTmp
@@ -1306,6 +1288,24 @@ Timer tmSleep
                     sleepValue=0
                     page screensaver
                 }
+            }
+        
+Timer tmLP
+    Attributes
+        ID         : 38
+        Scope      : local
+        Period (ms): 500
+        Enabled    : no
+    
+    Events
+        Timer Event
+            if(tTmp.txt=="shutter")
+            {
+                page popupShutter
+            }
+            if(tTmp.txt=="light")
+            {
+                page popupLight
             }
         
 TouchCap tc0
