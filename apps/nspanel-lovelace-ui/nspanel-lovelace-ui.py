@@ -10,7 +10,6 @@ babel_spec = importlib.util.find_spec("babel")
 if babel_spec is not None:
   import babel.dates
 
-
 class NsPanelLovelaceUIManager(hass.Hass):
   def initialize(self):
 
@@ -77,7 +76,7 @@ class NsPanelLovelaceUI:
     # Parse Json Message from Tasmota and strip out message from nextion display
     data = json.loads(data["payload"])
     if("CustomRecv" not in data):
-      self.api.log("Received Message from Tasmota: %s", data, level="DEBUG")
+      self.api.log("Received Message from Tasmota, but not from nextion screen: %s", data, level="DEBUG")
       return
     msg = data["CustomRecv"]
     self.api.log("Received Message from Tasmota: %s", msg) #, level="DEBUG"
@@ -86,17 +85,11 @@ class NsPanelLovelaceUI:
     msg = msg.split(",")
 
     # run action based on received command
-    # TODO: replace with match case after appdeamon container swiched to python 3.10 - https://pakstech.com/blog/python-switch-case/ - https://www.python.org/dev/peps/pep-0636/
     if msg[0] == "event":
 
       if msg[1] == "startup":
         self.api.log("Handling startup event", level="DEBUG")
-        
-        # grab version from screen
-        current_panel_version = int(msg[2])
-        self.api.log("Nextion Display reports version: %s; Checking for updates ...", current_panel_version)
-        
-        
+
         # send date and time
         self.update_time("")
         self.update_date("")
@@ -205,60 +198,64 @@ class NsPanelLovelaceUI:
 
 
   def handle_button_press(self, entity_id, btype, optVal=None):
-    if(btype == "OnOff"):
-      if(optVal == "1"):
+    if entity_id == "updateNoYes" and optVal == "yes":
+      self.api.log("Sending update command")
+      self.mqtt.mqtt_publish(self.config["panelSendTopic"].replace("CustomSend", "FlashNextion"), release_config_desired_display_firmware_url)
+
+    if btype == "OnOff":
+      if optVal == "1":
         self.api.turn_on(entity_id)
       else:
         self.api.turn_off(entity_id)
-    if(btype == "up"):
+    if btype == "up":
       self.api.get_entity(entity_id).call_service("open_cover")
-    if(btype == "stop"):
+    if btype == "stop":
       self.api.get_entity(entity_id).call_service("stop_cover")
-    if(btype == "down"):
+    if btype == "down":
       self.api.get_entity(entity_id).call_service("close_cover")
       
-    if(btype == "button"):
-      if(entity_id.startswith('scene')):
+    if btype == "button":
+      if entity_id.startswith('scene'):
         self.api.get_entity(entity_id).call_service("turn_on")
-      if(entity_id.startswith('light') or entity_id.startswith('switch')):
+      if entity_id.startswith('light') or entity_id.startswith('switch'):
         self.api.get_entity(entity_id).call_service("toggle")
       else:
         self.api.get_entity(entity_id).call_service("press")
 
-    if(btype == "media-next"):
+    if btype == "media-next":
       self.api.get_entity(entity_id).call_service("media_next_track")
-    if(btype == "media-back"):
+    if btype == "media-back":
       self.api.get_entity(entity_id).call_service("media_previous_track")
-    if(btype == "media-pause"):
+    if btype == "media-pause":
       self.api.get_entity(entity_id).call_service("media_play_pause")
 
-    if(btype == "hvac_action"):
+    if btype == "hvac_action":
       self.api.get_entity(entity_id).call_service("set_hvac_mode", hvac_mode=optVal)
 
 
-    if(btype == "brightnessSlider"):
+    if btype == "brightnessSlider":
       # scale 0-100 to ha brightness range
       brightness = int(scale(int(optVal),(0,100),(0,255)))
       self.api.get_entity(entity_id).call_service("turn_on", brightness=brightness)
       
-    if(btype == "colorTempSlider"):
+    if btype == "colorTempSlider":
       entity = self.api.get_entity(entity_id)
       #scale 0-100 from slider to color range of lamp
       color_val = scale(int(optVal), (0, 100), (entity.attributes.min_mireds, entity.attributes.max_mireds))
       self.api.get_entity(entity_id).call_service("turn_on", color_temp=color_val)
 
-    if(btype == "colorWheel"):
+    if btype == "colorWheel":
       self.api.log(optVal)
       optVal = optVal.split('|')
       color = pos_to_color(int(optVal[0]), int(optVal[1]))
       self.api.log(color)
       self.api.get_entity(entity_id).call_service("turn_on", rgb_color=color)
       
-    if(btype == "positionSlider"):
+    if btype == "positionSlider":
       pos = int(optVal)
       self.api.get_entity(entity_id).call_service("set_cover_position", position=pos)
 
-    if(btype == "volumeSlider"):
+    if btype == "volumeSlider":
       pos = int(optVal)
       # HA wants this value between 0 and 1 as float
       pos = pos/100
@@ -575,5 +572,5 @@ class NsPanelLovelaceUI:
 
   def send_message_page(self, id, heading, msg, b1, b2):
     self.send_mqtt_msg(f"pageType,popupNotify")
-    self.send_mqtt_msg(f"entityUpdateDetail,{id},{heading},65535,{b2},65535,{b2},65535,{msg},65535")
+    self.send_mqtt_msg(f"entityUpdateDetail,|{id}|{heading}|65535|{b1}|65535|{b2}|65535|{msg}|65535|0")
 
