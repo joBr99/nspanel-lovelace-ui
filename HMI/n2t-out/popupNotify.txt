@@ -31,7 +31,7 @@ Variable (string) strCommand
         ID            : 8
         Scope         : local
         Text          : 
-        Max. Text Size: 600
+        Max. Text Size: 1000
     
 Variable (string) entn
     Attributes
@@ -39,6 +39,12 @@ Variable (string) entn
         Scope         : local
         Text          : 
         Max. Text Size: 30
+    
+Variable (int32) vaOldSleepT
+    Attributes
+        ID   : 16
+        Scope: local
+        Value: 0
     
 Text tSend
     Attributes
@@ -271,6 +277,7 @@ Button b0
     
     Events
         Touch Press Event
+            sleepTimeout=vaOldSleepT.val
             //page open event
             // event,pageOpen,cardEntities,pageNumber
             // craft command
@@ -323,6 +330,7 @@ Button b2
     
     Events
         Touch Press Event
+            sleepTimeout=vaOldSleepT.val
             //craft command
             tSend.txt="event,buttonPress,D,D,"+entn.txt+",1,notifyAction,yes"
             //send calc crc
@@ -371,6 +379,7 @@ Button b1
     
     Events
         Touch Press Event
+            sleepTimeout=vaOldSleepT.val
             //craft command
             tSend.txt="event,buttonPress,D,D,"+entn.txt+",1,notifyAction,no"
             //send calc crc
@@ -493,6 +502,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"|",9
                                         covx tTmp.txt,sys0,0,0
                                         tText.pco=sys0
+                                        //preserve old sleepTimeout
+                                        vaOldSleepT.val=sleepTimeout
                                         // sleep timeout
                                         spstr strCommand.txt,tTmp.txt,"|",9
                                         covx tTmp.txt,sys0,0,0
@@ -513,7 +524,6 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,dimValue,0,0
-                                        dim=dimValue
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
@@ -523,6 +533,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
+                                        sleepTimeout=vaOldSleepT.val
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,",",1
