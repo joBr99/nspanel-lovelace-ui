@@ -17,7 +17,7 @@ cardMedia
 popupNotify
 	17   Component(s)
 	171  Line(s) of event code
-	113  Unique line(s) of event code
+	114  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	146  Line(s) of event code
@@ -63,4 +63,4 @@ Total
 	14   Page(s)
 	343  Component(s)
 	3172 Line(s) of event code
-	789  Unique line(s) of event code
+	790  Unique line(s) of event code
