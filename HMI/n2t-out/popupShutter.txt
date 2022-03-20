@@ -563,7 +563,7 @@ Timer tmSleep
                 {
                     screensaver.originPage.val=dp
                     sleepValue=0
-                    page cardEntities
+                    click b0,1
                 }
             }
         
