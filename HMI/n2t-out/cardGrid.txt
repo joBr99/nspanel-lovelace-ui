@@ -624,7 +624,7 @@ Button bEntity1
         Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -685,7 +685,7 @@ Button bEntity2
         Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -746,7 +746,7 @@ Button bEntity3
         Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -807,7 +807,7 @@ Button bEntity4
         Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -868,7 +868,7 @@ Button bEntity5
         Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -929,7 +929,7 @@ Button bEntity6
         Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
