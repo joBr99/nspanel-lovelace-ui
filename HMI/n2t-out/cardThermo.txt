@@ -1519,7 +1519,7 @@ Timer tmSerial
                                         {
                                             page pageStartup
                                         }
-                                        if(tId.txt=="pageNotify")
+                                        if(tId.txt=="popupNotify")
                                         {
                                             page popupNotify
                                         }
