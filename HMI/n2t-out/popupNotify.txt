@@ -557,6 +557,10 @@ Timer tmSerial
                                         {
                                             page cardMedia
                                         }
+                                        if(tId.txt=="cardThermo")
+                                        {
+                                            page cardThermo
+                                        }
                                         if(tId.txt=="pageStartup")
                                         {
                                             page pageStartup

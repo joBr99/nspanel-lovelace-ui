@@ -14,14 +14,10 @@ cardMedia
 	22   Component(s)
 	210  Line(s) of event code
 	116  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	146  Line(s) of event code
-	111  Unique line(s) of event code
 popupNotify
 	17   Component(s)
-	171  Line(s) of event code
-	114  Unique line(s) of event code
+	175  Line(s) of event code
+	116  Unique line(s) of event code
 pageSwipeTest
 	18   Component(s)
 	62   Line(s) of event code
@@ -34,6 +30,10 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	146  Line(s) of event code
+	111  Unique line(s) of event code
 popupShutter
 	19   Component(s)
 	194  Line(s) of event code
@@ -62,5 +62,5 @@ cardGrid
 Total
 	14   Page(s)
 	343  Component(s)
-	3172 Line(s) of event code
+	3176 Line(s) of event code
 	790  Unique line(s) of event code
