@@ -214,7 +214,7 @@ Text tText
         Horizontal Alignment                : left
         Vertical Alignment                  : top
         Input Type                          : character
-        Text                                : There's an update avalible for the tasmota      berry driver, do you want to start the update  now?                                                                      If you encounter issues after the update or      this message appears frequently, please           checkout the installation manual and repeat the installation steps for the tasmota berry driver. 
+        Text                                : 
         Max. Text Size                      : 500
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
