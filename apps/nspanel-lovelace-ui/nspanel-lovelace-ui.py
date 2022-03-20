@@ -295,7 +295,7 @@ class NsPanelLovelaceUI:
 
     self.api.log(f"Got state_callback from {entity}", level="DEBUG")
 
-    if page_type == "cardEntities":
+    if page_type IN ["cardEntities", "cardGrid"]:
       items = current_page_config["items"]
       if entity in items:
         self.api.log(f"State change on current page for {entity}", level="DEBUG")
