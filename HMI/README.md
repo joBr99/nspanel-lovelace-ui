@@ -115,7 +115,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupNotify Page
 
-`entityUpdateDetail,*tHeading*,*b1*,*b2*,*tText*`
+`entityUpdateDetail,*internalName*,*tHeading*,*b1*,*b2*,*tText*`
 
 ### cardThermo Page
 
@@ -173,9 +173,9 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupNotify Page
 
-`event,buttonPress,D,D,D,1,notifyAction,yes`
+`event,buttonPress,D,D,*internalName*,1,notifyAction,yes`
 
-`event,buttonPress,D,D,D,1,notifyAction,no`
+`event,buttonPress,D,D,*internalName*,1,notifyAction,no`
 
 ### cardThermo Page
 
