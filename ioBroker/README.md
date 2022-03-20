@@ -73,17 +73,19 @@ var config: Config = {
     timeFormat: "%H:%M",                                  // not used right now
     dateFormat: "%A, %d. %B %Y",                          // not used right now
     weatherEntity: "alias.0.Wetter",
-
+    defaultColor: RGB,                                    // Default color of all elements
+    gridPageOnColor: RGB,                                 // Default on color on grid page
+    gridPageOffColor: RGB,                                // Default off color on grid page
     temperatureUnit: "°C",                                // Unit to append on temperature sensors
     pages: [
         {
             "type": "cardEntities",                       // card type (cardEntities, cardThermo)
             "heading": "Testseite",                       // heading
             "items": [                                    // items array (up to 4 on cardEntities, 1 for cardThermo)
-                "alias.0.Rolladen_Eltern",                // device which must be configured in the device panel. Use only the folder for the device, not the set, get states ...
-                "alias.0.Erker",
-                "alias.0.Küche",
-                "alias.0.Wand"
+                <PageItem>{ id: "alias.0.Rolladen_Eltern" },                // device which must be configured in the device panel. Use only the folder for the device, not the set, get states ...
+                <PageItem>{ id: "alias.0.Erker" },
+                <PageItem>{ id: "alias.0.Küche", useColor: true },
+                <PageItem>{ id: "alias.0.Wand", useColor: true  }
 
             ]
         },
@@ -91,10 +93,10 @@ var config: Config = {
             "type": "cardEntities",
             "heading": "Strom",
             "items": [
-                "alias.0.Netz",
-                "alias.0.Hausverbrauch",
-                "alias.0.Pv",
-                "alias.0.Batterie"
+                <PageItem>{ id: "alias.0.Netz" },
+                <PageItem>{ id: "alias.0.Hausverbrauch" },
+                <PageItem>{ id: "alias.0.Pv" },
+                <PageItem>{ id: "alias.0.Batterie" }
 
             ]
         },
@@ -109,18 +111,29 @@ var config: Config = {
 };
 ```
 
+The pageItem element:
+```
+type PageItem = {
+    id: string,                             // the element in ioBroker devices 
+    icon: (string | undefined),             // the icon which should be displayed instead of the default detected. (not implemented)
+    onColor: (RGB | undefined),             // the color the item will get when active
+    offColor: (RGB | undefined),            // the color the item will get when inactive
+    useColor: (boolean | undefined)         // override colors, only Grid pages has colors enabled per default
+}
+```
+
+
 If you want you can create dedicated objects, so you don't need to declare them again. Then you can use tehm in the pages array and button pages.
 
 ```
-var button1Page: PageEntities =
+var button1Page: PageGrid =
 {
-    "type": "cardEntities",
-    "heading": "Knopf1",
+    "type": "cardGrid",
+    "heading": "Radio",
     "items": [
-        "alias.0.Schlafen",
-        "alias.0.Stern",
-        "delete",
-        "delete"
+        <PageItem>{ id: "alias.0.Radio.NJoy" },
+        <PageItem>{ id: "alias.0.Radio.Delta_Radio" },
+        <PageItem>{ id: "alias.0.Radio.NDR2" },
     ]
 };
 ```
@@ -134,11 +147,10 @@ pages: [
             "type": "cardEntities",
             "heading": "Strom",
             "items": [
-                "alias.0.Netz",
-                "alias.0.Hausverbrauch",
-                "alias.0.Pv",
-                "alias.0.Batterie"
-
+                <PageItem>{ id: "alias.0.Netz" },
+                <PageItem>{ id: "alias.0.Hausverbrauch" },
+                <PageItem>{ id: "alias.0.Pv" },
+                <PageItem>{ id: "alias.0.Batterie" }
             ]
         }]
 ```
