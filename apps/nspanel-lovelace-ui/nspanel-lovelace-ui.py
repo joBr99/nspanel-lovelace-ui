@@ -391,10 +391,12 @@ class NsPanelLovelaceUI:
     if item_type == "switch" or item_type == "input_boolean":
       switch_val = 1 if entity.state == "on" else 0
       icon_id = 4
-      if item_type == "input_boolean" and switch_val == 1:
-        icon_id = 6
-      else:
-        icon_id = 7
+      self.api.log("test_test: %s", item_type)
+      if item_type == "input_boolean":
+        if switch_val == 1:
+          icon_id = 6
+        else:
+          icon_id = 7
       
       return f",switch,{item},{icon_id},17299,{name},{switch_val}"
 
