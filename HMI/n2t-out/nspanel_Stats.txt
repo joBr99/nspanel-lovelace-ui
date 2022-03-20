@@ -16,8 +16,8 @@ cardMedia
 	116  Unique line(s) of event code
 popupNotify
 	16   Component(s)
-	164  Line(s) of event code
-	109  Unique line(s) of event code
+	167  Line(s) of event code
+	110  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	145  Line(s) of event code
@@ -62,5 +62,5 @@ cardThermo
 Total
 	14   Page(s)
 	342  Component(s)
-	3077 Line(s) of event code
-	774  Unique line(s) of event code
+	3080 Line(s) of event code
+	775  Unique line(s) of event code
