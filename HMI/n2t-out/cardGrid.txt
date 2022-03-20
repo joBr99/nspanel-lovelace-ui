@@ -636,6 +636,38 @@ Button bEntity1
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity1.txt
+            pageIcons.tTmp2.txt=entn1.txt
+            if(type1.txt=="shutter")
+            {
+                page popupShutter
+            }
+            if(type1.txt=="light")
+            {
+                page popupLight
+            }
+            // event,1,tHeading,tEntityName,1,up
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn1.txt+","
+            tSend.txt+="1,button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Button bEntity2
     Attributes
         ID                                  : 24
@@ -668,6 +700,38 @@ Button bEntity2
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity2.txt
+            pageIcons.tTmp2.txt=entn2.txt
+            if(type2.txt=="shutter")
+            {
+                page popupShutter
+            }
+            if(type2.txt=="light")
+            {
+                page popupLight
+            }
+            // event,1,tHeading,tEntityName,1,up
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn2.txt+","
+            tSend.txt+="1,button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Button bEntity3
     Attributes
         ID                                  : 26
@@ -700,6 +764,38 @@ Button bEntity3
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity3.txt
+            pageIcons.tTmp2.txt=entn3.txt
+            if(type3.txt=="shutter")
+            {
+                page popupShutter
+            }
+            if(type3.txt=="light")
+            {
+                page popupLight
+            }
+            // event,1,tHeading,tEntityName,1,up
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn3.txt+","
+            tSend.txt+="1,button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Button bEntity4
     Attributes
         ID                                  : 28
@@ -732,6 +828,38 @@ Button bEntity4
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity4.txt
+            pageIcons.tTmp2.txt=entn4.txt
+            if(type4.txt=="shutter")
+            {
+                page popupShutter
+            }
+            if(type4.txt=="light")
+            {
+                page popupLight
+            }
+            // event,1,tHeading,tEntityName,1,up
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn4.txt+","
+            tSend.txt+="1,button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Button bEntity5
     Attributes
         ID                                  : 31
@@ -764,6 +892,38 @@ Button bEntity5
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity5.txt
+            pageIcons.tTmp2.txt=entn5.txt
+            if(type5.txt=="shutter")
+            {
+                page popupShutter
+            }
+            if(type5.txt=="light")
+            {
+                page popupLight
+            }
+            // event,1,tHeading,tEntityName,1,up
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn5.txt+","
+            tSend.txt+="1,button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Button bEntity6
     Attributes
         ID                                  : 32
@@ -796,6 +956,38 @@ Button bEntity6
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity6.txt
+            pageIcons.tTmp2.txt=entn6.txt
+            if(type6.txt=="shutter")
+            {
+                page popupShutter
+            }
+            if(type6.txt=="light")
+            {
+                page popupLight
+            }
+            // event,1,tHeading,tEntityName,1,up
+            //craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,buttonPress,"+tTmp.txt+","
+            tSend.txt+=tHeading.txt+","
+            tSend.txt+=entn6.txt+","
+            tSend.txt+="1,button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Hotspot mSpecial
     Attributes
         ID                                  : 12
