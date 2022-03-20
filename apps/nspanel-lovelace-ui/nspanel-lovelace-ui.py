@@ -218,6 +218,8 @@ class NsPanelLovelaceUI:
     if(btype == "button"):
       if(entity_id.startswith('scene')):
         self.api.get_entity(entity_id).call_service("turn_on")
+      if(entity_id.startswith('light') or entity_id.startswith('switch')):
+        self.api.get_entity(entity_id).call_service("toggle")
       else:
         self.api.get_entity(entity_id).call_service("press")
 
