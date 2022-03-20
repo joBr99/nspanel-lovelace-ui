@@ -56,11 +56,11 @@ cardThermo
 	221  Unique line(s) of event code
 cardGrid
 	39   Component(s)
-	397  Line(s) of event code
-	219  Unique line(s) of event code
+	417  Line(s) of event code
+	224  Unique line(s) of event code
 
 Total
 	14   Page(s)
 	342  Component(s)
-	3085 Line(s) of event code
-	764  Unique line(s) of event code
+	3105 Line(s) of event code
+	769  Unique line(s) of event code
