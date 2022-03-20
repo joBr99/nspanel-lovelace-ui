@@ -27,7 +27,6 @@ Page cardEntities
             bauds=115200
             //debug stuff
             vis tTmp,0
-            vis nPageDisp,0
             vis tSend,0
             vis tInstruction,0
             vis tId,0
@@ -63,25 +62,6 @@ Page cardEntities
             vis tIcon4,0
             vis tEntity4,0
             vis bText4,0
-            //page open event
-            // event,pageOpen,cardEntities,pageNumber
-            // craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,pageOpen,"+tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-            //display current page from global var
-            nPageDisp.val=nPage
         
 Variable (string) strCommand
     Attributes
@@ -92,89 +72,59 @@ Variable (string) strCommand
     
 Variable (string) type1
     Attributes
-        ID            : 46
+        ID            : 45
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type2
     Attributes
-        ID            : 47
+        ID            : 46
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type3
     Attributes
-        ID            : 48
+        ID            : 47
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type4
     Attributes
-        ID            : 49
+        ID            : 48
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) entn1
     Attributes
-        ID            : 50
+        ID            : 49
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) entn2
     Attributes
-        ID            : 51
+        ID            : 50
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) entn3
     Attributes
-        ID            : 52
+        ID            : 51
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) entn4
     Attributes
-        ID            : 53
+        ID            : 52
         Scope         : local
         Text          : 
         Max. Text Size: 50
-    
-Number nPageDisp
-    Attributes
-        ID                                  : 35
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 409
-        y coordinate                        : 0
-        Width                               : 42
-        Height                              : 24
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Value                               : 0
-        Significant digits shown            : all
-        Format                              : decimal
-        Word wrap                           : enabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
     
 Text tHeading
     Attributes
@@ -603,7 +553,7 @@ Button bDown1
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -657,7 +607,7 @@ Button bUp1
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -711,7 +661,7 @@ Button bStop1
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -765,7 +715,7 @@ Button bStop2
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -819,7 +769,7 @@ Button bDown2
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -873,7 +823,7 @@ Button bUp2
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -927,7 +877,7 @@ Button bStop3
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -981,7 +931,7 @@ Button bDown3
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -1035,7 +985,7 @@ Button bUp3
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -1089,7 +1039,7 @@ Button bStop4
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -1143,7 +1093,7 @@ Button bDown4
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -1197,7 +1147,7 @@ Button bUp4
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -1251,7 +1201,7 @@ Button bPrev
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -1266,7 +1216,6 @@ Button bPrev
     Events
         Touch Press Event
             nPage=nPage-1
-            nPageDisp.val=nPage
             //page open event
             // event,pageOpen,cardEntities,pageNumber
             // craft command
@@ -1305,7 +1254,7 @@ Button bNext
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -1320,7 +1269,6 @@ Button bNext
     Events
         Touch Press Event
             nPage=nPage+1
-            nPageDisp.val=nPage
             //page open event
             // event,pageOpen,cardEntities,pageNumber
             // craft command
@@ -1341,7 +1289,7 @@ Button bNext
         
 Button bText1
     Attributes
-        ID                                  : 38
+        ID                                  : 37
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1395,7 +1343,7 @@ Button bText1
         
 Button bText2
     Attributes
-        ID                                  : 39
+        ID                                  : 38
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1449,7 +1397,7 @@ Button bText2
         
 Button bText3
     Attributes
-        ID                                  : 40
+        ID                                  : 39
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1503,7 +1451,7 @@ Button bText3
         
 Button bText4
     Attributes
-        ID                                  : 41
+        ID                                  : 40
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1765,7 +1713,7 @@ Dual-state Button btOnOff4
         
 Hotspot mSpecial
     Attributes
-        ID                                  : 36
+        ID                                  : 35
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1791,7 +1739,7 @@ Hotspot mSpecial
         
 Hotspot m2
     Attributes
-        ID                                  : 42
+        ID                                  : 41
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1822,7 +1770,7 @@ Hotspot m2
         
 Hotspot m1
     Attributes
-        ID                                  : 43
+        ID                                  : 42
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1853,7 +1801,7 @@ Hotspot m1
         
 Hotspot m0
     Attributes
-        ID                                  : 44
+        ID                                  : 43
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1884,7 +1832,7 @@ Hotspot m0
         
 Hotspot m3
     Attributes
-        ID                                  : 45
+        ID                                  : 44
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2398,7 +2346,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 37
+        ID         : 36
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -2418,7 +2366,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 54
+        ID   : 53
         Scope: local
         Value: 0
     

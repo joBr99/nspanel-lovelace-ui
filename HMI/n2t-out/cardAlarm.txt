@@ -27,25 +27,6 @@ Page cardAlarm
             vis tTmp,0
             vis tId,0
             //vis nPageDisp,0
-            //page open event
-            // event,pageOpen,cardEntities,pageNumber
-            // craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,pageOpen,"+tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-            //display current page from global var
-            nPageDisp.val=nPage
         
 Variable (string) strCommand
     Attributes
@@ -278,7 +259,7 @@ Button bNext
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -332,7 +313,7 @@ Button bPrev
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -388,7 +369,7 @@ Button b0
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -426,7 +407,7 @@ Button b1
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -464,7 +445,7 @@ Button b2
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -502,7 +483,7 @@ Button b3
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -540,7 +521,7 @@ Button b4
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -578,7 +559,7 @@ Button b5
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -616,7 +597,7 @@ Button b6
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -654,7 +635,7 @@ Button b7
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -692,7 +673,7 @@ Button b8
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -730,7 +711,7 @@ Button b9
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -768,7 +749,7 @@ Button b10
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -806,7 +787,7 @@ Button b11
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
@@ -840,7 +821,7 @@ Button b12
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 1024
+        Back. Color (Pressed)               : 14823
         Font Color (Unpressed)              : 1374
         Font Color (Pressed)                : 65535
         Horizontal Alignment                : center
