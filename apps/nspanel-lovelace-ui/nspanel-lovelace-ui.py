@@ -77,6 +77,7 @@ class Updater:
     self.nsplui.mqtt.mqtt_publish(self.nsplui.config["panelSendTopic"].replace("CustomSend", "UpdateDriverVersion"), self.desired_tasmota_driver_url)
   def update_panel_driver(self):
     self.nsplui.mqtt.mqtt_publish(self.nsplui.config["panelSendTopic"].replace("CustomSend", "FlashNextion"), self.desired_display_firmware_url)
+
 class NsPanelLovelaceUI:
   def __init__(self, api, config):
     self.api = api
@@ -92,10 +93,10 @@ class NsPanelLovelaceUI:
     self.mqtt.mqtt_subscribe(topic=self.config["panelRecvTopic"])
     self.mqtt.listen_event(self.handle_mqtt_incoming_message, "MQTT_MESSAGE", topic=self.config["panelRecvTopic"], namespace='mqtt')
 
-    if "update_mode" in self.config:
-      update_mode = self.config["update_mode"]
+    if "updateMode" in self.config:
+      update_mode = self.config["updateMode"]
     else:
-      update_mode = "manual"
+      update_mode = "auto-notify"
     self.updater = Updater(self, update_mode)
 
 
