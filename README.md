@@ -192,8 +192,6 @@ See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more 
 
 Upload the nspanel.tft from the lastest release to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console. (Development Version: [tft file from HMI folder](HMI/nspanel.tft))
 
-**Webserver needs to support HTTP Range Header Requests, python2/3 http server doesn't work**
-
 **Webserver must be HTTP, HTTPS is not supported, due to limitations of berry lang on tasmota**
 
 `FlashNextion http://ip-address-of-your-homeassistant:8123/local/nspanel.tft`
@@ -346,8 +344,7 @@ Since release 1.1 you can update the berry driver directly from the Tasmota Cons
 ### Flashing of the Display Firmware with FlashNextion doesn't work
 
 1. Make sure to use the [tasmota32-nspanel.bin](https://github.com/tasmota/install/raw/main/firmware/unofficial/tasmota32-nspanel.bin) Tasmota build.
-2. Make sure to use an WebServer which supports http range requests like HomeAssistant, apache2 or nginx for exmaple.
-3. Make sure to use HTTP and **not HTTPS**
+2. Make sure to use HTTP and **not HTTPS**
 
 ### My flashing doesn't start at all
 
