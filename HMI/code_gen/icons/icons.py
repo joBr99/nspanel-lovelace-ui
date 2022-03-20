@@ -68,7 +68,7 @@ with open(os.path.join(__location__, "../../../apps/nspanel-lovelace-ui", "icon_
         f.write(f"    '{val}': {idx},\n")
     f.write("}\n")
     f.write("""
-def get_icon(ma_name):
+def get_icon_id(ma_name):
     if ma_name in icons:
         return icons[ma_name]
     else:

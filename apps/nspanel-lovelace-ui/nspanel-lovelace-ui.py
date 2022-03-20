@@ -1,7 +1,8 @@
 import json
 import datetime
 import hassapi as hass
-from color import pos_to_color, rgb_dec565, rgb_brightness
+from helper import scale, pos_to_color, rgb_dec565, rgb_brightness
+from icon_mapper import get_icon_id
 
 # check Babel
 import importlib
@@ -68,6 +69,10 @@ class NsPanelLovelaceUI:
     # register callbacks
     self.register_callbacks()
 
+  def send_mqtt_msg(self,msg):
+    self.api.log("Send Message from Tasmota: %s", msg) #, level="DEBUG"
+    self.mqtt.mqtt_publish(self.config["panelSendTopic"], msg)
+
   def handle_mqtt_incoming_message(self, event_name, data, kwargs):
     # Parse Json Message from Tasmota and strip out message from nextion display
     data = json.loads(data["payload"])
@@ -133,10 +138,6 @@ class NsPanelLovelaceUI:
       if msg[1] == "screensaverOpen":
         self.update_screensaver_weather("")
 
-  def send_mqtt_msg(self,msg):
-    self.api.log("Send Message from Tasmota: %s", msg) #, level="DEBUG"
-    self.mqtt.mqtt_publish(self.config["panelSendTopic"], msg)
-
   def update_time(self, kwargs):
     time = datetime.datetime.now().strftime(self.config["timeFormat"])
     self.send_mqtt_msg(f"time,{time}")
@@ -166,22 +167,23 @@ class NsPanelLovelaceUI:
     we = self.api.get_entity(self.config["weatherEntity"])
     unit = "°C"
 
+    # this maps possible states from ha to material design icon names
     weathericons = {
-      'clear-night': 17,
-      'cloudy': 12,
-      'exceptional': 11,
-      'fog': 13,
-      'hail': 14,
-      'lightning': 15,
-      'lightning-rainy': 16,
-      'partlycloudy': 18,
-      'pouring': 19,
-      'rainy': 20,
-      'snowy': 21,
-      'snowy-rainy': 22,
-      'sunny': 23,
-      'windy': 24,
-      'windy-variant': 25
+      'clear-night': 'weather-night',
+      'cloudy': 'weather-cloudy',
+      'exceptional': 'alert-circle-outline',
+      'fog': 'weather-fog',
+      'hail': 'weather-hail',
+      'lightning': 'weather-lightning',
+      'lightning-rainy': 'weather-lightning-rainy',
+      'partlycloudy': 'weather-partly-cloudy',
+      'pouring': 'weather-pouring',
+      'rainy': 'weather-rainy',
+      'snowy': 'weather-snowy',
+      'snowy-rainy': 'weather-snowy-rainy',
+      'sunny': 'weather-sunny',
+      'windy': 'weather-windy',
+      'windy-variant': 'weather-windy-variant'
     }
 
     o1 = we.attributes.forecast[0]['datetime']
@@ -194,13 +196,7 @@ class NsPanelLovelaceUI:
     o2 = babel.dates.format_date(o2, "E", locale=self.config["locale"])
     i2 = weathericons[we.attributes.forecast[1]['condition']]
     u2 = we.attributes.forecast[1]['temperature']
-    self.send_mqtt_msg(f"weatherUpdate,?{weathericons[we.state]}?{we.attributes.temperature}{unit}?{26}?{we.attributes.humidity} %?{o1}?{i1}?{u1}?{o2}?{i2}?{u2}")
-
-  def scale(self, val, src, dst):
-    """
-    Scale the given value from the scale of src to the scale of dst.
-    """
-    return ((val - src[0]) / (src[1]-src[0])) * (dst[1]-dst[0]) + dst[0]
+    self.send_mqtt_msg(f"weatherUpdate,?{get_icon_id(weathericons[we.state])}?{we.attributes.temperature}{unit}?{26}?{we.attributes.humidity} %?{o1}?{i1}?{u1}?{o2}?{i2}?{u2}")
 
   def handle_button_press(self, entity_id, btype, optVal=None):
     if(btype == "OnOff"):
@@ -236,13 +232,13 @@ class NsPanelLovelaceUI:
 
     if(btype == "brightnessSlider"):
       # scale 0-100 to ha brightness range
-      brightness = int(self.scale(int(optVal),(0,100),(0,255)))
+      brightness = int(scale(int(optVal),(0,100),(0,255)))
       self.api.get_entity(entity_id).call_service("turn_on", brightness=brightness)
       
     if(btype == "colorTempSlider"):
       entity = self.api.get_entity(entity_id)
       #scale 0-100 from slider to color range of lamp
-      color_val = self.scale(int(optVal), (0, 100), (entity.attributes.min_mireds, entity.attributes.max_mireds))
+      color_val = scale(int(optVal), (0, 100), (entity.attributes.min_mireds, entity.attributes.max_mireds))
       self.api.get_entity(entity_id).call_service("turn_on", color_temp=color_val)
 
     if(btype == "colorWheel"):
@@ -550,13 +546,13 @@ class NsPanelLovelaceUI:
       # scale 0-255 brightness from ha to 0-100
       if entity.state == "on":
         if "brightness" in entity.attributes:
-          brightness = int(self.scale(entity.attributes.brightness,(0,255),(0,100)))
+          brightness = int(scale(entity.attributes.brightness,(0,255),(0,100)))
         else:
           brightness = "disable"
         if "color_temp" in entity.attributes.supported_color_modes:
           if "color_temp" in entity.attributes:
             # scale ha color temp range to 0-100
-            color_temp = int(self.scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100)))
+            color_temp = int(scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100)))
           else:
             color_temp = "unknown"
         else:
