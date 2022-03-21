@@ -99,7 +99,6 @@ class NsPanelLovelaceUI:
       update_mode = "auto-notify"
     self.updater = Updater(self, update_mode)
 
-
     # Request Tasmota Driver Version
     self.mqtt.mqtt_publish(self.config["panelSendTopic"].replace("CustomSend", "GetDriverVersion"), "x")
 
@@ -368,13 +367,27 @@ class NsPanelLovelaceUI:
       pos = pos/100
       self.api.get_entity(entity_id).call_service("volume_set", volume_level=pos)
 
-  def check_items(self):
+  def get_all_configured_items(self, pages):
     items = []
-    for page in self.config["pages"]:
+    for page in pages:
       if "item" in page:
         items.append(page["item"])
       if "items" in page:
         items.extend(page["items"])
+
+    # remove all dicts from list
+    cleaned_list = []
+    for item in items:
+      # in case item is a dict, grab the key and replace it
+      if type(item) is dict:
+        cleaned_list.append(next(iter(item)))
+      else:
+        cleaned_list.append(item)
+
+    return cleaned_list
+
+  def check_items(self):
+    items = self.get_all_configured_items(self.config["pages"])
     
     for item in items:
       # in case item is a dict, grab the key and use it as item name
@@ -387,12 +400,7 @@ class NsPanelLovelaceUI:
         self.api.error("The following item does not exist in Home Assistant, configuration error: %s", item)
 
   def register_callbacks(self):
-    items = []
-    for page in self.config["pages"]:
-      if "item" in page:
-        items.append(page["item"])
-      if "items" in page:
-        items.extend(page["items"])
+    items = self.get_all_configured_items(self.config["pages"])
     
     for item in items:
       if not self.api.entity_exists(item):
