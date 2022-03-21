@@ -1,101 +1,45 @@
-type RGB = {
-    red: number,
-    green: number,
-    blue: number
-};
 
+const Months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+const Days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
 const Red: RGB = { red: 255, green: 0, blue: 0 };
 const White: RGB = { red: 255, green: 255, blue: 255 };
-const Blue: RGB = { red: 68, green: 115, blue: 158 };
+const Off: RGB = { red: 68, green: 115, blue: 158 };
+const On: RGB = { red: 253, green: 216, blue: 53 };
+const BatteryFull: RGB = { red: 96, green: 176, blue: 62 }
+const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
 
-type Payload = {
-    payload: string;
-};
-
-type Page = {
-    type: string,
-    heading: string
-};
-
-interface PageEntities extends Page {
-    type: "cardEntities",
-    items: PageItem[]
-};
-interface PageGrid extends Page {
-    type: "cardGrid",
-    items: PageItem[]
-};
-
-interface PageThermo extends Page {
-    type: "cardThermo",
-    item: PageItem
-};
-type Config = {
-    panelRecvTopic: string,
-    panelSendTopic: string,
-    timeoutScreensaver: number,
-    dimmode: number,
-    //brightnessScreensaver:
-    locale: string,
-    timeFormat: string,
-    dateFormat: string,
-    weatherEntity: string | null,
-    temperatureUnit: string,
-    leftEntity: string,
-    leftEntityIcon: number,
-    leftEntityText: string,
-    leftEntityUnitText: string | null,
-    rightEntity: string,
-    rightEntityIcon: number,
-    rightEntityText: string,
-    rightEntityUnitText: string | null,
-    defaultColor: RGB,
-    gridPageOnColor: RGB,
-    gridPageOffColor: RGB,
-    pages: (PageThermo | PageEntities | PageGrid)[],
-    button1Page: (PageThermo | PageEntities | PageGrid | null),
-    button2Page: (PageThermo | PageEntities | PageGrid | null),
-};
-
-type PageItem = {
-    id: string,
-    icon: (string | undefined),
-    onColor: (RGB | undefined),
-    offColor: (RGB | undefined),
-    useColor: (boolean | undefined)
-}
-var subscriptions: any = {};
-
-var pageId = 0;
-
-var page1: PageEntities =
+var Wohnen: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Haus",
+    "useColor": true,
     "items": [
-        <PageItem>{ id: "alias.0.Rolladen_Eltern" },
-        <PageItem>{ id: "alias.0.Erker" },
-        <PageItem>{ id: "alias.0.Küche", useColor: true },
-        <PageItem>{ id: "alias.0.Wand", useColor: true  }
+        <PageItem>{ id: "alias.0.Stern"},
+        <PageItem>{ id: "alias.0.Erker"},
+        <PageItem>{ id: "alias.0.Küche", interpolateColor: true },
+        <PageItem>{ id: "alias.0.Wand" }
     ]
 };
 
-var page2: PageEntities =
+var Strom: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Strom",
+    "useColor": true,
     "items": [
-        <PageItem>{ id: "alias.0.Netz" },
-        <PageItem>{ id: "alias.0.Hausverbrauch" },
-        <PageItem>{ id: "alias.0.Pv" },
-        <PageItem>{ id: "alias.0.Batterie" }
+        <PageItem>{ id: "alias.0.Netz", icon: 4, interpolateColor: true, offColor: BatteryFull, onColor: Red , minValue: -1000, maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Hausverbrauch", icon: 4, interpolateColor: true, offColor: BatteryFull, onColor: Red , maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Pv", icon: 4, interpolateColor: true, offColor: Off, onColor: BatteryFull , maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Batterie", icon: 34, interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
     ]
 };
+
 
 var button1Page: PageGrid =
 {
     "type": "cardGrid",
     "heading": "Radio",
+    "useColor": true,
     "items": [
         <PageItem>{ id: "alias.0.Radio.NJoy" },
         <PageItem>{ id: "alias.0.Radio.Delta_Radio" },
@@ -108,13 +52,14 @@ var button2Page: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Knopf2",
+    "useColor": true,
     "items": [
         <PageItem>{ id: "alias.0.Schlafen" },
         <PageItem>{ id: "alias.0.Stern" }
     ]
 };
 
-var config: Config = {
+export const config: Config = {
     panelRecvTopic: "mqtt.0.tele.WzDisplay.RESULT",
     panelSendTopic: "mqtt.0.cmnd.WzDisplay.CustomSend",
     leftEntity: "alias.0.Batterie.ACTUAL",
@@ -131,20 +76,27 @@ var config: Config = {
     timeFormat: "%H:%M",
     dateFormat: "%A, %d. %B %Y",
     weatherEntity: "alias.0.Wetter",
-    gridPageOffColor: Blue,
-    gridPageOnColor: White,
-    defaultColor: Blue,
+    defaultOffColor: Off,
+    defaultOnColor: On,
+    defaultColor: Off,
     temperatureUnit: "°C",
-    pages: [page1, page2,
+    pages: [Wohnen, Strom,
         {
             "type": "cardThermo",
             "heading": "Thermostat",
-            "item": <PageItem>{ id: "alias.0.WzNsPanel" }
+            "useColor": true,
+            "items": [<PageItem>{ id: "alias.0.WzNsPanel" }]
         }
     ],
     button1Page: button1Page,
     button2Page: button2Page
 };
+
+
+
+var subscriptions: any = {};
+
+var pageId = 0;
 
 schedule("* * * * *", function () {
     SendTime();
@@ -152,8 +104,6 @@ schedule("* * * * *", function () {
 schedule("0 * * * *", function () {
     SendDate();
 });
-
-
 
 
 // Only monitor the extra nodes if one or both are present
@@ -177,7 +127,9 @@ on({ id: config.panelRecvTopic }, function (obj) {
         var split = json.CustomRecv.split(",");
         if (split[1] == "pageOpenDetail") {
             UnsubscribeWatcher();
-            SendToPanel(GenerateDetailPage(split[2], split[3]));
+            let pageItem = config.pages[pageId].items.find(e => e.id === split[3]);
+            if (pageItem !== undefined)
+                SendToPanel(GenerateDetailPage(split[2], pageItem));
         }
         else {
             HandleMessage(split[0], split[1], parseInt(split[2]), split);
@@ -186,7 +138,6 @@ on({ id: config.panelRecvTopic }, function (obj) {
 });
 
 function SendToPanel(val: Payload | Payload[]): void {
-
     if (Array.isArray(val)) {
         val.forEach(function (id, i) {
             setState(config.panelSendTopic, id.payload);
@@ -225,7 +176,6 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
 }
 
 function GeneratePage(page: Page): void {
-
     switch (page.type) {
         case "cardEntities":
             SendToPanel(GenerateEntitiesPage(<PageEntities>page));
@@ -250,18 +200,7 @@ function HandleHardwareButton(method: string): void {
     else {
         return;
     }
-    log("button1");
     GeneratePage(page);
-
-    //SendToPanel({ payload: "wake" });
-    // switch (page.type) {
-    //     case "cardEntities":
-    //         SendToPanel(GenerateEntitiesPage(page));
-    //         break;
-    //     case "cardThermo":
-    //         SendToPanel(GenerateThermoPage(0, page));
-    //         break;
-    // }
 }
 
 function HandleStartupProcess(): void {
@@ -272,16 +211,13 @@ function HandleStartupProcess(): void {
 }
 
 function SendDate(): void {
-    var months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-    var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
     var d = new Date();
-    var day = days[d.getDay()];
+    var day = Days[d.getDay()];
     var date = d.getDate();
-    var month = months[d.getMonth()];
+    var month = Months[d.getMonth()];
     var year = d.getFullYear();
     var _sendDate = "date,?" + day + " " + date + " " + month + " " + year;
     SendToPanel(<Payload>{ payload: _sendDate });
-
 }
 
 function SendTime(): void {
@@ -301,14 +237,14 @@ function SendTime(): void {
 function GenerateEntitiesPage(page: PageEntities): Payload[] {
     var out_msgs: Array<Payload> = [];
     out_msgs = [{ payload: "pageType,cardEntities" }, { payload: "entityUpdHeading," + page.heading }]
-    out_msgs.push({ payload: GeneratePageElements(page.items, 4) });
+    out_msgs.push({ payload: GeneratePageElements(page.items, 4,page.useColor) });
     return out_msgs
 }
 
 function GenerateGridPage(page: PageGrid): Payload[] {
     var out_msgs: Array<Payload> = [];
     out_msgs = [{ payload: "pageType,cardGrid" }, { payload: "entityUpdHeading," + page.heading }]
-    out_msgs.push({ payload: GeneratePageElements(page.items, 6, true) });
+    out_msgs.push({ payload: GeneratePageElements(page.items, 6, page.useColor) });
     return out_msgs
 }
 
@@ -346,23 +282,24 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
             val = getState(pageItem.id + ".SET").val;
             RegisterEntityWatcher(pageItem.id + ".SET", pageItem.id, placeId);
         }
-        var iconColor = rgb_dec565(useColors ? config.gridPageOffColor : config.defaultColor);
+        var iconColor = rgb_dec565(config.defaultColor);
+
         switch (o.common.role) {
             case "light":
                 type = "light"
-                iconId = 1
+                iconId = pageItem.icon !== undefined ? pageItem.icon : 1;
                 var optVal = "0"
 
                 if (val === true || val === "true") {
                     optVal = "1"
-                    iconColor = rgb_dec565(useColors ? config.gridPageOnColor : config.defaultColor);
+                    iconColor = GetIconColor(pageItem, true, useColors);
                 }
 
-                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + "," + optVal
+                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + "," + optVal;
 
             case "dimmer":
                 type = "light"
-                iconId = 1
+                iconId = pageItem.icon !== undefined ? pageItem.icon : 1;
                 var optVal = "0"
                 if (existsState(pageItem.id + ".ON_ACTUAL")) {
                     val = getState(pageItem.id + ".ON_ACTUAL").val;
@@ -374,61 +311,77 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 }
                 if (val === true || val === "true") {
                     optVal = "1"
-                    if ((pageItem.useColor || useColors) && existsState(pageItem.id + ".ACTUAL")) {
-
-                        let iconColorRgb = 
-                            Interpolate(
-                                pageItem.onColor !== undefined ? pageItem.onColor : config.gridPageOffColor,
-                                pageItem.offColor !== undefined ? pageItem.offColor : config.gridPageOnColor,
-                                (getState(pageItem.id + ".ACTUAL").val / 100)
-                                );
-                        iconColor = rgb_dec565(iconColorRgb);
-                    } 
+                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".ACTUAL") ? getState(pageItem.id + ".ACTUAL").val : true, useColors);
                 }
 
-                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + "," + optVal
+                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + "," + optVal;
 
             case "blind":
                 type = "shutter"
-                iconId = 0
+                iconId = pageItem.icon !== undefined ? pageItem.icon : 0;
+                iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".ACTUAL") ? getState(pageItem.id + ".ACTUAL").val : true, useColors);
                 return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + ","
 
             case "info":
             case "value.temperature":
-                type = "text"
-
+                type = "text";
+                iconId = pageItem.icon !== undefined ? pageItem.icon : 11;
+                let unit = "";
                 var optVal = "0"
                 if (existsState(pageItem.id + ".ON_ACTUAL")) {
-                    optVal = getState(pageItem.id + ".ON_ACTUAL").val + " " + GetUnitOfMeasurement(pageItem.id + ".ON_ACTUAL");
+                    optVal = getState(pageItem.id + ".ON_ACTUAL").val;
+                    unit = GetUnitOfMeasurement(pageItem.id + ".ON_ACTUAL");
                     RegisterEntityWatcher(pageItem.id + ".ON_ACTUAL", pageItem.id, placeId);
                 }
                 else if (existsState(pageItem.id + ".ACTUAL")) {
                     optVal = getState(pageItem.id + ".ACTUAL").val;
+                    unit = GetUnitOfMeasurement(pageItem.id + ".ACTUAL");
                     RegisterEntityWatcher(pageItem.id + ".ACTUAL", pageItem.id, placeId);
                 }
 
                 if (o.common.role == "value.temperature") {
-                    iconId = 2;
-                    optVal += config.temperatureUnit;
+                    iconId = pageItem.icon !== undefined ? pageItem.icon : 2;
                 }
-                else {
-                    optVal += GetUnitOfMeasurement(pageItem.id + ".ACTUAL");
-                }
-                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + "," + optVal;
+
+                iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
+
+                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + "," + optVal + " " + unit;
 
             case "button":
                 type = "button";
-                iconId = 3;
-                var optVal = "PRESS";
-                return "," + type + "," + pageItem.id + "," + iconId + "," + + iconColor + "," + name + "," + optVal;
+                iconId = pageItem.icon !== undefined ? pageItem.icon : 3;
+                let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : "PRESS";
+                iconColor = GetIconColor(pageItem, true, useColors);
+                return "," + type + "," + pageItem.id + "," + iconId + "," + + iconColor + "," + name + "," + buttonText;
 
             default:
-                return ",delete,,,,"
-
+                return ",delete,,,,";
         }
     }
 
     return ",delete,,,,,"
+}
+
+function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: boolean): number {
+    // dimmer
+    if ((pageItem.useColor || useColors) && pageItem.interpolateColor && typeof (value) === "number") {
+        let maxValue = pageItem.maxValue !== undefined ? pageItem.maxValue : 100;
+        let minValue = pageItem.minValue !== undefined ? pageItem.minValue : 0;
+        value = value > maxValue ? maxValue : value;
+        value = value < minValue ? minValue : value;
+        return rgb_dec565(
+            Interpolate(
+                pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor,
+                pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor,
+                scale(value, minValue, maxValue, 0, 1)
+            ));
+    }
+
+    if ((pageItem.useColor || useColors) && ((typeof (value) === "boolean" && value) || value > (pageItem.minValue !== undefined ? pageItem.minValue : 0))) {
+        return rgb_dec565(pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor)
+    }
+
+    return rgb_dec565(pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor);
 }
 
 function RegisterEntityWatcher(id: string, entityId: string, placeId: number): void {
@@ -441,12 +394,12 @@ function RegisterEntityWatcher(id: string, entityId: string, placeId: number): v
 }
 
 
-function RegisterDetailEntityWatcher(id: string, entityId: string, type: string): void {
+function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: string): void {
     if (subscriptions.hasOwnProperty(id)) {
         return;
     }
     subscriptions[id] = (on({ id: id, change: 'any' }, function () {
-        SendToPanel(GenerateDetailPage(type, entityId));
+        SendToPanel(GenerateDetailPage(type, pageItem));
     }))
 }
 
@@ -466,7 +419,7 @@ function GetUnitOfMeasurement(id: string): string {
 }
 
 function GenerateThermoPage(page: PageThermo): Payload[] {
-    var id = page.item.id
+    var id = page.items[0].id
     var out_msgs: Array<Payload> = [];
     out_msgs.push({ payload: "pageType,cardThermo" });
 
@@ -571,56 +524,63 @@ function HandleButtonEvent(words): void {
     }
 }
 
-function GenerateDetailPage(type: string, entityId: string): Payload[] {
+function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
     var out_msgs: Array<Payload> = [];
-    let id = entityId
+    let id = pageItem.id
     if (existsObject(id)) {
         var o = getObject(id)
-        var val = null;
+        var val: (boolean | number) = 0;
         let icon = 1;
+        var iconColor = rgb_dec565(config.defaultColor);
         if (type == "popupLight") {
             let switchVal = "0"
             if (o.common.role == "light") {
                 if (existsState(id + ".GET")) {
                     val = getState(id + ".GET").val;
-                    RegisterDetailEntityWatcher(id + ".GET", id, type);
+                    RegisterDetailEntityWatcher(id + ".GET", pageItem, type);
                 }
                 else if (existsState(id + ".SET")) {
                     val = getState(id + ".SET").val;
-                    RegisterDetailEntityWatcher(id + ".SET", id, type);
+                    RegisterDetailEntityWatcher(id + ".SET", pageItem, type);
                 }
 
-                if (val)
-                    switchVal = "1"
+                if (val) {
+                    switchVal = "1";
+                    iconColor = GetIconColor(pageItem, true, false);
+                }
 
-                out_msgs.push({ payload: "entityUpdateDetail," + icon + "," + "17299," + switchVal + ",disable,disable,disable" })
+                out_msgs.push({ payload: "entityUpdateDetail," + icon + "," + + iconColor + "," + switchVal + ",disable,disable,disable" })
             }
 
             if (o.common.role == "dimmer") {
                 if (existsState(id + ".ON_ACTUAL")) {
                     val = getState(id + ".ON_ACTUAL").val;
-                    RegisterDetailEntityWatcher(id + ".ON_ACTUAL", id, type);
+                    RegisterDetailEntityWatcher(id + ".ON_ACTUAL", pageItem, type);
                 }
 
                 else if (existsState(id + ".ON_SET")) {
                     val = getState(id + ".ON_SET").val;
-                    RegisterDetailEntityWatcher(id + ".ON_SET", id, type);
+                    RegisterDetailEntityWatcher(id + ".ON_SET", pageItem, type);
                 }
 
-                if (val === true || val === "true")
+                if (val === true) {
+                    var iconColor = GetIconColor(pageItem, val, false);
                     switchVal = "1"
+                }
                 let brightness = 0;
                 if (existsState(id + ".ACTUAL")) {
                     brightness = Math.trunc(scale(getState(id + ".ACTUAL").val, 0, 100, 0, 100))
-                    RegisterDetailEntityWatcher(id + ".ACTUAL", id, type);
+                    iconColor = GetIconColor(pageItem, brightness, false);
+                    RegisterDetailEntityWatcher(id + ".ACTUAL", pageItem, type);
                 }
-                let colortemp = "disable"
+                let colorTemp = "disable"
+                let colorMode = "disable"
                 //let attr_support_color = attr.supported_color_modes
                 //if (attr_support_color.includes("color_temp"))
                 // colortemp = Math.trunc(scale(attr.color_temp, attr.min_mireds, attr.max_mireds, 0, 100))
 
-                out_msgs.push({ payload: "entityUpdateDetail," + icon + "," + "17299," + switchVal + "," + brightness + "," + colortemp })
+                out_msgs.push({ payload: "entityUpdateDetail," + icon + "," + iconColor + "," + switchVal + "," + brightness + "," + colorTemp + "," + colorMode })
             }
 
         }
@@ -763,7 +723,7 @@ function GetAccuWeatherIcon(icon: number): number {
 
 function GetBlendedColor(percentage: number): RGB {
     if (percentage < 50)
-        return Interpolate(config.gridPageOffColor, config.gridPageOnColor, percentage / 50.0);
+        return Interpolate(config.defaultOffColor, config.defaultOnColor, percentage / 50.0);
     return Interpolate(Red, White, (percentage - 50) / 50.0);
 }
 
@@ -779,5 +739,76 @@ function InterpolateNum(d1: number, d2: number, fraction: number): number {
 }
 
 function rgb_dec565(rgb: RGB): number {
-    return ((Math.floor(rgb.red / 255 * 31) << 11) | (Math.floor(rgb.green / 255 * 63) << 5) | (Math.floor(rgb.blue / 255 * 31)))
+    return ((Math.floor(rgb.red / 255 * 31) << 11) | (Math.floor(rgb.green / 255 * 63) << 5) | (Math.floor(rgb.blue / 255 * 31)));
 }
+
+type RGB = {
+    red: number,
+    green: number,
+    blue: number
+};
+
+type Payload = {
+    payload: string;
+};
+
+type Page = {
+    type: string,
+    heading: string,
+    items: PageItem[],
+    useColor: boolean
+};
+
+interface PageEntities extends Page {
+    type: "cardEntities",
+    items: PageItem[],
+
+};
+interface PageGrid extends Page {
+    type: "cardGrid",
+    items: PageItem[],
+};
+
+interface PageThermo extends Page {
+    type: "cardThermo",
+    items: PageItem[],
+};
+
+type PageItem = {
+    id: string,
+    icon: (number | undefined),
+    onColor: (RGB | undefined),
+    offColor: (RGB | undefined),
+    useColor: (boolean | undefined),
+    interpolateColor: (boolean | undefined),
+    minValue: (number | undefined),
+    maxValue: (number | undefined),
+    buttonText: (string | undefined)
+}
+
+type Config = {
+    panelRecvTopic: string,
+    panelSendTopic: string,
+    timeoutScreensaver: number,
+    dimmode: number,
+    //brightnessScreensaver:
+    locale: string,
+    timeFormat: string,
+    dateFormat: string,
+    weatherEntity: string | null,
+    temperatureUnit: string,
+    leftEntity: string,
+    leftEntityIcon: number,
+    leftEntityText: string,
+    leftEntityUnitText: string | null,
+    rightEntity: string,
+    rightEntityIcon: number,
+    rightEntityText: string,
+    rightEntityUnitText: string | null,
+    defaultColor: RGB,
+    defaultOnColor: RGB,
+    defaultOffColor: RGB,
+    pages: (PageThermo | PageEntities | PageGrid)[],
+    button1Page: (PageThermo | PageEntities | PageGrid | null),
+    button2Page: (PageThermo | PageEntities | PageGrid | null),
+};
