@@ -117,6 +117,8 @@ The following message can be used to update the content on the cardEntities Page
 
 `entityUpdateDetail,*internalName*,*tHeading*,*tHeadingColor*,*b1*,*tB1Color*,*b2*,*tB2Color*,*tText*,*tTextColor*,*sleepTimeout*`
 
+`popupExit`
+
 ### cardThermo Page
 
 `entityUpd,*internalNameEntiy*,*heading*,*currentTemp*,*destTemp*,*status*,*minTemp*,*maxTemp*,*stepTemp*[[,*iconId*,*activeColor*,*state*,*hvac_action*]]`
