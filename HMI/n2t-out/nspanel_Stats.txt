@@ -42,10 +42,6 @@ screensaver
 	25   Component(s)
 	173  Line(s) of event code
 	124  Unique line(s) of event code
-cardAlarm
-	28   Component(s)
-	147  Line(s) of event code
-	106  Unique line(s) of event code
 cardThermo
 	42   Component(s)
 	438  Line(s) of event code
@@ -58,9 +54,13 @@ cardGrid
 	39   Component(s)
 	406  Line(s) of event code
 	224  Unique line(s) of event code
+cardAlarm
+	35   Component(s)
+	259  Line(s) of event code
+	163  Unique line(s) of event code
 
 Total
 	14   Page(s)
-	343  Component(s)
-	3176 Line(s) of event code
-	790  Unique line(s) of event code
+	350  Component(s)
+	3288 Line(s) of event code
+	840  Unique line(s) of event code
