@@ -367,14 +367,7 @@ class NsPanelLovelaceUI:
       pos = pos/100
       self.api.get_entity(entity_id).call_service("volume_set", volume_level=pos)
 
-  def get_all_configured_items(self, pages):
-    items = []
-    for page in pages:
-      if "item" in page:
-        items.append(page["item"])
-      if "items" in page:
-        items.extend(page["items"])
-
+  def filter_dict_from_item_list(self, items):
     # remove all dicts from list
     cleaned_list = []
     for item in items:
@@ -383,8 +376,16 @@ class NsPanelLovelaceUI:
         cleaned_list.append(next(iter(item)))
       else:
         cleaned_list.append(item)
-
     return cleaned_list
+
+  def get_all_configured_items(self, pages):
+    items = []
+    for page in pages:
+      if "item" in page:
+        items.append(page["item"])
+      if "items" in page:
+        items.extend(page["items"])
+    return self.filter_dict_from_item_list(items)
 
   def check_items(self):
     items = self.get_all_configured_items(self.config["pages"])
@@ -401,10 +402,7 @@ class NsPanelLovelaceUI:
 
   def register_callbacks(self):
     items = self.get_all_configured_items(self.config["pages"])
-    
     for item in items:
-      if not self.api.entity_exists(item):
-        continue
       self.api.log("Enable state callback for %s", item, level="DEBUG")
       self.api.handle = self.api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
 
@@ -417,11 +415,13 @@ class NsPanelLovelaceUI:
 
     if page_type in ["cardEntities", "cardGrid"]:
       items = current_page_config["items"]
-      if entity in items:
+      items_filtered = self.filter_dict_from_item_list(items)
+      if entity in items_filtered:
         self.api.log(f"State change on current page for {entity}", level="DEBUG")
         # send update of the page
         command = self.generate_entities_page(items)
         self.send_mqtt_msg(command)
+        # send detail pages in case they are open
         if(entity.startswith("cover")):
           self.generate_detail_page("popupShutter", entity)
         if(entity.startswith("light")):
