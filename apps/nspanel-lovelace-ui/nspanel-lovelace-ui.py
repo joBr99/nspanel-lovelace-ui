@@ -484,7 +484,7 @@ class NsPanelLovelaceUI:
 
     if item_type == "light":     
       switch_val = 1 if entity.state == "on" else 0
-      icon_color = getEntityColor(entity)
+      icon_color = self.getEntityColor(entity)
       return f",{item_type},{item},{get_icon_id('lightbulb')},{icon_color},{name},{switch_val}"
 
     if item_type == "switch" or item_type == "input_boolean":
@@ -644,7 +644,7 @@ class NsPanelLovelaceUI:
       entity = self.api.get_entity(entity)
       switch_val = 1 if entity.state == "on" else 0
 
-      icon_color = getEntityColor(entity)
+      icon_color = self.getEntityColor(entity)
 
       brightness = "disable"
       color_temp = "disable"
