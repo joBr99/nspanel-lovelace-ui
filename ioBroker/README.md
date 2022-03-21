@@ -44,8 +44,8 @@ See the icons currently usable in the following table:
 
 You can change the string and devices in the config object.
 
-## Buttons
-If you like you can add special pages for the buttons, but there is a problem currently which will open the last page again. But if you press the button again, the correct page will open.
+## Hardware buttons
+If you like you can add special pages for the buttons.
 
 First you need to add this rule to Tasmota:
 
@@ -87,6 +87,7 @@ var config: Config = {
         {
             "type": "cardEntities",                       // card type (cardEntities, cardThermo)
             "heading": "Testseite",                       // heading
+            "useColor": false,                             // should colors be enabled on this page, can be overridden in PageItem
             "items": [                                    // items array (up to 4 on cardEntities, 1 for cardThermo)
                 <PageItem>{ id: "alias.0.Rolladen_Eltern" },                // device which must be configured in the device panel. Use only the folder for the device, not the set, get states ...
                 <PageItem>{ id: "alias.0.Erker" },
@@ -98,6 +99,7 @@ var config: Config = {
         {
             "type": "cardEntities",
             "heading": "Strom",
+            "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
             "items": [
                 <PageItem>{ id: "alias.0.Netz" },
                 <PageItem>{ id: "alias.0.Hausverbrauch", icon: 4, interpolateColor: true, offColor: BatteryFull, onColor: Red , maxValue: 1000 },
@@ -109,6 +111,7 @@ var config: Config = {
         {
             "type": "cardThermo",
             "heading": "Thermostat",
+            "useColor": false,                            // should colors be enabled on this page, can be overridden in PageItem
             "item": "alias.0.WzNsPanel"                   // Needs to be a thermostat in the device panel
         }
     ],
@@ -140,6 +143,7 @@ var button1Page: PageGrid =
 {
     "type": "cardGrid",
     "heading": "Radio",
+    "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
     "items": [
         <PageItem>{ id: "alias.0.Radio.NJoy" },
         <PageItem>{ id: "alias.0.Radio.Delta_Radio" },
@@ -148,7 +152,7 @@ var button1Page: PageGrid =
 };
 ```
 
-Pages array can look like this:
+Pages array can look like this, so you can add the pages as object or define them in the array itself. This is up to you.
 
 ```
 pages: [
@@ -156,6 +160,7 @@ pages: [
         {
             "type": "cardEntities",
             "heading": "Strom",
+            "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
             "items": [
                 <PageItem>{ id: "alias.0.Netz" },
                 <PageItem>{ id: "alias.0.Hausverbrauch" },
