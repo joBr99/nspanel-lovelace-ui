@@ -205,6 +205,14 @@ class NsPanelLovelaceUI:
         else:
           value = None
         self.handle_button_press(entity_id, btype, value)
+      if msg[1] == "buttonPress2":
+        entity_id = msg[2]
+        btype = msg[3]
+        if len(msg) > 4:
+          value = msg[4]
+        else:
+          value = None
+        self.handle_button_press(entity_id, btype, value)
 
       if msg[1] == "pageOpenDetail":
         self.api.log("Received pageOpenDetail command", level="DEBUG")
