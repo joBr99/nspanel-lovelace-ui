@@ -18,6 +18,10 @@ popupNotify
 	17   Component(s)
 	179  Line(s) of event code
 	118  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	146  Line(s) of event code
+	111  Unique line(s) of event code
 pageSwipeTest
 	18   Component(s)
 	62   Line(s) of event code
@@ -30,10 +34,6 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	146  Line(s) of event code
-	111  Unique line(s) of event code
 popupShutter
 	19   Component(s)
 	194  Line(s) of event code
