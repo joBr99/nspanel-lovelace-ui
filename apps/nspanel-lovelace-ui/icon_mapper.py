@@ -34,6 +34,7 @@ icons = {
     'solar-power': 32,
     'battery-charging-medium': 33,
     'battery-medium': 34,
+    'shield-home': 35,
 }
 
 def get_icon_id(ma_name):
