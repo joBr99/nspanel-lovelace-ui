@@ -4,6 +4,7 @@
 
 - Thermostat Card
 - Entity Card (Temperature, Switches and sensors, the script tries to figure the unit of measurement automatically)
+- Grid Card
 - Detail Card (only switch and normal dimmer)
 - Live update (when value was changed in the backend and the page is currently open)
 - Screensaver Page with Time, Date and Weather Information.
