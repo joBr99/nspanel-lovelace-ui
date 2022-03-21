@@ -54,6 +54,12 @@ Rule2 on Button1#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,butto
 Rule2
 ```
 
+## Colors
+You can define colors this way and use them later in the PageItem element
+```
+const BatteryFull: RGB = { red: 96, green: 176, blue: 62 }
+const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
+```
 ## The config element in the script which needs to be configured
 ```
 var config: Config = {
@@ -73,9 +79,9 @@ var config: Config = {
     timeFormat: "%H:%M",                                  // not used right now
     dateFormat: "%A, %d. %B %Y",                          // not used right now
     weatherEntity: "alias.0.Wetter",
-    defaultColor: RGB,                                    // Default color of all elements
-    gridPageOnColor: RGB,                                 // Default on color on grid page
-    gridPageOffColor: RGB,                                // Default off color on grid page
+    defaultColor: Off,                                    // Default color of all elements
+    defaultOnColor: RGB,                                  // Default on state color for items
+    defaultOffColor: RGB,                                 // Default off state color for page
     temperatureUnit: "°C",                                // Unit to append on temperature sensors
     pages: [
         {
@@ -94,9 +100,9 @@ var config: Config = {
             "heading": "Strom",
             "items": [
                 <PageItem>{ id: "alias.0.Netz" },
-                <PageItem>{ id: "alias.0.Hausverbrauch" },
+                <PageItem>{ id: "alias.0.Hausverbrauch", icon: 4, interpolateColor: true, offColor: BatteryFull, onColor: Red , maxValue: 1000 },
                 <PageItem>{ id: "alias.0.Pv" },
-                <PageItem>{ id: "alias.0.Batterie" }
+                <PageItem>{ id: "alias.0.Batterie", icon: 34, interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
 
             ]
         },
@@ -119,6 +125,10 @@ type PageItem = {
     onColor: (RGB | undefined),             // the color the item will get when active
     offColor: (RGB | undefined),            // the color the item will get when inactive
     useColor: (boolean | undefined)         // override colors, only Grid pages has colors enabled per default
+    interpolateColor: (boolean | undefined),// fade between color on and off, useColor on Page or PageItem must be enabled
+    minValue: (number | undefined),         // the minimum value for the fade calculation, if smaller the minimum value will be used
+    maxValue: (number | undefined),         // the maximum value for the fade calculation, if larger the maximum value will be used
+    buttonText: (string | undefined)        // the Button Text, default is "Press"
 }
 ```
 
