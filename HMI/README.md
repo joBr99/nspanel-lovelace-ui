@@ -129,7 +129,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### cardAlarm Page
 
-`entityUpd,*internalNameEntity*,*arm1*,*arm2*,*arm3*,*arm4*,*icon*,*numpadStatus*`
+`entityUpd,*internalNameEntity*,*arm1*,*arm1ActionName*,*arm2*,*arm2ActionName*,*arm3*,*arm3ActionName*,*arm4*,*arm4ActionName*,*icon*,*numpadStatus*`
 
 
 ## Messages from Nextion Display
@@ -202,7 +202,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### cardAlarm Page
 
-`event,buttonPress2,internalNameEntity,actionText,code`
+`event,buttonPress2,internalNameEntity,actionName,code`
 
 
 # Icons IDs
