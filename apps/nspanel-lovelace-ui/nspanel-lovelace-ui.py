@@ -491,7 +491,7 @@ class LovelaceUIPanel:
           icon_id = get_icon_id("check-circle-outline")
         else:
           icon_id = get_icon_id("close-circle-outline")
-    return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
+      return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
 
     if item_type == "sensor":
       # maps ha device classes to material design icons
