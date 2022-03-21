@@ -455,7 +455,6 @@ class LovelaceUIPanel:
       self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
 
   def generate_entities_item(self, item):
-
     icon = None
     if type(item) is dict:
       icon = item["icon"]
@@ -601,20 +600,13 @@ class LovelaceUIPanel:
       entity       = self.api.get_entity(item)
       heading      = entity.attributes.friendly_name
       icon         = 0
-      title        = ""
-      author       = ""
-      volume       = 0
+      title        = self.get_safe_ha_attribute(entity.attributes, "media_title", "")
+      author       = self.get_safe_ha_attribute(entity.attributes, "media_artist", "")
+      volume       = int(self.get_safe_ha_attribute(entity.attributes, "volume_level", 0)*100)
+      iconplaypause = get_icon_id("pause") if entity.state == "playing" else get_icon_id("play")
       if "media_content_type" in entity.attributes:
         if entity.attributes.media_content_type == "music":
           icon = get_icon_id("music")
-      if "media_title" in entity.attributes:
-        title  = entity.attributes.media_title
-      if "media_artist" in entity.attributes:
-        author = entity.attributes.media_artist
-      if "volume_level" in entity.attributes:
-        volume = int(entity.attributes.volume_level*100)
-      iconplaypause = get_icon_id("pause") if entity.state == "playing" else get_icon_id("play")
-
       command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}"
 
     self.send_mqtt_msg(command)
@@ -663,7 +655,6 @@ class LovelaceUIPanel:
       else:
         color = "disable"
     self.send_mqtt_msg(f"entityUpdateDetail,{get_icon_id('lightbulb')},{icon_color},{switch_val},{brightness},{color_temp},{color}")
-
 
   def generate_shutter_detail_page(self, entity):
     pos = self.api.get_entity(entity).attributes.current_position
