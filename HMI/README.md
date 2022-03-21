@@ -127,6 +127,11 @@ The following message can be used to update the content on the cardEntities Page
 
 `entityUpd,|*internalNameEntiy*|*heading*|*icon*|*title*|*author*|*volume*|*playpauseicon*`
 
+### cardAlarm Page
+
+`entityUpd,*internalNameEntity*,*arm1*,*arm2*,*arm3*,*arm4*,*icon*,*numpadStatus*`
+
+
 ## Messages from Nextion Display
 
 ### startup page
@@ -195,6 +200,9 @@ The following message can be used to update the content on the cardEntities Page
 
 `event,buttonPress,1,tHeading,internalNameEntity,1,volumeSlider,75`
 
+### cardAlarm Page
+
+`event,buttonPress2,internalNameEntity,actionText,code`
 
 
 # Icons IDs
