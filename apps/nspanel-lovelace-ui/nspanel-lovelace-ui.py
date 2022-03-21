@@ -511,12 +511,11 @@ class NsPanelLovelaceUI:
       switch_val = 1 if entity.state == "on" else 0
       icon_id = get_icon_id('flash') if icon is None else get_icon_id(icon)
       icon_color = self.getEntityColor(entity)
-    
-    if item_type == "input_boolean":
-      if switch_val == 1:
-        icon_id = get_icon_id("check-circle-outline")
-      else:
-        icon_id = get_icon_id("close-circle-outline")
+      if item_type == "input_boolean":
+        if switch_val == 1:
+          icon_id = get_icon_id("check-circle-outline")
+        else:
+          icon_id = get_icon_id("close-circle-outline")
     return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
 
     if item_type == "sensor":
