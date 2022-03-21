@@ -266,16 +266,24 @@ class NsPanelLovelaceUI:
       'windy-variant': 'weather-windy-variant'
     }
 
-    o1 = we.attributes.forecast[0]['datetime']
-    o1 = datetime.datetime.fromisoformat(o1)
-    o1 = babel.dates.format_date(o1, "E", locale=self.config["locale"])
+
     i1 = get_icon_id(weathericons[we.attributes.forecast[0]['condition']])
     u1 = we.attributes.forecast[0]['temperature']
-    o2 = we.attributes.forecast[1]['datetime']
-    o2 = datetime.datetime.fromisoformat(o2)
-    o2 = babel.dates.format_date(o2, "E", locale=self.config["locale"])
     i2 = get_icon_id(weathericons[we.attributes.forecast[1]['condition']])
     u2 = we.attributes.forecast[1]['temperature']
+
+    o1 = we.attributes.forecast[0]['datetime']
+    o1 = datetime.datetime.fromisoformat(o1)
+    o2 = we.attributes.forecast[1]['datetime']
+    o2 = datetime.datetime.fromisoformat(o2)
+    global babel_spec
+    if babel_spec is not None:
+      o1 = babel.dates.format_date(o1, "E", locale=self.config["locale"])
+      o2 = babel.dates.format_date(o2, "E", locale=self.config["locale"])
+    else:
+      o1 = o1.strftime("%a")
+      o2 = o2.strftime("%a")
+
     self.send_mqtt_msg(f"weatherUpdate,?{get_icon_id(weathericons[we.state])}?{we.attributes.temperature}{unit}?{26}?{we.attributes.humidity} %?{o1}?{i1}?{u1}?{o2}?{i2}?{u2}")
 
 
@@ -665,4 +673,4 @@ class NsPanelLovelaceUI:
   def send_message_page(self, id, heading, msg, b1, b2):
     self.send_mqtt_msg(f"pageType,popupNotify")
     self.send_mqtt_msg(f"entityUpdateDetail,|{id}|{heading}|65535|{b1}|65535|{b2}|65535|{msg}|65535|0")
-
+    
