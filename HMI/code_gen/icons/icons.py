@@ -2,7 +2,7 @@ import json
 import os
 
 icons = [
-    "window-open",
+    "alert-circle-outline",
     "lightbulb",
     "thermometer",
     "gesture-tap-button",
@@ -13,7 +13,7 @@ icons = [
     "pause",
     "play",
     "palette",
-    "alert-circle-outline",
+    "window-open",
     "weather-cloudy",
     "weather-fog",
     "weather-hail",

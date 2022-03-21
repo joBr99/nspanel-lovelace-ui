@@ -4,7 +4,7 @@ This file contains the Icons IDs included in the display firmware, addressable v
 
 ID | MD Icon Name | Icon
 -- | ------------ | ----
-0 | window-open | ![window-open](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/window-open.svg)
+0 | alert-circle-outline | ![alert-circle-outline](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/alert-circle-outline.svg)
 1 | lightbulb | ![lightbulb](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/lightbulb.svg)
 2 | thermometer | ![thermometer](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/thermometer.svg)
 3 | gesture-tap-button | ![gesture-tap-button](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/gesture-tap-button.svg)
@@ -15,7 +15,7 @@ ID | MD Icon Name | Icon
 8 | pause | ![pause](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/pause.svg)
 9 | play | ![play](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/play.svg)
 10 | palette | ![palette](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/palette.svg)
-11 | alert-circle-outline | ![alert-circle-outline](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/alert-circle-outline.svg)
+11 | window-open | ![window-open](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/window-open.svg)
 12 | weather-cloudy | ![weather-cloudy](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/weather-cloudy.svg)
 13 | weather-fog | ![weather-fog](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/weather-fog.svg)
 14 | weather-hail | ![weather-hail](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/weather-hail.svg)

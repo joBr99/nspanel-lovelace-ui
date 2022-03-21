@@ -1,5 +1,5 @@
 icons = {
-    'window-open': 0,
+    'alert-circle-outline': 0,
     'lightbulb': 1,
     'thermometer': 2,
     'gesture-tap-button': 3,
@@ -10,7 +10,7 @@ icons = {
     'pause': 8,
     'play': 9,
     'palette': 10,
-    'alert-circle-outline': 11,
+    'window-open': 11,
     'weather-cloudy': 12,
     'weather-fog': 13,
     'weather-hail': 14,
