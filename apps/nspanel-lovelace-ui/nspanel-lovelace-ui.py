@@ -377,6 +377,10 @@ class NsPanelLovelaceUI:
         items.extend(page["items"])
     
     for item in items:
+      # in case item is a dict, grab the key and use it as item name
+      if type(item) is dict:
+        item = next(iter(item))
+    
       if self.api.entity_exists(item) or item == "delete":
         self.api.log("Found configured item in Home Assistant %s", item, level="DEBUG")
       else:
@@ -465,6 +469,12 @@ class NsPanelLovelaceUI:
 
   def generate_entities_item(self, item):
 
+    icon = None
+    if type(item) is dict:
+      item = next(iter(item.items()))
+      icon = item[1]
+      item = item[0]
+
     # type of the item is the string before the "." in the item name
     item_type = item.split(".")[0]
 
@@ -480,12 +490,14 @@ class NsPanelLovelaceUI:
     name = entity.attributes.friendly_name
 
     if item_type == "cover":
-      return f",shutter,{item},{get_icon_id('window-open')},17299,{name},"
+      icon_id = get_icon_id('window-open') if icon is None else get_icon_id(icon)
+      return f",shutter,{item},{icon_id},17299,{name},"
 
     if item_type == "light":     
       switch_val = 1 if entity.state == "on" else 0
       icon_color = self.getEntityColor(entity)
-      return f",{item_type},{item},{get_icon_id('lightbulb')},{icon_color},{name},{switch_val}"
+      icon_id = get_icon_id('lightbulb') if icon is None else get_icon_id(icon)
+      return f",{item_type},{item},{icon_id},{icon_color},{name},{switch_val}"
 
     if item_type == "switch" or item_type == "input_boolean":
       switch_val = 1 if entity.state == "on" else 0
@@ -519,10 +531,12 @@ class NsPanelLovelaceUI:
       return f",text,{item},{icon_id},17299,{name},{value}"
 
     if item_type == "button" or item_type == "input_button":
-      return f",button,{item},{get_icon_id('gesture-tap-button')},17299,{name},PRESS"
+      icon_id = get_icon_id('gesture-tap-button') if icon is None else get_icon_id(icon)
+      return f",button,{item},{icon_id},17299,{name},PRESS"
     
     if item_type == "scene":
-      return f",button,{item},{get_icon_id('palette')},17299,{name},ACTIVATE"
+      icon_id = get_icon_id('palette') if icon is None else get_icon_id(icon)
+      return f",button,{item},{icon_id},17299,{name},ACTIVATE"
 
   def generate_entities_page(self, items):
     # Get items and construct cmd string
