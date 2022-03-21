@@ -133,8 +133,11 @@ class LovelaceUIPanel:
           self.current_screensaver_brightness = sorted_timesets[index-1]["value"]
           self.api.log("Setting dim value to %s", sorted_timesets[index-1]) #level="DEBUG"
           found_current_dim_value = True
-          # send screensaver brightness in case config has changed
-          self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
+        # still no dim value
+        if not found_current_dim_value:
+          self.current_screensaver_brightness = sorted_timesets[-1]["value"]
+        # send screensaver brightness in case config has changed
+        self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
     
     # register callbacks
     self.register_callbacks()
@@ -145,7 +148,6 @@ class LovelaceUIPanel:
     for item in items:
       # in case item is a dict, grab the item name
       if type(item) is dict:
-        self.api.log(item)
         cleaned_list.append(item["item"])
       else:
         cleaned_list.append(item)
@@ -672,4 +674,4 @@ class LovelaceUIPanel:
   def send_message_page(self, id, heading, msg, b1, b2):
     self.send_mqtt_msg(f"pageType,popupNotify")
     self.send_mqtt_msg(f"entityUpdateDetail,|{id}|{heading}|65535|{b1}|65535|{b2}|65535|{msg}|65535|0")
-    
+   
