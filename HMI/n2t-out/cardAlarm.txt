@@ -27,24 +27,75 @@ Page cardAlarm
             vis tTmp,0
             vis tId,0
             //vis nPageDisp,0
+            vis arm1,0
+            vis arm2,0
+            vis arm3,0
+            vis arm4,0
+            vis b0,0
+            vis b1,0
+            vis b2,0
+            vis b3,0
+            vis b4,0
+            vis b5,0
+            vis b6,0
+            vis b7,0
+            vis b8,0
+            vis b9,0
+            vis b10,0
+            vis tCode,0
         
 Variable (string) strCommand
     Attributes
-        ID            : 8
+        ID            : 7
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) entn
     Attributes
-        ID            : 11
+        ID            : 10
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
+Variable (string) tSend
+    Attributes
+        ID            : 26
+        Scope         : local
+        Text          : 
+        Max. Text Size: 100
+    
+Variable (string) va1
+    Attributes
+        ID            : 31
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) va2
+    Attributes
+        ID            : 32
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) va3
+    Attributes
+        ID            : 33
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) va4
+    Attributes
+        ID            : 34
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
 Number nPageDisp
     Attributes
-        ID                                  : 6
+        ID                                  : 5
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -72,39 +123,9 @@ Number nPageDisp
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tSend
-    Attributes
-        ID                                  : 2
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 0
-        Width                               : 230
-        Height                              : 23
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : newtxt
-        Max. Text Size                      : 100
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Text tTmp
     Attributes
-        ID                                  : 3
+        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -134,7 +155,7 @@ Text tTmp
     
 Text tInstruction
     Attributes
-        ID                                  : 9
+        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -164,7 +185,7 @@ Text tInstruction
     
 Text tId
     Attributes
-        ID                                  : 10
+        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -194,15 +215,15 @@ Text tId
     
 Text tCode
     Attributes
-        ID                                  : 25
+        ID                                  : 24
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 162
-        y coordinate                        : 79
-        Width                               : 126
+        x coordinate                        : 92
+        y coordinate                        : 12
+        Width                               : 192
         Height                              : 49
         Effect                              : load
         Effect Priority                     : 0
@@ -215,8 +236,38 @@ Text tCode
         Font Color                          : 40179
         Horizontal Alignment                : center
         Vertical Alignment                  : center
-        Input Type                          : character
+        Input Type                          : password
         Text                                : 
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tIcon
+    Attributes
+        ID                                  : 27
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 300
+        y coordinate                        : 12
+        Width                               : 64
+        Height                              : 49
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 2
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : î
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -241,7 +292,7 @@ Picture p0
     
 Button bNext
     Attributes
-        ID                                  : 4
+        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -295,7 +346,7 @@ Button bNext
         
 Button bPrev
     Attributes
-        ID                                  : 5
+        ID                                  : 4
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -349,14 +400,14 @@ Button bPrev
         
 Button b0
     Attributes
-        ID                                  : 14
+        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 51
-        y coordinate                        : 139
+        x coordinate                        : 52
+        y coordinate                        : 146
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -387,14 +438,14 @@ Button b0
         
 Button b1
     Attributes
-        ID                                  : 15
+        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 143
-        y coordinate                        : 139
+        x coordinate                        : 144
+        y coordinate                        : 146
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -425,14 +476,14 @@ Button b1
         
 Button b2
     Attributes
-        ID                                  : 16
+        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 235
-        y coordinate                        : 138
+        x coordinate                        : 236
+        y coordinate                        : 145
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -463,14 +514,14 @@ Button b2
         
 Button b3
     Attributes
-        ID                                  : 17
+        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 51
-        y coordinate                        : 197
+        x coordinate                        : 52
+        y coordinate                        : 204
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -501,14 +552,14 @@ Button b3
         
 Button b4
     Attributes
-        ID                                  : 18
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 143
-        y coordinate                        : 197
+        x coordinate                        : 144
+        y coordinate                        : 204
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -539,14 +590,14 @@ Button b4
         
 Button b5
     Attributes
-        ID                                  : 19
+        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 235
-        y coordinate                        : 197
+        x coordinate                        : 236
+        y coordinate                        : 204
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -577,14 +628,14 @@ Button b5
         
 Button b6
     Attributes
-        ID                                  : 20
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 51
-        y coordinate                        : 255
+        x coordinate                        : 52
+        y coordinate                        : 262
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -615,14 +666,14 @@ Button b6
         
 Button b7
     Attributes
-        ID                                  : 21
+        ID                                  : 20
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 143
-        y coordinate                        : 255
+        x coordinate                        : 144
+        y coordinate                        : 262
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -653,14 +704,14 @@ Button b7
         
 Button b8
     Attributes
-        ID                                  : 22
+        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 235
-        y coordinate                        : 255
+        x coordinate                        : 236
+        y coordinate                        : 262
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -691,14 +742,14 @@ Button b8
         
 Button b9
     Attributes
-        ID                                  : 23
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 327
-        y coordinate                        : 197
+        x coordinate                        : 328
+        y coordinate                        : 204
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -729,14 +780,14 @@ Button b9
         
 Button b10
     Attributes
-        ID                                  : 24
+        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 327
-        y coordinate                        : 255
+        x coordinate                        : 328
+        y coordinate                        : 262
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -765,18 +816,18 @@ Button b10
         Touch Press Event
             tCode.txt=""
         
-Button b11
+Button arm1
     Attributes
-        ID                                  : 26
+        ID                                  : 25
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 96
-        y coordinate                        : 32
-        Width                               : 113
-        Height                              : 33
+        x coordinate                        : 59
+        y coordinate                        : 72
+        Width                               : 64
+        Height                              : 64
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -793,24 +844,43 @@ Button b11
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         State                               : unpressed
-        Text                                : ARM HOME
+        Text                                : 
         Max. Text Size                      : 10
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Button b12
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,arm1,tCode
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+=va1.txt+","
+            tSend.txt+=tCode.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button arm3
     Attributes
-        ID                                  : 27
+        ID                                  : 28
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 242
-        y coordinate                        : 32
-        Width                               : 113
-        Height                              : 33
+        x coordinate                        : 239
+        y coordinate                        : 72
+        Width                               : 64
+        Height                              : 64
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -827,15 +897,140 @@ Button b12
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         State                               : unpressed
-        Text                                : ARM AWAY
+        Text                                : 
         Max. Text Size                      : 10
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,arm1,tCode
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+=va3.txt+","
+            tSend.txt+=tCode.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button arm2
+    Attributes
+        ID                                  : 29
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 149
+        y coordinate                        : 72
+        Width                               : 64
+        Height                              : 64
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
+        Border Color                        : 6371
+        Border Width                        : 2
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 1374
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 10
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,arm1,tCode
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+=va2.txt+","
+            tSend.txt+=tCode.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button arm4
+    Attributes
+        ID                                  : 30
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 329
+        y coordinate                        : 72
+        Width                               : 64
+        Height                              : 64
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
+        Border Color                        : 6371
+        Border Width                        : 2
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 1374
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 10
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,arm1,tCode
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+=va4.txt+","
+            tSend.txt+=tCode.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Timer tmSerial
     Attributes
-        ID         : 7
+        ID         : 6
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -887,6 +1082,61 @@ Timer tmSerial
                                     spstr strCommand.txt,tInstruction.txt,",",0
                                     if(tInstruction.txt=="entityUpd")
                                     {
+                                        //entn
+                                        spstr strCommand.txt,entn.txt,",",1
+                                        //text arm1
+                                        spstr strCommand.txt,arm1.txt,",",2
+                                        if(arm1.txt!="")
+                                        {
+                                            vis arm1,1
+                                        }
+                                        //id arm1
+                                        spstr strCommand.txt,va1.txt,",",3
+                                        //text arm2
+                                        spstr strCommand.txt,arm2.txt,",",4
+                                        if(arm2.txt!="")
+                                        {
+                                            vis arm2,1
+                                        }
+                                        //id arm2
+                                        spstr strCommand.txt,va2.txt,",",5
+                                        //text arm3
+                                        spstr strCommand.txt,arm3.txt,",",6
+                                        if(arm3.txt!="")
+                                        {
+                                            vis arm3,1
+                                        }
+                                        //id arm3
+                                        spstr strCommand.txt,va3.txt,",",7
+                                        //text arm4
+                                        spstr strCommand.txt,arm4.txt,",",8
+                                        if(arm4.txt!="")
+                                        {
+                                            vis arm4,1
+                                        }
+                                        //id arm4
+                                        spstr strCommand.txt,va4.txt,",",9
+                                        //icon
+                                        spstr strCommand.txt,tTmp.txt,",",10
+                                        covx tTmp.txt,sys0,0,0
+                                        substr pageIcons.tIcons.txt,tIcon.txt,sys0,1
+                                        //numpad status
+                                        spstr strCommand.txt,tTmp.txt,",",11
+                                        if(tTmp.txt!="disable")
+                                        {
+                                            vis b0,1
+                                            vis b1,1
+                                            vis b2,1
+                                            vis b3,1
+                                            vis b4,1
+                                            vis b5,1
+                                            vis b6,1
+                                            vis b7,1
+                                            vis b8,1
+                                            vis b9,1
+                                            vis b10,1
+                                            vis tCode,1
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -967,7 +1217,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 12
+        ID         : 11
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -987,7 +1237,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 13
+        ID   : 12
         Scope: local
         Value: 0
     
