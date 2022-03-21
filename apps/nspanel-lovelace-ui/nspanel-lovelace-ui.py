@@ -14,7 +14,7 @@ class NsPanelLovelaceUIManager(hass.Hass):
   def initialize(self):
 
     data = self.args["config"]
-    NsPanelLovelaceUI(self, data)
+    LovelaceUIPanel(self, data)
 
 class Updater:
   def __init__(self, nsplui, mode):
@@ -78,7 +78,7 @@ class Updater:
   def update_panel_driver(self):
     self.nsplui.mqtt.mqtt_publish(self.nsplui.config["panelSendTopic"].replace("CustomSend", "FlashNextion"), self.desired_display_firmware_url)
 
-class NsPanelLovelaceUI:
+class LovelaceUIPanel:
   def __init__(self, api, config):
     self.api = api
     self.config = config
@@ -138,6 +138,72 @@ class NsPanelLovelaceUI:
     
     # register callbacks
     self.register_callbacks()
+
+  def filter_dict_from_item_list(self, items):
+    # remove all dicts from list
+    cleaned_list = []
+    for item in items:
+      # in case item is a dict, grab the item name
+      if type(item) is dict:
+        self.api.log(item)
+        cleaned_list.append(item["item"])
+      else:
+        cleaned_list.append(item)
+    return cleaned_list
+
+  def get_all_configured_items(self):
+    items = []
+    for page in self.config["pages"]:
+      if "item" in page:
+        items.append(page["item"])
+      if "items" in page:
+        items.extend(page["items"])
+    return self.filter_dict_from_item_list(items)
+
+  def check_items(self):
+    items = self.get_all_configured_items()
+    for item in items:
+      if self.api.entity_exists(item) or item == "delete":
+        self.api.log("Found configured item in Home Assistant %s", item, level="DEBUG")
+      else:
+        self.api.error("The following item does not exist in Home Assistant, configuration error: %s", item)
+
+  def register_callbacks(self):
+    items = self.get_all_configured_items()
+    for item in items:
+      self.api.log("Enable state callback for %s", item, level="DEBUG")
+      self.api.handle = self.api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
+
+  def state_change_callback(self, entity, attribute, old, new, kwargs):
+    current_page_config = self.config["pages"][self.current_page_nr]
+    page_type = current_page_config["type"]
+    self.api.log(f"Got state_callback from {entity}", level="DEBUG")
+    
+    if page_type in ["cardEntities", "cardGrid"]:
+      items = current_page_config["items"]
+      items_filtered = self.filter_dict_from_item_list(items)
+      if entity in items_filtered:
+        self.api.log(f"State change on current page for {entity}", level="DEBUG")
+        # send update of the page
+        self.generate_entities_page(items)
+        # send detail pages in case they are open
+        if(entity.startswith("cover")):
+          self.generate_detail_page("popupShutter", entity)
+        if(entity.startswith("light")):
+          self.generate_detail_page("popupLight", entity)
+      return
+    
+    if page_type in ["cardThermo", "cardMedia"]:
+      if entity == current_page_config["item"]:
+        self.api.log(f"State change on current page for {entity}", level="DEBUG")
+        # send update of the whole page
+        if page_type == "cardThermo":
+          self.generate_thermo_page(entity)
+          return
+        if page_type == "cardMedia":
+          self.generate_media_page(entity)
+          return
+      return
 
   def send_mqtt_msg(self,msg):
     self.api.log("Send Message to Tasmota: %s", msg) #, level="DEBUG"
@@ -273,7 +339,6 @@ class NsPanelLovelaceUI:
       'windy-variant': 'weather-windy-variant'
     }
 
-
     i1 = get_icon_id(weathericons[we.attributes.forecast[0]['condition']])
     u1 = we.attributes.forecast[0]['temperature']
     i2 = get_icon_id(weathericons[we.attributes.forecast[1]['condition']])
@@ -323,7 +388,7 @@ class NsPanelLovelaceUI:
     if btype == "button":
       if entity_id.startswith('scene'):
         self.api.get_entity(entity_id).call_service("turn_on")
-      if entity_id.startswith('light') or entity_id.startswith('switch'):
+      elif entity_id.startswith('light') or entity_id.startswith('switch'):
         self.api.get_entity(entity_id).call_service("toggle")
       else:
         self.api.get_entity(entity_id).call_service("press")
@@ -367,121 +432,29 @@ class NsPanelLovelaceUI:
       pos = pos/100
       self.api.get_entity(entity_id).call_service("volume_set", volume_level=pos)
 
-  def filter_dict_from_item_list(self, items):
-    # remove all dicts from list
-    cleaned_list = []
-    for item in items:
-      # in case item is a dict, grab the key and replace it
-      if type(item) is dict:
-        cleaned_list.append(next(iter(item)))
-      else:
-        cleaned_list.append(item)
-    return cleaned_list
-
-  def get_all_configured_items(self, pages):
-    items = []
-    for page in pages:
-      if "item" in page:
-        items.append(page["item"])
-      if "items" in page:
-        items.extend(page["items"])
-    return self.filter_dict_from_item_list(items)
-
-  def check_items(self):
-    items = self.get_all_configured_items(self.config["pages"])
-    
-    for item in items:
-      # in case item is a dict, grab the key and use it as item name
-      if type(item) is dict:
-        item = next(iter(item))
-    
-      if self.api.entity_exists(item) or item == "delete":
-        self.api.log("Found configured item in Home Assistant %s", item, level="DEBUG")
-      else:
-        self.api.error("The following item does not exist in Home Assistant, configuration error: %s", item)
-
-  def register_callbacks(self):
-    items = self.get_all_configured_items(self.config["pages"])
-    for item in items:
-      self.api.log("Enable state callback for %s", item, level="DEBUG")
-      self.api.handle = self.api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
-
-  def state_change_callback(self, entity, attribute, old, new, kwargs):
-    current_page_config = self.config["pages"][self.current_page_nr]
-
-    page_type = current_page_config["type"]
-
-    self.api.log(f"Got state_callback from {entity}", level="DEBUG")
-
-    if page_type in ["cardEntities", "cardGrid"]:
-      items = current_page_config["items"]
-      items_filtered = self.filter_dict_from_item_list(items)
-      if entity in items_filtered:
-        self.api.log(f"State change on current page for {entity}", level="DEBUG")
-        # send update of the page
-        command = self.generate_entities_page(items)
-        self.send_mqtt_msg(command)
-        # send detail pages in case they are open
-        if(entity.startswith("cover")):
-          self.generate_detail_page("popupShutter", entity)
-        if(entity.startswith("light")):
-          self.generate_detail_page("popupLight", entity)
-
-      return
-    
-    if page_type == "cardThermo" or page_type == "cardMedia":
-      if entity == current_page_config["item"]:
-        self.api.log(f"State change on current page for {entity}", level="DEBUG")
-        # send update of the whole page
-        if page_type == "cardThermo":
-          self.send_mqtt_msg(self.generate_thermo_page(entity))
-          return
-        if page_type == "cardMedia":
-          self.send_mqtt_msg(self.generate_media_page(entity))
-          return
-      return
-
   def generate_page(self, page_number):
-    # get type of current page
+    # get type of page
     page_type = self.config["pages"][self.current_page_nr]["type"]
     self.api.log("Generating page commands for page %i with type %s", self.current_page_nr, page_type, level="DEBUG")
-    if page_type == "cardEntities":
-      # Send page type
-      self.send_mqtt_msg(f"pageType,{page_type}")
-      # Set Heading of Page
-      self.send_mqtt_msg(f"entityUpdHeading,{self.config['pages'][self.current_page_nr]['heading']}")
 
-      command = self.generate_entities_page(self.config["pages"][self.current_page_nr]["items"])
-      self.send_mqtt_msg(command)
+    # Send page type
+    self.send_mqtt_msg(f"pageType,{page_type}")
 
-    if page_type == "cardGrid":
-      # Send page type
-      self.send_mqtt_msg(f"pageType,{page_type}")
-      # Set Heading of Page
-      self.send_mqtt_msg(f"entityUpdHeading,{self.config['pages'][self.current_page_nr]['heading']}")
-
-      command = self.generate_entities_page(self.config["pages"][self.current_page_nr]["items"])
-      self.send_mqtt_msg(command)
+    if page_type in ["cardEntities", "cardGrid"]:
+      self.generate_entities_page(self.config["pages"][self.current_page_nr]["items"])
 
     if page_type == "cardThermo":
-      # Send page type
-      self.send_mqtt_msg(f"pageType,{page_type}")
-      command = self.generate_thermo_page(self.config["pages"][self.current_page_nr]["item"])
-      self.send_mqtt_msg(command)
+      self.generate_thermo_page(self.config["pages"][self.current_page_nr]["item"])
       
     if page_type == "cardMedia":
-      # Send page type
-      self.send_mqtt_msg("pageType,{0}".format(page_type))
-      command = self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
-      self.send_mqtt_msg(command)
+      self.generate_media_page(self.config["pages"][self.current_page_nr]["item"])
 
   def generate_entities_item(self, item):
 
     icon = None
     if type(item) is dict:
-      item = next(iter(item.items()))
-      icon = item[1]
-      item = item[0]
+      icon = item["icon"]
+      item = item["item"]
 
     # type of the item is the string before the "." in the item name
     item_type = item.split(".")[0]
@@ -490,7 +463,9 @@ class NsPanelLovelaceUI:
 
     if item_type == "delete":
       return f",{item_type},,,,,"
-    
+
+    icon_id = get_icon_id('alert-circle-outline')
+
     if not self.api.entity_exists(item):
       return f",text,{item},{get_icon_id('alert-circle-outline')},17299,Not found check, apps.yaml"
 
@@ -547,103 +522,99 @@ class NsPanelLovelaceUI:
       return f",button,{item},{icon_id},17299,{name},ACTIVATE"
 
   def generate_entities_page(self, items):
+    # Set Heading of Page
+    self.send_mqtt_msg(f"entityUpdHeading,{self.config['pages'][self.current_page_nr]['heading']}")
     # Get items and construct cmd string
     command = "entityUpd"
     for item in items:
       command += self.generate_entities_item(item)
-    return command
+    self.send_mqtt_msg(command)
 
   def get_safe_ha_attribute(self, eattr, attr, default):
     return eattr[attr] if attr in eattr else default
 
   def generate_thermo_page(self, item):
-    
     if not self.api.entity_exists(item):
-      return f"entityUpd,{item},Not found,220,220,Not found,150,300,5"
-
-    entity       = self.api.get_entity(item)
-    heading      = entity.attributes.friendly_name
-    current_temp = int(self.get_safe_ha_attribute(entity.attributes, "current_temperature", 0)*10)
-    dest_temp    = int(self.get_safe_ha_attribute(entity.attributes, "temperature", 0)*10)
-    status       = self.get_safe_ha_attribute(entity.attributes, "hvac_action", "")
-    min_temp     = int(self.get_safe_ha_attribute(entity.attributes, "min_temp", 0)*10) 
-    max_temp     = int(self.get_safe_ha_attribute(entity.attributes, "max_temp", 0)*10) 
-    step_temp    = int(self.get_safe_ha_attribute(entity.attributes, "target_temp_step", 0.5)*10) 
-
-    icon_res = ""
-    hvac_modes = self.get_safe_ha_attribute(entity.attributes, "hvac_modes", [])
-    for mode in hvac_modes:
-      icon_id = get_icon_id('alert-circle-outline')
-      color_on = 64512
-      if mode == "auto":
-        icon_id = get_icon_id("calendar-sync")
-        color_on = 1024
-      if mode == "heat":
-        icon_id = get_icon_id("fire")
-        color_on = 64512
-      if mode == "off":
-        icon_id = get_icon_id("power")
-        color_on = 35921
-
-      if mode == "cool":
-        icon_id = get_icon_id("snowflake")
-        color_on = 11487
-      if mode == "dry":
-        icon_id = get_icon_id("water-percent")
-        color_on = 60897
-      if mode == "fan_only":
-        icon_id = get_icon_id("fan")
-        color_on = 35921
-
-      state = 0
-      if(mode == entity.state):
-        state = 1
-      
-      icon_res += f",{icon_id},{color_on},{state},{mode}"
-
-    len_hvac_modes = len(hvac_modes)
-    if len_hvac_modes%2 == 0:
-      # even
-      padding_len = int((4-len_hvac_modes)/2)
-      icon_res =  ","*4*padding_len + icon_res + ","*4*padding_len
-      # use last 4 icons
-      icon_res =  ","*4*5 + icon_res
+      command = f"entityUpd,{item},Not found,220,220,Not found,150,300,5"
     else:
-      # uneven
-      padding_len = int((5-len_hvac_modes)/2)
-      icon_res =  ","*4*padding_len + icon_res + ","*4*padding_len
-      # use first 5 icons
-      icon_res = icon_res + ","*4*4
-    
-    return f"entityUpd,{item},{heading},{current_temp},{dest_temp},{status},{min_temp},{max_temp},{step_temp}{icon_res}"
+      entity       = self.api.get_entity(item)
+      heading      = entity.attributes.friendly_name
+      current_temp = int(self.get_safe_ha_attribute(entity.attributes, "current_temperature", 0)*10)
+      dest_temp    = int(self.get_safe_ha_attribute(entity.attributes, "temperature", 0)*10)
+      status       = self.get_safe_ha_attribute(entity.attributes, "hvac_action", "")
+      min_temp     = int(self.get_safe_ha_attribute(entity.attributes, "min_temp", 0)*10) 
+      max_temp     = int(self.get_safe_ha_attribute(entity.attributes, "max_temp", 0)*10) 
+      step_temp    = int(self.get_safe_ha_attribute(entity.attributes, "target_temp_step", 0.5)*10) 
+
+      icon_res = ""
+      hvac_modes = self.get_safe_ha_attribute(entity.attributes, "hvac_modes", [])
+      for mode in hvac_modes:
+        icon_id = get_icon_id('alert-circle-outline')
+        color_on = 64512
+        if mode == "auto":
+          icon_id = get_icon_id("calendar-sync")
+          color_on = 1024
+        if mode == "heat":
+          icon_id = get_icon_id("fire")
+          color_on = 64512
+        if mode == "off":
+          icon_id = get_icon_id("power")
+          color_on = 35921
+        if mode == "cool":
+          icon_id = get_icon_id("snowflake")
+          color_on = 11487
+        if mode == "dry":
+          icon_id = get_icon_id("water-percent")
+          color_on = 60897
+        if mode == "fan_only":
+          icon_id = get_icon_id("fan")
+          color_on = 35921
+        state = 0
+        if(mode == entity.state):
+          state = 1
+        icon_res += f",{icon_id},{color_on},{state},{mode}"
+  
+      len_hvac_modes = len(hvac_modes)
+      if len_hvac_modes%2 == 0:
+        # even
+        padding_len = int((4-len_hvac_modes)/2)
+        icon_res =  ","*4*padding_len + icon_res + ","*4*padding_len
+        # use last 4 icons
+        icon_res =  ","*4*5 + icon_res
+      else:
+        # uneven
+        padding_len = int((5-len_hvac_modes)/2)
+        icon_res =  ","*4*padding_len + icon_res + ","*4*padding_len
+        # use first 5 icons
+        icon_res = icon_res + ","*4*4
+      command = f"entityUpd,{item},{heading},{current_temp},{dest_temp},{status},{min_temp},{max_temp},{step_temp}{icon_res}"
+    self.send_mqtt_msg(command)
 
   def generate_media_page(self, item):
 
     if not self.api.entity_exists(item):
-      return f"entityUpd,|{item}|Not found|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|11"
-
-    entity       = self.api.get_entity(item)
-    heading      = entity.attributes.friendly_name
-    icon         = 0
-    title        = ""
-    author       = ""
-    volume       = 0
-    if "media_content_type" in entity.attributes:
-      if entity.attributes.media_content_type == "music":
-        icon = get_icon_id("music")
-    if "media_title" in entity.attributes:
-      title  = entity.attributes.media_title
-    if "media_artist" in entity.attributes:
-      author = entity.attributes.media_artist
-    if "volume_level" in entity.attributes:
-      volume = int(entity.attributes.volume_level*100)
-
-    if entity.state == "playing":
-      iconplaypause = get_icon_id("pause")
+      command = f"entityUpd,|{item}|Not found|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|11"
     else:
-      iconplaypause = get_icon_id("play")
+      entity       = self.api.get_entity(item)
+      heading      = entity.attributes.friendly_name
+      icon         = 0
+      title        = ""
+      author       = ""
+      volume       = 0
+      if "media_content_type" in entity.attributes:
+        if entity.attributes.media_content_type == "music":
+          icon = get_icon_id("music")
+      if "media_title" in entity.attributes:
+        title  = entity.attributes.media_title
+      if "media_artist" in entity.attributes:
+        author = entity.attributes.media_artist
+      if "volume_level" in entity.attributes:
+        volume = int(entity.attributes.volume_level*100)
+      iconplaypause = get_icon_id("pause") if entity.state == "playing" else get_icon_id("play")
 
-    return f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}"
+      command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}"
+
+    self.send_mqtt_msg(command)
 
   def getEntityColor(self, entity):
     attr = entity.attributes
