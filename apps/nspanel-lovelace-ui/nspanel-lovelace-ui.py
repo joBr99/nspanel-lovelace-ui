@@ -484,15 +484,7 @@ class NsPanelLovelaceUI:
 
     if item_type == "light":     
       switch_val = 1 if entity.state == "on" else 0
-      icon_color = 17299
-      if "rgb_color" in entity.attributes:
-        color = entity.attributes.rgb_color
-        if "brightness" in entity.attributes:
-          color = rgb_brightness(color, entity.attributes.brightness)
-        icon_color = rgb_dec565(color)
-      elif "brightness" in entity.attributes:
-        color = rgb_brightness([253, 216, 53], entity.attributes.brightness)
-        icon_color = rgb_dec565(color)
+      icon_color = getEntityColor(entity)
       return f",{item_type},{item},{get_icon_id('lightbulb')},{icon_color},{name},{switch_val}"
 
     if item_type == "switch" or item_type == "input_boolean":
@@ -630,22 +622,29 @@ class NsPanelLovelaceUI:
 
     return f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}"
 
+  def getEntityColor(self, entity):
+    attr = entity.attributes
+    default_color_on  = rgb_dec565([253, 216, 53])
+    default_color_off = rgb_dec565([68, 115, 158])
+    icon_color = default_color_on if entity.state == "on" else default_color_off
+
+    if "rgb_color" in attr:
+      color = attr.rgb_color
+      if "brightness" in attr:
+        color = rgb_brightness(color, attr.brightness)
+      icon_color = rgb_dec565(color)
+    elif "brightness" in attr:
+      color = rgb_brightness([253, 216, 53], attr.brightness)
+      icon_color = rgb_dec565(color)
+    return icon_color
+
 
   def generate_detail_page(self, page_type, entity):
     if page_type == "popupLight":
       entity = self.api.get_entity(entity)
       switch_val = 1 if entity.state == "on" else 0
 
-      icon_color = 17299
-
-      if "rgb_color" in entity.attributes:
-        color = entity.attributes.rgb_color
-        if "brightness" in entity.attributes:
-          color = rgb_brightness(color, entity.attributes.brightness)
-        icon_color = rgb_dec565(color)
-      elif "brightness" in entity.attributes:
-        color = rgb_brightness([253, 216, 53], entity.attributes.brightness)
-        icon_color = rgb_dec565(color)
+      icon_color = getEntityColor(entity)
 
       brightness = "disable"
       color_temp = "disable"
