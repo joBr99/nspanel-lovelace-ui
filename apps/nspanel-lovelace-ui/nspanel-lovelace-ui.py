@@ -190,9 +190,9 @@ class LovelaceUIPanel:
         self.generate_entities_page(items)
         # send detail pages in case they are open
         if(entity.startswith("cover")):
-          self.generate_detail_page("popupShutter", entity)
+          self.generate_shutter_detail_page(entity)
         if(entity.startswith("light")):
-          self.generate_detail_page("popupLight", entity)
+          self.generate_light_detail_page(entity)
       return
     
     if page_type in ["cardThermo", "cardMedia"]:
@@ -283,7 +283,10 @@ class LovelaceUIPanel:
 
       if msg[1] == "pageOpenDetail":
         self.api.log("Received pageOpenDetail command", level="DEBUG")
-        self.generate_detail_page(msg[2], msg[3])
+        if msg[2] == "popupShutter":
+          self.generate_shutter_detail_page(msg[3])
+        if msg[2] == "popupLight":
+          self.generate_light_detail_page(msg[3])
 
       if msg[1] == "tempUpd":
         self.api.log("Received tempUpd command", level="DEBUG")
@@ -632,46 +635,43 @@ class LovelaceUIPanel:
       icon_color = rgb_dec565(color)
     return icon_color
 
-
-  def generate_detail_page(self, page_type, entity):
-    if page_type == "popupLight":
-      entity = self.api.get_entity(entity)
-      switch_val = 1 if entity.state == "on" else 0
-
-      icon_color = self.getEntityColor(entity)
-
-      brightness = "disable"
-      color_temp = "disable"
-      color = "disable"
-      # scale 0-255 brightness from ha to 0-100
-      if entity.state == "on":
-        if "brightness" in entity.attributes:
-          brightness = int(scale(entity.attributes.brightness,(0,255),(0,100)))
+  def generate_light_detail_page(self, entity):
+    entity = self.api.get_entity(entity)
+    switch_val = 1 if entity.state == "on" else 0
+    icon_color = self.getEntityColor(entity)
+    brightness = "disable"
+    color_temp = "disable"
+    color = "disable"
+    # scale 0-255 brightness from ha to 0-100
+    if entity.state == "on":
+      if "brightness" in entity.attributes:
+        brightness = int(scale(entity.attributes.brightness,(0,255),(0,100)))
+      else:
+        brightness = "disable"
+      if "color_temp" in entity.attributes.supported_color_modes:
+        if "color_temp" in entity.attributes:
+          # scale ha color temp range to 0-100
+          color_temp = int(scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100)))
         else:
-          brightness = "disable"
-        if "color_temp" in entity.attributes.supported_color_modes:
-          if "color_temp" in entity.attributes:
-            # scale ha color temp range to 0-100
-            color_temp = int(scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100)))
-          else:
-            color_temp = "unknown"
-        else:
-          color_temp = "disable"
-          
-        list_color_modes = ["xy", "rgb", "rgbw", "hs"]
-        if any(item in list_color_modes for item in entity.attributes.supported_color_modes):
-          color = "enable"
-        else:
-          color = "disable"
-      self.send_mqtt_msg(f"entityUpdateDetail,{get_icon_id('lightbulb')},{icon_color},{switch_val},{brightness},{color_temp},{color}")
+          color_temp = "unknown"
+      else:
+        color_temp = "disable"
+        
+      list_color_modes = ["xy", "rgb", "rgbw", "hs"]
+      if any(item in list_color_modes for item in entity.attributes.supported_color_modes):
+        color = "enable"
+      else:
+        color = "disable"
+    self.send_mqtt_msg(f"entityUpdateDetail,{get_icon_id('lightbulb')},{icon_color},{switch_val},{brightness},{color_temp},{color}")
 
-    if page_type == "popupShutter":
-      pos = self.api.get_entity(entity).attributes.current_position
-      # reverse position for slider
-      pos = 100-pos
-      self.send_mqtt_msg(f"entityUpdateDetail,{pos}")
+
+  def generate_shutter_detail_page(self, entity):
+    pos = self.api.get_entity(entity).attributes.current_position
+    # reverse position for slider
+    pos = 100-pos
+    self.send_mqtt_msg(f"entityUpdateDetail,{pos}")
 
   def send_message_page(self, id, heading, msg, b1, b2):
     self.send_mqtt_msg(f"pageType,popupNotify")
     self.send_mqtt_msg(f"entityUpdateDetail,|{id}|{heading}|65535|{b1}|65535|{b2}|65535|{msg}|65535|0")
-   
+    
