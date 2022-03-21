@@ -4,6 +4,7 @@
 
 - Thermostat Card
 - Entity Card (Temperature, Switches and sensors, the script tries to figure the unit of measurement automatically)
+- Grid Card
 - Detail Card (only switch and normal dimmer)
 - Live update (when value was changed in the backend and the page is currently open)
 - Screensaver Page with Time, Date and Weather Information.
@@ -44,8 +45,8 @@ See the icons currently usable in the following table:
 
 You can change the string and devices in the config object.
 
-## Buttons
-If you like you can add special pages for the buttons, but there is a problem currently which will open the last page again. But if you press the button again, the correct page will open.
+## Hardware buttons
+If you like you can add special pages for the buttons.
 
 First you need to add this rule to Tasmota:
 
@@ -54,6 +55,12 @@ Rule2 on Button1#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,butto
 Rule2
 ```
 
+## Colors
+You can define colors this way and use them later in the PageItem element
+```
+const BatteryFull: RGB = { red: 96, green: 176, blue: 62 }
+const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
+```
 ## The config element in the script which needs to be configured
 ```
 var config: Config = {
@@ -73,14 +80,15 @@ var config: Config = {
     timeFormat: "%H:%M",                                  // not used right now
     dateFormat: "%A, %d. %B %Y",                          // not used right now
     weatherEntity: "alias.0.Wetter",
-    defaultColor: RGB,                                    // Default color of all elements
-    gridPageOnColor: RGB,                                 // Default on color on grid page
-    gridPageOffColor: RGB,                                // Default off color on grid page
+    defaultColor: Off,                                    // Default color of all elements
+    defaultOnColor: RGB,                                  // Default on state color for items
+    defaultOffColor: RGB,                                 // Default off state color for page
     temperatureUnit: "°C",                                // Unit to append on temperature sensors
     pages: [
         {
             "type": "cardEntities",                       // card type (cardEntities, cardThermo)
             "heading": "Testseite",                       // heading
+            "useColor": false,                             // should colors be enabled on this page, can be overridden in PageItem
             "items": [                                    // items array (up to 4 on cardEntities, 1 for cardThermo)
                 <PageItem>{ id: "alias.0.Rolladen_Eltern" },                // device which must be configured in the device panel. Use only the folder for the device, not the set, get states ...
                 <PageItem>{ id: "alias.0.Erker" },
@@ -92,17 +100,19 @@ var config: Config = {
         {
             "type": "cardEntities",
             "heading": "Strom",
+            "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
             "items": [
                 <PageItem>{ id: "alias.0.Netz" },
-                <PageItem>{ id: "alias.0.Hausverbrauch" },
+                <PageItem>{ id: "alias.0.Hausverbrauch", icon: 4, interpolateColor: true, offColor: BatteryFull, onColor: Red , maxValue: 1000 },
                 <PageItem>{ id: "alias.0.Pv" },
-                <PageItem>{ id: "alias.0.Batterie" }
+                <PageItem>{ id: "alias.0.Batterie", icon: 34, interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
 
             ]
         },
         {
             "type": "cardThermo",
             "heading": "Thermostat",
+            "useColor": false,                            // should colors be enabled on this page, can be overridden in PageItem
             "item": "alias.0.WzNsPanel"                   // Needs to be a thermostat in the device panel
         }
     ],
@@ -119,6 +129,10 @@ type PageItem = {
     onColor: (RGB | undefined),             // the color the item will get when active
     offColor: (RGB | undefined),            // the color the item will get when inactive
     useColor: (boolean | undefined)         // override colors, only Grid pages has colors enabled per default
+    interpolateColor: (boolean | undefined),// fade between color on and off, useColor on Page or PageItem must be enabled
+    minValue: (number | undefined),         // the minimum value for the fade calculation, if smaller the minimum value will be used
+    maxValue: (number | undefined),         // the maximum value for the fade calculation, if larger the maximum value will be used
+    buttonText: (string | undefined)        // the Button Text, default is "Press"
 }
 ```
 
@@ -130,6 +144,7 @@ var button1Page: PageGrid =
 {
     "type": "cardGrid",
     "heading": "Radio",
+    "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
     "items": [
         <PageItem>{ id: "alias.0.Radio.NJoy" },
         <PageItem>{ id: "alias.0.Radio.Delta_Radio" },
@@ -138,7 +153,7 @@ var button1Page: PageGrid =
 };
 ```
 
-Pages array can look like this:
+Pages array can look like this, so you can add the pages as object or define them in the array itself. This is up to you.
 
 ```
 pages: [
@@ -146,6 +161,7 @@ pages: [
         {
             "type": "cardEntities",
             "heading": "Strom",
+            "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
             "items": [
                 <PageItem>{ id: "alias.0.Netz" },
                 <PageItem>{ id: "alias.0.Hausverbrauch" },
