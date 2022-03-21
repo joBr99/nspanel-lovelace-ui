@@ -464,8 +464,6 @@ class LovelaceUIPanel:
     if item_type == "delete":
       return f",{item_type},,,,,"
 
-    icon_id = get_icon_id('alert-circle-outline')
-
     if not self.api.entity_exists(item):
       return f",text,{item},{get_icon_id('alert-circle-outline')},17299,Not found check, apps.yaml"
 
@@ -476,7 +474,7 @@ class LovelaceUIPanel:
       icon_id = get_icon_id('window-open') if icon is None else get_icon_id(icon)
       return f",shutter,{item},{icon_id},17299,{name},"
 
-    if item_type == "light":     
+    if item_type == "light":
       switch_val = 1 if entity.state == "on" else 0
       icon_color = self.getEntityColor(entity)
       icon_id = get_icon_id('lightbulb') if icon is None else get_icon_id(icon)
