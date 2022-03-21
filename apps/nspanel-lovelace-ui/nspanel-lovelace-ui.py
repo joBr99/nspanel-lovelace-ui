@@ -490,12 +490,13 @@ class NsPanelLovelaceUI:
     if item_type == "switch" or item_type == "input_boolean":
       switch_val = 1 if entity.state == "on" else 0
       icon_id = get_icon_id("flash")
+      icon_color = self.getEntityColor(entity)
       if item_type == "input_boolean":
         if switch_val == 1:
           icon_id = get_icon_id("check-circle-outline")
         else:
           icon_id = get_icon_id("close-circle-outline")
-      return f",switch,{item},{icon_id},17299,{name},{switch_val}"
+      return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
 
     if item_type == "sensor":
       # maps ha device classes to material design icons
