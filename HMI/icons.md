@@ -39,3 +39,4 @@ ID | MD Icon Name | Icon
 32 | solar-power | ![solar-power](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/solar-power.svg)
 33 | battery-charging-medium | ![battery-charging-medium](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/battery-charging-medium.svg)
 34 | battery-medium | ![battery-medium](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/battery-medium.svg)
+35 | shield-home | ![shield-home](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/shield-home.svg)
