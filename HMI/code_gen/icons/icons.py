@@ -36,7 +36,8 @@ icons = [
     "snowflake",
     "solar-power",
     "battery-charging-medium",
-    "battery-medium"
+    "battery-medium",
+    "shield-home"
 ]
 
 
