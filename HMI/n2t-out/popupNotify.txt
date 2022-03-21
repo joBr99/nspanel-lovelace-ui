@@ -531,6 +531,10 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,sleepTimeout,0,0
                                     }
+                                    if(tInstruction.txt=="exitPopup")
+                                    {
+                                        click b0,1
+                                    }
                                     if(tInstruction.txt=="pageType")
                                     {
                                         sleepTimeout=vaOldSleepT.val
