@@ -146,31 +146,31 @@ The following message can be used to update the content on the cardEntities Page
 
 ### cardEntities Page
 
-`event,*eventName*,*PageNumber*,*PageHeading*,*entityName*,*buttonId*,*actionName*,*optionalValue*`
+`event,*eventName*,*entityName*,*actionName*,*optionalValue*`
 
 `event,pageOpen,0`
 
-`event,buttonPress,1,tHeading,internalNameEntity,1,up`
+`event,buttonPress2,internalNameEntity,up`
 
-`event,buttonPress,1,tHeading,internalNameEntity,1,down`
+`event,buttonPress2,internalNameEntity,down`
 
-`event,buttonPress,1,tHeading,internalNameEntity,1,stop`
+`event,buttonPress2,internalNameEntity,stop`
 
-`event,buttonPress,1,tHeading,internalNameEntity,1,OnOff,1`
+`event,buttonPress2,internalNameEntity,OnOff,1`
 
-`event,buttonPress,1,tHeading,internalNameEntity,1,button`
+`event,buttonPress2,internalNameEntity,button`
 
 ### popupLight Page
 
 `event,pageOpenDetail,popupLight,internalNameEntity`
 
-`event,buttonPress,D,nameEntity,internalNameEntity,1,OnOff,1`
+`event,buttonPress2,internalNameEntity,OnOff,1`
 
-`event,buttonPress,D,nameEntity,internalNameEntity,1,brightnessSlider,50`
+`event,buttonPress2,internalNameEntity,brightnessSlider,50`
 
-`event,buttonPress,D,nameEntity,internalNameEntity,1,colorTempSlider,50`
+`event,buttonPress2,internalNameEntity,colorTempSlider,50`
 
-`event,buttonPress,D,nameEntity,internalNameEntity,1,colorWheel,x|y`
+`event,buttonPress2,internalNameEntity,colorWheel,x|y`
 
 ### popupShutter Page
 
