@@ -309,6 +309,24 @@ key | optional | type | default | description
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
 
+### Override Icons
+
+To override Icons of entities you can configure an icon name in your configuration, please see the following example.
+Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.
+
+```yaml
+      - type: cardGrid
+        heading: Lights
+        items:
+          - light.wled
+          - light.schreibtischlampe
+          - item: switch.deckenbeleuchtung_hinten
+            icon: lightbulb
+		  - delete
+		  - delete
+      - type: cardMedia
+```
+
 ## How to update
 
 Updating involves mainly already descriped steps from installation, so this is a short summary.
