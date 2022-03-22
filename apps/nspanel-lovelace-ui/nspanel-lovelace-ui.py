@@ -488,13 +488,10 @@ class LovelaceUIPanel:
       icon_id = get_icon_id('flash') if icon is None else get_icon_id(icon)
       icon_color = self.getEntityColor(entity)
       if item_type == "input_boolean":
-        if switch_val == 1:
-          icon_id = get_icon_id("check-circle-outline")
-        else:
-          icon_id = get_icon_id("close-circle-outline")
+        icon_id = get_icon_id("check-circle-outline") if switch_val == 1 else get_icon_id("close-circle-outline")
       return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
 
-    if item_type == "sensor":
+    if item_type in ["sensor", "binary_sensor"]:
       # maps ha device classes to material design icons
       icon_mapping = {
         "temperature": "thermometer",
@@ -508,13 +505,12 @@ class LovelaceUIPanel:
           icon_id = get_icon_id('alert-circle-outline')
       else:
         icon_id = get_icon_id('alert-circle-outline')
-      unit_of_measurement = ""
-      if "unit_of_measurement" in entity.attributes:
-        unit_of_measurement = entity.attributes.unit_of_measurement
+      
+      unit_of_measurement = self.get_safe_ha_attribute(entity.attributes, "unit_of_measurement", "")
       value = entity.state + " " + unit_of_measurement
       return f",text,{item},{icon_id},17299,{name},{value}"
 
-    if item_type == "button" or item_type == "input_button":
+    if item_type in ["button", "input_button"]:
       icon_id = get_icon_id('gesture-tap-button') if icon is None else get_icon_id(icon)
       return f",button,{item},{icon_id},17299,{name},PRESS"
     
