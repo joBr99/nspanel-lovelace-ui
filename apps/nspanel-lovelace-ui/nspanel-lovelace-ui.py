@@ -2,8 +2,8 @@ import json
 import datetime
 import hassapi as hass
 from helper import scale, pos_to_color, rgb_dec565, rgb_brightness
-from icon_mapper import get_icon_id
-
+from icon_mapping import get_icon_id
+from icons import get_icon_id_ha
 # check Babel
 import importlib
 babel_spec = importlib.util.find_spec("babel")
@@ -320,43 +320,30 @@ class LovelaceUIPanel:
     we = self.api.get_entity(self.config["weatherEntity"])
     unit = "°C"
 
-    # this maps possible states from ha to material design icon names
-    weathericons = {
-      'clear-night': 'weather-night',
-      'cloudy': 'weather-cloudy',
-      'exceptional': 'alert-circle-outline',
-      'fog': 'weather-fog',
-      'hail': 'weather-hail',
-      'lightning': 'weather-lightning',
-      'lightning-rainy': 'weather-lightning-rainy',
-      'partlycloudy': 'weather-partly-cloudy',
-      'pouring': 'weather-pouring',
-      'rainy': 'weather-rainy',
-      'snowy': 'weather-snowy',
-      'snowy-rainy': 'weather-snowy-rainy',
-      'sunny': 'weather-sunny',
-      'windy': 'weather-windy',
-      'windy-variant': 'weather-windy-variant'
-    }
+    icon_cur        = get_icon_id_ha("weather", state=we.state)
+    text_cur        = f"{we.attributes.temperature}{unit}"
+    icon_cur_detail = get_icon_id("water-percent")
+    text_cur_detail = f"{we.attributes.humidity} %"
 
-    i1 = get_icon_id(weathericons[we.attributes.forecast[0]['condition']])
-    u1 = we.attributes.forecast[0]['temperature']
-    i2 = get_icon_id(weathericons[we.attributes.forecast[1]['condition']])
-    u2 = we.attributes.forecast[1]['temperature']
+    up1   = we.attributes.forecast[0]['datetime']
+    up1   = datetime.datetime.fromisoformat(up1)
+    icon1 = get_icon_id_ha("weather", state=we.attributes.forecast[0]['condition'])
+    down1 = we.attributes.forecast[0]['temperature']
 
-    o1 = we.attributes.forecast[0]['datetime']
-    o1 = datetime.datetime.fromisoformat(o1)
-    o2 = we.attributes.forecast[1]['datetime']
-    o2 = datetime.datetime.fromisoformat(o2)
+    up2   = we.attributes.forecast[1]['datetime']
+    up2   = datetime.datetime.fromisoformat(up2)
+    icon2 = get_icon_id_ha("weather", state=we.attributes.forecast[1]['condition'])
+    down2 = we.attributes.forecast[1]['temperature']
+
     global babel_spec
     if babel_spec is not None:
-      o1 = babel.dates.format_date(o1, "E", locale=self.config["locale"])
-      o2 = babel.dates.format_date(o2, "E", locale=self.config["locale"])
+      up1 = babel.dates.format_date(up1, "E", locale=self.config["locale"])
+      up2 = babel.dates.format_date(up2, "E", locale=self.config["locale"])
     else:
-      o1 = o1.strftime("%a")
-      o2 = o2.strftime("%a")
+      up1 = up1.strftime("%a")
+      up2 = up2.strftime("%a")
 
-    self.send_mqtt_msg(f"weatherUpdate,?{get_icon_id(weathericons[we.state])}?{we.attributes.temperature}{unit}?{26}?{we.attributes.humidity} %?{o1}?{i1}?{u1}?{o2}?{i2}?{u2}")
+    self.send_mqtt_msg(f"weatherUpdate,?{icon_cur}?{text_cur}?{icon_cur_detail}?{text_cur_detail}?{up1}?{icon1}?{down1}?{up2}?{icon2}?{down2}")
 
 
   def handle_button_press(self, entity_id, btype, optVal=None):
@@ -474,48 +461,34 @@ class LovelaceUIPanel:
     name = entity.attributes.friendly_name
 
     if item_type == "cover":
-      icon_id = get_icon_id('window-open') if icon is None else get_icon_id(icon)
+      icon_id = get_icon_id_ha("cover", state=entity.state overwrite=icon)
       return f",shutter,{item},{icon_id},17299,{name},"
 
     if item_type == "light":
       switch_val = 1 if entity.state == "on" else 0
       icon_color = self.getEntityColor(entity)
-      icon_id = get_icon_id('lightbulb') if icon is None else get_icon_id(icon)
+      icon_id = get_icon_id_ha("light", overwrite=icon)
       return f",{item_type},{item},{icon_id},{icon_color},{name},{switch_val}"
 
     if item_type == "switch" or item_type == "input_boolean":
+      icon_id = get_icon_id_ha(item_type, overwrite=icon)
       switch_val = 1 if entity.state == "on" else 0
-      icon_id = get_icon_id('flash') if icon is None else get_icon_id(icon)
       icon_color = self.getEntityColor(entity)
-      if item_type == "input_boolean":
-        icon_id = get_icon_id("check-circle-outline") if switch_val == 1 else get_icon_id("close-circle-outline")
       return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
 
     if item_type in ["sensor", "binary_sensor"]:
-      # maps ha device classes to material design icons
-      icon_mapping = {
-        "temperature": "thermometer",
-        "power": "flash"
-      }
-      if "device_class" in entity.attributes:
-        if entity.attributes.device_class in icon_mapping:
-          icon_id = icon_mapping[entity.attributes.device_class]
-        else:
-          self.api.log("No Icon found for device_class: %s. Please open a issue on github to report the missing mapping.", entity.attributes.device_class)
-          icon_id = get_icon_id('alert-circle-outline')
-      else:
-        icon_id = get_icon_id('alert-circle-outline')
-      
+      device_class = self.get_safe_ha_attribute(entity.attributes, "device_class", "")
+      icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
       unit_of_measurement = self.get_safe_ha_attribute(entity.attributes, "unit_of_measurement", "")
       value = entity.state + " " + unit_of_measurement
       return f",text,{item},{icon_id},17299,{name},{value}"
 
     if item_type in ["button", "input_button"]:
-      icon_id = get_icon_id('gesture-tap-button') if icon is None else get_icon_id(icon)
+      icon_id = get_icon_id_ha("button", overwrite=icon)
       return f",button,{item},{icon_id},17299,{name},PRESS"
     
     if item_type == "scene":
-      icon_id = get_icon_id('palette') if icon is None else get_icon_id(icon)
+      icon_id = get_icon_id_ha("scene", overwrite=icon)
       return f",button,{item},{icon_id},17299,{name},ACTIVATE"
 
   def generate_entities_page(self, items):

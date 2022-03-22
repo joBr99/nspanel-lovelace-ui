@@ -39,7 +39,8 @@ icons = [
     "battery-medium",
     "shield-home",
     "door-open",
-    "door-closed"
+    "door-closed",
+    "window-closed"
 ]
 
 
@@ -65,7 +66,7 @@ for icon_name in icons:
         icon_name_list.append(icon_name)
 
 # write mapping lib for python
-with open(os.path.join(__location__, "../../../apps/nspanel-lovelace-ui", "icon_mapper.py"), 'w') as f:
+with open(os.path.join(__location__, "../../../apps/nspanel-lovelace-ui", "icon_mapping.py"), 'w') as f:
     f.write("icons = {\n")
     for idx, val in enumerate(icon_name_list):
         f.write(f"    '{val}': {idx},\n")
