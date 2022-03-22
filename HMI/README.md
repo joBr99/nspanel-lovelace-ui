@@ -176,13 +176,13 @@ The following message can be used to update the content on the cardEntities Page
 
 `event,pageOpenDetail,popupShutter,internalNameEntity`
 
-`event,buttonPress,D,nameEntity,internalNameEntity,1,positionSlider,50`
+`event,buttonPress2,internalNameEntity,positionSlider,50`
 
 ### popupNotify Page
 
-`event,buttonPress,D,D,*internalName*,1,notifyAction,yes`
+`event,buttonPress2,*internalName*,notifyAction,yes`
 
-`event,buttonPress,D,D,*internalName*,1,notifyAction,no`
+`event,buttonPress2,*internalName*,notifyAction,no`
 
 ### cardThermo Page
 
