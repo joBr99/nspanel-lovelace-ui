@@ -789,6 +789,7 @@ Timer tmSleep
                     screensaver.originPage.val=dp
                     sleepValue=0
                     click b0,1
+                    click b0,0
                 }
             }
         
@@ -881,6 +882,7 @@ Timer tmSerial
                                             vis hTempSlider,0
                                             vis t3,0
                                             vis t4,0
+                                            mode_temp.val=0
                                             // mode == 1 is temp controls currently shown
                                             if(mode.val==1)
                                             {
@@ -890,6 +892,7 @@ Timer tmSerial
                                             }
                                         }else if(tTmp.txt=="unknown") // temp supported, but not in color mode
                                         {
+                                            mode_temp.val=1
                                             // mode == 1 is temp controls currently shown
                                             if(mode.val==1)
                                             {
@@ -899,6 +902,7 @@ Timer tmSerial
                                             }
                                         }else
                                         {
+                                            mode_temp.val=0
                                             vis hTempSlider,1
                                             vis t3,1
                                             vis t4,1
@@ -917,10 +921,15 @@ Timer tmSerial
                                         {
                                             vis t0,0
                                             vis bColor,0
+                                            vis pColorWheel,0
                                         }else
                                         {
                                             vis t0,1
                                             vis bColor,1
+                                            if(mode.val==0)
+                                            {
+                                                vis pColorWheel,1
+                                            }
                                         }
                                     }
                                     if(tInstruction.txt=="time")
