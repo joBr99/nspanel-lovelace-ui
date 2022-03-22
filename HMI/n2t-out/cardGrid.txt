@@ -632,14 +632,7 @@ Button bEntity1
         
         Touch Release Event
             tmLP.en=0
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn1.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -697,14 +690,7 @@ Button bEntity2
         
         Touch Release Event
             tmLP.en=0
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn2.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -762,14 +748,7 @@ Button bEntity3
         
         Touch Release Event
             tmLP.en=0
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn3.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn3.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -827,14 +806,7 @@ Button bEntity4
         
         Touch Release Event
             tmLP.en=0
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn4.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn4.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -892,14 +864,7 @@ Button bEntity5
         
         Touch Release Event
             tmLP.en=0
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn5.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn5.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -957,14 +922,7 @@ Button bEntity6
         
         Touch Release Event
             tmLP.en=0
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn6.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn6.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
