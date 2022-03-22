@@ -3,7 +3,7 @@ import datetime
 import hassapi as hass
 from helper import scale, pos_to_color, rgb_dec565, rgb_brightness
 from icon_mapping import get_icon_id
-from icons import get_icon_id_ha, map_to_mdi_name
+from icons import get_icon_id_ha
 # check Babel
 import importlib
 babel_spec = importlib.util.find_spec("babel")
