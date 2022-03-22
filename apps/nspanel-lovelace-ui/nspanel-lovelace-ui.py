@@ -657,7 +657,8 @@ class LovelaceUIPanel:
     self.send_mqtt_msg(f"entityUpdateDetail,{get_icon_id('lightbulb')},{icon_color},{switch_val},{brightness},{color_temp},{color}")
 
   def generate_shutter_detail_page(self, entity):
-    pos = self.api.get_entity(entity).attributes.current_position
+    pos = int(self.get_safe_ha_attribute(entity.attributes, "current_position", 50)) 
+
     # reverse position for slider
     pos = 100-pos
     self.send_mqtt_msg(f"entityUpdateDetail,{pos}")
