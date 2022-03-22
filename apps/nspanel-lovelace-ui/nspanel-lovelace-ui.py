@@ -148,7 +148,7 @@ class LovelaceUIPanel:
     for item in items:
       # in case item is a dict, grab the item name
       if type(item) is dict:
-        cleaned_list.append(item["item"])
+        cleaned_list.append(next(iter(item)))
       else:
         cleaned_list.append(item)
     return cleaned_list
@@ -443,8 +443,8 @@ class LovelaceUIPanel:
   def generate_entities_item(self, item):
     icon = None
     if type(item) is dict:
-      icon = item["icon"]
-      item = item["item"]
+      icon = next(iter(item.items()))[1]['icon']
+      item = next(iter(item.items()))[0]
 
     # type of the item is the string before the "." in the item name
     item_type = item.split(".")[0]
