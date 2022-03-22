@@ -288,11 +288,6 @@ class LovelaceUIPanel:
         if msg[2] == "popupLight":
           self.generate_light_detail_page(msg[3])
 
-      if msg[1] == "tempUpd":
-        self.api.log("Received tempUpd command", level="DEBUG")
-        temp = int(msg[4])/10
-        self.api.get_entity(msg[3]).call_service("set_temperature", temperature=temp)
-
       if msg[1] == "screensaverOpen":
         self.update_screensaver_weather("")
 
@@ -436,6 +431,10 @@ class LovelaceUIPanel:
       # HA wants this value between 0 and 1 as float
       pos = pos/100
       self.api.get_entity(entity_id).call_service("volume_set", volume_level=pos)
+
+    if btype == "tempUpd":
+      temp = int(optVal)/10
+      self.api.get_entity(msg[3]).call_service("set_temperature", temperature=temp)
 
   def generate_page(self, page_number):
     # get type of page
@@ -657,8 +656,7 @@ class LovelaceUIPanel:
     self.send_mqtt_msg(f"entityUpdateDetail,{get_icon_id('lightbulb')},{icon_color},{switch_val},{brightness},{color_temp},{color}")
 
   def generate_shutter_detail_page(self, entity):
-    pos = int(self.get_safe_ha_attribute(entity.attributes, "current_position", 50)) 
-
+    pos = int(self.get_safe_ha_attribute(entity.attributes, "current_position", 50))
     # reverse position for slider
     pos = 100-pos
     self.send_mqtt_msg(f"entityUpdateDetail,{pos}")
