@@ -9,7 +9,7 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 
 ## Features
 
-- Entities Page with support for cover, switch, input_boolean, sensor, button, scenes, input_button and light
+- Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, scenes, input_button and light
 - Grid Page with support for cover, switch, input_boolean, button, scenes, and light
 - Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
 - Thermostat Page 
@@ -250,7 +250,7 @@ nspanel-1:
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
-    updateMode: auto-notify 			# possible values are auto, auto-notify and manual
+    updateMode: auto-notify # possible values are auto, auto-notify and manual
     timeoutScreensaver: 15 #in seconds
     #brightnessScreensaver: 10
     brightnessScreensaver:
