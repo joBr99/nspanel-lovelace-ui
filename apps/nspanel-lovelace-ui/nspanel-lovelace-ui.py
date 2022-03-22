@@ -254,7 +254,16 @@ class LovelaceUIPanel:
         self.api.log("Received pageOpen command, raw page: %i, calc page: %i", recv_page, self.current_page_nr, level="DEBUG")
         # generate commands for current page
         self.generate_page(self.current_page_nr)
-
+        
+      if msg[1] == "buttonPress":
+        entity_id = msg[4]
+        btype = msg[6]
+        if len(msg) > 7:
+          value = msg[7]
+        else:
+          value = None
+        self.handle_button_press(entity_id, btype, value)
+        
       if msg[1] == "buttonPress2":
         entity_id = msg[2]
         btype = msg[3]
