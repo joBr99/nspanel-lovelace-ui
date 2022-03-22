@@ -14,6 +14,10 @@ popupNotify
 	17   Component(s)
 	180  Line(s) of event code
 	119  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	146  Line(s) of event code
+	111  Unique line(s) of event code
 cardMedia
 	22   Component(s)
 	200  Line(s) of event code
@@ -30,10 +34,6 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	146  Line(s) of event code
-	111  Unique line(s) of event code
 popupLight
 	26   Component(s)
 	304  Line(s) of event code
