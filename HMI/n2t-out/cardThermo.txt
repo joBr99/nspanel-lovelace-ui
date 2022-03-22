@@ -613,13 +613,11 @@ Button bDown
             {
                 xTempDest.val=xTempDest.val-xTempStep.val
             }
-            // temp chane event
-            // event,tempUpd,pageNumber,entityName,temperature
+            // event,buttonPress2,entn,tempUpd,X
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,tempUpd,"+tTmp.txt+","
+            tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
+            tSend.txt+="tempUpd,"
             //convert temperature
             covx xTempDest.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
@@ -669,11 +667,11 @@ Button bUp
             {
                 xTempDest.val=xTempDest.val+xTempStep.val
             }
-            // temp chane event
-            // event,tempUpd,pageNumber,entityName,temperature
+            // event,buttonPress2,entn,tempUpd,X
             //craft command
-            tSend.txt="event,tempUpd,"+tTmp.txt+","
+            tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
+            tSend.txt+="tempUpd,"
             //convert temperature
             covx xTempDest.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
@@ -778,12 +776,8 @@ Dual-state Button bt0
     Events
         Touch Press Event
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,hvac_action,"+va0.txt
+            tSend.txt="event,buttonPress2,"+entn.txt
+            tSend.txt+=",hvac_action,"+va0.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -831,12 +825,8 @@ Dual-state Button bt1
     Events
         Touch Press Event
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,hvac_action,"+va1.txt
+            tSend.txt="event,buttonPress2,"+entn.txt
+            tSend.txt+=",hvac_action,"+va1.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -884,12 +874,8 @@ Dual-state Button bt2
     Events
         Touch Press Event
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,hvac_action,"+va2.txt
+            tSend.txt="event,buttonPress2,"+entn.txt
+            tSend.txt+=",hvac_action,"+va2.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -937,12 +923,8 @@ Dual-state Button bt3
     Events
         Touch Press Event
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,hvac_action,"+va3.txt
+            tSend.txt="event,buttonPress2,"+entn.txt
+            tSend.txt+=",hvac_action,"+va3.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -990,12 +972,8 @@ Dual-state Button bt4
     Events
         Touch Press Event
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,hvac_action,"+va4.txt
+            tSend.txt="event,buttonPress2,"+entn.txt
+            tSend.txt+=",hvac_action,"+va4.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1043,12 +1021,8 @@ Dual-state Button bt5
     Events
         Touch Press Event
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,hvac_action,"+va5.txt
+            tSend.txt="event,buttonPress2,"+entn.txt
+            tSend.txt+=",hvac_action,"+va5.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1096,12 +1070,8 @@ Dual-state Button bt6
     Events
         Touch Press Event
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,hvac_action,"+va6.txt
+            tSend.txt="event,buttonPress2,"+entn.txt
+            tSend.txt+=",hvac_action,"+va6.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1149,12 +1119,8 @@ Dual-state Button bt7
     Events
         Touch Press Event
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,hvac_action,"+va7.txt
+            tSend.txt="event,buttonPress2,"+entn.txt
+            tSend.txt+=",hvac_action,"+va7.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1202,12 +1168,8 @@ Dual-state Button bt8
     Events
         Touch Press Event
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,hvac_action,"+va8.txt
+            tSend.txt="event,buttonPress2,"+entn.txt
+            tSend.txt+=",hvac_action,"+va8.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
