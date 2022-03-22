@@ -365,7 +365,7 @@ class LovelaceUIPanel:
     if btype == "button":
       if entity_id.startswith('scene'):
         self.api.get_entity(entity_id).call_service("turn_on")
-      elif entity_id.startswith('light') or entity_id.startswith('switch'):
+      elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean'):
         self.api.get_entity(entity_id).call_service("toggle")
       else:
         self.api.get_entity(entity_id).call_service("press")
