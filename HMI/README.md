@@ -188,19 +188,19 @@ The following message can be used to update the content on the cardEntities Page
 
 `event,pageOpen,0`
 
-`event,tempUpd,*pageNumber*,*entityName*,*temperature*`
+`event,buttonPress2,*entityName*,tempUpd,*temperature*`
 
-`event,buttonPress,*pageNumber*,*tHeading*,*entityName,1,hvac_action,*hvac_action*
+`event,buttonPress2,*entityName*,hvac_action,*hvac_action*`
 
 ### cardMedia Page
 
-`event,buttonPress,1,tHeading,internalNameEntity,1,media-back`
+`event,buttonPress2,internalNameEntity,media-back`
 
-`event,buttonPress,1,tHeading,internalNameEntity,1,media-pause`
+`event,buttonPress2,internalNameEntity,media-pause`
 
-`event,buttonPress,1,tHeading,internalNameEntity,1,media-next`
+`event,buttonPress2,internalNameEntity,media-next`
 
-`event,buttonPress,1,tHeading,internalNameEntity,1,volumeSlider,75`
+`event,buttonPress2,internalNameEntity,volumeSlider,75`
 
 ### cardAlarm Page
 
