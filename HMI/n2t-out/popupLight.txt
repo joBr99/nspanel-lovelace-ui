@@ -450,12 +450,8 @@ Picture pColorWheel
     
     Events
         Touch Press Event
-            // event,buttonPress,D,nameEntity,internalNameEntity,1,brightnessSlider,50
             //craft command
-            tSend.txt="event,buttonPress,D,"
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,colorWheel,"
+            tSend.txt="event,buttonPress2,"+entn.txt+",colorWheel,"
             sys0=tch0
             sys0=sys0-pColorWheel.x
             covx sys0,tTmp.txt,0,0
@@ -503,34 +499,9 @@ Slider hBrightness
         Lower range limit                   : 0
     
     Events
-        Touch Press Event
-            // event,buttonPress,D,nameEntity,internalNameEntity,1,brightnessSlider,50
-            //craft command
-            tSend.txt="event,buttonPress,D,"
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,brightnessSlider,"
-            covx hBrightness.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
         Touch Release Event
-            // event,buttonPress,D,nameEntity,internalNameEntity,1,brightnessSlider,50
             //craft command
-            tSend.txt="event,buttonPress,D,"
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,brightnessSlider,"
+            tSend.txt="event,buttonPress2,"+entn.txt+",brightnessSlider,"
             covx hBrightness.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -571,34 +542,9 @@ Slider hTempSlider
         Lower range limit                   : 0
     
     Events
-        Touch Press Event
-            // event,buttonPress,D,nameEntity,internalNameEntity,1,colorTempSlider,50
-            //craft command
-            tSend.txt="event,buttonPress,D,"
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,colorTempSlider,"
-            covx hTempSlider.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
         Touch Release Event
-            // event,buttonPress,D,nameEntity,internalNameEntity,1,colorTempSlider,50
             //craft command
-            tSend.txt="event,buttonPress,D,"
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,colorTempSlider,"
+            tSend.txt="event,buttonPress2,"+entn.txt+",colorTempSlider,"
             covx hTempSlider.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -752,12 +698,8 @@ Dual-state Button btOnOff1
     
     Events
         Touch Press Event
-            // event,buttonPress,D,nameEntity,internalNameEntity,1,OnOff,1
             //craft command
-            tSend.txt="event,buttonPress,D,"
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,OnOff,"
+            tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
             covx btOnOff1.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc

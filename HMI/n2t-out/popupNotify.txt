@@ -332,7 +332,7 @@ Button b2
         Touch Press Event
             sleepTimeout=vaOldSleepT.val
             //craft command
-            tSend.txt="event,buttonPress,D,D,"+entn.txt+",1,notifyAction,yes"
+            tSend.txt="event,buttonPress2,"+entn.txt+",notifyAction,yes"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -381,7 +381,7 @@ Button b1
         Touch Press Event
             sleepTimeout=vaOldSleepT.val
             //craft command
-            tSend.txt="event,buttonPress,D,D,"+entn.txt+",1,notifyAction,no"
+            tSend.txt="event,buttonPress2,"+entn.txt+",notifyAction,no"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC

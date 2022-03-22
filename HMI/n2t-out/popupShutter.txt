@@ -313,12 +313,9 @@ Slider hPosition
     
     Events
         Touch Release Event
-            // event,buttonPress,D,nameEntity,internalNameEntity,1,positionSlider,50
+            // event,buttonPress,internalNameEntity,positionSlider,50
             //craft command
-            tSend.txt="event,buttonPress,D,"
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,positionSlider,"
+            tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
             covx hPosition.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -419,14 +416,7 @@ Button bDown1
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,down"
+            tSend.txt="event,buttonPress2,"+entn.txt+",down"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -473,14 +463,7 @@ Button bStop1
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,stop"
+            tSend.txt="event,buttonPress2,"+entn.txt+",stop"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -527,14 +510,7 @@ Button bUp1
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tEntity.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,up"
+            tSend.txt="event,buttonPress2,"+entn.txt+",up"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
