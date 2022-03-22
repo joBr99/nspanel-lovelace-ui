@@ -320,8 +320,8 @@ Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.
         items:
           - light.wled
           - light.schreibtischlampe
-          - item: switch.deckenbeleuchtung_hinten
-            icon: lightbulb
+          - switch.deckenbeleuchtung_hinten:
+              icon: lightbulb
           - delete
           - delete
       - type: cardMedia
