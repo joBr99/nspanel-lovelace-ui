@@ -313,7 +313,7 @@ Slider hPosition
     
     Events
         Touch Release Event
-            // event,buttonPress,internalNameEntity,positionSlider,50
+            // event,buttonPress2,internalNameEntity,positionSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
             covx hPosition.val,tTmp.txt,0,0
