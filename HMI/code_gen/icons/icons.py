@@ -53,7 +53,7 @@ icon_name_list = []
 for icon_name in icons:
     #print(icon_name)
     icon = next((item for item in icon_metadata if item["name"] == icon_name), None)
-    if icon == None:
+    if icon is None:
         print(f"WARNING ICON NOT FOUND: {icon_name}")
     else:
         hex = icon['hex']
