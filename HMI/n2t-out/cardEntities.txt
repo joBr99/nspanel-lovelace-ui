@@ -541,8 +541,8 @@ Button bDown1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 379
-        y coordinate                        : 76
+        x coordinate                        : 377
+        y coordinate                        : 75
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -567,14 +567,7 @@ Button bDown1
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn1.txt+","
-            tSend.txt+="1,down"
+            tSend.txt="event,buttonPress2,"+entn1.txt+",down"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -596,7 +589,7 @@ Button bUp1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 275
-        y coordinate                        : 76
+        y coordinate                        : 75
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -621,14 +614,7 @@ Button bUp1
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn1.txt+","
-            tSend.txt+="1,up"
+            tSend.txt="event,buttonPress2,"+entn1.txt+",up"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -649,8 +635,8 @@ Button bStop1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 327
-        y coordinate                        : 76
+        x coordinate                        : 325
+        y coordinate                        : 75
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -675,14 +661,7 @@ Button bStop1
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn1.txt+","
-            tSend.txt+="1,stop"
+            tSend.txt="event,buttonPress2,"+entn1.txt+",stop"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -703,8 +682,8 @@ Button bStop2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 327
-        y coordinate                        : 133
+        x coordinate                        : 326
+        y coordinate                        : 132
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -729,14 +708,7 @@ Button bStop2
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn2.txt+","
-            tSend.txt+="2,stop"
+            tSend.txt="event,buttonPress2,"+entn2.txt+",stop"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -757,8 +729,8 @@ Button bDown2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 379
-        y coordinate                        : 133
+        x coordinate                        : 377
+        y coordinate                        : 131
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -783,14 +755,7 @@ Button bDown2
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn2.txt+","
-            tSend.txt+="2,down"
+            tSend.txt="event,buttonPress2,"+entn2.txt+",down"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -812,7 +777,7 @@ Button bUp2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 275
-        y coordinate                        : 133
+        y coordinate                        : 132
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -837,14 +802,7 @@ Button bUp2
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn2.txt+","
-            tSend.txt+="2,up"
+            tSend.txt="event,buttonPress2,"+entn2.txt+",up"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -865,8 +823,8 @@ Button bStop3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 327
-        y coordinate                        : 186
+        x coordinate                        : 326
+        y coordinate                        : 185
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -891,14 +849,7 @@ Button bStop3
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn3.txt+","
-            tSend.txt+="3,stop"
+            tSend.txt="event,buttonPress2,"+entn3.txt+",stop"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -919,8 +870,8 @@ Button bDown3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 379
-        y coordinate                        : 186
+        x coordinate                        : 378
+        y coordinate                        : 185
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -945,14 +896,7 @@ Button bDown3
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn3.txt+","
-            tSend.txt+="3,down"
+            tSend.txt="event,buttonPress2,"+entn3.txt+",down"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -999,14 +943,7 @@ Button bUp3
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn3.txt+","
-            tSend.txt+="3,up"
+            tSend.txt="event,buttonPress2,"+entn3.txt+",up"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1027,8 +964,8 @@ Button bStop4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 327
-        y coordinate                        : 242
+        x coordinate                        : 326
+        y coordinate                        : 241
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1053,14 +990,7 @@ Button bStop4
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn4.txt+","
-            tSend.txt+="4,stop"
+            tSend.txt="event,buttonPress2,"+entn4.txt+",stop"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1081,8 +1011,8 @@ Button bDown4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 378
-        y coordinate                        : 242
+        x coordinate                        : 377
+        y coordinate                        : 241
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1107,14 +1037,7 @@ Button bDown4
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn4.txt+","
-            tSend.txt+="4,down"
+            tSend.txt="event,buttonPress2,"+entn4.txt+",down"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1161,14 +1084,7 @@ Button bUp4
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn4.txt+","
-            tSend.txt+="4,up"
+            tSend.txt="event,buttonPress2,"+entn4.txt+",up"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1321,14 +1237,7 @@ Button bText1
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn1.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1349,8 +1258,8 @@ Button bText2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 277
-        y coordinate                        : 141
+        x coordinate                        : 276
+        y coordinate                        : 140
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -1375,14 +1284,7 @@ Button bText2
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn2.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1429,14 +1331,7 @@ Button bText3
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn3.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn3.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1483,14 +1378,7 @@ Button bText4
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn4.txt+","
-            tSend.txt+="1,button"
+            tSend.txt="event,buttonPress2,"+entn4.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1511,8 +1399,8 @@ Dual-state Button btOnOff1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 374
-        y coordinate                        : 76
+        x coordinate                        : 373
+        y coordinate                        : 75
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1533,14 +1421,7 @@ Dual-state Button btOnOff1
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn1.txt+","
-            tSend.txt+="1,OnOff,"
+            tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
             covx btOnOff1.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -1563,8 +1444,8 @@ Dual-state Button btOnOff2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 374
-        y coordinate                        : 133
+        x coordinate                        : 373
+        y coordinate                        : 132
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1585,14 +1466,7 @@ Dual-state Button btOnOff2
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn2.txt+","
-            tSend.txt+="2,OnOff,"
+            tSend.txt="event,buttonPress2,"+entn2.txt+",OnOff,"
             covx btOnOff2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -1637,14 +1511,7 @@ Dual-state Button btOnOff3
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn3.txt+","
-            tSend.txt+="3,OnOff,"
+            tSend.txt="event,buttonPress2,"+entn3.txt+",OnOff,"
             covx btOnOff3.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -1689,14 +1556,7 @@ Dual-state Button btOnOff4
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
-            //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn4.txt+","
-            tSend.txt+="4,OnOff,"
+            tSend.txt="event,buttonPress2,"+entn4.txt+",OnOff,"
             covx btOnOff4.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
