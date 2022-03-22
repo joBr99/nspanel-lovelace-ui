@@ -35,6 +35,8 @@ icons = {
     'battery-charging-medium': 33,
     'battery-medium': 34,
     'shield-home': 35,
+    'door-open': 36,
+    'door-closed': 37,
 }
 
 def get_icon_id(ma_name):
