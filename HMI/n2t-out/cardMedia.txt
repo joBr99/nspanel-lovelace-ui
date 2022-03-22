@@ -314,14 +314,11 @@ Text t2
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
+            // event,buttonPress2,entn,media-next
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
+            tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,media-next"
+            tSend.txt+="media-next"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -366,14 +363,11 @@ Text tPlayPause
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
+            // event,buttonPress2,entn,media-pause
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
+            tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,media-pause"
+            tSend.txt+="media-pause"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -418,14 +412,11 @@ Text t0
     
     Events
         Touch Press Event
-            // event,1,tHeading,tEntityName,1,up
+            // event,buttonPress2,entn,media-back
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
+            tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="1,media-back"
+            tSend.txt+="media-back"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -512,14 +503,9 @@ Slider hVolume
     
     Events
         Touch Release Event
-            // event,buttonPress,D,nameEntity,internalNameEntity,1,positionSlider,50
+            // event,buttonPress2,internalNameEntity,volumeSlider,50
             //craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,buttonPress,"+tTmp.txt+","
-            tSend.txt+=tHeading.txt+","
-            tSend.txt+=entn.txt+","
-            tSend.txt+="1,volumeSlider,"
+            tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
             covx hVolume.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
