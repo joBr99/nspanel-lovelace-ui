@@ -37,7 +37,9 @@ icons = [
     "solar-power",
     "battery-charging-medium",
     "battery-medium",
-    "shield-home"
+    "shield-home",
+    "door-open",
+    "door-closed"
 ]
 
 
