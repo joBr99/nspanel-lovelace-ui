@@ -14,10 +14,6 @@ popupNotify
 	17   Component(s)
 	180  Line(s) of event code
 	119  Unique line(s) of event code
-popupShutter
-	19   Component(s)
-	180  Line(s) of event code
-	103  Unique line(s) of event code
 cardMedia
 	22   Component(s)
 	200  Line(s) of event code
@@ -26,6 +22,10 @@ pageSwipeTest
 	18   Component(s)
 	62   Line(s) of event code
 	44   Unique line(s) of event code
+popupShutter
+	19   Component(s)
+	180  Line(s) of event code
+	103  Unique line(s) of event code
 pageTest
 	14   Component(s)
 	14   Line(s) of event code
