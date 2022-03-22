@@ -92,11 +92,9 @@ class LovelaceUIPanel:
     self.mqtt = self.api.get_plugin_api("MQTT")
     self.mqtt.mqtt_subscribe(topic=self.config["panelRecvTopic"])
     self.mqtt.listen_event(self.handle_mqtt_incoming_message, "MQTT_MESSAGE", topic=self.config["panelRecvTopic"], namespace='mqtt')
-
-    if "updateMode" in self.config:
-      update_mode = self.config["updateMode"]
-    else:
-      update_mode = "auto-notify"
+    
+    # Read updateMode and use "auto-notify" as default
+    update_mode = self.config["updateMode"] if "updateMode" in self.config else "auto-notify"
     self.updater = Updater(self, update_mode)
 
     # Request Tasmota Driver Version
@@ -231,27 +229,20 @@ class LovelaceUIPanel:
 
     # run action based on received command
     if msg[0] == "event":
-
       if msg[1] == "startup":
         self.api.log("Handling startup event", level="DEBUG")
-
         # grab version from screen and pass to updater class
         self.updater.set_current_display_firmware_version(int(msg[2]))
-
         # send date and time
         self.update_time("")
         self.update_date("")
-
         # set screensaver timeout
         timeout = self.config["timeoutScreensaver"]
         self.send_mqtt_msg(f"timeout,{timeout}")
-
         # send screensaver brightness
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
-
         # check for updates
         msg_send = self.updater.check_updates()
-
         # send messages for current page 
         if not msg_send:
           self.generate_page(self.current_page_nr)
@@ -347,7 +338,6 @@ class LovelaceUIPanel:
 
 
   def handle_button_press(self, entity_id, btype, optVal=None):
-
     if entity_id == "updateBerryNoYes" and optVal == "yes":
       # go back to main page before starting the update
       self.generate_page(self.current_page_nr)
