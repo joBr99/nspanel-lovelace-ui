@@ -78,15 +78,9 @@ Variable (int32) mode
         Scope: local
         Value: 1
     
-Variable (int32) mode_bright
-    Attributes
-        ID   : 24
-        Scope: local
-        Value: 0
-    
 Variable (int32) mode_temp
     Attributes
-        ID   : 25
+        ID   : 24
         Scope: local
         Value: 0
     
@@ -392,7 +386,7 @@ Text tId
     
 Text t0
     Attributes
-        ID                                  : 26
+        ID                                  : 25
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -710,11 +704,6 @@ Button bColor
                 mode.val=0
                 //enable color wheel
                 vis pColorWheel,1
-                //vis t0,1
-                //disable brightness
-                //vis t1,0
-                //vis t2,0
-                //vis hBrightness,0
                 //disable color temp
                 vis t4,0
                 vis t3,0
@@ -724,14 +713,6 @@ Button bColor
                 mode.val=1
                 //disable color wheel
                 vis pColorWheel,0
-                //vis t0,0
-                //if(mode_bright.val==1)
-                //{
-                //  //enable brightness
-                //  vis t1,1
-                //  vis t2,1
-                //  vis hBrightness,1
-                //}
                 if(mode_temp.val==1)
                 {
                     //enable color temp
@@ -885,46 +866,61 @@ Timer tmSerial
                                             vis t1,0
                                             vis t2,0
                                             vis hBrightness,0
-                                            mode_bright.val=0
                                         }else
                                         {
                                             vis t1,1
                                             vis t2,1
                                             vis hBrightness,1
-                                            mode_bright.val=1
                                             covx tTmp.txt,sys0,0,0
                                             hBrightness.val=sys0
                                         }
-                                        if(mode.val==1)
+                                        // get ColorTemp value
+                                        spstr strCommand.txt,tTmp.txt,",",5
+                                        if(tTmp.txt=="disable")
                                         {
-                                            // get ColorTemp value
-                                            spstr strCommand.txt,tTmp.txt,",",5
-                                            if(tTmp.txt=="unknown")
+                                            vis hTempSlider,0
+                                            vis t3,0
+                                            vis t4,0
+                                            // mode == 1 is temp controls currently shown
+                                            if(mode.val==1)
                                             {
+                                                // switch mode
                                                 click bColor,1
-                                                mode_temp.val=1
-                                            }else if(tTmp.txt=="disable")
+                                                click bColor,0
+                                            }
+                                        }else if(tTmp.txt=="unknown") // temp supported, but not in color mode
+                                        {
+                                            // mode == 1 is temp controls currently shown
+                                            if(mode.val==1)
                                             {
-                                                vis t4,0
-                                                vis t3,0
-                                                vis hTempSlider,0
-                                                mode_temp.val=0
-                                            }else
+                                                // switch mode
+                                                click bColor,1
+                                                click bColor,0
+                                            }
+                                        }else
+                                        {
+                                            vis hTempSlider,1
+                                            vis t3,1
+                                            vis t4,1
+                                            // mode == 0 is rgb controls currently shown
+                                            if(mode.val==0)
                                             {
-                                                vis t4,1
-                                                vis t3,1
-                                                vis hTempSlider,1
-                                                mode_temp.val=1
-                                                covx tTmp.txt,sys0,0,0
-                                                hTempSlider.val=sys0
+                                                // switch mode
+                                                click bColor,1
+                                                click bColor,0
                                             }
                                         }
-                                        // get ColorWheel value
+                                        // get Color value
                                         spstr strCommand.txt,tTmp.txt,",",6
-                                        if(tTmp.txt!="disable")
+                                        // disable -> isn't supported
+                                        if(tTmp.txt=="disable")
                                         {
-                                            vis bColor,1
+                                            vis t0,0
+                                            vis bColor,0
+                                        }else
+                                        {
                                             vis t0,1
+                                            vis bColor,1
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -949,61 +945,52 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,sleepTimeout,0,0
                                     }
+                                    if(tInstruction.txt=="pageType")
+                                    {
+                                        //command format pageType,specialPageName
+                                        //write name of speical page to tId
+                                        spstr strCommand.txt,tId.txt,",",1
+                                        //save second arg if there's one
+                                        spstr strCommand.txt,tTmp.txt,",",2
+                                        //save third arg if there's one
+                                        spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
+                                        //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
+                                        udelete payloadLength-1
+                                        bufferPos=0
+                                        if(tId.txt=="cardEntities")
+                                        {
+                                            page cardEntities
+                                        }
+                                        if(tId.txt=="cardMedia")
+                                        {
+                                            page cardMedia
+                                        }
+                                        if(tId.txt=="pageStartup")
+                                        {
+                                            page pageStartup
+                                        }
+                                        if(tId.txt=="popupNotify")
+                                        {
+                                            page popupNotify
+                                        }
+                                        if(tId.txt=="cardGrid")
+                                        {
+                                            page cardGrid
+                                        }
+                                        if(tId.txt=="cardAlarm")
+                                        {
+                                            page cardAlarm
+                                        }
+                                    }
                                     // end of user code
                                     udelete payloadLength-1
                                     bufferPos=0
-                                }
-                                if(tInstruction.txt=="pageType")
-                                {
-                                    //command format pageType,specialPageName
-                                    //write name of speical page to tId
-                                    spstr strCommand.txt,tId.txt,",",1
-                                    //save second arg if there's one
-                                    spstr strCommand.txt,tTmp.txt,",",2
-                                    //save third arg if there's one
-                                    spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
-                                    //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-                                    udelete payloadLength-1
-                                    bufferPos=0
-                                    if(tId.txt=="cardEntities")
-                                    {
-                                        page cardEntities
-                                    }
-                                    if(tId.txt=="cardMedia")
-                                    {
-                                        page cardMedia
-                                    }
-                                    if(tId.txt=="pageStartup")
-                                    {
-                                        page pageStartup
-                                    }
-                                    if(tId.txt=="popupNotify")
-                                    {
-                                        page popupNotify
-                                    }
-                                    if(tId.txt=="cardGrid")
-                                    {
-                                        page cardGrid
-                                    }
-                                    if(tId.txt=="cardAlarm")
-                                    {
-                                        page cardAlarm
-                                    }
                                 }
                             }
                         }
                     }
                     // next character
                     bufferPos++
-                }
-                if(bufferPos==usize)
-                {
-                    // copy whole buffer to t1.txt, for debugging
-                    //ucopy t2.txt,0,usize,0
-                    // ucopy n2.val,0,usize,0
-                    // clear whole buffer
-                    //code_c
-                    //bufferPos=0
                 }
             }
         
