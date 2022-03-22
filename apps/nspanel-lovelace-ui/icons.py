@@ -44,9 +44,9 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
     if ha_type == "light":
         return "lightbulb"
     if ha_type == "input_boolean":
-        return "check-circle-outline" if entity.state == "on" else "close-circle-outline"
+        return "check-circle-outline" if state == "on" else "close-circle-outline"
     if ha_type == "cover":
-        return "window-open" if entity.state == "open" else "window-closed"
+        return "window-open" if state == "open" else "window-closed"
 
     elif ha_type == "sensor":
         if state == "on":
