@@ -462,7 +462,7 @@ class LovelaceUIPanel:
       return f",{item_type},{item},{icon_id},{icon_color},{name},{switch_val}"
 
     if item_type == "switch" or item_type == "input_boolean":
-      icon_id = get_icon_id_ha(item_type, overwrite=icon)
+      icon_id = get_icon_id_ha(item_type, state=entity.state, overwrite=icon)
       switch_val = 1 if entity.state == "on" else 0
       icon_color = self.getEntityColor(entity)
       return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
