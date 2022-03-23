@@ -34,14 +34,14 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-popupLight
-	26   Component(s)
-	304  Line(s) of event code
-	167  Unique line(s) of event code
 screensaver
 	25   Component(s)
 	173  Line(s) of event code
 	124  Unique line(s) of event code
+popupLight
+	26   Component(s)
+	307  Line(s) of event code
+	168  Unique line(s) of event code
 cardThermo
 	42   Component(s)
 	412  Line(s) of event code
@@ -62,5 +62,5 @@ cardAlarm
 Total
 	14   Page(s)
 	349  Component(s)
-	3105 Line(s) of event code
-	827  Unique line(s) of event code
+	3108 Line(s) of event code
+	828  Unique line(s) of event code
