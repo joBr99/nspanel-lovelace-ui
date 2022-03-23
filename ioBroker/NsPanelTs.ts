@@ -161,7 +161,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
             GeneratePage(config.pages[pageId]);
         }
 
-        if (method == 'buttonPress' || method == "tempUpd") {
+        if (method == 'buttonPress2') {
             HandleButtonEvent(words)
         }
 
@@ -477,11 +477,11 @@ function toggleState(id: string): boolean {
 }
 
 function HandleButtonEvent(words): void {
-    let id = words[4]
+    let id = words[2]
 
-    if (words[6] == "OnOff" && existsObject(id)) {
+    if (words[3] == "OnOff" && existsObject(id)) {
         var action = false
-        if (words[7] == "1")
+        if (words[4] == "1")
             action = true
         let o = getObject(id)
         switch (o.common.role) {
@@ -496,30 +496,27 @@ function HandleButtonEvent(words): void {
         }
     }
 
-    if (words[6] == "up")
+    if (words[3] == "up")
         setState(id + ".OPEN", true)
-    if (words[6] == "stop")
+    if (words[3] == "stop")
         setState(id + ".STOP", true)
-    if (words[6] == "down")
+    if (words[3] == "down")
         setState(id + ".CLOSE", true)
-    if (words[6] == "button") {
-        let switchOn = true;
-        if (words[5] !== "1")
-            switchOn = false;
+    if (words[3] == "button") {
         toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET")
     }
-    if (words[6] == "positionSlider")
-        setState(id + ".SET", parseInt(words[7]))
+    if (words[3] == "positionSlider")
+        setState(id + ".SET", parseInt(words[4]))
 
-    if (words[6] == "brightnessSlider")
+    if (words[3] == "brightnessSlider")
         if (existsState(id + ".SET"))
-            setState(id + ".SET", parseInt(words[7]));
+            setState(id + ".SET", parseInt(words[4]));
         else if (existsState(id + ".ACTUAL"))
-            setState(id + ".ACTUAL", parseInt(words[7]));
+            setState(id + ".ACTUAL", parseInt(words[4]));
     //     out_msgs.push({ payload: id, action: "turn_on", domain: "lightBrightness", brightness: parseInt(words[7]) })
     // if (words[6] == "colorTempSlider")
     //     out_msgs.push({ payload: id, action: "turn_on", domain: "lightTemperature", temperature: parseInt(words[7]) })
-    if (words[1] == "tempUpd") {
+    if (words[3] == "tempUpd") {
         setState(words[3] + ".SET", parseInt(words[4]) / 10)
     }
 }
