@@ -560,7 +560,7 @@ class LovelaceUIPanel:
   def generate_media_page(self, item):
 
     if not self.api.entity_exists(item):
-      command = f"entityUpd,|{item}|Not found|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|11"
+      command = f"entityUpd,|{item}|Not found|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|{get_icon_id('alert-circle-outline')}"
     else:
       entity       = self.api.get_entity(item)
       heading      = entity.attributes.friendly_name
