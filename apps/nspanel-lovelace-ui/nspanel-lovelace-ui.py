@@ -462,14 +462,14 @@ class LovelaceUIPanel:
 
     if item_type == "light":
       switch_val = 1 if entity.state == "on" else 0
-      icon_color = self.getEntityColor(entity)
+      icon_color = self.get_entity_color(entity)
       icon_id = get_icon_id_ha("light", overwrite=icon)
       return f",{item_type},{item},{icon_id},{icon_color},{name},{switch_val}"
 
     if item_type in ["switch", "input_boolean"]:
       icon_id = get_icon_id_ha(item_type, state=entity.state, overwrite=icon)
       switch_val = 1 if entity.state == "on" else 0
-      icon_color = self.getEntityColor(entity)
+      icon_color = self.get_entity_color(entity)
       return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
 
     if item_type in ["sensor", "binary_sensor"]:
@@ -477,7 +477,7 @@ class LovelaceUIPanel:
       icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
       unit_of_measurement = self.get_safe_ha_attribute(entity.attributes, "unit_of_measurement", "")
       value = entity.state + " " + unit_of_measurement
-      icon_color = self.getEntityColor(entity)
+      icon_color = self.get_entity_color(entity)
       return f",text,{item},{icon_id},{icon_color},{name},{value}"
 
     if item_type in ["button", "input_button"]:
@@ -576,7 +576,7 @@ class LovelaceUIPanel:
 
     self.send_mqtt_msg(command)
 
-  def getEntityColor(self, entity):
+  def get_entity_color(self, entity):
     attr = entity.attributes
     default_color_on  = rgb_dec565([253, 216, 53])
     default_color_off = rgb_dec565([68, 115, 158])
@@ -588,14 +588,14 @@ class LovelaceUIPanel:
         color = rgb_brightness(color, attr.brightness)
       icon_color = rgb_dec565(color)
     elif "brightness" in attr:
-      color = rgb_brightness([253, 216, 53], attr.brightness)
+      color = rgb_brightness([253, 216, 53], max(70, attr.brightness))
       icon_color = rgb_dec565(color)
     return icon_color
 
   def generate_light_detail_page(self, entity):
     entity = self.api.get_entity(entity)
     switch_val = 1 if entity.state == "on" else 0
-    icon_color = self.getEntityColor(entity)
+    icon_color = self.get_entity_color(entity)
     brightness = "disable"
     color_temp = "disable"
     color = "disable"
