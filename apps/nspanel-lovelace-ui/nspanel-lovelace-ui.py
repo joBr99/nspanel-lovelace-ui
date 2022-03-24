@@ -84,7 +84,10 @@ class LovelaceUIPanel:
     self.config = config
     self.current_page_nr = 0
     self.current_screensaver_brightness = 10
-    
+
+    self.button_text = self.config.get("buttonText", "PRESS")
+    self.scene_text = self.config.get("sceneText", "ACTIVATE")
+
     # check configured items
     self.check_items()
 
@@ -479,11 +482,11 @@ class LovelaceUIPanel:
 
     if item_type in ["button", "input_button"]:
       icon_id = get_icon_id_ha("button", overwrite=icon)
-      return f",button,{item},{icon_id},17299,{name},PRESS"
+      return f",button,{item},{icon_id},17299,{name},{self.button_text}"
     
     if item_type == "scene":
       icon_id = get_icon_id_ha("scene", overwrite=icon)
-      return f",button,{item},{icon_id},17299,{name},ACTIVATE"
+      return f",button,{item},{icon_id},17299,{name},{self.scene_text}"
 
   def generate_entities_page(self, items):
     # Set Heading of Page
