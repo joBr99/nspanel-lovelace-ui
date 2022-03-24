@@ -433,8 +433,10 @@ class LovelaceUIPanel:
 
   def generate_entities_item(self, item):
     icon = None
+    name = None
     if type(item) is dict:
-      icon = next(iter(item.items()))[1]['icon']
+      icon = next(iter(item.items()))[1].get('icon')
+      name = next(iter(item.items()))[1].get('name')
       item = next(iter(item.items()))[0]
 
     # type of the item is the string before the "." in the item name
@@ -449,7 +451,7 @@ class LovelaceUIPanel:
       return f",text,{item},{get_icon_id('alert-circle-outline')},17299,Not found check, apps.yaml"
 
     entity = self.api.get_entity(item)
-    name = entity.attributes.friendly_name
+    name = name if name is not None else entity.attributes.friendly_name
 
     if item_type == "cover":
       icon_id = get_icon_id_ha("cover", state=entity.state, overwrite=icon)
