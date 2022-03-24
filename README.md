@@ -311,7 +311,7 @@ key | optional | type | default | description
 
 ### Override Icons or Names
 
-To override Icons or Names of entities you can configure an icon or name in your configuration, please see the following example.
+To override Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
 Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.
 
 ```yaml
