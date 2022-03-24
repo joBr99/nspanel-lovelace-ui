@@ -158,6 +158,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
             case "startup":
                 UnsubscribeWatcher();
                 HandleStartupProcess();
+                GeneratePage(config.pages[0]);
                 break;
             case "buttonPress2":
                 HandleButtonEvent(words);
