@@ -463,7 +463,7 @@ class LovelaceUIPanel:
       icon_id = get_icon_id_ha("light", overwrite=icon)
       return f",{item_type},{item},{icon_id},{icon_color},{name},{switch_val}"
 
-    if item_type == "switch" or item_type == "input_boolean":
+    if item_type in ["switch", "input_boolean"]:
       icon_id = get_icon_id_ha(item_type, state=entity.state, overwrite=icon)
       switch_val = 1 if entity.state == "on" else 0
       icon_color = self.getEntityColor(entity)
@@ -474,7 +474,8 @@ class LovelaceUIPanel:
       icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
       unit_of_measurement = self.get_safe_ha_attribute(entity.attributes, "unit_of_measurement", "")
       value = entity.state + " " + unit_of_measurement
-      return f",text,{item},{icon_id},17299,{name},{value}"
+      icon_color = self.getEntityColor(entity)
+      return f",text,{item},{icon_id},{icon_color},{name},{value}"
 
     if item_type in ["button", "input_button"]:
       icon_id = get_icon_id_ha("button", overwrite=icon)
