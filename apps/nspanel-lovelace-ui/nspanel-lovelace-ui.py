@@ -412,7 +412,7 @@ class LovelaceUIPanel:
 
     if btype == "tempUpd":
       temp = int(optVal)/10
-      self.api.get_entity(msg[3]).call_service("set_temperature", temperature=temp)
+      self.api.get_entity(entity_id).call_service("set_temperature", temperature=temp)
 
   def generate_page(self, page_number):
     # get type of page
