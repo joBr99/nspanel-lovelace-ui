@@ -71,6 +71,8 @@ change the page type:
 
 `pageType,popupNotify`
 
+`pageType,screensaver`
+
 ### screensaver page
 
 `weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val`
@@ -78,6 +80,8 @@ change the page type:
 `weatherUpdate,?0?2,3 C?0?0 mm?Mi?0?9,3 C?Do?0?11,5 C`
 
 `page,0`
+
+`entityUpd,heading_of_exit_page`
 
 ### cardEntities Page
 
@@ -142,7 +146,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### screensaver page
 
-`event,screensaverOpen`
+`event,buttonPress2,screensaver,enter`
 
 ### cardEntities Page
 
