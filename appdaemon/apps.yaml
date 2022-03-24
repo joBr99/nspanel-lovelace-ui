@@ -18,6 +18,8 @@ nspanel:
                             # formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
     timeFormat: "%H:%M"
     dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
+    buttonText: KLICKEN
+    sceneText: ACTIVIEREN
     weatherEntity: weather.example
     pages:
       - type: cardEntities
