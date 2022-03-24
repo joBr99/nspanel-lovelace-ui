@@ -28,11 +28,13 @@ class LuiMqttListener(object):
             if msg[1] == "startup":
                 display_firmware_version = int(msg[2])
                 self._controller.startup(display_firmware_version)
-            if msg[1] == "pageOpen":
-                self._controller.next()
+            if msg[1] == "screensaverOpen":
+                self._controller.screensaver_open()
             if msg[1] == "buttonPress2":
                 entity_id = msg[2]
                 btype = msg[3]
                 value = msg[4] if len(msg) > 4 else None
                 self._controller.button_press(entity_id, btype, value)
+            if msg[1] == "pageOpenDetail":
+                self._controller.detail_open(msg[2], msg[3])
 

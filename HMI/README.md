@@ -144,7 +144,11 @@ The following message can be used to update the content on the cardEntities Page
 
 ### screensaver page
 
-`event,buttonPress2,screensaver,enter`
+`event,buttonPress2,screensaver,exit` - Touch Event on Screensaver
+
+`event,screensaverOpen` - Screensaver has opened
+
+
 
 ### cardEntities Page
 

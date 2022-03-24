@@ -6,13 +6,13 @@ from luibackend.exceptions import LuiBackendConfigError
 
 LOGGER = logging.getLogger(__name__)
 
-
 class PageNode(object):
     def __init__(self, data, parent=None):
         self.data = data
         self.name = None
         self.childs = []
         self.parent = parent
+        self.pos = None
 
         if "items" in data:
             childs = data.pop("items")
@@ -21,19 +21,34 @@ class PageNode(object):
 
         name  = self.data.get("heading", "unkown") if type(self.data) is dict else self.data
         ptype = self.data.get("type", "unkown") if type(self.data) is dict else "leaf"
-        #parent = self.parent.data.get("heading", self.parent.data.get("type", "unknown")) if self.parent is not None else "root"
 
         self.name = f"{ptype}.{name}" if type(self.data) is dict else self.data
 
     def add_child(self, obj):
+        obj.pos = len(self.childs)
         self.childs.append(obj)
+
+    def next(self):
+        if self.parent is not None:
+            pos    = self.pos
+            length = len(self.parent.childs)
+            return self.parent.childs[(pos+1)%length]
+        else:
+            return self
+    def prev(self):
+        if self.parent is not None:
+            pos    = self.pos
+            length = len(self.parent.childs)
+            return self.parent.childs[(pos-1)%length]
+        else:
+            return self
 
     def dump(self, indent=0):
         """dump tree to string"""
         tab = '    '*(indent-1) + ' |- ' if indent > 0 else ''
         name   = self.name
         parent = self.parent.name if self.parent is not None else "root"
-        dumpstring = f"{tab}{name} -> {parent} \n"
+        dumpstring = f"{tab}{self.pos}:{name} -> {parent} \n"
         for obj in self.childs:
             dumpstring += obj.dump(indent + 1)
         return dumpstring
@@ -61,20 +76,17 @@ class LuiBackendConfig(object):
         'timeFormat': "%H:%M",
         'dateFormatBabel': "full",
         'dateFormat': "%A, %d. %B %Y",
+        'weather': 'weather.example',
         'pages': [{
-            'type': 'screensaver',
-            'weather': 'weather.example',
-            'items': [{
-                'type': 'cardEntities',
-                'heading': 'Test Entities 1',
-                'items': ['switch.test_item', 'switch.test_item', 'switch.test_item']
-                }, {
-                'type': 'cardGrid',
-                'heading': 'Test Grid 1',
-                'items': ['switch.test_item', 'switch.test_item', 'switch.test_item']
-                }
-            ],
-        }],
+            'type': 'cardEntities',
+            'heading': 'Test Entities 1',
+            'items': ['switch.test_item', 'switch.test_item', 'switch.test_item']
+            }, {
+            'type': 'cardGrid',
+            'heading': 'Test Grid 1',
+            'items': ['switch.test_item', 'switch.test_item', 'switch.test_item']
+            }
+        ]
     }
 
     def __init__(self, args=None, check=True):
@@ -93,9 +105,9 @@ class LuiBackendConfig(object):
                 self._config[k] = v
         LOGGER.info(f"Loaded config: {self._config}")
 
-        root_page = self.get("pages")[0]
+        root_page = {"items": self.get("pages")}
         self._page_config = PageNode(root_page)
-        
+
         LOGGER.info(f"Parsed Page config to the following Tree: \n {self._page_config.dump()}")
 
     def check(self):
