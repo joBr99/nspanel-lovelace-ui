@@ -62,7 +62,17 @@ class PageNode(object):
                 items.append(i.data)
         return items
 
-
+    def get_all_items_recursive(self):
+        items = []
+        for i in self.childs:
+            if len(i.childs) > 0:
+                items.extend(i.get_all_items_recursive())
+            else:
+                if type(i.data) is dict:
+                    items.append(i.data.get("item", next(iter(i.data))))
+                else:
+                    items.append(i.data)
+        return items
 
 class LuiBackendConfig(object):
 
@@ -121,10 +131,4 @@ class LuiBackendConfig(object):
 
     def get_root_page(self):
         return self._page_config
-
-    def get_child_by_heading(self, heading):
-        for page in self._current_page.childs:
-            if heading == page.data["heading"]:
-                self._current_page = page
-        return self._current_page
 
