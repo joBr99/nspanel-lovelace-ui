@@ -81,8 +81,6 @@ change the page type:
 
 `page,0`
 
-`entityUpd,heading_of_exit_page`
-
 ### cardEntities Page
 
 The following message can be used to update the content on the cardEntities Page
