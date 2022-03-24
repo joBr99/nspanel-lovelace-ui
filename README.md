@@ -309,9 +309,9 @@ key | optional | type | default | description
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
 
-### Override Icons
+### Override Icons or Names
 
-To override Icons of entities you can configure an icon name in your configuration, please see the following example.
+To override Icons or Names of entities you can configure an icon or name in your configuration, please see the following example.
 Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.
 
 ```yaml
@@ -322,6 +322,7 @@ Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.
           - light.schreibtischlampe
           - switch.deckenbeleuchtung_hinten:
               icon: lightbulb
+              name: Lampe
           - delete
           - delete
       - type: cardMedia
