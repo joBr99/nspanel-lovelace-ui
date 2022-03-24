@@ -15,14 +15,19 @@ class LuiController(object):
         self._current_page = None
         
         self._pages_gen = LuiPagesGen(ha_api, config, send_mqtt_msg)
-        # Setup time update callback
-        time = datetime.time(0, 0, 0)
-        ha_api.run_minutely(self._pages_gen.update_time, time)
 
         # send panel back to startup page on restart of this script
         self._pages_gen.page_type("pageStartup")
         
-    
+        # time update callback
+        time = datetime.time(0, 0, 0)
+        ha_api.run_minutely(self._pages_gen.update_time, time)
+        # weather callback
+        weather_interval = 15 * 60 # 15 minutes
+        ha_api.run_every(self.weather_update, "now", weather_interval)
+        # register callbacks
+        self.register_callbacks()
+
     def startup(self, display_firmware_version):
         LOGGER.info(f"Startup Event; Display Firmware Version is {display_firmware_version}")
         # send time and date on startup
@@ -31,11 +36,24 @@ class LuiController(object):
 
         # send panel to screensaver
         self._pages_gen.page_type("screensaver")
-        self.screensaver_open()
+        self.weather_update("")
 
-    def screensaver_open(self):
+    def weather_update(self, kwargs):
         we_name = self._config.get("weather")
-        self._pages_gen.update_screensaver_weather(kwargs={"weather": we_name, "unit": "°C"})
+        unit    = "°C"
+        self._pages_gen.update_screensaver_weather(kwargs={"weather": we_name, "unit": unit})
+
+    def register_callbacks(self):
+        items = self._config.get_root_page().get_all_items_recursive()
+        LOGGER.info(f"Registering callbacks for the following items: {items}")
+        for item in items:
+            self._ha_api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
+
+    def state_change_callback(self, entity, attribute, old, new, kwargs):
+        LOGGER.info(f"Got callback for: {entity}")
+        if entity in self._current_page.get_items():
+            self._pages_gen.render_page(self._current_page)
+
 
     def detail_open(self, detail_type, entity_id):
         if detail_type == "popupShutter":
