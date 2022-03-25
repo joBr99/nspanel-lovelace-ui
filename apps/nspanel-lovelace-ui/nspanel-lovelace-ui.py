@@ -1,8 +1,5 @@
-import asyncio
 import logging
-import sys
 import traceback
-import uuid
 
 import hassapi as hass
 
@@ -77,6 +74,6 @@ class NsPanelLovelaceUIManager(hass.Hass):
         updater = Updater(send_mqtt_msg, topic_send, mode, desired_display_firmware_version, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url)
 
         topic_recv = cfg.get("panelRecvTopic")
-        mqtt_listener = LuiMqttListener(mqtt_api, topic_recv, controller, updater)
+        LuiMqttListener(mqtt_api, topic_recv, controller, updater)
 
         LOGGER.info('Started')

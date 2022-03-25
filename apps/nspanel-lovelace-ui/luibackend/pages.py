@@ -3,7 +3,7 @@ import datetime
 
 from icon_mapping import get_icon_id
 from icons import get_icon_id_ha
-from helper import scale, pos_to_color, rgb_dec565, rgb_brightness
+from helper import scale, rgb_dec565, rgb_brightness
 from localization import get_translation
 
 # check Babel
