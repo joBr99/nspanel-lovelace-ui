@@ -224,13 +224,14 @@ class LuiPagesGen(object):
             command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}"
         self._send_mqtt_msg(command)
 
-    def render_page(self, page):
+    def render_page(self, page, send_page_type=True):
         LOGGER.info(page)
         config    = page.data
         page_type = config["type"]
         LOGGER.info(f"Started rendering of page x with type {page_type}")
         # Switch to page
-        self.page_type(page_type)
+        if send_page_type:
+            self.page_type(page_type)
         if page_type in ["cardEntities", "cardGrid"]:
             heading = config.get("heading", "unknown")
             self.generate_entities_page(heading, page.get_items())
