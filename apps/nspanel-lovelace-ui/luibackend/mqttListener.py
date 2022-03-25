@@ -21,6 +21,7 @@ class LuiMqttListener(object):
         if("nlui_driver_version" in data):
             msg = data["nlui_driver_version"]
             self._updater.set_tasmota_driver_version(int(msg))
+            self._updater.check_updates()
         if("CustomRecv" not in data):
             return
         msg = data["CustomRecv"]
