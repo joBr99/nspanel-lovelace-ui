@@ -83,7 +83,7 @@ class LuiController(object):
         if entity in self._current_page.get_items():
             self._pages_gen.render_page(self._current_page)
             # send detail page update, just in case
-            if self._current_page.type in ["cardGrid", "cardEntities"]:
+            if self._current_page.data.get("type", "unknown") in ["cardGrid", "cardEntities"]:
                 if entity.startswith("light"):
                     self._pages_gen.generate_light_detail_page(entity)
                 if entity.startswith("switch"):
