@@ -9,7 +9,7 @@ import hassapi as hass
 from luibackend.config import LuiBackendConfig
 from luibackend.controller import LuiController
 from luibackend.mqttListener import LuiMqttListener
-
+from luibackend.updater import Updater
 
 LOGGER = logging.getLogger(__name__)
 
@@ -60,14 +60,21 @@ class NsPanelLovelaceUIManager(hass.Hass):
             LOGGER.info(f"Sending MQTT Message: {msg}")
             mqtt_api.mqtt_publish(topic_send, msg)
 
+        # Request Tasmota Driver Version
+        mqtt_api.mqtt_publish(topic_send.replace("CustomSend", "GetDriverVersion"), "x")
+
         controller = LuiController(self, cfg, send_mqtt_msg)
 
-        topic_recv = cfg.get("panelRecvTopic")
-        mqtt_listener = LuiMqttListener(mqtt_api, topic_recv, controller)
-
+        desired_display_firmware_version = 17
+        desired_display_firmware_url     = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-v1.8.0.tft"
+        desired_tasmota_driver_version   = 3
+        desired_tasmota_driver_url       = "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be"
         
+        mode = cfg.get("updateMode")
+        updater = Updater(controller, mode, desired_display_firmware_version, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url)
 
-
+        topic_recv = cfg.get("panelRecvTopic")
+        mqtt_listener = LuiMqttListener(mqtt_api, topic_recv, controller, updater)
 
         LOGGER.info('Started')
 

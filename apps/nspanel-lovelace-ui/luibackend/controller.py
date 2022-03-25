@@ -12,7 +12,8 @@ class LuiController(object):
         self._config = config
         self._send_mqtt_msg = send_mqtt_msg
 
-        self._current_page = None
+        # first child of root page (default, after startup)
+        self._current_page = self._config._page_config.childs[0]
         
         self._pages_gen = LuiPagesGen(ha_api, config, send_mqtt_msg)
 
@@ -28,8 +29,8 @@ class LuiController(object):
         # register callbacks
         self.register_callbacks()
 
-    def startup(self, display_firmware_version):
-        LOGGER.info(f"Startup Event; Display Firmware Version is {display_firmware_version}")
+    def startup(self):
+        LOGGER.info(f"Startup Event")
         # send time and date on startup
         self._pages_gen.update_time("")
         self._pages_gen.update_date("")
@@ -53,6 +54,12 @@ class LuiController(object):
         LOGGER.info(f"Got callback for: {entity}")
         if entity in self._current_page.get_items():
             self._pages_gen.render_page(self._current_page)
+            # send detail page update, just in case
+            if self._current_page.type in ["cardGrid", "cardEntities"]:
+                if entity.startswith("light"):
+                    self._pages_gen.generate_light_detail_page(entity)
+                if entity.startswith("switch"):
+                    self._pages_gen.generate_shutter_detail_page(entity)
 
 
     def detail_open(self, detail_type, entity_id):
@@ -65,8 +72,8 @@ class LuiController(object):
         LOGGER.debug(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
         # internal buttons
         if(entity_id == "screensaver" and button_type == "enter"):
-            # go to first child of root page (default, after startup)
-            self._current_page = self._config._page_config.childs[0]
+            self._pages_gen.render_page(self._current_page)
+        if(button_type == "bExit"):
             self._pages_gen.render_page(self._current_page)
 
         if(button_type == "bNext"):
@@ -74,8 +81,6 @@ class LuiController(object):
             self._pages_gen.render_page(self._current_page)
         if(button_type == "bPrev"):
             self._current_page = self._current_page.prev()
-            self._pages_gen.render_page(self._current_page)
-        if(button_type == "bExit"):
             self._pages_gen.render_page(self._current_page)
         
         # buttons with actions on HA
