@@ -71,6 +71,8 @@ change the page type:
 
 `pageType,popupNotify`
 
+`pageType,screensaver`
+
 ### screensaver page
 
 `weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val`
@@ -136,19 +138,26 @@ The following message can be used to update the content on the cardEntities Page
 
 ## Messages from Nextion Display
 
+`event,buttonPress2,pageName,bNext`
+
+`event,buttonPress2,pageName,bPrev`
+
+`event,buttonPress2,pageName,bExit`
+
 ### startup page
 
 `event,startup,version`
 
 ### screensaver page
 
-`event,screensaverOpen`
+`event,buttonPress2,screensaver,exit` - Touch Event on Screensaver
+
+`event,screensaverOpen` - Screensaver has opened
+
 
 ### cardEntities Page
 
 `event,*eventName*,*entityName*,*actionName*,*optionalValue*`
-
-`event,pageOpen,0`
 
 `event,buttonPress2,internalNameEntity,up`
 
@@ -185,8 +194,6 @@ The following message can be used to update the content on the cardEntities Page
 `event,buttonPress2,*internalName*,notifyAction,no`
 
 ### cardThermo Page
-
-`event,pageOpen,0`
 
 `event,buttonPress2,*entityName*,tempUpd,*temperature*`
 
