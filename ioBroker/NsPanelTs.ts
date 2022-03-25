@@ -92,8 +92,6 @@ export const config: Config = {
     button2Page: button2Page
 };
 
-
-
 var subscriptions: any = {};
 
 var pageId = 0;
@@ -149,28 +147,29 @@ function SendToPanel(val: Payload | Payload[]): void {
 
 function HandleMessage(typ: string, method: string, page: number, words: Array<string>): void {
     if (typ == "event") {
-        var pageNum = (page % config.pages.length);
-        pageId = Math.abs(pageNum);
 
-        if (method == 'pageOpen' || method == 'startup') {
-            UnsubscribeWatcher();
-
-            if (method == 'startup')
+        switch (method) {
+            case "pageOpen":
+                var pageNum = (page % config.pages.length);
+                pageId = Math.abs(pageNum);
+                UnsubscribeWatcher();
+                GeneratePage(config.pages[pageId]);
+                break;
+            case "startup":
+                UnsubscribeWatcher();
                 HandleStartupProcess();
-
-            GeneratePage(config.pages[pageId]);
-        }
-
-        if (method == 'buttonPress' || method == "tempUpd") {
-            HandleButtonEvent(words)
-        }
-
-        if (method == 'screensaverOpen') {
-            HandleScreensaver()
-        }
-
-        if (method == 'button1' || method == 'button2') {
-            HandleHardwareButton(method);
+                break;
+            case "buttonPress2":
+                HandleButtonEvent(words);
+                break;
+            case "screensaverOpen":
+                HandleScreensaver();
+                break;
+            case "button1":
+            case "button2":
+                HandleHardwareButton(method);
+            default:
+                break;
         }
     }
 }
@@ -276,11 +275,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
         if (existsState(pageItem.id + ".GET")) {
             val = getState(pageItem.id + ".GET").val;
-            RegisterEntityWatcher(pageItem.id + ".GET", pageItem.id, placeId);
+            RegisterEntityWatcher(pageItem.id + ".GET");
         }
         else if (existsState(pageItem.id + ".SET")) {
             val = getState(pageItem.id + ".SET").val;
-            RegisterEntityWatcher(pageItem.id + ".SET", pageItem.id, placeId);
+            RegisterEntityWatcher(pageItem.id + ".SET");
         }
         var iconColor = rgb_dec565(config.defaultColor);
 
@@ -303,11 +302,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 var optVal = "0"
                 if (existsState(pageItem.id + ".ON_ACTUAL")) {
                     val = getState(pageItem.id + ".ON_ACTUAL").val;
-                    RegisterEntityWatcher(pageItem.id + ".ON_ACTUAL", pageItem.id, placeId);
+                    RegisterEntityWatcher(pageItem.id + ".ON_ACTUAL");
                 }
                 else if (existsState(pageItem.id + ".ON_SET")) {
                     val = getState(pageItem.id + ".ON_SET").val;
-                    RegisterEntityWatcher(pageItem.id + ".ON_SET", pageItem.id, placeId);
+                    RegisterEntityWatcher(pageItem.id + ".ON_SET");
                 }
                 if (val === true || val === "true") {
                     optVal = "1"
@@ -331,12 +330,12 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 if (existsState(pageItem.id + ".ON_ACTUAL")) {
                     optVal = getState(pageItem.id + ".ON_ACTUAL").val;
                     unit = GetUnitOfMeasurement(pageItem.id + ".ON_ACTUAL");
-                    RegisterEntityWatcher(pageItem.id + ".ON_ACTUAL", pageItem.id, placeId);
+                    RegisterEntityWatcher(pageItem.id + ".ON_ACTUAL");
                 }
                 else if (existsState(pageItem.id + ".ACTUAL")) {
                     optVal = getState(pageItem.id + ".ACTUAL").val;
                     unit = GetUnitOfMeasurement(pageItem.id + ".ACTUAL");
-                    RegisterEntityWatcher(pageItem.id + ".ACTUAL", pageItem.id, placeId);
+                    RegisterEntityWatcher(pageItem.id + ".ACTUAL");
                 }
 
                 if (o.common.role == "value.temperature") {
@@ -384,11 +383,12 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
     return rgb_dec565(pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor);
 }
 
-function RegisterEntityWatcher(id: string, entityId: string, placeId: number): void {
+function RegisterEntityWatcher(id: string): void {
     if (subscriptions.hasOwnProperty(id)) {
         return;
     }
     subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {
+        log("RegisterEntityWatcher PageId:" + pageId.toString())
         GeneratePage(config.pages[pageId]);
     }))
 }
@@ -477,11 +477,11 @@ function toggleState(id: string): boolean {
 }
 
 function HandleButtonEvent(words): void {
-    let id = words[4]
+    let id = words[2]
 
-    if (words[6] == "OnOff" && existsObject(id)) {
+    if (words[3] == "OnOff" && existsObject(id)) {
         var action = false
-        if (words[7] == "1")
+        if (words[4] == "1")
             action = true
         let o = getObject(id)
         switch (o.common.role) {
@@ -496,31 +496,28 @@ function HandleButtonEvent(words): void {
         }
     }
 
-    if (words[6] == "up")
+    if (words[3] == "up")
         setState(id + ".OPEN", true)
-    if (words[6] == "stop")
+    if (words[3] == "stop")
         setState(id + ".STOP", true)
-    if (words[6] == "down")
+    if (words[3] == "down")
         setState(id + ".CLOSE", true)
-    if (words[6] == "button") {
-        let switchOn = true;
-        if (words[5] !== "1")
-            switchOn = false;
+    if (words[3] == "button") {
         toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET")
     }
-    if (words[6] == "positionSlider")
-        setState(id + ".SET", parseInt(words[7]))
+    if (words[3] == "positionSlider")
+        setState(id + ".SET", parseInt(words[4]))
 
-    if (words[6] == "brightnessSlider")
+    if (words[3] == "brightnessSlider")
         if (existsState(id + ".SET"))
-            setState(id + ".SET", parseInt(words[7]));
+            setState(id + ".SET", parseInt(words[4]));
         else if (existsState(id + ".ACTUAL"))
-            setState(id + ".ACTUAL", parseInt(words[7]));
+            setState(id + ".ACTUAL", parseInt(words[4]));
     //     out_msgs.push({ payload: id, action: "turn_on", domain: "lightBrightness", brightness: parseInt(words[7]) })
     // if (words[6] == "colorTempSlider")
     //     out_msgs.push({ payload: id, action: "turn_on", domain: "lightTemperature", temperature: parseInt(words[7]) })
-    if (words[1] == "tempUpd") {
-        setState(words[3] + ".SET", parseInt(words[4]) / 10)
+    if (words[3] == "tempUpd") {
+        setState(id + ".SET", parseInt(words[4]) / 10)
     }
 }
 

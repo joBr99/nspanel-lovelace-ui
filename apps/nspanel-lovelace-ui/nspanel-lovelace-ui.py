@@ -80,6 +80,3 @@ class NsPanelLovelaceUIManager(hass.Hass):
         mqtt_listener = LuiMqttListener(mqtt_api, topic_recv, controller, updater)
 
         LOGGER.info('Started')
-
-
-
