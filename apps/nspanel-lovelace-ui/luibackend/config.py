@@ -1,8 +1,5 @@
 import logging
 
-from luibackend.exceptions import LuiBackendConfigIncomplete
-from luibackend.exceptions import LuiBackendConfigError
-
 
 LOGGER = logging.getLogger(__name__)
 

@@ -3,14 +3,15 @@ import logging
 LOGGER = logging.getLogger(__name__)
 
 class Updater:
-    def __init__(self, controller, mode, desired_display_firmware_version, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
+    def __init__(self, send_mqtt_msg, topic_send, mode, desired_display_firmware_version, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
         self.desired_display_firmware_version = desired_display_firmware_version
         self.desired_display_firmware_url     = desired_display_firmware_url
         self.desired_tasmota_driver_version   = desired_tasmota_driver_version
         self.desired_tasmota_driver_url       = desired_tasmota_driver_url
         
         self.mode = mode
-        self.controller = controller
+        self._send_mqtt_msg = send_mqtt_msg
+        self.topic_send = topic_send
         self.current_tasmota_driver_version   = None
         self.current_display_firmware_version = None
 
@@ -29,6 +30,10 @@ class Updater:
                 return True
             return False
 
+    def send_message_page(self, id, heading, msg, b1, b2):
+        self._send_mqtt_msg(f"pageType,popupNotify")
+        self._send_mqtt_msg(f"entityUpdateDetail,|{id}|{heading}|65535|{b1}|65535|{b2}|65535|{msg}|65535|0")
+
     def check_updates(self):
         # return's true if a notification was send to the panel
         # run pre req check
@@ -44,7 +49,7 @@ class Updater:
                 # send notification about the update
                 if self.mode == "auto-notify":
                     update_msg = "There's an update avalible for the tasmota      berry driver, do you want to start the update  now?                                                                      If you encounter issues after the update or      this message appears frequently, please checkthe manual and repeat the installation steps   for the tasmota berry driver. "
-                    self.controller._pages_gen.send_message_page("updateBerryNoYes", "Driver Update available!", update_msg, "Dismiss", "Yes")
+                    self.send_message_page("updateBerryNoYes", "Driver Update available!", update_msg, "Dismiss", "Yes")
                     return True
                 return False
             # check if display firmware needs an update
@@ -57,7 +62,7 @@ class Updater:
                 # send notification about the update
                 if self.mode == "auto-notify":
                     update_msg = "There's a firmware update avalible for the       nextion sceen inside of nspanel, do you want  to start the update now?                                     If the update fails check the installation         manual and flash again over the tasmota console. Be pationed the update will take a while."
-                    self.controller._pages_gen.send_message_page("updateDisplayNoYes", "Display Update available!", update_msg, "Dismiss", "Yes")
+                    self.send_message_page("updateDisplayNoYes", "Display Update available!", update_msg, "Dismiss", "Yes")
                     return True
                 return False
         else:
@@ -65,8 +70,8 @@ class Updater:
             return False
 
     def update_berry_driver(self):
-        topic = self.controller._config["panelSendTopic"].replace("CustomSend", "UpdateDriverVersion")
-        self.controller._send_mqtt_msg(topic, self.desired_tasmota_driver_url)
+        topic = self.topic_send.replace("CustomSend", "UpdateDriverVersion")
+        self._send_mqtt_msg(self.desired_tasmota_driver_url, topic=topic)
     def update_panel_driver(self):
-        topic = self.controller._config["panelSendTopic"].replace("CustomSend", "FlashNextion")
-        self.controller._send_mqtt_msg(topic, self.desired_display_firmware_url)
+        topic = self.topic_send.replace("CustomSend", "FlashNextion")
+        self._send_mqtt_msg(self.desired_display_firmware_url, topic=topic)
