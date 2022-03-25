@@ -58,6 +58,13 @@ class LuiController(object):
         self._pages_gen.update_time("")
         self._pages_gen.update_date("")
 
+        # set screensaver timeout
+        timeout = self._config.get("timeoutScreensaver")
+        self._send_mqtt_msg(f"timeout,{timeout}")
+        
+        # set current screensaver brightness
+        self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
+        
         # send panel to screensaver
         self._pages_gen.page_type("screensaver")
         self.weather_update("")
