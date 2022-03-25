@@ -51,12 +51,12 @@ popupLight
 	306  Line(s) of event code
 	167  Unique line(s) of event code
 screensaver
-	25   Component(s)
-	166  Line(s) of event code
-	121  Unique line(s) of event code
+	26   Component(s)
+	176  Line(s) of event code
+	127  Unique line(s) of event code
 
 Total
 	13   Page(s)
-	329  Component(s)
-	3033 Line(s) of event code
-	806  Unique line(s) of event code
+	330  Component(s)
+	3043 Line(s) of event code
+	812  Unique line(s) of event code
