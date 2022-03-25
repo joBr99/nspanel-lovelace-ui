@@ -48,7 +48,7 @@ class Updater:
                     return False
                 # send notification about the update
                 if self.mode == "auto-notify":
-                    update_msg = "There's an update avalible for the tasmota      berry driver, do you want to start the update  now?                                                                      If you encounter issues after the update or      this message appears frequently, please checkthe manual and repeat the installation steps   for the tasmota berry driver. "
+                    update_msg = "There's an update available for the Tasmota      Berry driver, do you want to start the update  now?                                                                      If you encounter issues after the update or      this message appears frequently, please check the manual and repeat the installation steps   for the Tasmota Berry driver. "
                     self.send_message_page("updateBerryNoYes", "Driver Update available!", update_msg, "Dismiss", "Yes")
                     return True
                 return False
@@ -61,7 +61,7 @@ class Updater:
                     return False
                 # send notification about the update
                 if self.mode == "auto-notify":
-                    update_msg = "There's a firmware update avalible for the       nextion sceen inside of nspanel, do you want  to start the update now?                                     If the update fails check the installation         manual and flash again over the tasmota console. Be pationed the update will take a while."
+                    update_msg = "There's a firmware update available for the       Nextion screen of the NSPanel. Do you want to start the update now?                                     If the update fails check the installation         manual and flash again over the Tasmota console. Be patient, the update will take a while."
                     self.send_message_page("updateDisplayNoYes", "Display Update available!", update_msg, "Dismiss", "Yes")
                     return True
                 return False
