@@ -22,7 +22,7 @@ class LuiPagesGen(object):
         self._locale  = config.get("locale")
         self._send_mqtt_msg = send_mqtt_msg
     
-    def getEntityColor(self, entity):
+    def get_entity_color(self, entity):
         attr = entity.attributes
         default_color_on  = rgb_dec565([253, 216, 53])
         default_color_off = rgb_dec565([68, 115, 158])
@@ -34,7 +34,7 @@ class LuiPagesGen(object):
                 color = rgb_brightness(color, attr.brightness)
             icon_color = rgb_dec565(color)
         elif "brightness" in attr:
-            color = rgb_brightness([253, 216, 53], attr.brightness)
+            color = rgb_brightness([253, 216, 53], max(70, attr.brightness))
             icon_color = rgb_dec565(color)
         return icon_color
 
@@ -115,12 +115,12 @@ class LuiPagesGen(object):
             return f",shutter,{item},{icon_id},17299,{name},"
         if item_type in "light":
             switch_val = 1 if entity.state == "on" else 0
-            icon_color = self.getEntityColor(entity)
+            icon_color = self.get_entity_color(entity)
             icon_id = get_icon_id_ha("light", overwrite=icon)
             return f",{item_type},{item},{icon_id},{icon_color},{name},{switch_val}"
         if item_type in ["switch", "input_boolean"]:
             switch_val = 1 if entity.state == "on" else 0
-            icon_color = self.getEntityColor(entity)
+            icon_color = self.get_entity_color(entity)
             icon_id = get_icon_id_ha(item_type, state=entity.state, overwrite=icon)
             return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
         if item_type in ["sensor", "binary_sensor"]:
@@ -128,7 +128,7 @@ class LuiPagesGen(object):
             icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
-            icon_color = self.getEntityColor(entity)
+            icon_color = self.get_entity_color(entity)
             return f",text,{item},{icon_id},{icon_color},{name},{value}"
         if item_type in ["button", "input_button"]:
             icon_id = get_icon_id_ha("button", overwrite=icon)
@@ -243,7 +243,7 @@ class LuiPagesGen(object):
     def generate_light_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)
         switch_val = 1 if entity.state == "on" else 0
-        icon_color = self.getEntityColor(entity)
+        icon_color = self.get_entity_color(entity)
         brightness = "disable"
         color_temp = "disable"
         color = "disable"
