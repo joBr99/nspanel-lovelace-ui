@@ -103,7 +103,6 @@ class LuiPagesGen(object):
         if item_type == "delete":
             return f",{item_type},,,,,"
         if item_type == "navigate":
-            icon_id = get_icon_id_ha("button", overwrite=icon)
             text = get_translation(self._locale,"PRESS")
             return f",button,{item},0,17299,{item},{text}"
         if not self._ha_api.entity_exists(item):
