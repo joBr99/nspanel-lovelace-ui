@@ -132,10 +132,11 @@ class LuiPagesGen(object):
             return f",text,{item},{icon_id},{icon_color},{name},{value}"
         if item_type in ["button", "input_button"]:
             icon_id = get_icon_id_ha("button", overwrite=icon)
-            return f",button,{item},{icon_id},17299,{name},PRESS"
+            text = get_translation(self._locale,"PRESS")
+            return f",button,{item},{icon_id},17299,{name},{text}"
         if item_type == "scene":
             icon_id = get_icon_id_ha("scene", overwrite=icon)
-            text = get_translation(self._locale,"PRESS")
+            text = get_translation(self._locale,"ACTIVATE")
             return f",button,{item},{icon_id},17299,{name},{text}"
 
 
@@ -158,6 +159,7 @@ class LuiPagesGen(object):
             current_temp = int(entity.attributes.get("current_temperature", 0)*10)
             dest_temp    = int(entity.attributes.get("temperature", 0)*10)
             status       = entity.attributes.get("hvac_action", "")
+            status       = get_translation(self._locale,status)
             min_temp     = int(entity.attributes.get("min_temp", 0)*10)
             max_temp     = int(entity.attributes.get("max_temp", 0)*10)
             step_temp    = int(entity.attributes.get("target_temp_step", 0.5)*10) 

@@ -58,6 +58,13 @@ class LuiController(object):
         self._pages_gen.update_time("")
         self._pages_gen.update_date("")
 
+        # set screensaver timeout
+        timeout = self._config.get("timeoutScreensaver")
+        self._send_mqtt_msg(f"timeout,{timeout}")
+        
+        # set current screensaver brightness
+        self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
+        
         # send panel to screensaver
         self._pages_gen.page_type("screensaver")
         self.weather_update("")
@@ -72,7 +79,7 @@ class LuiController(object):
         self._pages_gen.update_screensaver_weather(kwargs={"weather": we_name, "unit": unit})
 
     def register_callbacks(self):
-        items = self._config.get_root_page().get_all_items_recursive()
+        items = self._config.get_root_page().get_all_item_names()
         LOGGER.info(f"Registering callbacks for the following items: {items}")
         for item in items:
             if self._ha_api.entity_exists(item):
@@ -80,13 +87,15 @@ class LuiController(object):
 
     def state_change_callback(self, entity, attribute, old, new, kwargs):
         LOGGER.info(f"Got callback for: {entity}")
-        if entity in self._current_page.get_items():
+        LOGGER.info(f"Current page has the following items: {self._current_page.get_items()}")
+        if entity in self._current_page.get_all_item_names(recursive=False):
+            LOGGER.info(f"Callback Entity is on current page: {entity}")
             self._pages_gen.render_page(self._current_page)
             # send detail page update, just in case
             if self._current_page.data.get("type", "unknown") in ["cardGrid", "cardEntities"]:
                 if entity.startswith("light"):
                     self._pages_gen.generate_light_detail_page(entity)
-                if entity.startswith("switch"):
+                if entity.startswith("cover"):
                     self._pages_gen.generate_shutter_detail_page(entity)
 
 

@@ -1,6 +1,5 @@
 import logging
 
-
 LOGGER = logging.getLogger(__name__)
 
 class PageNode(object):
@@ -59,11 +58,12 @@ class PageNode(object):
                 items.append(i.data)
         return items
 
-    def get_all_items_recursive(self):
+    def get_all_item_names(self, recursive=True):
         items = []
         for i in self.childs:
             if len(i.childs) > 0:
-                items.extend(i.get_all_items_recursive())
+                if recursive:
+                    items.extend(i.get_all_item_names())
             else:
                 if type(i.data) is dict:
                     items.append(i.data.get("item", next(iter(i.data))))
