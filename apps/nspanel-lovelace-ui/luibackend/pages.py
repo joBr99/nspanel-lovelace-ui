@@ -132,10 +132,11 @@ class LuiPagesGen(object):
             return f",text,{item},{icon_id},{icon_color},{name},{value}"
         if item_type in ["button", "input_button"]:
             icon_id = get_icon_id_ha("button", overwrite=icon)
-            return f",button,{item},{icon_id},17299,{name},PRESS"
+            text = get_translation(self._locale,"PRESS")
+            return f",button,{item},{icon_id},17299,{name},{text}"
         if item_type == "scene":
             icon_id = get_icon_id_ha("scene", overwrite=icon)
-            text = get_translation(self._locale,"PRESS")
+            text = get_translation(self._locale,"ACTIVATE")
             return f",button,{item},{icon_id},17299,{name},{text}"
 
 
