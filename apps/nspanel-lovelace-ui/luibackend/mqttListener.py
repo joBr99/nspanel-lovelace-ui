@@ -43,6 +43,10 @@ class LuiMqttListener(object):
                 entity_id = msg[2]
                 btype = msg[3]
                 value = msg[4] if len(msg) > 4 else None
+
+                if entity_id == "updateDisplayNoYes" and value == "yes":
+                    self._updater.update_panel_driver()
+
                 self._controller.button_press(entity_id, btype, value)
             if msg[1] == "pageOpenDetail":
                 self._controller.detail_open(msg[2], msg[3])

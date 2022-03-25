@@ -29,6 +29,28 @@ class LuiController(object):
         # register callbacks
         self.register_callbacks()
 
+        self.current_screensaver_brightness = 20
+        # calc screensaver brightness
+        # set brightness of screensaver
+        if type(self._config.get("brightnessScreensaver")) == int:
+            self.current_screensaver_brightness = self._config.get("brightnessScreensaver")
+        elif type(self._config.get("brightnessScreensaver")) == list:
+            sorted_timesets = sorted(self._config.get("brightnessScreensaver"), key=lambda d: self._ha_api.parse_time(d['time']))
+            found_current_dim_value = False
+            for index, timeset in enumerate(sorted_timesets):
+                self._ha_api.run_daily(self.update_screensaver_brightness, timeset["time"], value=timeset["value"])
+                LOGGER.info("Current time %s", self._ha_api.get_now().time())
+                if self._ha_api.parse_time(timeset["time"]) > self._ha_api.get_now().time() and not found_current_dim_value:
+                    # first time after current time, set dim value
+                    self.current_screensaver_brightness = sorted_timesets[index-1]["value"]
+                    LOGGER.info("Setting dim value to %s", sorted_timesets[index-1])
+                    found_current_dim_value = True
+                # still no dim value
+                if not found_current_dim_value:
+                    self.current_screensaver_brightness = sorted_timesets[-1]["value"]
+                # send screensaver brightness in case config has changed
+                self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
+
     def startup(self):
         LOGGER.info(f"Startup Event")
         # send time and date on startup
@@ -39,6 +61,10 @@ class LuiController(object):
         self._pages_gen.page_type("screensaver")
         self.weather_update("")
 
+    def update_screensaver_brightness(self, kwargs):
+        self.current_screensaver_brightness = kwargs['value']
+        self._send_mqtt_msg(f"dimmode,{self.current_screensaver_brightness}")
+
     def weather_update(self, kwargs):
         we_name = self._config.get("weather")
         unit    = "°C"
@@ -48,7 +74,8 @@ class LuiController(object):
         items = self._config.get_root_page().get_all_items_recursive()
         LOGGER.info(f"Registering callbacks for the following items: {items}")
         for item in items:
-            self._ha_api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
+            if self._ha_api.entity_exists(item):
+                self._ha_api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
 
     def state_change_callback(self, entity, attribute, old, new, kwargs):
         LOGGER.info(f"Got callback for: {entity}")
@@ -71,18 +98,21 @@ class LuiController(object):
     def button_press(self, entity_id, button_type, value):
         LOGGER.debug(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
         # internal buttons
-        if(entity_id == "screensaver" and button_type == "enter"):
+        if entity_id == "screensaver" and button_type == "enter":
             self._pages_gen.render_page(self._current_page)
-        if(button_type == "bExit"):
+        if button_type == "bExit":
             self._pages_gen.render_page(self._current_page)
 
-        if(button_type == "bNext"):
+        if button_type == "bNext":
             self._current_page = self._current_page.next()
             self._pages_gen.render_page(self._current_page)
-        if(button_type == "bPrev"):
+        if button_type == "bPrev":
             self._current_page = self._current_page.prev()
             self._pages_gen.render_page(self._current_page)
         
+        elif entity_id == "updateDisplayNoYes" and value == "no":
+            self._pages_gen.render_page(self._current_page)
+
         # buttons with actions on HA
         if button_type == "OnOff":
             if value == "1":

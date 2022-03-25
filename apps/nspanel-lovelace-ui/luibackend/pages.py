@@ -4,6 +4,7 @@ import datetime
 from icon_mapping import get_icon_id
 from icons import get_icon_id_ha
 from helper import scale, pos_to_color, rgb_dec565, rgb_brightness
+from localization import get_translation
 
 # check Babel
 import importlib
@@ -18,6 +19,7 @@ class LuiPagesGen(object):
     def __init__(self, ha_api, config, send_mqtt_msg):
         self._ha_api = ha_api
         self._config = config
+        self._locale  = config.get("locale")
         self._send_mqtt_msg = send_mqtt_msg
     
     def getEntityColor(self, entity):
@@ -44,8 +46,7 @@ class LuiPagesGen(object):
         global babel_spec
         if babel_spec is not None:
             dateformat = self._config.get("dateFormatBabel")
-            locale     = self._config.get("locale")
-            date = babel.dates.format_date(datetime.datetime.now(), dateformat, locale=locale)
+            date = babel.dates.format_date(datetime.datetime.now(), dateformat, locale=self._locale)
         else:
             dateformat = self._config.get("dateFormat")
             date = datetime.datetime.now().strftime(dateformat)
@@ -81,8 +82,8 @@ class LuiPagesGen(object):
 
         global babel_spec
         if babel_spec is not None:
-            up1 = babel.dates.format_date(up1, "E", locale=self.config["locale"])
-            up2 = babel.dates.format_date(up2, "E", locale=self.config["locale"])
+            up1 = babel.dates.format_date(up1, "E", locale=self._locale)
+            up2 = babel.dates.format_date(up2, "E", locale=self._locale)
         else:
             up1 = up1.strftime("%a")
             up2 = up2.strftime("%a")
@@ -103,7 +104,8 @@ class LuiPagesGen(object):
             return f",{item_type},,,,,"
         if item_type == "navigate":
             icon_id = get_icon_id_ha("button", overwrite=icon)
-            return f",button,{item},0,17299,{item},PRESS"
+            text = get_translation(self._locale,"PRESS")
+            return f",button,{item},0,17299,{item},{text}"
         if not self._ha_api.entity_exists(item):
             return f",text,{item},{get_icon_id('alert-circle-outline')},17299,Not found check, apps.yaml"
         # HA Entities
@@ -134,7 +136,8 @@ class LuiPagesGen(object):
             return f",button,{item},{icon_id},17299,{name},PRESS"
         if item_type == "scene":
             icon_id = get_icon_id_ha("scene", overwrite=icon)
-            return f",button,{item},{icon_id},17299,{name},ACTIVATE"
+            text = get_translation(self._locale,"PRESS")
+            return f",button,{item},{icon_id},17299,{name},{text}"
 
 
     def generate_entities_page(self, heading, items):
