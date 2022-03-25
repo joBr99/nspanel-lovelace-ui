@@ -1131,13 +1131,14 @@ Button bPrev
     
     Events
         Touch Press Event
-            nPage=nPage-1
-            //page open event
-            // event,pageOpen,cardEntities,pageNumber
-            // craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,pageOpen,"+tTmp.txt
+            tSend.txt="event,buttonPress2,cardEntities,"
+            if(bPrev.isbr==1)
+            {
+                tSend.txt+="bBack"
+            }else
+            {
+                tSend.txt+="bPrev"
+            }
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1184,13 +1185,7 @@ Button bNext
     
     Events
         Touch Press Event
-            nPage=nPage+1
-            //page open event
-            // event,pageOpen,cardEntities,pageNumber
-            // craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,pageOpen,"+tTmp.txt
+            tSend.txt="event,buttonPress2,cardEntities,bNext"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1776,6 +1771,27 @@ Timer tmSerial
                                     if(tInstruction.txt=="entityUpdHeading")
                                     {
                                         spstr strCommand.txt,tHeading.txt,",",1
+                                        spstr strCommand.txt,tTmp.txt,",",2
+                                        if(tTmp.txt=="0")
+                                        {
+                                            vis bPrev,0
+                                        }else
+                                        {
+                                            vis bPrev,1
+                                            if(tTmp.txt=="2")
+                                            {
+                                                bPrev.txt="î¶"
+                                                bPrev.isbr=1
+                                            }
+                                        }
+                                        spstr strCommand.txt,tTmp.txt,",",3
+                                        if(tTmp.txt=="0")
+                                        {
+                                            vis bNext,0
+                                        }else
+                                        {
+                                            vis bNext,1
+                                        }
                                     }
                                     if(tInstruction.txt=="entityUpd")
                                     {

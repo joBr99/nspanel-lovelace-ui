@@ -23,54 +23,23 @@ Page cardMedia
             vis p0,0
             vis tSend,0
             vis tInstruction,0
-            vis nPageDisp,0
             vis tTmp,0
             vis tId,0
             //vis nPageDisp,0
         
 Variable (string) strCommand
     Attributes
-        ID            : 8
+        ID            : 7
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) entn
     Attributes
-        ID            : 19
+        ID            : 18
         Scope         : local
         Text          : 
         Max. Text Size: 50
-    
-Number nPageDisp
-    Attributes
-        ID                                  : 6
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 426
-        y coordinate                        : 0
-        Width                               : 42
-        Height                              : 24
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Value                               : 0
-        Significant digits shown            : all
-        Format                              : decimal
-        Word wrap                           : enabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
     
 Text tSend
     Attributes
@@ -134,7 +103,7 @@ Text tTmp
     
 Text tInstruction
     Attributes
-        ID                                  : 9
+        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -164,7 +133,7 @@ Text tInstruction
     
 Text tId
     Attributes
-        ID                                  : 10
+        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -194,7 +163,7 @@ Text tId
     
 Text tHeading
     Attributes
-        ID                                  : 11
+        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -224,7 +193,7 @@ Text tHeading
     
 Text tTitle
     Attributes
-        ID                                  : 12
+        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -254,7 +223,7 @@ Text tTitle
     
 Text tAuthor
     Attributes
-        ID                                  : 13
+        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -284,7 +253,7 @@ Text tAuthor
     
 Text t2
     Attributes
-        ID                                  : 14
+        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -333,7 +302,7 @@ Text t2
         
 Text tPlayPause
     Attributes
-        ID                                  : 15
+        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -382,7 +351,7 @@ Text tPlayPause
         
 Text t0
     Attributes
-        ID                                  : 16
+        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -431,7 +400,7 @@ Text t0
         
 Text tIcon
     Attributes
-        ID                                  : 18
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -478,7 +447,7 @@ Picture p0
     
 Slider hVolume
     Attributes
-        ID                                  : 17
+        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -554,14 +523,7 @@ Button bNext
     
     Events
         Touch Press Event
-            nPage=nPage+1
-            nPageDisp.val=nPage
-            //page open event
-            // event,pageOpen,cardEntities,pageNumber
-            // craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,pageOpen,"+tTmp.txt
+            tSend.txt="event,buttonPress2,cardMedia,bNext"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -608,14 +570,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            nPage=nPage-1
-            nPageDisp.val=nPage
-            //page open event
-            // event,pageOpen,cardEntities,pageNumber
-            // craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,pageOpen,"+tTmp.txt
+            tSend.txt="event,buttonPress2,cardMedia,bPrev"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -630,7 +585,7 @@ Button bPrev
         
 Timer tmSerial
     Attributes
-        ID         : 7
+        ID         : 6
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -791,7 +746,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 20
+        ID         : 19
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -811,7 +766,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 21
+        ID   : 20
         Scope: local
         Value: 0
     

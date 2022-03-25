@@ -32,7 +32,17 @@ Page screensaver
             dim=dimValue
             vis tSend,0
             //page open event
-            // craft command
+            // clear weather elements, to keep example content in HMI
+            tMainIcon.txt=""
+            tMainText.txt=""
+            tMRIcon.txt=""
+            tMR.txt=""
+            tForecast1.txt=""
+            tF1Icon.txt=""
+            tForecast1Val.txt=""
+            tForecast2.txt=""
+            tF2Icon.txt=""
+            tForecast2Val.txt=""
             tSend.txt="event,screensaverOpen"
             //send calc crc
             btlen tSend.txt,sys0
@@ -45,17 +55,6 @@ Page screensaver
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            // clear weather elements, to keep example content in HMI
-            tMainIcon.txt=""
-            tMainText.txt=""
-            tMRIcon.txt=""
-            tMR.txt=""
-            tForecast1.txt=""
-            tF1Icon.txt=""
-            tForecast1Val.txt=""
-            tForecast2.txt=""
-            tF2Icon.txt=""
-            tForecast2Val.txt=""
         
 Variable (string) strCommand
     Attributes
@@ -260,7 +259,7 @@ Text tSend
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 25
+        Max. Text Size                      : 50
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -725,14 +724,6 @@ Timer tmSerial
                                         //tForecast2Val
                                         spstr strCommand.txt,tForecast2Val.txt,"?",10
                                     }
-                                    if(tInstruction.txt=="page")
-                                    {
-                                        //pagenumber
-                                        spstr strCommand.txt,tTmp.txt,",",1
-                                        covx tTmp.txt,sys0,0,0
-                                        nPage=sys0
-                                        //don't send current page number, wake will do
-                                    }
                                     if(tInstruction.txt=="pageType")
                                     {
                                         dim=100
@@ -804,12 +795,7 @@ TouchCap tc0
     
     Events
         Touch Press Event
-            //page open event
-            // event,pageOpen,cardEntities,pageNumber
-            // craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,pageOpen,"+tTmp.txt
+            tSend.txt="event,buttonPress2,screensaver,bExit"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC

@@ -1,12 +1,12 @@
 ---
 nspanel:
-  module: nspanel-lovelace-ui
+  module: nspanel-lovelace-ui2
   class: NsPanelLovelaceUIManager
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
-    updateMode: auto-notify # possible values are auto, auto-notify and manual
-    timeoutScreensaver: 15 #in seconds
+    updateMode: "auto-notify"
+    timeoutScreensaver: 20
     #brightnessScreensaver: 10
     brightnessScreensaver:
       - time: "7:00:00"
@@ -58,4 +58,3 @@ nspanel:
       - type: cardMedia
         heading: Exampe Media
         item: media_player.spotify_user
-
