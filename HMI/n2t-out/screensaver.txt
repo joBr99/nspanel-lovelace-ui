@@ -27,7 +27,13 @@ Page screensaver
             vis tTmp,0
             vis p0,0
             //load gloabl time string from pageIcons
-            tTime.txt=vaTime.txt
+            //tTime.txt=vaTime.txt
+            spstr vaTime.txt,tTime.txt,"?",0
+            spstr vaTime.txt,tAMPM.txt,"?",1
+            if(tAMPM.txt=="")
+            {
+                vis tAMPM,0
+            }
             tDate.txt=vaDate.txt
             dim=dimValue
             vis tSend,0
@@ -68,7 +74,7 @@ Variable (string) vaTime
         ID            : 10
         Scope         : global
         Text          : 
-        Max. Text Size: 10
+        Max. Text Size: 15
     
 Variable (string) vaDate
     Attributes
@@ -198,8 +204,8 @@ Text tTime
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 21:32
-        Max. Text Size                      : 10
+        Text                                : 21:32   
+        Max. Text Size                      : 15
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -594,6 +600,36 @@ Text t10
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+Text tAMPM
+    Attributes
+        ID                                  : 25
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 343
+        y coordinate                        : 48
+        Width                               : 104
+        Height                              : 57
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 3
+        Back. Color                         : 0
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : PM
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
 Picture p0
     Attributes
         ID                                  : 1
@@ -679,7 +715,12 @@ Timer tmSerial
                                     {
                                         //get set time to global variable
                                         spstr strCommand.txt,vaTime.txt,",",1
-                                        tTime.txt=vaTime.txt
+                                        spstr vaTime.txt,tTime.txt,"?",0
+                                        spstr vaTime.txt,tAMPM.txt,"?",1
+                                        if(tAMPM.txt=="")
+                                        {
+                                            vis tAMPM,0
+                                        }
                                     }
                                     if(tInstruction.txt=="date")
                                     {
