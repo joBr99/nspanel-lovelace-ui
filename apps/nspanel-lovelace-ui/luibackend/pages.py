@@ -124,9 +124,9 @@ class LuiPagesGen(object):
             icon_id = get_icon_id_ha(item_type, state=entity.state, overwrite=icon)
             return f",switch,{item},{icon_id},{icon_color},{name},{switch_val}"
         if item_type in ["sensor", "binary_sensor"]:
-            device_class = self.entity.attributes.get("device_class", "")
+            device_class = entity.attributes.get("device_class", "")
             icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
-            unit_of_measurement = self.entity.attributes.get("unit_of_measurement", "")
+            unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
             icon_color = self.getEntityColor(entity)
             return f",text,{item},{icon_id},{icon_color},{name},{value}"
