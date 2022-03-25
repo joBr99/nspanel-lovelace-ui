@@ -90,7 +90,7 @@ class LuiController(object):
         LOGGER.info(f"Current page has the following items: {self._current_page.get_items()}")
         if entity in self._current_page.get_all_item_names(recursive=False):
             LOGGER.info(f"Callback Entity is on current page: {entity}")
-            self._pages_gen.render_page(self._current_page)
+            self._pages_gen.render_page(self._current_page, send_page_type=False)
             # send detail page update, just in case
             if self._current_page.data.get("type", "unknown") in ["cardGrid", "cardEntities"]:
                 if entity.startswith("light"):
