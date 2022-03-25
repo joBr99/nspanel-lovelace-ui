@@ -138,6 +138,12 @@ The following message can be used to update the content on the cardEntities Page
 
 ## Messages from Nextion Display
 
+`event,buttonPress2,pageName,bNext`
+
+`event,buttonPress2,pageName,bPrev`
+
+`event,buttonPress2,pageName,bExit`
+
 ### startup page
 
 `event,startup,version`
@@ -149,12 +155,9 @@ The following message can be used to update the content on the cardEntities Page
 `event,screensaverOpen` - Screensaver has opened
 
 
-
 ### cardEntities Page
 
 `event,*eventName*,*entityName*,*actionName*,*optionalValue*`
-
-`event,pageOpen,0`
 
 `event,buttonPress2,internalNameEntity,up`
 
@@ -191,8 +194,6 @@ The following message can be used to update the content on the cardEntities Page
 `event,buttonPress2,*internalName*,notifyAction,no`
 
 ### cardThermo Page
-
-`event,pageOpen,0`
 
 `event,buttonPress2,*entityName*,tempUpd,*temperature*`
 
