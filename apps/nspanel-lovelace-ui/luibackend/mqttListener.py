@@ -15,7 +15,7 @@ class LuiMqttListener(object):
 
 
     def mqtt_event_callback(self, event_name, data, kwargs):
-        LOGGER.info(f'MQTT callback for: {data}')
+        LOGGER.debug(f'MQTT callback for: {data}')
         # Parse Json Message from Tasmota and strip out message from nextion display
         data = json.loads(data["payload"])
         if("nlui_driver_version" in data):

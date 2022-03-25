@@ -98,7 +98,7 @@ class LuiPagesGen(object):
             item = next(iter(item.items()))[0]
         # type of the item is the string before the "." in the item name
         item_type = item.split(".")[0]
-        LOGGER.info(f"Generating item command for {item} with type {item_type}",)
+        LOGGER.debug(f"Generating item command for {item} with type {item_type}",)
         # Internal Entities 
         if item_type == "delete":
             return f",{item_type},,,,,"
@@ -225,10 +225,9 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(command)
 
     def render_page(self, page, send_page_type=True):
-        LOGGER.info(page)
         config    = page.data
         page_type = config["type"]
-        LOGGER.info(f"Started rendering of page x with type {page_type}")
+        LOGGER.info(f"Started rendering of page {page.pos} with type {page_type}")
         # Switch to page
         if send_page_type:
             self.page_type(page_type)
@@ -237,10 +236,8 @@ class LuiPagesGen(object):
             self.generate_entities_page(heading, page.get_items())
             return
         if page_type == "cardThermo":
-            LOGGER.info(page.data)
             self.generate_thermo_page(page.data.get("item"))
         if page_type == "cardMedia":
-            LOGGER.info(page.data)
             self.generate_media_page(page.data.get("item"))
 
     def generate_light_detail_page(self, entity):
