@@ -244,14 +244,15 @@ Confiure your NSPanel as you like, you need to edit the `apps.yaml` inside of yo
 You can have multiple nspanel sections.
 
 ```yaml
+---
 nspanel-1:
   module: nspanel-lovelace-ui
   class: NsPanelLovelaceUIManager
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
-    updateMode: auto-notify # possible values are auto, auto-notify and manual
-    timeoutScreensaver: 15 #in seconds
+    updateMode: "auto-notify"
+    timeoutScreensaver: 20
     #brightnessScreensaver: 10
     brightnessScreensaver:
       - time: "7:00:00"
@@ -263,7 +264,7 @@ nspanel-1:
                             # formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
     timeFormat: "%H:%M"
     dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
-    weatherEntity: weather.example
+    weather: weather.example
     pages:
       - type: cardEntities
         heading: Example Page 1

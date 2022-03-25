@@ -1,6 +1,6 @@
 ---
-nspanel:
-  module: nspanel-lovelace-ui2
+nspanel-1:
+  module: nspanel-lovelace-ui
   class: NsPanelLovelaceUIManager
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
@@ -18,9 +18,7 @@ nspanel:
                             # formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
     timeFormat: "%H:%M"
     dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
-    buttonText: KLICKEN
-    sceneText: ACTIVIEREN
-    weatherEntity: weather.example
+    weather: weather.example
     pages:
       - type: cardEntities
         heading: Example Page 1
