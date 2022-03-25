@@ -80,16 +80,16 @@ class LuiController(object):
 
     def register_callbacks(self):
         items = self._config.get_root_page().get_all_item_names()
-        LOGGER.info(f"Registering callbacks for the following items: {items}")
+        LOGGER.debug(f"Registering callbacks for the following items: {items}")
         for item in items:
             if self._ha_api.entity_exists(item):
                 self._ha_api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
 
     def state_change_callback(self, entity, attribute, old, new, kwargs):
-        LOGGER.info(f"Got callback for: {entity}")
-        LOGGER.info(f"Current page has the following items: {self._current_page.get_items()}")
+        LOGGER.debug(f"Got callback for: {entity}")
+        LOGGER.debug(f"Current page has the following items: {self._current_page.get_items()}")
         if entity in self._current_page.get_all_item_names(recursive=False):
-            LOGGER.info(f"Callback Entity is on current page: {entity}")
+            LOGGER.debug(f"Callback Entity is on current page: {entity}")
             self._pages_gen.render_page(self._current_page, send_page_type=False)
             # send detail page update, just in case
             if self._current_page.data.get("type", "unknown") in ["cardGrid", "cardEntities"]:

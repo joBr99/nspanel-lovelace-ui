@@ -112,7 +112,7 @@ class LuiBackendConfig(object):
                 self._config[k] = v
         LOGGER.info(f"Loaded config: {self._config}")
 
-        root_page = {"items": self.get("pages"), "name": "root"}
+        root_page = {"items": self.get("pages"), "type": "internal", "heading": "root"}
         self._page_config = PageNode(root_page)
 
         LOGGER.info(f"Parsed Page config to the following Tree: \n {self._page_config.dump()}")
