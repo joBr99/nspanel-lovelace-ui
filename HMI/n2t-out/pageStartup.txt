@@ -402,7 +402,7 @@ Text tVersion
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 16
+        Text                                : 17
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -591,6 +591,10 @@ Timer tmSerial
                                         if(tId.txt=="cardThermo")
                                         {
                                             page cardThermo
+                                        }
+                                        if(tId.txt=="screensaver")
+                                        {
+                                            page screensaver
                                         }
                                         if(tId.txt=="popupLight")
                                         {
