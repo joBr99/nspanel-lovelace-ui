@@ -1,5 +1,6 @@
 import logging
 import datetime
+from helper import scale, pos_to_color
 
 from pages import LuiPagesGen
 

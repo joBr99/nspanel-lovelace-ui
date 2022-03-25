@@ -118,7 +118,7 @@ class LuiBackendConfig(object):
         LOGGER.info(f"Parsed Page config to the following Tree: \n {self._page_config.dump()}")
 
     def check(self):
-        errors = 0
+        return
 
     def get(self, name):
         value = self._config.get(name)
