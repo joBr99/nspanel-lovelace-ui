@@ -6,8 +6,9 @@ LOGGER = logging.getLogger(__name__)
 
 class LuiMqttListener(object):
 
-    def __init__(self, mqtt_api, topic, controller):
+    def __init__(self, mqtt_api, topic, controller, updater):
         self._controller = controller
+        self._updater = updater
         # Setup, mqtt subscription and callback
         mqtt_api.mqtt_subscribe(topic=topic)
         mqtt_api.listen_event(self.mqtt_event_callback, "MQTT_MESSAGE", topic=topic, namespace='mqtt')
@@ -17,6 +18,9 @@ class LuiMqttListener(object):
         LOGGER.info(f'MQTT callback for: {data}')
         # Parse Json Message from Tasmota and strip out message from nextion display
         data = json.loads(data["payload"])
+        if("nlui_driver_version" in data):
+            msg = data["nlui_driver_version"]
+            self._updater.set_tasmota_driver_version(int(msg))
         if("CustomRecv" not in data):
             return
         msg = data["CustomRecv"]
@@ -27,9 +31,14 @@ class LuiMqttListener(object):
         if msg[0] == "event":
             if msg[1] == "startup":
                 display_firmware_version = int(msg[2])
-                self._controller.startup(display_firmware_version)
+                self._updater.set_current_display_firmware_version(display_firmware_version)
+                # check for updates
+                msg_send = self._updater.check_updates()
+                # send messages for current page 
+                if not msg_send:
+                    self._controller.startup()
             if msg[1] == "screensaverOpen":
-                self._controller.screensaver_open()
+                self._controller.weather_update("")
             if msg[1] == "buttonPress2":
                 entity_id = msg[2]
                 btype = msg[3]
