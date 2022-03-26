@@ -83,13 +83,13 @@ class LuiPagesGen(object):
             down1 = we.attributes.forecast[0]['temperature']
         else:
             LOGGER.info(f"Forecast 1 is overrriden with {wOF1}")
-            entity = self._ha_api.get_entity(wOF1)
             icon = None
             name = None
             if type(wOF1) is dict:
                 icon = next(iter(wOF1.items()))[1].get('icon')
                 name = next(iter(wOF1.items()))[1].get('name')
                 wOF1 = next(iter(wOF1.items()))[0]
+            entity = self._ha_api.get_entity(wOF1)
             up1 = name if name is not None else entity.attributes.friendly_name
             icon1 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
@@ -108,13 +108,13 @@ class LuiPagesGen(object):
             down2 = we.attributes.forecast[1]['temperature']
         else:
             LOGGER.info(f"Forecast 2 is overrriden with {wOF2}")
-            entity = self._ha_api.get_entity(wOF2)
             icon = None
             name = None
             if type(wOF2) is dict:
                 icon = next(iter(wOF2.items()))[1].get('icon')
                 name = next(iter(wOF2.items()))[1].get('name')
                 wOF2 = next(iter(wOF2.items()))[0]
+            entity = self._ha_api.get_entity(wOF2)
             up2 = name if name is not None else entity.attributes.friendly_name
             icon2 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
