@@ -202,7 +202,7 @@ Due the limitations of Berry, it's not possible to download the tft file directl
 
 The following Link has always the latest version from this repository, just execute the following Command in Tasmota:
 
-`FlashNextion http://nspanel.pky.eu/lui.tft`
+`FlashNextion http://nspanel.pky.eu/lui-release.tft`
 
 ## Configuration
 
