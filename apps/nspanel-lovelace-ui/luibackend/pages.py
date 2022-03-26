@@ -138,8 +138,10 @@ class LuiPagesGen(object):
         if item_type == "delete":
             return f",{item_type},,,,,"
         if item_type == "navigate":
+            name = self._config.get_root_page().search_page_by_name(item)[0].data.get("heading")
             text = get_translation(self._locale,"PRESS")
-            return f",button,{item},0,17299,{item},{text}"
+            icon_id = get_icon_id(self._config.get_root_page().search_page_by_name(item)[0].data.get("icon", "gesture-tap-button"))
+            return f",button,{item},{icon_id},17299,{name},{text}"
         if not self._ha_api.entity_exists(item):
             return f",text,{item},{get_icon_id('alert-circle-outline')},17299,Not found check, apps.yaml"
         # HA Entities
