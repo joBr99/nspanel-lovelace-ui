@@ -56,6 +56,7 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(f"pageType,{target_page}")
     
     def update_screensaver_weather(self, kwargs):
+        global babel_spec
         we_name = kwargs['weather']
         unit = kwargs['unit']
 
@@ -70,23 +71,55 @@ class LuiPagesGen(object):
         icon_cur_detail = get_icon_id("water-percent")
         text_cur_detail = f"{we.attributes.humidity} %"
 
-        up1   = we.attributes.forecast[0]['datetime']
-        up1   = datetime.datetime.fromisoformat(up1)
-        icon1 = get_icon_id_ha("weather", state=we.attributes.forecast[0]['condition'])
-        down1 = we.attributes.forecast[0]['temperature']
-
-        up2   = we.attributes.forecast[1]['datetime']
-        up2   = datetime.datetime.fromisoformat(up2)
-        icon2 = get_icon_id_ha("weather", state=we.attributes.forecast[1]['condition'])
-        down2 = we.attributes.forecast[1]['temperature']
-
-        global babel_spec
-        if babel_spec is not None:
-            up1 = babel.dates.format_date(up1, "E", locale=self._locale)
-            up2 = babel.dates.format_date(up2, "E", locale=self._locale)
+        wOF1 = self._config.get("weatherOverrideForecast1")
+        if wOF1 is None:
+            up1   = we.attributes.forecast[0]['datetime']
+            up1   = datetime.datetime.fromisoformat(up1)
+            if babel_spec is not None:
+                up1 = babel.dates.format_date(up1, "E", locale=self._locale)
+            else:
+                up1 = up1.strftime("%a")
+            icon1 = get_icon_id_ha("weather", state=we.attributes.forecast[0]['condition'])
+            down1 = we.attributes.forecast[0]['temperature']
         else:
-            up1 = up1.strftime("%a")
-            up2 = up2.strftime("%a")
+            LOGGER.info(f"Forecast 1 is overrriden with {wOF1}")
+            entity = self._ha_api.get_entity(wOF1)
+            icon = None
+            name = None
+            if type(wOF1) is dict:
+                icon = next(iter(item.items()))[1].get('icon')
+                name = next(iter(item.items()))[1].get('name')
+                wOF1 = next(iter(item.items()))[0]
+            up1 = name if name is not None else entity.attributes.friendly_name
+            icon1 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+            unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
+            down1 = entity.state + " " + unit_of_measurement
+
+
+        wOF2 = self._config.get("weatherOverrideForecast2")
+        if wOF2 is None:
+            up2   = we.attributes.forecast[1]['datetime']
+            up2   = datetime.datetime.fromisoformat(up2)
+            if babel_spec is not None:
+                up2 = babel.dates.format_date(up2, "E", locale=self._locale)
+            else:
+                up2 = up2.strftime("%a")
+            icon2 = get_icon_id_ha("weather", state=we.attributes.forecast[1]['condition'])
+            down2 = we.attributes.forecast[1]['temperature']
+        else:
+            LOGGER.info(f"Forecast 2 is overrriden with {wOF2}")
+            entity = self._ha_api.get_entity(wOF2)
+            icon = None
+            name = None
+            if type(wOF2) is dict:
+                icon = next(iter(item.items()))[1].get('icon')
+                name = next(iter(item.items()))[1].get('name')
+                wOF2 = next(iter(item.items()))[0]
+            up2 = name if name is not None else entity.attributes.friendly_name
+            icon2 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+            unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
+            down2 = entity.state + " " + unit_of_measurement
+            
         self._send_mqtt_msg(f"weatherUpdate,?{icon_cur}?{text_cur}?{icon_cur_detail}?{text_cur_detail}?{up1}?{icon1}?{down1}?{up2}?{icon2}?{down2}")
 
     def generate_entities_item(self, item):

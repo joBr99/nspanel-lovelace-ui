@@ -1800,7 +1800,7 @@ Timer tmSerial
                                         spstr strCommand.txt,type1.txt,",",1
                                         // get internal name
                                         spstr strCommand.txt,entn1.txt,",",2
-                                        if(type1.txt=="delete")
+                                        if(type1.txt=="delete"||type1.txt=="")
                                         {
                                             vis bUp1,0
                                             vis bStop1,0
@@ -1887,7 +1887,7 @@ Timer tmSerial
                                         spstr strCommand.txt,type2.txt,",",7
                                         // get internal name
                                         spstr strCommand.txt,entn2.txt,",",8
-                                        if(type2.txt=="delete")
+                                        if(type2.txt=="delete"||type2.txt=="")
                                         {
                                             vis bUp2,0
                                             vis bStop2,0
@@ -1974,7 +1974,7 @@ Timer tmSerial
                                         spstr strCommand.txt,type3.txt,",",13
                                         // get internal name
                                         spstr strCommand.txt,entn3.txt,",",14
-                                        if(type3.txt=="delete")
+                                        if(type3.txt=="delete"||type3.txt=="")
                                         {
                                             vis bUp3,0
                                             vis bStop3,0
@@ -2061,7 +2061,7 @@ Timer tmSerial
                                         spstr strCommand.txt,type4.txt,",",19
                                         // get internal name
                                         spstr strCommand.txt,entn4.txt,",",20
-                                        if(type4.txt=="delete")
+                                        if(type4.txt=="delete"||type4.txt=="")
                                         {
                                             vis bUp4,0
                                             vis bStop4,0
