@@ -80,7 +80,7 @@ class LuiPagesGen(object):
             else:
                 up1 = up1.strftime("%a")
             icon1 = get_icon_id_ha("weather", state=we.attributes.forecast[0]['condition'])
-            down1 = f"{we.attributes.forecast[0]['temperature']}{unit}"
+            down1 = f"{we.attributes.forecast[0]['temperature']} {unit}"
         else:
             LOGGER.info(f"Forecast 1 is overrriden with {wOF1}")
             icon = None
@@ -93,7 +93,7 @@ class LuiPagesGen(object):
             up1 = name if name is not None else entity.attributes.friendly_name
             icon1 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
-            down1 = entity.state + " " + unit_of_measurement
+            down1 = f"{entity.state} {unit_of_measurement}"
 
 
         wOF2 = self._config.get("weatherOverrideForecast2")
@@ -105,7 +105,7 @@ class LuiPagesGen(object):
             else:
                 up2 = up2.strftime("%a")
             icon2 = get_icon_id_ha("weather", state=we.attributes.forecast[1]['condition'])
-            down2 = f"{we.attributes.forecast[1]['temperature']}{unit}"
+            down2 = f"{we.attributes.forecast[1]['temperature']} {unit}"
 
         else:
             LOGGER.info(f"Forecast 2 is overrriden with {wOF2}")
@@ -119,7 +119,8 @@ class LuiPagesGen(object):
             up2 = name if name is not None else entity.attributes.friendly_name
             icon2 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
-            down2 = entity.state + " " + unit_of_measurement
+            down2 = f"{entity.state} {unit_of_measurement}"
+
             
         self._send_mqtt_msg(f"weatherUpdate,?{icon_cur}?{text_cur}?{icon_cur_detail}?{text_cur_detail}?{up1}?{icon1}?{down1}?{up2}?{icon2}?{down2}")
 
