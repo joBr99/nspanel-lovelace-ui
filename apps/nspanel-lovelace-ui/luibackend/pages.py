@@ -138,12 +138,18 @@ class LuiPagesGen(object):
         if item_type == "delete":
             return f",{item_type},,,,,"
         if item_type == "navigate":
-            name = self._config.get_root_page().search_page_by_name(item)[0].data.get("heading")
-            text = get_translation(self._locale,"PRESS")
-            icon_id = get_icon_id(self._config.get_root_page().search_page_by_name(item)[0].data.get("icon", "gesture-tap-button"))
-            return f",button,{item},{icon_id},17299,{name},{text}"
+            page_search = self._config.get_root_page().search_page_by_name(item)
+            if len(page_search) > 0:
+                page_data = page_search[0].data
+                name = page_data.get("heading")
+                text = get_translation(self._locale,"PRESS")
+                icon_id = get_icon_id(page_data.get("icon", "gesture-tap-button"))
+                return f",button,{item},{icon_id},17299,{name},{text}"
+            else:
+                return f",text,{item},{get_icon_id('alert-circle-outline')},17299,page not found,"
         if not self._ha_api.entity_exists(item):
             return f",text,{item},{get_icon_id('alert-circle-outline')},17299,Not found check, apps.yaml"
+        
         # HA Entities
         entity = self._ha_api.get_entity(item)
         name = name if name is not None else entity.attributes.friendly_name
