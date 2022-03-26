@@ -65,7 +65,7 @@ class NsPanelLovelaceUIManager(hass.Hass):
         controller = LuiController(self, cfg, send_mqtt_msg)
 
         desired_display_firmware_version = 18
-        desired_display_firmware_url     = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-v1.8.1.tft"
+        desired_display_firmware_url     = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-v1.8.2.tft"
         desired_tasmota_driver_version   = 3
         desired_tasmota_driver_url       = "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be"
         
