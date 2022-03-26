@@ -34,7 +34,7 @@ class LuiPagesGen(object):
                 color = rgb_brightness(color, attr.brightness)
             icon_color = rgb_dec565(color)
         elif "brightness" in attr:
-            color = rgb_brightness([253, 216, 53], max(70, attr.brightness))
+            color = rgb_brightness([253, 216, 53], attr.brightness)
             icon_color = rgb_dec565(color)
         return icon_color
 
@@ -280,9 +280,9 @@ class LuiPagesGen(object):
         brightness = "disable"
         color_temp = "disable"
         color = "disable"
-        # scale 0-255 brightness from ha to 0-100
         if entity.state == "on":
             if "brightness" in entity.attributes:
+                # scale 0-255 brightness from ha to 0-100
                 brightness = int(scale(entity.attributes.brightness,(0,255),(0,100)))
             else:
                 brightness = "disable"
