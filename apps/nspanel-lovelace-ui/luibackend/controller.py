@@ -106,7 +106,7 @@ class LuiController(object):
             self._pages_gen.generate_light_detail_page(entity_id)
 
     def button_press(self, entity_id, button_type, value):
-        LOGGER.debug(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
+        LOGGER.info(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
         # internal buttons
         if entity_id == "screensaver" and button_type == "enter":
             self._pages_gen.render_page(self._current_page)
@@ -142,7 +142,11 @@ class LuiController(object):
             self._ha_api.get_entity(entity_id).call_service("set_cover_position", position=pos)
 
         if button_type == "button":
-            if entity_id.startswith('scene'):
+            if entity_id.startswith('navigate'):
+                # internal for navigation to nested pages
+                topage = self._config.get_root_page().search_page_by_name(entity_id)[0]
+                self._pages_gen.render_page(topage)
+            elif entity_id.startswith('scene'):
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean'):
                 self._ha_api.get_entity(entity_id).call_service("toggle")

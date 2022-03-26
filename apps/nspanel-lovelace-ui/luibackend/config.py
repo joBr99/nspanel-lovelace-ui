@@ -19,6 +19,9 @@ class PageNode(object):
         ptype = self.data.get("type", "unkown") if type(self.data) is dict else "leaf"
 
         self.name = f"{ptype}.{name}" if type(self.data) is dict else self.data
+        self.name  = self.name.replace(".","_")
+        self.name  = self.name.replace(",","_")
+        self.name  = self.name.replace(" ","_")
 
     def add_child(self, obj):
         obj.pos = len(self.childs)
@@ -39,6 +42,20 @@ class PageNode(object):
         else:
             return self
 
+    def search_page_by_name(self, name):
+        name = name.replace("navigate.", "")
+        pages = []
+        for i in self.childs:
+            # compare name of current page
+            if i.name == name:
+                pages.append(i)
+            # current pages has also childs
+            if len(i.childs) > 0:
+                pages.extend(i.search_page_by_name(name))
+        return pages
+
+        return items
+
     def dump(self, indent=0):
         """dump tree to string"""
         tab = '    '*(indent-1) + ' |- ' if indent > 0 else ''
@@ -53,7 +70,7 @@ class PageNode(object):
         items = []
         for i in self.childs:
             if len(i.childs) > 0:
-                items.append("navigate.todo")
+                items.append(f"navigate.{i.name}")
             else:
                 items.append(i.data)
         return items
@@ -70,7 +87,7 @@ class PageNode(object):
                 else:
                     items.append(i.data)
         return items
-
+    
 class LuiBackendConfig(object):
 
     _DEFAULT_CONFIG = {
