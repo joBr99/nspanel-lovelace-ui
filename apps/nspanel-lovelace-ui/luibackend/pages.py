@@ -80,7 +80,7 @@ class LuiPagesGen(object):
             else:
                 up1 = up1.strftime("%a")
             icon1 = get_icon_id_ha("weather", state=we.attributes.forecast[0]['condition'])
-            down1 = we.attributes.forecast[0]['temperature']
+            down1 = f"{we.attributes.forecast[0]['temperature']}{unit}"
         else:
             LOGGER.info(f"Forecast 1 is overrriden with {wOF1}")
             icon = None
@@ -105,7 +105,8 @@ class LuiPagesGen(object):
             else:
                 up2 = up2.strftime("%a")
             icon2 = get_icon_id_ha("weather", state=we.attributes.forecast[1]['condition'])
-            down2 = we.attributes.forecast[1]['temperature']
+            down2 = f"{we.attributes.forecast[1]['temperature']}{unit}"
+
         else:
             LOGGER.info(f"Forecast 2 is overrriden with {wOF2}")
             icon = None
