@@ -24,33 +24,26 @@ class LuiController(object):
         # time update callback
         time = datetime.time(0, 0, 0)
         ha_api.run_minutely(self._pages_gen.update_time, time)
+
         # weather callback
         weather_interval = 15 * 60 # 15 minutes
         ha_api.run_every(self.weather_update, "now", weather_interval)
+
         # register callbacks
         self.register_callbacks()
 
-        self.current_screensaver_brightness = 20
-        # calc screensaver brightness
-        # set brightness of screensaver
-        if type(self._config.get("brightnessScreensaver")) == int:
-            self.current_screensaver_brightness = self._config.get("brightnessScreensaver")
-        elif type(self._config.get("brightnessScreensaver")) == list:
-            sorted_timesets = sorted(self._config.get("brightnessScreensaver"), key=lambda d: self._ha_api.parse_time(d['time']))
-            found_current_dim_value = False
-            for index, timeset in enumerate(sorted_timesets):
+        # register callbacks for each time
+        if type(self._config.get("brightnessScreensaver")) == list:
+            for index, timeset in enumerate(self._config.get("brightnessScreensaver")):
                 self._ha_api.run_daily(self.update_screensaver_brightness, timeset["time"], value=timeset["value"])
-                LOGGER.info("Current time %s", self._ha_api.get_now().time())
-                if self._ha_api.parse_time(timeset["time"]) > self._ha_api.get_now().time() and not found_current_dim_value:
-                    # first time after current time, set dim value
-                    self.current_screensaver_brightness = sorted_timesets[index-1]["value"]
-                    LOGGER.info("Setting dim value to %s", sorted_timesets[index-1])
-                    found_current_dim_value = True
-                # still no dim value
-                if not found_current_dim_value:
-                    self.current_screensaver_brightness = sorted_timesets[-1]["value"]
-                # send screensaver brightness in case config has changed
-                self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
+        
+        # calculate current brightness
+        self.current_screensaver_brightness = self.calc_current_screensaver_brightness()
+
+        # call update_screensaver_brightness on changes of entity configured in brightnessScreensaverTracking
+        bst = self._config.get("brightnessScreensaverTracking")
+        if bst is not None and self._ha_api.entity_exists(bst):
+            self._ha_api.listen_state(self.update_screensaver_brightness, entity_id=bst,  value=self.current_screensaver_brightness)
 
     def startup(self):
         LOGGER.info(f"Startup Event")
@@ -70,8 +63,33 @@ class LuiController(object):
         self.weather_update("")
 
     def update_screensaver_brightness(self, kwargs):
-        self.current_screensaver_brightness = kwargs['value']
+        bst = self._config.get("brightnessScreensaverTracking")
+        if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state == "not_home":
+            self.current_screensaver_brightness = 0
+        else:
+            self.current_screensaver_brightness = kwargs['value']
         self._send_mqtt_msg(f"dimmode,{self.current_screensaver_brightness}")
+
+    def calc_current_screensaver_brightness(self):
+        current_screensaver_brightness = 20
+        # set brightness of screensaver
+        if type(self._config.get("brightnessScreensaver")) == int:
+            current_screensaver_brightness = self._config.get("brightnessScreensaver")
+        elif type(self._config.get("brightnessScreensaver")) == list:
+            sorted_timesets = sorted(self._config.get("brightnessScreensaver"), key=lambda d: self._ha_api.parse_time(d['time']))
+            # calc current screensaver brightness
+            found_current_dim_value = False
+            for index, timeset in enumerate(sorted_timesets):
+                LOGGER.info("Current time %s", self._ha_api.get_now().time())
+                if self._ha_api.parse_time(timeset["time"]) > self._ha_api.get_now().time() and not found_current_dim_value:
+                    # first time after current time, set dim value
+                    current_screensaver_brightness = sorted_timesets[index-1]["value"]
+                    LOGGER.info("Setting dim value to %s", sorted_timesets[index-1])
+                    found_current_dim_value = True
+                # still no dim value
+                if not found_current_dim_value:
+                    self.current_screensaver_brightness = sorted_timesets[-1]["value"]
+        return current_screensaver_brightness
 
     def weather_update(self, kwargs):
         we_name = self._config.get("weather")

@@ -96,6 +96,7 @@ class LuiBackendConfig(object):
         'updateMode': "auto-notify",
         'timeoutScreensaver': 20,
         'brightnessScreensaver': 20,
+        'brightnessScreensaverTracking': None,
         'locale': "en_US",
         'timeFormat': "%H:%M",
         'dateFormatBabel': "full",
