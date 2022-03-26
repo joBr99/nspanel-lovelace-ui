@@ -87,9 +87,9 @@ class LuiPagesGen(object):
             icon = None
             name = None
             if type(wOF1) is dict:
-                icon = next(iter(item.items()))[1].get('icon')
-                name = next(iter(item.items()))[1].get('name')
-                wOF1 = next(iter(item.items()))[0]
+                icon = next(iter(wOF1.items()))[1].get('icon')
+                name = next(iter(wOF1.items()))[1].get('name')
+                wOF1 = next(iter(wOF1.items()))[0]
             up1 = name if name is not None else entity.attributes.friendly_name
             icon1 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
@@ -112,9 +112,9 @@ class LuiPagesGen(object):
             icon = None
             name = None
             if type(wOF2) is dict:
-                icon = next(iter(item.items()))[1].get('icon')
-                name = next(iter(item.items()))[1].get('name')
-                wOF2 = next(iter(item.items()))[0]
+                icon = next(iter(wOF2.items()))[1].get('icon')
+                name = next(iter(wOF2.items()))[1].get('name')
+                wOF2 = next(iter(wOF2.items()))[0]
             up2 = name if name is not None else entity.attributes.friendly_name
             icon2 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
