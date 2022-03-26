@@ -10,6 +10,7 @@ def scale(val, src, dst):
 def hsv2rgb(h, s, v):
     hsv = colorsys.hsv_to_rgb(h,s,v)
     return tuple(round(i * 255) for i in hsv)
+    
 def pos_to_color(x, y):
     r = 160/2
     x = round((x - r) / r * 100) / 100
@@ -26,10 +27,13 @@ def pos_to_color(x, y):
     return rgb
 
 def rgb_brightness(rgb_color, brightness):
+    # brightness values are in range 0-255
+    # to make sure that the color is not completly lost we need to rescale this to 70-255
+    brightness = int(scale(entity.attributes.brightness,(0,255),(70,255)))
     red = rgb_color[0]/255*brightness
     green = rgb_color[1]/255*brightness
     blue = rgb_color[2]/255*brightness
-    return [red, green, blue]
+    return [int(red), int(green), int(blue)]
 
 def rgb_dec565(rgb_color):
     red = rgb_color[0]
