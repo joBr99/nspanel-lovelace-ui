@@ -202,7 +202,7 @@ Due the limitations of Berry, it's not possible to download the tft file directl
 
 The following Link has always the latest version from this repository, just execute the following Command in Tasmota:
 
-`FlashNextion http://nspanel.pky.eu/lui.tft`
+`FlashNextion http://nspanel.pky.eu/lui-release.tft`
 
 ## Configuration
 
@@ -251,7 +251,6 @@ nspanel-1:
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
-    updateMode: "auto-notify"
     timeoutScreensaver: 20
     #brightnessScreensaver: 10
     brightnessScreensaver:
@@ -259,9 +258,8 @@ nspanel-1:
         value: 10
       - time: "23:00:00"
         value: 0
-    locale: "de_DE" # only used if babel python package is installed
-    dateFormatBabel: "full" # only used if babel python package is installed
-                            # formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
+    locale: "de_DE"
+    dateFormatBabel: "full"
     timeFormat: "%H:%M"
     dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
     weather: weather.example
@@ -310,7 +308,36 @@ key | optional | type | default | description
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
 
-### Override Icons or Names
+Possible configuration values for config key:
+
+key | optional | type | default | description
+-- | -- | -- | -- | --
+`panelRecvTopic` | False | string | `tele/tasmota_your_mqtt_topic/RESULT` | The mqtt topic used to receive messages. 
+`panelSendTopic` | False | string | `cmnd/tasmota_your_mqtt_topic/CustomSend` | The mqtt topic used to send messages. 
+`timeoutScreensaver` | True | integer | `20` | Timeout for the screen to enter screensaver, to disable screensaver use 0
+`brightnessScreensaver` | True | integer/complex | `20` | Brightness for the screen to enter screensaver, see example below for complex/scheduled config.
+`locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
+`dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
+`timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  `"%I:%M   ?%p"`
+`dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
+`weather` | True | string | `weather.example` | weather entity from homeassistant
+`weatherOverrideForecast1` | True | string | `None` | sensor entity from home assistant here to override the first weather forecast item on the screensaver
+`weatherOverrideForecast2` | True | string | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
+`pages` | False | complex | | configuration for pages on panel
+
+#### Schedule screensaver brightness
+
+It is possible to schedule a brightness change for the screen at specific times.
+
+```yaml
+    brightnessScreensaver:
+      - time: "7:00:00"
+        value: 10
+      - time: "23:00:00"
+        value: 0
+```
+
+#### Override Icons or Names
 
 To override Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
 Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.

@@ -59,4 +59,4 @@ Total
 	13   Page(s)
 	330  Component(s)
 	3043 Line(s) of event code
-	812  Unique line(s) of event code
+	808  Unique line(s) of event code

@@ -144,8 +144,8 @@ class LuiController(object):
         if button_type == "button":
             if entity_id.startswith('navigate'):
                 # internal for navigation to nested pages
-                topage = self._config.get_root_page().search_page_by_name(entity_id)[0]
-                self._pages_gen.render_page(topage)
+                self._current_page = self._config.get_root_page().search_page_by_name(entity_id)[0]
+                self._pages_gen.render_page(self._current_page)
             elif entity_id.startswith('scene'):
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean'):
