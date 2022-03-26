@@ -428,6 +428,106 @@ Text tIcon
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+Text t1
+    Attributes
+        ID                                  : 22
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 5
+        y coordinate                        : 222
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 2
+        Back. Color                         : 6371
+        Font Color                          : 50712
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            hVolume.val=hVolume.val-5
+            // event,buttonPress2,internalNameEntity,volumeSlider,50
+            //craft command
+            tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
+            covx hVolume.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Text t3
+    Attributes
+        ID                                  : 23
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 397
+        y coordinate                        : 222
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 2
+        Back. Color                         : 6371
+        Font Color                          : 50712
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            hVolume.val=hVolume.val+5
+            // event,buttonPress2,internalNameEntity,volumeSlider,50
+            //craft command
+            tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
+            covx hVolume.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Picture p0
     Attributes
         ID                                  : 1
@@ -453,7 +553,7 @@ Slider hVolume
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 61
+        x coordinate                        : 59
         y coordinate                        : 227
         Width                               : 335
         Height                              : 43
@@ -472,6 +572,8 @@ Slider hVolume
     
     Events
         Touch Release Event
+            tmCooldown.en=1
+            tmCooldown.tim=100
             // event,buttonPress2,internalNameEntity,volumeSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
@@ -763,6 +865,17 @@ Timer tmSleep
                     page screensaver
                 }
             }
+        
+Timer tmCooldown
+    Attributes
+        ID         : 21
+        Scope      : local
+        Period (ms): 100
+        Enabled    : no
+    
+    Events
+        Timer Event
+            tmCooldown.en=0
         
 TouchCap tc0
     Attributes
