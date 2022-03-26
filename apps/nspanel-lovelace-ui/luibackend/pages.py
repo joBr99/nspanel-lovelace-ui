@@ -98,13 +98,13 @@ class LuiPagesGen(object):
 
         wOF2 = self._config.get("weatherOverrideForecast2")
         if wOF2 is None:
-            up2   = we.attributes.forecast[0]['datetime']
+            up2   = we.attributes.forecast[1]['datetime']
             up2   = datetime.datetime.fromisoformat(up2)
             if babel_spec is not None:
                 up2 = babel.dates.format_date(up2, "E", locale=self._locale)
             else:
                 up2 = up2.strftime("%a")
-            icon2 = get_icon_id_ha("weather", state=we.attributes.forecast[0]['condition'])
+            icon2 = get_icon_id_ha("weather", state=we.attributes.forecast[1]['condition'])
             down2 = we.attributes.forecast[1]['temperature']
         else:
             LOGGER.info(f"Forecast 2 is overrriden with {wOF2}")
