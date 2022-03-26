@@ -101,6 +101,8 @@ class LuiBackendConfig(object):
         'dateFormatBabel': "full",
         'dateFormat': "%A, %d. %B %Y",
         'weather': 'weather.example',
+        'weatherOverrideForecast1': None,
+        'weatherOverrideForecast2': None,
         'pages': [{
             'type': 'cardEntities',
             'heading': 'Test Entities 1',
