@@ -327,7 +327,7 @@ key | optional | type | default | description
 
 It is possible to schedule a brightness change for the screen at specific times.
 
-```
+```yaml
     brightnessScreensaver:
       - time: "7:00:00"
         value: 10
