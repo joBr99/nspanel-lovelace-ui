@@ -178,14 +178,14 @@ class LuiController(object):
             self._ha_api.get_entity(entity_id).call_service("media_previous_track")
         if button_type == "media-pause":
             self._ha_api.get_entity(entity_id).call_service("media_play_pause")
-        if button_type == "hvac_action":
-            self._ha_api.get_entity(entity_id).call_service("set_hvac_mode", hvac_mode=value)
         if button_type == "volumeSlider":
             pos = int(value)
             # HA wants this value between 0 and 1 as float
             pos = pos/100
             self._ha_api.get_entity(entity_id).call_service("volume_set", volume_level=pos)
-
+        if button_type == "speaker-sel":
+            self._ha_api.get_entity(entity_id).call_service("select_source", source=value)
+            
         # for light detail page
         if button_type == "brightnessSlider":
             # scale 0-100 to ha brightness range
@@ -207,3 +207,5 @@ class LuiController(object):
         if button_type == "tempUpd":
             temp = int(value)/10
             self._ha_api.get_entity(entity_id).call_service("set_temperature", temperature=temp)
+        if button_type == "hvac_action":
+            self._ha_api.get_entity(entity_id).call_service("set_hvac_mode", hvac_mode=value)
