@@ -103,28 +103,28 @@ Variable (string) entn1
         ID            : 49
         Scope         : local
         Text          : 
-        Max. Text Size: 500
+        Max. Text Size: 70
     
 Variable (string) entn2
     Attributes
         ID            : 50
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 70
     
 Variable (string) entn3
     Attributes
         ID            : 51
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 70
     
 Variable (string) entn4
     Attributes
         ID            : 52
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 70
     
 Text tHeading
     Attributes
