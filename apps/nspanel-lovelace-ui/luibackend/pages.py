@@ -265,7 +265,13 @@ class LuiPagesGen(object):
             if "media_content_type" in entity.attributes:
                 if entity.attributes.media_content_type == "music":
                     icon = get_icon_id("music")
-            command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}"
+            source        = entity.attributes.get("source", "")
+            speakerlist   = entity.attributes.get("source_list","")
+            if source in speakerlist:
+                speakerlist.remove(source)
+                speakerlist.append(source)
+            speakerlist = "?".join(speakerlist)
+            command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist}"
         self._send_mqtt_msg(command)
 
     def render_page(self, page, send_page_type=True):
