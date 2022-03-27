@@ -129,6 +129,8 @@ class LuiController(object):
         if entity_id == "screensaver" and button_type == "bExit":
             if self._config.get("doubleTapToUnlock") and int(value) >= 2:
                 self._pages_gen.render_page(self._current_page)
+            elseif not self._config.get("doubleTapToUnlock"):
+                self._pages_gen.render_page(self._current_page)
             return
         if button_type == "bExit":
             self._pages_gen.render_page(self._current_page)
