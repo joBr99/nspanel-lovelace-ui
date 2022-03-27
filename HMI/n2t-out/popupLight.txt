@@ -501,7 +501,7 @@ Slider hBrightness
     Events
         Touch Release Event
             tmCooldown.en=1
-            tmCooldown.tim=200
+            tmCooldown.tim=800
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",brightnessSlider,"
             covx hBrightness.val,tTmp.txt,0,0
@@ -546,7 +546,7 @@ Slider hTempSlider
     Events
         Touch Release Event
             tmCooldown.en=1
-            tmCooldown.tim=200
+            tmCooldown.tim=800
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",colorTempSlider,"
             covx hTempSlider.val,tTmp.txt,0,0

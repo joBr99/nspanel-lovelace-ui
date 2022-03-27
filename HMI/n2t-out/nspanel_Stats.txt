@@ -29,7 +29,11 @@ cardAlarm
 popupLight
 	27   Component(s)
 	323  Line(s) of event code
-	173  Unique line(s) of event code
+	174  Unique line(s) of event code
+cardMedia
+	29   Component(s)
+	256  Line(s) of event code
+	132  Unique line(s) of event code
 cardGrid
 	39   Component(s)
 	378  Line(s) of event code
@@ -46,10 +50,6 @@ cardEntities
 	54   Component(s)
 	752  Line(s) of event code
 	330  Unique line(s) of event code
-cardMedia
-	29   Component(s)
-	256  Line(s) of event code
-	132  Unique line(s) of event code
 screensaver
 	31   Component(s)
 	183  Line(s) of event code
