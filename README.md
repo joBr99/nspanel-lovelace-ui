@@ -326,6 +326,7 @@ key | optional | type | default | description
 `weatherOverrideForecast2` | True | string | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
 `weatherOverrideForecast3` | True | string | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
 `weatherOverrideForecast4` | True | string | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
+`doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
 `pages` | False | complex | | configuration for pages on panel
 
 #### Schedule screensaver brightness
@@ -409,4 +410,23 @@ Reboot Tasmota and try to flash it a second time.
 
 Please check your MQTT Topics in your apps.yaml and your mqtt configuration on tasmota.
 
+### How to upgrade from a release to the current development version
+
+1. Update App in HACS to main
+
+Click redownload in the menu of the app in HACS.
+
+Select main version.
+
+![hacs-main](doc-pics/hacs-main.png)
+
+**Wait for it to load, dropdown needs to be selectable again**
+
+Click download.
+
+2. Restart AppDaemon
+
+3. Flash current Development Firmware in Tasmota Console.
+
+`FlashNextion http://nspanel.pky.eu/lui.tft`
 
