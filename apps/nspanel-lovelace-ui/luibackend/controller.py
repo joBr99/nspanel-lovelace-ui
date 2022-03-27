@@ -126,8 +126,10 @@ class LuiController(object):
     def button_press(self, entity_id, button_type, value):
         LOGGER.info(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
         # internal buttons
-        if entity_id == "screensaver" and button_type == "enter":
-            self._pages_gen.render_page(self._current_page)
+        if entity_id == "screensaver" and button_type == "bExit":
+            if self._config.get("doubleTapToUnlock") and int(value) >= 2:
+                self._pages_gen.render_page(self._current_page)
+            return
         if button_type == "bExit":
             self._pages_gen.render_page(self._current_page)
 
