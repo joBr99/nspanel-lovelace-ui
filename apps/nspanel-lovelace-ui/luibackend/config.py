@@ -77,6 +77,12 @@ class PageNode(object):
 
     def get_all_item_names(self, recursive=True):
         items = []
+        # current page
+        if type(self.data) is dict:
+            items.append(self.data.get("item", next(iter(self.data))))
+        else:
+            items.append(self.data)
+        # childs of page
         for i in self.childs:
             if len(i.childs) > 0:
                 if recursive:
