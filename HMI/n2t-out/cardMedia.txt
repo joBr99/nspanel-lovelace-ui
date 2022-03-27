@@ -707,7 +707,7 @@ Slider hVolume
     Events
         Touch Release Event
             tmCooldown.en=1
-            tmCooldown.tim=100
+            tmCooldown.tim=800
             // event,buttonPress2,internalNameEntity,volumeSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
