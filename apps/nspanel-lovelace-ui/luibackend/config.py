@@ -110,6 +110,9 @@ class LuiBackendConfig(object):
         'weather': 'weather.example',
         'weatherOverrideForecast1': None,
         'weatherOverrideForecast2': None,
+        'weatherOverrideForecast3': None,
+        'weatherOverrideForecast4': None,
+        'doubleTapToUnlock' False,
         'pages': [{
             'type': 'cardEntities',
             'heading': 'Test Entities 1',
