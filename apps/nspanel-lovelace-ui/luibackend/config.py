@@ -112,7 +112,7 @@ class LuiBackendConfig(object):
         'weatherOverrideForecast2': None,
         'weatherOverrideForecast3': None,
         'weatherOverrideForecast4': None,
-        'doubleTapToUnlock' False,
+        'doubleTapToUnlock': False,
         'pages': [{
             'type': 'cardEntities',
             'heading': 'Test Entities 1',

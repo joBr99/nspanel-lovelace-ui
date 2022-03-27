@@ -3,7 +3,7 @@ import datetime
 
 from icon_mapping import get_icon_id
 from icons import get_icon_id_ha
-from helper import scale, rgb_dec565, rgb_brightness
+from helper import scale, rgb_dec565, rgb_brightness, get_attr_safe
 from localization import get_translation
 
 # check Babel
@@ -168,21 +168,22 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(command)
 
 
+
     def generate_thermo_page(self, item):
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd,{item},Not found,220,220,Not found,150,300,5"
         else:
             entity       = self._ha_api.get_entity(item)
             heading      = entity.attributes.friendly_name
-            current_temp = int(entity.attributes.get("current_temperature", 0)*10)
-            dest_temp    = int(entity.attributes.get("temperature", 0)*10)
-            status       = entity.attributes.get("hvac_action", "")
+            current_temp = int(get_attr_safe(entity, "current_temperature", 0)*10)
+            dest_temp    = int(get_attr_safe(entity, "temperature", 0)*10)
+            status       = get_attr_safe(entity, "hvac_action", "")
             status       = get_translation(self._locale,status)
-            min_temp     = int(entity.attributes.get("min_temp", 0)*10)
-            max_temp     = int(entity.attributes.get("max_temp", 0)*10)
-            step_temp    = int(entity.attributes.get("target_temp_step", 0.5)*10) 
+            min_temp     = int(get_attr_safe(entity, "min_temp", 0)*10)
+            max_temp     = int(get_attr_safe(entity, "max_temp", 0)*10)
+            step_temp    = int(get_attr_safe(entity, "target_temp_step", 0.5)*10) 
             icon_res = ""
-            hvac_modes = entity.attributes.get("hvac_modes", [])
+            hvac_modes = get_attr_safe(entity, "hvac_modes", [])
             for mode in hvac_modes:
                 icon_id = get_icon_id('alert-circle-outline')
                 color_on = 64512
@@ -232,15 +233,15 @@ class LuiPagesGen(object):
             entity        = self._ha_api.get_entity(item)
             heading       = entity.attributes.friendly_name
             icon          = 0
-            title         = entity.attributes.get("media_title", "")
-            author        = entity.attributes.get("media_artist", "")
-            volume        = int(entity.attributes.get("volume_level", 0)*100)
+            title         = get_attr_safe(entity, "media_title", "")
+            author        = get_attr_safe(entity, "media_artist", "")
+            volume        = int(get_attr_safe(entity, "volume_level", 0)*100)
             iconplaypause = get_icon_id("pause") if entity.state == "playing" else get_icon_id("play")
             if "media_content_type" in entity.attributes:
                 if entity.attributes.media_content_type == "music":
                     icon = get_icon_id("music")
-            source        = entity.attributes.get("source", "")
-            speakerlist   = entity.attributes.get("source_list",[])
+            source        = get_attr_safe(entity, "source", "")
+            speakerlist   = get_attr_safe(entity, "source_list",[])
             if source in speakerlist:
                 # move current source to the end of the list
                 speakerlist.remove(source)
