@@ -51,12 +51,12 @@ cardMedia
 	256  Line(s) of event code
 	132  Unique line(s) of event code
 screensaver
-	30   Component(s)
-	180  Line(s) of event code
-	130  Unique line(s) of event code
+	31   Component(s)
+	183  Line(s) of event code
+	133  Unique line(s) of event code
 
 Total
 	13   Page(s)
-	343  Component(s)
-	3127 Line(s) of event code
-	835  Unique line(s) of event code
+	344  Component(s)
+	3130 Line(s) of event code
+	837  Unique line(s) of event code
