@@ -32,7 +32,7 @@ Variable (string) strCommand
         ID            : 7
         Scope         : local
         Text          : 
-        Max. Text Size: 200
+        Max. Text Size: 500
     
 Variable (string) entn
     Attributes
@@ -40,6 +40,19 @@ Variable (string) entn
         Scope         : local
         Text          : 
         Max. Text Size: 50
+    
+Variable (string) vaSpeakerList
+    Attributes
+        ID            : 27
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
+    
+Variable (int32) vaSpeakerPos
+    Attributes
+        ID   : 28
+        Scope: local
+        Value: 0
     
 Text tSend
     Attributes
@@ -52,7 +65,7 @@ Text tSend
         x coordinate                        : 0
         y coordinate                        : 0
         Width                               : 230
-        Height                              : 23
+        Height                              : 15
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -65,8 +78,8 @@ Text tSend
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : newtxt
-        Max. Text Size                      : 100
+        Text                                : 
+        Max. Text Size                      : 200
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -79,9 +92,9 @@ Text tTmp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 406
-        y coordinate                        : 277
-        Width                               : 34
+        x coordinate                        : 450
+        y coordinate                        : 145
+        Width                               : 27
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -109,10 +122,10 @@ Text tInstruction
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 290
+        x coordinate                        : 296
+        y coordinate                        : 0
         Width                               : 100
-        Height                              : 30
+        Height                              : 20
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -139,9 +152,9 @@ Text tId
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 99
-        y coordinate                        : 290
-        Width                               : 39
+        x coordinate                        : 449
+        y coordinate                        : 187
+        Width                               : 30
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -260,7 +273,7 @@ Text t2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 314
-        y coordinate                        : 159
+        y coordinate                        : 145
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -309,7 +322,7 @@ Text tPlayPause
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 203
-        y coordinate                        : 159
+        y coordinate                        : 145
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -358,7 +371,7 @@ Text t0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 92
-        y coordinate                        : 159
+        y coordinate                        : 145
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -437,7 +450,7 @@ Text t1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 5
-        y coordinate                        : 222
+        y coordinate                        : 201
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -487,7 +500,7 @@ Text t3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 397
-        y coordinate                        : 222
+        y coordinate                        : 201
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -528,6 +541,127 @@ Text t3
             prints tSend.txt,0
             prints crcval,2
         
+Text t4
+    Attributes
+        ID                                  : 24
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 21
+        y coordinate                        : 262
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 2
+        Back. Color                         : 6371
+        Font Color                          : 50712
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tSpeaker
+    Attributes
+        ID                                  : 25
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 90
+        y coordinate                        : 260
+        Width                               : 267
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : left
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 50
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,media-next
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="speaker-sel,"+tSpeaker.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Text t6
+    Attributes
+        ID                                  : 26
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 381
+        y coordinate                        : 262
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 2
+        Back. Color                         : 6371
+        Font Color                          : 50712
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : î´
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            //speaker
+            tSpeaker.pco=65535
+            spstr vaSpeakerList.txt,tSpeaker.txt,"?",vaSpeakerPos.val
+            vaSpeakerPos.val+=1
+            if(tSpeaker.txt=="")
+            {
+                vaSpeakerPos.val=0
+                spstr vaSpeakerList.txt,tSpeaker.txt,"?",vaSpeakerPos.val
+            }
+        
 Picture p0
     Attributes
         ID                                  : 1
@@ -554,7 +688,7 @@ Slider hVolume
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 59
-        y coordinate                        : 227
+        y coordinate                        : 206
         Width                               : 335
         Height                              : 43
         Effect                              : load
@@ -759,6 +893,22 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"|",7
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tPlayPause.txt,sys0,1
+                                        //speaker current
+                                        spstr strCommand.txt,tSpeaker.txt,"|",8
+                                        if(tSpeaker.txt!="")
+                                        {
+                                            tSpeaker.pco=1374
+                                        }else
+                                        {
+                                            tSpeaker.pco=65535
+                                        }
+                                        //speaker list
+                                        spstr strCommand.txt,vaSpeakerList.txt,"|",9
+                                        if(vaSpeakerList.txt=="")
+                                        {
+                                            vis t6,0
+                                        }
+                                        vaSpeakerPos.val=0
                                     }
                                     if(tInstruction.txt=="time")
                                     {
