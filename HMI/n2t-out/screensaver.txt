@@ -88,6 +88,12 @@ Variable (string) tId
         Text          : 
         Max. Text Size: 25
     
+Variable (int32) vaTap
+    Attributes
+        ID   : 30
+        Scope: local
+        Value: 0
+    
 Number originPage
     Attributes
         ID                                  : 3
@@ -964,7 +970,10 @@ TouchCap tc0
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,screensaver,bExit"
+            dim=100
+            vaTap.val+=1
+            covx vaTap.val,tTmp.txt,0,0
+            tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
