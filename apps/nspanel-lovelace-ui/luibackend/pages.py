@@ -68,61 +68,35 @@ class LuiPagesGen(object):
 
         icon_cur        = get_icon_id_ha("weather", state=we.state)
         text_cur        = f"{we.attributes.temperature}{unit}"
-        icon_cur_detail = get_icon_id("water-percent")
-        text_cur_detail = f"{we.attributes.humidity} %"
 
-        wOF1 = self._config.get("weatherOverrideForecast1")
-        if wOF1 is None:
-            up1   = we.attributes.forecast[0]['datetime']
-            up1   = datetime.datetime.fromisoformat(up1)
-            if babel_spec is not None:
-                up1 = babel.dates.format_date(up1, "E", locale=self._locale)
+        weather_res = ""
+        for i in range(1,5):
+            wOF = self._config.get(f"weatherOverrideForecast{i}")
+            if wOF is None:
+                up = we.attributes.forecast[i-1]['datetime']
+                up   = datetime.datetime.fromisoformat(up)
+                if babel_spec is not None:
+                    up = babel.dates.format_date(up, "E", locale=self._locale)
+                else:
+                    up = up.strftime("%a")
+                icon = get_icon_id_ha("weather", state=we.attributes.forecast[i-1]['condition'])
+                down = f"{we.attributes.forecast[i-1]['temperature']} {unit}"
             else:
-                up1 = up1.strftime("%a")
-            icon1 = get_icon_id_ha("weather", state=we.attributes.forecast[0]['condition'])
-            down1 = f"{we.attributes.forecast[0]['temperature']} {unit}"
-        else:
-            LOGGER.info(f"Forecast 1 is overrriden with {wOF1}")
-            icon = None
-            name = None
-            if type(wOF1) is dict:
-                icon = next(iter(wOF1.items()))[1].get('icon')
-                name = next(iter(wOF1.items()))[1].get('name')
-                wOF1 = next(iter(wOF1.items()))[0]
-            entity = self._ha_api.get_entity(wOF1)
-            up1 = name if name is not None else entity.attributes.friendly_name
-            icon1 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
-            unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
-            down1 = f"{entity.state} {unit_of_measurement}"
+                LOGGER.info(f"Forecast 1 is overrriden with {wOF}")
+                icon = None
+                name = None
+                if type(wOF) is dict:
+                    icon = next(iter(wOF.items()))[1].get('icon')
+                    name = next(iter(wOF.items()))[1].get('name')
+                    wOF = next(iter(wOF.items()))[0]
+                entity = self._ha_api.get_entity(wOF)
+                up = name if name is not None else entity.attributes.friendly_name
+                icon = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+                unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
+                down = f"{entity.state} {unit_of_measurement}"
+            weather_res+=f"?{up}?{icon}?{down}"
 
-
-        wOF2 = self._config.get("weatherOverrideForecast2")
-        if wOF2 is None:
-            up2   = we.attributes.forecast[1]['datetime']
-            up2   = datetime.datetime.fromisoformat(up2)
-            if babel_spec is not None:
-                up2 = babel.dates.format_date(up2, "E", locale=self._locale)
-            else:
-                up2 = up2.strftime("%a")
-            icon2 = get_icon_id_ha("weather", state=we.attributes.forecast[1]['condition'])
-            down2 = f"{we.attributes.forecast[1]['temperature']} {unit}"
-
-        else:
-            LOGGER.info(f"Forecast 2 is overrriden with {wOF2}")
-            icon = None
-            name = None
-            if type(wOF2) is dict:
-                icon = next(iter(wOF2.items()))[1].get('icon')
-                name = next(iter(wOF2.items()))[1].get('name')
-                wOF2 = next(iter(wOF2.items()))[0]
-            entity = self._ha_api.get_entity(wOF2)
-            up2 = name if name is not None else entity.attributes.friendly_name
-            icon2 = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
-            unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
-            down2 = f"{entity.state} {unit_of_measurement}"
-
-            
-        self._send_mqtt_msg(f"weatherUpdate,?{icon_cur}?{text_cur}?{icon_cur_detail}?{text_cur_detail}?{up1}?{icon1}?{down1}?{up2}?{icon2}?{down2}")
+        self._send_mqtt_msg(f"weatherUpdate,?{icon_cur}?{text_cur}{weather_res}")
 
     def generate_entities_item(self, item):
         icon = None
