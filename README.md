@@ -324,6 +324,8 @@ key | optional | type | default | description
 `weather` | True | string | `weather.example` | weather entity from homeassistant
 `weatherOverrideForecast1` | True | string | `None` | sensor entity from home assistant here to override the first weather forecast item on the screensaver
 `weatherOverrideForecast2` | True | string | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
+`weatherOverrideForecast3` | True | string | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
+`weatherOverrideForecast4` | True | string | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
 `pages` | False | complex | | configuration for pages on panel
 
 #### Schedule screensaver brightness
