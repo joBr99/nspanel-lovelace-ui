@@ -141,10 +141,11 @@ class LuiPagesGen(object):
             page_search = self._config.get_root_page().search_page_by_name(item)
             if len(page_search) > 0:
                 page_data = page_search[0].data
-                n_name = page_data.get("heading") if name is not None else name
+                if name is None:
+                    name = page_data.get("heading")
                 text = get_translation(self._locale,"PRESS")
                 icon_id = get_icon_id(icon) if icon is not None else get_icon_id(page_data.get("icon", "gesture-tap-button"))
-                return f",button,{item},{icon_id},17299,{n_name},{text}"
+                return f",button,{item},{icon_id},17299,{name},{text}"
             else:
                 return f",text,{item},{get_icon_id('alert-circle-outline')},17299,page not found,"
         if not self._ha_api.entity_exists(item):
