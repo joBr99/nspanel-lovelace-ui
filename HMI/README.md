@@ -71,13 +71,11 @@ change the page type:
 
 `pageType,popupNotify`
 
+`pageType,screensaver`
+
 ### screensaver page
 
-`weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val`
-
-`weatherUpdate,?0?2,3 C?0?0 mm?Mi?0?9,3 C?Do?0?11,5 C`
-
-`page,0`
+`weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val?tForecast3? tF3Icon? tForecast3Val?tForecast4? tF4Icon? tForecast4Val`
 
 ### cardEntities Page
 
@@ -117,7 +115,7 @@ The following message can be used to update the content on the cardEntities Page
 
 `entityUpdateDetail,*internalName*,*tHeading*,*tHeadingColor*,*b1*,*tB1Color*,*b2*,*tB2Color*,*tText*,*tTextColor*,*sleepTimeout*`
 
-`popupExit`
+`exitPopup`
 
 ### cardThermo Page
 
@@ -127,14 +125,20 @@ The following message can be used to update the content on the cardEntities Page
 
 ### cardMedia Page
 
-`entityUpd,|*internalNameEntiy*|*heading*|*icon*|*title*|*author*|*volume*|*playpauseicon*`
+`entityUpd,|*internalNameEntiy*|*heading*|*icon*|*title*|*author*|*volume*|*playpauseicon*|currentSpeaker|speakerList-seperated-by-?`
 
 ### cardAlarm Page
 
-`entityUpd,*internalNameEntity*,*arm1*,*arm1ActionName*,*arm2*,*arm2ActionName*,*arm3*,*arm3ActionName*,*arm4*,*arm4ActionName*,*icon*,*numpadStatus*`
+`entityUpd,*internalNameEntity*,*arm1*,*arm1ActionName*,*arm2*,*arm2ActionName*,*arm3*,*arm3ActionName*,*arm4*,*arm4ActionName*,*icon*,*iconcolor*,*numpadStatus*,*flashing*`
 
 
 ## Messages from Nextion Display
+
+`event,buttonPress2,pageName,bNext`
+
+`event,buttonPress2,pageName,bPrev`
+
+`event,buttonPress2,pageName,bExit,number_of_taps`
 
 ### startup page
 
@@ -142,13 +146,14 @@ The following message can be used to update the content on the cardEntities Page
 
 ### screensaver page
 
-`event,screensaverOpen`
+`event,buttonPress2,screensaver,exit` - Touch Event on Screensaver
+
+`event,screensaverOpen` - Screensaver has opened
+
 
 ### cardEntities Page
 
 `event,*eventName*,*entityName*,*actionName*,*optionalValue*`
-
-`event,pageOpen,0`
 
 `event,buttonPress2,internalNameEntity,up`
 
@@ -185,8 +190,6 @@ The following message can be used to update the content on the cardEntities Page
 `event,buttonPress2,*internalName*,notifyAction,no`
 
 ### cardThermo Page
-
-`event,pageOpen,0`
 
 `event,buttonPress2,*entityName*,tempUpd,*temperature*`
 
