@@ -202,7 +202,7 @@ Due the limitations of Berry, it's not possible to download the tft file directl
 
 The following Link has always the latest version from this repository, just execute the following Command in Tasmota:
 
-`FlashNextion http://nspanel.pky.eu/lui.tft`
+`FlashNextion http://nspanel.pky.eu/lui-release.tft`
 
 ## Configuration
 
@@ -244,26 +244,25 @@ Confiure your NSPanel as you like, you need to edit the `apps.yaml` inside of yo
 You can have multiple nspanel sections.
 
 ```yaml
+---
 nspanel-1:
   module: nspanel-lovelace-ui
   class: NsPanelLovelaceUIManager
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
-    updateMode: auto-notify # possible values are auto, auto-notify and manual
-    timeoutScreensaver: 15 #in seconds
+    timeoutScreensaver: 20
     #brightnessScreensaver: 10
     brightnessScreensaver:
       - time: "7:00:00"
         value: 10
       - time: "23:00:00"
         value: 0
-    locale: "de_DE" # only used if babel python package is installed
-    dateFormatBabel: "full" # only used if babel python package is installed
-                            # formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
+    locale: "de_DE"
+    dateFormatBabel: "full"
     timeFormat: "%H:%M"
     dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
-    weatherEntity: weather.example
+    weather: weather.example
     pages:
       - type: cardEntities
         heading: Example Page 1
@@ -309,9 +308,42 @@ key | optional | type | default | description
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
 
-### Override Icons
+Possible configuration values for config key:
 
-To override Icons of entities you can configure an icon name in your configuration, please see the following example.
+key | optional | type | default | description
+-- | -- | -- | -- | --
+`panelRecvTopic` | False | string | `tele/tasmota_your_mqtt_topic/RESULT` | The mqtt topic used to receive messages. 
+`panelSendTopic` | False | string | `cmnd/tasmota_your_mqtt_topic/CustomSend` | The mqtt topic used to send messages. 
+`timeoutScreensaver` | True | integer | `20` | Timeout for the screen to enter screensaver, to disable screensaver use 0
+`brightnessScreensaver` | True | integer/complex | `20` | Brightness for the screen to enter screensaver, see example below for complex/scheduled config.
+`brightnessScreensaverTracking` | True | string | None | Forces screensaver brightness to 0 in case entity state is not_home, can be a group, person or device_tracker entity.
+`locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
+`dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
+`timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  `"%I:%M   ?%p"`
+`dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
+`weather` | True | string | `weather.example` | weather entity from homeassistant
+`weatherOverrideForecast1` | True | string | `None` | sensor entity from home assistant here to override the first weather forecast item on the screensaver
+`weatherOverrideForecast2` | True | string | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
+`weatherOverrideForecast3` | True | string | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
+`weatherOverrideForecast4` | True | string | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
+`doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
+`pages` | False | complex | | configuration for pages on panel
+
+#### Schedule screensaver brightness
+
+It is possible to schedule a brightness change for the screen at specific times.
+
+```yaml
+    brightnessScreensaver:
+      - time: "7:00:00"
+        value: 10
+      - time: "23:00:00"
+        value: 0
+```
+
+#### Override Icons or Names
+
+To override Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
 Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.
 
 ```yaml
@@ -322,6 +354,7 @@ Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.
           - light.schreibtischlampe
           - switch.deckenbeleuchtung_hinten:
               icon: lightbulb
+              name: Lampe
           - delete
           - delete
       - type: cardMedia
@@ -342,13 +375,9 @@ HACS will show you that there is an update avalible and ask you to update.
 
 ### Update Display Firmware
 
-Use the following command to update or use your own webserver. FlashNextionFast will use Nextion Upload Protocol 1.2 and try to skip unchanged parts of the firmware.
+Use the following command to update or use your own webserver.
 
-`FlashNextionFast http://nspanel.pky.eu/lui.tft`
-
-In case this Update failes, reboot tasmota and use the following command:
-
-`FlashNextion http://nspanel.pky.eu/lui.tft`
+`FlashNextion http://nspanel.pky.eu/lui-release.tft`
 
 ### Update Tasmota Berry Driver
 
@@ -377,4 +406,23 @@ Reboot Tasmota and try to flash it a second time.
 
 Please check your MQTT Topics in your apps.yaml and your mqtt configuration on tasmota.
 
+### How to upgrade from a release to the current development version
+
+1. Update App in HACS to main
+
+Click redownload in the menu of the app in HACS.
+
+Select main version.
+
+![hacs-main](doc-pics/hacs-main.png)
+
+**Wait for it to load, dropdown needs to be selectable again**
+
+Click download.
+
+2. Restart AppDaemon
+
+3. Flash current Development Firmware in Tasmota Console.
+
+`FlashNextion http://nspanel.pky.eu/lui.tft`
 
