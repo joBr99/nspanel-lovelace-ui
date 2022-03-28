@@ -810,9 +810,9 @@ Button arm1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 59
+        x coordinate                        : 20
         y coordinate                        : 72
-        Width                               : 64
+        Width                               : 90
         Height                              : 64
         Effect                              : load
         Effect Priority                     : 0
@@ -863,9 +863,9 @@ Button arm3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 239
+        x coordinate                        : 234
         y coordinate                        : 72
-        Width                               : 64
+        Width                               : 90
         Height                              : 64
         Effect                              : load
         Effect Priority                     : 0
@@ -916,9 +916,9 @@ Button arm2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 149
+        x coordinate                        : 127
         y coordinate                        : 72
-        Width                               : 64
+        Width                               : 90
         Height                              : 64
         Effect                              : load
         Effect Priority                     : 0
@@ -969,9 +969,9 @@ Button arm4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 329
+        x coordinate                        : 341
         y coordinate                        : 72
-        Width                               : 64
+        Width                               : 90
         Height                              : 64
         Effect                              : load
         Effect Priority                     : 0
@@ -1106,8 +1106,12 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",10
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tIcon.txt,sys0,1
-                                        //numpad status
+                                        //icon color
                                         spstr strCommand.txt,tTmp.txt,",",11
+                                        covx tTmp.txt,sys0,0,0
+                                        tIcon.pco=sys0
+                                        //numpad status
+                                        spstr strCommand.txt,tTmp.txt,",",12
                                         if(tTmp.txt!="disable")
                                         {
                                             vis b0,1
