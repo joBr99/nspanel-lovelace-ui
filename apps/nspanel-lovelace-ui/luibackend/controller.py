@@ -216,3 +216,7 @@ class LuiController(object):
             self._ha_api.get_entity(entity_id).call_service("set_temperature", temperature=temp)
         if button_type == "hvac_action":
             self._ha_api.get_entity(entity_id).call_service("set_hvac_mode", hvac_mode=value)
+            
+        # for alarm page
+        if button_type in ["disarm", "arm_home", "arm_away", "arm_night", "arm_vacation"]:
+            self._ha_api.get_entity(entity_id).call_service(f"alarm_{button_type}", code=value)

@@ -44,7 +44,8 @@ icons = [
     "shield-off",
     "shield",
     "shield-lock",
-    "shield-airplane"
+    "shield-airplane",
+    "bell-ring"
 ]
 
 
