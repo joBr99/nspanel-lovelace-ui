@@ -160,7 +160,7 @@ class LuiPagesGen(object):
 
     def generate_entities_page(self, heading, items):
         navigation = ""
-        command = "entityUpd,{heading},{navigation}"
+        command = f"entityUpd,{heading},{navigation}"
         # Get items and construct cmd string
         for item in items:
             command += self.generate_entities_item(item)
