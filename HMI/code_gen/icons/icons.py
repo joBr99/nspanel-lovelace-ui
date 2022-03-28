@@ -40,7 +40,10 @@ icons = [
     "shield-home",
     "door-open",
     "door-closed",
-    "window-closed"
+    "window-closed",
+    "shield-off",
+    "shield",
+    "shield-lock"
 ]
 
 

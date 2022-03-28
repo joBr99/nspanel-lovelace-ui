@@ -43,3 +43,6 @@ ID | MD Icon Name | Icon
 36 | door-open | ![door-open](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/door-open.svg)
 37 | door-closed | ![door-closed](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/door-closed.svg)
 38 | window-closed | ![window-closed](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/window-closed.svg)
+39 | shield-off | ![shield-off](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/shield-off.svg)
+40 | shield | ![shield](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/shield.svg)
+41 | shield-lock | ![shield-lock](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/shield-lock.svg)

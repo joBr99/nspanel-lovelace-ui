@@ -252,6 +252,51 @@ class LuiPagesGen(object):
             command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist}"
         self._send_mqtt_msg(command)
 
+    def generate_alarm_page(self, item):
+        if not self._ha_api.entity_exists(item):
+            command = f"entityUpd,{item},Not found,Not found,Check your,Check your,apps.,apps.,yaml,yaml,0,,0"
+        else:
+            entity        = self._ha_api.get_entity(item)
+            icon = get_icon_id("shield-off")
+            color = rgb_dec565([255,255,255])
+            supported_modes = []
+            numpad = "enable"
+            if entity.state == "disarmed":
+                color = rgb_dec565([13,160,53])
+                icon = get_icon_id("shield-off")
+                if entity.attributes.get("code_arm_required", "false") == "false":
+                    numpad = "disable"
+                bits = entity.attributes.supported_features
+                if bits & 0b000001:
+                    supported_modes.append("ARM HOME")
+                if bits & 0b000010:
+                    supported_modes.append("ARM AWAY")
+                if bits & 0b000100:
+                    supported_modes.append("ARM NIGHT")
+                if bits & 0b100000:
+                    supported_modes.append("ARM VACATION")
+            if entity.state == "armed_home":
+                color = rgb_dec565([223,76,30])
+                icon = get_icon_id("shield-home")
+                supported_modes.append("DISARM")
+            if entity.state == "arming":
+                color = rgb_dec565([243,179,0])
+                icon = get_icon_id("shield")
+                supported_modes.append("DISARM")
+            if entity.state == "armed_away":
+                color = rgb_dec565([223,76,30])
+                icon = get_icon_id("shield-lock")
+                supported_modes.append("DISARM")
+
+            # add padding to arm buttons
+            arm_buttons = ""
+            for b in supported_modes:
+                arm_buttons += f",{b},{b}"
+            if len(supported_modes) < 4:
+                arm_buttons += ","*((4-len(supported_modes))*2)
+            command = f"entityUpd,{item}{arm_buttons},{icon},{color},0"
+        self._send_mqtt_msg(command)
+
     def render_page(self, page, send_page_type=True):
         config    = page.data
         page_type = config["type"]
@@ -267,6 +312,9 @@ class LuiPagesGen(object):
             self.generate_thermo_page(page.data.get("item"))
         if page_type == "cardMedia":
             self.generate_media_page(page.data.get("item"))
+        if page_type == "cardAlarm":
+            self.generate_alarm_page(page.data.get("item"))
+
 
     def generate_light_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)

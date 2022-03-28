@@ -38,6 +38,9 @@ icons = {
     'door-open': 36,
     'door-closed': 37,
     'window-closed': 38,
+    'shield-off': 39,
+    'shield': 40,
+    'shield-lock': 41,
 }
 
 def get_icon_id(ma_name):
