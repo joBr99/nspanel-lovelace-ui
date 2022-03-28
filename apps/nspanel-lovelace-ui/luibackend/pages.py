@@ -159,10 +159,9 @@ class LuiPagesGen(object):
 
 
     def generate_entities_page(self, heading, items):
-        # Set Heading of Page
-        self._send_mqtt_msg(f"entityUpdHeading,{heading}")
+        navigation = ""
+        command = "entityUpd,{heading},{navigation}"
         # Get items and construct cmd string
-        command = "entityUpd"
         for item in items:
             command += self.generate_entities_item(item)
         self._send_mqtt_msg(command)
