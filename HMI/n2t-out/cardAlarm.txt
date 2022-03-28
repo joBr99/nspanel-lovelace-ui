@@ -42,7 +42,7 @@ Page cardAlarm
             vis b8,0
             vis b9,0
             vis b10,0
-            vis tCode,0
+            //vis tCode,0
         
 Variable (string) strCommand
     Attributes

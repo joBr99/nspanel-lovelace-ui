@@ -22,10 +22,10 @@ popupNotify
 	17   Component(s)
 	179  Line(s) of event code
 	118  Unique line(s) of event code
-cardAlarm
-	35   Component(s)
-	253  Line(s) of event code
-	160  Unique line(s) of event code
+cardEntities
+	58   Component(s)
+	824  Line(s) of event code
+	346  Unique line(s) of event code
 cardMedia
 	29   Component(s)
 	256  Line(s) of event code
@@ -50,13 +50,13 @@ screensaver
 	31   Component(s)
 	183  Line(s) of event code
 	133  Unique line(s) of event code
-cardEntities
-	58   Component(s)
-	787  Line(s) of event code
-	336  Unique line(s) of event code
+cardAlarm
+	35   Component(s)
+	252  Line(s) of event code
+	159  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	348  Component(s)
-	3165 Line(s) of event code
-	844  Unique line(s) of event code
+	3201 Line(s) of event code
+	853  Unique line(s) of event code
