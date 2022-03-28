@@ -42,7 +42,7 @@ Page cardAlarm
             vis b8,0
             vis b9,0
             vis b10,0
-            //vis tCode,0
+            vis tCode,0
         
 Variable (string) strCommand
     Attributes
@@ -222,7 +222,7 @@ Text tCode
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 92
-        y coordinate                        : 12
+        y coordinate                        : 16
         Width                               : 192
         Height                              : 49
         Effect                              : load
@@ -252,7 +252,7 @@ Text tIcon
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 300
-        y coordinate                        : 12
+        y coordinate                        : 16
         Width                               : 64
         Height                              : 49
         Effect                              : load
@@ -267,7 +267,7 @@ Text tIcon
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : î
+        Text                                : 
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -831,13 +831,14 @@ Button arm1
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 40
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
     Events
         Touch Press Event
+            tCode.txt=""
             // event,buttonPress2,entn,arm1,tCode
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
@@ -884,13 +885,14 @@ Button arm3
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 40
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
     Events
         Touch Press Event
+            tCode.txt=""
             // event,buttonPress2,entn,arm1,tCode
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
@@ -937,13 +939,14 @@ Button arm2
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 40
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
     Events
         Touch Press Event
+            tCode.txt=""
             // event,buttonPress2,entn,arm1,tCode
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
@@ -990,13 +993,14 @@ Button arm4
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 40
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
     Events
         Touch Press Event
+            tCode.txt=""
             // event,buttonPress2,entn,arm1,tCode
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
