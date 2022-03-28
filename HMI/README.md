@@ -81,9 +81,7 @@ change the page type:
 
 The following message can be used to update the content on the cardEntities Page
 
-`entityUpdHeading,heading1337`
-
-`entityUpd[,*type*,*internalNameEntity*,*iconId*,*iconColor*,*displayNameEntity*,*optionalValue*]x4`
+`entityUpd,heading,navigation,[,*type*,*internalNameEntity*,*iconId*,*iconColor*,*displayNameEntity*,*optionalValue*]x4`
 
 `,light,light.entityName,1,17299,Light1,0`
 
