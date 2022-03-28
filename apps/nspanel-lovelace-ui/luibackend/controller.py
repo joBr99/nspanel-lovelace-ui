@@ -86,9 +86,9 @@ class LuiController(object):
                     current_screensaver_brightness = sorted_timesets[index-1]["value"]
                     LOGGER.info("Setting dim value to %s", sorted_timesets[index-1])
                     found_current_dim_value = True
-                # still no dim value
-                if not found_current_dim_value:
-                    self.current_screensaver_brightness = sorted_timesets[-1]["value"]
+            # still no dim value
+            if not found_current_dim_value:
+                current_screensaver_brightness = sorted_timesets[-1]["value"]
         return current_screensaver_brightness
 
     def weather_update(self, kwargs):
