@@ -252,7 +252,7 @@ class LuiPagesGen(object):
             bits = entity.attributes.supported_features
             onoffbutton = "disable"
             if bits & 0b01000000:
-                if entity.state == "off"
+                if entity.state == "off":
                     onoffbutton = 1374
                 else:
                     onoffbutton = rgb_dec565([255,255,255])
