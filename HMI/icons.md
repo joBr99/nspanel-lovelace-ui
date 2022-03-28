@@ -46,3 +46,4 @@ ID | MD Icon Name | Icon
 39 | shield-off | ![shield-off](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/shield-off.svg)
 40 | shield | ![shield](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/shield.svg)
 41 | shield-lock | ![shield-lock](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/shield-lock.svg)
+42 | shield-airplane | ![shield-airplane](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/shield-airplane.svg)

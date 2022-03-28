@@ -275,18 +275,24 @@ class LuiPagesGen(object):
                     supported_modes.append("ARM NIGHT")
                 if bits & 0b100000:
                     supported_modes.append("ARM VACATION")
+            else:
+                supported_modes.append("DISARM")
+
             if entity.state == "armed_home":
                 color = rgb_dec565([223,76,30])
                 icon = get_icon_id("shield-home")
-                supported_modes.append("DISARM")
             if entity.state == "arming":
                 color = rgb_dec565([243,179,0])
                 icon = get_icon_id("shield")
-                supported_modes.append("DISARM")
             if entity.state == "armed_away":
                 color = rgb_dec565([223,76,30])
                 icon = get_icon_id("shield-lock")
-                supported_modes.append("DISARM")
+            if entity.state == "armed_night":
+                color = rgb_dec565([223,76,30])
+                icon = get_icon_id("weather-night")
+            if entity.state == "armed_vacation":
+                color = rgb_dec565([223,76,30])
+                icon = get_icon_id("shield-airplane")
 
             # add padding to arm buttons
             arm_buttons = ""
