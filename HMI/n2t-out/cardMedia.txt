@@ -25,6 +25,7 @@ Page cardMedia
             vis tInstruction,0
             vis tTmp,0
             vis tId,0
+            vis t5,0
             //vis nPageDisp,0
         
 Variable (string) strCommand
@@ -272,7 +273,7 @@ Text t2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 314
+        x coordinate                        : 306
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -370,7 +371,7 @@ Text t0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 92
+        x coordinate                        : 96
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -579,8 +580,8 @@ Text tSpeaker
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 90
-        y coordinate                        : 260
+        x coordinate                        : 94
+        y coordinate                        : 262
         Width                               : 267
         Height                              : 50
         Effect                              : load
@@ -661,6 +662,55 @@ Text t6
                 vaSpeakerPos.val=0
                 spstr vaSpeakerList.txt,tSpeaker.txt,"?",vaSpeakerPos.val
             }
+        
+Text t5
+    Attributes
+        ID                                  : 29
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 397
+        y coordinate                        : 145
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 2
+        Back. Color                         : 6371
+        Font Color                          : 50712
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : î¤
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,media-next
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="media-OnOff"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
 Picture p0
     Attributes
@@ -909,6 +959,16 @@ Timer tmSerial
                                             vis t6,0
                                         }
                                         vaSpeakerPos.val=0
+                                        // on off button
+                                        spstr strCommand.txt,tTmp.txt,"|",10
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            vis t5,0
+                                        }else
+                                        {
+                                            vis t5,1
+                                            covx tTmp.txt,t5.pco,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
