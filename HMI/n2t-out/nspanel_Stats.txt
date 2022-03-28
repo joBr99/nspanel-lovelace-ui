@@ -2,6 +2,10 @@ Program.s
 	0    Component(s)
 	10   Line(s) of event code
 	10   Unique line(s) of event code
+pageIcons
+	6    Component(s)
+	0    Line(s) of event code
+	0    Unique line(s) of event code
 pageTest
 	13   Component(s)
 	13   Line(s) of event code
@@ -10,10 +14,6 @@ pageSerialTest
 	13   Component(s)
 	48   Line(s) of event code
 	43   Unique line(s) of event code
-pageIcons
-	6    Component(s)
-	0    Line(s) of event code
-	0    Unique line(s) of event code
 popupShutter
 	19   Component(s)
 	179  Line(s) of event code
@@ -52,11 +52,11 @@ screensaver
 	133  Unique line(s) of event code
 cardAlarm
 	35   Component(s)
-	255  Line(s) of event code
-	161  Unique line(s) of event code
+	260  Line(s) of event code
+	162  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	348  Component(s)
-	3204 Line(s) of event code
-	855  Unique line(s) of event code
+	3209 Line(s) of event code
+	856  Unique line(s) of event code
