@@ -264,26 +264,24 @@ class LuiPagesGen(object):
             if entity.state == "disarmed":
                 color = rgb_dec565([13,160,53])
                 icon = get_icon_id("shield-off")
-                if entity.attributes.get("code_arm_required", "false") == "false":
+                test = entity.attributes.get("code_arm_required", "false")
+                if not entity.attributes.get("code_arm_required", False):
                     numpad = "disable"
                 bits = entity.attributes.supported_features
                 if bits & 0b000001:
-                    supported_modes.append("ARM HOME")
+                    supported_modes.append("arm_home")
                 if bits & 0b000010:
-                    supported_modes.append("ARM AWAY")
+                    supported_modes.append("arm_away")
                 if bits & 0b000100:
-                    supported_modes.append("ARM NIGHT")
+                    supported_modes.append("arm_night")
                 if bits & 0b100000:
-                    supported_modes.append("ARM VACATION")
+                    supported_modes.append("arm_vacation")
             else:
-                supported_modes.append("DISARM")
+                supported_modes.append("disarm")
 
             if entity.state == "armed_home":
                 color = rgb_dec565([223,76,30])
                 icon = get_icon_id("shield-home")
-            if entity.state == "arming":
-                color = rgb_dec565([243,179,0])
-                icon = get_icon_id("shield")
             if entity.state == "armed_away":
                 color = rgb_dec565([223,76,30])
                 icon = get_icon_id("shield-lock")
@@ -294,15 +292,22 @@ class LuiPagesGen(object):
                 color = rgb_dec565([223,76,30])
                 icon = get_icon_id("shield-airplane")
 
+            if entity.state in ["arming", "pending"]:
+                color = rgb_dec565([243,179,0])
+                icon = get_icon_id("shield")
+            if entity.state == "triggered":
+                color = rgb_dec565([223,76,30])
+                icon = get_icon_id("bell-ring")
+
             # add padding to arm buttons
             arm_buttons = ""
             for b in supported_modes:
-                arm_buttons += f",{b},{b}"
+                arm_buttons += f",{get_translation(self._locale, b)},{b}"
             if len(supported_modes) < 4:
                 arm_buttons += ","*((4-len(supported_modes))*2)
-            command = f"entityUpd,{item}{arm_buttons},{icon},{color},0"
+            command = f"entityUpd,{item}{arm_buttons},{icon},{color},{numpad}"
         self._send_mqtt_msg(command)
-
+        
     def render_page(self, page, send_page_type=True):
         config    = page.data
         page_type = config["type"]
