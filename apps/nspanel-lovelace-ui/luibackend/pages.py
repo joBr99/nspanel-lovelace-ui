@@ -292,12 +292,15 @@ class LuiPagesGen(object):
                 color = rgb_dec565([223,76,30])
                 icon = get_icon_id("shield-airplane")
 
+            flashing = "disable"
             if entity.state in ["arming", "pending"]:
                 color = rgb_dec565([243,179,0])
                 icon = get_icon_id("shield")
+                flashing = "enable"
             if entity.state == "triggered":
                 color = rgb_dec565([223,76,30])
                 icon = get_icon_id("bell-ring")
+                flashing = "enable"
 
             # add padding to arm buttons
             arm_buttons = ""
@@ -305,7 +308,7 @@ class LuiPagesGen(object):
                 arm_buttons += f",{get_translation(self._locale, b)},{b}"
             if len(supported_modes) < 4:
                 arm_buttons += ","*((4-len(supported_modes))*2)
-            command = f"entityUpd,{item}{arm_buttons},{icon},{color},{numpad}"
+            command = f"entityUpd,{item}{arm_buttons},{icon},{color},{numpad},{flashing}"
         self._send_mqtt_msg(command)
         
     def render_page(self, page, send_page_type=True):
