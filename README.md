@@ -298,8 +298,9 @@ nspanel-1:
         heading: Exmaple Thermostat
         item: climate.example_climate
       - type: cardMedia
-        heading: Exampe Media
         item: media_player.spotify_user
+      - type: cardAlarm
+        item: alarm_control_panel.alarmo
 ```
 
 key | optional | type | default | description
