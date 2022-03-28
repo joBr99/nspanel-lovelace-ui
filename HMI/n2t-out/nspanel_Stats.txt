@@ -30,14 +30,14 @@ cardMedia
 	30   Component(s)
 	278  Line(s) of event code
 	139  Unique line(s) of event code
-cardThermo
-	42   Component(s)
-	406  Line(s) of event code
-	218  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	150  Line(s) of event code
 	113  Unique line(s) of event code
+cardThermo
+	42   Component(s)
+	406  Line(s) of event code
+	218  Unique line(s) of event code
 cardGrid
 	39   Component(s)
 	378  Line(s) of event code
