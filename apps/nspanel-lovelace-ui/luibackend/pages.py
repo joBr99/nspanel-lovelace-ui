@@ -366,6 +366,7 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(f"entityUpdateDetail,{get_icon_id('lightbulb')},{icon_color},{switch_val},{brightness},{color_temp},{color}")
     
     def generate_shutter_detail_page(self, entity):
+        entity = self._ha_api.get_entity(entity)
         pos = 100-int(entity.attributes.get("current_position", 50))
         self._send_mqtt_msg(f"entityUpdateDetail,{pos}")
 
