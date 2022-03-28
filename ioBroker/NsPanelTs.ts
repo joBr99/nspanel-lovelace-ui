@@ -142,7 +142,6 @@ function SendToPanel(val: Payload | Payload[]): void {
 
 function HandleMessage(typ: string, method: string, page: number, words: Array<string>): void {
     if (typ == "event") {
-<<<<<<< HEAD
         switch (method) {
             case "startup":
                 UnsubscribeWatcher();
@@ -155,21 +154,6 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                 let pageItem = config.pages[pageId].items.find(e => e.id === words[3]);
                 if (pageItem !== undefined)
                     SendToPanel(GenerateDetailPage(words[2], pageItem));
-=======
-
-        switch (method) {
-            case "pageOpen":
-                var pageNum = (page % config.pages.length);
-                pageId = Math.abs(pageNum);
-                UnsubscribeWatcher();
-                GeneratePage(config.pages[pageId]);
-                break;
-            case "startup":
-                UnsubscribeWatcher();
-                HandleStartupProcess();
-                GeneratePage(config.pages[0]);
-                break;
->>>>>>> 8a48ff35d408a7712a3052ee3cf8fc84e8b699c7
             case "buttonPress2":
                 HandleButtonEvent(words);
                 break;
@@ -492,7 +476,6 @@ function toggleState(id: string): boolean {
 
 function HandleButtonEvent(words): void {
     let id = words[2]
-<<<<<<< HEAD
     let buttonAction = words[3];
 
     switch (buttonAction) {
@@ -552,48 +535,6 @@ function HandleButtonEvent(words): void {
             break;
         default:
             break;
-=======
-
-    if (words[3] == "OnOff" && existsObject(id)) {
-        var action = false
-        if (words[4] == "1")
-            action = true
-        let o = getObject(id)
-        switch (o.common.role) {
-            case "light":
-                setState(id + ".SET", action);
-                break;
-            case "dimmer":
-                if (existsState(id + ".ON_SET"))
-                    setState(id + ".ON_SET", action);
-                else if (existsState(id + ".ON_ACTUAL"))
-                    setState(id + ".ON_ACTUAL", action);
-        }
-    }
-
-    if (words[3] == "up")
-        setState(id + ".OPEN", true)
-    if (words[3] == "stop")
-        setState(id + ".STOP", true)
-    if (words[3] == "down")
-        setState(id + ".CLOSE", true)
-    if (words[3] == "button") {
-        toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET")
-    }
-    if (words[3] == "positionSlider")
-        setState(id + ".SET", parseInt(words[4]))
-
-    if (words[3] == "brightnessSlider")
-        if (existsState(id + ".SET"))
-            setState(id + ".SET", parseInt(words[4]));
-        else if (existsState(id + ".ACTUAL"))
-            setState(id + ".ACTUAL", parseInt(words[4]));
-    //     out_msgs.push({ payload: id, action: "turn_on", domain: "lightBrightness", brightness: parseInt(words[7]) })
-    // if (words[6] == "colorTempSlider")
-    //     out_msgs.push({ payload: id, action: "turn_on", domain: "lightTemperature", temperature: parseInt(words[7]) })
-    if (words[3] == "tempUpd") {
-        setState(id + ".SET", parseInt(words[4]) / 10)
->>>>>>> 8a48ff35d408a7712a3052ee3cf8fc84e8b699c7
     }
 }
 
