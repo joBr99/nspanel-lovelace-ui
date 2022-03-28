@@ -66,14 +66,12 @@ const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
 var config: Config = {
     panelRecvTopic: "mqtt.0.tele.WzDisplay.RESULT",       // This is the object where the panel send the data to.
     panelSendTopic: "mqtt.0.cmnd.WzDisplay.CustomSend",   // This is the object where data is send to the panel.
-    leftEntity: "alias.0.Batterie.ACTUAL",                // This is a state will be displayed on the left side.
-    leftEntityIcon: 34,                                   // This is a icon which will be displayed on the left side.  
-    leftEntityText: "Batterie",                           // The label for the left side.  
-    leftEntityUnitText: "%",                              // The unit which will be appendon the left side.  
-    rightEntity: "alias.0.Pv.ACTUAL",                     // The same but for the right side.
-    rightEntityIcon: 32,
-    rightEntityText: "PV",
-    rightEntityUnitText: "W",                                                                                     
+    firstScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.HUMIDITY", ScreensaverEntityIcon: 26, ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%" },
+                                                        // Items which should be presented on the screensaver page
+    secondScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.PRECIPITATION_CHANCE", ScreensaverEntityIcon: 19, ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%" },
+    thirdScreensaverEntity: { ScreensaverEntity: "alias.0.Batterie.ACTUAL", ScreensaverEntityIcon: 34, ScreensaverEntityText: "Batterie", ScreensaverEntityUnitText: "%" },
+    fourthScreensaverEntity: { ScreensaverEntity: "alias.0.Pv.ACTUAL", ScreensaverEntityIcon: 32, ScreensaverEntityText: "PV", ScreensaverEntityUnitText: "W" },
+    screenSaverDoubleClick: false,                        // Doubletouch needed for leaving screensaver.                                                           
     timeoutScreensaver: 15,                               // Timeout for screensaver
     dimmode: 8,                                           // Display dim
     locale: "de_DE",                                      // not used right now
@@ -84,6 +82,14 @@ var config: Config = {
     defaultOnColor: RGB,                                  // Default on state color for items
     defaultOffColor: RGB,                                 // Default off state color for page
     temperatureUnit: "°C",                                // Unit to append on temperature sensors
+<<<<<<< HEAD
+    pages: [Wohnen, Strom,
+        {
+            "type": "cardThermo",
+            "heading": "Thermostat",
+            "useColor": true,
+            "items": [<PageItem>{ id: "alias.0.WzNsPanel" }]
+=======
     pages: [
         {
             "type": "cardEntities",                       // card type (cardEntities, cardThermo)
@@ -114,6 +120,7 @@ var config: Config = {
             "heading": "Thermostat",
             "useColor": false,                            // should colors be enabled on this page, can be overridden in PageItem
             "item": "alias.0.WzNsPanel"                   // Needs to be a thermostat in the device panel
+>>>>>>> 8a48ff35d408a7712a3052ee3cf8fc84e8b699c7
         }
     ],
     button1Page: button1Page,                             // A cardEntities, cardThermo or nothing. This will be opened when pressing button1 

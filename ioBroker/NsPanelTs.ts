@@ -62,16 +62,13 @@ var button2Page: PageEntities =
 export const config: Config = {
     panelRecvTopic: "mqtt.0.tele.WzDisplay.RESULT",
     panelSendTopic: "mqtt.0.cmnd.WzDisplay.CustomSend",
-    leftEntity: "alias.0.Batterie.ACTUAL",
-    leftEntityIcon: 34,
-    leftEntityText: "Batterie",
-    leftEntityUnitText: "%",
-    rightEntity: "alias.0.Pv.ACTUAL",
-    rightEntityIcon: 32,
-    rightEntityText: "PV",
-    rightEntityUnitText: "W",
+    firstScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.HUMIDITY", ScreensaverEntityIcon: 26, ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%" },
+    secondScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.PRECIPITATION_CHANCE", ScreensaverEntityIcon: 19, ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%" },
+    thirdScreensaverEntity: { ScreensaverEntity: "alias.0.Batterie.ACTUAL", ScreensaverEntityIcon: 34, ScreensaverEntityText: "Batterie", ScreensaverEntityUnitText: "%" },
+    fourthScreensaverEntity: { ScreensaverEntity: "alias.0.Pv.ACTUAL", ScreensaverEntityIcon: 32, ScreensaverEntityText: "PV", ScreensaverEntityUnitText: "W" },
     timeoutScreensaver: 15,
     dimmode: 8,
+    screenSaverDoubleClick: false,
     locale: "de_DE",
     timeFormat: "%H:%M",
     dateFormat: "%A, %d. %B %Y",
@@ -104,15 +101,21 @@ schedule("0 * * * *", function () {
 });
 
 
-// Only monitor the extra nodes if one or both are present
+// Only monitor the extra nodes if present
 var updateArray: string[] = [];
-if (config.rightEntity !== null && existsState(config.rightEntity)) {
-    updateArray.push(config.rightEntity)
+if (config.firstScreensaverEntity !== null && config.firstScreensaverEntity.ScreensaverEntity != null && existsState(config.firstScreensaverEntity.ScreensaverEntity)) {
+    updateArray.push(config.firstScreensaverEntity.ScreensaverEntity)
+}
+if (config.secondScreensaverEntity !== null && config.secondScreensaverEntity.ScreensaverEntity != null && existsState(config.secondScreensaverEntity.ScreensaverEntity)) {
+    updateArray.push(config.secondScreensaverEntity.ScreensaverEntity)
+}
+if (config.thirdScreensaverEntity !== null && config.thirdScreensaverEntity.ScreensaverEntity != null && existsState(config.thirdScreensaverEntity.ScreensaverEntity)) {
+    updateArray.push(config.thirdScreensaverEntity.ScreensaverEntity)
+}
+if (config.fourthScreensaverEntity !== null && config.fourthScreensaverEntity.ScreensaverEntity != null && existsState(config.fourthScreensaverEntity.ScreensaverEntity)) {
+    updateArray.push(config.fourthScreensaverEntity.ScreensaverEntity)
 }
 
-if (config.leftEntity !== null && existsState(config.leftEntity)) {
-    updateArray.push(config.leftEntity)
-}
 if (updateArray.length > 0) {
     on(updateArray, function () {
         HandleScreensaverUpdate();
@@ -123,15 +126,7 @@ on({ id: config.panelRecvTopic }, function (obj) {
         var json = JSON.parse(obj.state.val);
 
         var split = json.CustomRecv.split(",");
-        if (split[1] == "pageOpenDetail") {
-            UnsubscribeWatcher();
-            let pageItem = config.pages[pageId].items.find(e => e.id === split[3]);
-            if (pageItem !== undefined)
-                SendToPanel(GenerateDetailPage(split[2], pageItem));
-        }
-        else {
-            HandleMessage(split[0], split[1], parseInt(split[2]), split);
-        }
+        HandleMessage(split[0], split[1], parseInt(split[2]), split);
     }
 });
 
@@ -147,18 +142,18 @@ function SendToPanel(val: Payload | Payload[]): void {
 
 function HandleMessage(typ: string, method: string, page: number, words: Array<string>): void {
     if (typ == "event") {
-
         switch (method) {
-            case "pageOpen":
-                var pageNum = (page % config.pages.length);
-                pageId = Math.abs(pageNum);
-                UnsubscribeWatcher();
-                GeneratePage(config.pages[pageId]);
-                break;
             case "startup":
                 UnsubscribeWatcher();
                 HandleStartupProcess();
+                pageId = 0;
+                GeneratePage(config.pages[0]);
                 break;
+            case "pageOpenDetail":
+                UnsubscribeWatcher();
+                let pageItem = config.pages[pageId].items.find(e => e.id === words[3]);
+                if (pageItem !== undefined)
+                    SendToPanel(GenerateDetailPage(words[2], pageItem));
             case "buttonPress2":
                 HandleButtonEvent(words);
                 break;
@@ -236,7 +231,7 @@ function SendTime(): void {
 function GenerateEntitiesPage(page: PageEntities): Payload[] {
     var out_msgs: Array<Payload> = [];
     out_msgs = [{ payload: "pageType,cardEntities" }, { payload: "entityUpdHeading," + page.heading }]
-    out_msgs.push({ payload: GeneratePageElements(page.items, 4,page.useColor) });
+    out_msgs.push({ payload: GeneratePageElements(page.items, 4, page.useColor) });
     return out_msgs
 }
 
@@ -317,14 +312,15 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
             case "blind":
                 type = "shutter"
-                iconId = pageItem.icon !== undefined ? pageItem.icon : 0;
+                iconId = pageItem.icon !== undefined ? pageItem.icon : 11;
                 iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".ACTUAL") ? getState(pageItem.id + ".ACTUAL").val : true, useColors);
                 return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + ","
 
             case "info":
             case "value.temperature":
+            case "thermostat":
                 type = "text";
-                iconId = pageItem.icon !== undefined ? pageItem.icon : 11;
+                iconId = pageItem.icon !== undefined ? pageItem.icon : o.common.role == "value.temperature" || o.common.role == "thermostat" ? 2 : 0;
                 let unit = "";
                 var optVal = "0"
                 if (existsState(pageItem.id + ".ON_ACTUAL")) {
@@ -432,12 +428,15 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             currentTemp = parseInt(getState(id + ".ACTUAL").val) * 10;
 
         let destTemp = 0;
-        if (existsState(id + ".SET"))
-            destTemp = parseInt(getState(id + ".SET").val) * 10;
+        if (existsState(id + ".SET")) {
+            destTemp = getState(id + ".SET").val.toFixed(2) * 10;
+            log(id + ".SET " + destTemp)
+        }
+
 
         let status = ""
         if (existsState(id + ".MODE"))
-            status = destTemp = getState(id + ".MODE").val;
+            status = getState(id + ".MODE").val;
         let minTemp = 180
         let maxTemp = 300
         let stepTemp = 5
@@ -459,7 +458,6 @@ function setIfExists(id: string, value: any, type: string | null = null): boolea
     else {
         let obj = getObject(id);
         if (existsState(id) && obj.common.type !== undefined && obj.common.type === type) {
-            log(id)
             setState(id, value);
             return true;
         }
@@ -478,46 +476,65 @@ function toggleState(id: string): boolean {
 
 function HandleButtonEvent(words): void {
     let id = words[2]
+    let buttonAction = words[3];
 
-    if (words[3] == "OnOff" && existsObject(id)) {
-        var action = false
-        if (words[4] == "1")
-            action = true
-        let o = getObject(id)
-        switch (o.common.role) {
-            case "light":
-                setState(id + ".SET", action);
-                break;
-            case "dimmer":
-                if (existsState(id + ".ON_SET"))
-                    setState(id + ".ON_SET", action);
-                else if (existsState(id + ".ON_ACTUAL"))
-                    setState(id + ".ON_ACTUAL", action);
-        }
-    }
-
-    if (words[3] == "up")
-        setState(id + ".OPEN", true)
-    if (words[3] == "stop")
-        setState(id + ".STOP", true)
-    if (words[3] == "down")
-        setState(id + ".CLOSE", true)
-    if (words[3] == "button") {
-        toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET")
-    }
-    if (words[3] == "positionSlider")
-        setState(id + ".SET", parseInt(words[4]))
-
-    if (words[3] == "brightnessSlider")
-        if (existsState(id + ".SET"))
-            setState(id + ".SET", parseInt(words[4]));
-        else if (existsState(id + ".ACTUAL"))
-            setState(id + ".ACTUAL", parseInt(words[4]));
-    //     out_msgs.push({ payload: id, action: "turn_on", domain: "lightBrightness", brightness: parseInt(words[7]) })
-    // if (words[6] == "colorTempSlider")
-    //     out_msgs.push({ payload: id, action: "turn_on", domain: "lightTemperature", temperature: parseInt(words[7]) })
-    if (words[3] == "tempUpd") {
-        setState(id + ".SET", parseInt(words[4]) / 10)
+    switch (buttonAction) {
+        case "bNext":
+            var pageNum = ((pageId + 1) % config.pages.length);
+            pageId = Math.abs(pageNum);
+            UnsubscribeWatcher();
+            GeneratePage(config.pages[pageId]);
+            break;
+        case "bPrev":
+            var pageNum = ((pageId - 1) % config.pages.length);
+            pageId = Math.abs(pageNum);
+            UnsubscribeWatcher();
+            GeneratePage(config.pages[pageId]);
+            break;
+        case "bExit":
+            if (config.screenSaverDoubleClick) {
+                if (words[4] == 2)
+                    GeneratePage(config.pages[pageId]);
+            }
+            else
+                GeneratePage(config.pages[pageId]);
+            break;
+        case "OnOff":
+            if (existsObject(id)) {
+                var action = false
+                if (words[4] == "1")
+                    action = true
+                let o = getObject(id)
+                switch (o.common.role) {
+                    case "light":
+                        setIfExists(id + ".SET", action);
+                        break;
+                    case "dimmer":
+                        setIfExists(id + ".ON_SET", action) ? true : setIfExists(id + ".ON_ACTUAL", action);
+                }
+            }
+            break;
+        case "up":
+            setIfExists(id + ".OPEN", true)
+            break;
+        case "stop":
+            setIfExists(id + ".STOP", true)
+            break;
+        case "down":
+            setIfExists(id + ".CLOSE", true)
+            break;
+        case "button":
+            toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET")
+            break;
+        case "positionSlider":
+        case "brightnessSlider":
+            setIfExists(id + ".SET", parseInt(words[4])) ? true : setIfExists(id + ".ACTUAL", parseInt(words[4]));
+            break;
+        case "tempUpd":
+            setIfExists(id + ".SET", parseInt(words[4]) / 10)
+            break;
+        default:
+            break;
     }
 }
 
@@ -616,30 +633,27 @@ function HandleScreensaverUpdate(): void {
         let temperature: string =
             existsState(config.weatherEntity + ".ACTUAL") ? getState(config.weatherEntity + ".ACTUAL").val :
                 existsState(config.weatherEntity + ".TEMP") ? getState(config.weatherEntity + ".TEMP").val : "null";
-        let humidity = getState(config.weatherEntity + ".HUMIDITY").val;
-
 
         let payloadString =
             "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?"
-            + temperature + " " + config.temperatureUnit + "?26?"
-            + humidity + " %?";
+            + temperature + " " + config.temperatureUnit + "?"
 
-        if (existsState(config.leftEntity)) {
-            let u1 = getState(config.leftEntity).val;
-            payloadString += config.leftEntityText + "?" + config.leftEntityIcon + "?" + u1 + " " + config.leftEntityUnitText + "?";
-        }
-        else {
-            payloadString += "???";
-        }
+        payloadString += GetScreenSaverEntityString(config.firstScreensaverEntity);
+        payloadString += GetScreenSaverEntityString(config.secondScreensaverEntity);
+        payloadString += GetScreenSaverEntityString(config.thirdScreensaverEntity);
+        payloadString += GetScreenSaverEntityString(config.fourthScreensaverEntity);
 
-        if (existsState(config.rightEntity)) {
-            let u2 = getState(config.rightEntity).val;
-            payloadString += config.rightEntityText + "?" + config.rightEntityIcon + "?" + u2 + " " + config.rightEntityUnitText;
-        }
-        else {
-            payloadString += "??";
-        }
         SendToPanel(<Payload>{ payload: payloadString });
+    }
+}
+
+function GetScreenSaverEntityString(configElement: ScreenSaverElement | null): string {
+    if (configElement != null && configElement.ScreensaverEntity != null && existsState(configElement.ScreensaverEntity)) {
+        let u1 = getState(configElement.ScreensaverEntity).val;
+        return configElement.ScreensaverEntityText + "?" + configElement.ScreensaverEntityIcon + "?" + u1 + " " + configElement.ScreensaverEntityUnitText + "?";
+    }
+    else {
+        return "???";
     }
 }
 
@@ -793,15 +807,12 @@ type Config = {
     timeFormat: string,
     dateFormat: string,
     weatherEntity: string | null,
+    screenSaverDoubleClick: boolean,
     temperatureUnit: string,
-    leftEntity: string,
-    leftEntityIcon: number,
-    leftEntityText: string,
-    leftEntityUnitText: string | null,
-    rightEntity: string,
-    rightEntityIcon: number,
-    rightEntityText: string,
-    rightEntityUnitText: string | null,
+    firstScreensaverEntity: ScreenSaverElement | null,
+    secondScreensaverEntity: ScreenSaverElement | null,
+    thirdScreensaverEntity: ScreenSaverElement | null,
+    fourthScreensaverEntity: ScreenSaverElement | null,
     defaultColor: RGB,
     defaultOnColor: RGB,
     defaultOffColor: RGB,
@@ -809,3 +820,10 @@ type Config = {
     button1Page: (PageThermo | PageEntities | PageGrid | null),
     button2Page: (PageThermo | PageEntities | PageGrid | null),
 };
+
+type ScreenSaverElement = {
+    ScreensaverEntity: string | null,
+    ScreensaverEntityIcon: number | null,
+    ScreensaverEntityText: string | null,
+    ScreensaverEntityUnitText: string | null,
+}
