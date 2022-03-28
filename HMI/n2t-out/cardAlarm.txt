@@ -838,7 +838,6 @@ Button arm1
     
     Events
         Touch Press Event
-            tCode.txt=""
             // event,buttonPress2,entn,arm1,tCode
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
@@ -855,6 +854,7 @@ Button arm1
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
         
 Button arm3
     Attributes
@@ -892,7 +892,6 @@ Button arm3
     
     Events
         Touch Press Event
-            tCode.txt=""
             // event,buttonPress2,entn,arm1,tCode
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
@@ -909,6 +908,7 @@ Button arm3
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
         
 Button arm2
     Attributes
@@ -946,7 +946,6 @@ Button arm2
     
     Events
         Touch Press Event
-            tCode.txt=""
             // event,buttonPress2,entn,arm1,tCode
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
@@ -963,6 +962,7 @@ Button arm2
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
         
 Button arm4
     Attributes
@@ -1000,7 +1000,6 @@ Button arm4
     
     Events
         Touch Press Event
-            tCode.txt=""
             // event,buttonPress2,entn,arm1,tCode
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
@@ -1017,6 +1016,7 @@ Button arm4
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
         
 Timer tmSerial
     Attributes
@@ -1131,6 +1131,15 @@ Timer tmSerial
                                             vis b10,1
                                             vis tCode,1
                                         }
+                                        //flashing status
+                                        spstr strCommand.txt,tTmp.txt,",",13
+                                        if(tTmp.txt=="enable")
+                                        {
+                                            tmFlash.en=1
+                                        }else
+                                        {
+                                            tmFlash.en=0
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -1227,6 +1236,25 @@ Timer tmSleep
                     sleepValue=0
                     page screensaver
                 }
+            }
+        
+Timer tmFlash
+    Attributes
+        ID         : 35
+        Scope      : local
+        Period (ms): 600
+        Enabled    : no
+    
+    Events
+        Timer Event
+            if(tIcon.isbr==1)
+            {
+                tIcon.isbr=0
+                vis tIcon,0
+            }else
+            {
+                tIcon.isbr=1
+                vis tIcon,1
             }
         
 TouchCap tc0
