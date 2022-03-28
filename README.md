@@ -375,13 +375,9 @@ HACS will show you that there is an update avalible and ask you to update.
 
 ### Update Display Firmware
 
-Use the following command to update or use your own webserver. FlashNextionFast will use Nextion Upload Protocol 1.2 and try to skip unchanged parts of the firmware.
+Use the following command to update or use your own webserver.
 
-`FlashNextionFast http://nspanel.pky.eu/lui.tft`
-
-In case this Update failes, reboot tasmota and use the following command:
-
-`FlashNextion http://nspanel.pky.eu/lui.tft`
+`FlashNextion http://nspanel.pky.eu/lui-release.tft`
 
 ### Update Tasmota Berry Driver
 
