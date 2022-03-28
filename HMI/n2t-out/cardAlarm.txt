@@ -392,8 +392,8 @@ Button b0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 52
-        y coordinate                        : 146
+        x coordinate                        : 25
+        y coordinate                        : 94
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -430,8 +430,8 @@ Button b1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 144
-        y coordinate                        : 146
+        x coordinate                        : 117
+        y coordinate                        : 94
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -468,8 +468,8 @@ Button b2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 236
-        y coordinate                        : 145
+        x coordinate                        : 209
+        y coordinate                        : 93
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -506,8 +506,8 @@ Button b3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 52
-        y coordinate                        : 204
+        x coordinate                        : 25
+        y coordinate                        : 152
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -544,8 +544,8 @@ Button b4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 144
-        y coordinate                        : 204
+        x coordinate                        : 117
+        y coordinate                        : 152
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -582,8 +582,8 @@ Button b5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 236
-        y coordinate                        : 204
+        x coordinate                        : 209
+        y coordinate                        : 152
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -620,8 +620,8 @@ Button b6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 52
-        y coordinate                        : 262
+        x coordinate                        : 25
+        y coordinate                        : 210
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -658,8 +658,8 @@ Button b7
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 144
-        y coordinate                        : 262
+        x coordinate                        : 117
+        y coordinate                        : 210
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -696,8 +696,8 @@ Button b8
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 236
-        y coordinate                        : 262
+        x coordinate                        : 209
+        y coordinate                        : 210
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -734,8 +734,8 @@ Button b9
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 328
-        y coordinate                        : 204
+        x coordinate                        : 116
+        y coordinate                        : 266
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -772,8 +772,8 @@ Button b10
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 328
-        y coordinate                        : 262
+        x coordinate                        : 209
+        y coordinate                        : 266
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -792,7 +792,7 @@ Button b10
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         State                               : unpressed
-        Text                                : CLEAR
+        Text                                : CLR
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -810,10 +810,10 @@ Button arm1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 20
-        y coordinate                        : 72
-        Width                               : 90
-        Height                              : 64
+        x coordinate                        : 300
+        y coordinate                        : 91
+        Width                               : 141
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -831,7 +831,7 @@ Button arm1
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 15
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -863,10 +863,10 @@ Button arm3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 234
-        y coordinate                        : 72
-        Width                               : 90
-        Height                              : 64
+        x coordinate                        : 300
+        y coordinate                        : 210
+        Width                               : 140
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -884,7 +884,7 @@ Button arm3
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 15
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -916,10 +916,10 @@ Button arm2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 127
-        y coordinate                        : 72
-        Width                               : 90
-        Height                              : 64
+        x coordinate                        : 300
+        y coordinate                        : 152
+        Width                               : 141
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -937,7 +937,7 @@ Button arm2
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 15
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -969,10 +969,10 @@ Button arm4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 341
-        y coordinate                        : 72
-        Width                               : 90
-        Height                              : 64
+        x coordinate                        : 300
+        y coordinate                        : 266
+        Width                               : 141
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -990,7 +990,7 @@ Button arm4
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 15
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
