@@ -1001,17 +1001,14 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,",",0
-                                    if(tInstruction.txt=="entityUpdHeading")
-                                    {
-                                        spstr strCommand.txt,tHeading.txt,",",1
-                                    }
                                     if(tInstruction.txt=="entityUpd")
                                     {
-                                        // command format: entityUpd[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
+                                        // command format: entityUpd,heading,navigation,[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
+                                        spstr strCommand.txt,tHeading.txt,",",1
                                         // get Type
-                                        spstr strCommand.txt,type1.txt,",",1
+                                        spstr strCommand.txt,type1.txt,",",3
                                         // get internal name
-                                        spstr strCommand.txt,entn1.txt,",",2
+                                        spstr strCommand.txt,entn1.txt,",",4
                                         if(type1.txt=="delete"||type1.txt=="")
                                         {
                                             vis tEntity1,0
@@ -1019,22 +1016,22 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,",",3
+                                            spstr strCommand.txt,tTmp.txt,",",5
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bEntity1.txt,sys0,1
                                             vis bEntity1,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,",",4
+                                            spstr strCommand.txt,tTmp.txt,",",6
                                             covx tTmp.txt,sys0,0,0
                                             bEntity1.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity1.txt,",",5
+                                            spstr strCommand.txt,tEntity1.txt,",",7
                                             vis tEntity1,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type2.txt,",",7
+                                        spstr strCommand.txt,type2.txt,",",9
                                         // get internal name
-                                        spstr strCommand.txt,entn2.txt,",",8
+                                        spstr strCommand.txt,entn2.txt,",",10
                                         if(type2.txt=="delete"||type2.txt=="")
                                         {
                                             vis tEntity2,0
@@ -1042,22 +1039,22 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,",",9
+                                            spstr strCommand.txt,tTmp.txt,",",11
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bEntity2.txt,sys0,1
                                             vis bEntity2,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,",",10
+                                            spstr strCommand.txt,tTmp.txt,",",12
                                             covx tTmp.txt,sys0,0,0
                                             bEntity2.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity2.txt,",",11
+                                            spstr strCommand.txt,tEntity2.txt,",",13
                                             vis tEntity2,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type3.txt,",",13
+                                        spstr strCommand.txt,type3.txt,",",15
                                         // get internal name
-                                        spstr strCommand.txt,entn3.txt,",",14
+                                        spstr strCommand.txt,entn3.txt,",",16
                                         if(type3.txt=="delete"||type3.txt=="")
                                         {
                                             vis tEntity3,0
@@ -1065,22 +1062,22 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,",",15
+                                            spstr strCommand.txt,tTmp.txt,",",17
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bEntity3.txt,sys0,1
                                             vis bEntity3,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,",",16
+                                            spstr strCommand.txt,tTmp.txt,",",18
                                             covx tTmp.txt,sys0,0,0
                                             bEntity3.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity3.txt,",",17
+                                            spstr strCommand.txt,tEntity3.txt,",",19
                                             vis tEntity3,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type4.txt,",",19
+                                        spstr strCommand.txt,type4.txt,",",21
                                         // get internal name
-                                        spstr strCommand.txt,entn4.txt,",",20
+                                        spstr strCommand.txt,entn4.txt,",",22
                                         if(type4.txt=="delete"||type4.txt=="")
                                         {
                                             vis tEntity4,0
@@ -1088,22 +1085,22 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,",",21
+                                            spstr strCommand.txt,tTmp.txt,",",23
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bEntity4.txt,sys0,1
                                             vis bEntity4,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,",",22
+                                            spstr strCommand.txt,tTmp.txt,",",24
                                             covx tTmp.txt,sys0,0,0
                                             bEntity4.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity4.txt,",",23
+                                            spstr strCommand.txt,tEntity4.txt,",",25
                                             vis tEntity4,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type5.txt,",",25
+                                        spstr strCommand.txt,type5.txt,",",27
                                         // get internal name
-                                        spstr strCommand.txt,entn5.txt,",",26
+                                        spstr strCommand.txt,entn5.txt,",",28
                                         if(type5.txt=="delete"||type5.txt=="")
                                         {
                                             vis tEntity5,0
@@ -1111,22 +1108,22 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,",",27
+                                            spstr strCommand.txt,tTmp.txt,",",29
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bEntity5.txt,sys0,1
                                             vis bEntity5,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,",",28
+                                            spstr strCommand.txt,tTmp.txt,",",30
                                             covx tTmp.txt,sys0,0,0
                                             bEntity5.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity5.txt,",",29
+                                            spstr strCommand.txt,tEntity5.txt,",",31
                                             vis tEntity5,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type6.txt,",",31
+                                        spstr strCommand.txt,type6.txt,",",33
                                         // get internal name
-                                        spstr strCommand.txt,entn6.txt,",",32
+                                        spstr strCommand.txt,entn6.txt,",",34
                                         if(type6.txt=="delete"||type6.txt=="")
                                         {
                                             vis tEntity6,0
@@ -1134,16 +1131,16 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,",",33
+                                            spstr strCommand.txt,tTmp.txt,",",35
                                             covx tTmp.txt,sys0,0,0
                                             substr pageIcons.tIcons.txt,bEntity6.txt,sys0,1
                                             vis bEntity6,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,",",34
+                                            spstr strCommand.txt,tTmp.txt,",",36
                                             covx tTmp.txt,sys0,0,0
                                             bEntity6.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity6.txt,",",35
+                                            spstr strCommand.txt,tEntity6.txt,",",37
                                             vis tEntity6,1
                                         }
                                     }
@@ -1159,10 +1156,35 @@ Timer tmSerial
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                         udelete payloadLength-1
                                         bufferPos=0
+                                        if(tId.txt=="pageStartup")
+                                        {
+                                            page pageStartup
+                                        }
+                                        if(tId.txt=="screensaver")
+                                        {
+                                            page screensaver
+                                        }
+                                        if(tId.txt=="cardEntities")
+                                        {
+                                            page cardEntities
+                                        }
+                                        if(tId.txt=="cardGrid")
+                                        {
+                                            page cardGrid
+                                        }
                                         if(tId.txt=="popupLight")
                                         {
                                             pageIcons.tTmp1.txt=tTmp.txt
                                             page popupLight
+                                        }
+                                        if(tId.txt=="popupShutter")
+                                        {
+                                            pageIcons.tTmp1.txt=tTmp.txt
+                                            page popupShutter
+                                        }
+                                        if(tId.txt=="popupNotify")
+                                        {
+                                            page popupNotify
                                         }
                                         if(tId.txt=="cardThermo")
                                         {
@@ -1171,18 +1193,6 @@ Timer tmSerial
                                         if(tId.txt=="cardMedia")
                                         {
                                             page cardMedia
-                                        }
-                                        if(tId.txt=="pageStartup")
-                                        {
-                                            page pageStartup
-                                        }
-                                        if(tId.txt=="popupNotify")
-                                        {
-                                            page popupNotify
-                                        }
-                                        if(tId.txt=="cardEntities")
-                                        {
-                                            page cardEntities
                                         }
                                         if(tId.txt=="cardAlarm")
                                         {
