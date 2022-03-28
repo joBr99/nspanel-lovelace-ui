@@ -249,7 +249,8 @@ class LuiPagesGen(object):
             if len(speakerlist) == 1:
                 speakerlist = []
             speakerlist = "?".join(speakerlist)
-            command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist}"
+            supported_features = entity.attributes.supported_features
+            command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist}|{supported_features}"
         self._send_mqtt_msg(command)
 
     def generate_alarm_page(self, item):
