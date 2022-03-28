@@ -77,10 +77,6 @@ change the page type:
 
 `weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val?tForecast3? tF3Icon? tForecast3Val?tForecast4? tF4Icon? tForecast4Val`
 
-`weatherUpdate,?0?2,3 C?0?0 mm?Mi?0?9,3 C?Do?0?11,5 C`
-
-`page,0`
-
 ### cardEntities Page
 
 The following message can be used to update the content on the cardEntities Page
