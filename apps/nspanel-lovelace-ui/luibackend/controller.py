@@ -181,10 +181,12 @@ class LuiController(object):
         if button_type == "media-back":
             self._ha_api.get_entity(entity_id).call_service("media_previous_track")
         if button_type == "media-pause":
-            player = self._ha_api.get_entity(entity_id)
+            self._ha_api.get_entity(entity_id).call_service("media_play_pause")
+        if button_type == "media-OnOff":
             if player.state == "off":
-                player.call_service("turn_on")
-            player.call_service("media_play_pause")
+                self._ha_api.get_entity(entity_id).call_service("turn_on")
+            else:
+                self._ha_api.get_entity(entity_id).call_service("turn_off")
         if button_type == "volumeSlider":
             pos = int(value)
             # HA wants this value between 0 and 1 as float

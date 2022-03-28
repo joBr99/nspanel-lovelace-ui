@@ -249,10 +249,16 @@ class LuiPagesGen(object):
             if len(speakerlist) == 1:
                 speakerlist = []
             speakerlist = "?".join(speakerlist)
-            supported_features = entity.attributes.supported_features
-            command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist}|{supported_features}"
+            bits = entity.attributes.supported_features
+            onoffbutton = "disable"
+            if bits & 0b01000000:
+                if entity.state == "off"
+                    onoffbutton = 1374
+                else:
+                    onoffbutton = rgb_dec565([255,255,255])
+            command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist}|{onoffbutton}"
         self._send_mqtt_msg(command)
-
+        
     def generate_alarm_page(self, item):
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd,{item},Not found,Not found,Check your,Check your,apps.,apps.,yaml,yaml,0,,0"
