@@ -37,12 +37,13 @@ jobs:
       continue-on-error: true
       run: |
         python Nextion2Text.py -s -d -p -p visual -i HMI/nspanel.HMI -o HMI/n2t-out-visual
-        python Nextion2Text.py -d -i HMI/nspanel.HMI -o HMI/n2t-out
     
-    - name: Run n2t US
+    - name: Run n2t US DIFF
       continue-on-error: true
       run: |
-        python Nextion2Text.py -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
+        echo "YXR0cmlidXRlcyA9IHsKICAgICJpZCI6IHsKICAgICAgICAiaWdub3JlIjogVHJ1ZSwKICAgIH0KfQ==" | base -d > ignore-id.py
+        python Nextion2Text.py -c ignore-id.py -d -i HMI/nspanel.HMI -o HMI/n2t-out
+        python Nextion2Text.py -c ignore-id.py -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
         diff -bur HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
   
     - uses: stefanzweifel/git-auto-commit-action@v4
