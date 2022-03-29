@@ -158,8 +158,8 @@ class LuiPagesGen(object):
             return f",button,{item},{icon_id},17299,{name},{text}"
         if item_type == "number":
             icon_id = get_icon_id_ha("number", overwrite=icon)
-            min_v = entitiy.attributes.get("min", 0)
-            max_v = entitiy.attributes.get("max", 100)
+            min_v = entity.attributes.get("min", 0)
+            max_v = entity.attributes.get("max", 100)
             return f",number,{item},{icon_id},17299,{name},{entity.state}|{min_v}|{max_v}"
 
     def generate_entities_page(self, heading, items):
