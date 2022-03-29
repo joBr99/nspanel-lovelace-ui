@@ -1,6 +1,5 @@
 Page cardThermo
     Attributes
-        ID                                  : 0
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -36,84 +35,72 @@ Page cardThermo
         
 Variable (string) strCommand
     Attributes
-        ID            : 7
         Scope         : local
         Text          : 
         Max. Text Size: 250
     
 Variable (string) entn
     Attributes
-        ID            : 22
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) va0
     Attributes
-        ID            : 33
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) va1
     Attributes
-        ID            : 34
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) va2
     Attributes
-        ID            : 35
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) va3
     Attributes
-        ID            : 36
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) va4
     Attributes
-        ID            : 37
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) va5
     Attributes
-        ID            : 38
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) va6
     Attributes
-        ID            : 39
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) va7
     Attributes
-        ID            : 40
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) va8
     Attributes
-        ID            : 41
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Number nPageDisp
     Attributes
-        ID                                  : 5
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -123,7 +110,6 @@ Number nPageDisp
     
 XFloat xTempCurr
     Attributes
-        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -133,7 +119,6 @@ XFloat xTempCurr
     
 XFloat xTempDest
     Attributes
-        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -143,7 +128,6 @@ XFloat xTempDest
     
 XFloat xTempMin
     Attributes
-        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -153,7 +137,6 @@ XFloat xTempMin
     
 XFloat xTempMax
     Attributes
-        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -163,7 +146,6 @@ XFloat xTempMax
     
 XFloat xTempStep
     Attributes
-        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -173,7 +155,6 @@ XFloat xTempStep
     
 Text tSend
     Attributes
-        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -184,7 +165,6 @@ Text tSend
     
 Text tTmp
     Attributes
-        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -195,7 +175,6 @@ Text tTmp
     
 Text tInstruction
     Attributes
-        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -206,7 +185,6 @@ Text tInstruction
     
 Text tId
     Attributes
-        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -217,7 +195,6 @@ Text tId
     
 Text tHeading
     Attributes
-        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -228,7 +205,6 @@ Text tHeading
     
 Text tStatus
     Attributes
-        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -239,7 +215,6 @@ Text tStatus
     
 Text t2
     Attributes
-        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -250,7 +225,6 @@ Text t2
     
 Picture p0
     Attributes
-        ID                                  : 1
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -258,7 +232,6 @@ Picture p0
     
 Button bNext
     Attributes
-        ID                                  : 4
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -284,7 +257,6 @@ Button bNext
         
 Button bDown
     Attributes
-        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -321,7 +293,6 @@ Button bDown
         
 Button bUp
     Attributes
-        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -358,7 +329,6 @@ Button bUp
         
 Button bPrev
     Attributes
-        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -384,7 +354,6 @@ Button bPrev
         
 Dual-state Button bt0
     Attributes
-        ID                                  : 24
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -412,7 +381,6 @@ Dual-state Button bt0
         
 Dual-state Button bt1
     Attributes
-        ID                                  : 25
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -440,7 +408,6 @@ Dual-state Button bt1
         
 Dual-state Button bt2
     Attributes
-        ID                                  : 26
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -468,7 +435,6 @@ Dual-state Button bt2
         
 Dual-state Button bt3
     Attributes
-        ID                                  : 27
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -496,7 +462,6 @@ Dual-state Button bt3
         
 Dual-state Button bt4
     Attributes
-        ID                                  : 28
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -524,7 +489,6 @@ Dual-state Button bt4
         
 Dual-state Button bt5
     Attributes
-        ID                                  : 29
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -552,7 +516,6 @@ Dual-state Button bt5
         
 Dual-state Button bt6
     Attributes
-        ID                                  : 30
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -580,7 +543,6 @@ Dual-state Button bt6
         
 Dual-state Button bt7
     Attributes
-        ID                                  : 31
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -608,7 +570,6 @@ Dual-state Button bt7
         
 Dual-state Button bt8
     Attributes
-        ID                                  : 32
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -636,7 +597,6 @@ Dual-state Button bt8
         
 Timer tmSerial
     Attributes
-        ID         : 6
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -960,7 +920,6 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 20
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -980,7 +939,6 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 21
         Scope: local
         Value: 0
     

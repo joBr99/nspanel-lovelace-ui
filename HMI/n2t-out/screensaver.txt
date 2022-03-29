@@ -1,6 +1,5 @@
 Page screensaver
     Attributes
-        ID                                  : 0
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -55,41 +54,35 @@ Page screensaver
         
 Variable (string) strCommand
     Attributes
-        ID            : 5
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) vaTime
     Attributes
-        ID            : 10
         Scope         : global
         Text          : 
         Max. Text Size: 15
     
 Variable (string) vaDate
     Attributes
-        ID            : 11
         Scope         : global
         Text          : 
         Max. Text Size: 30
     
 Variable (string) tId
     Attributes
-        ID            : 22
         Scope         : local
         Text          : 
         Max. Text Size: 25
     
 Variable (int32) vaTap
     Attributes
-        ID   : 30
         Scope: local
         Value: 0
     
 Number originPage
     Attributes
-        ID                                  : 3
         Scope                               : global
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -99,7 +92,6 @@ Number originPage
     
 Text tInstruction
     Attributes
-        ID                                  : 6
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -110,7 +102,6 @@ Text tInstruction
     
 Text tTmp
     Attributes
-        ID                                  : 7
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -121,7 +112,6 @@ Text tTmp
     
 Text tTime
     Attributes
-        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -132,7 +122,6 @@ Text tTime
     
 Text tDate
     Attributes
-        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -143,7 +132,6 @@ Text tDate
     
 Text tSend
     Attributes
-        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -154,7 +142,6 @@ Text tSend
     
 Text tMainIcon
     Attributes
-        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -165,7 +152,6 @@ Text tMainIcon
     
 Text tMainText
     Attributes
-        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -176,7 +162,6 @@ Text tMainText
     
 Text tForecast1
     Attributes
-        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -187,7 +172,6 @@ Text tForecast1
     
 Text tForecast1Val
     Attributes
-        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -198,7 +182,6 @@ Text tForecast1Val
     
 Text tF1Icon
     Attributes
-        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -209,7 +192,6 @@ Text tF1Icon
     
 Text tForecast2
     Attributes
-        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -220,7 +202,6 @@ Text tForecast2
     
 Text tF2Icon
     Attributes
-        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -231,7 +212,6 @@ Text tF2Icon
     
 Text tForecast2Val
     Attributes
-        ID                                  : 20
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -242,7 +222,6 @@ Text tForecast2Val
     
 Text t10
     Attributes
-        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -253,7 +232,6 @@ Text t10
     
 Text tAMPM
     Attributes
-        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -264,7 +242,6 @@ Text tAMPM
     
 Text tForecast3Val
     Attributes
-        ID                                  : 24
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -275,7 +252,6 @@ Text tForecast3Val
     
 Text tF3Icon
     Attributes
-        ID                                  : 25
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -286,7 +262,6 @@ Text tF3Icon
     
 Text tForecast3
     Attributes
-        ID                                  : 26
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -297,7 +272,6 @@ Text tForecast3
     
 Text tForecast4
     Attributes
-        ID                                  : 27
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -308,7 +282,6 @@ Text tForecast4
     
 Text tF4Icon
     Attributes
-        ID                                  : 28
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -319,7 +292,6 @@ Text tF4Icon
     
 Text tForecast4Val
     Attributes
-        ID                                  : 29
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -330,7 +302,6 @@ Text tForecast4Val
     
 Picture p0
     Attributes
-        ID                                  : 1
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -338,7 +309,6 @@ Picture p0
     
 Timer tmSerial
     Attributes
-        ID         : 4
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -529,7 +499,6 @@ Timer tmSerial
         
 TouchCap tc0
     Attributes
-        ID   : 2
         Scope: local
         Value: 0
     

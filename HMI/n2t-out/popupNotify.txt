@@ -1,6 +1,5 @@
 Page popupNotify
     Attributes
-        ID                                  : 0
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -21,27 +20,23 @@ Page popupNotify
         
 Variable (string) strCommand
     Attributes
-        ID            : 8
         Scope         : local
         Text          : 
         Max. Text Size: 1000
     
 Variable (string) entn
     Attributes
-        ID            : 15
         Scope         : local
         Text          : 
         Max. Text Size: 30
     
 Variable (int32) vaOldSleepT
     Attributes
-        ID   : 16
         Scope: local
         Value: 0
     
 Text tSend
     Attributes
-        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -52,7 +47,6 @@ Text tSend
     
 Text tTmp
     Attributes
-        ID                                  : 4
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -63,7 +57,6 @@ Text tTmp
     
 Text tInstruction
     Attributes
-        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -74,7 +67,6 @@ Text tInstruction
     
 Text tId
     Attributes
-        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -85,7 +77,6 @@ Text tId
     
 Text tHeading
     Attributes
-        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -96,7 +87,6 @@ Text tHeading
     
 Text tText
     Attributes
-        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -107,7 +97,6 @@ Text tText
     
 Picture p0
     Attributes
-        ID                                  : 1
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -115,7 +104,6 @@ Picture p0
     
 Button b0
     Attributes
-        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -142,7 +130,6 @@ Button b0
         
 Button b2
     Attributes
-        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -170,7 +157,6 @@ Button b2
         
 Button b1
     Attributes
-        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -198,7 +184,6 @@ Button b1
         
 Timer tmSleep
     Attributes
-        ID         : 6
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -219,7 +204,6 @@ Timer tmSleep
         
 Timer tmSerial
     Attributes
-        ID         : 7
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -404,7 +388,6 @@ Timer tmSerial
         
 TouchCap tc0
     Attributes
-        ID   : 5
         Scope: local
         Value: 0
     

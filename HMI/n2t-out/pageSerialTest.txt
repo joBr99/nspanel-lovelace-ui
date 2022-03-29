@@ -1,6 +1,5 @@
 Page pageSerialTest
     Attributes
-        ID                                  : 0
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -19,7 +18,6 @@ Page pageSerialTest
         
 Number nCrcRecv
     Attributes
-        ID                                  : 5
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -29,7 +27,6 @@ Number nCrcRecv
     
 Number nCrcCalc
     Attributes
-        ID                                  : 6
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -39,7 +36,6 @@ Number nCrcCalc
     
 Number nIt
     Attributes
-        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -49,7 +45,6 @@ Number nIt
     
 Number nLength
     Attributes
-        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -59,7 +54,6 @@ Number nLength
     
 Text tStatus
     Attributes
-        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -70,7 +64,6 @@ Text tStatus
     
 Text tCmd
     Attributes
-        ID                                  : 4
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -81,7 +74,6 @@ Text tCmd
     
 Text tBuffer
     Attributes
-        ID                                  : 7
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -92,7 +84,6 @@ Text tBuffer
     
 Text tDesc
     Attributes
-        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -103,7 +94,6 @@ Text tDesc
     
 Picture p0
     Attributes
-        ID                                  : 1
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -111,7 +101,6 @@ Picture p0
     
 Button b0
     Attributes
-        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -127,7 +116,6 @@ Button b0
         
 Button b1
     Attributes
-        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -143,7 +131,6 @@ Button b1
         
 Timer tmSerial
     Attributes
-        ID         : 2
         Scope      : local
         Period (ms): 400
         Enabled    : yes

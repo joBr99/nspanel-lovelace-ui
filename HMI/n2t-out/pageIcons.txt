@@ -1,6 +1,5 @@
 Page pageIcons
     Attributes
-        ID                                  : 0
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -13,7 +12,6 @@ Page pageIcons
     
 Text t0
     Attributes
-        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -24,7 +22,6 @@ Text t0
     
 Text tIcons
     Attributes
-        ID                                  : 3
         Scope                               : global
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -35,7 +32,6 @@ Text tIcons
     
 Text tTmp1
     Attributes
-        ID                                  : 4
         Scope                               : global
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -46,7 +42,6 @@ Text tTmp1
     
 Text tTmp2
     Attributes
-        ID                                  : 5
         Scope                               : global
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -57,7 +52,6 @@ Text tTmp2
     
 Picture p0
     Attributes
-        ID                                  : 1
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
