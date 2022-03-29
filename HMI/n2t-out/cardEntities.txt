@@ -643,14 +643,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardEntities,"
-            if(bPrev.isbr==1)
-            {
-                tSend.txt+="bBack"
-            }else
-            {
-                tSend.txt+="bPrev"
-            }
+            tSend.txt="event,buttonPress2,cardEntities,bPrev"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
