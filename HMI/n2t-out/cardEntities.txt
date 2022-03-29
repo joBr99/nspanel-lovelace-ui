@@ -300,6 +300,24 @@ Slider hSlider1
         Upper range limit                   : 100
         Lower range limit                   : 0
     
+    Events
+        Touch Release Event
+            nNum1.val=hSlider1.val
+            tSend.txt="event,buttonPress2,"+entn1.txt+",number-set,"
+            covx nNum1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Slider hSlider2
     Attributes
         Scope                               : local
@@ -310,6 +328,24 @@ Slider hSlider2
         Upper range limit                   : 100
         Lower range limit                   : 0
     
+    Events
+        Touch Release Event
+            nNum2.val=hSlider2.val
+            tSend.txt="event,buttonPress2,"+entn2.txt+",number-set,"
+            covx nNum2.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Slider hSlider3
     Attributes
         Scope                               : local
@@ -320,6 +356,24 @@ Slider hSlider3
         Upper range limit                   : 100
         Lower range limit                   : 0
     
+    Events
+        Touch Release Event
+            nNum3.val=hSlider3.val
+            tSend.txt="event,buttonPress2,"+entn3.txt+",number-set,"
+            covx nNum3.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Slider hSlider4
     Attributes
         Scope                               : local
@@ -330,6 +384,24 @@ Slider hSlider4
         Upper range limit                   : 100
         Lower range limit                   : 0
     
+    Events
+        Touch Release Event
+            nNum4.val=hSlider4.val
+            tSend.txt="event,buttonPress2,"+entn4.txt+",number-set,"
+            covx nNum4.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Button bDown1
     Attributes
         Scope                               : local
@@ -1159,16 +1231,16 @@ Timer tmSerial
                                             // get config (optional Value) (use bText as variable)
                                             spstr strCommand.txt,bText1.txt,",",8
                                             //first value is current value
-                                            spstr bText1.txt,tTmp.txt,"|",1
+                                            spstr bText1.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
                                             hSlider1.val=sys0
                                             nNum1.val=sys0
                                             //second value is min value
-                                            spstr bText1.txt,tTmp.txt,"|",2
+                                            spstr bText1.txt,tTmp.txt,"|",1
                                             covx tTmp.txt,sys0,0,0
                                             hSlider1.minval=sys0
                                             //third value is max value
-                                            spstr bText1.txt,tTmp.txt,"|",3
+                                            spstr bText1.txt,tTmp.txt,"|",2
                                             covx tTmp.txt,sys0,0,0
                                             hSlider1.maxval=sys0
                                         }
@@ -1283,16 +1355,16 @@ Timer tmSerial
                                             // get config (optional Value) (use bText as variable)
                                             spstr strCommand.txt,bText2.txt,",",14
                                             //first value is current value
-                                            spstr bText2.txt,tTmp.txt,"|",1
+                                            spstr bText2.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
                                             hSlider2.val=sys0
                                             nNum2.val=sys0
                                             //second value is min value
-                                            spstr bText2.txt,tTmp.txt,"|",2
+                                            spstr bText2.txt,tTmp.txt,"|",1
                                             covx tTmp.txt,sys0,0,0
                                             hSlider2.minval=sys0
                                             //third value is max value
-                                            spstr bText2.txt,tTmp.txt,"|",3
+                                            spstr bText2.txt,tTmp.txt,"|",2
                                             covx tTmp.txt,sys0,0,0
                                             hSlider2.maxval=sys0
                                         }
@@ -1407,16 +1479,16 @@ Timer tmSerial
                                             // get config (optional Value) (use bText as variable)
                                             spstr strCommand.txt,bText3.txt,",",20
                                             //first value is current value
-                                            spstr bText3.txt,tTmp.txt,"|",1
+                                            spstr bText3.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
                                             hSlider3.val=sys0
                                             nNum3.val=sys0
                                             //second value is min value
-                                            spstr bText3.txt,tTmp.txt,"|",2
+                                            spstr bText3.txt,tTmp.txt,"|",1
                                             covx tTmp.txt,sys0,0,0
                                             hSlider3.minval=sys0
                                             //third value is max value
-                                            spstr bText3.txt,tTmp.txt,"|",3
+                                            spstr bText3.txt,tTmp.txt,"|",2
                                             covx tTmp.txt,sys0,0,0
                                             hSlider3.maxval=sys0
                                         }
@@ -1531,16 +1603,16 @@ Timer tmSerial
                                             // get config (optional Value) (use bText as variable)
                                             spstr strCommand.txt,bText4.txt,",",26
                                             //first value is current value
-                                            spstr bText4.txt,tTmp.txt,"|",1
+                                            spstr bText4.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
                                             hSlider4.val=sys0
                                             nNum4.val=sys0
                                             //second value is min value
-                                            spstr bText4.txt,tTmp.txt,"|",2
+                                            spstr bText4.txt,tTmp.txt,"|",1
                                             covx tTmp.txt,sys0,0,0
                                             hSlider4.minval=sys0
                                             //third value is max value
-                                            spstr bText4.txt,tTmp.txt,"|",3
+                                            spstr bText4.txt,tTmp.txt,"|",2
                                             covx tTmp.txt,sys0,0,0
                                             hSlider4.maxval=sys0
                                         }
