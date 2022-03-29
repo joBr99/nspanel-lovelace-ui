@@ -156,6 +156,10 @@ class LuiPagesGen(object):
             icon_id = get_icon_id_ha("scene", overwrite=icon)
             text = get_translation(self._locale,"ACTIVATE")
             return f",button,{item},{icon_id},17299,{name},{text}"
+        if item_type == "script":
+            icon_id = get_icon_id_ha("script", overwrite=icon)
+            text = get_translation(self._locale,"run")
+            return f",button,{item},{icon_id},17299,{name},{text}"
         if item_type == "number":
             icon_id = get_icon_id_ha("number", overwrite=icon)
             min_v = entity.attributes.get("min", 0)

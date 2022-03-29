@@ -14,11 +14,12 @@ translations = {
         'clear_code': "Maak skoon",
         'code': "Kode",
         'disarm': "Skakel Af",
+        'run': "Hardloop",
     },
     'ca_ES': {
         'PRESS': "Prem",
         'ACTIVATE': "Activar",
-        'aux_heat': "Calefactor auxiliar",
+        'aux_heat': "Calefactor auxiliar",        
         'cooling': "Refredant",
         'drying': "Assecant",
         'fan': "Ventilació",
@@ -32,6 +33,7 @@ translations = {
         'clear_code': "Borrar",
         'code': "Codi",
         'disarm': "Desactivar",
+        'run': "Executa",
     },
     'cs_CZ': {
         'PRESS': "Stisknutí",
@@ -50,6 +52,7 @@ translations = {
         'clear_code': "Zrušit",
         'code': "Kód",
         'disarm': "Odbezpečit",
+        'run': "Spustit",
     },
     'cy_GB': {
         'ACTIVATE': "Actifadu",
@@ -75,6 +78,7 @@ translations = {
         'clear_code': "Ryd",
         'code': "Kode",
         'disarm': "Frakobl",
+        'run': "Kør",
     },
     'de_DE': {
         'PRESS': "Drücken",
@@ -93,6 +97,7 @@ translations = {
         'clear_code': "Löschen",
         'code': "Code",
         'disarm': "Deaktivieren",
+        'run': "Ausführen",
     },
     'en_US': {
         'PRESS': "Press",
@@ -111,6 +116,7 @@ translations = {
         'clear_code': "Clear",
         'code': "Code",
         'disarm': "Disarm",
+        'run': "Run",
     },
     'es_ES': {
         'PRESS': "Pulsa",
@@ -129,6 +135,7 @@ translations = {
         'clear_code': "Limpiar",
         'code': "Código",
         'disarm': "Desarmar",
+        'run': "Ejecutar",
     },
     'et_EE': {
         'PRESS': "Vajuta nuppu",
@@ -147,6 +154,7 @@ translations = {
         'clear_code': "Puhasta",
         'code': "Kood",
         'disarm': "Valvest maha",
+        'run': "Käivita",
     },
     'eu_ES': {
         'ACTIVATE': "Aktibatu",
@@ -171,6 +179,7 @@ translations = {
         'clear_code': "Tyhjennä",
         'code': "Koodi",
         'disarm': "Poista hälytys",
+        'run': "Suorita",
     },
     'fr_FR': {
         'PRESS': "Appui",
@@ -189,12 +198,14 @@ translations = {
         'clear_code': "Effacer",
         'code': "Code",
         'disarm': "Désarmer",
+        'run': "Exécuter",
     },
     'fy_DE': {
         'off': "Út",
     },
     'gl_ES': {
         'off': "Apagado",
+        'run': "Executar",
     },
     'hr_HR': {
         'ACTIVATE': "Aktivirati",
@@ -211,6 +222,7 @@ translations = {
         'clear_code': "Vedro",
         'code': "Kod",
         'disarm': "Deaktiviraj",
+        'run': "Pokreni",
     },
     'id_ID': {
         'PRESS': "Tekan",
@@ -229,6 +241,7 @@ translations = {
         'clear_code': "Hapus",
         'code': "Kode",
         'disarm': "Nonaktifkan",
+        'run': "Jalankan",
     },
     'is_IS': {
         'PRESS': "Ýttu á",
@@ -246,6 +259,7 @@ translations = {
         'clear_code': "Hreinsa",
         'code': "Kóði",
         'disarm': "Taka af verði",
+        'run': "Keyra",
     },
     'it_IT': {
         'PRESS': "Premi",
@@ -264,6 +278,7 @@ translations = {
         'clear_code': "Canc",
         'code': "Codice",
         'disarm': "Disattiva",
+        'run': "Esegui",
     },
     'nl_NL': {
         'PRESS': "Klik",
@@ -282,6 +297,7 @@ translations = {
         'clear_code': "Wis",
         'code': "Code",
         'disarm': "Uitschakelen",
+        'run': "Uitvoeren",
     },
     'nn_NO': {
         'ACTIVATE': "Aktiver",
@@ -299,6 +315,7 @@ translations = {
         'clear_code': "Slett alt",
         'code': "Kode",
         'disarm': "Skru av",
+        'run': "Køyr",
     },
     'pt_PT': {
         'PRESS': "Pressione",
@@ -316,6 +333,7 @@ translations = {
         'clear_code': "Apagar",
         'code': "Código",
         'disarm': "Desarmar",
+        'run': "Executar",
     },
     'sr_RS': {
         'PRESS': "Pritisnite taster",
@@ -339,6 +357,7 @@ translations = {
         'clear_code': "Rensa",
         'code': "Kod",
         'disarm': "Larma från",
+        'run': "Kör",
     },
 }
 

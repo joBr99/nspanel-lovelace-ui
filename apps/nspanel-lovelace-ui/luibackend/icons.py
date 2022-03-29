@@ -39,6 +39,8 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
         return "gesture-tap-button"
     if ha_type == "scene":
         return "palette"
+    if ha_type == "script":
+        return "script-text"
     if ha_type == "switch":
         return "flash"
     if ha_type == "number":

@@ -178,6 +178,8 @@ class LuiController(object):
                 self._pages_gen.render_page(self._current_page)
             elif entity_id.startswith('scene'):
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
+            elif entity_id.startswith('script'):
+                self._ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean'):
                 self._ha_api.get_entity(entity_id).call_service("toggle")
             else:
