@@ -9,7 +9,7 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 
 ## Features
 
-- Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, scenes, input_button and light
+- Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light
 - Grid Page with support for cover, switch, input_boolean, button, scenes, and light
 - Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
 - Thermostat Page 
