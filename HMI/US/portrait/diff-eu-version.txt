@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-29 07:47:31.945583643 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 07:47:32.365587735 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-29 07:50:32.340739774 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 07:50:32.748740333 +0000
 @@ -10,6 +10,6 @@
      int sleepValue=0
      // dim value
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-29 07:47:31.945583643 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 07:47:32.365587735 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-29 07:50:32.340739774 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 07:50:32.752740338 +0000
 @@ -123,6 +123,34 @@
          Text          : 
          Max. Text Size: 70
@@ -157,23 +157,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
          Scope                               : local
          Dragging                            : 0
          Disable release event after dragging: 0
-@@ -643,14 +737,7 @@
-     
-     Events
-         Touch Press Event
--            tSend.txt="event,buttonPress2,cardEntities,"
--            if(bPrev.isbr==1)
--            {
--                tSend.txt+="bBack"
--            }else
--            {
--                tSend.txt+="bPrev"
--            }
-+            tSend.txt="event,buttonPress2,cardEntities,bPrev"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -793,6 +880,214 @@
+@@ -786,6 +880,214 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -388,7 +372,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          ID                                  : 23
-@@ -905,6 +1200,62 @@
+@@ -898,6 +1200,62 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -451,7 +435,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          ID                                  : 35
-@@ -1015,6 +1366,52 @@
+@@ -1008,6 +1366,52 @@
                  page popupLight
              }
          
@@ -504,7 +488,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          ID         : 30
-@@ -1535,6 +1932,238 @@
+@@ -1528,6 +1932,238 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
@@ -744,8 +728,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-03-29 07:47:31.945583643 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-29 07:47:32.365587735 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-03-29 07:50:32.340739774 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-29 07:50:32.752740338 +0000
 @@ -30,21 +30,21 @@
      
  Variable (string) entn
@@ -873,8 +857,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
 Only in HMI/n2t-out: nspanel_Stats.txt
 Only in HMI/US/portrait/n2t-out: nspanel_US_P_Stats.txt
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-29 07:47:31.945583643 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 07:47:32.365587735 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-29 07:50:32.340739774 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 07:50:32.752740338 +0000
 @@ -155,7 +155,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -905,8 +889,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
                                          {
                                              pageIcons.tTmp1.txt=tTmp.txt
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-03-29 07:47:31.945583643 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-03-29 07:47:32.365587735 +0000
+--- HMI/n2t-out/popupLight.txt	2022-03-29 07:50:32.340739774 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-03-29 07:50:32.748740333 +0000
 @@ -252,8 +252,6 @@
      
      Events
