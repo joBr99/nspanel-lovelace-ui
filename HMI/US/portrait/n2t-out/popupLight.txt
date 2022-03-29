@@ -310,7 +310,12 @@ Button b0
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,popupLight,bExit"
+            //page open event
+            // event,pageOpen,cardEntities,pageNumber
+            // craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,pageOpen,"+tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
