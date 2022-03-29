@@ -67,11 +67,13 @@ class LuiController(object):
         
     def update_screensaver_brightness(self, kwargs):
         bst = self._config.get("brightnessScreensaverTracking")
+        brightness = 0
         if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state == "not_home":
-            self.current_screensaver_brightness = 0
+            brightness = 0
         else:
             self.current_screensaver_brightness = kwargs['value']
-        self._send_mqtt_msg(f"dimmode,{self.current_screensaver_brightness}")
+            brightness = kwargs['value']
+        self._send_mqtt_msg(f"dimmode,{brightness}")
 
     def calc_current_screensaver_brightness(self):
         current_screensaver_brightness = 20
