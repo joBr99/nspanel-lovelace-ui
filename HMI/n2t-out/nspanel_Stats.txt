@@ -52,11 +52,11 @@ screensaver
 	133  Unique line(s) of event code
 cardEntities
 	58   Component(s)
-	849  Line(s) of event code
-	364  Unique line(s) of event code
+	842  Line(s) of event code
+	360  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	349  Component(s)
-	3282 Line(s) of event code
-	885  Unique line(s) of event code
+	3275 Line(s) of event code
+	882  Unique line(s) of event code
