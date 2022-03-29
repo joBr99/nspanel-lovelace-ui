@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -5,11 +5,24 @@
      int recvCrc=0
      int payloadLength=0
@@ -29,8 +29,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -16,6 +16,7 @@
              vis p0,0
              vis tSend,0
@@ -454,8 +454,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
          Value: 0
      
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -31,7 +31,6 @@
              vis tIcon1,0
              vis tEntity1,0
@@ -1700,8 +1700,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                          if(tId.txt=="cardAlarm")
                                          {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -76,28 +76,28 @@
          ID            : 18
          Scope         : local
@@ -2003,8 +2003,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                          if(tId.txt=="cardAlarm")
                                          {
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -16,37 +16,34 @@
              vis p0,0
              vis tSend,0
@@ -2434,8 +2434,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
          Value: 0
      
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -269,7 +269,14 @@
      
      Events
@@ -2468,11 +2468,9 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-Only in HMI/n2t-out: nspanel_Stats.txt
-Only in HMI/US/portrait/n2t-out: nspanel_US_P_Stats.txt
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/pageIcons.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -30,8 +30,8 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -2485,8 +2483,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
  Text tTmp1
      Attributes
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -155,7 +155,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -2509,8 +2507,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
                                              pageIcons.tTmp1.txt=tTmp.txt
 Only in HMI/US/portrait/n2t-out: pageSwipeTest.txt
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/pageTest.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/pageTest.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -53,7 +53,7 @@
          Touch Press Event
              page pageSerialTest
@@ -2615,8 +2613,8 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
          Dragging                            : 0
          Disable release event after dragging: 0
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/popupLight.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -252,8 +252,6 @@
      
      Events
@@ -2692,8 +2690,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
      Attributes
          ID   : 14
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -127,7 +127,12 @@
      Events
          Touch Press Event
@@ -2709,8 +2707,8 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -180,7 +180,12 @@
      
      Events
@@ -2726,8 +2724,8 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-03-29 07:55:24.603203320 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-03-29 07:55:25.143226231 +0000
+--- HMI/n2t-out/screensaver.txt	2022-03-29 08:02:33.634746387 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-03-29 08:02:34.038739908 +0000
 @@ -20,26 +20,12 @@
              vis tTmp,0
              vis p0,0
