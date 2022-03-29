@@ -1,6 +1,5 @@
 Page pageTest
     Attributes
-        ID                                  : 0
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -17,7 +16,6 @@ Page pageTest
         
 Picture p0
     Attributes
-        ID                                  : 1
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -25,7 +23,6 @@ Picture p0
     
 Button b0
     Attributes
-        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -40,7 +37,6 @@ Button b0
         
 Button b1
     Attributes
-        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -55,7 +51,6 @@ Button b1
         
 Button b3
     Attributes
-        ID                                  : 4
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -70,7 +65,6 @@ Button b3
         
 Button b6
     Attributes
-        ID                                  : 5
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -85,7 +79,6 @@ Button b6
         
 Button b4
     Attributes
-        ID                                  : 6
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -100,7 +93,6 @@ Button b4
         
 Button b5
     Attributes
-        ID                                  : 7
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -115,7 +107,6 @@ Button b5
         
 Button b7
     Attributes
-        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -130,7 +121,6 @@ Button b7
         
 Button b8
     Attributes
-        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -146,7 +136,6 @@ Button b8
         
 Button b9
     Attributes
-        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -161,7 +150,6 @@ Button b9
         
 Button b10
     Attributes
-        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -176,7 +164,6 @@ Button b10
         
 Button b11
     Attributes
-        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0

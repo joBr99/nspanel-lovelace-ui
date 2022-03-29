@@ -1,6 +1,5 @@
 Page pageStartup
     Attributes
-        ID                                  : 0
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -36,14 +35,12 @@ Page pageStartup
         
 Variable (string) strCommand
     Attributes
-        ID            : 5
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Number frame_ptr
     Attributes
-        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -53,7 +50,6 @@ Number frame_ptr
     
 Number spinner_w
     Attributes
-        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -63,7 +59,6 @@ Number spinner_w
     
 Number frapic_w
     Attributes
-        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -73,7 +68,6 @@ Number frapic_w
     
 Number usual_cnt
     Attributes
-        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -83,7 +77,6 @@ Number usual_cnt
     
 Text tSend
     Attributes
-        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -94,7 +87,6 @@ Text tSend
     
 Text tTmp
     Attributes
-        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -105,7 +97,6 @@ Text tTmp
     
 Text tInstruction
     Attributes
-        ID                                  : 6
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -116,7 +107,6 @@ Text tInstruction
     
 Text tId
     Attributes
-        ID                                  : 7
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -127,7 +117,6 @@ Text tId
     
 Text tMsg1
     Attributes
-        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -138,7 +127,6 @@ Text tMsg1
     
 Text tMsg2
     Attributes
-        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -149,7 +137,6 @@ Text tMsg2
     
 Text tMsg3
     Attributes
-        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -160,7 +147,6 @@ Text tMsg3
     
 Text tVersion
     Attributes
-        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -171,7 +157,6 @@ Text tVersion
     
 Picture p0
     Attributes
-        ID                                  : 1
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -179,7 +164,6 @@ Picture p0
     
 Button bSendStartup
     Attributes
-        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -208,7 +192,6 @@ Button bSendStartup
         
 Hotspot mSpinner
     Attributes
-        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -226,7 +209,6 @@ Hotspot mSpinner
         
 Timer tmSerial
     Attributes
-        ID         : 4
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -363,7 +345,6 @@ Timer tmSerial
         
 Timer tmSpinner
     Attributes
-        ID         : 9
         Scope      : local
         Period (ms): 80
         Enabled    : yes
