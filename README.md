@@ -385,7 +385,9 @@ Use the following command to update or use your own webserver.
 If you are using a recent release you also should be able to update directly with a notification on the screen.
 
 EU Version: `FlashNextion http://nspanel.pky.eu/lui-release.tft`
+
 US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
+
 US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
 ### Update Tasmota Berry Driver
