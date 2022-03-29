@@ -191,7 +191,7 @@ class LuiController(object):
         if button_type == "media-pause":
             self._ha_api.get_entity(entity_id).call_service("media_play_pause")
         if button_type == "media-OnOff":
-            if player.state == "off":
+            if self._ha_api.get_entity(entity_id).state == "off":
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
             else:
                 self._ha_api.get_entity(entity_id).call_service("turn_off")
