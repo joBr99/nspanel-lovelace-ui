@@ -2,14 +2,14 @@ Program.s
 	0    Component(s)
 	9    Line(s) of event code
 	9    Unique line(s) of event code
-pageIcons
-	6    Component(s)
-	0    Line(s) of event code
-	0    Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	180  Line(s) of event code
 	119  Unique line(s) of event code
+pageIcons
+	6    Component(s)
+	0    Line(s) of event code
+	0    Unique line(s) of event code
 pageSerialTest
 	13   Component(s)
 	48   Line(s) of event code
