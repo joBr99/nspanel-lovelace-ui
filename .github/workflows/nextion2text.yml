@@ -20,8 +20,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.head_ref }}
+#      with:
+#        ref: ${{ github.head_ref }}
 
     - name: Get last commit message
       id: last-commit-message
