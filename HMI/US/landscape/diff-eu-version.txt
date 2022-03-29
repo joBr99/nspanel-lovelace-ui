@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-29 22:51:44.242306277 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-03-29 22:51:45.066317995 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-29 23:57:00.704990944 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-03-29 23:57:01.505006185 +0000
 @@ -10,6 +10,6 @@
      int sleepValue=0
      // dim value
