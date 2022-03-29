@@ -40,6 +40,9 @@ class LuiMqttListener(object):
                     self._controller.startup()
             if msg[1] == "screensaverOpen":
                 self._controller.weather_update("")
+                # try to request tasmota driver version again in case it's still None
+                self._updater.current_tasmota_driver_version is None:
+                    self._updater.request_berry_driver_version()
             if msg[1] == "buttonPress2":
                 entity_id = msg[2]
                 btype = msg[3]

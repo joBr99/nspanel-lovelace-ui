@@ -69,6 +69,10 @@ class Updater:
             LOGGER.info("Update Pre-Check failed Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_display_firmware_version)
             return False
 
+    def request_berry_driver_version(self):
+        topic = self.topic_send.replace("CustomSend", "GetDriverVersion")
+        self._send_mqtt_msg("X", topic=topic)
+
     def update_berry_driver(self):
         topic = self.topic_send.replace("CustomSend", "UpdateDriverVersion")
         self._send_mqtt_msg(self.desired_tasmota_driver_url, topic=topic)
