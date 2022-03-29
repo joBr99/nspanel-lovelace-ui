@@ -45,7 +45,8 @@ icons = [
     "shield",
     "shield-lock",
     "shield-airplane",
-    "bell-ring"
+    "bell-ring",
+    "ray-vertex"
 ]
 
 

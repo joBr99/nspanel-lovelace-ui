@@ -41,6 +41,8 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
         return "palette"
     if ha_type == "switch":
         return "flash"
+    if ha_type == "number":
+        return "ray-vertex"
     if ha_type == "light":
         return "lightbulb"
     if ha_type == "input_boolean":
