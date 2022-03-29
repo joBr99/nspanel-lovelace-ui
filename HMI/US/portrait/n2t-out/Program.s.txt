@@ -5,24 +5,11 @@ Program.s
     int recvCrc=0
     int payloadLength=0
     int par0=0,par1=0
-    // landsspace orientation x has 480px and y has 320px xy limits todo: adjust xy values to something that fit's resulution
-    //Maximum values in directional change for Swipes beeing detected as swipe (diagonal swipes are invalid) (for one axis at a time)
-    int xLimit=125,yLimit=125
-    int ixLimit=-125,iyLimit=-125
-    //Minimum values for swipes, directional changes below theese values are ignored, because they could be unintended swipes
-    int xLimitMin=60,yLimitMin=60
-    int ixLimitMin=-60,iyLimitMin=-60
-    // Swipe Result Vars
-    int ycR=0,xcR=0
-    // Start End Swipe Touch Locations
-    int yc1=0,xc1=0,yc2=0,xc2=0
     // sleep timeout in s
     int sleepTimeout=20
     int sleepValue=0
     // dim value
     int dimValue=40
-    // current page
-    int nPage=0
     // fix touch offset (Removed for US version)
     //lcd_dev fffb 0002 0000 0020
     page pageStartup
