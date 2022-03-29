@@ -1,4 +1,4 @@
-Page popupShutter
+Page popupLight
     Attributes
         ID                                  : 0
         Scope                               : local
@@ -25,7 +25,208 @@ Page popupShutter
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
-            tSend.txt="event,pageOpenDetail,popupShutter,"+entn.txt
+            tSend.txt="event,pageOpenDetail,popupLight,"+entn.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            //disable brightness by default
+            vis t1,0
+            vis t2,0
+            vis hBrightness,0
+            //disable color temp by default
+            vis t4,0
+            vis t3,0
+            vis hTempSlider,0
+            //disable color wheel components by default
+            vis bColor,0
+            vis t0,0
+            vis pColorWheel,0
+            //vis t0,0
+        
+Variable (string) strCommand
+    Attributes
+        ID            : 17
+        Scope         : local
+        Text          : 
+        Max. Text Size: 100
+    
+Variable (string) entn
+    Attributes
+        ID            : 21
+        Scope         : local
+        Text          : newtxt
+        Max. Text Size: 50
+    
+Variable (int32) mode
+    Attributes
+        ID   : 23
+        Scope: local
+        Value: 1
+    
+Variable (int32) mode_temp
+    Attributes
+        ID   : 24
+        Scope: local
+        Value: 0
+    
+Text tEntity
+    Attributes
+        ID                                  : 3
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : tEntity1
+        Max. Text Size                      : 25
+    
+Text tIcon1
+    Attributes
+        ID                                  : 4
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î´
+        Max. Text Size                      : 10
+    
+Text t1
+    Attributes
+        ID                                  : 6
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Brightness
+        Max. Text Size                      : 15
+    
+Text t2
+    Attributes
+        ID                                  : 9
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 10
+    
+Text t3
+    Attributes
+        ID                                  : 10
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 10
+    
+Text t4
+    Attributes
+        ID                                  : 11
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Temperature
+        Max. Text Size                      : 15
+    
+Text tSend
+    Attributes
+        ID                                  : 12
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : newtxt
+        Max. Text Size                      : 100
+    
+Text tTmp
+    Attributes
+        ID                                  : 13
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tInstruction
+    Attributes
+        ID                                  : 18
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
+    
+Text tId
+    Attributes
+        ID                                  : 19
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
+    
+Text t0
+    Attributes
+        ID                                  : 25
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Color
+        Max. Text Size                      : 15
+    
+Picture p0
+    Attributes
+        ID                                  : 1
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+Picture pColorWheel
+    Attributes
+        ID                                  : 2
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+    Events
+        Touch Press Event
+            //craft command
+            tSend.txt="event,buttonPress2,"+entn.txt+",colorWheel,"
+            sys0=tch0
+            sys0=sys0-pColorWheel.x
+            covx sys0,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
+            sys0=tch1
+            sys0=sys0-pColorWheel.y
+            covx sys0,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -38,108 +239,9 @@ Page popupShutter
             prints tSend.txt,0
             prints crcval,2
         
-Variable (string) strCommand
+Slider hBrightness
     Attributes
-        ID            : 10
-        Scope         : local
-        Text          : 
-        Max. Text Size: 50
-    
-Variable (string) entn
-    Attributes
-        ID            : 18
-        Scope         : local
-        Text          : newtxt
-        Max. Text Size: 50
-    
-Text tEntity
-    Attributes
-        ID                                  : 2
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity1
-        Max. Text Size                      : 25
-    
-Text tIcon1
-    Attributes
-        ID                                  : 3
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î°
-        Max. Text Size                      : 10
-    
-Text tSend
-    Attributes
-        ID                                  : 5
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : newtxt
-        Max. Text Size                      : 100
-    
-Text tTmp
-    Attributes
-        ID                                  : 6
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
-    
-Text tInstruction
-    Attributes
-        ID                                  : 11
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text tId
-    Attributes
-        ID                                  : 12
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text t1
-    Attributes
-        ID                                  : 17
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : Position
-        Max. Text Size                      : 15
-    
-Picture p0
-    Attributes
-        ID                                  : 1
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-    
-Slider hPosition
-    Attributes
-        ID                                  : 16
+        ID                                  : 7
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -150,10 +252,38 @@ Slider hPosition
     
     Events
         Touch Release Event
-            // event,buttonPress2,internalNameEntity,positionSlider,50
             //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
-            covx hPosition.val,tTmp.txt,0,0
+            tSend.txt="event,buttonPress2,"+entn.txt+",brightnessSlider,"
+            covx hBrightness.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Slider hTempSlider
+    Attributes
+        ID                                  : 20
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
+    
+    Events
+        Touch Release Event
+            //craft command
+            tSend.txt="event,buttonPress2,"+entn.txt+",colorTempSlider,"
+            covx hTempSlider.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
@@ -169,7 +299,7 @@ Slider hPosition
         
 Button b0
     Attributes
-        ID                                  : 4
+        ID                                  : 5
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -180,7 +310,12 @@ Button b0
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,popupShutter,bExit"
+            //page open event
+            // event,pageOpen,cardEntities,pageNumber
+            // craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,pageOpen,"+tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -193,72 +328,59 @@ Button b0
             prints tSend.txt,0
             prints crcval,2
         
-Button bDown1
+Button bColor
     Attributes
-        ID                                  : 13
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",down"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            if(mode.val==1)
+            {
+                mode.val=0
+                //enable color wheel
+                vis pColorWheel,1
+                //disable color temp
+                vis t4,0
+                vis t3,0
+                vis hTempSlider,0
+            }else
+            {
+                mode.val=1
+                //disable color wheel
+                vis pColorWheel,0
+                if(mode_temp.val==1)
+                {
+                    //enable color temp
+                    vis t4,1
+                    vis t3,1
+                    vis hTempSlider,1
+                }
+            }
         
-Button bStop1
+Dual-state Button btOnOff1
     Attributes
-        ID                                  : 14
+        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î
+        Text                                : 
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",stop"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bUp1
-    Attributes
-        ID                                  : 15
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",up"
+            //craft command
+            tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
+            covx btOnOff1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -273,7 +395,7 @@ Button bUp1
         
 Timer tmSleep
     Attributes
-        ID         : 8
+        ID         : 15
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -294,7 +416,7 @@ Timer tmSleep
         
 Timer tmSerial
     Attributes
-        ID         : 9
+        ID         : 16
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -346,16 +468,94 @@ Timer tmSerial
                                     spstr strCommand.txt,tInstruction.txt,",",0
                                     if(tInstruction.txt=="entityUpdateDetail")
                                     {
-                                        // get Position value
+                                        // change icon
                                         spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,sys0,0,0
-                                        hPosition.val=sys0
-                                    }
-                                    if(tInstruction.txt=="dimmode")
-                                    {
-                                        // get value
-                                        spstr strCommand.txt,tTmp.txt,",",1
-                                        covx tTmp.txt,dimValue,0,0
+                                        substr pageIcons.tIcons.txt,tIcon1.txt,sys0,1
+                                        vis tIcon1,1
+                                        // change icon color
+                                        spstr strCommand.txt,tTmp.txt,",",2
+                                        covx tTmp.txt,sys0,0,0
+                                        tIcon1.pco=sys0
+                                        // get Button State
+                                        spstr strCommand.txt,tTmp.txt,",",3
+                                        covx tTmp.txt,sys0,0,0
+                                        btOnOff1.val=sys0
+                                        // get Brightness value
+                                        spstr strCommand.txt,tTmp.txt,",",4
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            vis t1,0
+                                            vis t2,0
+                                            vis hBrightness,0
+                                        }else
+                                        {
+                                            vis t1,1
+                                            vis t2,1
+                                            vis hBrightness,1
+                                            covx tTmp.txt,sys0,0,0
+                                            hBrightness.val=sys0
+                                        }
+                                        // get ColorTemp value
+                                        spstr strCommand.txt,tTmp.txt,",",5
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            vis hTempSlider,0
+                                            vis t3,0
+                                            vis t4,0
+                                            mode_temp.val=0
+                                            // mode == 1 is temp controls currently shown
+                                            if(mode.val==1)
+                                            {
+                                                // switch mode
+                                                click bColor,1
+                                                click bColor,0
+                                            }
+                                        }else if(tTmp.txt=="unknown") // temp supported, but not in color mode
+                                        {
+                                            mode_temp.val=1
+                                            // mode == 1 is temp controls currently shown
+                                            if(mode.val==1)
+                                            {
+                                                // switch mode
+                                                click bColor,1
+                                                click bColor,0
+                                            }
+                                        }else
+                                        {
+                                            mode_temp.val=1
+                                            vis hTempSlider,1
+                                            vis t3,1
+                                            vis t4,1
+                                            // mode == 0 is rgb controls currently shown
+                                            if(mode.val==0)
+                                            {
+                                                // switch mode
+                                                click bColor,1
+                                                click bColor,0
+                                            }
+                                        }
+                                        // get Color value
+                                        spstr strCommand.txt,tTmp.txt,",",6
+                                        // disable -> isn't supported
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            vis t0,0
+                                            vis bColor,0
+                                            vis pColorWheel,0
+                                        }else
+                                        {
+                                            vis t0,1
+                                            //only enable bColor button if color temp is also supported
+                                            if(mode_temp.val==1)
+                                            {
+                                                vis bColor,1
+                                            }
+                                            if(mode.val==0)
+                                            {
+                                                vis pColorWheel,1
+                                            }
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -366,6 +566,12 @@ Timer tmSerial
                                     {
                                         // get set date to global variable
                                         spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                    }
+                                    if(tInstruction.txt=="dimmode")
+                                    {
+                                        // get value
+                                        spstr strCommand.txt,tTmp.txt,",",1
+                                        covx tTmp.txt,dimValue,0,0
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
@@ -385,11 +591,6 @@ Timer tmSerial
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                         udelete payloadLength-1
                                         bufferPos=0
-                                        if(tId.txt=="popupLight")
-                                        {
-                                            pageIcons.tTmp1.txt=tTmp.txt
-                                            page popupLight
-                                        }
                                         if(tId.txt=="cardEntities")
                                         {
                                             page cardEntities
@@ -425,20 +626,11 @@ Timer tmSerial
                     // next character
                     bufferPos++
                 }
-                if(bufferPos==usize)
-                {
-                    // copy whole buffer to t1.txt, for debugging
-                    //ucopy t2.txt,0,usize,0
-                    // ucopy n2.val,0,usize,0
-                    // clear whole buffer
-                    //code_c
-                    //bufferPos=0
-                }
             }
         
 TouchCap tc0
     Attributes
-        ID   : 7
+        ID   : 14
         Scope: local
         Value: 0
     

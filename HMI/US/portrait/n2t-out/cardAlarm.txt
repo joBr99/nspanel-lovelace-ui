@@ -148,7 +148,7 @@ Text tIcon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 
+        Text                                : î
         Max. Text Size                      : 10
     
 Picture p0
@@ -172,7 +172,14 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,bNext"
+            nPage=nPage+1
+            nPageDisp.val=nPage
+            //page open event
+            // event,pageOpen,cardEntities,pageNumber
+            // craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,pageOpen,"+tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -198,7 +205,14 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,bPrev"
+            nPage=nPage-1
+            nPageDisp.val=nPage
+            //page open event
+            // event,pageOpen,cardEntities,pageNumber
+            // craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,pageOpen,"+tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -369,7 +383,7 @@ Button b10
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : CLR
+        Text                                : CLEAR
         Max. Text Size                      : 10
     
     Events
@@ -385,7 +399,7 @@ Button arm1
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 40
+        Max. Text Size                      : 10
     
     Events
         Touch Press Event
@@ -405,7 +419,6 @@ Button arm1
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            tCode.txt=""
         
 Button arm3
     Attributes
@@ -416,7 +429,7 @@ Button arm3
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 40
+        Max. Text Size                      : 10
     
     Events
         Touch Press Event
@@ -436,7 +449,6 @@ Button arm3
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            tCode.txt=""
         
 Button arm2
     Attributes
@@ -447,7 +459,7 @@ Button arm2
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 40
+        Max. Text Size                      : 10
     
     Events
         Touch Press Event
@@ -467,7 +479,6 @@ Button arm2
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            tCode.txt=""
         
 Button arm4
     Attributes
@@ -478,7 +489,7 @@ Button arm4
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 40
+        Max. Text Size                      : 10
     
     Events
         Touch Press Event
@@ -498,7 +509,6 @@ Button arm4
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            tCode.txt=""
         
 Timer tmSerial
     Attributes
@@ -592,12 +602,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",10
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tIcon.txt,sys0,1
-                                        //icon color
-                                        spstr strCommand.txt,tTmp.txt,",",11
-                                        covx tTmp.txt,sys0,0,0
-                                        tIcon.pco=sys0
                                         //numpad status
-                                        spstr strCommand.txt,tTmp.txt,",",12
+                                        spstr strCommand.txt,tTmp.txt,",",11
                                         if(tTmp.txt!="disable")
                                         {
                                             vis b0,1
@@ -612,15 +618,6 @@ Timer tmSerial
                                             vis b9,1
                                             vis b10,1
                                             vis tCode,1
-                                        }
-                                        //flashing status
-                                        spstr strCommand.txt,tTmp.txt,",",13
-                                        if(tTmp.txt=="enable")
-                                        {
-                                            tmFlash.en=1
-                                        }else
-                                        {
-                                            tmFlash.en=0
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -718,25 +715,6 @@ Timer tmSleep
                     sleepValue=0
                     page screensaver
                 }
-            }
-        
-Timer tmFlash
-    Attributes
-        ID         : 35
-        Scope      : local
-        Period (ms): 600
-        Enabled    : no
-    
-    Events
-        Timer Event
-            if(tIcon.isbr==1)
-            {
-                tIcon.isbr=0
-                vis tIcon,0
-            }else
-            {
-                tIcon.isbr=1
-                vis tIcon,1
             }
         
 TouchCap tc0

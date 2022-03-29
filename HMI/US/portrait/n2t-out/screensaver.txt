@@ -1,4 +1,4 @@
-Page popupShutter
+Page screensaver
     Attributes
         ID                                  : 0
         Scope                               : local
@@ -13,19 +13,20 @@ Page popupShutter
     
     Events
         Preinitialize Event
-            //get entitiy name
-            tEntity.txt=pageIcons.tTmp1.txt
-            //get entity id
-            entn.txt=pageIcons.tTmp2.txt
-            vis p0,0
-            vis tSend,0
-            vis tTmp,0
+            recmod=1
+            bauds=115200
+            vis originPage,0
             vis tInstruction,0
-            vis tId,0
+            vis tTmp,0
+            vis p0,0
+            //load gloabl time string from pageIcons
+            tTime.txt=vaTime.txt
+            tDate.txt=vaDate.txt
+            dim=dimValue
+            vis tSend,0
             //page open event
-            // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
-            tSend.txt="event,pageOpenDetail,popupShutter,"+entn.txt
+            tSend.txt="event,screensaverOpen"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -37,55 +38,57 @@ Page popupShutter
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            // clear weather elements, to keep example content in HMI
+            tMainIcon.txt=""
+            tMainText.txt=""
+            tMRIcon.txt=""
+            tMR.txt=""
+            tForecast1.txt=""
+            tF1Icon.txt=""
+            tForecast1Val.txt=""
+            tForecast2.txt=""
+            tF2Icon.txt=""
+            tForecast2Val.txt=""
         
 Variable (string) strCommand
     Attributes
-        ID            : 10
+        ID            : 5
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 100
     
-Variable (string) entn
+Variable (string) vaTime
     Attributes
-        ID            : 18
+        ID            : 10
+        Scope         : global
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) vaDate
+    Attributes
+        ID            : 11
+        Scope         : global
+        Text          : 
+        Max. Text Size: 30
+    
+Variable (string) tId
+    Attributes
+        ID            : 24
         Scope         : local
-        Text          : newtxt
-        Max. Text Size: 50
+        Text          : 
+        Max. Text Size: 25
     
-Text tEntity
-    Attributes
-        ID                                  : 2
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity1
-        Max. Text Size                      : 25
-    
-Text tIcon1
+Number originPage
     Attributes
         ID                                  : 3
-        Scope                               : local
+        Scope                               : global
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î°
-        Max. Text Size                      : 10
+        Value                               : 0
     
-Text tSend
-    Attributes
-        ID                                  : 5
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : newtxt
-        Max. Text Size                      : 100
-    
-Text tTmp
+Text tInstruction
     Attributes
         ID                                  : 6
         Scope                               : local
@@ -94,11 +97,11 @@ Text tTmp
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 20
     
-Text tInstruction
+Text tTmp
     Attributes
-        ID                                  : 11
+        ID                                  : 7
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -107,7 +110,29 @@ Text tInstruction
         Text                                : 
         Max. Text Size                      : 20
     
-Text tId
+Text tTime
+    Attributes
+        ID                                  : 8
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 21:32
+        Max. Text Size                      : 10
+    
+Text tDate
+    Attributes
+        ID                                  : 9
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Tuesday, 08. March 2022
+        Max. Text Size                      : 30
+    
+Text tSend
     Attributes
         ID                                  : 12
         Scope                               : local
@@ -116,9 +141,53 @@ Text tId
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 20
+        Max. Text Size                      : 25
     
-Text t1
+Text tMainIcon
+    Attributes
+        ID                                  : 13
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 10
+    
+Text tMainText
+    Attributes
+        ID                                  : 14
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 2,3 Â°C
+        Max. Text Size                      : 10
+    
+Text tMRIcon
+    Attributes
+        ID                                  : 15
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 10
+    
+Text tMR
+    Attributes
+        ID                                  : 16
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 0 mm
+        Max. Text Size                      : 10
+    
+Text tForecast1
     Attributes
         ID                                  : 17
         Scope                               : local
@@ -126,8 +195,74 @@ Text t1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : Position
-        Max. Text Size                      : 15
+        Text                                : Mi
+        Max. Text Size                      : 10
+    
+Text tForecast1Val
+    Attributes
+        ID                                  : 18
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 9,3 Â°C
+        Max. Text Size                      : 10
+    
+Text tF1Icon
+    Attributes
+        ID                                  : 19
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 10
+    
+Text tForecast2
+    Attributes
+        ID                                  : 20
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Do
+        Max. Text Size                      : 10
+    
+Text tF2Icon
+    Attributes
+        ID                                  : 21
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 10
+    
+Text tForecast2Val
+    Attributes
+        ID                                  : 22
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 11,9 Â°C
+        Max. Text Size                      : 10
+    
+Text t10
+    Attributes
+        ID                                  : 23
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : |
+        Max. Text Size                      : 10
     
 Picture p0
     Attributes
@@ -137,164 +272,9 @@ Picture p0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
     
-Slider hPosition
-    Attributes
-        ID                                  : 16
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
-        Lower range limit                   : 0
-    
-    Events
-        Touch Release Event
-            // event,buttonPress2,internalNameEntity,positionSlider,50
-            //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
-            covx hPosition.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button b0
-    Attributes
-        ID                                  : 4
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,popupShutter,bExit"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bDown1
-    Attributes
-        ID                                  : 13
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",down"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bStop1
-    Attributes
-        ID                                  : 14
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",stop"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bUp1
-    Attributes
-        ID                                  : 15
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",up"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Timer tmSleep
-    Attributes
-        ID         : 8
-        Scope      : local
-        Period (ms): 1000
-        Enabled    : yes
-    
-    Events
-        Timer Event
-            if(sleepTimeout!=0)
-            {
-                sleepValue+=1
-                if(sleepTimeout<=sleepValue)
-                {
-                    screensaver.originPage.val=dp
-                    sleepValue=0
-                    click b0,1
-                    click b0,0
-                }
-            }
-        
 Timer tmSerial
     Attributes
-        ID         : 9
+        ID         : 4
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -344,28 +324,29 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,",",0
-                                    if(tInstruction.txt=="entityUpdateDetail")
+                                    if(tInstruction.txt=="wake")
                                     {
-                                        // get Position value
-                                        spstr strCommand.txt,tTmp.txt,",",1
-                                        covx tTmp.txt,sys0,0,0
-                                        hPosition.val=sys0
+                                        //dim=100
+                                        click tc0,1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,dimValue,0,0
+                                        dim=dimValue
                                     }
                                     if(tInstruction.txt=="time")
                                     {
-                                        // get set time to global variable
-                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                        //get set time to global variable
+                                        spstr strCommand.txt,vaTime.txt,",",1
+                                        tTime.txt=vaTime.txt
                                     }
                                     if(tInstruction.txt=="date")
                                     {
-                                        // get set date to global variable
-                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                        //get set date to global variable
+                                        spstr strCommand.txt,vaDate.txt,"?",1
+                                        tDate.txt=vaDate.txt
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
@@ -373,8 +354,48 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",1
                                         covx tTmp.txt,sleepTimeout,0,0
                                     }
+                                    if(tInstruction.txt=="weatherUpdate")
+                                    {
+                                        //tMainIcon
+                                        spstr strCommand.txt,tTmp.txt,"?",1
+                                        covx tTmp.txt,sys0,0,0
+                                        substr pageIcons.tIcons.txt,tMainIcon.txt,sys0,1
+                                        //tMainText
+                                        spstr strCommand.txt,tMainText.txt,"?",2
+                                        //tMRIcon
+                                        spstr strCommand.txt,tTmp.txt,"?",3
+                                        covx tTmp.txt,sys0,0,0
+                                        substr pageIcons.tIcons.txt,tMRIcon.txt,sys0,1
+                                        //tMR
+                                        spstr strCommand.txt,tMR.txt,"?",4
+                                        //tForecast1
+                                        spstr strCommand.txt,tForecast1.txt,"?",5
+                                        //tF1Icon
+                                        spstr strCommand.txt,tTmp.txt,"?",6
+                                        covx tTmp.txt,sys0,0,0
+                                        substr pageIcons.tIcons.txt,tF1Icon.txt,sys0,1
+                                        //tForecast1Val
+                                        spstr strCommand.txt,tForecast1Val.txt,"?",7
+                                        //tForecast2
+                                        spstr strCommand.txt,tForecast2.txt,"?",8
+                                        //tF2Icon
+                                        spstr strCommand.txt,tTmp.txt,"?",9
+                                        covx tTmp.txt,sys0,0,0
+                                        substr pageIcons.tIcons.txt,tF2Icon.txt,sys0,1
+                                        //tForecast2Val
+                                        spstr strCommand.txt,tForecast2Val.txt,"?",10
+                                    }
+                                    if(tInstruction.txt=="page")
+                                    {
+                                        //pagenumber
+                                        spstr strCommand.txt,tTmp.txt,",",1
+                                        covx tTmp.txt,sys0,0,0
+                                        nPage=sys0
+                                        //don't send current page number, wake will do
+                                    }
                                     if(tInstruction.txt=="pageType")
                                     {
+                                        dim=100
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,",",1
@@ -383,16 +404,20 @@ Timer tmSerial
                                         //save third arg if there's one
                                         spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-                                        udelete payloadLength-1
+                                        udelete u[2]+3
                                         bufferPos=0
                                         if(tId.txt=="popupLight")
                                         {
                                             pageIcons.tTmp1.txt=tTmp.txt
                                             page popupLight
                                         }
-                                        if(tId.txt=="cardEntities")
+                                        if(tId.txt=="pageStartup")
                                         {
-                                            page cardEntities
+                                            page pageStartup
+                                        }
+                                        if(tId.txt=="cardThermo")
+                                        {
+                                            page cardThermo
                                         }
                                         if(tId.txt=="cardMedia")
                                         {
@@ -410,6 +435,10 @@ Timer tmSerial
                                         {
                                             page cardGrid
                                         }
+                                        if(tId.txt=="cardEntities")
+                                        {
+                                            page cardEntities
+                                        }
                                         if(tId.txt=="cardAlarm")
                                         {
                                             page cardAlarm
@@ -425,24 +454,33 @@ Timer tmSerial
                     // next character
                     bufferPos++
                 }
-                if(bufferPos==usize)
-                {
-                    // copy whole buffer to t1.txt, for debugging
-                    //ucopy t2.txt,0,usize,0
-                    // ucopy n2.val,0,usize,0
-                    // clear whole buffer
-                    //code_c
-                    //bufferPos=0
-                }
             }
         
 TouchCap tc0
     Attributes
-        ID   : 7
+        ID   : 2
         Scope: local
         Value: 0
     
     Events
         Touch Press Event
-            sleepValue=0
+            //page open event
+            // event,pageOpen,cardEntities,pageNumber
+            // craft command
+            // convert pageNumber and write to tTmp
+            covx nPage,tTmp.txt,0,0
+            tSend.txt="event,pageOpen,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,1
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            //dim=100
+            //page originPage.val
         
