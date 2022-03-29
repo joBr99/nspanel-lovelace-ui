@@ -30,10 +30,6 @@ cardMedia
 	22   Component(s)
 	200  Line(s) of event code
 	115  Unique line(s) of event code
-cardGrid
-	39   Component(s)
-	392  Line(s) of event code
-	226  Unique line(s) of event code
 cardThermo
 	42   Component(s)
 	412  Line(s) of event code
@@ -50,6 +46,10 @@ popupLight
 	26   Component(s)
 	307  Line(s) of event code
 	168  Unique line(s) of event code
+cardGrid
+	39   Component(s)
+	392  Line(s) of event code
+	226  Unique line(s) of event code
 cardEntities
 	74   Component(s)
 	970  Line(s) of event code
