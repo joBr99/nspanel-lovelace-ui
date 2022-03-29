@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-29 18:16:56.880176149 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 18:16:57.284191791 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-29 21:37:35.051043757 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 21:37:35.411045869 +0000
 @@ -10,6 +10,6 @@
      int sleepValue=0
      // dim value
@@ -11,37 +11,12 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-29 18:16:56.880176149 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 18:16:57.284191791 +0000
-@@ -31,7 +31,6 @@
-             vis tEntity1,0
-             vis bText1,0
-             vis hSlider1,0
--            vis nNum1,0
-             //ui e2
-             vis btOnOff2,0
-             vis bUp2,0
-@@ -41,7 +40,6 @@
-             vis tEntity2,0
-             vis bText2,0
-             vis hSlider2,0
--            vis nNum2,0
-             //ui e3
-             vis btOnOff3,0
-             vis bUp3,0
-@@ -51,7 +49,6 @@
-             vis tEntity3,0
-             vis bText3,0
-             vis hSlider3,0
--            vis nNum3,0
-             //ui e4
-             vis btOnOff4,0
-             vis bUp4,0
-@@ -61,7 +58,24 @@
-             vis tEntity4,0
+--- HMI/n2t-out/cardEntities.txt	2022-03-29 21:37:35.055043780 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 21:37:35.411045869 +0000
+@@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
--            vis nNum4,0
+             vis nNum4,0
 +            //ui e5
 +            vis btOnOff5,0
 +            vis bUp5,0
@@ -51,6 +26,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +            vis tEntity5,0
 +            vis bText5,0
 +            vis hSlider5,0
++            vis nNum5,0
 +            //ui e6
 +            vis btOnOff6,0
 +            vis bUp6,0
@@ -60,10 +36,11 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +            vis tEntity6,0
 +            vis bText6,0
 +            vis hSlider6,0
++            vis nNum6,0
          
  Variable (string) strCommand
      Attributes
-@@ -117,6 +131,30 @@
+@@ -117,6 +137,30 @@
          Text          : 
          Max. Text Size: 70
      
@@ -94,7 +71,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Number nNum1
      Attributes
          Scope                               : local
-@@ -153,6 +191,24 @@
+@@ -153,6 +197,24 @@
          Associated Keyboard                 : none
          Value                               : 0
      
@@ -119,7 +96,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Text tHeading
      Attributes
          Scope                               : local
-@@ -283,6 +339,46 @@
+@@ -283,6 +345,46 @@
          Text                                : 
          Max. Text Size                      : 50
      
@@ -166,7 +143,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Picture p0
      Attributes
          Scope                               : local
-@@ -402,6 +498,62 @@
+@@ -402,6 +504,62 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -229,7 +206,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Button bDown1
      Attributes
          Scope                               : local
-@@ -852,6 +1004,206 @@
+@@ -852,6 +1010,206 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -436,7 +413,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          Scope                               : local
-@@ -960,6 +1312,60 @@
+@@ -960,6 +1318,60 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -497,7 +474,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          Scope                               : local
-@@ -1065,6 +1471,50 @@
+@@ -1065,6 +1477,50 @@
                  page popupLight
              }
          
@@ -548,7 +525,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          Scope      : local
-@@ -1616,6 +2066,254 @@
+@@ -1616,6 +2072,254 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
@@ -804,8 +781,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-03-29 18:16:56.880176149 +0000
-+++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-03-29 18:16:57.284191791 +0000
+--- HMI/n2t-out/pageIcons.txt	2022-03-29 21:37:35.051043757 +0000
++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-03-29 21:37:35.411045869 +0000
 @@ -10,6 +10,16 @@
          Swide left page ID                  : disabled
          Swide right page ID                 : disabled
@@ -833,8 +810,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
      
  Text tTmp1
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-29 18:16:56.880176149 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 18:16:57.284191791 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-29 21:37:35.051043757 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 21:37:35.411045869 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled

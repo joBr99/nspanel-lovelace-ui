@@ -52,11 +52,11 @@ cardMedia
 	139  Unique line(s) of event code
 cardEntities
 	86   Component(s)
-	1314 Line(s) of event code
-	520  Unique line(s) of event code
+	1320 Line(s) of event code
+	526  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	377  Component(s)
-	3746 Line(s) of event code
-	1014 Unique line(s) of event code
+	3752 Line(s) of event code
+	1020 Unique line(s) of event code
