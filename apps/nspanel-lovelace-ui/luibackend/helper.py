@@ -44,5 +44,7 @@ def rgb_dec565(rgb_color):
     return ((int(red / 255 * 31) << 11) | (int(green / 255 * 63) << 5) | (int(blue / 255 * 31)))
 
 def get_attr_safe(entity, attr, default):
-    res = entity.attributes.get(attr, default) if not None else default
+    res = entity.attributes.get(attr, default)
+    if res is None:
+        res = default
     return res
