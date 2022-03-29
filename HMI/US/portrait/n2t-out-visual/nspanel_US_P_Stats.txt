@@ -2,10 +2,6 @@ Program.s
 	0    Component(s)
 	9    Line(s) of event code
 	9    Unique line(s) of event code
-pageIcons
-	6    Component(s)
-	0    Line(s) of event code
-	0    Unique line(s) of event code
 pageSerialTest
 	13   Component(s)
 	48   Line(s) of event code
@@ -50,6 +46,10 @@ cardMedia
 	30   Component(s)
 	278  Line(s) of event code
 	139  Unique line(s) of event code
+pageIcons
+	5    Component(s)
+	0    Line(s) of event code
+	0    Unique line(s) of event code
 cardEntities
 	86   Component(s)
 	1320 Line(s) of event code
@@ -57,6 +57,6 @@ cardEntities
 
 Total
 	13   Page(s)
-	377  Component(s)
+	376  Component(s)
 	3752 Line(s) of event code
 	1020 Unique line(s) of event code
