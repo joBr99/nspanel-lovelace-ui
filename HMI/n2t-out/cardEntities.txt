@@ -32,6 +32,7 @@ Page cardEntities
             vis tEntity1,0
             vis bText1,0
             vis hSlider1,0
+            vis nNum1,0
             //ui e2
             vis btOnOff2,0
             vis bUp2,0
@@ -41,6 +42,7 @@ Page cardEntities
             vis tEntity2,0
             vis bText2,0
             vis hSlider2,0
+            vis nNum2,0
             //ui e3
             vis btOnOff3,0
             vis bUp3,0
@@ -50,6 +52,7 @@ Page cardEntities
             vis tEntity3,0
             vis bText3,0
             vis hSlider3,0
+            vis nNum3,0
             //ui e4
             vis btOnOff4,0
             vis bUp4,0
@@ -59,6 +62,7 @@ Page cardEntities
             vis tEntity4,0
             vis bText4,0
             vis hSlider4,0
+            vis nNum4,0
         
 Variable (string) strCommand
     Attributes
@@ -122,6 +126,46 @@ Variable (string) entn4
         Scope         : local
         Text          : 
         Max. Text Size: 70
+    
+Number nNum1
+    Attributes
+        ID                                  : 58
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number nNum2
+    Attributes
+        ID                                  : 59
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number nNum3
+    Attributes
+        ID                                  : 60
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number nNum4
+    Attributes
+        ID                                  : 61
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
     
 Text tHeading
     Attributes
@@ -1078,6 +1122,7 @@ Timer tmSerial
                                             vis tIcon1,0
                                             vis bText1,0
                                             vis hSlider1,0
+                                            vis nNum1,0
                                         }else
                                         {
                                             // change icon
@@ -1101,6 +1146,7 @@ Timer tmSerial
                                             vis btOnOff1,0
                                             vis bText1,0
                                             vis hSlider1,0
+                                            vis nNum1,0
                                         }
                                         if(type1.txt=="light")
                                         {
@@ -1110,6 +1156,7 @@ Timer tmSerial
                                             vis btOnOff1,1
                                             vis bText1,0
                                             vis hSlider1,0
+                                            vis nNum1,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tTmp.txt,",",8
                                             covx tTmp.txt,sys0,0,0
@@ -1123,6 +1170,7 @@ Timer tmSerial
                                             vis btOnOff1,1
                                             vis bText1,0
                                             vis hSlider1,0
+                                            vis nNum1,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tTmp.txt,",",8
                                             covx tTmp.txt,sys0,0,0
@@ -1137,6 +1185,7 @@ Timer tmSerial
                                             vis bText1,1
                                             tsw bText1,0
                                             vis hSlider1,0
+                                            vis nNum1,0
                                             bText1.pco=65535
                                             bText1.pco2=65535
                                             // get Text (optional Value)
@@ -1151,6 +1200,7 @@ Timer tmSerial
                                             vis bText1,1
                                             tsw bText1,1
                                             vis hSlider1,0
+                                            vis nNum1,0
                                             bText1.pco=1374
                                             bText1.pco2=1374
                                             // get Text (optional Value)
@@ -1165,12 +1215,14 @@ Timer tmSerial
                                             vis bText1,0
                                             tsw bText1,0
                                             vis hSlider1,1
+                                            vis nNum1,1
                                             // get config (optional Value) (use bText as variable)
                                             spstr strCommand.txt,bText1.txt,",",8
                                             //first value is current value
                                             spstr bText1.txt,tTmp.txt,"|",1
                                             covx tTmp.txt,sys0,0,0
                                             hSlider1.val=sys0
+                                            nNum1.val=sys0
                                             //second value is min value
                                             spstr bText1.txt,tTmp.txt,"|",2
                                             covx tTmp.txt,sys0,0,0
@@ -1194,6 +1246,7 @@ Timer tmSerial
                                             vis tIcon2,0
                                             vis bText2,0
                                             vis hSlider2,0
+                                            vis nNum2,0
                                         }else
                                         {
                                             // change icon
@@ -1217,6 +1270,7 @@ Timer tmSerial
                                             vis btOnOff2,0
                                             vis bText2,0
                                             vis hSlider2,0
+                                            vis nNum2,0
                                         }
                                         if(type2.txt=="light")
                                         {
@@ -1226,6 +1280,7 @@ Timer tmSerial
                                             vis btOnOff2,1
                                             vis bText2,0
                                             vis hSlider2,0
+                                            vis nNum2,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tTmp.txt,",",14
                                             covx tTmp.txt,sys0,0,0
@@ -1239,6 +1294,7 @@ Timer tmSerial
                                             vis btOnOff2,1
                                             vis bText2,0
                                             vis hSlider2,0
+                                            vis nNum2,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tTmp.txt,",",14
                                             covx tTmp.txt,sys0,0,0
@@ -1253,6 +1309,7 @@ Timer tmSerial
                                             vis bText2,1
                                             tsw bText2,0
                                             vis hSlider2,0
+                                            vis nNum2,0
                                             bText2.pco=65535
                                             bText2.pco2=65535
                                             // get Text (optional Value)
@@ -1267,6 +1324,7 @@ Timer tmSerial
                                             vis bText2,1
                                             tsw bText2,1
                                             vis hSlider2,0
+                                            vis nNum2,0
                                             bText2.pco=1374
                                             bText2.pco2=1374
                                             // get Text (optional Value)
@@ -1281,12 +1339,14 @@ Timer tmSerial
                                             vis bText2,0
                                             tsw bText2,0
                                             vis hSlider2,1
+                                            vis nNum2,1
                                             // get config (optional Value) (use bText as variable)
                                             spstr strCommand.txt,bText2.txt,",",14
                                             //first value is current value
                                             spstr bText2.txt,tTmp.txt,"|",1
                                             covx tTmp.txt,sys0,0,0
                                             hSlider2.val=sys0
+                                            nNum2.val=sys0
                                             //second value is min value
                                             spstr bText2.txt,tTmp.txt,"|",2
                                             covx tTmp.txt,sys0,0,0
@@ -1310,6 +1370,7 @@ Timer tmSerial
                                             vis tIcon3,0
                                             vis bText3,0
                                             vis hSlider3,0
+                                            vis nNum3,0
                                         }else
                                         {
                                             // change icon
@@ -1333,6 +1394,7 @@ Timer tmSerial
                                             vis btOnOff3,0
                                             vis bText3,0
                                             vis hSlider3,0
+                                            vis nNum3,0
                                         }
                                         if(type3.txt=="light")
                                         {
@@ -1342,6 +1404,7 @@ Timer tmSerial
                                             vis btOnOff3,1
                                             vis bText3,0
                                             vis hSlider3,0
+                                            vis nNum3,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tTmp.txt,",",20
                                             covx tTmp.txt,sys0,0,0
@@ -1355,6 +1418,7 @@ Timer tmSerial
                                             vis btOnOff3,1
                                             vis bText3,0
                                             vis hSlider3,0
+                                            vis nNum3,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tTmp.txt,",",20
                                             covx tTmp.txt,sys0,0,0
@@ -1369,6 +1433,7 @@ Timer tmSerial
                                             vis bText3,1
                                             tsw bText3,0
                                             vis hSlider3,0
+                                            vis nNum3,0
                                             bText3.pco=65535
                                             bText3.pco2=65535
                                             // get Text (optional Value)
@@ -1383,6 +1448,7 @@ Timer tmSerial
                                             vis bText3,1
                                             tsw bText3,1
                                             vis hSlider3,0
+                                            vis nNum3,0
                                             bText3.pco=1374
                                             bText3.pco2=1374
                                             // get Text (optional Value)
@@ -1397,12 +1463,14 @@ Timer tmSerial
                                             vis bText3,0
                                             tsw bText3,0
                                             vis hSlider3,1
+                                            vis nNum3,1
                                             // get config (optional Value) (use bText as variable)
                                             spstr strCommand.txt,bText3.txt,",",20
                                             //first value is current value
                                             spstr bText3.txt,tTmp.txt,"|",1
                                             covx tTmp.txt,sys0,0,0
                                             hSlider3.val=sys0
+                                            nNum3.val=sys0
                                             //second value is min value
                                             spstr bText3.txt,tTmp.txt,"|",2
                                             covx tTmp.txt,sys0,0,0
@@ -1426,6 +1494,7 @@ Timer tmSerial
                                             vis tIcon4,0
                                             vis bText4,0
                                             vis hSlider4,0
+                                            vis nNum4,0
                                         }else
                                         {
                                             // change icon
@@ -1449,6 +1518,7 @@ Timer tmSerial
                                             vis btOnOff4,0
                                             vis bText4,0
                                             vis hSlider4,0
+                                            vis nNum4,0
                                         }
                                         if(type4.txt=="light")
                                         {
@@ -1458,6 +1528,7 @@ Timer tmSerial
                                             vis btOnOff4,1
                                             vis bText4,0
                                             vis hSlider4,0
+                                            vis nNum4,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tTmp.txt,",",26
                                             covx tTmp.txt,sys0,0,0
@@ -1471,6 +1542,7 @@ Timer tmSerial
                                             vis btOnOff4,1
                                             vis bText4,0
                                             vis hSlider4,0
+                                            vis nNum4,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tTmp.txt,",",26
                                             covx tTmp.txt,sys0,0,0
@@ -1485,6 +1557,7 @@ Timer tmSerial
                                             vis bText4,1
                                             tsw bText4,0
                                             vis hSlider4,0
+                                            vis nNum4,0
                                             bText4.pco=65535
                                             bText4.pco2=65535
                                             // get Text (optional Value)
@@ -1499,6 +1572,7 @@ Timer tmSerial
                                             vis bText4,1
                                             tsw bText4,1
                                             vis hSlider4,0
+                                            vis nNum4,0
                                             bText4.pco=1374
                                             bText4.pco2=1374
                                             // get Text (optional Value)
@@ -1513,12 +1587,14 @@ Timer tmSerial
                                             vis bText4,0
                                             tsw bText4,0
                                             vis hSlider4,1
+                                            vis nNum4,1
                                             // get config (optional Value) (use bText as variable)
                                             spstr strCommand.txt,bText4.txt,",",26
                                             //first value is current value
                                             spstr bText4.txt,tTmp.txt,"|",1
                                             covx tTmp.txt,sys0,0,0
                                             hSlider4.val=sys0
+                                            nNum4.val=sys0
                                             //second value is min value
                                             spstr bText4.txt,tTmp.txt,"|",2
                                             covx tTmp.txt,sys0,0,0
