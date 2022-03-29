@@ -233,6 +233,8 @@ Slider hBrightness
     
     Events
         Touch Release Event
+            tmCooldown.en=1
+            tmCooldown.tim=2500
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",brightnessSlider,"
             covx hBrightness.val,tTmp.txt,0,0
@@ -261,6 +263,8 @@ Slider hTempSlider
     
     Events
         Touch Release Event
+            tmCooldown.en=1
+            tmCooldown.tim=2500
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",colorTempSlider,"
             covx hTempSlider.val,tTmp.txt,0,0
@@ -597,6 +601,16 @@ Timer tmSerial
                     bufferPos++
                 }
             }
+        
+Timer tmCooldown
+    Attributes
+        Scope      : local
+        Period (ms): 100
+        Enabled    : no
+    
+    Events
+        Timer Event
+            tmCooldown.en=0
         
 TouchCap tc0
     Attributes

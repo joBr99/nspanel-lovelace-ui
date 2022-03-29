@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-29 10:42:30.588162981 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 10:42:30.980165342 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-29 11:04:01.397604313 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 11:04:01.825631787 +0000
 @@ -10,6 +10,6 @@
      int sleepValue=0
      // dim value
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-29 10:42:30.592163005 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 10:42:30.984165366 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-29 11:04:01.397604313 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 11:04:01.825631787 +0000
 @@ -31,7 +31,6 @@
              vis tEntity1,0
              vis bText1,0
@@ -63,61 +63,63 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
          
  Variable (string) strCommand
      Attributes
-@@ -117,41 +131,29 @@
+@@ -117,6 +131,30 @@
          Text          : 
          Max. Text Size: 70
      
--Number nNum1
 +Variable (string) entn5
-     Attributes
-         Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Value                               : 0
++    Attributes
++        Scope         : local
 +        Text          : 
-+        Max. Text Size: 50
-     
--Number nNum2
++        Max. Text Size: 70
++    
 +Variable (string) entn6
-     Attributes
-         Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Value                               : 0
++    Attributes
++        Scope         : local
 +        Text          : 
-+        Max. Text Size: 50
-     
--Number nNum3
++        Max. Text Size: 70
++    
 +Variable (string) type5
-     Attributes
-         Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Value                               : 0
++    Attributes
++        Scope         : local
 +        Text          : 
 +        Max. Text Size: 10
-     
--Number nNum4
++    
 +Variable (string) type6
-     Attributes
-         Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Value                               : 0
++    Attributes
++        Scope         : local
 +        Text          :  
 +        Max. Text Size: 10
++    
+ Number nNum1
+     Attributes
+         Scope                               : local
+@@ -153,6 +191,24 @@
+         Associated Keyboard                 : none
+         Value                               : 0
      
++Number nNum5
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        Associated Keyboard                 : none
++        Value                               : 0
++    
++Number nNum6
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        Associated Keyboard                 : none
++        Value                               : 0
++    
  Text tHeading
      Attributes
-@@ -283,6 +285,46 @@
+         Scope                               : local
+@@ -283,6 +339,46 @@
          Text                                : 
          Max. Text Size                      : 50
      
@@ -164,102 +166,10 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Picture p0
      Attributes
          Scope                               : local
-@@ -300,24 +342,6 @@
-         Upper range limit                   : 100
-         Lower range limit                   : 0
-     
--    Events
--        Touch Release Event
--            nNum1.val=hSlider1.val
--            tSend.txt="event,buttonPress2,"+entn1.txt+",number-set,"
--            covx nNum1.val,tTmp.txt,0,0
--            tSend.txt+=tTmp.txt
--            //send calc crc
--            btlen tSend.txt,sys0
--            crcrest 1,0xffff // reset CRC
--            crcputh 55 bb
--            crcputs sys0,1
--            crcputs tSend.txt,0
--            //send cmd
--            printh 55 bb
--            prints sys0,2
--            prints tSend.txt,0
--            prints crcval,2
--        
- Slider hSlider2
-     Attributes
-         Scope                               : local
-@@ -328,24 +352,6 @@
-         Upper range limit                   : 100
-         Lower range limit                   : 0
-     
--    Events
--        Touch Release Event
--            nNum2.val=hSlider2.val
--            tSend.txt="event,buttonPress2,"+entn2.txt+",number-set,"
--            covx nNum2.val,tTmp.txt,0,0
--            tSend.txt+=tTmp.txt
--            //send calc crc
--            btlen tSend.txt,sys0
--            crcrest 1,0xffff // reset CRC
--            crcputh 55 bb
--            crcputs sys0,1
--            crcputs tSend.txt,0
--            //send cmd
--            printh 55 bb
--            prints sys0,2
--            prints tSend.txt,0
--            prints crcval,2
--        
- Slider hSlider3
-     Attributes
-         Scope                               : local
-@@ -356,24 +362,6 @@
-         Upper range limit                   : 100
-         Lower range limit                   : 0
-     
--    Events
--        Touch Release Event
--            nNum3.val=hSlider3.val
--            tSend.txt="event,buttonPress2,"+entn3.txt+",number-set,"
--            covx nNum3.val,tTmp.txt,0,0
--            tSend.txt+=tTmp.txt
--            //send calc crc
--            btlen tSend.txt,sys0
--            crcrest 1,0xffff // reset CRC
--            crcputh 55 bb
--            crcputs sys0,1
--            crcputs tSend.txt,0
--            //send cmd
--            printh 55 bb
--            prints sys0,2
--            prints tSend.txt,0
--            prints crcval,2
--        
- Slider hSlider4
-     Attributes
-         Scope                               : local
-@@ -384,23 +372,25 @@
-         Upper range limit                   : 100
-         Lower range limit                   : 0
-     
--    Events
--        Touch Release Event
--            nNum4.val=hSlider4.val
--            tSend.txt="event,buttonPress2,"+entn4.txt+",number-set,"
--            covx nNum4.val,tTmp.txt,0,0
--            tSend.txt+=tTmp.txt
--            //send calc crc
--            btlen tSend.txt,sys0
--            crcrest 1,0xffff // reset CRC
--            crcputh 55 bb
--            crcputs sys0,1
--            crcputs tSend.txt,0
--            //send cmd
--            printh 55 bb
--            prints sys0,2
--            prints tSend.txt,0
--            prints crcval,2
+@@ -402,6 +498,62 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
 +Slider hSlider5
 +    Attributes
 +        Scope                               : local
@@ -270,6 +180,24 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +        Upper range limit                   : 100
 +        Lower range limit                   : 0
 +    
++    Events
++        Touch Release Event
++            nNum5.val=hSlider5.val
++            tSend.txt="event,buttonPress2,"+entn5.txt+",number-set,"
++            covx nNum5.val,tTmp.txt,0,0
++            tSend.txt+=tTmp.txt
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
 +Slider hSlider6
 +    Attributes
 +        Scope                               : local
@@ -279,10 +207,29 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +        Position                            : 50
 +        Upper range limit                   : 100
 +        Lower range limit                   : 0
-         
++    
++    Events
++        Touch Release Event
++            nNum6.val=hSlider6.val
++            tSend.txt="event,buttonPress2,"+entn6.txt+",number-set,"
++            covx nNum6.val,tTmp.txt,0,0
++            tSend.txt+=tTmp.txt
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
  Button bDown1
      Attributes
-@@ -852,6 +842,206 @@
+         Scope                               : local
+@@ -852,6 +1004,206 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -489,7 +436,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          Scope                               : local
-@@ -960,6 +1150,60 @@
+@@ -960,6 +1312,60 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -550,7 +497,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          Scope                               : local
-@@ -1065,6 +1309,50 @@
+@@ -1065,6 +1471,50 @@
                  page popupLight
              }
          
@@ -601,291 +548,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          Scope      : local
-@@ -1134,7 +1422,6 @@
-                                             vis tIcon1,0
-                                             vis bText1,0
-                                             vis hSlider1,0
--                                            vis nNum1,0
-                                         }else
-                                         {
-                                             // change icon
-@@ -1158,7 +1445,6 @@
-                                             vis btOnOff1,0
-                                             vis bText1,0
-                                             vis hSlider1,0
--                                            vis nNum1,0
-                                         }
-                                         if(type1.txt=="light")
-                                         {
-@@ -1168,7 +1454,6 @@
-                                             vis btOnOff1,1
-                                             vis bText1,0
-                                             vis hSlider1,0
--                                            vis nNum1,0
-                                             // get Button State (optional Value)
-                                             spstr strCommand.txt,tTmp.txt,",",8
-                                             covx tTmp.txt,sys0,0,0
-@@ -1182,7 +1467,6 @@
-                                             vis btOnOff1,1
-                                             vis bText1,0
-                                             vis hSlider1,0
--                                            vis nNum1,0
-                                             // get Button State (optional Value)
-                                             spstr strCommand.txt,tTmp.txt,",",8
-                                             covx tTmp.txt,sys0,0,0
-@@ -1197,7 +1481,6 @@
-                                             vis bText1,1
-                                             tsw bText1,0
-                                             vis hSlider1,0
--                                            vis nNum1,0
-                                             bText1.pco=65535
-                                             bText1.pco2=65535
-                                             // get Text (optional Value)
-@@ -1212,7 +1495,6 @@
-                                             vis bText1,1
-                                             tsw bText1,1
-                                             vis hSlider1,0
--                                            vis nNum1,0
-                                             bText1.pco=1374
-                                             bText1.pco2=1374
-                                             // get Text (optional Value)
-@@ -1227,20 +1509,18 @@
-                                             vis bText1,0
-                                             tsw bText1,0
-                                             vis hSlider1,1
--                                            vis nNum1,1
-                                             // get config (optional Value) (use bText as variable)
-                                             spstr strCommand.txt,bText1.txt,",",8
-                                             //first value is current value
--                                            spstr bText1.txt,tTmp.txt,"|",0
-+                                            spstr bText1.txt,tTmp.txt,"|",1
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider1.val=sys0
--                                            nNum1.val=sys0
-                                             //second value is min value
--                                            spstr bText1.txt,tTmp.txt,"|",1
-+                                            spstr bText1.txt,tTmp.txt,"|",2
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider1.minval=sys0
-                                             //third value is max value
--                                            spstr bText1.txt,tTmp.txt,"|",2
-+                                            spstr bText1.txt,tTmp.txt,"|",3
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider1.maxval=sys0
-                                         }
-@@ -1258,7 +1538,6 @@
-                                             vis tIcon2,0
-                                             vis bText2,0
-                                             vis hSlider2,0
--                                            vis nNum2,0
-                                         }else
-                                         {
-                                             // change icon
-@@ -1282,7 +1561,6 @@
-                                             vis btOnOff2,0
-                                             vis bText2,0
-                                             vis hSlider2,0
--                                            vis nNum2,0
-                                         }
-                                         if(type2.txt=="light")
-                                         {
-@@ -1292,7 +1570,6 @@
-                                             vis btOnOff2,1
-                                             vis bText2,0
-                                             vis hSlider2,0
--                                            vis nNum2,0
-                                             // get Button State (optional Value)
-                                             spstr strCommand.txt,tTmp.txt,",",14
-                                             covx tTmp.txt,sys0,0,0
-@@ -1306,7 +1583,6 @@
-                                             vis btOnOff2,1
-                                             vis bText2,0
-                                             vis hSlider2,0
--                                            vis nNum2,0
-                                             // get Button State (optional Value)
-                                             spstr strCommand.txt,tTmp.txt,",",14
-                                             covx tTmp.txt,sys0,0,0
-@@ -1321,7 +1597,6 @@
-                                             vis bText2,1
-                                             tsw bText2,0
-                                             vis hSlider2,0
--                                            vis nNum2,0
-                                             bText2.pco=65535
-                                             bText2.pco2=65535
-                                             // get Text (optional Value)
-@@ -1336,7 +1611,6 @@
-                                             vis bText2,1
-                                             tsw bText2,1
-                                             vis hSlider2,0
--                                            vis nNum2,0
-                                             bText2.pco=1374
-                                             bText2.pco2=1374
-                                             // get Text (optional Value)
-@@ -1351,20 +1625,18 @@
-                                             vis bText2,0
-                                             tsw bText2,0
-                                             vis hSlider2,1
--                                            vis nNum2,1
-                                             // get config (optional Value) (use bText as variable)
-                                             spstr strCommand.txt,bText2.txt,",",14
-                                             //first value is current value
--                                            spstr bText2.txt,tTmp.txt,"|",0
-+                                            spstr bText2.txt,tTmp.txt,"|",1
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider2.val=sys0
--                                            nNum2.val=sys0
-                                             //second value is min value
--                                            spstr bText2.txt,tTmp.txt,"|",1
-+                                            spstr bText2.txt,tTmp.txt,"|",2
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider2.minval=sys0
-                                             //third value is max value
--                                            spstr bText2.txt,tTmp.txt,"|",2
-+                                            spstr bText2.txt,tTmp.txt,"|",3
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider2.maxval=sys0
-                                         }
-@@ -1382,7 +1654,6 @@
-                                             vis tIcon3,0
-                                             vis bText3,0
-                                             vis hSlider3,0
--                                            vis nNum3,0
-                                         }else
-                                         {
-                                             // change icon
-@@ -1406,7 +1677,6 @@
-                                             vis btOnOff3,0
-                                             vis bText3,0
-                                             vis hSlider3,0
--                                            vis nNum3,0
-                                         }
-                                         if(type3.txt=="light")
-                                         {
-@@ -1416,7 +1686,6 @@
-                                             vis btOnOff3,1
-                                             vis bText3,0
-                                             vis hSlider3,0
--                                            vis nNum3,0
-                                             // get Button State (optional Value)
-                                             spstr strCommand.txt,tTmp.txt,",",20
-                                             covx tTmp.txt,sys0,0,0
-@@ -1430,7 +1699,6 @@
-                                             vis btOnOff3,1
-                                             vis bText3,0
-                                             vis hSlider3,0
--                                            vis nNum3,0
-                                             // get Button State (optional Value)
-                                             spstr strCommand.txt,tTmp.txt,",",20
-                                             covx tTmp.txt,sys0,0,0
-@@ -1445,7 +1713,6 @@
-                                             vis bText3,1
-                                             tsw bText3,0
-                                             vis hSlider3,0
--                                            vis nNum3,0
-                                             bText3.pco=65535
-                                             bText3.pco2=65535
-                                             // get Text (optional Value)
-@@ -1460,7 +1727,6 @@
-                                             vis bText3,1
-                                             tsw bText3,1
-                                             vis hSlider3,0
--                                            vis nNum3,0
-                                             bText3.pco=1374
-                                             bText3.pco2=1374
-                                             // get Text (optional Value)
-@@ -1475,20 +1741,18 @@
-                                             vis bText3,0
-                                             tsw bText3,0
-                                             vis hSlider3,1
--                                            vis nNum3,1
-                                             // get config (optional Value) (use bText as variable)
-                                             spstr strCommand.txt,bText3.txt,",",20
-                                             //first value is current value
--                                            spstr bText3.txt,tTmp.txt,"|",0
-+                                            spstr bText3.txt,tTmp.txt,"|",1
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider3.val=sys0
--                                            nNum3.val=sys0
-                                             //second value is min value
--                                            spstr bText3.txt,tTmp.txt,"|",1
-+                                            spstr bText3.txt,tTmp.txt,"|",2
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider3.minval=sys0
-                                             //third value is max value
--                                            spstr bText3.txt,tTmp.txt,"|",2
-+                                            spstr bText3.txt,tTmp.txt,"|",3
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider3.maxval=sys0
-                                         }
-@@ -1506,7 +1770,6 @@
-                                             vis tIcon4,0
-                                             vis bText4,0
-                                             vis hSlider4,0
--                                            vis nNum4,0
-                                         }else
-                                         {
-                                             // change icon
-@@ -1530,7 +1793,6 @@
-                                             vis btOnOff4,0
-                                             vis bText4,0
-                                             vis hSlider4,0
--                                            vis nNum4,0
-                                         }
-                                         if(type4.txt=="light")
-                                         {
-@@ -1540,7 +1802,6 @@
-                                             vis btOnOff4,1
-                                             vis bText4,0
-                                             vis hSlider4,0
--                                            vis nNum4,0
-                                             // get Button State (optional Value)
-                                             spstr strCommand.txt,tTmp.txt,",",26
-                                             covx tTmp.txt,sys0,0,0
-@@ -1554,7 +1815,6 @@
-                                             vis btOnOff4,1
-                                             vis bText4,0
-                                             vis hSlider4,0
--                                            vis nNum4,0
-                                             // get Button State (optional Value)
-                                             spstr strCommand.txt,tTmp.txt,",",26
-                                             covx tTmp.txt,sys0,0,0
-@@ -1569,7 +1829,6 @@
-                                             vis bText4,1
-                                             tsw bText4,0
-                                             vis hSlider4,0
--                                            vis nNum4,0
-                                             bText4.pco=65535
-                                             bText4.pco2=65535
-                                             // get Text (optional Value)
-@@ -1584,7 +1843,6 @@
-                                             vis bText4,1
-                                             tsw bText4,1
-                                             vis hSlider4,0
--                                            vis nNum4,0
-                                             bText4.pco=1374
-                                             bText4.pco2=1374
-                                             // get Text (optional Value)
-@@ -1599,23 +1857,253 @@
-                                             vis bText4,0
-                                             tsw bText4,0
-                                             vis hSlider4,1
--                                            vis nNum4,1
-                                             // get config (optional Value) (use bText as variable)
-                                             spstr strCommand.txt,bText4.txt,",",26
-                                             //first value is current value
--                                            spstr bText4.txt,tTmp.txt,"|",0
-+                                            spstr bText4.txt,tTmp.txt,"|",1
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider4.val=sys0
--                                            nNum4.val=sys0
-                                             //second value is min value
--                                            spstr bText4.txt,tTmp.txt,"|",1
-+                                            spstr bText4.txt,tTmp.txt,"|",2
-                                             covx tTmp.txt,sys0,0,0
-                                             hSlider4.minval=sys0
-                                             //third value is max value
--                                            spstr bText4.txt,tTmp.txt,"|",2
-+                                            spstr bText4.txt,tTmp.txt,"|",3
+@@ -1616,6 +2066,254 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
@@ -903,6 +566,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis tIcon5,0
 +                                            vis bText5,0
 +                                            vis hSlider5,0
++                                            vis nNum5,0
 +                                        }else
 +                                        {
 +                                            // change icon
@@ -926,6 +590,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis btOnOff5,0
 +                                            vis bText5,0
 +                                            vis hSlider5,0
++                                            vis nNum5,0
 +                                        }
 +                                        if(type5.txt=="light")
 +                                        {
@@ -935,6 +600,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis btOnOff5,1
 +                                            vis bText5,0
 +                                            vis hSlider5,0
++                                            vis nNum5,0
 +                                            // get Button State (optional Value)
 +                                            spstr strCommand.txt,tTmp.txt,",",32
 +                                            covx tTmp.txt,sys0,0,0
@@ -948,6 +614,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis btOnOff5,1
 +                                            vis bText5,0
 +                                            vis hSlider5,0
++                                            vis nNum5,0
 +                                            // get Button State (optional Value)
 +                                            spstr strCommand.txt,tTmp.txt,",",32
 +                                            covx tTmp.txt,sys0,0,0
@@ -962,6 +629,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis bText5,1
 +                                            tsw bText5,0
 +                                            vis hSlider5,0
++                                            vis nNum5,0
 +                                            bText5.pco=65535
 +                                            bText5.pco2=65535
 +                                            // get Text (optional Value)
@@ -976,6 +644,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis bText5,1
 +                                            tsw bText5,1
 +                                            vis hSlider5,0
++                                            vis nNum5,0
 +                                            bText5.pco=1374
 +                                            bText5.pco2=1374
 +                                            // get Text (optional Value)
@@ -990,18 +659,20 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis bText5,0
 +                                            tsw bText5,0
 +                                            vis hSlider5,1
++                                            vis nNum5,1
 +                                            // get config (optional Value) (use bText as variable)
 +                                            spstr strCommand.txt,bText5.txt,",",32
 +                                            //first value is current value
-+                                            spstr bText5.txt,tTmp.txt,"|",1
++                                            spstr bText5.txt,tTmp.txt,"|",0
 +                                            covx tTmp.txt,sys0,0,0
 +                                            hSlider5.val=sys0
++                                            nNum5.val=sys0
 +                                            //second value is min value
-+                                            spstr bText5.txt,tTmp.txt,"|",2
++                                            spstr bText5.txt,tTmp.txt,"|",1
 +                                            covx tTmp.txt,sys0,0,0
 +                                            hSlider5.minval=sys0
 +                                            //third value is max value
-+                                            spstr bText5.txt,tTmp.txt,"|",3
++                                            spstr bText5.txt,tTmp.txt,"|",2
 +                                            covx tTmp.txt,sys0,0,0
 +                                            hSlider5.maxval=sys0
 +                                        }
@@ -1019,6 +690,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis tIcon6,0
 +                                            vis bText6,0
 +                                            vis hSlider6,0
++                                            vis nNum6,0
 +                                        }else
 +                                        {
 +                                            // change icon
@@ -1042,6 +714,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis btOnOff6,0
 +                                            vis bText6,0
 +                                            vis hSlider6,0
++                                            vis nNum6,0
 +                                        }
 +                                        if(type6.txt=="light")
 +                                        {
@@ -1051,6 +724,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis btOnOff6,1
 +                                            vis bText6,0
 +                                            vis hSlider6,0
++                                            vis nNum6,0
 +                                            // get Button State (optional Value)
 +                                            spstr strCommand.txt,tTmp.txt,",",38
 +                                            covx tTmp.txt,sys0,0,0
@@ -1064,6 +738,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis btOnOff6,1
 +                                            vis bText6,0
 +                                            vis hSlider6,0
++                                            vis nNum6,0
 +                                            // get Button State (optional Value)
 +                                            spstr strCommand.txt,tTmp.txt,",",38
 +                                            covx tTmp.txt,sys0,0,0
@@ -1078,6 +753,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis bText6,1
 +                                            tsw bText6,0
 +                                            vis hSlider6,0
++                                            vis nNum6,0
 +                                            bText6.pco=65535
 +                                            bText6.pco2=65535
 +                                            // get Text (optional Value)
@@ -1092,6 +768,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis bText6,1
 +                                            tsw bText6,1
 +                                            vis hSlider6,0
++                                            vis nNum6,0
 +                                            bText6.pco=1374
 +                                            bText6.pco2=1374
 +                                            // get Text (optional Value)
@@ -1106,18 +783,20 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis bText6,0
 +                                            tsw bText6,0
 +                                            vis hSlider6,1
++                                            vis nNum6,1
 +                                            // get config (optional Value) (use bText as variable)
 +                                            spstr strCommand.txt,bText6.txt,",",38
 +                                            //first value is current value
-+                                            spstr bText6.txt,tTmp.txt,"|",1
++                                            spstr bText6.txt,tTmp.txt,"|",0
 +                                            covx tTmp.txt,sys0,0,0
 +                                            hSlider6.val=sys0
++                                            nNum6.val=sys0
 +                                            //second value is min value
-+                                            spstr bText6.txt,tTmp.txt,"|",2
++                                            spstr bText6.txt,tTmp.txt,"|",1
 +                                            covx tTmp.txt,sys0,0,0
 +                                            hSlider6.minval=sys0
 +                                            //third value is max value
-+                                            spstr bText6.txt,tTmp.txt,"|",3
++                                            spstr bText6.txt,tTmp.txt,"|",2
 +                                            covx tTmp.txt,sys0,0,0
 +                                            hSlider6.maxval=sys0
 +                                        }
@@ -1125,8 +804,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-03-29 10:42:30.588162981 +0000
-+++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-03-29 10:42:30.980165342 +0000
+--- HMI/n2t-out/pageIcons.txt	2022-03-29 11:04:01.397604313 +0000
++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-03-29 11:04:01.825631787 +0000
 @@ -27,7 +27,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -1137,8 +816,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
      
  Text tTmp1
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-29 10:42:30.592163005 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 10:42:30.984165366 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-29 11:04:01.397604313 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 11:04:01.825631787 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -1148,15 +827,6 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
          Max. Text Size                      : 100
      
  Text tVersion
-@@ -152,7 +152,7 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : 22
-+        Text                                : 21
-         Max. Text Size                      : 10
-     
- Picture p0
 @@ -297,10 +297,6 @@
                                          {
                                              page cardThermo
@@ -1169,27 +839,9 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
                                          {
                                              pageIcons.tTmp1.txt=tTmp.txt
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-03-29 10:42:30.592163005 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-03-29 10:42:30.984165366 +0000
-@@ -233,8 +233,6 @@
-     
-     Events
-         Touch Release Event
--            tmCooldown.en=1
--            tmCooldown.tim=2500
-             //craft command
-             tSend.txt="event,buttonPress2,"+entn.txt+",brightnessSlider,"
-             covx hBrightness.val,tTmp.txt,0,0
-@@ -263,8 +261,6 @@
-     
-     Events
-         Touch Release Event
--            tmCooldown.en=1
--            tmCooldown.tim=2500
-             //craft command
-             tSend.txt="event,buttonPress2,"+entn.txt+",colorTempSlider,"
-             covx hTempSlider.val,tTmp.txt,0,0
-@@ -468,11 +464,8 @@
+--- HMI/n2t-out/popupLight.txt	2022-03-29 11:04:01.397604313 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-03-29 11:04:01.825631787 +0000
+@@ -468,11 +468,8 @@
                                              vis t2,1
                                              vis hBrightness,1
                                              covx tTmp.txt,sys0,0,0
@@ -1201,7 +853,7 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                          // get ColorTemp value
                                          spstr strCommand.txt,tTmp.txt,",",5
                                          if(tTmp.txt=="disable")
-@@ -504,11 +497,6 @@
+@@ -504,11 +501,6 @@
                                              vis hTempSlider,1
                                              vis t3,1
                                              vis t4,1
@@ -1213,20 +865,3 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                              // mode == 0 is rgb controls currently shown
                                              if(mode.val==0)
                                              {
-@@ -610,16 +598,6 @@
-                 }
-             }
-         
--Timer tmCooldown
--    Attributes
--        Scope      : local
--        Period (ms): 100
--        Enabled    : no
--    
--    Events
--        Timer Event
--            tmCooldown.en=0
--        
- TouchCap tc0
-     Attributes
-         Scope: local
