@@ -254,7 +254,7 @@ class LuiPagesGen(object):
             speakerlist = "?".join(speakerlist)
             bits = entity.attributes.supported_features
             onoffbutton = "disable"
-            if bits & 0b01000000:
+            if bits & 0b10000000:
                 if entity.state == "off":
                     onoffbutton = 1374
                 else:
