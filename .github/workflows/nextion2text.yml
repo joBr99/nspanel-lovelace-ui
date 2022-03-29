@@ -28,17 +28,23 @@ jobs:
       run: |
         echo "::set-output name=msg::$(git log -1 --pretty=%s)"
 
-    - name: Run nextion2text
+    - name: Download n2t
+      continue-on-error: true
       run: |
         wget https://raw.githubusercontent.com/joBr99/Nextion2Text/linux/Nextion2Text.py
-        
-        set +o pipefail
-        python Nextion2Text.py -s -d -p visual -i HMI/nspanel.HMI -o HMI/n2t-out-visual  || true
-        python Nextion2Text.py -s -d -i HMI/nspanel.HMI -o HMI/n2t-out  || true
-        python Nextion2Text.py -s -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out  || true
-
+  
+    - name: Run n2t EU
+      continue-on-error: true
+      run: |
+        python Nextion2Text.py -s -d -p -p visual -i HMI/nspanel.HMI -o HMI/n2t-out-visual
+    
+    - name: Run n2t US
+      continue-on-error: true
+      run: |
+        python Nextion2Text.py -s -d -i HMI/nspanel.HMI -o HMI/n2t-out
+        python Nextion2Text.py -s -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
         diff -bur HMI/US/portrait/n2t-out HMI/n2t-out > HMI/US/portrait/diff-eu-version.txt
-
+  
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: ${{ steps.last-commit-message.outputs.msg }} (add nextion2text)
