@@ -37,6 +37,11 @@ jobs:
       continue-on-error: true
       run: |
         python Nextion2Text.py -s -d -p -p visual -i HMI/nspanel.HMI -o HMI/n2t-out-visual
+   
+    - name: Run n2t US
+      continue-on-error: true
+      run: |
+        python Nextion2Text.py -s -d -p -p visual -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out-visual
     
     - name: Run n2t US DIFF
       continue-on-error: true
