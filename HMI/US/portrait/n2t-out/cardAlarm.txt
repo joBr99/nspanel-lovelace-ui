@@ -419,6 +419,7 @@ Button arm1
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
         
 Button arm3
     Attributes
@@ -449,6 +450,7 @@ Button arm3
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
         
 Button arm2
     Attributes
@@ -479,6 +481,7 @@ Button arm2
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
         
 Button arm4
     Attributes
@@ -509,6 +512,7 @@ Button arm4
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
         
 Timer tmSerial
     Attributes
@@ -602,8 +606,12 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",10
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tIcon.txt,sys0,1
-                                        //numpad status
+                                        //icon color
                                         spstr strCommand.txt,tTmp.txt,",",11
+                                        covx tTmp.txt,sys0,0,0
+                                        tIcon.pco=sys0
+                                        //numpad status
+                                        spstr strCommand.txt,tTmp.txt,",",12
                                         if(tTmp.txt!="disable")
                                         {
                                             vis b0,1
@@ -618,6 +626,15 @@ Timer tmSerial
                                             vis b9,1
                                             vis b10,1
                                             vis tCode,1
+                                        }
+                                        //flashing status
+                                        spstr strCommand.txt,tTmp.txt,",",13
+                                        if(tTmp.txt=="enable")
+                                        {
+                                            tmFlash.en=1
+                                        }else
+                                        {
+                                            tmFlash.en=0
                                         }
                                     }
                                     if(tInstruction.txt=="time")
