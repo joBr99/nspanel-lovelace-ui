@@ -297,6 +297,10 @@ Timer tmSerial
                                         {
                                             page cardThermo
                                         }
+                                        if(tId.txt=="screensaver")
+                                        {
+                                            page screensaver
+                                        }
                                         if(tId.txt=="popupLight")
                                         {
                                             pageIcons.tTmp1.txt=tTmp.txt

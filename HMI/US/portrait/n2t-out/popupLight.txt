@@ -468,7 +468,10 @@ Timer tmSerial
                                             vis t2,1
                                             vis hBrightness,1
                                             covx tTmp.txt,sys0,0,0
-                                            hBrightness.val=sys0
+                                            if(tmCooldown.en==0)
+                                            {
+                                                hBrightness.val=sys0
+                                            }
                                         }
                                         // get ColorTemp value
                                         spstr strCommand.txt,tTmp.txt,",",5
@@ -501,6 +504,11 @@ Timer tmSerial
                                             vis hTempSlider,1
                                             vis t3,1
                                             vis t4,1
+                                            if(tmCooldown.en==0)
+                                            {
+                                                covx tTmp.txt,sys0,0,0
+                                                hTempSlider.val=sys0
+                                            }
                                             // mode == 0 is rgb controls currently shown
                                             if(mode.val==0)
                                             {

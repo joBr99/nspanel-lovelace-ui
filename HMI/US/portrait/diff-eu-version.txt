@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-29 11:04:01.397604313 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 11:04:01.825631787 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-29 11:46:11.344670256 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 11:46:11.748675118 +0000
 @@ -10,6 +10,6 @@
      int sleepValue=0
      // dim value
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-29 11:04:01.397604313 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 11:04:01.825631787 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-29 11:46:11.348670304 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 11:46:11.748675118 +0000
 @@ -31,7 +31,6 @@
              vis tEntity1,0
              vis bText1,0
@@ -803,21 +803,9 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      }
                                      if(tInstruction.txt=="pageType")
                                      {
-diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-03-29 11:04:01.397604313 +0000
-+++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-03-29 11:04:01.825631787 +0000
-@@ -27,7 +27,7 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîî
-+        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºî
-         Max. Text Size                      : 150
-     
- Text tTmp1
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-29 11:04:01.397604313 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 11:04:01.825631787 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-29 11:46:11.344670256 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 11:46:11.748675118 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -827,41 +815,3 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
          Max. Text Size                      : 100
      
  Text tVersion
-@@ -297,10 +297,6 @@
-                                         {
-                                             page cardThermo
-                                         }
--                                        if(tId.txt=="screensaver")
--                                        {
--                                            page screensaver
--                                        }
-                                         if(tId.txt=="popupLight")
-                                         {
-                                             pageIcons.tTmp1.txt=tTmp.txt
-diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-03-29 11:04:01.397604313 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-03-29 11:04:01.825631787 +0000
-@@ -468,11 +468,8 @@
-                                             vis t2,1
-                                             vis hBrightness,1
-                                             covx tTmp.txt,sys0,0,0
--                                            if(tmCooldown.en==0)
--                                            {
-                                                 hBrightness.val=sys0
-                                             }
--                                        }
-                                         // get ColorTemp value
-                                         spstr strCommand.txt,tTmp.txt,",",5
-                                         if(tTmp.txt=="disable")
-@@ -504,11 +501,6 @@
-                                             vis hTempSlider,1
-                                             vis t3,1
-                                             vis t4,1
--                                            if(tmCooldown.en==0)
--                                            {
--                                                covx tTmp.txt,sys0,0,0
--                                                hTempSlider.val=sys0
--                                            }
-                                             // mode == 0 is rgb controls currently shown
-                                             if(mode.val==0)
-                                             {
