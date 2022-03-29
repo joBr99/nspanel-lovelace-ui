@@ -31,6 +31,7 @@ Page cardEntities
             vis tEntity1,0
             vis bText1,0
             vis hSlider1,0
+            vis nNum1,0
             //ui e2
             vis btOnOff2,0
             vis bUp2,0
@@ -40,6 +41,7 @@ Page cardEntities
             vis tEntity2,0
             vis bText2,0
             vis hSlider2,0
+            vis nNum2,0
             //ui e3
             vis btOnOff3,0
             vis bUp3,0
@@ -49,6 +51,7 @@ Page cardEntities
             vis tEntity3,0
             vis bText3,0
             vis hSlider3,0
+            vis nNum3,0
             //ui e4
             vis btOnOff4,0
             vis bUp4,0
@@ -58,6 +61,7 @@ Page cardEntities
             vis tEntity4,0
             vis bText4,0
             vis hSlider4,0
+            vis nNum4,0
             //ui e5
             vis btOnOff5,0
             vis bUp5,0
@@ -67,6 +71,7 @@ Page cardEntities
             vis tEntity5,0
             vis bText5,0
             vis hSlider5,0
+            vis nNum5,0
             //ui e6
             vis btOnOff6,0
             vis bUp6,0
@@ -76,6 +81,7 @@ Page cardEntities
             vis tEntity6,0
             vis bText6,0
             vis hSlider6,0
+            vis nNum6,0
         
 Variable (string) strCommand
     Attributes
