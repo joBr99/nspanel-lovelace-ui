@@ -43,7 +43,7 @@ jobs:
       continue-on-error: true
       run: |
         python Nextion2Text.py -s -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
-        diff -bur HMI/US/portrait/n2t-out HMI/n2t-out > HMI/US/portrait/diff-eu-version.txt
+        diff -bur HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
   
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
