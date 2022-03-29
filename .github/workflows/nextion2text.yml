@@ -5,13 +5,14 @@ on:
     paths:
       - HMI/nspanel.HMI
       - HMI/US/portrait/nspanel_US_P.HMI
+      - .github/workflows/nextion2text.yml
   push:
     branches:
       - main
     paths:
       - HMI/nspanel.HMI
       - HMI/US/portrait/nspanel_US_P.HMI
-
+      - .github/workflows/nextion2text.yml
 
 jobs:
   gen-nextion-to-text:
