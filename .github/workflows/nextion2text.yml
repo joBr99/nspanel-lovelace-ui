@@ -5,6 +5,7 @@ on:
     paths:
       - HMI/nspanel.HMI
       - HMI/US/portrait/nspanel_US_P.HMI
+      - HMI/US/landscape/nspanel_US_L.HMI
       - .github/workflows/nextion2text.yml
   push:
     branches:
@@ -12,6 +13,7 @@ on:
     paths:
       - HMI/nspanel.HMI
       - HMI/US/portrait/nspanel_US_P.HMI
+      - HMI/US/landscape/nspanel_US_L.HMI
       - .github/workflows/nextion2text.yml
 
 jobs:
@@ -42,14 +44,19 @@ jobs:
       continue-on-error: true
       run: |
         python Nextion2Text.py -s -d -p -p visual -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out-visual
+        python Nextion2Text.py -s -d -p -p visual -i HMI/US/landscape/nspanel_US_L.HMI -o HMI/US/landscape/n2t-out-visual
     
     - name: Run n2t US DIFF
       continue-on-error: true
       run: |
         echo "YXR0cmlidXRlcyA9IHsKICAgICJpZCI6IHsKICAgICAgICAiaWdub3JlIjogVHJ1ZSwKICAgICAgICAibmFtZSI6ICJJRCIsCiAgICAgICAgInN0cnVjdCI6ICJpIiwKICAgIH0KfQ==" | base64 -d > ignore-id.py
         python Nextion2Text.py -c ignore-id.py -d -i HMI/nspanel.HMI -o HMI/n2t-out
+        # portrait
         python Nextion2Text.py -c ignore-id.py -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
         diff -bur HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
+        # landscape
+        python Nextion2Text.py -c ignore-id.py -d -i HMI/US/landscape/nspanel_US_L.HMI -o HMI/US/landscape/n2t-out
+        diff -bur HMI/n2t-out HMI/US/landscape/n2t-out > HMI/US/landscape/diff-eu-version.txt
   
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
