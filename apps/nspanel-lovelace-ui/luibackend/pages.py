@@ -244,7 +244,6 @@ class LuiPagesGen(object):
                 if entity.attributes.media_content_type == "music":
                     icon = get_icon_id("music")
             source        = get_attr_safe(entity, "source", "")
-            speakerlist   = get_attr_safe(entity, "source_list",[])
             if source in speakerlist:
                 # move current source to the end of the list
                 speakerlist.remove(source)
@@ -259,7 +258,7 @@ class LuiPagesGen(object):
                     onoffbutton = 1374
                 else:
                     onoffbutton = rgb_dec565([255,255,255])
-            command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist}|{onoffbutton}"
+            command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist[:200]}|{onoffbutton}"
         self._send_mqtt_msg(command)
         
     def generate_alarm_page(self, item):
