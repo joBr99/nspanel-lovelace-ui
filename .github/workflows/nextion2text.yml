@@ -4,13 +4,13 @@ on:
   pull_request:
     paths:
       - HMI/nspanel.HMI
-      - HMI/US/portrait/nspanel_US.HMI
+      - HMI/US/portrait/nspanel_US_P.HMI
   push:
     branches:
       - main
     paths:
       - HMI/nspanel.HMI
-      - HMI/US/portrait/nspanel_US.HMI
+      - HMI/US/portrait/nspanel_US_P.HMI
 
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
         python Nextion2Text.py -s -d -i HMI/nspanel.HMI -o HMI/n2t-out
         
         wget https://raw.githubusercontent.com/joBr99/Nextion2Text/linux/Nextion2Text.py
-        python Nextion2Text.py -s -d -i HMI/US/portrait/nspanel.HMI -o HMI/US/portrait/n2t-out
+        python Nextion2Text.py -s -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
 
         diff -bur HMI/US/portrait/n2t-out HMI/n2t-out > HMI/US/portrait/diff-eu-version.txt
 
