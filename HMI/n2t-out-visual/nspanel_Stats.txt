@@ -3,7 +3,7 @@ Program.s
 	10   Line(s) of event code
 	10   Unique line(s) of event code
 pageIcons
-	6    Component(s)
+	5    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
 pageTest
@@ -57,6 +57,6 @@ cardEntities
 
 Total
 	13   Page(s)
-	353  Component(s)
+	352  Component(s)
 	3363 Line(s) of event code
 	910  Unique line(s) of event code

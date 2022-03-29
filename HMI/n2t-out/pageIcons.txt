@@ -10,16 +10,6 @@ Page pageIcons
         Swide left page ID                  : disabled
         Swide right page ID                 : disabled
     
-Text t0
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tIcons contains all icons that can be used though serial (icon will be pulled from this textbox, first icon 0 and so on)
-        Max. Text Size                      : 400
-    
 Text tIcons
     Attributes
         Scope                               : global
@@ -27,7 +17,7 @@ Text tIcons
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîî
+        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîîî¯
         Max. Text Size                      : 150
     
 Text tTmp1
