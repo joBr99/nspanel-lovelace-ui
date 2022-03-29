@@ -43,6 +43,7 @@ icons = {
     'shield-lock': 41,
     'shield-airplane': 42,
     'bell-ring': 43,
+    'ray-vertex': 44,
 }
 
 def get_icon_id(ma_name):
