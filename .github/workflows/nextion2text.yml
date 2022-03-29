@@ -4,11 +4,14 @@ on:
   pull_request:
     paths:
       - HMI/nspanel.HMI
+      - HMI/US/portrait/nspanel_US.HMI
   push:
     branches:
       - main
     paths:
       - HMI/nspanel.HMI
+      - HMI/US/portrait/nspanel_US.HMI
+
 
 jobs:
   gen-nextion-to-text:
