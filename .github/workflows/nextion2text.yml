@@ -46,7 +46,7 @@ jobs:
         python Nextion2Text.py -s -d -p -p visual -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out-visual
         python Nextion2Text.py -s -d -p -p visual -i HMI/US/landscape/nspanel_US_L.HMI -o HMI/US/landscape/n2t-out-visual
     
-    - name: Run n2t US DIFF
+    - name: Run n2t US P DIFF
       continue-on-error: true
       run: |
         echo "YXR0cmlidXRlcyA9IHsKICAgICJpZCI6IHsKICAgICAgICAiaWdub3JlIjogVHJ1ZSwKICAgICAgICAibmFtZSI6ICJJRCIsCiAgICAgICAgInN0cnVjdCI6ICJpIiwKICAgIH0KfQ==" | base64 -d > ignore-id.py
@@ -55,11 +55,19 @@ jobs:
         echo portrait
         python Nextion2Text.py -c ignore-id.py -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
         diff -bur HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
-        
+  
+    - name: Run n2t US L DIFF
+      continue-on-error: true
+      run: |      
         echo landscape
         python Nextion2Text.py -c ignore-id.py -d -i HMI/US/landscape/nspanel_US_L.HMI -o HMI/US/landscape/n2t-out
         diff -bur HMI/n2t-out HMI/US/landscape/n2t-out > HMI/US/landscape/diff-eu-version.txt
-  
+        
+    - name: Display txt files 
+      continue-on-error: true
+      run: |      
+        find -name "**.txt"
+        
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: ${{ steps.last-commit-message.outputs.msg }} (add nextion2text)
