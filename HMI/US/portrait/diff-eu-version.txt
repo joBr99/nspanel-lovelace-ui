@@ -1,6 +1,6 @@
 diff -bur HMI/US/portrait/n2t-out/Program.s.txt HMI/n2t-out/Program.s.txt
---- HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/Program.s.txt	2022-03-29 07:16:04.296720453 +0000
+--- HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 07:45:15.963041685 +0000
++++ HMI/n2t-out/Program.s.txt	2022-03-29 07:45:15.451041163 +0000
 @@ -10,6 +10,6 @@
      int sleepValue=0
      // dim value
@@ -10,124 +10,9 @@ diff -bur HMI/US/portrait/n2t-out/Program.s.txt HMI/n2t-out/Program.s.txt
 +    // fix touch offset
 +    lcd_dev fffb 0002 0000 0020
      page pageStartup
-diff -bur HMI/US/portrait/n2t-out/cardAlarm.txt HMI/n2t-out/cardAlarm.txt
---- HMI/US/portrait/n2t-out/cardAlarm.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/cardAlarm.txt	2022-03-29 07:16:04.296720453 +0000
-@@ -148,7 +148,7 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : î
-+        Text                                : 
-         Max. Text Size                      : 10
-     
- Picture p0
-@@ -172,14 +172,7 @@
-     
-     Events
-         Touch Press Event
--            nPage=nPage+1
--            nPageDisp.val=nPage
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,cardAlarm,bNext"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -205,14 +198,7 @@
-     
-     Events
-         Touch Press Event
--            nPage=nPage-1
--            nPageDisp.val=nPage
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,cardAlarm,bPrev"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -383,7 +369,7 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         State                               : unpressed
--        Text                                : CLEAR
-+        Text                                : CLR
-         Max. Text Size                      : 10
-     
-     Events
-@@ -399,7 +385,7 @@
-         Send Component ID                   : disabled
-         State                               : unpressed
-         Text                                : 
--        Max. Text Size                      : 10
-+        Max. Text Size                      : 40
-     
-     Events
-         Touch Press Event
-@@ -430,7 +416,7 @@
-         Send Component ID                   : disabled
-         State                               : unpressed
-         Text                                : 
--        Max. Text Size                      : 10
-+        Max. Text Size                      : 40
-     
-     Events
-         Touch Press Event
-@@ -461,7 +447,7 @@
-         Send Component ID                   : disabled
-         State                               : unpressed
-         Text                                : 
--        Max. Text Size                      : 10
-+        Max. Text Size                      : 40
-     
-     Events
-         Touch Press Event
-@@ -492,7 +478,7 @@
-         Send Component ID                   : disabled
-         State                               : unpressed
-         Text                                : 
--        Max. Text Size                      : 10
-+        Max. Text Size                      : 40
-     
-     Events
-         Touch Press Event
-@@ -734,6 +720,25 @@
-                 }
-             }
-         
-+Timer tmFlash
-+    Attributes
-+        ID         : 35
-+        Scope      : local
-+        Period (ms): 600
-+        Enabled    : no
-+    
-+    Events
-+        Timer Event
-+            if(tIcon.isbr==1)
-+            {
-+                tIcon.isbr=0
-+                vis tIcon,0
-+            }else
-+            {
-+                tIcon.isbr=1
-+                vis tIcon,1
-+            }
-+        
- TouchCap tc0
-     Attributes
-         ID   : 12
 diff -bur HMI/US/portrait/n2t-out/cardEntities.txt HMI/n2t-out/cardEntities.txt
---- HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/cardEntities.txt	2022-03-29 07:16:04.296720453 +0000
+--- HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 07:45:15.963041685 +0000
++++ HMI/n2t-out/cardEntities.txt	2022-03-29 07:45:15.451041163 +0000
 @@ -123,34 +123,6 @@
          Text          : 
          Max. Text Size: 70
@@ -163,97 +48,120 @@ diff -bur HMI/US/portrait/n2t-out/cardEntities.txt HMI/n2t-out/cardEntities.txt
  Text tHeading
      Attributes
          ID                                  : 2
-@@ -294,57 +266,57 @@
+@@ -294,50 +266,6 @@
          Text                                : 
          Max. Text Size                      : 50
      
 -Text tEntity5
-+Picture p0
-     Attributes
+-    Attributes
 -        ID                                  : 54
-+        ID                                  : 1
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
 -        Associated Keyboard                 : none
 -        Text                                : tEntity5
 -        Max. Text Size                      : 30
-     
+-    
 -Text tIcon5
-+Slider hSlider1
-     Attributes
+-    Attributes
 -        ID                                  : 55
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : î°
+-        Max. Text Size                      : 30
+-    
+-Text tEntity6
+-    Attributes
+-        ID                                  : 62
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : tEntity6
+-        Max. Text Size                      : 30
+-    
+-Text tIcon6
+-    Attributes
+-        ID                                  : 63
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : î°
+-        Max. Text Size                      : 30
+-    
+ Picture p0
+     Attributes
+         ID                                  : 1
+@@ -348,7 +276,7 @@
+     
+ Slider hSlider1
+     Attributes
+-        ID                                  : 74
 +        ID                                  : 54
          Scope                               : local
          Dragging                            : 0
          Disable release event after dragging: 0
-         Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Text                                : î°
--        Max. Text Size                      : 30
-+        Position                            : 50
-+        Upper range limit                   : 100
-+        Lower range limit                   : 0
+@@ -359,7 +287,7 @@
      
--Text tEntity6
-+Slider hSlider2
+ Slider hSlider2
      Attributes
--        ID                                  : 62
+-        ID                                  : 75
 +        ID                                  : 55
          Scope                               : local
          Dragging                            : 0
          Disable release event after dragging: 0
-         Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Text                                : tEntity6
--        Max. Text Size                      : 30
-+        Position                            : 50
-+        Upper range limit                   : 100
-+        Lower range limit                   : 0
+@@ -370,7 +298,7 @@
      
--Text tIcon6
-+Slider hSlider3
+ Slider hSlider3
      Attributes
--        ID                                  : 63
+-        ID                                  : 76
 +        ID                                  : 56
          Scope                               : local
          Dragging                            : 0
          Disable release event after dragging: 0
-         Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Text                                : î°
--        Max. Text Size                      : 30
-+        Position                            : 50
-+        Upper range limit                   : 100
-+        Lower range limit                   : 0
+@@ -381,29 +309,7 @@
      
--Picture p0
-+Slider hSlider4
+ Slider hSlider4
      Attributes
--        ID                                  : 1
+-        ID                                  : 77
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Position                            : 50
+-        Upper range limit                   : 100
+-        Lower range limit                   : 0
+-    
+-Slider hSlider5
+-    Attributes
+-        ID                                  : 78
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Position                            : 50
+-        Upper range limit                   : 100
+-        Lower range limit                   : 0
+-    
+-Slider hSlider6
+-    Attributes
+-        ID                                  : 79
 +        ID                                  : 57
          Scope                               : local
          Dragging                            : 0
          Disable release event after dragging: 0
-         Send Component ID                   : disabled
-+        Position                            : 50
-+        Upper range limit                   : 100
-+        Lower range limit                   : 0
-     
- Button bDown1
-     Attributes
-@@ -671,13 +643,14 @@
+@@ -737,7 +643,14 @@
      
      Events
          Touch Press Event
--            nPage=nPage-1
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
+-            tSend.txt="event,buttonPress2,cardEntities,bPrev"
 +            tSend.txt="event,buttonPress2,cardEntities,"
 +            if(bPrev.isbr==1)
 +            {
@@ -265,22 +173,7 @@ diff -bur HMI/US/portrait/n2t-out/cardEntities.txt HMI/n2t-out/cardEntities.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -703,13 +676,7 @@
-     
-     Events
-         Touch Press Event
--            nPage=nPage+1
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,cardEntities,bNext"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -826,214 +793,6 @@
+@@ -880,214 +793,6 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -495,7 +388,7 @@ diff -bur HMI/US/portrait/n2t-out/cardEntities.txt HMI/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          ID                                  : 23
-@@ -1146,62 +905,6 @@
+@@ -1200,62 +905,6 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -558,7 +451,7 @@ diff -bur HMI/US/portrait/n2t-out/cardEntities.txt HMI/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          ID                                  : 35
-@@ -1312,52 +1015,6 @@
+@@ -1366,52 +1015,6 @@
                  page popupLight
              }
          
@@ -611,510 +504,377 @@ diff -bur HMI/US/portrait/n2t-out/cardEntities.txt HMI/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          ID         : 30
-diff -bur HMI/US/portrait/n2t-out/cardGrid.txt HMI/n2t-out/cardGrid.txt
---- HMI/US/portrait/n2t-out/cardGrid.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/cardGrid.txt	2022-03-29 07:16:04.296720453 +0000
-@@ -269,13 +269,7 @@
-     
-     Events
-         Touch Press Event
--            nPage=nPage-1
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,cardGrid,bPrev"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -301,13 +295,7 @@
-     
-     Events
-         Touch Press Event
--            nPage=nPage+1
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,cardGrid,bNext"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
+@@ -1932,238 +1535,6 @@
+                                             covx tTmp.txt,sys0,0,0
+                                             hSlider4.maxval=sys0
+                                         }
+-                                        // get Type
+-                                        spstr strCommand.txt,type5.txt,",",27
+-                                        // get internal name
+-                                        spstr strCommand.txt,entn5.txt,",",28
+-                                        if(type5.txt=="delete"||type5.txt=="")
+-                                        {
+-                                            vis bUp5,0
+-                                            vis bStop5,0
+-                                            vis bDown5,0
+-                                            vis btOnOff5,0
+-                                            vis tEntity5,0
+-                                            vis tIcon5,0
+-                                            vis bText5,0
+-                                            vis hSlider5,0
+-                                        }else
+-                                        {
+-                                            // change icon
+-                                            spstr strCommand.txt,tTmp.txt,",",29
+-                                            covx tTmp.txt,sys0,0,0
+-                                            substr pageIcons.tIcons.txt,tIcon5.txt,sys0,1
+-                                            vis tIcon5,1
+-                                            // change icon color
+-                                            spstr strCommand.txt,tTmp.txt,",",30
+-                                            covx tTmp.txt,sys0,0,0
+-                                            tIcon5.pco=sys0
+-                                            // set name
+-                                            spstr strCommand.txt,tEntity5.txt,",",31
+-                                            vis tEntity5,1
+-                                        }
+-                                        if(type5.txt=="shutter")
+-                                        {
+-                                            vis bUp5,1
+-                                            vis bStop5,1
+-                                            vis bDown5,1
+-                                            vis btOnOff5,0
+-                                            vis bText5,0
+-                                            vis hSlider5,0
+-                                        }
+-                                        if(type5.txt=="light")
+-                                        {
+-                                            vis bUp5,0
+-                                            vis bStop5,0
+-                                            vis bDown5,0
+-                                            vis btOnOff5,1
+-                                            vis bText5,0
+-                                            vis hSlider5,0
+-                                            // get Button State (optional Value)
+-                                            spstr strCommand.txt,tTmp.txt,",",32
+-                                            covx tTmp.txt,sys0,0,0
+-                                            btOnOff5.val=sys0
+-                                        }
+-                                        if(type5.txt=="switch")
+-                                        {
+-                                            vis bUp5,0
+-                                            vis bStop5,0
+-                                            vis bDown5,0
+-                                            vis btOnOff5,1
+-                                            vis bText5,0
+-                                            vis hSlider5,0
+-                                            // get Button State (optional Value)
+-                                            spstr strCommand.txt,tTmp.txt,",",32
+-                                            covx tTmp.txt,sys0,0,0
+-                                            btOnOff5.val=sys0
+-                                        }
+-                                        if(type5.txt=="text")
+-                                        {
+-                                            vis bUp5,0
+-                                            vis bStop5,0
+-                                            vis bDown5,0
+-                                            vis btOnOff5,0
+-                                            vis bText5,1
+-                                            tsw bText5,0
+-                                            vis hSlider5,0
+-                                            bText5.pco=65535
+-                                            bText5.pco2=65535
+-                                            // get Text (optional Value)
+-                                            spstr strCommand.txt,bText5.txt,",",32
+-                                        }
+-                                        if(type5.txt=="button")
+-                                        {
+-                                            vis bUp5,0
+-                                            vis bStop5,0
+-                                            vis bDown5,0
+-                                            vis btOnOff5,0
+-                                            vis bText5,1
+-                                            tsw bText5,1
+-                                            vis hSlider5,0
+-                                            bText5.pco=1374
+-                                            bText5.pco2=1374
+-                                            // get Text (optional Value)
+-                                            spstr strCommand.txt,bText5.txt,",",32
+-                                        }
+-                                        if(type5.txt=="number")
+-                                        {
+-                                            vis bUp5,0
+-                                            vis bStop5,0
+-                                            vis bDown5,0
+-                                            vis btOnOff5,0
+-                                            vis bText5,0
+-                                            tsw bText5,0
+-                                            vis hSlider5,1
+-                                            // get config (optional Value) (use bText as variable)
+-                                            spstr strCommand.txt,bText5.txt,",",32
+-                                            //first value is current value
+-                                            spstr bText5.txt,tTmp.txt,"|",1
+-                                            covx tTmp.txt,sys0,0,0
+-                                            hSlider5.val=sys0
+-                                            //second value is min value
+-                                            spstr bText5.txt,tTmp.txt,"|",2
+-                                            covx tTmp.txt,sys0,0,0
+-                                            hSlider5.minval=sys0
+-                                            //third value is max value
+-                                            spstr bText5.txt,tTmp.txt,"|",3
+-                                            covx tTmp.txt,sys0,0,0
+-                                            hSlider5.maxval=sys0
+-                                        }
+-                                        // get Type
+-                                        spstr strCommand.txt,type6.txt,",",33
+-                                        // get internal name
+-                                        spstr strCommand.txt,entn6.txt,",",34
+-                                        if(type6.txt=="delete"||type6.txt=="")
+-                                        {
+-                                            vis bUp6,0
+-                                            vis bStop6,0
+-                                            vis bDown6,0
+-                                            vis btOnOff6,0
+-                                            vis tEntity6,0
+-                                            vis tIcon6,0
+-                                            vis bText6,0
+-                                            vis hSlider6,0
+-                                        }else
+-                                        {
+-                                            // change icon
+-                                            spstr strCommand.txt,tTmp.txt,",",35
+-                                            covx tTmp.txt,sys0,0,0
+-                                            substr pageIcons.tIcons.txt,tIcon6.txt,sys0,1
+-                                            vis tIcon6,1
+-                                            // change icon color
+-                                            spstr strCommand.txt,tTmp.txt,",",36
+-                                            covx tTmp.txt,sys0,0,0
+-                                            tIcon6.pco=sys0
+-                                            // set name
+-                                            spstr strCommand.txt,tEntity6.txt,",",37
+-                                            vis tEntity6,1
+-                                        }
+-                                        if(type6.txt=="shutter")
+-                                        {
+-                                            vis bUp6,1
+-                                            vis bStop6,1
+-                                            vis bDown6,1
+-                                            vis btOnOff6,0
+-                                            vis bText6,0
+-                                            vis hSlider6,0
+-                                        }
+-                                        if(type6.txt=="light")
+-                                        {
+-                                            vis bUp6,0
+-                                            vis bStop6,0
+-                                            vis bDown6,0
+-                                            vis btOnOff6,1
+-                                            vis bText6,0
+-                                            vis hSlider6,0
+-                                            // get Button State (optional Value)
+-                                            spstr strCommand.txt,tTmp.txt,",",38
+-                                            covx tTmp.txt,sys0,0,0
+-                                            btOnOff6.val=sys0
+-                                        }
+-                                        if(type6.txt=="switch")
+-                                        {
+-                                            vis bUp6,0
+-                                            vis bStop6,0
+-                                            vis bDown6,0
+-                                            vis btOnOff6,1
+-                                            vis bText6,0
+-                                            vis hSlider6,0
+-                                            // get Button State (optional Value)
+-                                            spstr strCommand.txt,tTmp.txt,",",38
+-                                            covx tTmp.txt,sys0,0,0
+-                                            btOnOff6.val=sys0
+-                                        }
+-                                        if(type6.txt=="text")
+-                                        {
+-                                            vis bUp6,0
+-                                            vis bStop6,0
+-                                            vis bDown6,0
+-                                            vis btOnOff6,0
+-                                            vis bText6,1
+-                                            tsw bText6,0
+-                                            vis hSlider6,0
+-                                            bText6.pco=65535
+-                                            bText6.pco2=65535
+-                                            // get Text (optional Value)
+-                                            spstr strCommand.txt,bText6.txt,",",38
+-                                        }
+-                                        if(type6.txt=="button")
+-                                        {
+-                                            vis bUp6,0
+-                                            vis bStop6,0
+-                                            vis bDown6,0
+-                                            vis btOnOff6,0
+-                                            vis bText6,1
+-                                            tsw bText6,1
+-                                            vis hSlider6,0
+-                                            bText6.pco=1374
+-                                            bText6.pco2=1374
+-                                            // get Text (optional Value)
+-                                            spstr strCommand.txt,bText6.txt,",",38
+-                                        }
+-                                        if(type6.txt=="number")
+-                                        {
+-                                            vis bUp6,0
+-                                            vis bStop6,0
+-                                            vis bDown6,0
+-                                            vis btOnOff6,0
+-                                            vis bText6,0
+-                                            tsw bText6,0
+-                                            vis hSlider6,1
+-                                            // get config (optional Value) (use bText as variable)
+-                                            spstr strCommand.txt,bText6.txt,",",38
+-                                            //first value is current value
+-                                            spstr bText6.txt,tTmp.txt,"|",1
+-                                            covx tTmp.txt,sys0,0,0
+-                                            hSlider6.val=sys0
+-                                            //second value is min value
+-                                            spstr bText6.txt,tTmp.txt,"|",2
+-                                            covx tTmp.txt,sys0,0,0
+-                                            hSlider6.minval=sys0
+-                                            //third value is max value
+-                                            spstr bText6.txt,tTmp.txt,"|",3
+-                                            covx tTmp.txt,sys0,0,0
+-                                            hSlider6.maxval=sys0
+-                                        }
+                                     }
+                                     if(tInstruction.txt=="pageType")
+                                     {
 diff -bur HMI/US/portrait/n2t-out/cardMedia.txt HMI/n2t-out/cardMedia.txt
---- HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/cardMedia.txt	2022-03-29 07:16:04.296720453 +0000
-@@ -16,34 +16,37 @@
-             vis p0,0
-             vis tSend,0
-             vis tInstruction,0
--            vis nPageDisp,0
-             vis tTmp,0
-             vis tId,0
-+            vis t5,0
-             //vis nPageDisp,0
-         
- Variable (string) strCommand
-     Attributes
--        ID            : 8
-+        ID            : 7
-         Scope         : local
-         Text          : 
--        Max. Text Size: 200
-+        Max. Text Size: 500
+--- HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-29 07:45:15.967041689 +0000
++++ HMI/n2t-out/cardMedia.txt	2022-03-29 07:45:15.451041163 +0000
+@@ -30,21 +30,21 @@
      
  Variable (string) entn
      Attributes
--        ID            : 19
+-        ID            : 17
 +        ID            : 18
          Scope         : local
          Text          : 
          Max. Text Size: 50
      
--Number nPageDisp
-+Variable (string) vaSpeakerList
+ Variable (string) vaSpeakerList
      Attributes
--        ID                                  : 6
+-        ID            : 26
 +        ID            : 27
-         Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Value                               : 0
-+        Text          : 
-+        Max. Text Size: 200
-+    
-+Variable (int32) vaSpeakerPos
-+    Attributes
+         Scope         : local
+         Text          : 
+         Max. Text Size: 200
+     
+ Variable (int32) vaSpeakerPos
+     Attributes
+-        ID   : 27
 +        ID   : 28
-+        Scope: local
-+        Value: 0
+         Scope: local
+         Value: 0
      
- Text tSend
-     Attributes
-@@ -53,8 +56,8 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : newtxt
--        Max. Text Size                      : 100
-+        Text                                : 
-+        Max. Text Size                      : 200
-     
- Text tTmp
-     Attributes
-@@ -69,7 +72,7 @@
-     
- Text tInstruction
-     Attributes
--        ID                                  : 9
-+        ID                                  : 8
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-@@ -80,7 +83,7 @@
-     
- Text tId
-     Attributes
--        ID                                  : 10
-+        ID                                  : 9
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-@@ -91,7 +94,7 @@
-     
- Text tHeading
-     Attributes
--        ID                                  : 11
-+        ID                                  : 10
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-@@ -102,7 +105,7 @@
-     
- Text tTitle
-     Attributes
--        ID                                  : 12
-+        ID                                  : 11
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-@@ -113,7 +116,7 @@
-     
- Text tAuthor
-     Attributes
--        ID                                  : 13
-+        ID                                  : 12
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-@@ -124,7 +127,7 @@
-     
- Text t2
-     Attributes
--        ID                                  : 14
-+        ID                                  : 13
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-@@ -154,7 +157,7 @@
-         
- Text tPlayPause
-     Attributes
--        ID                                  : 15
-+        ID                                  : 14
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-@@ -184,7 +187,7 @@
-         
- Text t0
-     Attributes
--        ID                                  : 16
-+        ID                                  : 15
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-@@ -214,15 +217,171 @@
+@@ -217,7 +217,7 @@
          
  Text tIcon
      Attributes
--        ID                                  : 18
+-        ID                                  : 16
 +        ID                                  : 17
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : 
-+        Max. Text Size                      : 10
-+    
-+Text t1
-+    Attributes
+         Scope                               : local
+         Dragging                            : 0
+         Disable release event after dragging: 0
+@@ -228,7 +228,7 @@
+     
+ Text t1
+     Attributes
+-        ID                                  : 21
 +        ID                                  : 22
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : î
-+        Max. Text Size                      : 10
-+    
-+    Events
-+        Touch Press Event
-+            hVolume.val=hVolume.val-5
-+            // event,buttonPress2,internalNameEntity,volumeSlider,50
-+            //craft command
-+            tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
-+            covx hVolume.val,tTmp.txt,0,0
-+            tSend.txt+=tTmp.txt
-+            //send calc crc
-+            btlen tSend.txt,sys0
-+            crcrest 1,0xffff // reset CRC
-+            crcputh 55 bb
-+            crcputs sys0,1
-+            crcputs tSend.txt,0
-+            //send cmd
-+            printh 55 bb
-+            prints sys0,2
-+            prints tSend.txt,0
-+            prints crcval,2
-+        
-+Text t3
-+    Attributes
+         Scope                               : local
+         Dragging                            : 0
+         Disable release event after dragging: 0
+@@ -259,7 +259,7 @@
+         
+ Text t3
+     Attributes
+-        ID                                  : 22
 +        ID                                  : 23
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : î
-+        Max. Text Size                      : 10
-+    
-+    Events
-+        Touch Press Event
-+            hVolume.val=hVolume.val+5
-+            // event,buttonPress2,internalNameEntity,volumeSlider,50
-+            //craft command
-+            tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
-+            covx hVolume.val,tTmp.txt,0,0
-+            tSend.txt+=tTmp.txt
-+            //send calc crc
-+            btlen tSend.txt,sys0
-+            crcrest 1,0xffff // reset CRC
-+            crcputh 55 bb
-+            crcputs sys0,1
-+            crcputs tSend.txt,0
-+            //send cmd
-+            printh 55 bb
-+            prints sys0,2
-+            prints tSend.txt,0
-+            prints crcval,2
-+        
-+Text t4
-+    Attributes
+         Scope                               : local
+         Dragging                            : 0
+         Disable release event after dragging: 0
+@@ -290,7 +290,7 @@
+         
+ Text t4
+     Attributes
+-        ID                                  : 23
 +        ID                                  : 24
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : î
-+        Max. Text Size                      : 10
-+    
-+Text tSpeaker
-+    Attributes
+         Scope                               : local
+         Dragging                            : 0
+         Disable release event after dragging: 0
+@@ -301,7 +301,7 @@
+     
+ Text tSpeaker
+     Attributes
+-        ID                                  : 24
 +        ID                                  : 25
          Scope                               : local
          Dragging                            : 0
          Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : 
-+        Max. Text Size                      : 50
-+    
-+    Events
-+        Touch Press Event
-+            // event,buttonPress2,entn,media-next
-+            //craft command
-+            tSend.txt="event,buttonPress2,"
-+            tSend.txt+=entn.txt+","
-+            tSend.txt+="speaker-sel,"+tSpeaker.txt
-+            //send calc crc
-+            btlen tSend.txt,sys0
-+            crcrest 1,0xffff // reset CRC
-+            crcputh 55 bb
-+            crcputs sys0,1
-+            crcputs tSend.txt,0
-+            //send cmd
-+            printh 55 bb
-+            prints sys0,2
-+            prints tSend.txt,0
-+            prints crcval,2
-+        
-+Text t6
-+    Attributes
-+        ID                                  : 26
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : î´
-         Max. Text Size                      : 10
-     
-+    Events
-+        Touch Press Event
-+            //speaker
-+            tSpeaker.pco=65535
-+            spstr vaSpeakerList.txt,tSpeaker.txt,"?",vaSpeakerPos.val
-+            vaSpeakerPos.val+=1
-+            if(tSpeaker.txt=="")
-+            {
-+                vaSpeakerPos.val=0
-+                spstr vaSpeakerList.txt,tSpeaker.txt,"?",vaSpeakerPos.val
-+            }
-+        
-+Text t5
-+    Attributes
-+        ID                                  : 29
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : î¤
-+        Max. Text Size                      : 10
-+    
-+    Events
-+        Touch Press Event
-+            // event,buttonPress2,entn,media-next
-+            //craft command
-+            tSend.txt="event,buttonPress2,"
-+            tSend.txt+=entn.txt+","
-+            tSend.txt+="media-OnOff"
-+            //send calc crc
-+            btlen tSend.txt,sys0
-+            crcrest 1,0xffff // reset CRC
-+            crcputh 55 bb
-+            crcputs sys0,1
-+            crcputs tSend.txt,0
-+            //send cmd
-+            printh 55 bb
-+            prints sys0,2
-+            prints tSend.txt,0
-+            prints crcval,2
-+        
- Picture p0
+@@ -331,7 +331,7 @@
+         
+ Text t6
      Attributes
-         ID                                  : 1
-@@ -233,7 +392,7 @@
+-        ID                                  : 25
++        ID                                  : 26
+         Scope                               : local
+         Dragging                            : 0
+         Disable release event after dragging: 0
+@@ -354,7 +354,7 @@
+         
+ Text t5
+     Attributes
+-        ID                                  : 28
++        ID                                  : 29
+         Scope                               : local
+         Dragging                            : 0
+         Disable release event after dragging: 0
+@@ -392,7 +392,7 @@
      
  Slider hVolume
      Attributes
--        ID                                  : 17
+-        ID                                  : 29
 +        ID                                  : 16
          Scope                               : local
          Dragging                            : 0
          Disable release event after dragging: 0
-@@ -244,6 +403,8 @@
-     
-     Events
-         Touch Release Event
-+            tmCooldown.en=1
-+            tmCooldown.tim=800
-             // event,buttonPress2,internalNameEntity,volumeSlider,50
-             //craft command
-             tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
-@@ -274,14 +435,7 @@
-     
-     Events
-         Touch Press Event
--            nPage=nPage+1
--            nPageDisp.val=nPage
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,cardMedia,bNext"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -307,14 +461,7 @@
-     
-     Events
-         Touch Press Event
--            nPage=nPage-1
--            nPageDisp.val=nPage
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,cardMedia,bPrev"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -329,7 +476,7 @@
-         
- Timer tmSerial
-     Attributes
--        ID         : 7
-+        ID         : 6
-         Scope      : local
-         Period (ms): 50
-         Enabled    : yes
-@@ -401,6 +548,32 @@
-                                         spstr strCommand.txt,tTmp.txt,"|",7
-                                         covx tTmp.txt,sys0,0,0
-                                         substr pageIcons.tIcons.txt,tPlayPause.txt,sys0,1
-+                                        //speaker current
-+                                        spstr strCommand.txt,tSpeaker.txt,"|",8
-+                                        if(tSpeaker.txt!="")
-+                                        {
-+                                            tSpeaker.pco=1374
-+                                        }else
-+                                        {
-+                                            tSpeaker.pco=65535
-+                                        }
-+                                        //speaker list
-+                                        spstr strCommand.txt,vaSpeakerList.txt,"|",9
-+                                        if(vaSpeakerList.txt=="")
-+                                        {
-+                                            vis t6,0
-+                                        }
-+                                        vaSpeakerPos.val=0
-+                                        // on off button
-+                                        spstr strCommand.txt,tTmp.txt,"|",10
-+                                        if(tTmp.txt=="disable")
-+                                        {
-+                                            vis t5,0
-+                                        }else
-+                                        {
-+                                            vis t5,1
-+                                            covx tTmp.txt,t5.pco,0,0
-+                                        }
-                                     }
-                                     if(tInstruction.txt=="time")
-                                     {
-@@ -490,7 +663,7 @@
+@@ -663,7 +663,7 @@
          
  Timer tmSleep
      Attributes
--        ID         : 20
+-        ID         : 18
 +        ID         : 19
          Scope      : local
          Period (ms): 1000
          Enabled    : yes
-@@ -508,9 +681,20 @@
-                 }
-             }
+@@ -683,7 +683,7 @@
          
--TouchCap tc0
-+Timer tmCooldown
+ Timer tmCooldown
      Attributes
-         ID   : 21
-+        Scope      : local
-+        Period (ms): 100
-+        Enabled    : no
-+    
-+    Events
-+        Timer Event
-+            tmCooldown.en=0
-+        
-+TouchCap tc0
-+    Attributes
+-        ID         : 20
++        ID         : 21
+         Scope      : local
+         Period (ms): 100
+         Enabled    : no
+@@ -694,7 +694,7 @@
+         
+ TouchCap tc0
+     Attributes
+-        ID   : 19
 +        ID   : 20
          Scope: local
          Value: 0
      
-diff -bur HMI/US/portrait/n2t-out/cardThermo.txt HMI/n2t-out/cardThermo.txt
---- HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/cardThermo.txt	2022-03-29 07:16:04.296720453 +0000
-@@ -269,14 +269,7 @@
-     
-     Events
-         Touch Press Event
--            nPage=nPage+1
--            nPageDisp.val=nPage
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,cardThermo,bNext"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -376,14 +369,7 @@
-     
-     Events
-         Touch Press Event
--            nPage=nPage-1
--            nPageDisp.val=nPage
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,cardThermo,bPrev"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
 Only in HMI/n2t-out: nspanel_Stats.txt
 Only in HMI/US/portrait/n2t-out: nspanel_US_P_Stats.txt
 diff -bur HMI/US/portrait/n2t-out/pageStartup.txt HMI/n2t-out/pageStartup.txt
---- HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/pageStartup.txt	2022-03-29 07:16:04.296720453 +0000
+--- HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 07:45:15.963041685 +0000
++++ HMI/n2t-out/pageStartup.txt	2022-03-29 07:45:15.451041163 +0000
 @@ -155,7 +155,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -1145,8 +905,8 @@ diff -bur HMI/US/portrait/n2t-out/pageStartup.txt HMI/n2t-out/pageStartup.txt
                                          {
                                              pageIcons.tTmp1.txt=tTmp.txt
 diff -bur HMI/US/portrait/n2t-out/popupLight.txt HMI/n2t-out/popupLight.txt
---- HMI/US/portrait/n2t-out/popupLight.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/popupLight.txt	2022-03-29 07:16:04.296720453 +0000
+--- HMI/US/portrait/n2t-out/popupLight.txt	2022-03-29 07:45:15.963041685 +0000
++++ HMI/n2t-out/popupLight.txt	2022-03-29 07:45:15.451041163 +0000
 @@ -252,6 +252,8 @@
      
      Events
@@ -1165,21 +925,7 @@ diff -bur HMI/US/portrait/n2t-out/popupLight.txt HMI/n2t-out/popupLight.txt
              //craft command
              tSend.txt="event,buttonPress2,"+entn.txt+",colorTempSlider,"
              covx hTempSlider.val,tTmp.txt,0,0
-@@ -310,12 +314,7 @@
-     
-     Events
-         Touch Press Event
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,popupLight,bExit"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -494,8 +493,11 @@
+@@ -489,8 +493,11 @@
                                              vis t2,1
                                              vis hBrightness,1
                                              covx tTmp.txt,sys0,0,0
@@ -1191,7 +937,7 @@ diff -bur HMI/US/portrait/n2t-out/popupLight.txt HMI/n2t-out/popupLight.txt
                                          // get ColorTemp value
                                          spstr strCommand.txt,tTmp.txt,",",5
                                          if(tTmp.txt=="disable")
-@@ -527,6 +529,11 @@
+@@ -522,6 +529,11 @@
                                              vis hTempSlider,1
                                              vis t3,1
                                              vis t4,1
@@ -1203,7 +949,7 @@ diff -bur HMI/US/portrait/n2t-out/popupLight.txt HMI/n2t-out/popupLight.txt
                                              // mode == 0 is rgb controls currently shown
                                              if(mode.val==0)
                                              {
-@@ -628,6 +635,17 @@
+@@ -623,6 +635,17 @@
                  }
              }
          
@@ -1221,422 +967,3 @@ diff -bur HMI/US/portrait/n2t-out/popupLight.txt HMI/n2t-out/popupLight.txt
  TouchCap tc0
      Attributes
          ID   : 14
-diff -bur HMI/US/portrait/n2t-out/popupNotify.txt HMI/n2t-out/popupNotify.txt
---- HMI/US/portrait/n2t-out/popupNotify.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/popupNotify.txt	2022-03-29 07:16:04.296720453 +0000
-@@ -127,12 +127,7 @@
-     Events
-         Touch Press Event
-             sleepTimeout=vaOldSleepT.val
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,popupNotify,bExit"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-diff -bur HMI/US/portrait/n2t-out/popupShutter.txt HMI/n2t-out/popupShutter.txt
---- HMI/US/portrait/n2t-out/popupShutter.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/popupShutter.txt	2022-03-29 07:16:04.296720453 +0000
-@@ -180,12 +180,7 @@
-     
-     Events
-         Touch Press Event
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            tSend.txt="event,buttonPress2,popupShutter,bExit"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-diff -bur HMI/US/portrait/n2t-out/screensaver.txt HMI/n2t-out/screensaver.txt
---- HMI/US/portrait/n2t-out/screensaver.txt	2022-03-29 07:16:04.668722752 +0000
-+++ HMI/n2t-out/screensaver.txt	2022-03-29 07:16:04.296720453 +0000
-@@ -20,12 +20,26 @@
-             vis tTmp,0
-             vis p0,0
-             //load gloabl time string from pageIcons
--            tTime.txt=vaTime.txt
-+            //tTime.txt=vaTime.txt
-+            spstr vaTime.txt,tTime.txt,"?",0
-+            spstr vaTime.txt,tAMPM.txt,"?",1
-+            if(tAMPM.txt=="")
-+            {
-+                vis tAMPM,0
-+            }
-             tDate.txt=vaDate.txt
-             dim=dimValue
-             vis tSend,0
-             //page open event
--            // craft command
-+            // clear weather elements, to keep example content in HMI
-+            tMainIcon.txt=""
-+            tMainText.txt=""
-+            tForecast1.txt=""
-+            tF1Icon.txt=""
-+            tForecast1Val.txt=""
-+            tForecast2.txt=""
-+            tF2Icon.txt=""
-+            tForecast2Val.txt=""
-             tSend.txt="event,screensaverOpen"
-             //send calc crc
-             btlen tSend.txt,sys0
-@@ -38,31 +52,20 @@
-             prints sys0,2
-             prints tSend.txt,0
-             prints crcval,2
--            // clear weather elements, to keep example content in HMI
--            tMainIcon.txt=""
--            tMainText.txt=""
--            tMRIcon.txt=""
--            tMR.txt=""
--            tForecast1.txt=""
--            tF1Icon.txt=""
--            tForecast1Val.txt=""
--            tForecast2.txt=""
--            tF2Icon.txt=""
--            tForecast2Val.txt=""
-         
- Variable (string) strCommand
-     Attributes
-         ID            : 5
-         Scope         : local
-         Text          : 
--        Max. Text Size: 100
-+        Max. Text Size: 200
-     
- Variable (string) vaTime
-     Attributes
-         ID            : 10
-         Scope         : global
-         Text          : 
--        Max. Text Size: 10
-+        Max. Text Size: 15
-     
- Variable (string) vaDate
-     Attributes
-@@ -73,11 +76,17 @@
-     
- Variable (string) tId
-     Attributes
--        ID            : 24
-+        ID            : 22
-         Scope         : local
-         Text          : 
-         Max. Text Size: 25
-     
-+Variable (int32) vaTap
-+    Attributes
-+        ID   : 30
-+        Scope: local
-+        Value: 0
-+    
- Number originPage
-     Attributes
-         ID                                  : 3
-@@ -97,7 +106,7 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : 
--        Max. Text Size                      : 20
-+        Max. Text Size                      : 50
-     
- Text tTmp
-     Attributes
-@@ -108,7 +117,7 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : 
--        Max. Text Size                      : 20
-+        Max. Text Size                      : 50
-     
- Text tTime
-     Attributes
-@@ -119,7 +128,7 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : 21:32
--        Max. Text Size                      : 10
-+        Max. Text Size                      : 15
-     
- Text tDate
-     Attributes
-@@ -141,7 +150,7 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : 
--        Max. Text Size                      : 25
-+        Max. Text Size                      : 50
-     
- Text tMainIcon
-     Attributes
-@@ -165,7 +174,7 @@
-         Text                                : 2,3 Â°C
-         Max. Text Size                      : 10
-     
--Text tMRIcon
-+Text tForecast1
-     Attributes
-         ID                                  : 15
-         Scope                               : local
-@@ -173,10 +182,10 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : î
-+        Text                                : Mi
-         Max. Text Size                      : 10
-     
--Text tMR
-+Text tForecast1Val
-     Attributes
-         ID                                  : 16
-         Scope                               : local
-@@ -184,10 +193,10 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : 0 mm
-+        Text                                : 9,3 Â°C
-         Max. Text Size                      : 10
-     
--Text tForecast1
-+Text tF1Icon
-     Attributes
-         ID                                  : 17
-         Scope                               : local
-@@ -195,10 +204,10 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : Mi
-+        Text                                : î
-         Max. Text Size                      : 10
-     
--Text tForecast1Val
-+Text tForecast2
-     Attributes
-         ID                                  : 18
-         Scope                               : local
-@@ -206,10 +215,10 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : 9,3 Â°C
-+        Text                                : Do
-         Max. Text Size                      : 10
-     
--Text tF1Icon
-+Text tF2Icon
-     Attributes
-         ID                                  : 19
-         Scope                               : local
-@@ -220,7 +229,7 @@
-         Text                                : î
-         Max. Text Size                      : 10
-     
--Text tForecast2
-+Text tForecast2Val
-     Attributes
-         ID                                  : 20
-         Scope                               : local
-@@ -228,10 +237,10 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : Do
-+        Text                                : 11,9 Â°C
-         Max. Text Size                      : 10
-     
--Text tF2Icon
-+Text t10
-     Attributes
-         ID                                  : 21
-         Scope                               : local
-@@ -239,29 +248,84 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : î
-+        Text                                : |
-         Max. Text Size                      : 10
-     
--Text tForecast2Val
-+Text tAMPM
-     Attributes
--        ID                                  : 22
-+        ID                                  : 23
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : 11,9 Â°C
-+        Text                                : PM
-         Max. Text Size                      : 10
-     
--Text t10
-+Text tForecast3Val
-     Attributes
--        ID                                  : 23
-+        ID                                  : 24
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : |
-+        Text                                : 
-+        Max. Text Size                      : 10
-+    
-+Text tF3Icon
-+    Attributes
-+        ID                                  : 25
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : 
-+        Max. Text Size                      : 10
-+    
-+Text tForecast3
-+    Attributes
-+        ID                                  : 26
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : 
-+        Max. Text Size                      : 10
-+    
-+Text tForecast4
-+    Attributes
-+        ID                                  : 27
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : 
-+        Max. Text Size                      : 10
-+    
-+Text tF4Icon
-+    Attributes
-+        ID                                  : 28
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : 
-+        Max. Text Size                      : 10
-+    
-+Text tForecast4Val
-+    Attributes
-+        ID                                  : 29
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : 
-         Max. Text Size                      : 10
-     
- Picture p0
-@@ -340,7 +404,12 @@
-                                     {
-                                         //get set time to global variable
-                                         spstr strCommand.txt,vaTime.txt,",",1
--                                        tTime.txt=vaTime.txt
-+                                        spstr vaTime.txt,tTime.txt,"?",0
-+                                        spstr vaTime.txt,tAMPM.txt,"?",1
-+                                        if(tAMPM.txt=="")
-+                                        {
-+                                            vis tAMPM,0
-+                                        }
-                                     }
-                                     if(tInstruction.txt=="date")
-                                     {
-@@ -362,36 +431,38 @@
-                                         substr pageIcons.tIcons.txt,tMainIcon.txt,sys0,1
-                                         //tMainText
-                                         spstr strCommand.txt,tMainText.txt,"?",2
--                                        //tMRIcon
--                                        spstr strCommand.txt,tTmp.txt,"?",3
--                                        covx tTmp.txt,sys0,0,0
--                                        substr pageIcons.tIcons.txt,tMRIcon.txt,sys0,1
--                                        //tMR
--                                        spstr strCommand.txt,tMR.txt,"?",4
-                                         //tForecast1
--                                        spstr strCommand.txt,tForecast1.txt,"?",5
-+                                        spstr strCommand.txt,tForecast1.txt,"?",3
-                                         //tF1Icon
--                                        spstr strCommand.txt,tTmp.txt,"?",6
-+                                        spstr strCommand.txt,tTmp.txt,"?",4
-                                         covx tTmp.txt,sys0,0,0
-                                         substr pageIcons.tIcons.txt,tF1Icon.txt,sys0,1
-                                         //tForecast1Val
--                                        spstr strCommand.txt,tForecast1Val.txt,"?",7
-+                                        spstr strCommand.txt,tForecast1Val.txt,"?",5
-                                         //tForecast2
--                                        spstr strCommand.txt,tForecast2.txt,"?",8
-+                                        spstr strCommand.txt,tForecast2.txt,"?",6
-                                         //tF2Icon
--                                        spstr strCommand.txt,tTmp.txt,"?",9
-+                                        spstr strCommand.txt,tTmp.txt,"?",7
-                                         covx tTmp.txt,sys0,0,0
-                                         substr pageIcons.tIcons.txt,tF2Icon.txt,sys0,1
-                                         //tForecast2Val
--                                        spstr strCommand.txt,tForecast2Val.txt,"?",10
--                                    }
--                                    if(tInstruction.txt=="page")
--                                    {
--                                        //pagenumber
--                                        spstr strCommand.txt,tTmp.txt,",",1
-+                                        spstr strCommand.txt,tForecast2Val.txt,"?",8
-+                                        //tForecast3
-+                                        spstr strCommand.txt,tForecast3.txt,"?",9
-+                                        //tF3Icon
-+                                        spstr strCommand.txt,tTmp.txt,"?",10
-                                         covx tTmp.txt,sys0,0,0
--                                        nPage=sys0
--                                        //don't send current page number, wake will do
-+                                        substr pageIcons.tIcons.txt,tF3Icon.txt,sys0,1
-+                                        //tForecast3Val
-+                                        spstr strCommand.txt,tForecast3Val.txt,"?",11
-+                                        //tForecast4
-+                                        spstr strCommand.txt,tForecast4.txt,"?",12
-+                                        //tF4Icon
-+                                        spstr strCommand.txt,tTmp.txt,"?",13
-+                                        covx tTmp.txt,sys0,0,0
-+                                        substr pageIcons.tIcons.txt,tF4Icon.txt,sys0,1
-+                                        //tForecast4Val
-+                                        spstr strCommand.txt,tForecast4Val.txt,"?",14
-                                     }
-                                     if(tInstruction.txt=="pageType")
-                                     {
-@@ -464,12 +535,10 @@
-     
-     Events
-         Touch Press Event
--            //page open event
--            // event,pageOpen,cardEntities,pageNumber
--            // craft command
--            // convert pageNumber and write to tTmp
--            covx nPage,tTmp.txt,0,0
--            tSend.txt="event,pageOpen,"+tTmp.txt
-+            dim=100
-+            vaTap.val+=1
-+            covx vaTap.val,tTmp.txt,0,0
-+            tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
