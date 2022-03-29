@@ -43,7 +43,7 @@ class LuiController(object):
         # call update_screensaver_brightness on changes of entity configured in brightnessScreensaverTracking
         bst = self._config.get("brightnessScreensaverTracking")
         if bst is not None and self._ha_api.entity_exists(bst):
-            self._ha_api.listen_state(self.update_screensaver_brightness, entity_id=bst,  value=self.current_screensaver_brightness)
+            self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=bst)
 
     def startup(self):
         LOGGER.info(f"Startup Event")
@@ -62,6 +62,9 @@ class LuiController(object):
         self._pages_gen.page_type("screensaver")
         self.weather_update("")
 
+    def update_screensaver_brightness_state_callback(self, entity, attribute, old, new, kwargs):
+        self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
+        
     def update_screensaver_brightness(self, kwargs):
         bst = self._config.get("brightnessScreensaverTracking")
         if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state == "not_home":
