@@ -127,12 +127,7 @@ Button b0
     Events
         Touch Press Event
             sleepTimeout=vaOldSleepT.val
-            //page open event
-            // event,pageOpen,cardEntities,pageNumber
-            // craft command
-            // convert pageNumber and write to tTmp
-            covx nPage,tTmp.txt,0,0
-            tSend.txt="event,pageOpen,"+tTmp.txt
+            tSend.txt="event,buttonPress2,popupNotify,bExit"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
