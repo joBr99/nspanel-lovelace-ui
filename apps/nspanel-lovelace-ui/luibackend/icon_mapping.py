@@ -44,6 +44,7 @@ icons = {
     'shield-airplane': 42,
     'bell-ring': 43,
     'ray-vertex': 44,
+    'script-text': 45,
 }
 
 def get_icon_id(ma_name):
