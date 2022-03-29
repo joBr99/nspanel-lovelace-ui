@@ -244,6 +244,7 @@ class LuiPagesGen(object):
                 if entity.attributes.media_content_type == "music":
                     icon = get_icon_id("music")
             source        = get_attr_safe(entity, "source", "")
+            speakerlist   = get_attr_safe(entity, "source_list",[])
             if source in speakerlist:
                 # move current source to the end of the list
                 speakerlist.remove(source)
