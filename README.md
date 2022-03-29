@@ -201,9 +201,13 @@ Upload the nspanel.tft from the lastest release to a Webserver (for example www 
 
 Due the limitations of Berry, it's not possible to download the tft file directly from github, so I'm also renting a small server where you can download the file via HTTP.
 
-The following Link has always the latest version from this repository, just execute the following Command in Tasmota:
+Use the one following commands to flash the latest release from this repository, just execute the following Command in Tasmota:
 
-`FlashNextion http://nspanel.pky.eu/lui-release.tft`
+EU Version: `FlashNextion http://nspanel.pky.eu/lui-release.tft`
+
+US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
+
+US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
 ## Configuration
 
@@ -377,9 +381,12 @@ HACS will show you that there is an update avalible and ask you to update.
 
 ### Update Display Firmware
 
-Use the following command to update or use your own webserver.
+Use the following command to update or use your own webserver. 
+If you are using a recent release you also should be able to update directly with a notification on the screen.
 
-`FlashNextion http://nspanel.pky.eu/lui-release.tft`
+EU Version: `FlashNextion http://nspanel.pky.eu/lui-release.tft`
+US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
+US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
 ### Update Tasmota Berry Driver
 
@@ -428,3 +435,7 @@ Click download.
 
 `FlashNextion http://nspanel.pky.eu/lui.tft`
 
+Development happens in the EU version, so it is possible that the US Version isn't up to date with the current development version of the EU firmware, the lastet US versions are still downloadable with the following links:
+
+`FlashNextion http://nspanel.pky.eu/lui-us-l.tft`
+`FlashNextion http://nspanel.pky.eu/lui-us-p.tft`
