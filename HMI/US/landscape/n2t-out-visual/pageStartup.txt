@@ -297,7 +297,7 @@ Text tMsg1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 42
-        y coordinate                        : 238
+        y coordinate                        : 223
         Width                               : 375
         Height                              : 30
         Effect                              : load
