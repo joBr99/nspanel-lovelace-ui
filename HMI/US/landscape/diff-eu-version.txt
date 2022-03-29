@@ -1,0 +1,12 @@
+diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
+--- HMI/n2t-out/Program.s.txt	2022-03-29 22:51:44.242306277 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-03-29 22:51:45.066317995 +0000
+@@ -10,6 +10,6 @@
+     int sleepValue=0
+     // dim value
+     int dimValue=40
+-    // fix touch offset
+-    lcd_dev fffb 0002 0000 0020
++    // fix touch offset (Removed for US version)
++    //lcd_dev fffb 0002 0000 0020
+     page pageStartup
