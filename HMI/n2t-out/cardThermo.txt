@@ -17,7 +17,6 @@ Page cardThermo
             vis tInstruction,0
             vis tTmp,0
             vis tId,0
-            vis nPageDisp,0
             vis xTempMin,0
             vis xTempMax,0
             vis xTempStep,0
@@ -98,15 +97,6 @@ Variable (string) va8
         Scope         : local
         Text          : 
         Max. Text Size: 10
-    
-Number nPageDisp
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
     
 XFloat xTempCurr
     Attributes
