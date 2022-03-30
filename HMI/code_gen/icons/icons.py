@@ -54,7 +54,8 @@ icons = [
     "arrow-down-bold",
     "cast-audio",
     "cast",
-    "radio"
+    "radio",
+    "fireplace"
 ]
 
 

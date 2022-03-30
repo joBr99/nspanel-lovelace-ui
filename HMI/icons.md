@@ -57,3 +57,4 @@ ID | MD Icon Name | Icon
 50 | cast-audio | ![cast-audio](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/cast-audio.svg)
 51 | cast | ![cast](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/cast.svg)
 52 | radio | ![radio](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/radio.svg)
+53 | fireplace | ![fireplace](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/fireplace.svg)
