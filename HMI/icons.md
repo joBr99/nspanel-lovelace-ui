@@ -52,3 +52,8 @@ ID | MD Icon Name | Icon
 45 | script-text | ![script-text](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/script-text.svg)
 46 | home-import-outline | ![home-import-outline](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/home-import-outline.svg)
 47 | home-export-outline | ![home-export-outline](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/home-export-outline.svg)
+48 | arrow-up-bold | ![arrow-up-bold](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/arrow-up-bold.svg)
+49 | arrow-down-bold | ![arrow-down-bold](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/arrow-down-bold.svg)
+50 | cast-audio | ![cast-audio](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/cast-audio.svg)
+51 | cast | ![cast](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/cast.svg)
+52 | radio | ![radio](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/radio.svg)
