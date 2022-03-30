@@ -19,6 +19,11 @@ nspanel-1:
     timeFormat: "%H:%M"
     dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
     weather: weather.example
+    weatherOverrideForecast3: sensor.nas_cpu_perc
+    weatherOverrideForecast4:
+      sensor.solar_power_current: # use this for overriding name and icon
+        name: Zon
+        icon: solar-power
     pages:
       - type: cardEntities
         heading: Example Page 1
