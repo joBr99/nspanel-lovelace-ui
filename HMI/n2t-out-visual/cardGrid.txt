@@ -1249,7 +1249,7 @@ Timer tmSleep
                 {
                     sleepValue=0
                     dim=dimValue
-                    tSend.txt="event,buttonPress2,cardGrid,sleepReached"
+                    tSend.txt="event,sleepReached,cardGrid"
                     //send calc crc
                     btlen tSend.txt,sys0
                     crcrest 1,0xffff // reset CRC
