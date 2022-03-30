@@ -19,13 +19,13 @@ Page screensaver
             vis p0,0
             //load gloabl time string from pageIcons
             //tTime.txt=vaTime.txt
-            spstr vaTime.txt,tTime.txt,"?",0
-            spstr vaTime.txt,tAMPM.txt,"?",1
+            spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+            spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
             if(tAMPM.txt=="")
             {
                 vis tAMPM,0
             }
-            tDate.txt=vaDate.txt
+            tDate.txt=pageIcons.vaDate.txt
             dim=dimValue
             vis tSend,0
             //page open event
@@ -56,18 +56,6 @@ Variable (string) strCommand
         Scope         : local
         Text          : 
         Max. Text Size: 200
-    
-Variable (string) vaTime
-    Attributes
-        Scope         : global
-        Text          : 
-        Max. Text Size: 15
-    
-Variable (string) vaDate
-    Attributes
-        Scope         : global
-        Text          : 
-        Max. Text Size: 30
     
 Variable (string) tId
     Attributes
@@ -363,9 +351,9 @@ Timer tmSerial
                                     if(tInstruction.txt=="time")
                                     {
                                         //get set time to global variable
-                                        spstr strCommand.txt,vaTime.txt,",",1
-                                        spstr vaTime.txt,tTime.txt,"?",0
-                                        spstr vaTime.txt,tAMPM.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
+                                        spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+                                        spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
                                         if(tAMPM.txt=="")
                                         {
                                             vis tAMPM,0
@@ -374,8 +362,8 @@ Timer tmSerial
                                     if(tInstruction.txt=="date")
                                     {
                                         //get set date to global variable
-                                        spstr strCommand.txt,vaDate.txt,"?",1
-                                        tDate.txt=vaDate.txt
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                        tDate.txt=pageIcons.vaDate.txt
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
@@ -494,7 +482,7 @@ TouchCap tc0
     
     Events
         Touch Press Event
-            dim=100
+            dim=dimValueNormal
             vaTap.val+=1
             covx vaTap.val,tTmp.txt,0,0
             tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
@@ -509,6 +497,4 @@ TouchCap tc0
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            //dim=100
-            //page originPage.val
         

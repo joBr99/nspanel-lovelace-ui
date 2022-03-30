@@ -1,18 +1,34 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-30 20:07:58.195056766 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-03-30 20:07:59.147136815 +0000
-@@ -10,6 +10,6 @@
+--- HMI/n2t-out/Program.s.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-03-30 20:32:26.895241964 +0000
+@@ -10,7 +10,6 @@
      int sleepValue=0
      // dim value
      int dimValue=40
+-    int dimValueNormal=100
 -    // fix touch offset
 -    lcd_dev fffb 0002 0000 0020
 +    // fix touch offset (Removed for US version)
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-03-30 20:07:59.147136815 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-03-30 20:32:26.899241936 +0000
+@@ -583,12 +583,12 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
++                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                     }
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
++                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                     }
+                                     if(tInstruction.txt=="dimmode")
+                                     {
 @@ -670,20 +670,9 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -37,8 +53,23 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
              }
          
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-03-30 20:07:59.147136815 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-03-30 20:32:26.899241936 +0000
+@@ -1675,12 +1675,12 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
++                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                     }
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
++                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                     }
+                                     if(tInstruction.txt=="dimmode")
+                                     {
 @@ -1719,20 +1719,9 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -63,8 +94,23 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
              }
          
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-03-30 20:07:59.147136815 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-03-30 20:32:26.899241936 +0000
+@@ -765,12 +765,12 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
++                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                     }
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
++                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                     }
+                                     if(tInstruction.txt=="dimmode")
+                                     {
 @@ -809,20 +809,9 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -89,8 +135,23 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
              }
          
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-03-30 20:07:59.147136815 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-03-30 20:32:26.899241936 +0000
+@@ -551,12 +551,12 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
++                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                     }
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
++                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                     }
+                                     if(tInstruction.txt=="dimmode")
+                                     {
 @@ -647,20 +647,9 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -115,8 +176,23 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
              }
          
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-03-30 20:07:59.147136815 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-03-30 20:32:26.899241936 +0000
+@@ -835,12 +835,12 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
++                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                     }
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
++                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                     }
+                                     if(tInstruction.txt=="dimmode")
+                                     {
 @@ -921,20 +921,9 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -141,9 +217,28 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
              }
          
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/landscape/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-03-30 20:07:58.195056766 +0000
-+++ HMI/US/landscape/n2t-out/pageIcons.txt	2022-03-30 20:07:59.147136815 +0000
-@@ -17,7 +17,7 @@
+--- HMI/n2t-out/pageIcons.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/pageIcons.txt	2022-03-30 20:32:26.895241964 +0000
+@@ -10,18 +10,6 @@
+         Swide left page ID                  : disabled
+         Swide right page ID                 : disabled
+     
+-Variable (string) vaTime
+-    Attributes
+-        Scope         : global
+-        Text          : 
+-        Max. Text Size: 15
+-    
+-Variable (string) vaDate
+-    Attributes
+-        Scope         : global
+-        Text          : 
+-        Max. Text Size: 30
+-    
+ Text tIcons
+     Attributes
+         Scope                               : global
+@@ -29,7 +17,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
          Associated Keyboard                 : none
@@ -153,8 +248,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/landscape/n2t-out/pageIcons.txt
      
  Text tTmp1
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-03-30 20:07:59.147136815 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-03-30 20:32:26.899241936 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -164,9 +259,24 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
+@@ -261,12 +261,12 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
++                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                     }
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
++                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                     }
+                                     if(tInstruction.txt=="dimmode")
+                                     {
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/popupLight.txt	2022-03-30 20:07:59.147136815 +0000
+--- HMI/n2t-out/popupLight.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/popupLight.txt	2022-03-30 20:32:26.899241936 +0000
 @@ -382,6 +382,7 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -175,9 +285,24 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
                      sleepValue=0
                      click b0,1
                      click b0,0
+@@ -541,12 +542,12 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
++                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                     }
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
++                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                     }
+                                     if(tInstruction.txt=="dimmode")
+                                     {
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-03-30 20:07:59.147136815 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-03-30 20:32:26.899241936 +0000
 @@ -195,6 +195,7 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -186,9 +311,24 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
                      sleepValue=0
                      click b0,1
                      click b0,0
+@@ -298,12 +299,12 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
++                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                     }
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
++                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                     }
+                                     if(tInstruction.txt=="dimmode")
+                                     {
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-03-30 20:07:59.147136815 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-03-30 20:32:26.899241936 +0000
 @@ -268,6 +268,7 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -197,10 +337,25 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
                      sleepValue=0
                      click b0,1
                      click b0,0
+@@ -341,12 +342,12 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
++                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                     }
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
++                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                     }
+                                     if(tInstruction.txt=="timeout")
+                                     {
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-03-30 20:07:58.199057102 +0000
-+++ HMI/US/landscape/n2t-out/screensaver.txt	2022-03-30 20:07:59.147136815 +0000
-@@ -14,6 +14,7 @@
+--- HMI/n2t-out/screensaver.txt	2022-03-30 20:32:26.087247588 +0000
++++ HMI/US/landscape/n2t-out/screensaver.txt	2022-03-30 20:32:26.899241936 +0000
+@@ -14,18 +14,19 @@
          Preinitialize Event
              recmod=1
              bauds=115200
@@ -208,7 +363,41 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
              vis tInstruction,0
              vis tTmp,0
              vis p0,0
-@@ -80,6 +81,15 @@
+             //load gloabl time string from pageIcons
+             //tTime.txt=vaTime.txt
+-            spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+-            spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
++            spstr vaTime.txt,tTime.txt,"?",0
++            spstr vaTime.txt,tAMPM.txt,"?",1
+             if(tAMPM.txt=="")
+             {
+                 vis tAMPM,0
+             }
+-            tDate.txt=pageIcons.vaDate.txt
++            tDate.txt=vaDate.txt
+             dim=dimValue
+             vis tSend,0
+             //page open event
+@@ -57,6 +58,18 @@
+         Text          : 
+         Max. Text Size: 200
+     
++Variable (string) vaTime
++    Attributes
++        Scope         : global
++        Text          : 
++        Max. Text Size: 15
++    
++Variable (string) vaDate
++    Attributes
++        Scope         : global
++        Text          : 
++        Max. Text Size: 30
++    
+ Variable (string) tId
+     Attributes
+         Scope         : local
+@@ -68,6 +81,15 @@
          Scope: local
          Value: 0
      
@@ -224,3 +413,43 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
  Text tInstruction
      Attributes
          Scope                               : local
+@@ -351,9 +373,9 @@
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         //get set time to global variable
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
+-                                        spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+-                                        spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
++                                        spstr strCommand.txt,vaTime.txt,",",1
++                                        spstr vaTime.txt,tTime.txt,"?",0
++                                        spstr vaTime.txt,tAMPM.txt,"?",1
+                                         if(tAMPM.txt=="")
+                                         {
+                                             vis tAMPM,0
+@@ -362,8 +384,8 @@
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         //get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+-                                        tDate.txt=pageIcons.vaDate.txt
++                                        spstr strCommand.txt,vaDate.txt,"?",1
++                                        tDate.txt=vaDate.txt
+                                     }
+                                     if(tInstruction.txt=="timeout")
+                                     {
+@@ -482,7 +504,7 @@
+     
+     Events
+         Touch Press Event
+-            dim=dimValueNormal
++            dim=100
+             vaTap.val+=1
+             covx vaTap.val,tTmp.txt,0,0
+             tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
+@@ -497,4 +519,6 @@
+             prints sys0,2
+             prints tSend.txt,0
+             prints crcval,2
++            //dim=100
++            //page originPage.val
+         
