@@ -10,10 +10,6 @@ popupShutter
 	19   Component(s)
 	179  Line(s) of event code
 	102  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	150  Line(s) of event code
-	113  Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	179  Line(s) of event code
@@ -50,6 +46,10 @@ pageIcons
 	5    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	150  Line(s) of event code
+	113  Unique line(s) of event code
 cardEntities
 	86   Component(s)
 	1320 Line(s) of event code

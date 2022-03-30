@@ -152,7 +152,7 @@ Text tVersion
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 22
+        Text                                : 23
         Max. Text Size                      : 10
     
 Picture p0
@@ -177,7 +177,7 @@ Button bSendStartup
             recmod=1
             bauds=115200
             // startup event
-            tSend.txt="event,startup,"+tVersion.txt
+            tSend.txt="event,startup,"+tVersion.txt+",us-l"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
