@@ -22,7 +22,7 @@ nspanel-1:
     weatherOverrideForecast3: sensor.nas_cpu_perc
     weatherOverrideForecast4:
       sensor.solar_power_current: # use this for overriding name and icon
-        name: Zon
+        name: Sonne
         icon: solar-power
     pages:
       - type: cardEntities
