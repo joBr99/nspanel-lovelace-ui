@@ -49,7 +49,12 @@ icons = [
     "ray-vertex",
     "script-text",
     "home-import-outline",
-    "home-export-outline"
+    "home-export-outline",
+    "arrow-up-bold",
+    "arrow-down-bold",
+    "cast-audio",
+    "cast",
+    "radio"
 ]
 
 

@@ -47,6 +47,11 @@ icons = {
     'script-text': 45,
     'home-import-outline': 46,
     'home-export-outline': 47,
+    'arrow-up-bold': 48,
+    'arrow-down-bold': 49,
+    'cast-audio': 50,
+    'cast': 51,
+    'radio': 52,
 }
 
 def get_icon_id(ma_name):
