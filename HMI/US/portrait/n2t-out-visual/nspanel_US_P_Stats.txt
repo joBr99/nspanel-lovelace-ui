@@ -6,6 +6,10 @@ pageSerialTest
 	13   Component(s)
 	48   Line(s) of event code
 	43   Unique line(s) of event code
+pageIcons
+	5    Component(s)
+	0    Line(s) of event code
+	0    Unique line(s) of event code
 popupShutter
 	19   Component(s)
 	179  Line(s) of event code
@@ -42,10 +46,6 @@ cardMedia
 	30   Component(s)
 	278  Line(s) of event code
 	139  Unique line(s) of event code
-pageIcons
-	5    Component(s)
-	0    Line(s) of event code
-	0    Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	150  Line(s) of event code
