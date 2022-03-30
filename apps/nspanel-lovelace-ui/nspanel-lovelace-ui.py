@@ -65,7 +65,22 @@ class NsPanelLovelaceUIManager(hass.Hass):
         controller = LuiController(self, cfg, send_mqtt_msg)
 
         desired_display_firmware_version = 22
-        desired_display_firmware_url     = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.0.0.tft"
+        
+        version     = "v2.0.0"
+        model       = cfg.get("model")
+        orientation = cfg.get("orientation")
+        if model == "us":
+            if orientation == "landscape":
+                # us landscape version
+                desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-{version}.tft"
+            else:
+                # us portrait version
+                desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-{version}.tft"
+        else:
+            # eu version
+            desired_display_firmware_url     = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-{version}.tft"
+
+        
         desired_tasmota_driver_version   = 3
         desired_tasmota_driver_url       = "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be"
         
