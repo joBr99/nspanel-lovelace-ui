@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-30 09:17:12.762388734 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-03-30 09:17:13.638390126 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-30 15:03:45.667488911 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-03-30 15:03:46.575489457 +0000
 @@ -10,6 +10,6 @@
      int sleepValue=0
      // dim value
@@ -10,9 +10,21 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 +    // fix touch offset (Removed for US version)
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
+diff -bur HMI/n2t-out/pageIcons.txt HMI/US/landscape/n2t-out/pageIcons.txt
+--- HMI/n2t-out/pageIcons.txt	2022-03-30 15:03:45.667488911 +0000
++++ HMI/US/landscape/n2t-out/pageIcons.txt	2022-03-30 15:03:46.575489457 +0000
+@@ -17,7 +17,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîîî¯î¾î¾
++        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîîî¯
+         Max. Text Size                      : 150
+     
+ Text tTmp1
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-30 09:17:12.762388734 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-03-30 09:17:13.638390126 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-30 15:03:45.667488911 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-03-30 15:03:46.575489457 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200

@@ -181,7 +181,7 @@ See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more 
 
 ### Upload Berry Driver to Tasmota
 
-1. Download the autoexec.be berry driver from the latest release. (Development Version [Berry Driver from this Repository](tasmota/autoexec.be))
+1. Download the autoexec.be from the repository: [Berry Driver](tasmota/autoexec.be)
 
 2. Go to `Consoles` > `Manage File System` in Tasmota and upload the previously downloaded file.
 
