@@ -75,6 +75,9 @@ class LuiController(object):
             brightness = kwargs['value']
         self._send_mqtt_msg(f"dimmode,{brightness}")
 
+    def weather_update(self, kwargs):
+        self._pages_gen.update_screensaver_weather()
+        
     def calc_current_screensaver_brightness(self):
         current_screensaver_brightness = 20
         # set brightness of screensaver
@@ -95,11 +98,6 @@ class LuiController(object):
             if not found_current_dim_value:
                 current_screensaver_brightness = sorted_timesets[-1]["value"]
         return current_screensaver_brightness
-
-    def weather_update(self, kwargs):
-        we_name = self._config.get("weather")
-        unit    = "°C"
-        self._pages_gen.update_screensaver_weather(kwargs={"weather": we_name, "unit": unit})
 
     def register_callbacks(self):
         items = self._config.get_root_page().get_all_item_names()
@@ -139,9 +137,7 @@ class LuiController(object):
             return
             
         if button_type == "sleepReached":
-            #self._pages_gen.generate_screensaver_page(kwargs={"weather": we_name, "unit": unit})
-            self._pages_gen.page_type("screensaver")
-            self.weather_update("")
+            self._pages_gen.generate_screensaver_page()
             return
 
         if button_type == "bExit":
