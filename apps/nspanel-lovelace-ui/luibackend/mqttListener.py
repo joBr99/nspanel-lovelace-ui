@@ -34,7 +34,7 @@ class LuiMqttListener(object):
                 display_firmware_version = int(msg[2])
                 model = None
                 if display_firmware_version >= 23:
-                    model = msg[2]
+                    model = msg[3]
                 self._updater.set_current_display_firmware_version(display_firmware_version, model)
                 # check for updates
                 msg_send = self._updater.check_updates()
