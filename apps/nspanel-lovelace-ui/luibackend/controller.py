@@ -137,6 +137,11 @@ class LuiController(object):
             elif not self._config.get("doubleTapToUnlock"):
                 self._pages_gen.render_page(self._current_page)
             return
+            
+        if button_type == "sleepReached":
+            self._pages_gen.page_type("screensaver")
+            return
+
         if button_type == "bExit":
             self._pages_gen.render_page(self._current_page)
 
