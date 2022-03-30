@@ -42,8 +42,8 @@ Text tIcons
         Horizontal Alignment                : left
         Vertical Alignment                  : top
         Input Type                          : character
-        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîîî¯î¾î¾
-        Max. Text Size                      : 150
+        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîîî¯î¾î¾î¶î­ïîî¸
+        Max. Text Size                      : 170
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
