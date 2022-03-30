@@ -189,6 +189,8 @@ See Tasmota [MQTT Documentation](https://tasmota.github.io/docs/MQTT/) for more 
 
 ### Flash Firmware to Nextion Screen
 
+Note for ioBroker Users: Check the Release Notes, if the ioBroker Backend is not up to date with the current release there will be a note and you have to flash the latest compatible version from there.
+
 #### Use your own Webserver
 
 Upload the nspanel.tft from the lastest release to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console. (Development Version: [tft file from HMI folder](HMI/nspanel.tft))
