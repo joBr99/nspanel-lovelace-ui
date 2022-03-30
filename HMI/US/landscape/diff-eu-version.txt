@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-03-30 20:32:26.895241964 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -10,7 +10,6 @@
      int sleepValue=0
      // dim value
@@ -12,8 +12,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -583,12 +583,12 @@
                                      if(tInstruction.txt=="time")
                                      {
@@ -36,7 +36,7 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
 +                    screensaver.originPage.val=dp
                      sleepValue=0
 -                    dim=dimValue
--                    tSend.txt="event,buttonPress2,cardAlarm,sleepReached"
+-                    tSend.txt="event,sleepReached,cardAlarm"
 -                    //send calc crc
 -                    btlen tSend.txt,sys0
 -                    crcrest 1,0xffff // reset CRC
@@ -53,8 +53,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
              }
          
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -1675,12 +1675,12 @@
                                      if(tInstruction.txt=="time")
                                      {
@@ -77,7 +77,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
 +                    screensaver.originPage.val=dp
                      sleepValue=0
 -                    dim=dimValue
--                    tSend.txt="event,buttonPress2,cardEntities,sleepReached"
+-                    tSend.txt="event,sleepReached,cardEntities"
 -                    //send calc crc
 -                    btlen tSend.txt,sys0
 -                    crcrest 1,0xffff // reset CRC
@@ -94,8 +94,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
              }
          
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -765,12 +765,12 @@
                                      if(tInstruction.txt=="time")
                                      {
@@ -118,7 +118,7 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
 +                    screensaver.originPage.val=dp
                      sleepValue=0
 -                    dim=dimValue
--                    tSend.txt="event,buttonPress2,cardGrid,sleepReached"
+-                    tSend.txt="event,sleepReached,cardGrid"
 -                    //send calc crc
 -                    btlen tSend.txt,sys0
 -                    crcrest 1,0xffff // reset CRC
@@ -135,8 +135,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
              }
          
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -551,12 +551,12 @@
                                      if(tInstruction.txt=="time")
                                      {
@@ -159,7 +159,7 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
 +                    screensaver.originPage.val=dp
                      sleepValue=0
 -                    dim=dimValue
--                    tSend.txt="event,buttonPress2,cardMedia,sleepReached"
+-                    tSend.txt="event,sleepReached,cardMedia"
 -                    //send calc crc
 -                    btlen tSend.txt,sys0
 -                    crcrest 1,0xffff // reset CRC
@@ -176,8 +176,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
              }
          
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -835,12 +835,12 @@
                                      if(tInstruction.txt=="time")
                                      {
@@ -200,7 +200,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
 +                    screensaver.originPage.val=dp
                      sleepValue=0
 -                    dim=dimValue
--                    tSend.txt="event,buttonPress2,cardThermo,sleepReached"
+-                    tSend.txt="event,sleepReached,cardThermo"
 -                    //send calc crc
 -                    btlen tSend.txt,sys0
 -                    crcrest 1,0xffff // reset CRC
@@ -217,8 +217,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
              }
          
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/landscape/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/pageIcons.txt	2022-03-30 20:32:26.895241964 +0000
+--- HMI/n2t-out/pageIcons.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/pageIcons.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -10,18 +10,6 @@
          Swide left page ID                  : disabled
          Swide right page ID                 : disabled
@@ -248,8 +248,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/landscape/n2t-out/pageIcons.txt
      
  Text tTmp1
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -275,8 +275,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
                                      if(tInstruction.txt=="dimmode")
                                      {
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/popupLight.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/popupLight.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/popupLight.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -382,6 +382,7 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -301,8 +301,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
                                      if(tInstruction.txt=="dimmode")
                                      {
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -195,6 +195,7 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -327,8 +327,8 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
                                      if(tInstruction.txt=="dimmode")
                                      {
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -268,6 +268,7 @@
                  sleepValue+=1
                  if(sleepTimeout<=sleepValue)
@@ -353,8 +353,8 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-03-30 20:32:26.087247588 +0000
-+++ HMI/US/landscape/n2t-out/screensaver.txt	2022-03-30 20:32:26.899241936 +0000
+--- HMI/n2t-out/screensaver.txt	2022-03-30 21:36:49.205416390 +0000
++++ HMI/US/landscape/n2t-out/screensaver.txt	2022-03-30 21:36:50.121435295 +0000
 @@ -14,18 +14,19 @@
          Preinitialize Event
              recmod=1
@@ -378,6 +378,35 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
              dim=dimValue
              vis tSend,0
              //page open event
+@@ -38,18 +39,18 @@
+             tForecast2.txt=""
+             tF2Icon.txt=""
+             tForecast2Val.txt=""
+-            //tSend.txt="event,screensaverOpen"
++            tSend.txt="event,screensaverOpen"
+             //send calc crc
+-            //btlen tSend.txt,sys0
+-            //crcrest 1,0xffff // reset CRC
+-            //crcputh 55 bb
+-            //crcputs sys0,1
+-            //crcputs tSend.txt,0
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
+             //send cmd
+-            //printh 55 bb
+-            //prints sys0,2
+-            //prints tSend.txt,0
+-            //prints crcval,2
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
+         
+ Variable (string) strCommand
+     Attributes
 @@ -57,6 +58,18 @@
          Text          : 
          Max. Text Size: 200
