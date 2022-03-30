@@ -55,6 +55,10 @@ class LuiPagesGen(object):
     def page_type(self, target_page):
         self._send_mqtt_msg(f"pageType,{target_page}")
     
+    def generate_screensaver_page(self):
+        self.page_type("screensaver")
+        self.update_screensaver_weather("")
+        
     def update_screensaver_weather(self, kwargs):
         global babel_spec
         we_name = kwargs['weather']

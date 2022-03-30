@@ -139,7 +139,7 @@ class LuiController(object):
             return
             
         if button_type == "sleepReached":
-            self._pages_gen.page_type("screensaver")
+            self._pages_gen.generate_screensaver_page()
             return
 
         if button_type == "bExit":
