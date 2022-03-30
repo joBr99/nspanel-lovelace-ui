@@ -47,7 +47,9 @@ icons = [
     "shield-airplane",
     "bell-ring",
     "ray-vertex",
-    "script-text"
+    "script-text",
+    "home-import-outline",
+    "home-export-outline"
 ]
 
 

@@ -50,3 +50,5 @@ ID | MD Icon Name | Icon
 43 | bell-ring | ![bell-ring](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/bell-ring.svg)
 44 | ray-vertex | ![ray-vertex](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/ray-vertex.svg)
 45 | script-text | ![script-text](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/script-text.svg)
+46 | home-import-outline | ![home-import-outline](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/home-import-outline.svg)
+47 | home-export-outline | ![home-export-outline](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/home-export-outline.svg)

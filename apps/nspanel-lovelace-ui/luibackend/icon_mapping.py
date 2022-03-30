@@ -45,6 +45,8 @@ icons = {
     'bell-ring': 43,
     'ray-vertex': 44,
     'script-text': 45,
+    'home-import-outline': 46,
+    'home-export-outline': 47,
 }
 
 def get_icon_id(ma_name):
