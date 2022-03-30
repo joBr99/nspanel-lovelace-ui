@@ -63,7 +63,7 @@ class LuiPagesGen(object):
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
         else:
-            LOGGER.error("Skipping Weather Update, entitiy not found")
+            LOGGER.error("Skipping Weather Update, entity not found")
             return
 
         icon_cur        = get_icon_id_ha("weather", state=we.state)
@@ -82,7 +82,7 @@ class LuiPagesGen(object):
                 icon = get_icon_id_ha("weather", state=we.attributes.forecast[i-1]['condition'])
                 down = f"{we.attributes.forecast[i-1]['temperature']} {unit}"
             else:
-                LOGGER.info(f"Forecast 1 is overrriden with {wOF}")
+                LOGGER.info(f"Forecast {i} is overriden with {wOF}")
                 icon = None
                 name = None
                 if type(wOF) is dict:
