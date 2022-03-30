@@ -3,8 +3,9 @@ import logging
 LOGGER = logging.getLogger(__name__)
 
 class Updater:
-    def __init__(self, send_mqtt_msg, topic_send, mode, desired_display_firmware_version, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
+    def __init__(self, send_mqtt_msg, topic_send, mode, desired_display_firmware_version, desired_display_firmware_model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
         self.desired_display_firmware_version = desired_display_firmware_version
+        self.desired_display_firmware_model = desired_display_firmware_model
         self.desired_display_firmware_url     = desired_display_firmware_url
         self.desired_tasmota_driver_version   = desired_tasmota_driver_version
         self.desired_tasmota_driver_url       = desired_tasmota_driver_url
@@ -14,11 +15,13 @@ class Updater:
         self.topic_send = topic_send
         self.current_tasmota_driver_version   = None
         self.current_display_firmware_version = None
+        self.current_display_model = None
 
     def set_tasmota_driver_version(self, driver_version):
-        self.current_tasmota_driver_version = driver_version
-    def set_current_display_firmware_version(self, panel_version):
+        self.current_tasmota_driver_version   = driver_version
+    def set_current_display_firmware_version(self, panel_version, panel_model=None):
         self.current_display_firmware_version = panel_version
+        self.current_display_model            = panel_model
 
     def check_pre_req(self):
         # we need to know both versions to continue
@@ -52,6 +55,13 @@ class Updater:
                     self.send_message_page("updateBerryNoYes", "Driver Update available!", update_msg, "Dismiss", "Yes")
                     return True
                 return False
+            # check if model has changed
+            if self.current_display_model is not None and current_display_model != self.desired_display_firmware_model:
+                LOGGER.info("Mismatch between Display Firmware and configured model")
+                update_msg = "The configured display firmware model has changed, do you wanto to start the update now? If the update fails check the installation manual and flash your version again over the Tasmota console. Be patient, the update will take a while."
+                self.send_message_page("updateDisplayNoYes", "Display Update available!", update_msg, "Dismiss", "Yes")
+                return True
+
             # check if display firmware needs an update
             if self.current_display_firmware_version < self.desired_display_firmware_version:
                 LOGGER.info("Update of Display Firmware needed")

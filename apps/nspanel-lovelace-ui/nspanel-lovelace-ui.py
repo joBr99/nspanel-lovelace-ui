@@ -65,20 +65,18 @@ class NsPanelLovelaceUIManager(hass.Hass):
         controller = LuiController(self, cfg, send_mqtt_msg)
 
         desired_display_firmware_version = 22
+        version     = "v2.1.0"
         
-        version     = "v2.0.0"
         model       = cfg.get("model")
-        orientation = cfg.get("orientation")
-        if model == "us":
-            if orientation == "landscape":
-                # us landscape version
-                desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-{version}.tft"
-            else:
-                # us portrait version
-                desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-{version}.tft"
+        if model == "us-l":
+            # us landscape version
+            desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-{version}.tft"
+        elif: model == "us-p":
+            # us portrait version
+            desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-{version}.tft"
         else:
             # eu version
-            desired_display_firmware_url     = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-{version}.tft"
+            desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-{version}.tft"
 
         
         desired_tasmota_driver_version   = 3
@@ -86,7 +84,7 @@ class NsPanelLovelaceUIManager(hass.Hass):
         
         mode = cfg.get("updateMode")
         topic_send = cfg.get("panelSendTopic")
-        updater = Updater(send_mqtt_msg, topic_send, mode, desired_display_firmware_version, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url)
+        updater = Updater(send_mqtt_msg, topic_send, mode, desired_display_firmware_version, model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url)
 
         topic_recv = cfg.get("panelRecvTopic")
         LuiMqttListener(mqtt_api, topic_recv, controller, updater)
