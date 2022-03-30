@@ -10,6 +10,18 @@ Page pageIcons
         Swide left page ID                  : disabled
         Swide right page ID                 : disabled
     
+Variable (string) vaTime
+    Attributes
+        Scope         : global
+        Text          : 
+        Max. Text Size: 15
+    
+Variable (string) vaDate
+    Attributes
+        Scope         : global
+        Text          : 
+        Max. Text Size: 30
+    
 Text tIcons
     Attributes
         Scope                               : global

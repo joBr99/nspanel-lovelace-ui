@@ -765,12 +765,12 @@ Timer tmSerial
                                     if(tInstruction.txt=="time")
                                     {
                                         // get set time to global variable
-                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
                                     }
                                     if(tInstruction.txt=="date")
                                     {
                                         // get set date to global variable
-                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {

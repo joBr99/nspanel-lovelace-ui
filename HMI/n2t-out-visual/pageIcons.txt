@@ -18,6 +18,20 @@ Page pageIcons
         Fill                                : solid color
         Back. Color                         : 65535
     
+Variable (string) vaTime
+    Attributes
+        ID            : 5
+        Scope         : global
+        Text          : 
+        Max. Text Size: 15
+    
+Variable (string) vaDate
+    Attributes
+        ID            : 6
+        Scope         : global
+        Text          : 
+        Max. Text Size: 30
+    
 Text tIcons
     Attributes
         ID                                  : 2
