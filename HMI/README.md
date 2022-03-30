@@ -140,7 +140,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### startup page
 
-`event,startup,version`
+`event,startup,version,model`
 
 ### screensaver page
 
