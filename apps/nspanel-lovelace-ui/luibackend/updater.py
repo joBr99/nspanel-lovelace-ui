@@ -58,7 +58,7 @@ class Updater:
             # check if model has changed
             if self.current_display_model is not None and self.current_display_model != self.desired_display_firmware_model:
                 LOGGER.info(f"Mismatch between Display Firmware ({self.current_display_model}) and configured model ({self.desired_display_firmware_model})")
-                update_msg = "The configured display firmware model has changed, do you wanto to start the update now? If the update fails check the installation manual and flash your version again over the Tasmota console. Be patient, the update will take a while."
+                update_msg = f"The configured display firmware model has changed, do you want to start the update now? Current Model: {self.current_display_model}         Configured Model: {self.desired_display_firmware_model} If the update fails check the installation          manual and flash your version again over the Tasmota console. Be patient, the update will   take a while."
                 self.send_message_page("updateDisplayNoYes", "Display Update available!", update_msg, "Dismiss", "Yes")
                 return True
 
