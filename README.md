@@ -256,6 +256,7 @@ nspanel-1:
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
+    #model: 'us-p' # uncomment this if you have the us version, see table below for more information
     timeoutScreensaver: 20
     #brightnessScreensaver: 10
     brightnessScreensaver:
