@@ -57,12 +57,12 @@ class LuiPagesGen(object):
     
     def generate_screensaver_page(self):
         self.page_type("screensaver")
-        #self.update_screensaver_weather("")
+        self.update_screensaver_weather("")
         
-    def update_screensaver_weather(self, kwargs):
+    def update_screensaver_weather(self):
         global babel_spec
-        we_name = kwargs['weather']
-        unit = kwargs['unit']
+        we_name = self._config.get("weather")
+        unit = self._config.get("weatherUnit")
 
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
