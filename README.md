@@ -320,6 +320,8 @@ key | optional | type | default | description
 -- | -- | -- | -- | --
 `panelRecvTopic` | False | string | `tele/tasmota_your_mqtt_topic/RESULT` | The mqtt topic used to receive messages. 
 `panelSendTopic` | False | string | `cmnd/tasmota_your_mqtt_topic/CustomSend` | The mqtt topic used to send messages. 
+`updateMode` | True | string | `auto-notify` | Update Mode; Possible values: "auto", "auto-notify", "manual"
+`model` | True | string | `eu` | Model; Possible values: "eu", "us-l" and "us-p"
 `timeoutScreensaver` | True | integer | `20` | Timeout for the screen to enter screensaver, to disable screensaver use 0
 `brightnessScreensaver` | True | integer/complex | `20` | Brightness for the screen to enter screensaver, see example below for complex/scheduled config.
 `brightnessScreensaverTracking` | True | string | None | Forces screensaver brightness to 0 in case entity state is not_home, can be a group, person or device_tracker entity.
