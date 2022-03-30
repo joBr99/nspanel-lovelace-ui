@@ -71,7 +71,7 @@ class NsPanelLovelaceUIManager(hass.Hass):
         if model == "us-l":
             # us landscape version
             desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-{version}.tft"
-        elif: model == "us-p":
+        elif model == "us-p":
             # us portrait version
             desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-{version}.tft"
         else:
