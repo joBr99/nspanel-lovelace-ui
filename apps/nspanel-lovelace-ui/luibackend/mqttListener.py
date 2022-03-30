@@ -41,8 +41,9 @@ class LuiMqttListener(object):
                 # send messages for current page 
                 if not msg_send:
                     self._controller.startup()
-            if msg[1] == "screensaverOpen":
-                self._controller.weather_update("")
+            if msg[1] == "sleepReached":
+                entity_id = msg[2]
+                self._controller.button_press(entity_id, "sleepReached", None)
                 # try to request tasmota driver version again in case it's still None
                 if self._updater.current_tasmota_driver_version is None:
                     self._updater.request_berry_driver_version()
