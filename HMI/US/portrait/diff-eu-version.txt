@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-29 23:57:00.704990944 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-29 23:57:01.108998641 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-30 09:17:12.762388734 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-30 09:17:13.206389440 +0000
 @@ -10,6 +10,6 @@
      int sleepValue=0
      // dim value
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-29 23:57:00.704990944 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-29 23:57:01.112998717 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-30 09:17:12.766388740 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-30 09:17:13.206389440 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -781,8 +781,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-03-29 23:57:00.704990944 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-29 23:57:01.108998641 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-03-30 09:17:12.766388740 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-30 09:17:13.206389440 +0000
 @@ -17,6 +17,7 @@
              vis tInstruction,0
              vis tTmp,0
@@ -808,8 +808,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
      Attributes
          Scope                               : local
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-29 23:57:00.704990944 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-29 23:57:01.108998641 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-30 09:17:12.762388734 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-30 09:17:13.206389440 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -819,3 +819,12 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
          Max. Text Size                      : 100
      
  Text tVersion
+@@ -177,7 +177,7 @@
+             recmod=1
+             bauds=115200
+             // startup event
+-            tSend.txt="event,startup,"+tVersion.txt+",eu"
++            tSend.txt="event,startup,"+tVersion.txt+",us-p"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC

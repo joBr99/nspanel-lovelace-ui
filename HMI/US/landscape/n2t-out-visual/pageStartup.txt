@@ -402,7 +402,7 @@ Text tVersion
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 22
+        Text                                : 23
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -462,7 +462,7 @@ Button bSendStartup
             recmod=1
             bauds=115200
             // startup event
-            tSend.txt="event,startup,"+tVersion.txt
+            tSend.txt="event,startup,"+tVersion.txt+",us-l"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
