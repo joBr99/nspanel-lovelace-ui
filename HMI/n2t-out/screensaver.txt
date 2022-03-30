@@ -14,7 +14,6 @@ Page screensaver
         Preinitialize Event
             recmod=1
             bauds=115200
-            vis originPage,0
             vis tInstruction,0
             vis tTmp,0
             vis p0,0
@@ -80,15 +79,6 @@ Variable (int32) vaTap
     Attributes
         Scope: local
         Value: 0
-    
-Number originPage
-    Attributes
-        Scope                               : global
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
     
 Text tInstruction
     Attributes

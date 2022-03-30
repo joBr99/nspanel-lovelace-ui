@@ -382,7 +382,6 @@ Timer tmSleep
                 sleepValue+=1
                 if(sleepTimeout<=sleepValue)
                 {
-                    screensaver.originPage.val=dp
                     sleepValue=0
                     click b0,1
                     click b0,0
