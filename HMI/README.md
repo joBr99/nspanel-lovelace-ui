@@ -138,6 +138,9 @@ The following message can be used to update the content on the cardEntities Page
 
 `event,buttonPress2,pageName,bExit,number_of_taps`
 
+`event,buttonPress2,pageName,sleepReached`
+
+
 ### startup page
 
 `event,startup,version,model`
