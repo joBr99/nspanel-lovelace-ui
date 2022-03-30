@@ -100,6 +100,8 @@ class LuiBackendConfig(object):
         'panelRecvTopic': "tele/tasmota_your_mqtt_topic/RESULT",
         'panelSendTopic': "cmnd/tasmota_your_mqtt_topic/CustomSend",
         'updateMode': "auto-notify",
+        'model': "eu",
+        'orientation': "landscape",
         'timeoutScreensaver': 20,
         'brightnessScreensaver': 20,
         'brightnessScreensaverTracking': None,
