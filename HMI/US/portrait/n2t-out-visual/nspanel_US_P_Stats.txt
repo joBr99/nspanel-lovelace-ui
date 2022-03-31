@@ -16,8 +16,8 @@ popupNotify
 	117  Unique line(s) of event code
 cardAlarm
 	35   Component(s)
-	298  Line(s) of event code
-	187  Unique line(s) of event code
+	343  Line(s) of event code
+	214  Unique line(s) of event code
 pageTest
 	13   Component(s)
 	13   Line(s) of event code
@@ -58,5 +58,5 @@ cardEntities
 Total
 	13   Page(s)
 	375  Component(s)
-	3832 Line(s) of event code
-	1034 Unique line(s) of event code
+	3877 Line(s) of event code
+	1061 Unique line(s) of event code
