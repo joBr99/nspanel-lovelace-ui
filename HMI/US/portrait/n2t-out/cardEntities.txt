@@ -273,7 +273,7 @@ Text tIcon1
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : î°
-        Max. Text Size                      : 10
+        Max. Text Size                      : 5
     
 Text tIcon2
     Attributes
@@ -283,7 +283,7 @@ Text tIcon2
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : î°
-        Max. Text Size                      : 30
+        Max. Text Size                      : 5
     
 Text tIcon3
     Attributes
@@ -293,7 +293,7 @@ Text tIcon3
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : î°
-        Max. Text Size                      : 10
+        Max. Text Size                      : 5
     
 Text tIcon4
     Attributes
@@ -303,7 +303,7 @@ Text tIcon4
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : î°
-        Max. Text Size                      : 30
+        Max. Text Size                      : 5
     
 Text tSend
     Attributes
@@ -363,7 +363,7 @@ Text tIcon5
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : î°
-        Max. Text Size                      : 30
+        Max. Text Size                      : 5
     
 Text tEntity6
     Attributes
@@ -383,7 +383,7 @@ Text tIcon6
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : î°
-        Max. Text Size                      : 30
+        Max. Text Size                      : 5
     
 Picture p0
     Attributes

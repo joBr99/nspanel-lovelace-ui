@@ -6,14 +6,14 @@ pageSerialTest
 	13   Component(s)
 	48   Line(s) of event code
 	43   Unique line(s) of event code
-pageIcons
-	7    Component(s)
-	0    Line(s) of event code
-	0    Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	178  Line(s) of event code
 	117  Unique line(s) of event code
+pageIcons
+	7    Component(s)
+	0    Line(s) of event code
+	0    Unique line(s) of event code
 cardMedia
 	30   Component(s)
 	331  Line(s) of event code
