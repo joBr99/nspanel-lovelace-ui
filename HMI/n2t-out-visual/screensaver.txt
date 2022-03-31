@@ -917,6 +917,26 @@ Timer tmSerial
                 }
             }
         
+Timer tmSleep
+    Attributes
+        ID         : 28
+        Scope      : local
+        Period (ms): 1000
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            if(sleepTimeout!=0&&dimValue!=dim)
+            {
+                sleepValue+=1
+                if(sleepTimeout<=sleepValue)
+                {
+                    sleepValue=0
+                    dim=dimValue
+                    vaTap.val=0
+                }
+            }
+        
 TouchCap tc0
     Attributes
         ID   : 2
