@@ -673,7 +673,7 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,",",4
                                         covx tTmp.txt,xTempCurr.val,0,0
                                         //dstTemp
-                                        spstr strCommand.txt,tTmp.txt,",",4
+                                        spstr strCommand.txt,tTmp.txt,",",5
                                         covx tTmp.txt,xTempDest.val,0,0
                                         //status
                                         spstr strCommand.txt,tStatus.txt,",",6
