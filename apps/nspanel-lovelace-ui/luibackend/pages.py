@@ -267,7 +267,7 @@ class LuiPagesGen(object):
                     onoffbutton = 1374
                 else:
                     onoffbutton = rgb_dec565([255,255,255])
-            command = f"entityUpd,|{item}|{heading}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist[:200]}|{onoffbutton}"
+            command = f"entityUpd,|{heading}||{item}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist[:200]}|{onoffbutton}"
         self._send_mqtt_msg(command)
         
     def generate_alarm_page(self, item):
@@ -326,7 +326,8 @@ class LuiPagesGen(object):
                 arm_buttons += f",{get_translation(self._locale, b)},{b}"
             if len(supported_modes) < 4:
                 arm_buttons += ","*((4-len(supported_modes))*2)
-            command = f"entityUpd,{item}{arm_buttons},{icon},{color},{numpad},{flashing}"
+            navigation = ""
+            command = f"entityUpd,{item},{navigation}{arm_buttons},{icon},{color},{numpad},{flashing}"
         self._send_mqtt_msg(command)
         
     def render_page(self, page, send_page_type=True):
