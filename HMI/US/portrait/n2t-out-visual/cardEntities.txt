@@ -537,7 +537,7 @@ Text tIcon1
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : î°
-        Max. Text Size                      : 10
+        Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -567,7 +567,7 @@ Text tIcon2
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : î°
-        Max. Text Size                      : 30
+        Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -597,7 +597,7 @@ Text tIcon3
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : î°
-        Max. Text Size                      : 10
+        Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -627,7 +627,7 @@ Text tIcon4
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : î°
-        Max. Text Size                      : 30
+        Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -807,7 +807,7 @@ Text tIcon5
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : î°
-        Max. Text Size                      : 30
+        Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -867,7 +867,7 @@ Text tIcon6
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : î°
-        Max. Text Size                      : 30
+        Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
