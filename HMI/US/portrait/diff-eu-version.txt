@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-31 06:42:28.886866357 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 06:42:29.390880901 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-31 06:52:54.704771879 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 06:52:55.108777348 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,36 +11,9 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-31 06:42:28.890866473 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 06:42:29.438882286 +0000
-@@ -62,6 +62,26 @@
-             vis bText4,0
-             vis hSlider4,0
-             vis nNum4,0
-+            //ui e5
-+            vis btOnOff5,0
-+            vis bUp5,0
-+            vis bStop5,0
-+            vis bDown5,0
-+            vis tIcon5,0
-+            vis tEntity5,0
-+            vis bText5,0
-+            vis hSlider5,0
-+            vis nNum5,0
-+            //ui e6
-+            vis btOnOff6,0
-+            vis bUp6,0
-+            vis bStop6,0
-+            vis bDown6,0
-+            vis tIcon6,0
-+            vis tEntity6,0
-+            vis bText6,0
-+            vis hSlider6,0
-+            vis nNum6,0
-         
- Variable (string) strCommand
-     Attributes
-@@ -117,6 +137,30 @@
+--- HMI/n2t-out/cardEntities.txt	2022-03-31 06:52:54.704771879 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 06:52:55.144777835 +0000
+@@ -117,6 +117,30 @@
          Text          : 
          Max. Text Size: 70
      
@@ -71,7 +44,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Number nNum1
      Attributes
          Scope                               : local
-@@ -153,6 +197,24 @@
+@@ -153,6 +177,24 @@
          Associated Keyboard                 : none
          Value                               : 0
      
@@ -96,7 +69,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Text tHeading
      Attributes
          Scope                               : local
-@@ -283,6 +345,46 @@
+@@ -283,6 +325,46 @@
          Text                                : 
          Max. Text Size                      : 50
      
@@ -143,7 +116,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Picture p0
      Attributes
          Scope                               : local
-@@ -402,6 +504,62 @@
+@@ -402,6 +484,62 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -206,7 +179,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Button bDown1
      Attributes
          Scope                               : local
-@@ -852,6 +1010,206 @@
+@@ -852,6 +990,206 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -413,7 +386,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          Scope                               : local
-@@ -960,6 +1318,60 @@
+@@ -960,6 +1298,60 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -474,7 +447,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          Scope                               : local
-@@ -1065,6 +1477,50 @@
+@@ -1065,6 +1457,50 @@
                  page popupLight
              }
          
@@ -525,7 +498,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          Scope      : local
-@@ -1120,12 +1576,9 @@
+@@ -1120,12 +1556,9 @@
                                      {
                                          // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
                                          spstr strCommand.txt,tHeading.txt,",",1
@@ -538,7 +511,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp1,0
                                              vis bStop1,0
                                              vis bDown1,0
-@@ -1135,23 +1588,14 @@
+@@ -1135,23 +1568,14 @@
                                              vis bText1,0
                                              vis hSlider1,0
                                              vis nNum1,0
@@ -562,7 +535,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp1,1
                                              vis bStop1,1
                                              vis bDown1,1
-@@ -1159,9 +1603,7 @@
+@@ -1159,9 +1583,7 @@
                                              vis bText1,0
                                              vis hSlider1,0
                                              vis nNum1,0
@@ -572,7 +545,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp1,0
                                              vis bStop1,0
                                              vis bDown1,0
-@@ -1169,13 +1611,9 @@
+@@ -1169,13 +1591,9 @@
                                              vis bText1,0
                                              vis hSlider1,0
                                              vis nNum1,0
@@ -586,7 +559,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp1,0
                                              vis bStop1,0
                                              vis bDown1,0
-@@ -1183,13 +1621,9 @@
+@@ -1183,13 +1601,9 @@
                                              vis bText1,0
                                              vis hSlider1,0
                                              vis nNum1,0
@@ -600,7 +573,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp1,0
                                              vis bStop1,0
                                              vis bDown1,0
-@@ -1200,11 +1634,8 @@
+@@ -1200,11 +1614,8 @@
                                              vis nNum1,0
                                              bText1.pco=65535
                                              bText1.pco2=65535
@@ -612,7 +585,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp1,0
                                              vis bStop1,0
                                              vis bDown1,0
-@@ -1215,11 +1646,8 @@
+@@ -1215,11 +1626,8 @@
                                              vis nNum1,0
                                              bText1.pco=1374
                                              bText1.pco2=1374
@@ -624,7 +597,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp1,0
                                              vis bStop1,0
                                              vis bDown1,0
-@@ -1228,28 +1656,17 @@
+@@ -1228,28 +1636,17 @@
                                              tsw bText1,0
                                              vis hSlider1,1
                                              vis nNum1,1
@@ -653,7 +626,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp2,0
                                              vis bStop2,0
                                              vis bDown2,0
-@@ -1259,23 +1676,14 @@
+@@ -1259,23 +1656,14 @@
                                              vis bText2,0
                                              vis hSlider2,0
                                              vis nNum2,0
@@ -677,7 +650,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp2,1
                                              vis bStop2,1
                                              vis bDown2,1
-@@ -1283,9 +1691,7 @@
+@@ -1283,9 +1671,7 @@
                                              vis bText2,0
                                              vis hSlider2,0
                                              vis nNum2,0
@@ -687,7 +660,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp2,0
                                              vis bStop2,0
                                              vis bDown2,0
-@@ -1293,13 +1699,9 @@
+@@ -1293,13 +1679,9 @@
                                              vis bText2,0
                                              vis hSlider2,0
                                              vis nNum2,0
@@ -701,7 +674,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp2,0
                                              vis bStop2,0
                                              vis bDown2,0
-@@ -1307,13 +1709,9 @@
+@@ -1307,13 +1689,9 @@
                                              vis bText2,0
                                              vis hSlider2,0
                                              vis nNum2,0
@@ -715,7 +688,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp2,0
                                              vis bStop2,0
                                              vis bDown2,0
-@@ -1324,11 +1722,8 @@
+@@ -1324,11 +1702,8 @@
                                              vis nNum2,0
                                              bText2.pco=65535
                                              bText2.pco2=65535
@@ -727,7 +700,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp2,0
                                              vis bStop2,0
                                              vis bDown2,0
-@@ -1339,11 +1734,8 @@
+@@ -1339,11 +1714,8 @@
                                              vis nNum2,0
                                              bText2.pco=1374
                                              bText2.pco2=1374
@@ -739,7 +712,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp2,0
                                              vis bStop2,0
                                              vis bDown2,0
-@@ -1352,28 +1744,17 @@
+@@ -1352,28 +1724,17 @@
                                              tsw bText2,0
                                              vis hSlider2,1
                                              vis nNum2,1
@@ -768,7 +741,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp3,0
                                              vis bStop3,0
                                              vis bDown3,0
-@@ -1383,23 +1764,14 @@
+@@ -1383,23 +1744,14 @@
                                              vis bText3,0
                                              vis hSlider3,0
                                              vis nNum3,0
@@ -792,7 +765,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp3,1
                                              vis bStop3,1
                                              vis bDown3,1
-@@ -1407,9 +1779,7 @@
+@@ -1407,9 +1759,7 @@
                                              vis bText3,0
                                              vis hSlider3,0
                                              vis nNum3,0
@@ -802,7 +775,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp3,0
                                              vis bStop3,0
                                              vis bDown3,0
-@@ -1417,13 +1787,9 @@
+@@ -1417,13 +1767,9 @@
                                              vis bText3,0
                                              vis hSlider3,0
                                              vis nNum3,0
@@ -816,7 +789,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp3,0
                                              vis bStop3,0
                                              vis bDown3,0
-@@ -1431,13 +1797,9 @@
+@@ -1431,13 +1777,9 @@
                                              vis bText3,0
                                              vis hSlider3,0
                                              vis nNum3,0
@@ -830,7 +803,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp3,0
                                              vis bStop3,0
                                              vis bDown3,0
-@@ -1448,11 +1810,8 @@
+@@ -1448,11 +1790,8 @@
                                              vis nNum3,0
                                              bText3.pco=65535
                                              bText3.pco2=65535
@@ -842,7 +815,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp3,0
                                              vis bStop3,0
                                              vis bDown3,0
-@@ -1463,11 +1822,8 @@
+@@ -1463,11 +1802,8 @@
                                              vis nNum3,0
                                              bText3.pco=1374
                                              bText3.pco2=1374
@@ -854,7 +827,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp3,0
                                              vis bStop3,0
                                              vis bDown3,0
-@@ -1476,28 +1832,17 @@
+@@ -1476,28 +1812,17 @@
                                              tsw bText3,0
                                              vis hSlider3,1
                                              vis nNum3,1
@@ -883,7 +856,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp4,0
                                              vis bStop4,0
                                              vis bDown4,0
-@@ -1507,23 +1852,14 @@
+@@ -1507,23 +1832,14 @@
                                              vis bText4,0
                                              vis hSlider4,0
                                              vis nNum4,0
@@ -907,7 +880,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp4,1
                                              vis bStop4,1
                                              vis bDown4,1
-@@ -1531,9 +1867,7 @@
+@@ -1531,9 +1847,7 @@
                                              vis bText4,0
                                              vis hSlider4,0
                                              vis nNum4,0
@@ -917,7 +890,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp4,0
                                              vis bStop4,0
                                              vis bDown4,0
-@@ -1541,13 +1875,9 @@
+@@ -1541,13 +1855,9 @@
                                              vis bText4,0
                                              vis hSlider4,0
                                              vis nNum4,0
@@ -931,7 +904,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp4,0
                                              vis bStop4,0
                                              vis bDown4,0
-@@ -1555,13 +1885,9 @@
+@@ -1555,13 +1865,9 @@
                                              vis bText4,0
                                              vis hSlider4,0
                                              vis nNum4,0
@@ -945,7 +918,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp4,0
                                              vis bStop4,0
                                              vis bDown4,0
-@@ -1572,11 +1898,8 @@
+@@ -1572,11 +1878,8 @@
                                              vis nNum4,0
                                              bText4.pco=65535
                                              bText4.pco2=65535
@@ -957,7 +930,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp4,0
                                              vis bStop4,0
                                              vis bDown4,0
-@@ -1587,11 +1910,8 @@
+@@ -1587,11 +1890,8 @@
                                              vis nNum4,0
                                              bText4.pco=1374
                                              bText4.pco2=1374
@@ -969,7 +942,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                              vis bUp4,0
                                              vis bStop4,0
                                              vis bDown4,0
-@@ -1600,23 +1920,15 @@
+@@ -1600,23 +1900,15 @@
                                              tsw bText4,0
                                              vis hSlider4,1
                                              vis nNum4,1
@@ -993,7 +966,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
                                          //command format pageType,specialPageName
-@@ -1630,48 +1942,28 @@
+@@ -1630,48 +1922,28 @@
                                          udelete payloadLength-1
                                          bufferPos=0
                                          if(tId.txt=="pageStartup")
@@ -1043,8 +1016,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      {
                                          // get set time to global variable
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-31 06:42:28.886866357 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 06:42:29.394881016 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-31 06:52:54.704771879 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 06:52:55.112777402 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
