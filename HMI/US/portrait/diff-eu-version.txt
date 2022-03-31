@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-31 18:53:35.913570934 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 18:53:36.313575206 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-31 18:57:30.523092501 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 18:57:30.927102768 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-03-31 18:53:35.913570934 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-03-31 18:53:36.313575206 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-03-31 18:57:30.523092501 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-03-31 18:57:30.927102768 +0000
 @@ -17,6 +17,7 @@
              vis tInstruction,0
              vis tTmp,0
@@ -148,8 +148,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                          {
                                              tmFlash.en=1
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-31 18:53:35.913570934 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 18:53:36.313575206 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-31 18:57:30.523092501 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 18:57:30.927102768 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -966,8 +966,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-03-31 18:53:35.913570934 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-03-31 18:53:36.313575206 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-03-31 18:57:30.523092501 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-03-31 18:57:30.927102768 +0000
 @@ -242,12 +242,7 @@
      
      Events
@@ -1017,8 +1017,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                          spstr strCommand.txt,type1.txt,",",3
                                          // get internal name
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-03-31 18:53:35.913570934 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-31 18:53:36.313575206 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-03-31 18:57:30.523092501 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-31 18:57:30.927102768 +0000
 @@ -435,12 +435,7 @@
      
      Events
@@ -1116,8 +1116,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                          {
                                              vis t5,0
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-03-31 18:53:35.913570934 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-31 18:53:36.313575206 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-03-31 18:57:30.523092501 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-31 18:57:30.927102768 +0000
 @@ -329,12 +329,7 @@
      
      Events
@@ -1460,8 +1460,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                                                      udelete payloadLength-1
                                                                      bufferPos=0
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-31 18:53:35.913570934 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 18:53:36.313575206 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-31 18:57:30.523092501 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 18:57:30.927102768 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
