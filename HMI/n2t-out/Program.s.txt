@@ -6,7 +6,7 @@ Program.s
     int payloadLength=0
     int par0=0,par1=0
     // sleep timeout in s
-    int sleepTimeout=2
+    int sleepTimeout=20
     int sleepValue=0
     // dim value
     int dimValue=40
