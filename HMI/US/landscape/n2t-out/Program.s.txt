@@ -10,6 +10,7 @@ Program.s
     int sleepValue=0
     // dim value
     int dimValue=40
-    // fix touch offset (Removed for US version)
-    //lcd_dev fffb 0002 0000 0020
+    int dimValueNormal=100
+    // fix touch offset
+    lcd_dev fffb 0002 0000 0020
     page pageStartup

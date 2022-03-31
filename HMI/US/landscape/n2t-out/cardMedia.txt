@@ -551,12 +551,12 @@ Timer tmSerial
                                     if(tInstruction.txt=="time")
                                     {
                                         // get set time to global variable
-                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
                                     }
                                     if(tInstruction.txt=="date")
                                     {
                                         // get set date to global variable
-                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
@@ -647,9 +647,20 @@ Timer tmSleep
                 sleepValue+=1
                 if(sleepTimeout<=sleepValue)
                 {
-                    screensaver.originPage.val=dp
                     sleepValue=0
-                    page screensaver
+                    dim=dimValue
+                    tSend.txt="event,sleepReached,cardMedia"
+                    //send calc crc
+                    btlen tSend.txt,sys0
+                    crcrest 1,0xffff // reset CRC
+                    crcputh 55 bb
+                    crcputs sys0,1
+                    crcputs tSend.txt,0
+                    //send cmd
+                    printh 55 bb
+                    prints sys0,2
+                    prints tSend.txt,0
+                    prints crcval,2
                 }
             }
         

@@ -22,19 +22,18 @@ Page screensaver
         Preinitialize Event
             recmod=1
             bauds=115200
-            vis originPage,0
             vis tInstruction,0
             vis tTmp,0
             vis p0,0
             //load gloabl time string from pageIcons
             //tTime.txt=vaTime.txt
-            spstr vaTime.txt,tTime.txt,"?",0
-            spstr vaTime.txt,tAMPM.txt,"?",1
+            spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+            spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
             if(tAMPM.txt=="")
             {
                 vis tAMPM,0
             }
-            tDate.txt=vaDate.txt
+            tDate.txt=pageIcons.vaDate.txt
             dim=dimValue
             vis tSend,0
             //page open event
@@ -47,86 +46,42 @@ Page screensaver
             tForecast2.txt=""
             tF2Icon.txt=""
             tForecast2Val.txt=""
-            tSend.txt="event,screensaverOpen"
+            //tSend.txt="event,screensaverOpen"
             //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
+            //btlen tSend.txt,sys0
+            //crcrest 1,0xffff // reset CRC
+            //crcputh 55 bb
+            //crcputs sys0,1
+            //crcputs tSend.txt,0
             //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            //printh 55 bb
+            //prints sys0,2
+            //prints tSend.txt,0
+            //prints crcval,2
         
 Variable (string) strCommand
     Attributes
-        ID            : 5
+        ID            : 4
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
-Variable (string) vaTime
-    Attributes
-        ID            : 10
-        Scope         : global
-        Text          : 
-        Max. Text Size: 15
-    
-Variable (string) vaDate
-    Attributes
-        ID            : 11
-        Scope         : global
-        Text          : 
-        Max. Text Size: 30
-    
 Variable (string) tId
     Attributes
-        ID            : 22
+        ID            : 19
         Scope         : local
         Text          : 
         Max. Text Size: 25
     
 Variable (int32) vaTap
     Attributes
-        ID   : 30
+        ID   : 27
         Scope: local
         Value: 0
     
-Number originPage
-    Attributes
-        ID                                  : 3
-        Scope                               : global
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 452
-        y coordinate                        : 267
-        Width                               : 24
-        Height                              : 49
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Value                               : 0
-        Significant digits shown            : all
-        Format                              : decimal
-        Word wrap                           : enabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Text tInstruction
     Attributes
-        ID                                  : 6
+        ID                                  : 5
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -156,7 +111,7 @@ Text tInstruction
     
 Text tTmp
     Attributes
-        ID                                  : 7
+        ID                                  : 6
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -186,7 +141,7 @@ Text tTmp
     
 Text tTime
     Attributes
-        ID                                  : 8
+        ID                                  : 7
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -216,7 +171,7 @@ Text tTime
     
 Text tDate
     Attributes
-        ID                                  : 9
+        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -246,7 +201,7 @@ Text tDate
     
 Text tSend
     Attributes
-        ID                                  : 12
+        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -276,7 +231,7 @@ Text tSend
     
 Text tMainIcon
     Attributes
-        ID                                  : 13
+        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -306,7 +261,7 @@ Text tMainIcon
     
 Text tMainText
     Attributes
-        ID                                  : 14
+        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -336,7 +291,7 @@ Text tMainText
     
 Text tForecast1
     Attributes
-        ID                                  : 15
+        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -366,7 +321,7 @@ Text tForecast1
     
 Text tForecast1Val
     Attributes
-        ID                                  : 16
+        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -396,7 +351,7 @@ Text tForecast1Val
     
 Text tF1Icon
     Attributes
-        ID                                  : 17
+        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -426,7 +381,7 @@ Text tF1Icon
     
 Text tForecast2
     Attributes
-        ID                                  : 18
+        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -456,7 +411,7 @@ Text tForecast2
     
 Text tF2Icon
     Attributes
-        ID                                  : 19
+        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -486,7 +441,7 @@ Text tF2Icon
     
 Text tForecast2Val
     Attributes
-        ID                                  : 20
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -516,13 +471,13 @@ Text tForecast2Val
     
 Text t10
     Attributes
-        ID                                  : 21
+        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 46
+        x coordinate                        : 61
         y coordinate                        : 195
         Width                               : 360
         Height                              : 2
@@ -546,7 +501,7 @@ Text t10
     
 Text tAMPM
     Attributes
-        ID                                  : 23
+        ID                                  : 20
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -576,7 +531,7 @@ Text tAMPM
     
 Text tForecast3Val
     Attributes
-        ID                                  : 24
+        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -606,7 +561,7 @@ Text tForecast3Val
     
 Text tF3Icon
     Attributes
-        ID                                  : 25
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -636,7 +591,7 @@ Text tF3Icon
     
 Text tForecast3
     Attributes
-        ID                                  : 26
+        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -666,7 +621,7 @@ Text tForecast3
     
 Text tForecast4
     Attributes
-        ID                                  : 27
+        ID                                  : 24
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -696,7 +651,7 @@ Text tForecast4
     
 Text tF4Icon
     Attributes
-        ID                                  : 28
+        ID                                  : 25
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -726,7 +681,7 @@ Text tF4Icon
     
 Text tForecast4Val
     Attributes
-        ID                                  : 29
+        ID                                  : 26
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -773,7 +728,7 @@ Picture p0
     
 Timer tmSerial
     Attributes
-        ID         : 4
+        ID         : 3
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -838,9 +793,9 @@ Timer tmSerial
                                     if(tInstruction.txt=="time")
                                     {
                                         //get set time to global variable
-                                        spstr strCommand.txt,vaTime.txt,",",1
-                                        spstr vaTime.txt,tTime.txt,"?",0
-                                        spstr vaTime.txt,tAMPM.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
+                                        spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+                                        spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
                                         if(tAMPM.txt=="")
                                         {
                                             vis tAMPM,0
@@ -849,8 +804,8 @@ Timer tmSerial
                                     if(tInstruction.txt=="date")
                                     {
                                         //get set date to global variable
-                                        spstr strCommand.txt,vaDate.txt,"?",1
-                                        tDate.txt=vaDate.txt
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                        tDate.txt=pageIcons.vaDate.txt
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
@@ -970,7 +925,7 @@ TouchCap tc0
     
     Events
         Touch Press Event
-            dim=100
+            dim=dimValueNormal
             vaTap.val+=1
             covx vaTap.val,tTmp.txt,0,0
             tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
@@ -985,6 +940,4 @@ TouchCap tc0
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            //dim=100
-            //page originPage.val
         

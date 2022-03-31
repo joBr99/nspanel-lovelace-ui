@@ -22,14 +22,14 @@ popupShutter
 	19   Component(s)
 	178  Line(s) of event code
 	101  Unique line(s) of event code
-cardAlarm
-	35   Component(s)
-	285  Line(s) of event code
-	181  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	150  Line(s) of event code
 	113  Unique line(s) of event code
+cardAlarm
+	35   Component(s)
+	285  Line(s) of event code
+	181  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	322  Line(s) of event code

@@ -10,6 +10,18 @@ Page pageIcons
         Swide left page ID                  : disabled
         Swide right page ID                 : disabled
     
+Variable (string) vaTime
+    Attributes
+        Scope         : global
+        Text          : 
+        Max. Text Size: 15
+    
+Variable (string) vaDate
+    Attributes
+        Scope         : global
+        Text          : 
+        Max. Text Size: 30
+    
 Text tIcons
     Attributes
         Scope                               : global
@@ -17,7 +29,7 @@ Text tIcons
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîîî¯î¾î¾î¶î­ïîî¸
+        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîîî¯î¾î¾î¶î­ïîî¸î¸­
         Max. Text Size                      : 170
     
 Text tTmp1

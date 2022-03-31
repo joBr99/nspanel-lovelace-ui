@@ -152,7 +152,7 @@ Text tVersion
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 23
+        Text                                : 24
         Max. Text Size                      : 10
     
 Picture p0
@@ -177,7 +177,7 @@ Button bSendStartup
             recmod=1
             bauds=115200
             // startup event
-            tSend.txt="event,startup,"+tVersion.txt+",us-l"
+            tSend.txt="event,startup,"+tVersion.txt+",eu"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -261,12 +261,12 @@ Timer tmSerial
                                     if(tInstruction.txt=="time")
                                     {
                                         // get set time to global variable
-                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
                                     }
                                     if(tInstruction.txt=="date")
                                     {
                                         // get set date to global variable
-                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
