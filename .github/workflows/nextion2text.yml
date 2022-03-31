@@ -5,6 +5,7 @@ on:
     paths:
       - HMI/nspanel.HMI
       - HMI/US/portrait/nspanel_US_P.HMI
+      - HMI/US/portrait/diff-ignore/cardEntities.txt
       - HMI/US/landscape/nspanel_US_L.HMI
       - .github/workflows/nextion2text.yml
   push:
@@ -13,6 +14,7 @@ on:
     paths:
       - HMI/nspanel.HMI
       - HMI/US/portrait/nspanel_US_P.HMI
+      - HMI/US/portrait/diff-ignore/cardEntities.txt
       - HMI/US/landscape/nspanel_US_L.HMI
       - .github/workflows/nextion2text.yml
 
