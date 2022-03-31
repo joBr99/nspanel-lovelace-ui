@@ -4,7 +4,7 @@ head = sharedhead + """
             {
               // command format: entityUpd,heading,navigation,[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
               spstr strCommand.txt,tHeading.txt,",",1
-"""
+""" + navigation
 print(head)
 start = 3
 for i in range(1,7):

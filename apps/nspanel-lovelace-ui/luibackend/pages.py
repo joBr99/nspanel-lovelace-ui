@@ -234,7 +234,7 @@ class LuiPagesGen(object):
                 icon_res =  ","*4*padding_len + icon_res + ","*4*padding_len
                 # use first 5 icons
                 icon_res = icon_res + ","*4*4
-            command = f"entityUpd,{item},{heading},{current_temp},{dest_temp},{status},{min_temp},{max_temp},{step_temp}{icon_res}"
+            command = f"entityUpd,{heading},,{item},{current_temp},{dest_temp},{status},{min_temp},{max_temp},{step_temp}{icon_res}"
         self._send_mqtt_msg(command)
 
     def generate_media_page(self, item):

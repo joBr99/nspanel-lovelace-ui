@@ -4,10 +4,10 @@ head = sharedhead + """
             {
             // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
             spstr strCommand.txt,tHeading.txt,",",1
-"""
+""" + navigation
 print(head)
 start = 3
-for i in range(1,7):
+for i in range(1,5):
     idxstart = start + (i-1)*6
     item = f"""
               // get Type
