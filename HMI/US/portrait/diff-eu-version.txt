@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-31 21:30:19.649486397 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 21:30:20.049491752 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-31 21:34:53.332219061 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 21:34:53.840234939 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-31 21:30:19.649486397 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 21:30:20.053491806 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-31 21:34:53.332219061 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 21:34:53.844235064 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -206,21 +206,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Button bDown1
      Attributes
          Scope                               : local
-@@ -714,12 +872,7 @@
-     
-     Events
-         Touch Press Event
--            tSend.txt="event,buttonPress2,cardEntities,"
--            if(bPrev.txt=="î¶")
--            {
--                tSend.txt+="bUp"
--            }
--            tSend.txt+="bPrev"
-+            tSend.txt="event,buttonPress2,cardEntities,bPrev"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-@@ -857,6 +1010,206 @@
+@@ -857,6 +1015,206 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -427,7 +413,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          Scope                               : local
-@@ -965,6 +1318,60 @@
+@@ -965,6 +1323,60 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -488,7 +474,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          Scope                               : local
-@@ -1070,6 +1477,50 @@
+@@ -1070,6 +1482,50 @@
                  page popupLight
              }
          
@@ -539,7 +525,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          Scope      : local
-@@ -1125,33 +1576,6 @@
+@@ -1125,33 +1581,6 @@
                                      {
                                          // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
                                          spstr strCommand.txt,tHeading.txt,",",1
@@ -573,7 +559,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                          // get Type
                                          spstr strCommand.txt,type1.txt,",",3
                                          // get internal name
-@@ -1648,6 +2072,254 @@
+@@ -1648,6 +2077,254 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
@@ -829,8 +815,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-03-31 21:30:19.649486397 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-03-31 21:30:20.053491806 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-03-31 21:34:53.332219061 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-03-31 21:34:53.844235064 +0000
 @@ -242,12 +242,7 @@
      
      Events
@@ -880,8 +866,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                          spstr strCommand.txt,type1.txt,",",3
                                          // get internal name
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-03-31 21:30:19.649486397 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-31 21:30:20.053491806 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-03-31 21:34:53.332219061 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-31 21:34:53.844235064 +0000
 @@ -435,12 +435,7 @@
      
      Events
@@ -979,8 +965,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                          {
                                              vis t5,0
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-03-31 21:30:19.649486397 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-31 21:30:20.053491806 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-03-31 21:34:53.332219061 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-31 21:34:53.844235064 +0000
 @@ -329,12 +329,7 @@
      
      Events
@@ -1323,8 +1309,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                                                      udelete payloadLength-1
                                                                      bufferPos=0
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-31 21:30:19.649486397 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 21:30:20.053491806 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-31 21:34:53.332219061 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 21:34:53.840234939 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -1344,8 +1330,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-03-31 21:30:19.649486397 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-03-31 21:30:20.053491806 +0000
+--- HMI/n2t-out/screensaver.txt	2022-03-31 21:34:53.332219061 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-03-31 21:34:53.844235064 +0000
 @@ -30,6 +30,26 @@
              vis tSend,0
              //page open event
