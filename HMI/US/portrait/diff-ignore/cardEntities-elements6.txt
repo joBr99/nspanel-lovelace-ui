@@ -1,0 +1,60 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
++Dual-state Button btOnOff5
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : 
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn5.txt+",OnOff,"
++            covx btOnOff5.val,tTmp.txt,0,0
++            tSend.txt+=tTmp.txt
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
++Dual-state Button btOnOff6
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : 
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn6.txt+",OnOff,"
++            covx btOnOff6.val,tTmp.txt,0,0
++            tSend.txt+=tTmp.txt
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
+ Hotspot mSpecial
+     Attributes
+         Scope                               : local

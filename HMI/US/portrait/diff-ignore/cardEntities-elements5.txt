@@ -1,0 +1,206 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
++Button bStop5
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : î
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn5.txt+",stop"
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
++Button bDown5
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : î
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn5.txt+",down"
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
++Button bUp5
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : î
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn5.txt+",up"
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
++Button bText5
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : newtxt
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn5.txt+",button"
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
++Button bStop6
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : î
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn6.txt+",stop"
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
++Button bDown6
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : î
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn6.txt+",down"
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
++Button bUp6
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : î
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn6.txt+",up"
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
++Button bText6
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        State                               : unpressed
++        Text                                : newtxt
++        Max. Text Size                      : 10
++    
++    Events
++        Touch Press Event
++            tSend.txt="event,buttonPress2,"+entn6.txt+",button"
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
+ Dual-state Button btOnOff1
+     Attributes
+         Scope                               : local
