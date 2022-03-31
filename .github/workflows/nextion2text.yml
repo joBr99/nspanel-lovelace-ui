@@ -54,6 +54,7 @@ jobs:
         
         echo portrait
         python Nextion2Text.py -c ignore-id.py -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
+        grep -vf HMI/US/portrait/diff-ignore/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt > HMI/US/portrait/n2t-out/cardEntities.txt
         diff -bur HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
   
     - name: Run n2t US L DIFF
