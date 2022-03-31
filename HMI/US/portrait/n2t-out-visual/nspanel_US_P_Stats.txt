@@ -52,11 +52,11 @@ cardThermo
 	232  Unique line(s) of event code
 cardEntities
 	86   Component(s)
-	1329 Line(s) of event code
-	537  Unique line(s) of event code
+	1334 Line(s) of event code
+	540  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	375  Component(s)
-	3877 Line(s) of event code
+	3882 Line(s) of event code
 	1061 Unique line(s) of event code
