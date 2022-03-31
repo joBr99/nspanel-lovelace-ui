@@ -174,7 +174,7 @@ Text tDate
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : Tuesday, 08. March 2022
-        Max. Text Size                      : 30
+        Max. Text Size                      : 35
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
