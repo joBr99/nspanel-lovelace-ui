@@ -14,19 +14,18 @@ Page screensaver
         Preinitialize Event
             recmod=1
             bauds=115200
-            vis originPage,0
             vis tInstruction,0
             vis tTmp,0
             vis p0,0
             //load gloabl time string from pageIcons
             //tTime.txt=vaTime.txt
-            spstr vaTime.txt,tTime.txt,"?",0
-            spstr vaTime.txt,tAMPM.txt,"?",1
+            spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+            spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
             if(tAMPM.txt=="")
             {
                 vis tAMPM,0
             }
-            tDate.txt=vaDate.txt
+            tDate.txt=pageIcons.vaDate.txt
             dim=dimValue
             vis tSend,0
             //page open event
@@ -39,36 +38,24 @@ Page screensaver
             tForecast2.txt=""
             tF2Icon.txt=""
             tForecast2Val.txt=""
-            tSend.txt="event,screensaverOpen"
+            //tSend.txt="event,screensaverOpen"
             //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,1
-            crcputs tSend.txt,0
+            //btlen tSend.txt,sys0
+            //crcrest 1,0xffff // reset CRC
+            //crcputh 55 bb
+            //crcputs sys0,1
+            //crcputs tSend.txt,0
             //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            //printh 55 bb
+            //prints sys0,2
+            //prints tSend.txt,0
+            //prints crcval,2
         
 Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
         Max. Text Size: 200
-    
-Variable (string) vaTime
-    Attributes
-        Scope         : global
-        Text          : 
-        Max. Text Size: 15
-    
-Variable (string) vaDate
-    Attributes
-        Scope         : global
-        Text          : 
-        Max. Text Size: 30
     
 Variable (string) tId
     Attributes
@@ -80,15 +67,6 @@ Variable (int32) vaTap
     Attributes
         Scope: local
         Value: 0
-    
-Number originPage
-    Attributes
-        Scope                               : global
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
     
 Text tInstruction
     Attributes
@@ -373,9 +351,9 @@ Timer tmSerial
                                     if(tInstruction.txt=="time")
                                     {
                                         //get set time to global variable
-                                        spstr strCommand.txt,vaTime.txt,",",1
-                                        spstr vaTime.txt,tTime.txt,"?",0
-                                        spstr vaTime.txt,tAMPM.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
+                                        spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+                                        spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
                                         if(tAMPM.txt=="")
                                         {
                                             vis tAMPM,0
@@ -384,8 +362,8 @@ Timer tmSerial
                                     if(tInstruction.txt=="date")
                                     {
                                         //get set date to global variable
-                                        spstr strCommand.txt,vaDate.txt,"?",1
-                                        tDate.txt=vaDate.txt
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                        tDate.txt=pageIcons.vaDate.txt
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
@@ -504,7 +482,7 @@ TouchCap tc0
     
     Events
         Touch Press Event
-            dim=100
+            dim=dimValueNormal
             vaTap.val+=1
             covx vaTap.val,tTmp.txt,0,0
             tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
@@ -519,6 +497,4 @@ TouchCap tc0
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            //dim=100
-            //page originPage.val
         
