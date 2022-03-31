@@ -472,7 +472,7 @@ Picture p0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
+        x coordinate                        : 1
         y coordinate                        : 0
         Width                               : 479
         Height                              : 319
@@ -1242,7 +1242,7 @@ Timer tmSleep
     
     Events
         Timer Event
-            if(sleepTimeout!=0)
+            if(sleepTimeout!=0&&dimValue!=dim)
             {
                 sleepValue+=1
                 if(sleepTimeout<=sleepValue)
