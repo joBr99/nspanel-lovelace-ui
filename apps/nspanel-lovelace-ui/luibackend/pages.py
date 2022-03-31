@@ -57,7 +57,7 @@ class LuiPagesGen(object):
     
     def generate_screensaver_page(self):
         self.page_type("screensaver")
-        self.update_screensaver_weather("")
+        self.update_screensaver_weather()
         
     def update_screensaver_weather(self):
         global babel_spec
