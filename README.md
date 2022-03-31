@@ -7,6 +7,8 @@ If you like this project consider buying me a pizza 🍕 <a href="https://paypal
 
 NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in the Design of [HomeAssistant](https://www.home-assistant.io/)'s Lovelace UI Design.
 
+EU Model and US Model supported (in portrait and landscape orientation)
+
 ## Features
 
 - Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light

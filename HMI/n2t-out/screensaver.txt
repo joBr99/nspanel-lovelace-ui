@@ -30,26 +30,6 @@ Page screensaver
             vis tSend,0
             //page open event
             // clear weather elements, to keep example content in HMI
-            tMainIcon.txt=""
-            tMainText.txt=""
-            tForecast1.txt=""
-            tF1Icon.txt=""
-            tForecast1Val.txt=""
-            tForecast2.txt=""
-            tF2Icon.txt=""
-            tForecast2Val.txt=""
-            //tSend.txt="event,screensaverOpen"
-            //send calc crc
-            //btlen tSend.txt,sys0
-            //crcrest 1,0xffff // reset CRC
-            //crcputh 55 bb
-            //crcputs sys0,1
-            //crcputs tSend.txt,0
-            //send cmd
-            //printh 55 bb
-            //prints sys0,2
-            //prints tSend.txt,0
-            //prints crcval,2
         
 Variable (string) strCommand
     Attributes
@@ -125,7 +105,7 @@ Text tMainIcon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î
+        Text                                : 
         Max. Text Size                      : 10
     
 Text tMainText
@@ -135,7 +115,7 @@ Text tMainText
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 2,3 Â°C
+        Text                                : 
         Max. Text Size                      : 10
     
 Text tForecast1
@@ -145,7 +125,7 @@ Text tForecast1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : Mi
+        Text                                : 
         Max. Text Size                      : 10
     
 Text tForecast1Val
@@ -155,7 +135,7 @@ Text tForecast1Val
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 9,3 Â°C
+        Text                                : 
         Max. Text Size                      : 10
     
 Text tF1Icon
@@ -165,7 +145,7 @@ Text tF1Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î
+        Text                                : 
         Max. Text Size                      : 10
     
 Text tForecast2
@@ -175,7 +155,7 @@ Text tForecast2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : Do
+        Text                                : 
         Max. Text Size                      : 10
     
 Text tF2Icon
@@ -185,7 +165,7 @@ Text tF2Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î
+        Text                                : 
         Max. Text Size                      : 10
     
 Text tForecast2Val
@@ -195,7 +175,7 @@ Text tForecast2Val
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 11,9 Â°C
+        Text                                : 
         Max. Text Size                      : 10
     
 Text t10
@@ -266,9 +246,49 @@ Text tF4Icon
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 5
     
 Text tForecast4Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tMainTextAlt
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tMainIconAlt
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tMRIcon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tMR
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -373,12 +393,20 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="weatherUpdate")
                                     {
+                                        vis tMainIcon,1
+                                        vis tMainIconAlt,0
+                                        vis tMainText,1
+                                        vis tMainTextAlt,0
+                                        vis tMRIcon,0
+                                        vis tMR,0
                                         //tMainIcon
                                         spstr strCommand.txt,tTmp.txt,"?",1
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tMainIcon.txt,sys0,1
+                                        tMainIconAlt.txt=tMainIcon.txt
                                         //tMainText
                                         spstr strCommand.txt,tMainText.txt,"?",2
+                                        tMainTextAlt.txt=tMainText.txt
                                         //tForecast1
                                         spstr strCommand.txt,tForecast1.txt,"?",3
                                         //tF1Icon
@@ -411,6 +439,36 @@ Timer tmSerial
                                         substr pageIcons.tIcons.txt,tF4Icon.txt,sys0,1
                                         //tForecast4Val
                                         spstr strCommand.txt,tForecast4Val.txt,"?",14
+                                        //alternative layout
+                                        //tMRIcon
+                                        spstr strCommand.txt,tTmp.txt,"?",15
+                                        covx tTmp.txt,sys0,0,0
+                                        substr pageIcons.tIcons.txt,tMRIcon.txt,sys0,1
+                                        if(tTmp.txt!="")
+                                        {
+                                            //value for tMRIcon, activate alternative layout
+                                            vis tMainIcon,0
+                                            vis tMainText,0
+                                            vis tMainTextAlt,1
+                                            vis tMainIconAlt,1
+                                            vis tMRIcon,1
+                                            vis tMR,1
+                                            vis tForecast1,0
+                                            vis tF1Icon,0
+                                            vis tForecast1Val,0
+                                            //move forecast values to the right
+                                            tForecast4.txt=tForecast3.txt
+                                            tForecast3.txt=tForecast2.txt
+                                            tForecast2.txt=tForecast1.txt
+                                            tForecast4Val.txt=tForecast3Val.txt
+                                            tForecast3Val.txt=tForecast2Val.txt
+                                            tForecast2Val.txt=tForecast1Val.txt
+                                            tF4Icon.txt=tF3Icon.txt
+                                            tF3Icon.txt=tF2Icon.txt
+                                            tF2Icon.txt=tF1Icon.txt
+                                        }
+                                        //tMR
+                                        spstr strCommand.txt,tMR.txt,"?",16
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
