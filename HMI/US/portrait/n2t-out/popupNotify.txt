@@ -195,7 +195,6 @@ Timer tmSleep
                 sleepValue+=1
                 if(sleepTimeout<=sleepValue)
                 {
-                    screensaver.originPage.val=dp
                     sleepValue=0
                     click b0,1
                     click b0,0
@@ -299,12 +298,12 @@ Timer tmSerial
                                     if(tInstruction.txt=="time")
                                     {
                                         // get set time to global variable
-                                        spstr strCommand.txt,screensaver.vaTime.txt,",",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
                                     }
                                     if(tInstruction.txt=="date")
                                     {
                                         // get set date to global variable
-                                        spstr strCommand.txt,screensaver.vaDate.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
