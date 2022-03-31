@@ -75,7 +75,7 @@ change the page type:
 
 ### screensaver page
 
-`weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val?tForecast3? tF3Icon? tForecast3Val?tForecast4? tF4Icon? tForecast4Val`
+`weatherUpdate,? tMainIcon? tMainText? tMRIcon? tMR? tForecast1? tF1Icon? tForecast1Val? tForecast2? tF2Icon? tForecast2Val?tForecast3? tF3Icon? tForecast3Val?tForecast4? tF4Icon? tForecast4Val?optionalLayoutIcon?optionalLayoutText`
 
 ### cardEntities Page
 

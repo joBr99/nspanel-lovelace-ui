@@ -27,7 +27,7 @@ class LuiController(object):
 
         # Setup date callback
         ha_api.run_daily(self._pages_gen.update_date, time)
-      
+        
         # weather callback
         weather_interval = 15 * 60 # 15 minutes
         ha_api.run_every(self.weather_update, "now", weather_interval)

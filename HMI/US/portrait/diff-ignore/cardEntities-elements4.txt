@@ -1,0 +1,62 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
++Slider hSlider5
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        Position                            : 50
++        Upper range limit                   : 100
++        Lower range limit                   : 0
++    
++    Events
++        Touch Release Event
++            nNum5.val=hSlider5.val
++            tSend.txt="event,buttonPress2,"+entn5.txt+",number-set,"
++            covx nNum5.val,tTmp.txt,0,0
++            tSend.txt+=tTmp.txt
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
++Slider hSlider6
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        Position                            : 50
++        Upper range limit                   : 100
++        Lower range limit                   : 0
++    
++    Events
++        Touch Release Event
++            nNum6.val=hSlider6.val
++            tSend.txt="event,buttonPress2,"+entn6.txt+",number-set,"
++            covx nNum6.val,tTmp.txt,0,0
++            tSend.txt+=tTmp.txt
++            //send calc crc
++            btlen tSend.txt,sys0
++            crcrest 1,0xffff // reset CRC
++            crcputh 55 bb
++            crcputs sys0,1
++            crcputs tSend.txt,0
++            //send cmd
++            printh 55 bb
++            prints sys0,2
++            prints tSend.txt,0
++            prints crcval,2
++        
+ Button bDown1
+     Attributes
+         Scope                               : local
