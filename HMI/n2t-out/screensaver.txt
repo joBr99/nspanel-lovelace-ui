@@ -86,7 +86,7 @@ Text tDate
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : Tuesday, 08. March 2022
-        Max. Text Size                      : 30
+        Max. Text Size                      : 35
     
 Text tSend
     Attributes

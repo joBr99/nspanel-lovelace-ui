@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-03-31 21:43:25.747084511 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-03-31 21:43:26.723167180 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-03-31 21:51:26.414805107 +0000
++++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-03-31 21:51:27.194798213 +0000
 @@ -17,6 +17,7 @@
              vis tInstruction,0
              vis tTmp,0
@@ -10,8 +10,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
              vis arm2,0
              vis arm3,0
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-31 21:43:25.751084850 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-03-31 21:43:26.723167180 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-31 21:51:26.414805107 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-03-31 21:51:27.194798213 +0000
 @@ -1125,33 +1125,6 @@
                                      {
                                          // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
@@ -47,8 +47,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
                                          spstr strCommand.txt,type1.txt,",",3
                                          // get internal name
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-03-31 21:43:25.751084850 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-03-31 21:43:26.723167180 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-03-31 21:51:26.414805107 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-03-31 21:51:27.194798213 +0000
 @@ -12,28 +12,307 @@
      
      Events
@@ -407,9 +407,21 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
                                          // get Type
                                          spstr strCommand.txt,type1.txt,",",3
                                          // get internal name
+diff -bur HMI/n2t-out/pageIcons.txt HMI/US/landscape/n2t-out/pageIcons.txt
+--- HMI/n2t-out/pageIcons.txt	2022-03-31 21:51:26.414805107 +0000
++++ HMI/US/landscape/n2t-out/pageIcons.txt	2022-03-31 21:51:27.194798213 +0000
+@@ -20,7 +20,7 @@
+     Attributes
+         Scope         : global
+         Text          : 
+-        Max. Text Size: 35
++        Max. Text Size: 30
+     
+ Text tIcons
+     Attributes
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-03-31 21:43:25.747084511 +0000
-+++ HMI/US/landscape/n2t-out/screensaver.txt	2022-03-31 21:43:26.723167180 +0000
+--- HMI/n2t-out/screensaver.txt	2022-03-31 21:51:26.414805107 +0000
++++ HMI/US/landscape/n2t-out/screensaver.txt	2022-03-31 21:51:27.194798213 +0000
 @@ -30,6 +30,26 @@
              vis tSend,0
              //page open event
@@ -436,6 +448,15 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
 +            //prints crcval,2
          
  Variable (string) strCommand
+     Attributes
+@@ -86,7 +106,7 @@
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+         Text                                : Tuesday, 08. March 2022
+-        Max. Text Size                      : 35
++        Max. Text Size                      : 30
+     
+ Text tSend
      Attributes
 @@ -105,7 +125,7 @@
          Disable release event after dragging: 0

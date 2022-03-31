@@ -20,7 +20,7 @@ Variable (string) vaDate
     Attributes
         Scope         : global
         Text          : 
-        Max. Text Size: 30
+        Max. Text Size: 35
     
 Text tIcons
     Attributes
