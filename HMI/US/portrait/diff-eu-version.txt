@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-31 06:31:06.861581047 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 06:31:07.213586116 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-31 06:42:28.886866357 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 06:42:29.390880901 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-31 06:31:06.861581047 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 06:31:07.217586174 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-31 06:42:28.890866473 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 06:42:29.438882286 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -525,264 +525,526 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          Scope      : local
-@@ -1616,6 +2072,254 @@
-                                             covx tTmp.txt,sys0,0,0
+@@ -1120,12 +1576,9 @@
+                                     {
+                                         // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
+                                         spstr strCommand.txt,tHeading.txt,",",1
+-                                        // get Type
+                                         spstr strCommand.txt,type1.txt,",",3
+-                                        // get internal name
+                                         spstr strCommand.txt,entn1.txt,",",4
+                                         if(type1.txt=="delete"||type1.txt=="")
+-                                        {
+                                             vis bUp1,0
+                                             vis bStop1,0
+                                             vis bDown1,0
+@@ -1135,23 +1588,14 @@
+                                             vis bText1,0
+                                             vis hSlider1,0
+                                             vis nNum1,0
+-                                        }else
+-                                        {
+-                                            // change icon
+                                             spstr strCommand.txt,tTmp.txt,",",5
+-                                            covx tTmp.txt,sys0,0,0
+                                             substr pageIcons.tIcons.txt,tIcon1.txt,sys0,1
+                                             vis tIcon1,1
+-                                            // change icon color
+                                             spstr strCommand.txt,tTmp.txt,",",6
+-                                            covx tTmp.txt,sys0,0,0
+                                             tIcon1.pco=sys0
+-                                            // set name
+                                             spstr strCommand.txt,tEntity1.txt,",",7
+                                             vis tEntity1,1
+-                                        }
+                                         if(type1.txt=="shutter")
+-                                        {
+                                             vis bUp1,1
+                                             vis bStop1,1
+                                             vis bDown1,1
+@@ -1159,9 +1603,7 @@
+                                             vis bText1,0
+                                             vis hSlider1,0
+                                             vis nNum1,0
+-                                        }
+                                         if(type1.txt=="light")
+-                                        {
+                                             vis bUp1,0
+                                             vis bStop1,0
+                                             vis bDown1,0
+@@ -1169,13 +1611,9 @@
+                                             vis bText1,0
+                                             vis hSlider1,0
+                                             vis nNum1,0
+-                                            // get Button State (optional Value)
+                                             spstr strCommand.txt,tTmp.txt,",",8
+-                                            covx tTmp.txt,sys0,0,0
+                                             btOnOff1.val=sys0
+-                                        }
+                                         if(type1.txt=="switch")
+-                                        {
+                                             vis bUp1,0
+                                             vis bStop1,0
+                                             vis bDown1,0
+@@ -1183,13 +1621,9 @@
+                                             vis bText1,0
+                                             vis hSlider1,0
+                                             vis nNum1,0
+-                                            // get Button State (optional Value)
+                                             spstr strCommand.txt,tTmp.txt,",",8
+-                                            covx tTmp.txt,sys0,0,0
+                                             btOnOff1.val=sys0
+-                                        }
+                                         if(type1.txt=="text")
+-                                        {
+                                             vis bUp1,0
+                                             vis bStop1,0
+                                             vis bDown1,0
+@@ -1200,11 +1634,8 @@
+                                             vis nNum1,0
+                                             bText1.pco=65535
+                                             bText1.pco2=65535
+-                                            // get Text (optional Value)
+                                             spstr strCommand.txt,bText1.txt,",",8
+-                                        }
+                                         if(type1.txt=="button")
+-                                        {
+                                             vis bUp1,0
+                                             vis bStop1,0
+                                             vis bDown1,0
+@@ -1215,11 +1646,8 @@
+                                             vis nNum1,0
+                                             bText1.pco=1374
+                                             bText1.pco2=1374
+-                                            // get Text (optional Value)
+                                             spstr strCommand.txt,bText1.txt,",",8
+-                                        }
+                                         if(type1.txt=="number")
+-                                        {
+                                             vis bUp1,0
+                                             vis bStop1,0
+                                             vis bDown1,0
+@@ -1228,28 +1656,17 @@
+                                             tsw bText1,0
+                                             vis hSlider1,1
+                                             vis nNum1,1
+-                                            // get config (optional Value) (use bText as variable)
+                                             spstr strCommand.txt,bText1.txt,",",8
+-                                            //first value is current value
+                                             spstr bText1.txt,tTmp.txt,"|",0
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider1.val=sys0
+                                             nNum1.val=sys0
+-                                            //second value is min value
+                                             spstr bText1.txt,tTmp.txt,"|",1
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider1.minval=sys0
+-                                            //third value is max value
+                                             spstr bText1.txt,tTmp.txt,"|",2
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider1.maxval=sys0
+-                                        }
+-                                        // get Type
+                                         spstr strCommand.txt,type2.txt,",",9
+-                                        // get internal name
+                                         spstr strCommand.txt,entn2.txt,",",10
+                                         if(type2.txt=="delete"||type2.txt=="")
+-                                        {
+                                             vis bUp2,0
+                                             vis bStop2,0
+                                             vis bDown2,0
+@@ -1259,23 +1676,14 @@
+                                             vis bText2,0
+                                             vis hSlider2,0
+                                             vis nNum2,0
+-                                        }else
+-                                        {
+-                                            // change icon
+                                             spstr strCommand.txt,tTmp.txt,",",11
+-                                            covx tTmp.txt,sys0,0,0
+                                             substr pageIcons.tIcons.txt,tIcon2.txt,sys0,1
+                                             vis tIcon2,1
+-                                            // change icon color
+                                             spstr strCommand.txt,tTmp.txt,",",12
+-                                            covx tTmp.txt,sys0,0,0
+                                             tIcon2.pco=sys0
+-                                            // set name
+                                             spstr strCommand.txt,tEntity2.txt,",",13
+                                             vis tEntity2,1
+-                                        }
+                                         if(type2.txt=="shutter")
+-                                        {
+                                             vis bUp2,1
+                                             vis bStop2,1
+                                             vis bDown2,1
+@@ -1283,9 +1691,7 @@
+                                             vis bText2,0
+                                             vis hSlider2,0
+                                             vis nNum2,0
+-                                        }
+                                         if(type2.txt=="light")
+-                                        {
+                                             vis bUp2,0
+                                             vis bStop2,0
+                                             vis bDown2,0
+@@ -1293,13 +1699,9 @@
+                                             vis bText2,0
+                                             vis hSlider2,0
+                                             vis nNum2,0
+-                                            // get Button State (optional Value)
+                                             spstr strCommand.txt,tTmp.txt,",",14
+-                                            covx tTmp.txt,sys0,0,0
+                                             btOnOff2.val=sys0
+-                                        }
+                                         if(type2.txt=="switch")
+-                                        {
+                                             vis bUp2,0
+                                             vis bStop2,0
+                                             vis bDown2,0
+@@ -1307,13 +1709,9 @@
+                                             vis bText2,0
+                                             vis hSlider2,0
+                                             vis nNum2,0
+-                                            // get Button State (optional Value)
+                                             spstr strCommand.txt,tTmp.txt,",",14
+-                                            covx tTmp.txt,sys0,0,0
+                                             btOnOff2.val=sys0
+-                                        }
+                                         if(type2.txt=="text")
+-                                        {
+                                             vis bUp2,0
+                                             vis bStop2,0
+                                             vis bDown2,0
+@@ -1324,11 +1722,8 @@
+                                             vis nNum2,0
+                                             bText2.pco=65535
+                                             bText2.pco2=65535
+-                                            // get Text (optional Value)
+                                             spstr strCommand.txt,bText2.txt,",",14
+-                                        }
+                                         if(type2.txt=="button")
+-                                        {
+                                             vis bUp2,0
+                                             vis bStop2,0
+                                             vis bDown2,0
+@@ -1339,11 +1734,8 @@
+                                             vis nNum2,0
+                                             bText2.pco=1374
+                                             bText2.pco2=1374
+-                                            // get Text (optional Value)
+                                             spstr strCommand.txt,bText2.txt,",",14
+-                                        }
+                                         if(type2.txt=="number")
+-                                        {
+                                             vis bUp2,0
+                                             vis bStop2,0
+                                             vis bDown2,0
+@@ -1352,28 +1744,17 @@
+                                             tsw bText2,0
+                                             vis hSlider2,1
+                                             vis nNum2,1
+-                                            // get config (optional Value) (use bText as variable)
+                                             spstr strCommand.txt,bText2.txt,",",14
+-                                            //first value is current value
+                                             spstr bText2.txt,tTmp.txt,"|",0
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider2.val=sys0
+                                             nNum2.val=sys0
+-                                            //second value is min value
+                                             spstr bText2.txt,tTmp.txt,"|",1
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider2.minval=sys0
+-                                            //third value is max value
+                                             spstr bText2.txt,tTmp.txt,"|",2
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider2.maxval=sys0
+-                                        }
+-                                        // get Type
+                                         spstr strCommand.txt,type3.txt,",",15
+-                                        // get internal name
+                                         spstr strCommand.txt,entn3.txt,",",16
+                                         if(type3.txt=="delete"||type3.txt=="")
+-                                        {
+                                             vis bUp3,0
+                                             vis bStop3,0
+                                             vis bDown3,0
+@@ -1383,23 +1764,14 @@
+                                             vis bText3,0
+                                             vis hSlider3,0
+                                             vis nNum3,0
+-                                        }else
+-                                        {
+-                                            // change icon
+                                             spstr strCommand.txt,tTmp.txt,",",17
+-                                            covx tTmp.txt,sys0,0,0
+                                             substr pageIcons.tIcons.txt,tIcon3.txt,sys0,1
+                                             vis tIcon3,1
+-                                            // change icon color
+                                             spstr strCommand.txt,tTmp.txt,",",18
+-                                            covx tTmp.txt,sys0,0,0
+                                             tIcon3.pco=sys0
+-                                            // set name
+                                             spstr strCommand.txt,tEntity3.txt,",",19
+                                             vis tEntity3,1
+-                                        }
+                                         if(type3.txt=="shutter")
+-                                        {
+                                             vis bUp3,1
+                                             vis bStop3,1
+                                             vis bDown3,1
+@@ -1407,9 +1779,7 @@
+                                             vis bText3,0
+                                             vis hSlider3,0
+                                             vis nNum3,0
+-                                        }
+                                         if(type3.txt=="light")
+-                                        {
+                                             vis bUp3,0
+                                             vis bStop3,0
+                                             vis bDown3,0
+@@ -1417,13 +1787,9 @@
+                                             vis bText3,0
+                                             vis hSlider3,0
+                                             vis nNum3,0
+-                                            // get Button State (optional Value)
+                                             spstr strCommand.txt,tTmp.txt,",",20
+-                                            covx tTmp.txt,sys0,0,0
+                                             btOnOff3.val=sys0
+-                                        }
+                                         if(type3.txt=="switch")
+-                                        {
+                                             vis bUp3,0
+                                             vis bStop3,0
+                                             vis bDown3,0
+@@ -1431,13 +1797,9 @@
+                                             vis bText3,0
+                                             vis hSlider3,0
+                                             vis nNum3,0
+-                                            // get Button State (optional Value)
+                                             spstr strCommand.txt,tTmp.txt,",",20
+-                                            covx tTmp.txt,sys0,0,0
+                                             btOnOff3.val=sys0
+-                                        }
+                                         if(type3.txt=="text")
+-                                        {
+                                             vis bUp3,0
+                                             vis bStop3,0
+                                             vis bDown3,0
+@@ -1448,11 +1810,8 @@
+                                             vis nNum3,0
+                                             bText3.pco=65535
+                                             bText3.pco2=65535
+-                                            // get Text (optional Value)
+                                             spstr strCommand.txt,bText3.txt,",",20
+-                                        }
+                                         if(type3.txt=="button")
+-                                        {
+                                             vis bUp3,0
+                                             vis bStop3,0
+                                             vis bDown3,0
+@@ -1463,11 +1822,8 @@
+                                             vis nNum3,0
+                                             bText3.pco=1374
+                                             bText3.pco2=1374
+-                                            // get Text (optional Value)
+                                             spstr strCommand.txt,bText3.txt,",",20
+-                                        }
+                                         if(type3.txt=="number")
+-                                        {
+                                             vis bUp3,0
+                                             vis bStop3,0
+                                             vis bDown3,0
+@@ -1476,28 +1832,17 @@
+                                             tsw bText3,0
+                                             vis hSlider3,1
+                                             vis nNum3,1
+-                                            // get config (optional Value) (use bText as variable)
+                                             spstr strCommand.txt,bText3.txt,",",20
+-                                            //first value is current value
+                                             spstr bText3.txt,tTmp.txt,"|",0
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider3.val=sys0
+                                             nNum3.val=sys0
+-                                            //second value is min value
+                                             spstr bText3.txt,tTmp.txt,"|",1
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider3.minval=sys0
+-                                            //third value is max value
+                                             spstr bText3.txt,tTmp.txt,"|",2
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider3.maxval=sys0
+-                                        }
+-                                        // get Type
+                                         spstr strCommand.txt,type4.txt,",",21
+-                                        // get internal name
+                                         spstr strCommand.txt,entn4.txt,",",22
+                                         if(type4.txt=="delete"||type4.txt=="")
+-                                        {
+                                             vis bUp4,0
+                                             vis bStop4,0
+                                             vis bDown4,0
+@@ -1507,23 +1852,14 @@
+                                             vis bText4,0
+                                             vis hSlider4,0
+                                             vis nNum4,0
+-                                        }else
+-                                        {
+-                                            // change icon
+                                             spstr strCommand.txt,tTmp.txt,",",23
+-                                            covx tTmp.txt,sys0,0,0
+                                             substr pageIcons.tIcons.txt,tIcon4.txt,sys0,1
+                                             vis tIcon4,1
+-                                            // change icon color
+                                             spstr strCommand.txt,tTmp.txt,",",24
+-                                            covx tTmp.txt,sys0,0,0
+                                             tIcon4.pco=sys0
+-                                            // set name
+                                             spstr strCommand.txt,tEntity4.txt,",",25
+                                             vis tEntity4,1
+-                                        }
+                                         if(type4.txt=="shutter")
+-                                        {
+                                             vis bUp4,1
+                                             vis bStop4,1
+                                             vis bDown4,1
+@@ -1531,9 +1867,7 @@
+                                             vis bText4,0
+                                             vis hSlider4,0
+                                             vis nNum4,0
+-                                        }
+                                         if(type4.txt=="light")
+-                                        {
+                                             vis bUp4,0
+                                             vis bStop4,0
+                                             vis bDown4,0
+@@ -1541,13 +1875,9 @@
+                                             vis bText4,0
+                                             vis hSlider4,0
+                                             vis nNum4,0
+-                                            // get Button State (optional Value)
+                                             spstr strCommand.txt,tTmp.txt,",",26
+-                                            covx tTmp.txt,sys0,0,0
+                                             btOnOff4.val=sys0
+-                                        }
+                                         if(type4.txt=="switch")
+-                                        {
+                                             vis bUp4,0
+                                             vis bStop4,0
+                                             vis bDown4,0
+@@ -1555,13 +1885,9 @@
+                                             vis bText4,0
+                                             vis hSlider4,0
+                                             vis nNum4,0
+-                                            // get Button State (optional Value)
+                                             spstr strCommand.txt,tTmp.txt,",",26
+-                                            covx tTmp.txt,sys0,0,0
+                                             btOnOff4.val=sys0
+-                                        }
+                                         if(type4.txt=="text")
+-                                        {
+                                             vis bUp4,0
+                                             vis bStop4,0
+                                             vis bDown4,0
+@@ -1572,11 +1898,8 @@
+                                             vis nNum4,0
+                                             bText4.pco=65535
+                                             bText4.pco2=65535
+-                                            // get Text (optional Value)
+                                             spstr strCommand.txt,bText4.txt,",",26
+-                                        }
+                                         if(type4.txt=="button")
+-                                        {
+                                             vis bUp4,0
+                                             vis bStop4,0
+                                             vis bDown4,0
+@@ -1587,11 +1910,8 @@
+                                             vis nNum4,0
+                                             bText4.pco=1374
+                                             bText4.pco2=1374
+-                                            // get Text (optional Value)
+                                             spstr strCommand.txt,bText4.txt,",",26
+-                                        }
+                                         if(type4.txt=="number")
+-                                        {
+                                             vis bUp4,0
+                                             vis bStop4,0
+                                             vis bDown4,0
+@@ -1600,23 +1920,15 @@
+                                             tsw bText4,0
+                                             vis hSlider4,1
+                                             vis nNum4,1
+-                                            // get config (optional Value) (use bText as variable)
+                                             spstr strCommand.txt,bText4.txt,",",26
+-                                            //first value is current value
+                                             spstr bText4.txt,tTmp.txt,"|",0
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider4.val=sys0
+                                             nNum4.val=sys0
+-                                            //second value is min value
+                                             spstr bText4.txt,tTmp.txt,"|",1
+-                                            covx tTmp.txt,sys0,0,0
+                                             hSlider4.minval=sys0
+-                                            //third value is max value
+                                             spstr bText4.txt,tTmp.txt,"|",2
+-                                            covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
-+                                        // get Type
-+                                        spstr strCommand.txt,type5.txt,",",27
-+                                        // get internal name
-+                                        spstr strCommand.txt,entn5.txt,",",28
-+                                        if(type5.txt=="delete"||type5.txt=="")
-+                                        {
-+                                            vis bUp5,0
-+                                            vis bStop5,0
-+                                            vis bDown5,0
-+                                            vis btOnOff5,0
-+                                            vis tEntity5,0
-+                                            vis tIcon5,0
-+                                            vis bText5,0
-+                                            vis hSlider5,0
-+                                            vis nNum5,0
-+                                        }else
-+                                        {
-+                                            // change icon
-+                                            spstr strCommand.txt,tTmp.txt,",",29
-+                                            covx tTmp.txt,sys0,0,0
-+                                            substr pageIcons.tIcons.txt,tIcon5.txt,sys0,1
-+                                            vis tIcon5,1
-+                                            // change icon color
-+                                            spstr strCommand.txt,tTmp.txt,",",30
-+                                            covx tTmp.txt,sys0,0,0
-+                                            tIcon5.pco=sys0
-+                                            // set name
-+                                            spstr strCommand.txt,tEntity5.txt,",",31
-+                                            vis tEntity5,1
-+                                        }
-+                                        if(type5.txt=="shutter")
-+                                        {
-+                                            vis bUp5,1
-+                                            vis bStop5,1
-+                                            vis bDown5,1
-+                                            vis btOnOff5,0
-+                                            vis bText5,0
-+                                            vis hSlider5,0
-+                                            vis nNum5,0
-+                                        }
-+                                        if(type5.txt=="light")
-+                                        {
-+                                            vis bUp5,0
-+                                            vis bStop5,0
-+                                            vis bDown5,0
-+                                            vis btOnOff5,1
-+                                            vis bText5,0
-+                                            vis hSlider5,0
-+                                            vis nNum5,0
-+                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,",",32
-+                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff5.val=sys0
-+                                        }
-+                                        if(type5.txt=="switch")
-+                                        {
-+                                            vis bUp5,0
-+                                            vis bStop5,0
-+                                            vis bDown5,0
-+                                            vis btOnOff5,1
-+                                            vis bText5,0
-+                                            vis hSlider5,0
-+                                            vis nNum5,0
-+                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,",",32
-+                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff5.val=sys0
-+                                        }
-+                                        if(type5.txt=="text")
-+                                        {
-+                                            vis bUp5,0
-+                                            vis bStop5,0
-+                                            vis bDown5,0
-+                                            vis btOnOff5,0
-+                                            vis bText5,1
-+                                            tsw bText5,0
-+                                            vis hSlider5,0
-+                                            vis nNum5,0
-+                                            bText5.pco=65535
-+                                            bText5.pco2=65535
-+                                            // get Text (optional Value)
-+                                            spstr strCommand.txt,bText5.txt,",",32
-+                                        }
-+                                        if(type5.txt=="button")
-+                                        {
-+                                            vis bUp5,0
-+                                            vis bStop5,0
-+                                            vis bDown5,0
-+                                            vis btOnOff5,0
-+                                            vis bText5,1
-+                                            tsw bText5,1
-+                                            vis hSlider5,0
-+                                            vis nNum5,0
-+                                            bText5.pco=1374
-+                                            bText5.pco2=1374
-+                                            // get Text (optional Value)
-+                                            spstr strCommand.txt,bText5.txt,",",32
-+                                        }
-+                                        if(type5.txt=="number")
-+                                        {
-+                                            vis bUp5,0
-+                                            vis bStop5,0
-+                                            vis bDown5,0
-+                                            vis btOnOff5,0
-+                                            vis bText5,0
-+                                            tsw bText5,0
-+                                            vis hSlider5,1
-+                                            vis nNum5,1
-+                                            // get config (optional Value) (use bText as variable)
-+                                            spstr strCommand.txt,bText5.txt,",",32
-+                                            //first value is current value
-+                                            spstr bText5.txt,tTmp.txt,"|",0
-+                                            covx tTmp.txt,sys0,0,0
-+                                            hSlider5.val=sys0
-+                                            nNum5.val=sys0
-+                                            //second value is min value
-+                                            spstr bText5.txt,tTmp.txt,"|",1
-+                                            covx tTmp.txt,sys0,0,0
-+                                            hSlider5.minval=sys0
-+                                            //third value is max value
-+                                            spstr bText5.txt,tTmp.txt,"|",2
-+                                            covx tTmp.txt,sys0,0,0
-+                                            hSlider5.maxval=sys0
-+                                        }
-+                                        // get Type
-+                                        spstr strCommand.txt,type6.txt,",",33
-+                                        // get internal name
-+                                        spstr strCommand.txt,entn6.txt,",",34
-+                                        if(type6.txt=="delete"||type6.txt=="")
-+                                        {
-+                                            vis bUp6,0
-+                                            vis bStop6,0
-+                                            vis bDown6,0
-+                                            vis btOnOff6,0
-+                                            vis tEntity6,0
-+                                            vis tIcon6,0
-+                                            vis bText6,0
-+                                            vis hSlider6,0
-+                                            vis nNum6,0
-+                                        }else
-+                                        {
-+                                            // change icon
-+                                            spstr strCommand.txt,tTmp.txt,",",35
-+                                            covx tTmp.txt,sys0,0,0
-+                                            substr pageIcons.tIcons.txt,tIcon6.txt,sys0,1
-+                                            vis tIcon6,1
-+                                            // change icon color
-+                                            spstr strCommand.txt,tTmp.txt,",",36
-+                                            covx tTmp.txt,sys0,0,0
-+                                            tIcon6.pco=sys0
-+                                            // set name
-+                                            spstr strCommand.txt,tEntity6.txt,",",37
-+                                            vis tEntity6,1
-+                                        }
-+                                        if(type6.txt=="shutter")
-+                                        {
-+                                            vis bUp6,1
-+                                            vis bStop6,1
-+                                            vis bDown6,1
-+                                            vis btOnOff6,0
-+                                            vis bText6,0
-+                                            vis hSlider6,0
-+                                            vis nNum6,0
-+                                        }
-+                                        if(type6.txt=="light")
-+                                        {
-+                                            vis bUp6,0
-+                                            vis bStop6,0
-+                                            vis bDown6,0
-+                                            vis btOnOff6,1
-+                                            vis bText6,0
-+                                            vis hSlider6,0
-+                                            vis nNum6,0
-+                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,",",38
-+                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff6.val=sys0
-+                                        }
-+                                        if(type6.txt=="switch")
-+                                        {
-+                                            vis bUp6,0
-+                                            vis bStop6,0
-+                                            vis bDown6,0
-+                                            vis btOnOff6,1
-+                                            vis bText6,0
-+                                            vis hSlider6,0
-+                                            vis nNum6,0
-+                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,",",38
-+                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff6.val=sys0
-+                                        }
-+                                        if(type6.txt=="text")
-+                                        {
-+                                            vis bUp6,0
-+                                            vis bStop6,0
-+                                            vis bDown6,0
-+                                            vis btOnOff6,0
-+                                            vis bText6,1
-+                                            tsw bText6,0
-+                                            vis hSlider6,0
-+                                            vis nNum6,0
-+                                            bText6.pco=65535
-+                                            bText6.pco2=65535
-+                                            // get Text (optional Value)
-+                                            spstr strCommand.txt,bText6.txt,",",38
-+                                        }
-+                                        if(type6.txt=="button")
-+                                        {
-+                                            vis bUp6,0
-+                                            vis bStop6,0
-+                                            vis bDown6,0
-+                                            vis btOnOff6,0
-+                                            vis bText6,1
-+                                            tsw bText6,1
-+                                            vis hSlider6,0
-+                                            vis nNum6,0
-+                                            bText6.pco=1374
-+                                            bText6.pco2=1374
-+                                            // get Text (optional Value)
-+                                            spstr strCommand.txt,bText6.txt,",",38
-+                                        }
-+                                        if(type6.txt=="number")
-+                                        {
-+                                            vis bUp6,0
-+                                            vis bStop6,0
-+                                            vis bDown6,0
-+                                            vis btOnOff6,0
-+                                            vis bText6,0
-+                                            tsw bText6,0
-+                                            vis hSlider6,1
-+                                            vis nNum6,1
-+                                            // get config (optional Value) (use bText as variable)
-+                                            spstr strCommand.txt,bText6.txt,",",38
-+                                            //first value is current value
-+                                            spstr bText6.txt,tTmp.txt,"|",0
-+                                            covx tTmp.txt,sys0,0,0
-+                                            hSlider6.val=sys0
-+                                            nNum6.val=sys0
-+                                            //second value is min value
-+                                            spstr bText6.txt,tTmp.txt,"|",1
-+                                            covx tTmp.txt,sys0,0,0
-+                                            hSlider6.minval=sys0
-+                                            //third value is max value
-+                                            spstr bText6.txt,tTmp.txt,"|",2
-+                                            covx tTmp.txt,sys0,0,0
-+                                            hSlider6.maxval=sys0
-+                                        }
-                                     }
+-                                    }
                                      if(tInstruction.txt=="pageType")
                                      {
+                                         //command format pageType,specialPageName
+@@ -1630,48 +1942,28 @@
+                                         udelete payloadLength-1
+                                         bufferPos=0
+                                         if(tId.txt=="pageStartup")
+-                                        {
+                                             page pageStartup
+-                                        }
+                                         if(tId.txt=="screensaver")
+-                                        {
+                                             page screensaver
+-                                        }
+                                         if(tId.txt=="cardEntities")
+-                                        {
+                                             page cardEntities
+-                                        }
+                                         if(tId.txt=="cardGrid")
+-                                        {
+                                             page cardGrid
+-                                        }
+                                         if(tId.txt=="popupLight")
+-                                        {
+                                             pageIcons.tTmp1.txt=tTmp.txt
+                                             page popupLight
+-                                        }
+                                         if(tId.txt=="popupShutter")
+-                                        {
+                                             pageIcons.tTmp1.txt=tTmp.txt
+                                             page popupShutter
+-                                        }
+                                         if(tId.txt=="popupNotify")
+-                                        {
+                                             page popupNotify
+-                                        }
+                                         if(tId.txt=="cardThermo")
+-                                        {
+                                             page cardThermo
+-                                        }
+                                         if(tId.txt=="cardMedia")
+-                                        {
+                                             page cardMedia
+-                                        }
+                                         if(tId.txt=="cardAlarm")
+-                                        {
+                                             page cardAlarm
+                                         }
+-                                    }
+                                     if(tInstruction.txt=="time")
+                                     {
+                                         // get set time to global variable
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-31 06:31:06.861581047 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 06:31:07.217586174 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-31 06:42:28.886866357 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 06:42:29.394881016 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
