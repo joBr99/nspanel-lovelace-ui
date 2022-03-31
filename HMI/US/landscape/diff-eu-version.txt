@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-03-31 18:57:30.523092501 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-03-31 18:57:31.323112832 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-03-31 20:31:52.507584386 +0000
++++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-03-31 20:31:53.307593985 +0000
 @@ -17,6 +17,7 @@
              vis tInstruction,0
              vis tTmp,0
@@ -10,8 +10,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
              vis arm2,0
              vis arm3,0
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-31 18:57:30.523092501 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-03-31 18:57:31.323112832 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-31 20:31:52.507584386 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-03-31 20:31:53.311594033 +0000
 @@ -1125,33 +1125,6 @@
                                      {
                                          // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
@@ -47,8 +47,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
                                          spstr strCommand.txt,type1.txt,",",3
                                          // get internal name
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-03-31 18:57:30.523092501 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-03-31 18:57:31.327112934 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-03-31 20:31:52.507584386 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-03-31 20:31:53.311594033 +0000
 @@ -12,28 +12,307 @@
      
      Events
@@ -407,3 +407,214 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
                                          // get Type
                                          spstr strCommand.txt,type1.txt,",",3
                                          // get internal name
+diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
+--- HMI/n2t-out/screensaver.txt	2022-03-31 20:31:52.507584386 +0000
++++ HMI/US/landscape/n2t-out/screensaver.txt	2022-03-31 20:31:53.307593985 +0000
+@@ -30,6 +30,26 @@
+             vis tSend,0
+             //page open event
+             // clear weather elements, to keep example content in HMI
++            tMainIcon.txt=""
++            tMainText.txt=""
++            tForecast1.txt=""
++            tF1Icon.txt=""
++            tForecast1Val.txt=""
++            tForecast2.txt=""
++            tF2Icon.txt=""
++            tForecast2Val.txt=""
++            //tSend.txt="event,screensaverOpen"
++            //send calc crc
++            //btlen tSend.txt,sys0
++            //crcrest 1,0xffff // reset CRC
++            //crcputh 55 bb
++            //crcputs sys0,1
++            //crcputs tSend.txt,0
++            //send cmd
++            //printh 55 bb
++            //prints sys0,2
++            //prints tSend.txt,0
++            //prints crcval,2
+         
+ Variable (string) strCommand
+     Attributes
+@@ -105,7 +125,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 
++        Text                                : î
+         Max. Text Size                      : 10
+     
+ Text tMainText
+@@ -115,7 +135,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 
++        Text                                : 2,3 Â°C
+         Max. Text Size                      : 10
+     
+ Text tForecast1
+@@ -125,7 +145,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 
++        Text                                : Mi
+         Max. Text Size                      : 10
+     
+ Text tForecast1Val
+@@ -135,7 +155,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 
++        Text                                : 9,3 Â°C
+         Max. Text Size                      : 10
+     
+ Text tF1Icon
+@@ -145,7 +165,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 
++        Text                                : î
+         Max. Text Size                      : 10
+     
+ Text tForecast2
+@@ -155,7 +175,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 
++        Text                                : Do
+         Max. Text Size                      : 10
+     
+ Text tF2Icon
+@@ -165,7 +185,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 
++        Text                                : î
+         Max. Text Size                      : 10
+     
+ Text tForecast2Val
+@@ -175,7 +195,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 
++        Text                                : 11,9 Â°C
+         Max. Text Size                      : 10
+     
+ Text t10
+@@ -246,49 +266,9 @@
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+         Text                                : 
+-        Max. Text Size                      : 5
+-    
+-Text tForecast4Val
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : 
+-        Max. Text Size                      : 10
+-    
+-Text tMainTextAlt
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : 
+-        Max. Text Size                      : 10
+-    
+-Text tMainIconAlt
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : 
+-        Max. Text Size                      : 10
+-    
+-Text tMRIcon
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : 
+         Max. Text Size                      : 10
+     
+-Text tMR
++Text tForecast4Val
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -393,20 +373,12 @@
+                                     }
+                                     if(tInstruction.txt=="weatherUpdate")
+                                     {
+-                                        vis tMainIcon,1
+-                                        vis tMainIconAlt,0
+-                                        vis tMainText,1
+-                                        vis tMainTextAlt,0
+-                                        vis tMRIcon,0
+-                                        vis tMR,0
+                                         //tMainIcon
+                                         spstr strCommand.txt,tTmp.txt,"?",1
+                                         covx tTmp.txt,sys0,0,0
+                                         substr pageIcons.tIcons.txt,tMainIcon.txt,sys0,1
+-                                        tMainIconAlt.txt=tMainIcon.txt
+                                         //tMainText
+                                         spstr strCommand.txt,tMainText.txt,"?",2
+-                                        tMainTextAlt.txt=tMainText.txt
+                                         //tForecast1
+                                         spstr strCommand.txt,tForecast1.txt,"?",3
+                                         //tF1Icon
+@@ -439,36 +411,6 @@
+                                         substr pageIcons.tIcons.txt,tF4Icon.txt,sys0,1
+                                         //tForecast4Val
+                                         spstr strCommand.txt,tForecast4Val.txt,"?",14
+-                                        //alternative layout
+-                                        //tMRIcon
+-                                        spstr strCommand.txt,tTmp.txt,"?",15
+-                                        covx tTmp.txt,sys0,0,0
+-                                        substr pageIcons.tIcons.txt,tMRIcon.txt,sys0,1
+-                                        if(tTmp.txt!="")
+-                                        {
+-                                            //value for tMRIcon, activate alternative layout
+-                                            vis tMainIcon,0
+-                                            vis tMainText,0
+-                                            vis tMainTextAlt,1
+-                                            vis tMainIconAlt,1
+-                                            vis tMRIcon,1
+-                                            vis tMR,1
+-                                            vis tForecast1,0
+-                                            vis tF1Icon,0
+-                                            vis tForecast1Val,0
+-                                            //move forecast values to the right
+-                                            tForecast4.txt=tForecast3.txt
+-                                            tForecast3.txt=tForecast2.txt
+-                                            tForecast2.txt=tForecast1.txt
+-                                            tForecast4Val.txt=tForecast3Val.txt
+-                                            tForecast3Val.txt=tForecast2Val.txt
+-                                            tForecast2Val.txt=tForecast1Val.txt
+-                                            tF4Icon.txt=tF3Icon.txt
+-                                            tF3Icon.txt=tF2Icon.txt
+-                                            tF2Icon.txt=tF1Icon.txt
+-                                        }
+-                                        //tMR
+-                                        spstr strCommand.txt,tMR.txt,"?",16
+                                     }
+                                     if(tInstruction.txt=="pageType")
+                                     {
