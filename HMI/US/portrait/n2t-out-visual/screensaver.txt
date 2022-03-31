@@ -374,7 +374,7 @@ Text tF1Icon
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : î
-        Max. Text Size                      : 10
+        Max. Text Size                      : 4
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0

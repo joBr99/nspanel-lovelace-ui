@@ -166,7 +166,7 @@ Text tF1Icon
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : î
-        Max. Text Size                      : 10
+        Max. Text Size                      : 4
     
 Text tForecast2
     Attributes

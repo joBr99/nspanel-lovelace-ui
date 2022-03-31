@@ -928,28 +928,55 @@ Timer tmSerial
                                     spstr strCommand.txt,tInstruction.txt,",",0
                                     if(tInstruction.txt=="entityUpd")
                                     {
-                                        //entity name
-                                        spstr strCommand.txt,entn.txt,"|",1
                                         //heading
-                                        spstr strCommand.txt,tHeading.txt,"|",2
+                                        spstr strCommand.txt,tHeading.txt,"|",1
+                                        // navigation icons
+                                        spstr strCommand.txt,tId.txt,",",2
+                                        spstr tId.txt,tTmp.txt,"|",0
+                                        if(tTmp.txt=="0")
+                                        {
+                                            vis bPrev,0
+                                        }
+                                        if(tTmp.txt=="1")
+                                        {
+                                            vis bPrev,1
+                                            bPrev.txt="î°"
+                                        }
+                                        if(tTmp.txt=="2")
+                                        {
+                                            vis bPrev,1
+                                            bPrev.txt="î¶"
+                                        }
+                                        spstr tId.txt,tTmp.txt,"|",1
+                                        if(tTmp.txt=="0")
+                                        {
+                                            vis bNext,0
+                                        }
+                                        if(tTmp.txt=="1")
+                                        {
+                                            vis bPrev,1
+                                            bNext.txt="î³"
+                                        }
+                                        //entity name
+                                        spstr strCommand.txt,entn.txt,"|",3
                                         //icon
-                                        spstr strCommand.txt,tTmp.txt,"|",3
+                                        spstr strCommand.txt,tTmp.txt,"|",4
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tIcon.txt,sys0,1
                                         //title
-                                        spstr strCommand.txt,tTitle.txt,"|",4
+                                        spstr strCommand.txt,tTitle.txt,"|",5
                                         //author
-                                        spstr strCommand.txt,tAuthor.txt,"|",5
+                                        spstr strCommand.txt,tAuthor.txt,"|",6
                                         //volume
-                                        spstr strCommand.txt,tTmp.txt,"|",6
+                                        spstr strCommand.txt,tTmp.txt,"|",7
                                         covx tTmp.txt,sys0,0,0
                                         hVolume.val=sys0
                                         //icon
-                                        spstr strCommand.txt,tTmp.txt,"|",7
+                                        spstr strCommand.txt,tTmp.txt,"|",8
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tPlayPause.txt,sys0,1
                                         //speaker current
-                                        spstr strCommand.txt,tSpeaker.txt,"|",8
+                                        spstr strCommand.txt,tSpeaker.txt,"|",9
                                         if(tSpeaker.txt!="")
                                         {
                                             tSpeaker.pco=1374
@@ -958,14 +985,14 @@ Timer tmSerial
                                             tSpeaker.pco=65535
                                         }
                                         //speaker list
-                                        spstr strCommand.txt,vaSpeakerList.txt,"|",9
+                                        spstr strCommand.txt,vaSpeakerList.txt,"|",10
                                         if(vaSpeakerList.txt=="")
                                         {
                                             vis t6,0
                                         }
                                         vaSpeakerPos.val=0
                                         // on off button
-                                        spstr strCommand.txt,tTmp.txt,"|",10
+                                        spstr strCommand.txt,tTmp.txt,"|",11
                                         if(tTmp.txt=="disable")
                                         {
                                             vis t5,0
