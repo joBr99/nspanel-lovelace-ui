@@ -2074,7 +2074,7 @@ Button bDown5
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn4.txt+",down"
+            tSend.txt="event,buttonPress2,"+entn5.txt+",down"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -2262,7 +2262,7 @@ Button bDown6
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn4.txt+",down"
+            tSend.txt="event,buttonPress2,"+entn6.txt+",down"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
