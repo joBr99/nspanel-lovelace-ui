@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-03-31 18:35:24.383440514 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 18:35:24.787445085 +0000
+--- HMI/n2t-out/Program.s.txt	2022-03-31 18:39:20.775930111 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-03-31 18:39:21.243969492 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-03-31 18:35:24.383440514 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-03-31 18:35:24.787445085 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-03-31 18:39:20.775930111 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-03-31 18:39:21.243969492 +0000
 @@ -17,6 +17,7 @@
              vis tInstruction,0
              vis tTmp,0
@@ -21,7 +21,21 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
              vis arm1,0
              vis arm2,0
              vis arm3,0
-@@ -512,75 +513,48 @@
+@@ -170,12 +171,7 @@
+     
+     Events
+         Touch Press Event
+-            tSend.txt="event,buttonPress2,cardAlarm,"
+-            if(bPrev.txt=="î¶")
+-            {
+-                tSend.txt+="bUp"
+-            }
+-            tSend.txt+="bPrev"
++            tSend.txt="event,buttonPress2,cardAlarm,bPrev"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC
+@@ -517,75 +513,48 @@
                                      {
                                          //entn
                                          spstr strCommand.txt,entn.txt,",",1
@@ -108,7 +122,7 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                          if(tTmp.txt!="disable")
                                          {
                                              vis b0,1
-@@ -595,23 +569,9 @@
+@@ -600,23 +569,9 @@
                                              vis b9,1
                                              vis b10,1
                                              vis tCode,1
@@ -134,8 +148,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                          {
                                              tmFlash.en=1
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-03-31 18:35:24.387440559 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 18:35:24.787445085 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-03-31 18:39:20.775930111 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-03-31 18:39:21.243969492 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -329,7 +343,21 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Button bDown1
      Attributes
          Scope                               : local
-@@ -852,6 +1010,206 @@
+@@ -714,12 +872,7 @@
+     
+     Events
+         Touch Press Event
+-            tSend.txt="event,buttonPress2,cardEntities,"
+-            if(bPrev.txt=="î¶")
+-            {
+-                tSend.txt+="bUp"
+-            }
+-            tSend.txt+="bPrev"
++            tSend.txt="event,buttonPress2,cardEntities,bPrev"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC
+@@ -857,6 +1010,206 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -536,7 +564,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          Scope                               : local
-@@ -960,6 +1318,60 @@
+@@ -965,6 +1318,60 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -597,7 +625,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          Scope                               : local
-@@ -1065,6 +1477,50 @@
+@@ -1070,6 +1477,50 @@
                  page popupLight
              }
          
@@ -648,7 +676,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          Scope      : local
-@@ -1120,33 +1576,6 @@
+@@ -1125,33 +1576,6 @@
                                      {
                                          // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
                                          spstr strCommand.txt,tHeading.txt,",",1
@@ -682,7 +710,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                          // get Type
                                          spstr strCommand.txt,type1.txt,",",3
                                          // get internal name
-@@ -1643,6 +2072,254 @@
+@@ -1648,6 +2072,254 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
@@ -938,9 +966,23 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-03-31 18:35:24.383440514 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-03-31 18:35:24.787445085 +0000
-@@ -568,33 +568,6 @@
+--- HMI/n2t-out/cardGrid.txt	2022-03-31 18:39:20.775930111 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-03-31 18:39:21.243969492 +0000
+@@ -242,12 +242,7 @@
+     
+     Events
+         Touch Press Event
+-            tSend.txt="event,buttonPress2,cardGrid,"
+-            if(bPrev.txt=="î¶")
+-            {
+-                tSend.txt+="bUp"
+-            }
+-            tSend.txt+="bPrev"
++            tSend.txt="event,buttonPress2,cardGrid,bPrev"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC
+@@ -573,33 +568,6 @@
                                      {
                                          // command format: entityUpd,heading,navigation,[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
                                          spstr strCommand.txt,tHeading.txt,",",1
@@ -975,9 +1017,23 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                          spstr strCommand.txt,type1.txt,",",3
                                          // get internal name
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-03-31 18:35:24.387440559 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-31 18:35:24.787445085 +0000
-@@ -501,55 +501,28 @@
+--- HMI/n2t-out/cardMedia.txt	2022-03-31 18:39:20.775930111 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-03-31 18:39:21.243969492 +0000
+@@ -435,12 +435,7 @@
+     
+     Events
+         Touch Press Event
+-            tSend.txt="event,buttonPress2,cardMedia,"
+-            if(bPrev.txt=="î¶")
+-            {
+-                tSend.txt+="bUp"
+-            }
+-            tSend.txt+="bPrev"
++            tSend.txt="event,buttonPress2,cardMedia,bPrev"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC
+@@ -506,55 +501,28 @@
                                      spstr strCommand.txt,tInstruction.txt,",",0
                                      if(tInstruction.txt=="entityUpd")
                                      {
@@ -1042,7 +1098,7 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                          if(tSpeaker.txt!="")
                                          {
                                              tSpeaker.pco=1374
-@@ -558,14 +531,14 @@
+@@ -563,14 +531,14 @@
                                              tSpeaker.pco=65535
                                          }
                                          //speaker list
@@ -1060,9 +1116,23 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                          {
                                              vis t5,0
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-03-31 18:35:24.383440514 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-31 18:35:24.787445085 +0000
-@@ -638,53 +638,26 @@
+--- HMI/n2t-out/cardThermo.txt	2022-03-31 18:39:20.775930111 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-03-31 18:39:21.243969492 +0000
+@@ -329,12 +329,7 @@
+     
+     Events
+         Touch Press Event
+-            tSend.txt="event,buttonPress2,cardThermo,"
+-            if(bPrev.txt=="î¶")
+-            {
+-                tSend.txt+="bUp"
+-            }
+-            tSend.txt+="bPrev"
++            tSend.txt="event,buttonPress2,cardThermo,bPrev"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC
+@@ -643,53 +638,26 @@
                                      spstr strCommand.txt,tInstruction.txt,",",0
                                      if(tInstruction.txt=="entityUpd")
                                      {
@@ -1125,7 +1195,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                          covx tTmp.txt,xTempStep.val,0,0
                                          // disable all buttons
                                          vis bt0,0
-@@ -697,160 +670,190 @@
+@@ -702,160 +670,190 @@
                                          vis bt7,0
                                          vis bt8,0
                                          //bt0
@@ -1360,7 +1430,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                                                      if(tInstruction.txt=="pageType")
                                                                      {
                                                                          //command format pageType,specialPageName
-@@ -906,28 +909,6 @@
+@@ -911,28 +909,6 @@
                                                                              page cardAlarm
                                                                          }
                                                                      }
@@ -1390,8 +1460,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                                                      udelete payloadLength-1
                                                                      bufferPos=0
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-03-31 18:35:24.383440514 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 18:35:24.787445085 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-03-31 18:39:20.775930111 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-03-31 18:39:21.243969492 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled

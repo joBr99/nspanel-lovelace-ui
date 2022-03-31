@@ -339,7 +339,12 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,bPrev"
+            tSend.txt="event,buttonPress2,cardAlarm,"
+            if(bPrev.txt=="î¶")
+            {
+                tSend.txt+="bUp"
+            }
+            tSend.txt+="bPrev"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
