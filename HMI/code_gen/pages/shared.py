@@ -134,3 +134,33 @@ sharedfoot = """
   }
 }
 """
+
+navigation = """
+              // navigation icons
+              spstr strCommand.txt,tId.txt,",",2
+              spstr tId.txt,tTmp.txt,"|",0
+              if(tTmp.txt=="0")
+              {
+                vis bPrev,0
+              }
+              if(tTmp.txt=="1")
+              {
+                vis bPrev,1
+                bPrev.txt=""
+              }
+              if(tTmp.txt=="2")
+              {
+                vis bPrev,1
+                bPrev.txt=""
+              }       
+              spstr tId.txt,tTmp.txt,"|",1
+              if(tTmp.txt=="0")
+              {
+                vis bNext,0
+              }
+              if(tTmp.txt=="1")
+              {
+                vis bPrev,1
+                bNext.txt=""
+              }
+"""
