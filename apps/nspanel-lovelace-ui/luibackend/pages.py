@@ -3,7 +3,7 @@ import datetime
 
 from icon_mapping import get_icon_id
 from icons import get_icon_id_ha
-from helper import scale, rgb_dec565, rgb_brightness, get_attr_safe, convert_temperature_from_celsius
+from helper import scale, rgb_dec565, rgb_brightness, get_attr_safe, convert_temperature
 from localization import get_translation
 
 # check Babel
@@ -71,7 +71,7 @@ class LuiPagesGen(object):
             return
 
         icon_cur        = get_icon_id_ha("weather", state=we.state)
-        text_cur        = convert_temperature_from_celsius(we.attributes.temperature, unit)
+        text_cur        = convert_temperature(we.attributes.temperature, unit)
 
         weather_res = ""
         for i in range(1,5):
@@ -84,7 +84,7 @@ class LuiPagesGen(object):
                 else:
                     up = up.strftime("%a")
                 icon = get_icon_id_ha("weather", state=we.attributes.forecast[i-1]['condition'])
-                down = convert_temperature_from_celsius(we.attributes.forecast[i-1]['temperature'], unit)
+                down = convert_temperature(we.attributes.forecast[i-1]['temperature'], unit)
             else:
                 LOGGER.info(f"Forecast {i} is overriden with {wOF}")
                 icon = None
