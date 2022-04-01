@@ -64,8 +64,8 @@ class NsPanelLovelaceUIManager(hass.Hass):
 
         controller = LuiController(self, cfg, send_mqtt_msg)
 
-        desired_display_firmware_version = 25
-        version     = "v2.3.0"
+        desired_display_firmware_version = 26
+        version     = "v2.4.0"
         
         model       = cfg.get("model")
         if model == "us-l":
