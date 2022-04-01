@@ -45,7 +45,7 @@ cardThermo
 screensaver
 	33   Component(s)
 	207  Line(s) of event code
-	159  Unique line(s) of event code
+	158  Unique line(s) of event code
 cardAlarm
 	35   Component(s)
 	343  Line(s) of event code
@@ -59,4 +59,4 @@ Total
 	13   Page(s)
 	355  Component(s)
 	3637 Line(s) of event code
-	1064 Unique line(s) of event code
+	1059 Unique line(s) of event code
