@@ -42,10 +42,6 @@ cardAlarm
 	35   Component(s)
 	343  Line(s) of event code
 	214  Unique line(s) of event code
-cardEntities
-	86   Component(s)
-	1360 Line(s) of event code
-	552  Unique line(s) of event code
 cardGrid
 	39   Component(s)
 	428  Line(s) of event code
@@ -54,6 +50,10 @@ cardThermo
 	41   Component(s)
 	458  Line(s) of event code
 	283  Unique line(s) of event code
+cardEntities
+	86   Component(s)
+	1360 Line(s) of event code
+	552  Unique line(s) of event code
 
 Total
 	13   Page(s)
