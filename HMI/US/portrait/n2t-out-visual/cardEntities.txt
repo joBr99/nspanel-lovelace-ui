@@ -400,8 +400,8 @@ Text tEntity1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 77
-        y coordinate                        : 95
+        x coordinate                        : 52
+        y coordinate                        : 93
         Width                               : 180
         Height                              : 30
         Effect                              : load
@@ -430,8 +430,8 @@ Text tEntity2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 78
-        y coordinate                        : 164
+        x coordinate                        : 52
+        y coordinate                        : 162
         Width                               : 180
         Height                              : 30
         Effect                              : load
@@ -460,8 +460,8 @@ Text tEntity3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 78
-        y coordinate                        : 231
+        x coordinate                        : 52
+        y coordinate                        : 229
         Width                               : 180
         Height                              : 30
         Effect                              : load
@@ -490,7 +490,7 @@ Text tEntity4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 78
+        x coordinate                        : 52
         y coordinate                        : 296
         Width                               : 180
         Height                              : 30
@@ -520,7 +520,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 5
         y coordinate                        : 94
         Width                               : 45
         Height                              : 30
@@ -550,7 +550,7 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 5
         y coordinate                        : 163
         Width                               : 45
         Height                              : 30
@@ -580,7 +580,7 @@ Text tIcon3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 5
         y coordinate                        : 230
         Width                               : 45
         Height                              : 30
@@ -610,7 +610,7 @@ Text tIcon4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 5
         y coordinate                        : 296
         Width                               : 45
         Height                              : 30
@@ -760,8 +760,8 @@ Text tEntity5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 78
-        y coordinate                        : 360
+        x coordinate                        : 52
+        y coordinate                        : 359
         Width                               : 180
         Height                              : 30
         Effect                              : load
@@ -790,7 +790,7 @@ Text tIcon5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 5
         y coordinate                        : 360
         Width                               : 45
         Height                              : 30
@@ -820,8 +820,8 @@ Text tEntity6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 78
-        y coordinate                        : 425
+        x coordinate                        : 52
+        y coordinate                        : 424
         Width                               : 180
         Height                              : 30
         Effect                              : load
@@ -850,7 +850,7 @@ Text tIcon6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 5
         y coordinate                        : 425
         Width                               : 45
         Height                              : 30
@@ -897,7 +897,7 @@ Slider hSlider1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 168
+        x coordinate                        : 170
         y coordinate                        : 88
         Width                               : 100
         Height                              : 43
