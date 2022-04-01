@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-01 15:25:01.338399413 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-01 15:25:01.750404700 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-01 17:25:58.645575442 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-01 17:25:59.041577968 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-04-01 15:25:01.342399464 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-01 15:25:01.750404700 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-04-01 17:25:58.645575442 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-01 17:25:59.041577968 +0000
 @@ -512,13 +512,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -98,7 +98,7 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                          if(tTmp.txt=="enable")
                                          {
                                              tmFlash.en=1
-@@ -628,7 +628,7 @@
+@@ -628,35 +628,35 @@
                                      if(tInstruction.txt=="time")
                                      {
                                          // get set time to global variable
@@ -107,7 +107,10 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                      }
                                      if(tInstruction.txt=="date")
                                      {
-@@ -638,25 +638,25 @@
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                     }
                                      if(tInstruction.txt=="dimmode")
                                      {
                                          // get value
@@ -139,8 +142,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-01 15:25:01.342399464 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-01 15:25:01.750404700 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-01 17:25:58.649575467 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-01 17:25:59.045577994 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -1246,7 +1249,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                          udelete payloadLength-1
                                          bufferPos=0
-@@ -1707,7 +2411,7 @@
+@@ -1707,23 +2411,23 @@
                                      if(tInstruction.txt=="time")
                                      {
                                          // get set time to global variable
@@ -1255,7 +1258,10 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      }
                                      if(tInstruction.txt=="date")
                                      {
-@@ -1717,13 +2421,13 @@
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                     }
                                      if(tInstruction.txt=="dimmode")
                                      {
                                          // get value
@@ -1272,8 +1278,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      }
                                      // end of user code
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-04-01 15:25:01.338399413 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-01 15:25:01.750404700 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-04-01 17:25:58.649575467 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-01 17:25:59.041577968 +0000
 @@ -568,13 +568,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1478,7 +1484,7 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                          udelete payloadLength-1
                                          bufferPos=0
-@@ -797,7 +797,7 @@
+@@ -797,23 +797,23 @@
                                      if(tInstruction.txt=="time")
                                      {
                                          // get set time to global variable
@@ -1487,7 +1493,10 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                      }
                                      if(tInstruction.txt=="date")
                                      {
-@@ -807,13 +807,13 @@
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                     }
                                      if(tInstruction.txt=="dimmode")
                                      {
                                          // get value
@@ -1504,8 +1513,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                      }
                                      // end of user code
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-04-01 15:25:01.338399413 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-01 15:25:01.750404700 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-04-01 17:25:58.649575467 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-01 17:25:59.041577968 +0000
 @@ -503,13 +503,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1522,7 +1531,7 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                          spstr tId.txt,tTmp.txt,"|",0
                                          if(tTmp.txt=="0")
                                          {
-@@ -583,7 +583,7 @@
+@@ -583,35 +583,35 @@
                                      if(tInstruction.txt=="time")
                                      {
                                          // get set time to global variable
@@ -1531,7 +1540,10 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                      }
                                      if(tInstruction.txt=="date")
                                      {
-@@ -593,25 +593,25 @@
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                     }
                                      if(tInstruction.txt=="dimmode")
                                      {
                                          // get value
@@ -1563,8 +1575,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-04-01 15:25:01.342399464 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-01 15:25:01.750404700 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-04-01 17:25:58.649575467 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-01 17:25:59.041577968 +0000
 @@ -640,13 +640,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1821,7 +1833,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                                                          udelete payloadLength-1
                                                                          bufferPos=0
-@@ -914,7 +914,7 @@
+@@ -914,23 +914,23 @@
                                                                      if(tInstruction.txt=="time")
                                                                      {
                                                                          // get set time to global variable
@@ -1830,7 +1842,10 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                                                      }
                                                                      if(tInstruction.txt=="date")
                                                                      {
-@@ -924,13 +924,13 @@
+                                                                         // get set date to global variable
+-                                                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                                                     }
                                                                      if(tInstruction.txt=="dimmode")
                                                                      {
                                                                          // get value
@@ -1847,8 +1862,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                                                      }
                                                                      // end of user code
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-01 15:25:01.338399413 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-01 15:25:01.750404700 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-01 17:25:58.645575442 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-01 17:25:59.041577968 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -1867,7 +1882,7 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -257,11 +257,11 @@
+@@ -257,27 +257,27 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
@@ -1881,7 +1896,10 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
                                      }
                                      if(tInstruction.txt=="date")
                                      {
-@@ -271,13 +271,13 @@
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                     }
                                      if(tInstruction.txt=="dimmode")
                                      {
                                          // get value
@@ -1913,8 +1931,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-04-01 15:25:01.338399413 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-01 15:25:01.750404700 +0000
+--- HMI/n2t-out/popupLight.txt	2022-04-01 17:25:58.645575442 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-01 17:25:59.041577968 +0000
 @@ -438,24 +438,24 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1924,23 +1942,23 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                      if(tInstruction.txt=="entityUpdateDetail")
                                      {
                                          // change icon
--                                        spstr strCommand.txt,tTmp.txt,"}",1
+-                                        spstr strCommand.txt,tTmp.txt,"~",1
 +                                        spstr strCommand.txt,tTmp.txt,",",1
                                          covx tTmp.txt,sys0,0,0
                                          substr pageIcons.tIcons.txt,tIcon1.txt,sys0,1
                                          vis tIcon1,1
                                          // change icon color
--                                        spstr strCommand.txt,tTmp.txt,"}",2
+-                                        spstr strCommand.txt,tTmp.txt,"~",2
 +                                        spstr strCommand.txt,tTmp.txt,",",2
                                          covx tTmp.txt,sys0,0,0
                                          tIcon1.pco=sys0
                                          // get Button State
--                                        spstr strCommand.txt,tTmp.txt,"}",3
+-                                        spstr strCommand.txt,tTmp.txt,"~",3
 +                                        spstr strCommand.txt,tTmp.txt,",",3
                                          covx tTmp.txt,sys0,0,0
                                          btOnOff1.val=sys0
                                          // get Brightness value
--                                        spstr strCommand.txt,tTmp.txt,"}",4
+-                                        spstr strCommand.txt,tTmp.txt,"~",4
 +                                        spstr strCommand.txt,tTmp.txt,",",4
                                          if(tTmp.txt=="disable")
                                          {
@@ -1949,7 +1967,7 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                              }
                                          }
                                          // get ColorTemp value
--                                        spstr strCommand.txt,tTmp.txt,"}",5
+-                                        spstr strCommand.txt,tTmp.txt,"~",5
 +                                        spstr strCommand.txt,tTmp.txt,",",5
                                          if(tTmp.txt=="disable")
                                          {
@@ -1958,32 +1976,35 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                              }
                                          }
                                          // get Color value
--                                        spstr strCommand.txt,tTmp.txt,"}",6
+-                                        spstr strCommand.txt,tTmp.txt,"~",6
 +                                        spstr strCommand.txt,tTmp.txt,",",6
                                          // disable -> isn't supported
                                          if(tTmp.txt=="disable")
                                          {
-@@ -541,7 +541,7 @@
+@@ -541,34 +541,34 @@
                                      if(tInstruction.txt=="time")
                                      {
                                          // get set time to global variable
--                                        spstr strCommand.txt,pageIcons.vaTime.txt,"}",1
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 +                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
                                      }
                                      if(tInstruction.txt=="date")
                                      {
-@@ -551,24 +551,24 @@
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                     }
                                      if(tInstruction.txt=="dimmode")
                                      {
                                          // get value
--                                        spstr strCommand.txt,tTmp.txt,"}",1
+-                                        spstr strCommand.txt,tTmp.txt,"~",1
 +                                        spstr strCommand.txt,tTmp.txt,",",1
                                          covx tTmp.txt,dimValue,0,0
                                      }
                                      if(tInstruction.txt=="timeout")
                                      {
                                          //set timeout to global var
--                                        spstr strCommand.txt,tTmp.txt,"}",1
+-                                        spstr strCommand.txt,tTmp.txt,"~",1
 +                                        spstr strCommand.txt,tTmp.txt,",",1
                                          covx tTmp.txt,sleepTimeout,0,0
                                      }
@@ -1991,50 +2012,102 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                      {
                                          //command format pageType,specialPageName
                                          //write name of speical page to tId
--                                        spstr strCommand.txt,tId.txt,"}",1
+-                                        spstr strCommand.txt,tId.txt,"~",1
 +                                        spstr strCommand.txt,tId.txt,",",1
                                          //save second arg if there's one
--                                        spstr strCommand.txt,tTmp.txt,"}",2
+-                                        spstr strCommand.txt,tTmp.txt,"~",2
 +                                        spstr strCommand.txt,tTmp.txt,",",2
                                          //save third arg if there's one
--                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"}",3
+-                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
 +                                        spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-04-01 15:25:01.338399413 +0000
-+++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-04-01 15:25:01.750404700 +0000
-@@ -251,7 +251,7 @@
+--- HMI/n2t-out/popupNotify.txt	2022-04-01 17:25:58.645575442 +0000
++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-04-01 17:25:59.041577968 +0000
+@@ -251,70 +251,70 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
--                                    spstr strCommand.txt,tInstruction.txt,"}",0
+-                                    spstr strCommand.txt,tInstruction.txt,"~",0
 +                                    spstr strCommand.txt,tInstruction.txt,",",0
                                      if(tInstruction.txt=="entityUpdateDetail")
                                      {
                                          // get entn
-@@ -298,7 +298,7 @@
+-                                        spstr strCommand.txt,entn.txt,"~",1
++                                        spstr strCommand.txt,entn.txt,"|",1
+                                         // get Heading
+-                                        spstr strCommand.txt,tHeading.txt,"~",2
++                                        spstr strCommand.txt,tHeading.txt,"|",2
+                                         // heading color
+-                                        spstr strCommand.txt,tTmp.txt,"~",3
++                                        spstr strCommand.txt,tTmp.txt,"|",3
+                                         covx tTmp.txt,sys0,0,0
+                                         tHeading.pco=sys0
+                                         // get b1
+-                                        spstr strCommand.txt,b1.txt,"~",4
++                                        spstr strCommand.txt,b1.txt,"|",4
+                                         if(b1.txt!="")
+                                         {
+                                             vis b1,1
+                                         }
+                                         // b1 color
+-                                        spstr strCommand.txt,tTmp.txt,"~",5
++                                        spstr strCommand.txt,tTmp.txt,"|",5
+                                         covx tTmp.txt,sys0,0,0
+                                         b1.pco=sys0
+                                         // get b2
+-                                        spstr strCommand.txt,b2.txt,"~",6
++                                        spstr strCommand.txt,b2.txt,"|",6
+                                         if(b2.txt!="")
+                                         {
+                                             vis b2,1
+                                         }
+                                         // b2 color
+-                                        spstr strCommand.txt,tTmp.txt,"~",7
++                                        spstr strCommand.txt,tTmp.txt,"|",7
+                                         covx tTmp.txt,sys0,0,0
+                                         b2.pco=sys0
+                                         // get tText
+-                                        spstr strCommand.txt,tText.txt,"~",8
++                                        spstr strCommand.txt,tText.txt,"|",8
+                                         // tText color
+-                                        spstr strCommand.txt,tTmp.txt,"~",9
++                                        spstr strCommand.txt,tTmp.txt,"|",9
+                                         covx tTmp.txt,sys0,0,0
+                                         tText.pco=sys0
+                                         //preserve old sleepTimeout
+                                         vaOldSleepT.val=sleepTimeout
+                                         // sleep timeout
+-                                        spstr strCommand.txt,tTmp.txt,"~",10
++                                        spstr strCommand.txt,tTmp.txt,"|",10
+                                         covx tTmp.txt,sys0,0,0
+                                         sleepTimeout=sys0
+                                     }
                                      if(tInstruction.txt=="time")
                                      {
                                          // get set time to global variable
--                                        spstr strCommand.txt,pageIcons.vaTime.txt,"}",1
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 +                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
                                      }
                                      if(tInstruction.txt=="date")
                                      {
-@@ -308,13 +308,13 @@
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                     }
                                      if(tInstruction.txt=="dimmode")
                                      {
                                          // get value
--                                        spstr strCommand.txt,tTmp.txt,"}",1
+-                                        spstr strCommand.txt,tTmp.txt,"~",1
 +                                        spstr strCommand.txt,tTmp.txt,",",1
                                          covx tTmp.txt,dimValue,0,0
                                      }
                                      if(tInstruction.txt=="timeout")
                                      {
                                          //set timeout to global var
--                                        spstr strCommand.txt,tTmp.txt,"}",1
+-                                        spstr strCommand.txt,tTmp.txt,"~",1
 +                                        spstr strCommand.txt,tTmp.txt,",",1
                                          covx tTmp.txt,sleepTimeout,0,0
                                      }
@@ -2043,30 +2116,30 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
                                          sleepTimeout=vaOldSleepT.val
                                          //command format pageType,specialPageName
                                          //write name of speical page to tId
--                                        spstr strCommand.txt,tId.txt,"}",1
+-                                        spstr strCommand.txt,tId.txt,"~",1
 +                                        spstr strCommand.txt,tId.txt,",",1
                                          //save second arg if there's one
--                                        spstr strCommand.txt,tTmp.txt,"}",2
+-                                        spstr strCommand.txt,tTmp.txt,"~",2
 +                                        spstr strCommand.txt,tTmp.txt,",",2
                                          //save third arg if there's one
--                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"}",3
+-                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
 +                                        spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-04-01 15:25:01.338399413 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-04-01 15:25:01.750404700 +0000
-@@ -324,24 +324,24 @@
+--- HMI/n2t-out/popupShutter.txt	2022-04-01 17:25:58.645575442 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-04-01 17:25:59.041577968 +0000
+@@ -324,45 +324,45 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
--                                    spstr strCommand.txt,tInstruction.txt,"}",0
+-                                    spstr strCommand.txt,tInstruction.txt,"~",0
 +                                    spstr strCommand.txt,tInstruction.txt,",",0
                                      if(tInstruction.txt=="entityUpdateDetail")
                                      {
                                          // get Position value
--                                        spstr strCommand.txt,tTmp.txt,"}",1
+-                                        spstr strCommand.txt,tTmp.txt,"~",1
 +                                        spstr strCommand.txt,tTmp.txt,",",1
                                          covx tTmp.txt,sys0,0,0
                                          hPosition.val=sys0
@@ -2074,23 +2147,26 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
                                      if(tInstruction.txt=="dimmode")
                                      {
                                          // get value
--                                        spstr strCommand.txt,tTmp.txt,"}",1
+-                                        spstr strCommand.txt,tTmp.txt,"~",1
 +                                        spstr strCommand.txt,tTmp.txt,",",1
                                          covx tTmp.txt,dimValue,0,0
                                      }
                                      if(tInstruction.txt=="time")
                                      {
                                          // get set time to global variable
--                                        spstr strCommand.txt,pageIcons.vaTime.txt,"}",1
+-                                        spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 +                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
                                      }
                                      if(tInstruction.txt=="date")
                                      {
-@@ -351,18 +351,18 @@
+                                         // get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                     }
                                      if(tInstruction.txt=="timeout")
                                      {
                                          //set timeout to global var
--                                        spstr strCommand.txt,tTmp.txt,"}",1
+-                                        spstr strCommand.txt,tTmp.txt,"~",1
 +                                        spstr strCommand.txt,tTmp.txt,",",1
                                          covx tTmp.txt,sleepTimeout,0,0
                                      }
@@ -2098,20 +2174,20 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
                                      {
                                          //command format pageType,specialPageName
                                          //write name of speical page to tId
--                                        spstr strCommand.txt,tId.txt,"}",1
+-                                        spstr strCommand.txt,tId.txt,"~",1
 +                                        spstr strCommand.txt,tId.txt,",",1
                                          //save second arg if there's one
--                                        spstr strCommand.txt,tTmp.txt,"}",2
+-                                        spstr strCommand.txt,tTmp.txt,"~",2
 +                                        spstr strCommand.txt,tTmp.txt,",",2
                                          //save third arg if there's one
--                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"}",3
+-                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
 +                                        spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-04-01 15:25:01.342399464 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-01 15:25:01.750404700 +0000
+--- HMI/n2t-out/screensaver.txt	2022-04-01 17:25:58.649575467 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-01 17:25:59.041577968 +0000
 @@ -355,7 +355,7 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -2138,7 +2214,14 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
                                          spstr pageIcons.vaTime.txt,tTime.txt,"?",0
                                          spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
                                          if(tAMPM.txt=="")
-@@ -388,7 +388,7 @@
+@@ -382,13 +382,13 @@
+                                     if(tInstruction.txt=="date")
+                                     {
+                                         //get set date to global variable
+-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                         tDate.txt=pageIcons.vaDate.txt
+                                     }
                                      if(tInstruction.txt=="timeout")
                                      {
                                          //set timeout to global var
