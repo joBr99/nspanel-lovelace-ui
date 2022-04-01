@@ -335,6 +335,7 @@ key | optional | type | default | description
 `timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  `"%I:%M   ?%p"`
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
 `weather` | True | string | `weather.example` | weather entity from homeassistant
+`weatherUnit` | True | string | `celsius` | unit for temperature, valid values are `celsius` or `fahrenheit`
 `weatherOverrideForecast1` | True | string | `None` | sensor entity from home assistant here to override the first weather forecast item on the screensaver
 `weatherOverrideForecast2` | True | string | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
 `weatherOverrideForecast3` | True | string | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver

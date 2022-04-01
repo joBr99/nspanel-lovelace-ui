@@ -109,7 +109,7 @@ class LuiBackendConfig(object):
         'dateFormatBabel': "full",
         'dateFormat': "%A, %d. %B %Y",
         'weather': 'weather.example',
-        'weatherUnit': '°C',
+        'weatherUnit': 'celsius',
         'weatherOverrideForecast1': None,
         'weatherOverrideForecast2': None,
         'weatherOverrideForecast3': None,
