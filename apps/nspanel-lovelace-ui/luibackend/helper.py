@@ -44,11 +44,11 @@ def rgb_dec565(rgb_color):
     return ((int(red / 255 * 31) << 11) | (int(green / 255 * 63) << 5) | (int(blue / 255 * 31)))
 
 def convert_temperature_from_celsius(c, unit):
-    if unit == "celsius":
+    if unit == "fahrenheit":
         temp = (c * 1.8) + 32
         return f"{temp}°F"
     else:
-        return f"{temp}°C"
+        return f"{c}°C"
     
 def get_attr_safe(entity, attr, default):
     res = entity.attributes.get(attr, default)
