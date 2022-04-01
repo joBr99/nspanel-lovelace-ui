@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-04-01 15:25:01.342399464 +0000
++++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-04-01 15:25:02.174410141 +0000
 @@ -17,6 +17,7 @@
              vis tInstruction,0
              vis tTmp,0
@@ -135,8 +135,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-01 15:25:01.342399464 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-04-01 15:25:02.178410192 +0000
 @@ -211,7 +211,7 @@
          Send Component ID                   : disabled
          Associated Keyboard                 : none
@@ -557,8 +557,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
                                      }
                                      // end of user code
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-04-01 15:25:01.338399413 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-04-01 15:25:02.178410192 +0000
 @@ -12,28 +12,307 @@
      
      Events
@@ -1131,8 +1131,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
                                      }
                                      // end of user code
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-04-01 15:25:01.338399413 +0000
++++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-04-01 15:25:02.174410141 +0000
 @@ -503,13 +503,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1190,8 +1190,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-04-01 15:25:01.342399464 +0000
++++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-04-01 15:25:02.174410141 +0000
 @@ -640,13 +640,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1474,8 +1474,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
                                                                      }
                                                                      // end of user code
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/landscape/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/pageIcons.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/pageIcons.txt	2022-04-01 15:25:01.338399413 +0000
++++ HMI/US/landscape/n2t-out/pageIcons.txt	2022-04-01 15:25:02.174410141 +0000
 @@ -20,7 +20,7 @@
      Attributes
          Scope         : global
@@ -1486,8 +1486,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/landscape/n2t-out/pageIcons.txt
  Text tIcons
      Attributes
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-01 15:25:01.338399413 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-04-01 15:25:02.174410141 +0000
 @@ -257,11 +257,11 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1534,8 +1534,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/popupLight.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/popupLight.txt	2022-04-01 15:25:01.338399413 +0000
++++ HMI/US/landscape/n2t-out/popupLight.txt	2022-04-01 15:25:02.174410141 +0000
 @@ -438,24 +438,24 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1624,8 +1624,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-04-01 15:25:01.338399413 +0000
++++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-04-01 15:25:02.174410141 +0000
 @@ -251,7 +251,7 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1676,8 +1676,8 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-04-01 15:25:01.338399413 +0000
++++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-04-01 15:25:02.174410141 +0000
 @@ -324,24 +324,24 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1731,8 +1731,8 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-04-01 14:58:11.568015122 +0000
-+++ HMI/US/landscape/n2t-out/screensaver.txt	2022-04-01 14:58:12.364010551 +0000
+--- HMI/n2t-out/screensaver.txt	2022-04-01 15:25:01.342399464 +0000
++++ HMI/US/landscape/n2t-out/screensaver.txt	2022-04-01 15:25:02.174410141 +0000
 @@ -30,6 +30,26 @@
              vis tSend,0
              //page open event
@@ -1918,7 +1918,7 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
                                          spstr pageIcons.vaTime.txt,tTime.txt,"?",0
                                          spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
                                          if(tAMPM.txt=="")
-@@ -388,25 +368,17 @@
+@@ -388,98 +368,60 @@
                                      if(tInstruction.txt=="timeout")
                                      {
                                          //set timeout to global var
@@ -1935,23 +1935,61 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
 -                                        vis tMRIcon,0
 -                                        vis tMR,0
                                          //tMainIcon
-                                         spstr strCommand.txt,tTmp.txt,"?",1
+-                                        spstr strCommand.txt,tTmp.txt,"~",1
++                                        spstr strCommand.txt,tTmp.txt,"?",1
                                          covx tTmp.txt,sys0,0,0
                                          substr pageIcons.tIcons.txt,tMainIcon.txt,sys0,1
 -                                        tMainIconAlt.txt=tMainIcon.txt
                                          //tMainText
-                                         spstr strCommand.txt,tMainText.txt,"?",2
+-                                        spstr strCommand.txt,tMainText.txt,"~",2
 -                                        tMainTextAlt.txt=tMainText.txt
++                                        spstr strCommand.txt,tMainText.txt,"?",2
                                          //tForecast1
-                                         spstr strCommand.txt,tForecast1.txt,"?",3
+-                                        spstr strCommand.txt,tForecast1.txt,"~",3
++                                        spstr strCommand.txt,tForecast1.txt,"?",3
                                          //tF1Icon
-@@ -439,47 +411,17 @@
+-                                        spstr strCommand.txt,tTmp.txt,"~",4
++                                        spstr strCommand.txt,tTmp.txt,"?",4
+                                         covx tTmp.txt,sys0,0,0
+                                         substr pageIcons.tIcons.txt,tF1Icon.txt,sys0,1
+                                         //tForecast1Val
+-                                        spstr strCommand.txt,tForecast1Val.txt,"~",5
++                                        spstr strCommand.txt,tForecast1Val.txt,"?",5
+                                         //tForecast2
+-                                        spstr strCommand.txt,tForecast2.txt,"~",6
++                                        spstr strCommand.txt,tForecast2.txt,"?",6
+                                         //tF2Icon
+-                                        spstr strCommand.txt,tTmp.txt,"~",7
++                                        spstr strCommand.txt,tTmp.txt,"?",7
+                                         covx tTmp.txt,sys0,0,0
+                                         substr pageIcons.tIcons.txt,tF2Icon.txt,sys0,1
+                                         //tForecast2Val
+-                                        spstr strCommand.txt,tForecast2Val.txt,"~",8
++                                        spstr strCommand.txt,tForecast2Val.txt,"?",8
+                                         //tForecast3
+-                                        spstr strCommand.txt,tForecast3.txt,"~",9
++                                        spstr strCommand.txt,tForecast3.txt,"?",9
+                                         //tF3Icon
+-                                        spstr strCommand.txt,tTmp.txt,"~",10
++                                        spstr strCommand.txt,tTmp.txt,"?",10
+                                         covx tTmp.txt,sys0,0,0
+                                         substr pageIcons.tIcons.txt,tF3Icon.txt,sys0,1
+                                         //tForecast3Val
+-                                        spstr strCommand.txt,tForecast3Val.txt,"~",11
++                                        spstr strCommand.txt,tForecast3Val.txt,"?",11
+                                         //tForecast4
+-                                        spstr strCommand.txt,tForecast4.txt,"~",12
++                                        spstr strCommand.txt,tForecast4.txt,"?",12
+                                         //tF4Icon
+-                                        spstr strCommand.txt,tTmp.txt,"~",13
++                                        spstr strCommand.txt,tTmp.txt,"?",13
+                                         covx tTmp.txt,sys0,0,0
                                          substr pageIcons.tIcons.txt,tF4Icon.txt,sys0,1
                                          //tForecast4Val
-                                         spstr strCommand.txt,tForecast4Val.txt,"?",14
+-                                        spstr strCommand.txt,tForecast4Val.txt,"~",14
 -                                        //alternative layout
 -                                        //tMRIcon
--                                        spstr strCommand.txt,tTmp.txt,"?",15
+-                                        spstr strCommand.txt,tTmp.txt,"~",15
 -                                        covx tTmp.txt,sys0,0,0
 -                                        substr pageIcons.tIcons.txt,tMRIcon.txt,sys0,1
 -                                        if(tTmp.txt!="")
@@ -1978,7 +2016,8 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
 -                                            tF2Icon.txt=tF1Icon.txt
 -                                        }
 -                                        //tMR
--                                        spstr strCommand.txt,tMR.txt,"?",16
+-                                        spstr strCommand.txt,tMR.txt,"~",16
++                                        spstr strCommand.txt,tForecast4Val.txt,"?",14
                                      }
                                      if(tInstruction.txt=="pageType")
                                      {
