@@ -56,7 +56,7 @@ class LuiController(object):
 
         # set screensaver timeout
         timeout = self._config.get("timeoutScreensaver")
-        self._send_mqtt_msg(f"timeout,{timeout}")
+        self._send_mqtt_msg(f"timeout~{timeout}")
         
         # set current screensaver brightness
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
@@ -76,7 +76,7 @@ class LuiController(object):
         else:
             self.current_screensaver_brightness = kwargs['value']
             brightness = kwargs['value']
-        self._send_mqtt_msg(f"dimmode,{brightness}")
+        self._send_mqtt_msg(f"dimmode~{brightness}")
 
     def weather_update(self, kwargs):
         self._pages_gen.update_screensaver_weather()
