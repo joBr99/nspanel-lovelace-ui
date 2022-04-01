@@ -49,7 +49,7 @@ set current time:
 
 set current date:
 
-`date~?Di 24. Februar`
+`date~Di 24. Februar`
 
 set screensaver timeout (set time in sec~ max 65):
 

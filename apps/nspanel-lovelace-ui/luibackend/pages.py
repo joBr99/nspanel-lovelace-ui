@@ -50,7 +50,7 @@ class LuiPagesGen(object):
         else:
             dateformat = self._config.get("dateFormat")
             date = datetime.datetime.now().strftime(dateformat)
-        self._send_mqtt_msg(f"date~?{date}")
+        self._send_mqtt_msg(f"date~{date}")
 
     def page_type(self, target_page):
         self._send_mqtt_msg(f"pageType~{target_page}")
