@@ -438,7 +438,7 @@ Timer tmSerial
                                     // write command to variable strCommand
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-                                    spstr strCommand.txt,tInstruction.txt,"}",0
+                                    spstr strCommand.txt,tInstruction.txt,"~",0
                                     if(tInstruction.txt=="entityUpdateDetail")
                                     {
                                         // change icon
