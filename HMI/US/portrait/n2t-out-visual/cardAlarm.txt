@@ -1042,13 +1042,13 @@ Timer tmSerial
                                     // write command to variable strCommand
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-                                    spstr strCommand.txt,tInstruction.txt,",",0
+                                    spstr strCommand.txt,tInstruction.txt,"~",0
                                     if(tInstruction.txt=="entityUpd")
                                     {
                                         //entn
-                                        spstr strCommand.txt,entn.txt,",",1
+                                        spstr strCommand.txt,entn.txt,"~",1
                                         // navigation icons
-                                        spstr strCommand.txt,tId.txt,",",2
+                                        spstr strCommand.txt,tId.txt,"~",2
                                         spstr tId.txt,tTmp.txt,"|",0
                                         if(tTmp.txt=="0")
                                         {
@@ -1075,47 +1075,47 @@ Timer tmSerial
                                             bNext.txt="î³"
                                         }
                                         //text arm1
-                                        spstr strCommand.txt,arm1.txt,",",3
+                                        spstr strCommand.txt,arm1.txt,"~",3
                                         if(arm1.txt!="")
                                         {
                                             vis arm1,1
                                         }
                                         //id arm1
-                                        spstr strCommand.txt,va1.txt,",",4
+                                        spstr strCommand.txt,va1.txt,"~",4
                                         //text arm2
-                                        spstr strCommand.txt,arm2.txt,",",5
+                                        spstr strCommand.txt,arm2.txt,"~",5
                                         if(arm2.txt!="")
                                         {
                                             vis arm2,1
                                         }
                                         //id arm2
-                                        spstr strCommand.txt,va2.txt,",",6
+                                        spstr strCommand.txt,va2.txt,"~",6
                                         //text arm3
-                                        spstr strCommand.txt,arm3.txt,",",7
+                                        spstr strCommand.txt,arm3.txt,"~",7
                                         if(arm3.txt!="")
                                         {
                                             vis arm3,1
                                         }
                                         //id arm3
-                                        spstr strCommand.txt,va3.txt,",",8
+                                        spstr strCommand.txt,va3.txt,"~",8
                                         //text arm4
-                                        spstr strCommand.txt,arm4.txt,",",9
+                                        spstr strCommand.txt,arm4.txt,"~",9
                                         if(arm4.txt!="")
                                         {
                                             vis arm4,1
                                         }
                                         //id arm4
-                                        spstr strCommand.txt,va4.txt,",",10
+                                        spstr strCommand.txt,va4.txt,"~",10
                                         //icon
-                                        spstr strCommand.txt,tTmp.txt,",",11
+                                        spstr strCommand.txt,tTmp.txt,"~",11
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tIcon.txt,sys0,1
                                         //icon color
-                                        spstr strCommand.txt,tTmp.txt,",",12
+                                        spstr strCommand.txt,tTmp.txt,"~",12
                                         covx tTmp.txt,sys0,0,0
                                         tIcon.pco=sys0
                                         //numpad status
-                                        spstr strCommand.txt,tTmp.txt,",",13
+                                        spstr strCommand.txt,tTmp.txt,"~",13
                                         if(tTmp.txt!="disable")
                                         {
                                             vis b0,1
@@ -1146,7 +1146,7 @@ Timer tmSerial
                                             vis tCode,0
                                         }
                                         //flashing status
-                                        spstr strCommand.txt,tTmp.txt,",",14
+                                        spstr strCommand.txt,tTmp.txt,"~",14
                                         if(tTmp.txt=="enable")
                                         {
                                             tmFlash.en=1
@@ -1158,35 +1158,35 @@ Timer tmSerial
                                     if(tInstruction.txt=="time")
                                     {
                                         // get set time to global variable
-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
                                     }
                                     if(tInstruction.txt=="date")
                                     {
                                         // get set date to global variable
-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
                                         // get value
-                                        spstr strCommand.txt,tTmp.txt,",",1
+                                        spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
                                         dim=dimValue
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
                                         //set timeout to global var
-                                        spstr strCommand.txt,tTmp.txt,",",1
+                                        spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sleepTimeout,0,0
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
-                                        spstr strCommand.txt,tId.txt,",",1
+                                        spstr strCommand.txt,tId.txt,"~",1
                                         //save second arg if there's one
-                                        spstr strCommand.txt,tTmp.txt,",",2
+                                        spstr strCommand.txt,tTmp.txt,"~",2
                                         //save third arg if there's one
-                                        spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
+                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                         udelete payloadLength-1
                                         bufferPos=0
