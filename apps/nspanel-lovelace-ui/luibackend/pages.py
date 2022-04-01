@@ -98,9 +98,9 @@ class LuiPagesGen(object):
                 icon = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
                 unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
                 down = f"{entity.state} {unit_of_measurement}"
-            weather_res+=f"?{up}?{icon}?{down}"
+            weather_res+=f"~{up}~{icon}~{down}"
 
-        self._send_mqtt_msg(f"weatherUpdate~?{icon_cur}?{text_cur}{weather_res}")
+        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}")
 
     def generate_entities_item(self, item):
         icon = None
