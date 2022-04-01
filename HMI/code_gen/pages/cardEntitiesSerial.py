@@ -3,17 +3,17 @@ head = sharedhead + """
             if(tInstruction.txt=="entityUpd")
             {
             // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
-            spstr strCommand.txt,tHeading.txt,",",1
+            spstr strCommand.txt,tHeading.txt,"~",1
 """ + navigation
 print(head)
 start = 3
-for i in range(1,5):
+for i in range(1,7):
     idxstart = start + (i-1)*6
     item = f"""
               // get Type
-              spstr strCommand.txt,type{i}.txt,",",{idxstart}
+              spstr strCommand.txt,type{i}.txt,"~",{idxstart}
               // get internal name
-              spstr strCommand.txt,entn{i}.txt,",",{idxstart+1}
+              spstr strCommand.txt,entn{i}.txt,"~",{idxstart+1}
               if(type{i}.txt=="delete"||type{i}.txt=="")
               {{
                 vis bUp{i},0
@@ -28,16 +28,16 @@ for i in range(1,5):
               }}else
               {{
                 // change icon
-                spstr strCommand.txt,tTmp.txt,",",{idxstart+2}
+                spstr strCommand.txt,tTmp.txt,"~",{idxstart+2}
                 covx tTmp.txt,sys0,0,0
                 substr pageIcons.tIcons.txt,tIcon{i}.txt,sys0,1
                 vis tIcon{i},1
                 // change icon color
-                spstr strCommand.txt,tTmp.txt,",",{idxstart+3}
+                spstr strCommand.txt,tTmp.txt,"~",{idxstart+3}
                 covx tTmp.txt,sys0,0,0
                 tIcon{i}.pco=sys0
                 // set name
-                spstr strCommand.txt,tEntity{i}.txt,",",{idxstart+4}
+                spstr strCommand.txt,tEntity{i}.txt,"~",{idxstart+4}
                 vis tEntity{i},1
               }}
 
@@ -61,7 +61,7 @@ for i in range(1,5):
                 vis hSlider{i},0
                 vis nNum{i},0
                 // get Button State (optional Value)
-                spstr strCommand.txt,tTmp.txt,",",{idxstart+5}
+                spstr strCommand.txt,tTmp.txt,"~",{idxstart+5}
                 covx tTmp.txt,sys0,0,0
                 btOnOff{i}.val=sys0
               }}
@@ -75,7 +75,7 @@ for i in range(1,5):
                 vis hSlider{i},0
                 vis nNum{i},0
                 // get Button State (optional Value)
-                spstr strCommand.txt,tTmp.txt,",",{idxstart+5}
+                spstr strCommand.txt,tTmp.txt,"~",{idxstart+5}
                 covx tTmp.txt,sys0,0,0
                 btOnOff{i}.val=sys0
               }}
@@ -92,7 +92,7 @@ for i in range(1,5):
                 bText{i}.pco=65535
                 bText{i}.pco2=65535
                 // get Text (optional Value)
-                spstr strCommand.txt,bText{i}.txt,",",{idxstart+5}
+                spstr strCommand.txt,bText{i}.txt,"~",{idxstart+5}
               }}
               if(type{i}.txt=="button")
               {{
@@ -107,7 +107,7 @@ for i in range(1,5):
                 bText{i}.pco=1374
                 bText{i}.pco2=1374
                 // get Text (optional Value)
-                spstr strCommand.txt,bText{i}.txt,",",{idxstart+5}
+                spstr strCommand.txt,bText{i}.txt,"~",{idxstart+5}
               }}
               if(type{i}.txt=="number")
               {{
@@ -120,7 +120,7 @@ for i in range(1,5):
                 vis hSlider{i},1
                 vis nNum{i},1
                 // get config (optional Value) (use bText as variable)
-                spstr strCommand.txt,bText{i}.txt,",",{idxstart+5}
+                spstr strCommand.txt,bText{i}.txt,"~",{idxstart+5}
                 //first value is current value
                 spstr bText{i}.txt,tTmp.txt,"|",0
                 covx tTmp.txt,sys0,0,0
