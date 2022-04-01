@@ -922,48 +922,48 @@ Timer tmSerial
                                         vis tMRIcon,0
                                         vis tMR,0
                                         //tMainIcon
-                                        spstr strCommand.txt,tTmp.txt,"?",1
+                                        spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tMainIcon.txt,sys0,1
                                         tMainIconAlt.txt=tMainIcon.txt
                                         //tMainText
-                                        spstr strCommand.txt,tMainText.txt,"?",2
+                                        spstr strCommand.txt,tMainText.txt,"~",2
                                         tMainTextAlt.txt=tMainText.txt
                                         //tForecast1
-                                        spstr strCommand.txt,tForecast1.txt,"?",3
+                                        spstr strCommand.txt,tForecast1.txt,"~",3
                                         //tF1Icon
-                                        spstr strCommand.txt,tTmp.txt,"?",4
+                                        spstr strCommand.txt,tTmp.txt,"~",4
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tF1Icon.txt,sys0,1
                                         //tForecast1Val
-                                        spstr strCommand.txt,tForecast1Val.txt,"?",5
+                                        spstr strCommand.txt,tForecast1Val.txt,"~",5
                                         //tForecast2
-                                        spstr strCommand.txt,tForecast2.txt,"?",6
+                                        spstr strCommand.txt,tForecast2.txt,"~",6
                                         //tF2Icon
-                                        spstr strCommand.txt,tTmp.txt,"?",7
+                                        spstr strCommand.txt,tTmp.txt,"~",7
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tF2Icon.txt,sys0,1
                                         //tForecast2Val
-                                        spstr strCommand.txt,tForecast2Val.txt,"?",8
+                                        spstr strCommand.txt,tForecast2Val.txt,"~",8
                                         //tForecast3
-                                        spstr strCommand.txt,tForecast3.txt,"?",9
+                                        spstr strCommand.txt,tForecast3.txt,"~",9
                                         //tF3Icon
-                                        spstr strCommand.txt,tTmp.txt,"?",10
+                                        spstr strCommand.txt,tTmp.txt,"~",10
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tF3Icon.txt,sys0,1
                                         //tForecast3Val
-                                        spstr strCommand.txt,tForecast3Val.txt,"?",11
+                                        spstr strCommand.txt,tForecast3Val.txt,"~",11
                                         //tForecast4
-                                        spstr strCommand.txt,tForecast4.txt,"?",12
+                                        spstr strCommand.txt,tForecast4.txt,"~",12
                                         //tF4Icon
-                                        spstr strCommand.txt,tTmp.txt,"?",13
+                                        spstr strCommand.txt,tTmp.txt,"~",13
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tF4Icon.txt,sys0,1
                                         //tForecast4Val
-                                        spstr strCommand.txt,tForecast4Val.txt,"?",14
+                                        spstr strCommand.txt,tForecast4Val.txt,"~",14
                                         //alternative layout
                                         //tMRIcon
-                                        spstr strCommand.txt,tTmp.txt,"?",15
+                                        spstr strCommand.txt,tTmp.txt,"~",15
                                         covx tTmp.txt,sys0,0,0
                                         substr pageIcons.tIcons.txt,tMRIcon.txt,sys0,1
                                         if(tTmp.txt!="")
@@ -990,7 +990,7 @@ Timer tmSerial
                                             tF2Icon.txt=tF1Icon.txt
                                         }
                                         //tMR
-                                        spstr strCommand.txt,tMR.txt,"?",16
+                                        spstr strCommand.txt,tMR.txt,"~",16
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
