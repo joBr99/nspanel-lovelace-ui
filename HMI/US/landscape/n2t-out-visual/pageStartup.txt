@@ -296,7 +296,7 @@ Text tMsg1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 57
+        x coordinate                        : 59
         y coordinate                        : 223
         Width                               : 375
         Height                              : 30
@@ -326,7 +326,7 @@ Text tMsg2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 40
+        x coordinate                        : 42
         y coordinate                        : 256
         Width                               : 408
         Height                              : 25
@@ -356,7 +356,7 @@ Text tMsg3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 40
+        x coordinate                        : 42
         y coordinate                        : 278
         Width                               : 408
         Height                              : 25
@@ -402,7 +402,7 @@ Text tVersion
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 25
+        Text                                : 26
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -462,7 +462,7 @@ Button bSendStartup
             recmod=1
             bauds=115200
             // startup event
-            tSend.txt="event,startup,"+tVersion.txt+",eu"
+            tSend.txt="event,startup,"+tVersion.txt+",us-l"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -483,7 +483,7 @@ Hotspot mSpinner
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 169
+        x coordinate                        : 171
         y coordinate                        : 49
         Width                               : 140
         Height                              : 140
@@ -552,27 +552,27 @@ Timer tmSerial
                                     // write command to variable strCommand
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-                                    spstr strCommand.txt,tInstruction.txt,",",0
+                                    spstr strCommand.txt,tInstruction.txt,"~",0
                                     if(tInstruction.txt=="time")
                                     {
                                         // get set time to global variable
-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
                                     }
                                     if(tInstruction.txt=="date")
                                     {
                                         // get set date to global variable
-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
                                         // get value
-                                        spstr strCommand.txt,tTmp.txt,",",1
+                                        spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
                                         //set timeout to global var
-                                        spstr strCommand.txt,tTmp.txt,",",1
+                                        spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sleepTimeout,0,0
                                     }
                                     if(tInstruction.txt=="pageType")
@@ -580,11 +580,11 @@ Timer tmSerial
                                         dim=100
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
-                                        spstr strCommand.txt,tId.txt,",",1
+                                        spstr strCommand.txt,tId.txt,"~",1
                                         //save second arg if there's one
-                                        spstr strCommand.txt,tTmp.txt,",",2
+                                        spstr strCommand.txt,tTmp.txt,"~",2
                                         //save third arg if there's one
-                                        spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
+                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                         udelete payloadLength-1
                                         bufferPos=0
