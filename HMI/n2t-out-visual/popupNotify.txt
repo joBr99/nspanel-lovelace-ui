@@ -460,7 +460,7 @@ Timer tmSerial
                                     // write command to variable strCommand
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-                                    spstr strCommand.txt,tInstruction.txt,",",0
+                                    spstr strCommand.txt,tInstruction.txt,"}",0
                                     if(tInstruction.txt=="entityUpdateDetail")
                                     {
                                         // get entn
@@ -507,7 +507,7 @@ Timer tmSerial
                                     if(tInstruction.txt=="time")
                                     {
                                         // get set time to global variable
-                                        spstr strCommand.txt,pageIcons.vaTime.txt,",",1
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,"}",1
                                     }
                                     if(tInstruction.txt=="date")
                                     {
@@ -517,13 +517,13 @@ Timer tmSerial
                                     if(tInstruction.txt=="dimmode")
                                     {
                                         // get value
-                                        spstr strCommand.txt,tTmp.txt,",",1
+                                        spstr strCommand.txt,tTmp.txt,"}",1
                                         covx tTmp.txt,dimValue,0,0
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
                                         //set timeout to global var
-                                        spstr strCommand.txt,tTmp.txt,",",1
+                                        spstr strCommand.txt,tTmp.txt,"}",1
                                         covx tTmp.txt,sleepTimeout,0,0
                                     }
                                     if(tInstruction.txt=="exitPopup")
@@ -535,11 +535,11 @@ Timer tmSerial
                                         sleepTimeout=vaOldSleepT.val
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
-                                        spstr strCommand.txt,tId.txt,",",1
+                                        spstr strCommand.txt,tId.txt,"}",1
                                         //save second arg if there's one
-                                        spstr strCommand.txt,tTmp.txt,",",2
+                                        spstr strCommand.txt,tTmp.txt,"}",2
                                         //save third arg if there's one
-                                        spstr strCommand.txt,pageIcons.tTmp2.txt,",",3
+                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"}",3
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                         udelete payloadLength-1
                                         bufferPos=0
