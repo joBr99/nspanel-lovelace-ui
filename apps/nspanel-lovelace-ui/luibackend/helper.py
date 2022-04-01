@@ -45,7 +45,7 @@ def rgb_dec565(rgb_color):
 
 def convert_temperature_from_celsius(c, unit):
     if unit == "fahrenheit":
-        temp = (c * 1.8) + 32
+        temp = round(((c * 1.8) + 32), 1)
         return f"{temp}°F"
     else:
         return f"{c}°C"
