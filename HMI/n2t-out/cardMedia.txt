@@ -588,7 +588,7 @@ Timer tmSerial
                                     if(tInstruction.txt=="date")
                                     {
                                         // get set date to global variable
-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"?",1
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
