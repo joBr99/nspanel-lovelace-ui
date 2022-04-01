@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-01 17:25:58.645575442 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-04-01 17:25:58.645575442 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -512,13 +512,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -142,8 +142,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-01 17:25:58.649575467 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-01 17:25:59.045577994 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-01 17:33:33.870969251 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -1278,8 +1278,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      }
                                      // end of user code
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-04-01 17:25:58.649575467 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -568,13 +568,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1513,8 +1513,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                      }
                                      // end of user code
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-04-01 17:25:58.649575467 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -503,13 +503,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1575,8 +1575,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-04-01 17:25:58.649575467 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -640,13 +640,13 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -1862,8 +1862,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                                                      }
                                                                      // end of user code
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-01 17:25:58.645575442 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -1931,13 +1931,13 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-04-01 17:25:58.645575442 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/popupLight.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -438,24 +438,24 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
--                                    spstr strCommand.txt,tInstruction.txt,"}",0
+-                                    spstr strCommand.txt,tInstruction.txt,"~",0
 +                                    spstr strCommand.txt,tInstruction.txt,",",0
                                      if(tInstruction.txt=="entityUpdateDetail")
                                      {
@@ -2024,8 +2024,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-04-01 17:25:58.645575442 +0000
-+++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -251,70 +251,70 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -2128,8 +2128,8 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-04-01 17:25:58.645575442 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -324,45 +324,45 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -2186,8 +2186,8 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
                                          udelete payloadLength-1
                                          bufferPos=0
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-04-01 17:25:58.649575467 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-01 17:25:59.041577968 +0000
+--- HMI/n2t-out/screensaver.txt	2022-04-01 17:33:33.866969230 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-01 17:33:34.270971412 +0000
 @@ -355,7 +355,7 @@
                                      // write command to variable strCommand
                                      ucopy strCommand.txt,4,payloadLength-5,0

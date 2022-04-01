@@ -26,14 +26,14 @@ cardAlarm
 	35   Component(s)
 	343  Line(s) of event code
 	214  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	150  Line(s) of event code
-	113  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	322  Line(s) of event code
 	173  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	150  Line(s) of event code
+	113  Unique line(s) of event code
 cardMedia
 	30   Component(s)
 	331  Line(s) of event code
@@ -59,4 +59,4 @@ Total
 	13   Page(s)
 	355  Component(s)
 	3637 Line(s) of event code
-	1047 Unique line(s) of event code
+	1046 Unique line(s) of event code
