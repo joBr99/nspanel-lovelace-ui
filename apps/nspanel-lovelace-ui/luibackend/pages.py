@@ -61,7 +61,6 @@ class LuiPagesGen(object):
         
     def update_screensaver_weather(self):
         global babel_spec
-        screensaver_config = self._config._config_screensaver
         we_name = self._config._config_screensaver.entity.entityId
         unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
 
