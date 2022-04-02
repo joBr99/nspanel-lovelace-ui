@@ -361,7 +361,7 @@ Possible configuration values for screensaver config:
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
-`weather` | True | string | `weather.example` | weather entity from homeassistant
+`entity` | True | string | `weather.example` | weather entity from homeassistant
 `weatherUnit` | True | string | `celsius` | unit for temperature, valid values are `celsius` or `fahrenheit`
 `weatherOverrideForecast1` | True | complex | `None` | sensor entity from home assistant here to override the first weather forecast item on the screensaver
 `weatherOverrideForecast2` | True | complex | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
