@@ -353,7 +353,7 @@ key | optional | type | default | description
 -- | -- | -- | -- | --
 `type` | False | string | `None` | Used by navigate items
 `entities` | False | complex | `None` | contains entities of the card, applys only to cardEntities and cardGrid
-`heading` | True | string | `None` | Heading of the Page 
+`title` | True | string | `None` | Title of the Page 
 `entity` | False | string | `None` | contains the entity of the current card, valid for cardThermo, cardAlarm and cardMedia
 `key` | True | string | `None` | Used by navigate items
 
