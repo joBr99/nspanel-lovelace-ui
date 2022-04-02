@@ -68,7 +68,7 @@ class LuiController(object):
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
         
     def update_screensaver_brightness(self, kwargs):
-        bst = self._config.get("brightnessScreensaverTracking")
+        bst = self._config.get("sleepTracking")
         brightness = 0
         if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state == "not_home":
             brightness = 0
@@ -83,10 +83,10 @@ class LuiController(object):
     def calc_current_screensaver_brightness(self):
         current_screensaver_brightness = 20
         # set brightness of screensaver
-        if type(self._config.get("brightnessScreensaver")) == int:
-            current_screensaver_brightness = self._config.get("brightnessScreensaver")
-        elif type(self._config.get("brightnessScreensaver")) == list:
-            sorted_timesets = sorted(self._config.get("brightnessScreensaver"), key=lambda d: self._ha_api.parse_time(d['time']))
+        if type(self._config.get("sleepBrightness")) == int:
+            current_screensaver_brightness = self._config.get("sleepBrightness")
+        elif type(self._config.get("sleepBrightness")) == list:
+            sorted_timesets = sorted(self._config.get("sleepBrightness"), key=lambda d: self._ha_api.parse_time(d['time']))
             # calc current screensaver brightness
             found_current_dim_value = False
             for index, timeset in enumerate(sorted_timesets):
