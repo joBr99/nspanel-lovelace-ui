@@ -13,8 +13,8 @@ class LuiController(object):
         self._config = config
         self._send_mqtt_msg = send_mqtt_msg
 
-        # first child of root page (default, after startup)
-        self._current_page = self._config._page_config.childs[0]
+        # first card (default, after startup)
+        self._current_card = self._config.getCard(0)
         
         self._pages_gen = LuiPagesGen(ha_api, config, send_mqtt_msg)
 
@@ -36,15 +36,14 @@ class LuiController(object):
         self.register_callbacks()
 
         # register callbacks for each time
-        if type(self._config.get("brightnessScreensaver")) == list:
-            for index, timeset in enumerate(self._config.get("brightnessScreensaver")):
+        if type(self._config.get("sleepBrightness")) == list:
+            for index, timeset in enumerate(self._config.get("sleepBrightness")):
                 self._ha_api.run_daily(self.update_screensaver_brightness, timeset["time"], value=timeset["value"])
         
         # calculate current brightness
         self.current_screensaver_brightness = self.calc_current_screensaver_brightness()
-
         # call update_screensaver_brightness on changes of entity configured in brightnessScreensaverTracking
-        bst = self._config.get("brightnessScreensaverTracking")
+        bst = self._config.get("sleepTracking")
         if bst is not None and self._ha_api.entity_exists(bst):
             self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=bst)
 
@@ -55,7 +54,7 @@ class LuiController(object):
         self._pages_gen.update_date("")
 
         # set screensaver timeout
-        timeout = self._config.get("timeoutScreensaver")
+        timeout = self._config.get("sleepTimeout")
         self._send_mqtt_msg(f"timeout~{timeout}")
         
         # set current screensaver brightness
@@ -69,7 +68,7 @@ class LuiController(object):
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
         
     def update_screensaver_brightness(self, kwargs):
-        bst = self._config.get("brightnessScreensaverTracking")
+        bst = self._config.get("sleepTracking")
         brightness = 0
         if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state == "not_home":
             brightness = 0
@@ -84,10 +83,10 @@ class LuiController(object):
     def calc_current_screensaver_brightness(self):
         current_screensaver_brightness = 20
         # set brightness of screensaver
-        if type(self._config.get("brightnessScreensaver")) == int:
-            current_screensaver_brightness = self._config.get("brightnessScreensaver")
-        elif type(self._config.get("brightnessScreensaver")) == list:
-            sorted_timesets = sorted(self._config.get("brightnessScreensaver"), key=lambda d: self._ha_api.parse_time(d['time']))
+        if type(self._config.get("sleepBrightness")) == int:
+            current_screensaver_brightness = self._config.get("sleepBrightness")
+        elif type(self._config.get("sleepBrightness")) == list:
+            sorted_timesets = sorted(self._config.get("sleepBrightness"), key=lambda d: self._ha_api.parse_time(d['time']))
             # calc current screensaver brightness
             found_current_dim_value = False
             for index, timeset in enumerate(sorted_timesets):
@@ -103,7 +102,7 @@ class LuiController(object):
         return current_screensaver_brightness
 
     def register_callbacks(self):
-        items = self._config.get_root_page().get_all_item_names()
+        items = self._config.get_all_entity_names()
         LOGGER.debug(f"Registering callbacks for the following items: {items}")
         for item in items:
             if self._ha_api.entity_exists(item):
@@ -111,12 +110,12 @@ class LuiController(object):
 
     def state_change_callback(self, entity, attribute, old, new, kwargs):
         LOGGER.debug(f"Got callback for: {entity}")
-        LOGGER.debug(f"Current page has the following items: {self._current_page.get_items()}")
-        if entity in self._current_page.get_all_item_names(recursive=False):
+        LOGGER.debug(f"Current page has the following items: {self._current_card.get_entity_list()}")
+        if entity in self._current_card.get_entity_list():
             LOGGER.debug(f"Callback Entity is on current page: {entity}")
-            self._pages_gen.render_page(self._current_page, send_page_type=False)
+            self._pages_gen.render_card(self._current_card, send_page_type=False)
             # send detail page update, just in case
-            if self._current_page.data.get("type", "unknown") in ["cardGrid", "cardEntities"]:
+            if self._current_card.cardType in ["cardGrid", "cardEntities"]:
                 if entity.startswith("light"):
                     self._pages_gen.generate_light_detail_page(entity)
                 if entity.startswith("cover"):
@@ -134,27 +133,29 @@ class LuiController(object):
         # internal buttons
         if entity_id == "screensaver" and button_type == "bExit":
             if self._config.get("doubleTapToUnlock") and int(value) >= 2:
-                self._pages_gen.render_page(self._current_page)
+                self._pages_gen.render_card(self._current_card)
             elif not self._config.get("doubleTapToUnlock"):
-                self._pages_gen.render_page(self._current_page)
+                self._pages_gen.render_card(self._current_card)
             return
             
         if button_type == "sleepReached":
             self._pages_gen.generate_screensaver_page()
             return
 
-        if button_type == "bExit":
-            self._pages_gen.render_page(self._current_page)
+        if button_type in ["bExit", "bUp"]:
+            self._pages_gen.render_card(self._current_card)
 
         if button_type == "bNext":
-            self._current_page = self._current_page.next()
-            self._pages_gen.render_page(self._current_page)
+            card = self._config.getCard(self._current_card.pos+1)
+            self._current_card = card
+            self._pages_gen.render_card(card)
         if button_type == "bPrev":
-            self._current_page = self._current_page.prev()
-            self._pages_gen.render_page(self._current_page)
+            card = self._config.getCard(self._current_card.pos-1)
+            self._current_card = card
+            self._pages_gen.render_card(card)
         
         elif entity_id == "updateDisplayNoYes" and value == "no":
-            self._pages_gen.render_page(self._current_page)
+            self._pages_gen.render_card(self._current_card)
 
         # buttons with actions on HA
         if button_type == "OnOff":
@@ -180,8 +181,7 @@ class LuiController(object):
         if button_type == "button":
             if entity_id.startswith('navigate'):
                 # internal for navigation to nested pages
-                self._current_page = self._config.get_root_page().search_page_by_name(entity_id)[0]
-                self._pages_gen.render_page(self._current_page)
+                self._pages_gen.render_card(self._config.searchCard(entity_id))
             elif entity_id.startswith('scene'):
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('script'):

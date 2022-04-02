@@ -55,19 +55,19 @@ class LuiPagesGen(object):
     def page_type(self, target_page):
         self._send_mqtt_msg(f"pageType~{target_page}")
     
-    def generate_screensaver_page(self):
+    def generate_screensaver_page(self, card):
         self.page_type("screensaver")
         self.update_screensaver_weather()
         
     def update_screensaver_weather(self):
         global babel_spec
-        we_name = self._config.get("weather")
-        unit = self._config.get("weatherUnit")
+        we_name = self._config._config_screensaver.entity.entityId
+        unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
 
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
         else:
-            LOGGER.error("Skipping Weather Update, entity not found")
+            LOGGER.error("Skipping Weather Update, entity {we_name} not found")
             return
 
         icon_cur        = get_icon_id_ha("weather", state=we.state)
@@ -75,7 +75,7 @@ class LuiPagesGen(object):
 
         weather_res = ""
         for i in range(1,5):
-            wOF = self._config.get(f"weatherOverrideForecast{i}")
+            wOF = self._config._config_screensaver.raw_config.get(f"weatherOverrideForecast{i}")
             if wOF is None:
                 up = we.attributes.forecast[i-1]['datetime']
                 up   = datetime.datetime.fromisoformat(up)
@@ -87,91 +87,86 @@ class LuiPagesGen(object):
                 down = convert_temperature(we.attributes.forecast[i-1]['temperature'], unit)
             else:
                 LOGGER.info(f"Forecast {i} is overriden with {wOF}")
-                icon = None
-                name = None
-                if type(wOF) is dict:
-                    icon = next(iter(wOF.items()))[1].get('icon')
-                    name = next(iter(wOF.items()))[1].get('name')
-                    wOF = next(iter(wOF.items()))[0]
-                entity = self._ha_api.get_entity(wOF)
+                icon = wOF.get("icon")
+                name = wOF.get("name")
+                entity = self._ha_api.get_entity(wOF.get("entity"))
                 up = name if name is not None else entity.attributes.friendly_name
                 icon = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
                 unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
                 down = f"{entity.state} {unit_of_measurement}"
             weather_res+=f"~{up}~{icon}~{down}"
 
-        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}")
+        altLayout = ""
+        if self._config._config_screensaver.raw_config.get("alternativeLayout", False) is True:
+            altLayout = f"~26~{we.attributes.humidity} %"
 
-    def generate_entities_item(self, item):
-        icon = None
-        name = None
-        if type(item) is dict:
-            icon = next(iter(item.items()))[1].get('icon')
-            name = next(iter(item.items()))[1].get('name')
-            item = next(iter(item.items()))[0]
-        # type of the item is the string before the "." in the item name
-        item_type = item.split(".")[0]
-        LOGGER.debug(f"Generating item command for {item} with type {item_type}",)
-        # Internal Entities 
-        if item_type == "delete":
-            return f"~{item_type}~~~~~"
-        if item_type == "navigate":
-            page_search = self._config.get_root_page().search_page_by_name(item)
-            if len(page_search) > 0:
-                page_data = page_search[0].data
-                if name is None:
-                    name = page_data.get("heading")
+        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
+
+    def generate_entities_item(self, entity):
+        entityId = entity.entityId
+        icon = entity.iconOverride
+        name = entity.nameOverride
+        # type of the item is the string before the "." in the entityId
+        entityType = entityId.split(".")[0]
+        
+        LOGGER.debug(f"Generating item for {entityId} with type {entityType}",)
+        # Internal types
+        if entityType == "delete":
+            return f"~{entityType}~~~~~"
+        if entityType == "navigate":
+            page_search_res = self._config.searchCard(entityId)
+            if page_search_res is not None:
+                name = page_search_res.title
                 text = get_translation(self._locale,"PRESS")
-                icon_id = get_icon_id(icon) if icon is not None else get_icon_id(page_data.get("icon", "gesture-tap-button"))
-                return f"~button~{item}~{icon_id}~17299~{name}~{text}"
+                icon_id = get_icon_id(icon) if icon is not None else get_icon_id("gesture-tap-button")
+                return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
             else:
-                return f"~text~{item}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
-        if not self._ha_api.entity_exists(item):
-            return f"~text~{item}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
+                return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
+        if not self._ha_api.entity_exists(entityId):
+            return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
         
         # HA Entities
-        entity = self._ha_api.get_entity(item)
+        entity = self._ha_api.get_entity(entityId)
         name = name if name is not None else entity.attributes.friendly_name
-        if item_type == "cover":
+        if entityType == "cover":
             icon_id = get_icon_id_ha("cover", state=entity.state, overwrite=icon)
-            return f"~shutter~{item}~{icon_id}~17299~{name}~"
-        if item_type in "light":
+            return f"~shutter~{entityId}~{icon_id}~17299~{name}~"
+        if entityType in "light":
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity)
             icon_id = get_icon_id_ha("light", overwrite=icon)
-            return f"~{item_type}~{item}~{icon_id}~{icon_color}~{name}~{switch_val}"
-        if item_type in ["switch", "input_boolean"]:
+            return f"~{entityType}~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
+        if entityType in ["switch", "input_boolean"]:
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity)
-            icon_id = get_icon_id_ha(item_type, state=entity.state, overwrite=icon)
-            return f"~switch~{item}~{icon_id}~{icon_color}~{name}~{switch_val}"
-        if item_type in ["sensor", "binary_sensor"]:
+            icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+            return f"~switch~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
+        if entityType in ["sensor", "binary_sensor"]:
             device_class = entity.attributes.get("device_class", "")
             icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
             icon_color = self.get_entity_color(entity)
-            return f"~text~{item}~{icon_id}~{icon_color}~{name}~{value}"
-        if item_type in ["button", "input_button"]:
+            return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{value}"
+        if entityType in ["button", "input_button"]:
             icon_id = get_icon_id_ha("button", overwrite=icon)
             text = get_translation(self._locale,"PRESS")
-            return f"~button~{item}~{icon_id}~17299~{name}~{text}"
-        if item_type == "scene":
+            return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+        if entityType == "scene":
             icon_id = get_icon_id_ha("scene", overwrite=icon)
             text = get_translation(self._locale,"ACTIVATE")
-            return f"~button~{item}~{icon_id}~17299~{name}~{text}"
-        if item_type == "script":
+            return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+        if entityType == "script":
             icon_id = get_icon_id_ha("script", overwrite=icon)
             text = get_translation(self._locale,"run")
-            return f"~button~{item}~{icon_id}~17299~{name}~{text}"
-        if item_type == "number":
+            return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+        if entityType == "number":
             icon_id = get_icon_id_ha("number", overwrite=icon)
             min_v = entity.attributes.get("min", 0)
             max_v = entity.attributes.get("max", 100)
-            return f"~number~{item}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
+            return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
 
-    def generate_entities_page(self, heading, items):
-        navigation = ""
+    def generate_entities_page(self, navigation, heading, items):
         command = f"entityUpd~{heading}~{navigation}"
         # Get items and construct cmd string
         for item in items:
@@ -180,7 +175,8 @@ class LuiPagesGen(object):
 
 
 
-    def generate_thermo_page(self, item):
+    def generate_thermo_page(self, navigation, entity):
+        item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~{item}~Not found~220~220~Not found~150~300~5"
         else:
@@ -237,7 +233,8 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~~{item}~{current_temp}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}"
         self._send_mqtt_msg(command)
 
-    def generate_media_page(self, item):
+    def generate_media_page(self, navigation, entity):
+        item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~|{item}|Not found|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|{get_icon_id('alert-circle-outline')}"
         else:
@@ -270,7 +267,8 @@ class LuiPagesGen(object):
             command = f"entityUpd~|{heading}||{item}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist[:200]}|{onoffbutton}"
         self._send_mqtt_msg(command)
         
-    def generate_alarm_page(self, item):
+    def generate_alarm_page(self, navigation, entity):
+        item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~{item}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
         else:
@@ -330,23 +328,29 @@ class LuiPagesGen(object):
             command = f"entityUpd~{item}~{navigation}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}"
         self._send_mqtt_msg(command)
         
-    def render_page(self, page, send_page_type=True):
-        config    = page.data
-        page_type = config["type"]
-        LOGGER.info(f"Started rendering of page {page.pos} with type {page_type}")
+    def render_card(self, card, send_page_type=True):
+        LOGGER.info(f"Started rendering of page {card.pos} with type {card.cardType}")
+        if len(self._config._config_cards) == 1:
+            navigation = "0|0"
+        else:
+            navigation = "1|1"
+        if card.pos is None:
+            navigation = "2|0"
         # Switch to page
         if send_page_type:
-            self.page_type(page_type)
-        if page_type in ["cardEntities", "cardGrid"]:
-            heading = config.get("heading", "unknown")
-            self.generate_entities_page(heading, page.get_items())
+            self.page_type(card.cardType)
+        if card.cardType in ["cardEntities", "cardGrid"]:
+            self.generate_entities_page(navigation, card.title, card.entities)
             return
-        if page_type == "cardThermo":
-            self.generate_thermo_page(page.data.get("item"))
-        if page_type == "cardMedia":
-            self.generate_media_page(page.data.get("item"))
-        if page_type == "cardAlarm":
-            self.generate_alarm_page(page.data.get("item"))
+        if card.cardType == "cardThermo":
+            self.generate_thermo_page(navigation, card.entity)
+        if card.cardType == "cardMedia":
+            self.generate_media_page(navigation, card.entity)
+        if card.cardType == "cardAlarm":
+            self.generate_alarm_page(navigation, card.entity)
+
+        if card.cardType == "screensaver":
+            self.generate_screensaver_page(card)
 
 
     def generate_light_detail_page(self, entity):
@@ -380,7 +384,7 @@ class LuiPagesGen(object):
     def generate_shutter_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)
         pos = 100-int(entity.attributes.get("current_position", 50))
-        self._send_mqtt_msg(f"entityUpdateDetail,{pos}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{pos}")
 
     def send_message_page(self, id, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
