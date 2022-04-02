@@ -13,30 +13,25 @@ nspanel-1:
         value: 10
       - time: "23:00:00"
         value: 0
-    locale: "de_DE" # only used if babel python package is installed
-    dateFormatBabel: "full" # only used if babel python package is installed
-                            # formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
-    timeFormat: "%H:%M"
-    dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
-    weather: weather.example
-    weatherOverrideForecast3: sensor.nas_cpu_perc
-    weatherOverrideForecast4:
-      sensor.solar_power_current: # use this for overriding name and icon
-        name: Sonne
-        icon: solar-power
+    locale: "de_DE" # used for translations in translations.py and for localized date if babel python package is installed
+    screensaver:
+      weather: weather.k3ll3r
     cards:
-      - type: entities
+      - type: cardEntities
         entities:
           - entity: light.example_item
             name: NameOverride
           - entity: light.example_item
         title: Example Entities
-      - type: gird
+      - type: cardGrid
         entities:
           - entity: select.example_item
           - entity: select.example_item
           - entity: light.example_item
         title: Exmaple Gird
-      - type: climate
-        entity: light.example_item
-        title: Exmaple Climate
+      - type: cardThermo
+        entity: climate.example_item
+      - type: cardMedia
+        entity: media_player.example_item
+      - type: cardAlarm
+        entity: alarm_control_panel.alarmo

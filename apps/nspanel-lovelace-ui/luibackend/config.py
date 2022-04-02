@@ -11,17 +11,31 @@ class Entity(object):
         self.iconOverride = entity_input_config.get("icon")
 
 class Card(object):
-    def __init__(self, card_input_config):
+    def __init__(self, card_input_config, pos=None):
+        self.pos = pos
+        self.raw_config = card_input_config
         self.cardType = card_input_config.get("type", "unknown")
         self.title =  card_input_config.get("title", "unknown")
+        self.key = card_input_config.get("key", "unknown")
         # for single entity card like climate or media
         self.entity = None
         if card_input_config.get("entity") is not None:
-            self.entity = Entity(card_input_config.get("entity"))
+            self.entity = Entity(card_input_config)
         # for pages like grid or entities
         self.entities = []
         for e in card_input_config.get("entities", []):
             self.entities.append(Entity(e))
+        self.id = f"{self.cardType}_{self.key}".replace(".","_").replace("~","_").replace(" ","_")
+        LOGGER.info(f"Created Card {self.cardType} with pos {pos} and id {self.id}")
+    
+    def get_entity_list(self):
+        entityIds = []
+        if self.entity is not None:
+            entityIds.append(self.entity.entityId)
+        else:
+            for e in self.entities:
+                entityIds.append(e.entityId)
+        return entityIds
 
 class LuiBackendConfig(object):
 
@@ -30,22 +44,15 @@ class LuiBackendConfig(object):
         'panelSendTopic': "cmnd/tasmota_your_mqtt_topic/CustomSend",
         'updateMode': "auto-notify",
         'model': "eu",
-        'timeoutScreensaver': 20,
-        'brightnessScreensaver': 20,
-        'brightnessScreensaverTracking': None,
+        'sleepTimeout': 20,
+        'sleepBrightness': 20,
+        'sleepTracking': None,
         'locale': "en_US",
         'timeFormat': "%H:%M",
         'dateFormatBabel': "full",
         'dateFormat': "%A, %d. %B %Y",
-        'weather': 'weather.example',
-        'weatherUnit': 'celsius',
-        'weatherOverrideForecast1': None,
-        'weatherOverrideForecast2': None,
-        'weatherOverrideForecast3': None,
-        'weatherOverrideForecast4': None,
-        'doubleTapToUnlock': False,
         'cards': [{
-            'type': 'entities',
+            'type': 'cardEntities',
             'entities': [{
                 'entity': 'switch.test_item',
                 'name': 'Test Item'
@@ -54,7 +61,7 @@ class LuiBackendConfig(object):
             }],
             'title': 'Example Entities Page'
         }, {
-            'type': 'grid',
+            'type': 'cardGrid',
             'entities': [{
                 'entity': 'switch.test_item'
                 }, {
@@ -66,9 +73,19 @@ class LuiBackendConfig(object):
             'title': 'Example Grid Page'
         }, {
             'type': 'climate',
-            'entity': 'climate.test_item'
-            'title': 'Example Climate Page'
-        }]
+            'entity': 'climate.test_item',
+        }],
+        'screensaver': {
+            'type': 'screensaver',
+            'weather': 'weather.example',
+            'weatherUnit': 'celsius',
+            'weatherOverrideForecast1': None,
+            'weatherOverrideForecast2': None,
+            'weatherOverrideForecast3': None,
+            'weatherOverrideForecast4': None,
+            'doubleTapToUnlock': False
+        },
+        'hiddenCards': []
     }
 
     def __init__(self, ha_api, config_in):
@@ -76,7 +93,7 @@ class LuiBackendConfig(object):
         HA_API = ha_api
         self._config = {}
         self._config_cards = []
-        self._current_card = None
+        self._config_screensaver = None
 
         self.load(config_in)
 
@@ -85,16 +102,51 @@ class LuiBackendConfig(object):
             if k in self._DEFAULT_CONFIG:
                 self._config[k] = v
         LOGGER.info(f"Loaded config: {self._config}")
-
+        
+        # parse cards displayed on panel
+        pos = 0
         for card in self.get("cards"):
-            self._config_cards.append(Card(card))
-        # set current card to first card
-        self._current_card = self._config_cards[0]
+            self._config_cards.append(Card(card, pos))
+            pos = pos + 1
+        # parse screensaver
+        screensaver = Card(self.get("screensaver"))
 
+        # parsed hidden pages that can be accessed through navigate
+        for card in self.get("hiddenCards"):
+            self._config_hidden_cards.append(Card(card))
 
     def get(self, name):
-        value = self._config.get(name)
-        if value is None:
-            value = self._DEFAULT_CONFIG.get(name)
+        path = name.split(".")
+        value = self._config
+        for p in path:
+            if value is not None:
+                value = value.get(p, None)
+        if value is not None:
+            return value
+        # try to get a value from default config
+        value = self._DEFAULT_CONFIG
+        for p in path:
+            if value is not None:
+                value = value.get(p, None)
         return value
+    
+    def get_all_entity_names(self):
+        entities = []
+        for card in self._config_cards:
+            entities.extend(card.get_entity_list())
+        return entities
 
+    def getCard(self, pos):
+        card = self._config_cards[pos%len(self._config_cards)]
+        return card
+
+    def searchCard(self, id):
+        id = id.replace("navigate.", "")
+        for card in self._config_cards:
+            if card.id == id:
+                return card
+        if self._config_screensaver.id == id:
+            return screensaver
+        for card in self._config_hidden_cards:
+            if card.id == id:
+                return card
