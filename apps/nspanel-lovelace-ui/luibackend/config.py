@@ -94,6 +94,7 @@ class LuiBackendConfig(object):
         self._config = {}
         self._config_cards = []
         self._config_screensaver = None
+        self._config_hidden_cards = []
 
         self.load(config_in)
 
@@ -109,7 +110,7 @@ class LuiBackendConfig(object):
             self._config_cards.append(Card(card, pos))
             pos = pos + 1
         # parse screensaver
-        screensaver = Card(self.get("screensaver"))
+        self._config_screensaver = Card(self.get("screensaver"))
 
         # parsed hidden pages that can be accessed through navigate
         for card in self.get("hiddenCards"):

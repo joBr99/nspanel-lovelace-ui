@@ -261,9 +261,9 @@ nspanel-1:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
     updateMode: "auto-notify"
-    timeoutScreensaver: 20
-    #brightnessScreensaver: 10
-    brightnessScreensaver:
+    sleepTimeout: 20
+    #sleepBrightness: 10
+    sleepBrightness:
       - time: "7:00:00"
         value: 10
       - time: "23:00:00"
