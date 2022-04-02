@@ -313,6 +313,7 @@ nspanel-1:
           - entity: delete
           - entity: button.example_item
           - entity: cover.example_item
+          - delete # delete at the end is optional
         title: Exmaple Gird
       - type: cardThermo
         entity: climate.example_item
