@@ -36,14 +36,14 @@ class LuiController(object):
         self.register_callbacks()
 
         # register callbacks for each time
-        if type(self._config.get("brightnessScreensaver")) == list:
-            for index, timeset in enumerate(self._config.get("brightnessScreensaver")):
+        if type(self._config.get("sleepBrightness")) == list:
+            for index, timeset in enumerate(self._config.get("sleepBrightness")):
                 self._ha_api.run_daily(self.update_screensaver_brightness, timeset["time"], value=timeset["value"])
         
         # calculate current brightness
         self.current_screensaver_brightness = self.calc_current_screensaver_brightness()
         # call update_screensaver_brightness on changes of entity configured in brightnessScreensaverTracking
-        bst = self._config.get("brightnessScreensaverTracking")
+        bst = self._config.get("sleepTracking")
         if bst is not None and self._ha_api.entity_exists(bst):
             self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=bst)
 
@@ -54,7 +54,7 @@ class LuiController(object):
         self._pages_gen.update_date("")
 
         # set screensaver timeout
-        timeout = self._config.get("timeoutScreensaver")
+        timeout = self._config.get("sleepTimeout")
         self._send_mqtt_msg(f"timeout~{timeout}")
         
         # set current screensaver brightness
@@ -142,7 +142,7 @@ class LuiController(object):
             self._pages_gen.generate_screensaver_page()
             return
 
-        if button_type in  ["bExit", "bUp"]:
+        if button_type in ["bExit", "bUp"]:
             self._pages_gen.render_card(self._current_card)
 
         if button_type == "bNext":

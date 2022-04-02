@@ -77,13 +77,14 @@ class LuiBackendConfig(object):
         }],
         'screensaver': {
             'type': 'screensaver',
-            'weather': 'weather.example',
+            'entity': 'weather.example',
             'weatherUnit': 'celsius',
             'weatherOverrideForecast1': None,
             'weatherOverrideForecast2': None,
             'weatherOverrideForecast3': None,
             'weatherOverrideForecast4': None,
-            'doubleTapToUnlock': False
+            'doubleTapToUnlock': False,
+            'alternativeLayout': False
         },
         'hiddenCards': []
     }
