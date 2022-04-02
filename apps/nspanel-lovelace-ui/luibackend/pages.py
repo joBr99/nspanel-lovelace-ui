@@ -55,7 +55,7 @@ class LuiPagesGen(object):
     def page_type(self, target_page):
         self._send_mqtt_msg(f"pageType~{target_page}")
     
-    def generate_screensaver_page(self, card):
+    def generate_screensaver_page(self):
         self.page_type("screensaver")
         self.update_screensaver_weather()
         
@@ -350,7 +350,7 @@ class LuiPagesGen(object):
             self.generate_alarm_page(navigation, card.entity)
 
         if card.cardType == "screensaver":
-            self.generate_screensaver_page(card)
+            self.generate_screensaver_page()
 
 
     def generate_light_detail_page(self, entity):
