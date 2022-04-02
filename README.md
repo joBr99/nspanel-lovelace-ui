@@ -26,7 +26,7 @@ See the following picture to get an idea of the look of this firmware for NSPane
 
 ![screens](doc-pics/screens.png)
 
-Sonme (not all) screenshots from the US Portrait Version:
+Some (not all) screenshots from the US Portrait Version:
 
 ![screens-us-p](doc-pics/screens-us-p.png)
 
