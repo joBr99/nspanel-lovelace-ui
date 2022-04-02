@@ -260,7 +260,7 @@ nspanel-1:
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
-    #model: us-p # uncomment this if you have the us version, see table below for more information
+    updateMode: "auto-notify"
     timeoutScreensaver: 20
     #brightnessScreensaver: 10
     brightnessScreensaver:
@@ -268,49 +268,28 @@ nspanel-1:
         value: 10
       - time: "23:00:00"
         value: 0
-    locale: "de_DE"
-    dateFormatBabel: "full"
-    timeFormat: "%H:%M"
-    dateFormat: "%A, %d. %B %Y" # ignored if babel python package is installed
-    weather: weather.example
-    pages:
+    locale: "de_DE" # used for translations in translations.py and for localized date if babel python package is installed
+    screensaver:
+      weather: weather.k3ll3r
+    cards:
       - type: cardEntities
-        heading: Example Page 1
-        items:
-          - cover.example_cover
-          - switch.example_switch
-          - input_boolean.example_input_boolean
-          - sensor.example_sensor
-      - type: cardEntities
-        heading: Example Page 2
-        items:
-          - button.example_button
-          - input_button.example_input_button
-          - light.light_example
-          - delete # (read this as 'empty')
-      - type: cardEntities
-        heading: Example Page 3
-        items:
-          - scene.example_scene
-          - delete
-          - delete
-          - delete
+        entities:
+          - entity: light.example_item
+            name: NameOverride
+          - entity: light.example_item
+        title: Example Entities
       - type: cardGrid
-        heading: Example Page 4
-        items:
-          - light.light_example
-          - button.example_button
-          - cover.example_cover
-          - scene.example_scene
-          - switch.example_switch
-          - delete
+        entities:
+          - entity: select.example_item
+          - entity: select.example_item
+          - entity: light.example_item
+        title: Exmaple Gird
       - type: cardThermo
-        heading: Exmaple Thermostat
-        item: climate.example_climate
+        entity: climate.example_item
       - type: cardMedia
-        item: media_player.spotify_user
+        entity: media_player.example_item
       - type: cardAlarm
-        item: alarm_control_panel.alarmo
+        entity: alarm_control_panel.alarmo
 ```
 
 key | optional | type | default | description
@@ -327,13 +306,21 @@ key | optional | type | default | description
 `panelSendTopic` | False | string | `cmnd/tasmota_your_mqtt_topic/CustomSend` | The mqtt topic used to send messages. 
 `updateMode` | True | string | `auto-notify` | Update Mode; Possible values: "auto", "auto-notify", "manual"
 `model` | True | string | `eu` | Model; Possible values: "eu", "us-l" and "us-p"
-`timeoutScreensaver` | True | integer | `20` | Timeout for the screen to enter screensaver, to disable screensaver use 0
-`brightnessScreensaver` | True | integer/complex | `20` | Brightness for the screen to enter screensaver, see example below for complex/scheduled config.
-`brightnessScreensaverTracking` | True | string | None | Forces screensaver brightness to 0 in case entity state is not_home, can be a group, person or device_tracker entity.
+`sleepTimeout` | True | integer | `20` | Timeout for the screen to enter screensaver, to disable screensaver use 0
+`sleepBrightness` | True | integer/complex | `20` | Brightness for the screen to enter screensaver, see example below for complex/scheduled config.
+`sleepTracking` | True | string | None | Forces screensaver brightness to 0 in case entity state is not_home, can be a group, person or device_tracker entity.
 `locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
 `dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
 `timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  `"%I:%M   ?%p"`
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
+`cards` | False | complex | | configuration for pages that are displayed on panel
+`screensaver` | True | complex | | configuration for screensaver
+`hiddenCards` | True | complex | | configuration for pages that can be accessed though navigate items
+
+Possible configuration values for screensaver config:
+
+key | optional | type | default | description
+-- | -- | -- | -- | --
 `weather` | True | string | `weather.example` | weather entity from homeassistant
 `weatherUnit` | True | string | `celsius` | unit for temperature, valid values are `celsius` or `fahrenheit`
 `weatherOverrideForecast1` | True | string | `None` | sensor entity from home assistant here to override the first weather forecast item on the screensaver
@@ -341,14 +328,13 @@ key | optional | type | default | description
 `weatherOverrideForecast3` | True | string | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
 `weatherOverrideForecast4` | True | string | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
-`pages` | False | complex | | configuration for pages on panel
 
-#### Schedule screensaver brightness
+#### Schedule sleep brightness
 
 It is possible to schedule a brightness change for the screen at specific times.
 
 ```yaml
-    brightnessScreensaver:
+    sleepBrightness:
       - time: "7:00:00"
         value: 10
       - time: "23:00:00"
@@ -361,17 +347,13 @@ To override Icons or Names of entities you can configure an icon and/or name in 
 Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.
 
 ```yaml
-      - type: cardGrid
-        heading: Lights
-        items:
-          - light.wled
-          - light.schreibtischlampe
-          - switch.deckenbeleuchtung_hinten:
-              icon: lightbulb
-              name: Lampe
-          - delete
-          - delete
-      - type: cardMedia
+            'entities': [{
+                'entity': 'switch.test_item',
+                'name': 'Test Item'
+				'icon': 'lightbulb'
+                }, {
+                'entity': 'switch.test_item'
+            }],
 ```
 
 ## How to update
