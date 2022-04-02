@@ -250,7 +250,7 @@ Please see [appdaemon.yaml](appdaemon/appdaemon.yaml) as an exmaple.
 ### Configure your NSPanel in AppDaemon
 
 Confiure your NSPanel as you like, you need to edit the `apps.yaml` inside of your Appdaemon config folder.
-You can have multiple nspanel sections.
+You can have multiple nspanel sections. There are some more exmaples in the appdaemon folder of this repo.
 
 ```yaml
 ---
@@ -270,19 +270,45 @@ nspanel-1:
         value: 0
     locale: "de_DE" # used for translations in translations.py and for localized date if babel python package is installed
     screensaver:
-      weather: weather.k3ll3r
+      entity: weather.k3ll3r
     cards:
       - type: cardEntities
         entities:
-          - entity: light.example_item
+          - entity: switch.example_item
             name: NameOverride
+            icon: lightbulb
           - entity: light.example_item
-        title: Example Entities
+          - entity: cover.example_item
+          - entity: input_boolean.example_item
+        title: Example Entities 1
+      - type: cardEntities
+        entities:
+          - entity: switch.example_item
+          - entity: delete
+          - entity: cover.example_item
+          - entity: input_boolean.example_item
+        title: Example Entities 2
+      - type: cardEntities
+        entities:
+          - entity: binary_sensor.example_item
+          - entity: sensor.example_item
+          - entity: button.example_item
+          - entity: number.example_item
+        title: Example Entities 3
+      - type: cardEntities
+        entities:
+          - entity: scenes.example_item
+          - entity: script.example_item
+          - entity: button.example_item
+          - entity: input_button.example_item
+        title: Example Entities 4
       - type: cardGrid
         entities:
-          - entity: select.example_item
-          - entity: select.example_item
           - entity: light.example_item
+          - entity: switch.example_item
+          - entity: delete
+          - entity: button.example_item
+          - entity: cover.example_item
         title: Exmaple Gird
       - type: cardThermo
         entity: climate.example_item
@@ -338,6 +364,7 @@ key | optional | type | default | description
 `weatherOverrideForecast3` | True | string | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
 `weatherOverrideForecast4` | True | string | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
+`alternativeLayout` | True | boolean | `False` | alternative layout with humidity
 `key` | True | string | `None` | Used by navigate items
 
 #### Schedule sleep brightness

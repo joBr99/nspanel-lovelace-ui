@@ -61,8 +61,9 @@ class LuiPagesGen(object):
         
     def update_screensaver_weather(self):
         global babel_spec
-        we_name = self._config.get("screensaver.weather")
-        unit = self._config.get("screensaver.weatherUnit")
+        screensaver_config = self._config._config_screensaver
+        we_name = self._config._config_screensaver.entity.entityId
+        unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
 
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
@@ -75,7 +76,7 @@ class LuiPagesGen(object):
 
         weather_res = ""
         for i in range(1,5):
-            wOF = self._config.get(f"screensaver.weatherOverrideForecast{i}")
+            wOF = self._config._config_screensaver.raw_config.get(f"weatherOverrideForecast{i}")
             if wOF is None:
                 up = we.attributes.forecast[i-1]['datetime']
                 up   = datetime.datetime.fromisoformat(up)
@@ -87,16 +88,20 @@ class LuiPagesGen(object):
                 down = convert_temperature(we.attributes.forecast[i-1]['temperature'], unit)
             else:
                 LOGGER.info(f"Forecast {i} is overriden with {wOF}")
-                icon = wOF.iconOverride
-                name = wOF.nameOverride
-                entity = self._ha_api.get_entity(wOF.entityId)
+                icon = wOF.get("icon")
+                name = wOF.get("name")
+                entity = self._ha_api.get_entity(wOF.get("entity"))
                 up = name if name is not None else entity.attributes.friendly_name
                 icon = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
                 unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
                 down = f"{entity.state} {unit_of_measurement}"
             weather_res+=f"~{up}~{icon}~{down}"
 
-        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}")
+        altLayout = ""
+        if self._config._config_screensaver.raw_config.get("alternativeLayout", False) is True:
+            altLayout = f"~26~{we.attributes.humidity} %"
+
+        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
 
     def generate_entities_item(self, entity):
         entityId = entity.entityId
@@ -326,7 +331,10 @@ class LuiPagesGen(object):
         
     def render_card(self, card, send_page_type=True):
         LOGGER.info(f"Started rendering of page {card.pos} with type {card.cardType}")
-        navigation = "1|1"
+        if len(self._config._config_cards) == 1:
+            navigation = "0|0"
+        else:
+            navigation = "1|1"
         if card.pos is None:
             navigation = "2|0"
         # Switch to page
