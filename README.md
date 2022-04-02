@@ -358,13 +358,29 @@ To override Icons or Names of entities you can configure an icon and/or name in 
 Only the icons listed in the [Icon Table](HMI#icons-ids) are useable.
 
 ```yaml
-            'entities': [{
-                'entity': 'switch.test_item',
-                'name': 'Test Item'
-				'icon': 'lightbulb'
-                }, {
-                'entity': 'switch.test_item'
-            }],
+        entities:
+          - entity: light.test_item
+            name: NameOverride
+            icon: lightbulb
+```
+
+#### Subpages
+
+You can configure entities with with the prefix `navigate`, that are navigating to cards, in case it's hidden page, the navigation items will change and the arrow is bringing you back to the current page on the top level.
+
+```yaml
+          - entity: navigate.cardGrid_testKey
+```
+
+will allow you to navigate to a cardGrid page with the configured key testKey
+
+```yaml
+    hiddenCards:
+      - type: cardGrid
+        title: Exmaple Grid
+        entities:
+          - entity: light.test_item
+        key: testKey
 ```
 
 ## How to update
