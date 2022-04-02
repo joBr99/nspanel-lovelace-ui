@@ -110,11 +110,11 @@ class LuiPagesGen(object):
         if entityType == "delete":
             return f"~{entityType}~~~~~"
         if entityType == "navigate":
-            page_search_res = self._config.searchPage(entityId)
+            page_search_res = self._config.searchCard(entityId)
             if page_search_res is not None:
                 name = page_search_res.title
                 text = get_translation(self._locale,"PRESS")
-                icon_id = get_icon_id(icon) if icon is not None else get_icon_id(page_data.get("icon", "gesture-tap-button"))
+                icon_id = get_icon_id(icon) if icon is not None else get_icon_id("gesture-tap-button")
                 return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
@@ -162,8 +162,7 @@ class LuiPagesGen(object):
             max_v = entity.attributes.get("max", 100)
             return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
 
-    def generate_entities_page(self, heading, items):
-        navigation = ""
+    def generate_entities_page(self, navigation, heading, items):
         command = f"entityUpd~{heading}~{navigation}"
         # Get items and construct cmd string
         for item in items:
@@ -172,7 +171,7 @@ class LuiPagesGen(object):
 
 
 
-    def generate_thermo_page(self, entity):
+    def generate_thermo_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~{item}~Not found~220~220~Not found~150~300~5"
@@ -230,7 +229,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~~{item}~{current_temp}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}"
         self._send_mqtt_msg(command)
 
-    def generate_media_page(self, entity):
+    def generate_media_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~|{item}|Not found|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|{get_icon_id('alert-circle-outline')}"
@@ -264,7 +263,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~|{heading}||{item}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist[:200]}|{onoffbutton}"
         self._send_mqtt_msg(command)
         
-    def generate_alarm_page(self, entity):
+    def generate_alarm_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~{item}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
@@ -327,18 +326,21 @@ class LuiPagesGen(object):
         
     def render_card(self, card, send_page_type=True):
         LOGGER.info(f"Started rendering of page {card.pos} with type {card.cardType}")
+        navigation = "1|1"
+        if card.pos is None:
+            navigation = "2|0"
         # Switch to page
         if send_page_type:
             self.page_type(card.cardType)
         if card.cardType in ["cardEntities", "cardGrid"]:
-            self.generate_entities_page(card.title, card.entities)
+            self.generate_entities_page(navigation, card.title, card.entities)
             return
         if card.cardType == "cardThermo":
-            self.generate_thermo_page(card.entity)
+            self.generate_thermo_page(navigation, card.entity)
         if card.cardType == "cardMedia":
-            self.generate_media_page(card.entity)
+            self.generate_media_page(navigation, card.entity)
         if card.cardType == "cardAlarm":
-            self.generate_alarm_page(card.entity)
+            self.generate_alarm_page(navigation, card.entity)
 
         if card.cardType == "screensaver":
             self.generate_screensaver_page(card)
