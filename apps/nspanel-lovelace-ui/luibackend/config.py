@@ -148,7 +148,7 @@ class LuiBackendConfig(object):
             if card.id == id:
                 return card
         if self._config_screensaver.id == id:
-            return screensaver
+            return self._config_screensaver
         for card in self._config_hidden_cards:
             if card.id == id:
                 return card
