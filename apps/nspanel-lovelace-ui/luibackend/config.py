@@ -136,7 +136,8 @@ class LuiBackendConfig(object):
         entities = []
         for card in self._config_cards:
             entities.extend(card.get_entity_list())
-        return entities
+        for card in self._config_hidden_cards:
+            entities.extend(card.get_entity_list())
 
     def getCard(self, pos):
         card = self._config_cards[pos%len(self._config_cards)]
