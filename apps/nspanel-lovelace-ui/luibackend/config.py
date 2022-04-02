@@ -2,98 +2,41 @@ import logging
 
 LOGGER = logging.getLogger(__name__)
 
-class PageNode(object):
-    def __init__(self, data, parent=None):
-        self.data = data
-        self.name = None
-        self.childs = []
-        self.parent = parent
-        self.pos = None
+HA_API = None
 
-        if "items" in data:
-            childs = data.pop("items")
-            for page in childs:
-                self.add_child(PageNode(page, self))
+class Entity(object):
+    def __init__(self, entity_input_config):
+        self.entityId = entity_input_config.get("entity", "unknown")
+        self.nameOverride = entity_input_config.get("name")
+        self.iconOverride = entity_input_config.get("icon")
 
-        name  = self.data.get("heading", "unkown") if type(self.data) is dict else self.data
-        ptype = self.data.get("type", "unkown") if type(self.data) is dict else "leaf"
-
-        self.name = f"{ptype}.{name}" if type(self.data) is dict else self.data
-        self.name  = self.name.replace(".","_")
-        self.name  = self.name.replace(",","_")
-        self.name  = self.name.replace(" ","_")
-
-    def add_child(self, obj):
-        obj.pos = len(self.childs)
-        self.childs.append(obj)
-
-    def next(self):
-        if self.parent is not None:
-            pos    = self.pos
-            length = len(self.parent.childs)
-            return self.parent.childs[(pos+1)%length]
-        else:
-            return self
-    def prev(self):
-        if self.parent is not None:
-            pos    = self.pos
-            length = len(self.parent.childs)
-            return self.parent.childs[(pos-1)%length]
-        else:
-            return self
-
-    def search_page_by_name(self, name):
-        name = name.replace("navigate.", "")
-        pages = []
-        for i in self.childs:
-            # compare name of current page
-            if i.name == name:
-                pages.append(i)
-            # current pages has also childs
-            if len(i.childs) > 0:
-                pages.extend(i.search_page_by_name(name))
-        return pages
-
-        return items
-
-    def dump(self, indent=0):
-        """dump tree to string"""
-        tab = '    '*(indent-1) + ' |- ' if indent > 0 else ''
-        name   = self.name
-        parent = self.parent.name if self.parent is not None else "root"
-        dumpstring = f"{tab}{self.pos}:{name} -> {parent} \n"
-        for obj in self.childs:
-            dumpstring += obj.dump(indent + 1)
-        return dumpstring
+class Card(object):
+    def __init__(self, card_input_config, pos=None):
+        self.pos = pos
+        self.raw_config = card_input_config
+        self.cardType = card_input_config.get("type", "unknown")
+        self.title =  card_input_config.get("title", "unknown")
+        self.key = card_input_config.get("key", "unknown")
+        # for single entity card like climate or media
+        self.entity = None
+        if card_input_config.get("entity") is not None:
+            self.entity = Entity(card_input_config)
+        # for pages like grid or entities
+        self.entities = []
+        for e in card_input_config.get("entities", []):
+            self.entities.append(Entity(e))
+        self.id = f"{self.cardType}_{self.key}".replace(".","_").replace("~","_").replace(" ","_")
+        LOGGER.info(f"Created Card {self.cardType} with pos {pos} and id {self.id}")
     
-    def get_items(self):
-        items = []
-        for i in self.childs:
-            if len(i.childs) > 0:
-                items.append(f"navigate.{i.name}")
-            else:
-                items.append(i.data)
-        return items
-
-    def get_all_item_names(self, recursive=True):
-        items = []
-        # current page
-        if type(self.data) is dict:
-            items.append(self.data.get("item", next(iter(self.data))))
+    def get_entity_list(self):
+        entityIds = []
+        if self.entity is not None:
+            entityIds.append(self.entity.entityId)
         else:
-            items.append(self.data)
-        # childs of page
-        for i in self.childs:
-            if len(i.childs) > 0:
-                if recursive:
-                    items.extend(i.get_all_item_names())
-            else:
-                if type(i.data) is dict:
-                    items.append(i.data.get("item", next(iter(i.data))))
-                else:
-                    items.append(i.data)
-        return items
-    
+            for e in self.entities:
+                entityIds.append(e.entityId)
+        return entityIds
+
 class LuiBackendConfig(object):
 
     _DEFAULT_CONFIG = {
@@ -101,62 +44,111 @@ class LuiBackendConfig(object):
         'panelSendTopic': "cmnd/tasmota_your_mqtt_topic/CustomSend",
         'updateMode': "auto-notify",
         'model': "eu",
-        'timeoutScreensaver': 20,
-        'brightnessScreensaver': 20,
-        'brightnessScreensaverTracking': None,
+        'sleepTimeout': 20,
+        'sleepBrightness': 20,
+        'sleepTracking': None,
         'locale': "en_US",
         'timeFormat': "%H:%M",
         'dateFormatBabel': "full",
         'dateFormat': "%A, %d. %B %Y",
-        'weather': 'weather.example',
-        'weatherUnit': 'celsius',
-        'weatherOverrideForecast1': None,
-        'weatherOverrideForecast2': None,
-        'weatherOverrideForecast3': None,
-        'weatherOverrideForecast4': None,
-        'doubleTapToUnlock': False,
-        'pages': [{
+        'cards': [{
             'type': 'cardEntities',
-            'heading': 'Test Entities 1',
-            'items': ['switch.test_item', 'switch.test_item', 'switch.test_item']
-            }, {
+            'entities': [{
+                'entity': 'switch.test_item',
+                'name': 'Test Item'
+                }, {
+                'entity': 'switch.test_item'
+            }],
+            'title': 'Example Entities Page'
+        }, {
             'type': 'cardGrid',
-            'heading': 'Test Grid 1',
-            'items': ['switch.test_item', 'switch.test_item', 'switch.test_item']
-            }
-        ]
+            'entities': [{
+                'entity': 'switch.test_item'
+                }, {
+                'entity': 'switch.test_item'
+                }, {
+                'entity': 'switch.test_item'
+                }
+            ],
+            'title': 'Example Grid Page'
+        }, {
+            'type': 'climate',
+            'entity': 'climate.test_item',
+        }],
+        'screensaver': {
+            'type': 'screensaver',
+            'entity': 'weather.example',
+            'weatherUnit': 'celsius',
+            'weatherOverrideForecast1': None,
+            'weatherOverrideForecast2': None,
+            'weatherOverrideForecast3': None,
+            'weatherOverrideForecast4': None,
+            'doubleTapToUnlock': False,
+            'alternativeLayout': False
+        },
+        'hiddenCards': []
     }
 
-    def __init__(self, args=None, check=True):
+    def __init__(self, ha_api, config_in):
+        global HA_API
+        HA_API = ha_api
         self._config = {}
-        self._page_config = None
-        
-        if args:
-            self.load(args)
+        self._config_cards = []
+        self._config_screensaver = None
+        self._config_hidden_cards = []
 
-        if check:
-            self.check()
+        self.load(config_in)
 
     def load(self, args):
         for k, v in args.items():
             if k in self._DEFAULT_CONFIG:
                 self._config[k] = v
         LOGGER.info(f"Loaded config: {self._config}")
+        
+        # parse cards displayed on panel
+        pos = 0
+        for card in self.get("cards"):
+            self._config_cards.append(Card(card, pos))
+            pos = pos + 1
+        # parse screensaver
+        self._config_screensaver = Card(self.get("screensaver"))
 
-        root_page = {"items": self.get("pages"), "type": "internal", "heading": "root"}
-        self._page_config = PageNode(root_page)
-
-        LOGGER.info(f"Parsed Page config to the following Tree: \n {self._page_config.dump()}")
-
-    def check(self):
-        return
+        # parsed hidden pages that can be accessed through navigate
+        for card in self.get("hiddenCards"):
+            self._config_hidden_cards.append(Card(card))
 
     def get(self, name):
-        value = self._config.get(name)
-        if value is None:
-            value = self._DEFAULT_CONFIG.get(name)
+        path = name.split(".")
+        value = self._config
+        for p in path:
+            if value is not None:
+                value = value.get(p, None)
+        if value is not None:
+            return value
+        # try to get a value from default config
+        value = self._DEFAULT_CONFIG
+        for p in path:
+            if value is not None:
+                value = value.get(p, None)
         return value
+    
+    def get_all_entity_names(self):
+        entities = []
+        for card in self._config_cards:
+            entities.extend(card.get_entity_list())
+        return entities
 
-    def get_root_page(self):
-        return self._page_config
+    def getCard(self, pos):
+        card = self._config_cards[pos%len(self._config_cards)]
+        return card
 
+    def searchCard(self, id):
+        id = id.replace("navigate.", "")
+        for card in self._config_cards:
+            if card.id == id:
+                return card
+        if self._config_screensaver.id == id:
+            return screensaver
+        for card in self._config_hidden_cards:
+            if card.id == id:
+                return card

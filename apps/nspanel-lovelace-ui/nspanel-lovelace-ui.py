@@ -10,7 +10,6 @@ from luibackend.updater import Updater
 
 LOGGER = logging.getLogger(__name__)
 
-
 class AppDaemonLoggingHandler(logging.Handler):
     def __init__(self, app):
         super().__init__()
@@ -50,7 +49,7 @@ class NsPanelLovelaceUIManager(hass.Hass):
     def initialize(self):
         LOGGER.info('Starting')
         mqtt_api = self._mqtt_api = self.get_plugin_api("MQTT")
-        cfg = self._cfg = LuiBackendConfig(self.args["config"])
+        cfg = self._cfg = LuiBackendConfig(self, self.args["config"])
         
         topic_send = cfg.get("panelSendTopic")
         def send_mqtt_msg(msg, topic=None):
@@ -63,7 +62,7 @@ class NsPanelLovelaceUIManager(hass.Hass):
         mqtt_api.mqtt_publish(topic_send.replace("CustomSend", "GetDriverVersion"), "x")
 
         controller = LuiController(self, cfg, send_mqtt_msg)
-
+        
         desired_display_firmware_version = 26
         version     = "v2.4.0"
         
@@ -77,7 +76,6 @@ class NsPanelLovelaceUIManager(hass.Hass):
         else:
             # eu version
             desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-{version}.tft"
-
         
         desired_tasmota_driver_version   = 3
         desired_tasmota_driver_url       = "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be"
