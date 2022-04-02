@@ -313,9 +313,19 @@ key | optional | type | default | description
 `dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
 `timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  `"%I:%M   ?%p"`
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
-`cards` | False | complex | | configuration for pages that are displayed on panel
+`cards` | False | complex | | configuration for cards that are displayed on panel
 `screensaver` | True | complex | | configuration for screensaver
-`hiddenCards` | True | complex | | configuration for pages that can be accessed though navigate items
+`hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items
+
+Possible configuration values for a card in card config:
+
+key | optional | type | default | description
+-- | -- | -- | -- | --
+`type` | False | string | `None` | Used by navigate items
+`entities` | False | complex | `None` | contains entities of the card, applys only to cardEntities and cardGrid
+`heading` | True | string | `None` | Heading of the Page 
+`entity` | False | string | `None` | contains the entity of the current card, valid for cardThermo, cardAlarm and cardMedia
+`key` | True | string | `None` | Used by navigate items
 
 Possible configuration values for screensaver config:
 
@@ -328,6 +338,7 @@ key | optional | type | default | description
 `weatherOverrideForecast3` | True | string | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
 `weatherOverrideForecast4` | True | string | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
+`key` | True | string | `None` | Used by navigate items
 
 #### Schedule sleep brightness
 
@@ -385,7 +396,6 @@ US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 Since release 1.1 you can update the berry driver directly from the Tasmota Console with the following command.
 
 `UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be`
-
 
 
 ## FAQ - Frequently Asked Questions
