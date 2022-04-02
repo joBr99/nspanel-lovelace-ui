@@ -142,8 +142,10 @@ class LuiController(object):
             self._pages_gen.generate_screensaver_page()
             return
 
-        if button_type in ["bExit", "bUp"]:
+        if button_type == "bExit":
             self._pages_gen.render_card(self._current_card)
+        if button_type == "bUp":
+            self._pages_gen.render_card(self._previous_card)
 
         if button_type == "bNext":
             card = self._config.getCard(self._current_card.pos+1)
@@ -181,7 +183,9 @@ class LuiController(object):
         if button_type == "button":
             if entity_id.startswith('navigate'):
                 # internal for navigation to nested pages
-                self._pages_gen.render_card(self._config.searchCard(entity_id))
+                self._previous_card = self._current_card
+                self._current_card = self._config.searchCard(entity_id)
+                self._pages_gen.render_card(self._current_card)
             elif entity_id.startswith('scene'):
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('script'):
