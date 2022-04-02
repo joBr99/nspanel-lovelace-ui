@@ -59,6 +59,7 @@ nspanel-1:
           - entity: delete
           - entity: button.example_item
           - entity: cover.example_item
+          - entity: navigate.cardGrid_testKey
         title: Exmaple Gird
       - type: cardThermo
         entity: climate.example_item
@@ -66,3 +67,11 @@ nspanel-1:
         entity: media_player.example_item
       - type: cardAlarm
         entity: alarm_control_panel.alarmo
+    hiddenCards:
+      - type: cardGrid
+        title: Exmaple Grid
+        entities:
+          - entity: light.kueche_lights
+          - entity: light.kueche_lights
+          - entity: light.kueche_lights
+        key: testKey
