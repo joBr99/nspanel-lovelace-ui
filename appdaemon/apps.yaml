@@ -24,41 +24,19 @@ nspanel-1:
       sensor.solar_power_current: # use this for overriding name and icon
         name: Sonne
         icon: solar-power
-    pages:
-      - type: cardEntities
-        heading: Example Page 1
-        items:
-          - cover.example_cover
-          - switch.example_switch
-          - input_boolean.example_input_boolean
-          - sensor.example_sensor
-      - type: cardEntities
-        heading: Example Page 2
-        items:
-          - button.example_button
-          - input_button.example_input_button
-          - light.light_example
-          - delete # (read this as 'empty')
-      - type: cardEntities
-        heading: Example Page 3
-        items:
-          - scene.example_scene
-          - delete
-          - delete
-          - delete
-      - type: cardGrid
-        heading: Example Page 4
-        items:
-          - light.light_example
-          - button.example_button
-          - cover.example_cover
-          - scene.example_scene
-          - switch.example_switch
-          - delete
-      - type: cardThermo
-        heading: Exmaple Thermostat
-        item: climate.example_climate
-      - type: cardMedia
-        item: media_player.spotify_user
-      - type: cardAlarm
-        item: alarm_control_panel.alarmo
+    cards:
+      - type: entities
+        entities:
+          - entity: light.example_item
+            name: NameOverride
+          - entity: light.example_item
+        title: Example Entities
+      - type: gird
+        entities:
+          - entity: select.example_item
+          - entity: select.example_item
+          - entity: light.example_item
+        title: Exmaple Gird
+      - type: climate
+        entity: light.example_item
+        title: Exmaple Climate
