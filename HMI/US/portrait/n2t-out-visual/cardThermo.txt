@@ -687,8 +687,10 @@ Button bPrev
             if(bPrev.txt=="î¶")
             {
                 tSend.txt+="bUp"
+            }else
+            {
+                tSend.txt+="bPrev"
             }
-            tSend.txt+="bPrev"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
