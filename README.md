@@ -26,6 +26,8 @@ See the following picture to get an idea of the look of this firmware for NSPane
 
 ![screens](doc-pics/screens.png)
 
+![screens-us-p](doc-pics/screens-us-p.png)
+
 ## TLDR
 1. Install Tasmota to NSPanel
 2. Install Berry Driver in Tasmota and setup MQTT
