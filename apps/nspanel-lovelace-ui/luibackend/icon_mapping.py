@@ -53,6 +53,8 @@ icons = {
     'cast': 51,
     'radio': 52,
     'fireplace': 53,
+    'arrow-left-bold': 54,
+    'arrow-right-bold': 55,
 }
 
 def get_icon_id(ma_name):
