@@ -8,6 +8,9 @@ class Entity(object):
     def __init__(self, entity_input_config):
         if type(entity_input_config) is not dict:
             LOGGER.error("Config error, not a dict check your entity configs")
+            self.entityId = "error"
+            self.nameOverride = None
+            self.iconOverride = None
         else:
             self.entityId = entity_input_config.get("entity", "unknown")
             self.nameOverride = entity_input_config.get("name")
