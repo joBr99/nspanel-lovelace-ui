@@ -57,7 +57,12 @@ icons = [
     "radio",
     "fireplace",
     "arrow-left-bold",
-    "arrow-right-bold"
+    "arrow-right-bold",
+    "sofa",
+    "garage-variant",
+    "bed",
+    "soccer",
+    "silverware-variant"
 ]
 
 

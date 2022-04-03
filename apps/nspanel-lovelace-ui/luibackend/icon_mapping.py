@@ -55,6 +55,11 @@ icons = {
     'fireplace': 53,
     'arrow-left-bold': 54,
     'arrow-right-bold': 55,
+    'sofa': 56,
+    'garage-variant': 57,
+    'bed': 58,
+    'soccer': 59,
+    'silverware-variant': 60,
 }
 
 def get_icon_id(ma_name):
