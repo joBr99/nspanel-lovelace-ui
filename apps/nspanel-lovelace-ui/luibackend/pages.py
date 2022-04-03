@@ -1,5 +1,6 @@
 import logging
 import datetime
+import dateutil.parser as dp
 
 from icon_mapping import get_icon_id
 from icons import get_icon_id_ha
@@ -78,7 +79,8 @@ class LuiPagesGen(object):
             wOF = self._config._config_screensaver.raw_config.get(f"weatherOverrideForecast{i}")
             if wOF is None:
                 up = we.attributes.forecast[i-1]['datetime']
-                up   = datetime.datetime.fromisoformat(up)
+                #up   = datetime.datetime.fromisoformat(up)
+                up   = dp.parse(up)
                 if babel_spec is not None:
                     up = babel.dates.format_date(up, "E", locale=self._locale)
                 else:
