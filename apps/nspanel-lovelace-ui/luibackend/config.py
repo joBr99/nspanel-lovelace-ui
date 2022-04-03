@@ -84,7 +84,8 @@ class LuiBackendConfig(object):
             'weatherOverrideForecast3': None,
             'weatherOverrideForecast4': None,
             'doubleTapToUnlock': False,
-            'alternativeLayout': False
+            'alternativeLayout': False,
+            'defaultCard': None
         },
         'hiddenCards': []
     }

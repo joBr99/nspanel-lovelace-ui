@@ -133,6 +133,13 @@ class LuiController(object):
         LOGGER.info(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
         # internal buttons
         if entity_id == "screensaver" and button_type == "bExit":
+            # get default card if there is one
+            if self._config.get("screensaver.defaultCard") is not None:
+                dstCard = self._config.searchCard(self._config.get("screensaver.defaultCard"))
+                if dstCard is not None:
+                    self._previous_cards = []
+                    self._current_card = dstCard
+            # check for duouble tap if configured and render current page
             if self._config.get("doubleTapToUnlock") and int(value) >= 2:
                 self._pages_gen.render_card(self._current_card)
             elif not self._config.get("doubleTapToUnlock"):

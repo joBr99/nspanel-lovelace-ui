@@ -132,83 +132,83 @@ The following message can be used to update the content on the cardEntities Page
 
 ## Messages from Nextion Display
 
-`event~buttonPress2~pageName~bNext`
+`event,buttonPress2,pageName,bNext`
 
-`event~buttonPress2~pageName~bPrev`
+`event,buttonPress2,pageName,bPrev`
 
-`event~buttonPress2~pageName~bExit~number_of_taps`
+`event,buttonPress2,pageName,bExit,number_of_taps`
 
-`event~buttonPress2~pageName~sleepReached`
+`event,buttonPress2,pageName,sleepReached`
 
 
 ### startup page
 
-`event~startup~version~model`
+`event,startup,version,model`
 
 ### screensaver page
 
-`event~buttonPress2~screensaver~exit` - Touch Event on Screensaver
+`event,buttonPress2,screensaver,exit` - Touch Event on Screensaver
 
-`event~screensaverOpen` - Screensaver has opened
+`event,screensaverOpen` - Screensaver has opened
 
 
 ### cardEntities Page
 
-`event~*eventName*~*entityName*~*actionName*~*optionalValue*`
+`event,*eventName*,*entityName*,*actionName*,*optionalValue*`
 
-`event~buttonPress2~internalNameEntity~up`
+`event,buttonPress2,internalNameEntity,up`
 
-`event~buttonPress2~internalNameEntity~down`
+`event,buttonPress2,internalNameEntity,down`
 
-`event~buttonPress2~internalNameEntity~stop`
+`event,buttonPress2,internalNameEntity,stop`
 
-`event~buttonPress2~internalNameEntity~OnOff~1`
+`event,buttonPress2,internalNameEntity,OnOff,1`
 
-`event~buttonPress2~internalNameEntity~button`
+`event,buttonPress2,internalNameEntity,button`
 
 ### popupLight Page
 
-`event~pageOpenDetail~popupLight~internalNameEntity`
+`event,pageOpenDetail,popupLight,internalNameEntity`
 
-`event~buttonPress2~internalNameEntity~OnOff~1`
+`event,buttonPress2,internalNameEntity,OnOff,1`
 
-`event~buttonPress2~internalNameEntity~brightnessSlider~50`
+`event,buttonPress2,internalNameEntity,brightnessSlider,50`
 
-`event~buttonPress2~internalNameEntity~colorTempSlider~50`
+`event,buttonPress2,internalNameEntity,colorTempSlider,50`
 
-`event~buttonPress2~internalNameEntity~colorWheel~x|y`
+`event,buttonPress2,internalNameEntity,colorWheel,x|y`
 
 ### popupShutter Page
 
-`event~pageOpenDetail~popupShutter~internalNameEntity`
+`event,pageOpenDetail,popupShutter,internalNameEntity`
 
-`event~buttonPress2~internalNameEntity~positionSlider~50`
+`event,buttonPress2,internalNameEntity,positionSlider,50`
 
 ### popupNotify Page
 
-`event~buttonPress2~*internalName*~notifyAction~yes`
+`event,buttonPress2,*internalName*,notifyAction,yes`
 
-`event~buttonPress2~*internalName*~notifyAction~no`
+`event,buttonPress2,*internalName*,notifyAction,no`
 
 ### cardThermo Page
 
-`event~buttonPress2~*entityName*~tempUpd~*temperature*`
+`event,buttonPress2,*entityName*,tempUpd,*temperature*`
 
-`event~buttonPress2~*entityName*~hvac_action~*hvac_action*`
+`event,buttonPress2,*entityName*,hvac_action,*hvac_action*`
 
 ### cardMedia Page
 
-`event~buttonPress2~internalNameEntity~media-back`
+`event,buttonPress2,internalNameEntity,media-back`
 
-`event~buttonPress2~internalNameEntity~media-pause`
+`event,buttonPress2,internalNameEntity,media-pause`
 
-`event~buttonPress2~internalNameEntity~media-next`
+`event,buttonPress2,internalNameEntity,media-next`
 
-`event~buttonPress2~internalNameEntity~volumeSlider~75`
+`event,buttonPress2,internalNameEntity,volumeSlider,75`
 
 ### cardAlarm Page
 
-`event~buttonPress2~internalNameEntity~actionName~code`
+`event,buttonPress2,internalNameEntity,actionName,code`
 
 
 # Icons IDs
@@ -218,7 +218,7 @@ Please see Icon's int the [icons.md file](icons.md)
 # Design Guidelines for Nextion HMI Project
 
 Background Color is 
-- RGB565: 6371 [18e3] (HEX: #1C1C1C~ RGB: 28~28~28)
+- RGB565: 6371 [18e3] (HEX: #1C1C1C, RGB: 28,28,28)
 
-Source for Icons is the Material Design Font~ used by HASPone
+Source for Icons is the Material Design Font, used by HASPone
 https://github.com/HASwitchPlate/HASPone
