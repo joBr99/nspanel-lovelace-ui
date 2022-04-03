@@ -140,9 +140,9 @@ class LuiController(object):
                     self._previous_cards = []
                     self._current_card = dstCard
             # check for duouble tap if configured and render current page
-            if self._config.get("doubleTapToUnlock") and int(value) >= 2:
+            if self._config.get("screensaver.doubleTapToUnlock") and int(value) >= 2:
                 self._pages_gen.render_card(self._current_card)
-            elif not self._config.get("doubleTapToUnlock"):
+            elif not self._config.get("screensaver.doubleTapToUnlock"):
                 self._pages_gen.render_card(self._current_card)
             return
             
