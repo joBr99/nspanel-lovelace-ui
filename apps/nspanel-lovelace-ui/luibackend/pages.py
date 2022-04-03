@@ -68,7 +68,7 @@ class LuiPagesGen(object):
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
         else:
-            LOGGER.error("Skipping Weather Update, entity {we_name} not found")
+            LOGGER.error(f"Skipping Weather Update, entity {we_name} not found")
             return
 
         icon_cur        = get_icon_id_ha("weather", state=we.state)
