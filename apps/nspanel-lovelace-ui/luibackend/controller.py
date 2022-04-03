@@ -15,6 +15,7 @@ class LuiController(object):
 
         # first card (default, after startup)
         self._current_card = self._config.getCard(0)
+        self._previous_cards = []
         
         self._pages_gen = LuiPagesGen(ha_api, config, send_mqtt_msg)
 
@@ -145,8 +146,8 @@ class LuiController(object):
         if button_type == "bExit":
             self._pages_gen.render_card(self._current_card)
         if button_type == "bUp":
-            self._current_card = self._previous_card
-            self._pages_gen.render_card(self._previous_card)
+            self._current_card = self._previous_cards.pop()
+            self._pages_gen.render_card(self._current_card)
 
         if button_type == "bNext":
             card = self._config.getCard(self._current_card.pos+1)
@@ -184,7 +185,7 @@ class LuiController(object):
         if button_type == "button":
             if entity_id.startswith('navigate'):
                 # internal for navigation to nested pages
-                self._previous_card = self._current_card
+                self._previous_cards.append(self._current_card)
                 self._current_card = self._config.searchCard(entity_id)
                 self._pages_gen.render_card(self._current_card)
             elif entity_id.startswith('scene'):
