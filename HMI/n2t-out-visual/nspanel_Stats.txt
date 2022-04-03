@@ -14,6 +14,10 @@ pageSerialTest
 	13   Component(s)
 	48   Line(s) of event code
 	43   Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	150  Line(s) of event code
+	113  Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	178  Line(s) of event code
@@ -26,10 +30,6 @@ popupLight
 	27   Component(s)
 	322  Line(s) of event code
 	173  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	150  Line(s) of event code
-	113  Unique line(s) of event code
 cardThermo
 	41   Component(s)
 	460  Line(s) of event code
