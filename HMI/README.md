@@ -123,7 +123,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### cardMedia Page
 
-`entityUpd~|*heading*|*navigation*|*internalNameEntiy*|*icon*|*title*|*author*|*volume*|*playpauseicon*|currentSpeaker|speakerList-seperated-by-?`
+`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*icon*~*title*~*author*~*volume*~*playpauseicon*~currentSpeaker~speakerList-seperated-by-?`
 
 ### cardAlarm Page
 
