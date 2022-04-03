@@ -1,13 +1,5 @@
 [
     {
-        "id": "ba6c8bb20b9aa4cc",
-        "type": "tab",
-        "label": "NSP_Kueche",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "6873c08312276c95",
         "type": "server-state-changed",
         "z": "ba6c8bb20b9aa4cc",
@@ -76,7 +68,7 @@
         "type": "function",
         "z": "ba6c8bb20b9aa4cc",
         "name": "wake&display",
-        "func": "var out_msgs = \n[ {payload:\"wake\"}, \n  {payload: \"pageType,popupLight,Kueche,light.kueche_lights\"} \n]\n\n\n\nreturn [out_msgs]",
+        "func": "var out_msgs = \n[\n  {payload: \"CustomSend pageType~popupLight~Kueche~light.kueche_lights\"} \n]\n\n\n\nreturn [out_msgs]",
         "outputs": 1,
         "noerr": 0,
         "initialize": "if (flow.get(\"ns-currentPage\") === undefined) {\n    flow.set(\"ns-currentPage\", 0)\n}",
@@ -113,7 +105,7 @@
         "type": "function",
         "z": "ba6c8bb20b9aa4cc",
         "name": "send notification",
-        "func": "var out_msgs = \n[ {payload:\"pageType,popupNotify\"}, \n  {payload: \"entityUpdateDetail,|updateBerryNoYes|Notification|65535|No|65535|Yes|65535|\"+msg.payload+\"|65535|4\"} \n]\n\nreturn [out_msgs]",
+        "func": "var out_msgs = \n[ {payload:\"pageType~popupNotify\"}, \n  {payload: \"entityUpdateDetail~updateBerryNoYes~Notification~65535~No~65535~Yes~65535~\"+msg.payload+\"~65535~4\"} \n]\n\nreturn [out_msgs]",
         "outputs": 1,
         "noerr": 0,
         "initialize": "if (flow.get(\"ns-currentPage\") === undefined) {\n    flow.set(\"ns-currentPage\", 0)\n}",
