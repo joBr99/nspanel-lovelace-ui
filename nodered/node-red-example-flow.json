@@ -68,7 +68,7 @@
         "type": "function",
         "z": "ba6c8bb20b9aa4cc",
         "name": "wake&display",
-        "func": "var out_msgs = \n[\n  {payload: \"CustomSend pageType~popupLight~Kueche~light.kueche_lights\"} \n]\n\n\n\nreturn [out_msgs]",
+        "func": "var out_msgs = \n[\n  {payload: \"pageType~popupLight~Kueche~light.kueche_lights\"} \n]\n\n\n\nreturn [out_msgs]",
         "outputs": 1,
         "noerr": 0,
         "initialize": "if (flow.get(\"ns-currentPage\") === undefined) {\n    flow.set(\"ns-currentPage\", 0)\n}",
