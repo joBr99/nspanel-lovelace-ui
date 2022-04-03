@@ -64,6 +64,8 @@ class LuiPagesGen(object):
         we_name = self._config._config_screensaver.entity.entityId
         unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
 
+        LOGGER.info(f"test123 {we_name}")
+
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
         else:
@@ -178,7 +180,7 @@ class LuiPagesGen(object):
     def generate_thermo_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
-            command = f"entityUpd~{item}~Not found~220~220~Not found~150~300~5"
+            command = f"entityUpd~{heading}~{navigation}~{item}~220~220~Not found~150~300~5"
         else:
             entity       = self._ha_api.get_entity(item)
             heading      = entity.attributes.friendly_name
@@ -230,13 +232,13 @@ class LuiPagesGen(object):
                 icon_res =  "~"*4*padding_len + icon_res + "~"*4*padding_len
                 # use first 5 icons
                 icon_res = icon_res + "~"*4*4
-            command = f"entityUpd~{heading}~~{item}~{current_temp}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}"
+            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}"
         self._send_mqtt_msg(command)
 
     def generate_media_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
-            command = f"entityUpd~|{item}|Not found|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|{get_icon_id('alert-circle-outline')}"
+            command = f"entityUpd~|Not found||{item}|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|{get_icon_id('alert-circle-outline')}"
         else:
             entity        = self._ha_api.get_entity(item)
             heading       = entity.attributes.friendly_name
@@ -264,13 +266,13 @@ class LuiPagesGen(object):
                     onoffbutton = 1374
                 else:
                     onoffbutton = rgb_dec565([255,255,255])
-            command = f"entityUpd~|{heading}||{item}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist[:200]}|{onoffbutton}"
+            command = f"entityUpd~|{heading}|{navigation}|{item}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist[:200]}|{onoffbutton}"
         self._send_mqtt_msg(command)
         
     def generate_alarm_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
-            command = f"entityUpd~{item}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
+            command = f"entityUpd~{item}~~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
         else:
             entity        = self._ha_api.get_entity(item)
             icon = get_icon_id("shield-off")
@@ -324,7 +326,6 @@ class LuiPagesGen(object):
                 arm_buttons += f"~{get_translation(self._locale, b)}~{b}"
             if len(supported_modes) < 4:
                 arm_buttons += "~"*((4-len(supported_modes))*2)
-            navigation = ""
             command = f"entityUpd~{item}~{navigation}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}"
         self._send_mqtt_msg(command)
         
