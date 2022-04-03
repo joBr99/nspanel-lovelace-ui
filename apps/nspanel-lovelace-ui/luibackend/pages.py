@@ -64,8 +64,6 @@ class LuiPagesGen(object):
         we_name = self._config._config_screensaver.entity.entityId
         unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
 
-        LOGGER.info(f"test123 {we_name}")
-
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
         else:
@@ -167,6 +165,7 @@ class LuiPagesGen(object):
             min_v = entity.attributes.get("min", 0)
             max_v = entity.attributes.get("max", 100)
             return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
+        return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~error~"
 
     def generate_entities_page(self, navigation, heading, items):
         command = f"entityUpd~{heading}~{navigation}"
@@ -266,7 +265,7 @@ class LuiPagesGen(object):
                     onoffbutton = 1374
                 else:
                     onoffbutton = rgb_dec565([255,255,255])
-            command = f"entityUpd~|{heading}|{navigation}|{item}|{icon}|{title}|{author}|{volume}|{iconplaypause}|{source}|{speakerlist[:200]}|{onoffbutton}"
+            command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~{title}~{author}~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}"
         self._send_mqtt_msg(command)
         
     def generate_alarm_page(self, navigation, entity):
