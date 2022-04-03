@@ -60,3 +60,8 @@ ID | MD Icon Name | Icon
 53 | fireplace | ![fireplace](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/fireplace.svg)
 54 | arrow-left-bold | ![arrow-left-bold](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/arrow-left-bold.svg)
 55 | arrow-right-bold | ![arrow-right-bold](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/arrow-right-bold.svg)
+56 | sofa | ![sofa](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/sofa.svg)
+57 | garage-variant | ![garage-variant](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/garage-variant.svg)
+58 | bed | ![bed](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/bed.svg)
+59 | soccer | ![soccer](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/soccer.svg)
+60 | silverware-variant | ![silverware-variant](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/silverware-variant.svg)
