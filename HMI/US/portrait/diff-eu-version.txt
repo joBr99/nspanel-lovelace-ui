@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -113,7 +113,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -34,8 +34,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                          spstr strCommand.txt,tTmp.txt,"~",12
                                          covx tTmp.txt,sys0,0,0
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -848,192 +848,77 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-04 21:08:13.792946140 +0000
-@@ -574,7 +574,7 @@
-                                     if(tInstruction.txt=="entityUpd")
-                                     {
-                                         // command format: entityUpd,heading,navigation,[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
--                                        spstr strCommand.txt,tHeading.txt,",",1
-+                                        spstr strCommand.txt,tHeading.txt,"~",1
-                                         // navigation icons
-                                         spstr strCommand.txt,tId.txt,"~",2
-                                         spstr tId.txt,tTmp.txt,"|",0
-@@ -603,9 +603,9 @@
-                                             bNext.txt="î³"
-                                         }
-                                         // get Type
--                                        spstr strCommand.txt,type1.txt,",",3
-+                                        spstr strCommand.txt,type1.txt,"~",3
-                                         // get internal name
--                                        spstr strCommand.txt,entn1.txt,",",4
-+                                        spstr strCommand.txt,entn1.txt,"~",4
-                                         if(type1.txt=="delete"||type1.txt=="")
-                                         {
-                                             vis tEntity1,0
-@@ -613,20 +613,22 @@
+--- HMI/n2t-out/cardGrid.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-04 21:26:09.160579693 +0000
+@@ -613,7 +613,9 @@
                                          }else
                                          {
                                              // change icon
--                                            spstr strCommand.txt,bEntity1.txt,",",5
+-                                            spstr strCommand.txt,bEntity1.txt,"~",5
 +                                            spstr strCommand.txt,tTmp.txt,"~",5
 +                                            covx tTmp.txt,sys0,0,0
 +                                            substr pageIcons.tIcons.txt,bEntity1.txt,sys0,1
                                              vis bEntity1,1
                                              // change icon color
--                                            spstr strCommand.txt,tTmp.txt,",",6
-+                                            spstr strCommand.txt,tTmp.txt,"~",6
-                                             covx tTmp.txt,sys0,0,0
-                                             bEntity1.pco=sys0
-                                             // set name
--                                            spstr strCommand.txt,tEntity1.txt,",",7
-+                                            spstr strCommand.txt,tEntity1.txt,"~",7
-                                             vis tEntity1,1
-                                         }
-                                         // get Type
--                                        spstr strCommand.txt,type2.txt,",",9
-+                                        spstr strCommand.txt,type2.txt,"~",9
-                                         // get internal name
--                                        spstr strCommand.txt,entn2.txt,",",10
-+                                        spstr strCommand.txt,entn2.txt,"~",10
-                                         if(type2.txt=="delete"||type2.txt=="")
-                                         {
-                                             vis tEntity2,0
-@@ -634,20 +636,22 @@
+                                             spstr strCommand.txt,tTmp.txt,"~",6
+@@ -634,7 +636,9 @@
                                          }else
                                          {
                                              // change icon
--                                            spstr strCommand.txt,bEntity2.txt,",",11
+-                                            spstr strCommand.txt,bEntity2.txt,"~",11
 +                                            spstr strCommand.txt,tTmp.txt,"~",11
 +                                            covx tTmp.txt,sys0,0,0
 +                                            substr pageIcons.tIcons.txt,bEntity2.txt,sys0,1
                                              vis bEntity2,1
                                              // change icon color
--                                            spstr strCommand.txt,tTmp.txt,",",12
-+                                            spstr strCommand.txt,tTmp.txt,"~",12
-                                             covx tTmp.txt,sys0,0,0
-                                             bEntity2.pco=sys0
-                                             // set name
--                                            spstr strCommand.txt,tEntity2.txt,",",13
-+                                            spstr strCommand.txt,tEntity2.txt,"~",13
-                                             vis tEntity2,1
-                                         }
-                                         // get Type
--                                        spstr strCommand.txt,type3.txt,",",15
-+                                        spstr strCommand.txt,type3.txt,"~",15
-                                         // get internal name
--                                        spstr strCommand.txt,entn3.txt,",",16
-+                                        spstr strCommand.txt,entn3.txt,"~",16
-                                         if(type3.txt=="delete"||type3.txt=="")
-                                         {
-                                             vis tEntity3,0
-@@ -655,20 +659,22 @@
+                                             spstr strCommand.txt,tTmp.txt,"~",12
+@@ -655,7 +659,9 @@
                                          }else
                                          {
                                              // change icon
--                                            spstr strCommand.txt,bEntity3.txt,",",17
+-                                            spstr strCommand.txt,bEntity3.txt,"~",17
 +                                            spstr strCommand.txt,tTmp.txt,"~",17
 +                                            covx tTmp.txt,sys0,0,0
 +                                            substr pageIcons.tIcons.txt,bEntity3.txt,sys0,1
                                              vis bEntity3,1
                                              // change icon color
--                                            spstr strCommand.txt,tTmp.txt,",",18
-+                                            spstr strCommand.txt,tTmp.txt,"~",18
-                                             covx tTmp.txt,sys0,0,0
-                                             bEntity3.pco=sys0
-                                             // set name
--                                            spstr strCommand.txt,tEntity3.txt,",",19
-+                                            spstr strCommand.txt,tEntity3.txt,"~",19
-                                             vis tEntity3,1
-                                         }
-                                         // get Type
--                                        spstr strCommand.txt,type4.txt,",",21
-+                                        spstr strCommand.txt,type4.txt,"~",21
-                                         // get internal name
--                                        spstr strCommand.txt,entn4.txt,",",22
-+                                        spstr strCommand.txt,entn4.txt,"~",22
-                                         if(type4.txt=="delete"||type4.txt=="")
-                                         {
-                                             vis tEntity4,0
-@@ -676,20 +682,22 @@
+                                             spstr strCommand.txt,tTmp.txt,"~",18
+@@ -676,7 +682,9 @@
                                          }else
                                          {
                                              // change icon
--                                            spstr strCommand.txt,bEntity4.txt,",",23
+-                                            spstr strCommand.txt,bEntity4.txt,"~",23
 +                                            spstr strCommand.txt,tTmp.txt,"~",23
 +                                            covx tTmp.txt,sys0,0,0
 +                                            substr pageIcons.tIcons.txt,bEntity4.txt,sys0,1
                                              vis bEntity4,1
                                              // change icon color
--                                            spstr strCommand.txt,tTmp.txt,",",24
-+                                            spstr strCommand.txt,tTmp.txt,"~",24
-                                             covx tTmp.txt,sys0,0,0
-                                             bEntity4.pco=sys0
-                                             // set name
--                                            spstr strCommand.txt,tEntity4.txt,",",25
-+                                            spstr strCommand.txt,tEntity4.txt,"~",25
-                                             vis tEntity4,1
-                                         }
-                                         // get Type
--                                        spstr strCommand.txt,type5.txt,",",27
-+                                        spstr strCommand.txt,type5.txt,"~",27
-                                         // get internal name
--                                        spstr strCommand.txt,entn5.txt,",",28
-+                                        spstr strCommand.txt,entn5.txt,"~",28
-                                         if(type5.txt=="delete"||type5.txt=="")
-                                         {
-                                             vis tEntity5,0
-@@ -697,20 +705,22 @@
+                                             spstr strCommand.txt,tTmp.txt,"~",24
+@@ -697,7 +705,9 @@
                                          }else
                                          {
                                              // change icon
--                                            spstr strCommand.txt,bEntity5.txt,",",29
+-                                            spstr strCommand.txt,bEntity5.txt,"~",29
 +                                            spstr strCommand.txt,tTmp.txt,"~",29
 +                                            covx tTmp.txt,sys0,0,0
 +                                            substr pageIcons.tIcons.txt,bEntity5.txt,sys0,1
                                              vis bEntity5,1
                                              // change icon color
--                                            spstr strCommand.txt,tTmp.txt,",",30
-+                                            spstr strCommand.txt,tTmp.txt,"~",30
-                                             covx tTmp.txt,sys0,0,0
-                                             bEntity5.pco=sys0
-                                             // set name
--                                            spstr strCommand.txt,tEntity5.txt,",",31
-+                                            spstr strCommand.txt,tEntity5.txt,"~",31
-                                             vis tEntity5,1
-                                         }
-                                         // get Type
--                                        spstr strCommand.txt,type6.txt,",",33
-+                                        spstr strCommand.txt,type6.txt,"~",33
-                                         // get internal name
--                                        spstr strCommand.txt,entn6.txt,",",34
-+                                        spstr strCommand.txt,entn6.txt,"~",34
-                                         if(type6.txt=="delete"||type6.txt=="")
-                                         {
-                                             vis tEntity6,0
-@@ -718,14 +728,16 @@
+                                             spstr strCommand.txt,tTmp.txt,"~",30
+@@ -718,7 +728,9 @@
                                          }else
                                          {
                                              // change icon
--                                            spstr strCommand.txt,bEntity6.txt,",",35
+-                                            spstr strCommand.txt,bEntity6.txt,"~",35
 +                                            spstr strCommand.txt,tTmp.txt,"~",35
 +                                            covx tTmp.txt,sys0,0,0
 +                                            substr pageIcons.tIcons.txt,bEntity6.txt,sys0,1
                                              vis bEntity6,1
                                              // change icon color
--                                            spstr strCommand.txt,tTmp.txt,",",36
-+                                            spstr strCommand.txt,tTmp.txt,"~",36
-                                             covx tTmp.txt,sys0,0,0
-                                             bEntity6.pco=sys0
-                                             // set name
--                                            spstr strCommand.txt,tEntity6.txt,",",37
-+                                            spstr strCommand.txt,tEntity6.txt,"~",37
-                                             vis tEntity6,1
-                                         }
-                                     }
+                                             spstr strCommand.txt,tTmp.txt,"~",36
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -540,7 +540,9 @@
                                          //entity name
                                          spstr strCommand.txt,entn.txt,"~",3
@@ -1057,8 +942,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                          spstr strCommand.txt,tSpeaker.txt,"~",9
                                          if(tSpeaker.txt!="")
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -680,7 +680,7 @@
                                          spstr strCommand.txt,tTmp.txt,"~",4
                                          covx tTmp.txt,xTempCurr.val,0,0
@@ -1236,8 +1121,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                              spstr strCommand.txt,tTmp.txt,"~",43
                                              covx tTmp.txt,bt8.pco2,0,0
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/pageIcons.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -22,6 +22,16 @@
          Text          : 
          Max. Text Size: 35
@@ -1257,8 +1142,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
          Scope                               : global
 Only in HMI/US/portrait/n2t-out: pageSerialTest.txt
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -1287,8 +1172,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/pageTest.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/pageTest.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -35,6 +35,20 @@
          Touch Press Event
              page cardEntities
@@ -1329,8 +1214,8 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
 -            bauds=115200
 -        
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/popupLight.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -442,7 +442,9 @@
                                      if(tInstruction.txt=="entityUpdateDetail")
                                      {
@@ -1343,8 +1228,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                          // change icon color
                                          spstr strCommand.txt,tTmp.txt,"~",2
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-04-04 21:08:13.436944769 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-04 21:08:13.792946140 +0000
+--- HMI/n2t-out/screensaver.txt	2022-04-04 21:26:08.660575169 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-04 21:26:09.160579693 +0000
 @@ -48,6 +48,26 @@
          Scope: local
          Value: 0

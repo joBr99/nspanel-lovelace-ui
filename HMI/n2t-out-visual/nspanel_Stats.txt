@@ -18,6 +18,10 @@ pageStartup
 	19   Component(s)
 	150  Line(s) of event code
 	113  Unique line(s) of event code
+cardGrid
+	39   Component(s)
+	418  Line(s) of event code
+	243  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	320  Line(s) of event code
@@ -38,10 +42,6 @@ cardAlarm
 	35   Component(s)
 	343  Line(s) of event code
 	213  Unique line(s) of event code
-cardGrid
-	39   Component(s)
-	418  Line(s) of event code
-	243  Unique line(s) of event code
 cardThermo
 	41   Component(s)
 	442  Line(s) of event code
@@ -55,4 +55,4 @@ Total
 	12   Page(s)
 	341  Component(s)
 	3541 Line(s) of event code
-	965  Unique line(s) of event code
+	947  Unique line(s) of event code
