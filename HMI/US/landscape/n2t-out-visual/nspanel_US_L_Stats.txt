@@ -10,6 +10,10 @@ pageTest
 	13   Component(s)
 	13   Line(s) of event code
 	13   Unique line(s) of event code
+cardThermo
+	41   Component(s)
+	442  Line(s) of event code
+	245  Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	178  Line(s) of event code
@@ -46,13 +50,9 @@ cardEntities
 	62   Component(s)
 	964  Line(s) of event code
 	409  Unique line(s) of event code
-cardThermo
-	41   Component(s)
-	451  Line(s) of event code
-	274  Unique line(s) of event code
 
 Total
 	12   Page(s)
 	341  Component(s)
-	3549 Line(s) of event code
-	1039 Unique line(s) of event code
+	3540 Line(s) of event code
+	964  Unique line(s) of event code
