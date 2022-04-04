@@ -37,4 +37,4 @@ MD Icon Name | Icon
 """)
     for icon in icon_metadata:
         val = icon["name"]
-        f.write(f"{val} | ![{val}](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/{val}.svg)\n")
+        f.write(f"mdi:{val} | ![{val}](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/{val}.svg)\n")
