@@ -21,7 +21,7 @@ Page screensaver
     Events
         Preinitialize Event
             recmod=1
-            bauds=115200
+            bauds=921600
             vis tInstruction,0
             vis tTmp,0
             vis p0,0
@@ -167,7 +167,7 @@ Text tDate
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 1
+        Font ID                             : 2
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -227,7 +227,7 @@ Text tMainIcon
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -257,7 +257,7 @@ Text tMainText
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 2
+        Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -497,7 +497,7 @@ Text tAMPM
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -707,7 +707,7 @@ Text tMainTextAlt
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 2
+        Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : left
@@ -737,7 +737,7 @@ Text tMainIconAlt
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -922,9 +922,7 @@ Timer tmSerial
                                         vis tMRIcon,0
                                         vis tMR,0
                                         //tMainIcon
-                                        spstr strCommand.txt,tTmp.txt,"~",1
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tMainIcon.txt,sys0,1
+                                        spstr strCommand.txt,tMainIcon.txt,"~",1
                                         tMainIconAlt.txt=tMainIcon.txt
                                         //tMainText
                                         spstr strCommand.txt,tMainText.txt,"~",2
@@ -932,40 +930,30 @@ Timer tmSerial
                                         //tForecast1
                                         spstr strCommand.txt,tForecast1.txt,"~",3
                                         //tF1Icon
-                                        spstr strCommand.txt,tTmp.txt,"~",4
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tF1Icon.txt,sys0,1
+                                        spstr strCommand.txt,tF1Icon.txt,"~",4
                                         //tForecast1Val
                                         spstr strCommand.txt,tForecast1Val.txt,"~",5
                                         //tForecast2
                                         spstr strCommand.txt,tForecast2.txt,"~",6
                                         //tF2Icon
-                                        spstr strCommand.txt,tTmp.txt,"~",7
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tF2Icon.txt,sys0,1
+                                        spstr strCommand.txt,tF2Icon.txt,"~",7
                                         //tForecast2Val
                                         spstr strCommand.txt,tForecast2Val.txt,"~",8
                                         //tForecast3
                                         spstr strCommand.txt,tForecast3.txt,"~",9
                                         //tF3Icon
-                                        spstr strCommand.txt,tTmp.txt,"~",10
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tF3Icon.txt,sys0,1
+                                        spstr strCommand.txt,tF3Icon.txt,"~",10
                                         //tForecast3Val
                                         spstr strCommand.txt,tForecast3Val.txt,"~",11
                                         //tForecast4
                                         spstr strCommand.txt,tForecast4.txt,"~",12
                                         //tF4Icon
-                                        spstr strCommand.txt,tTmp.txt,"~",13
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tF4Icon.txt,sys0,1
+                                        spstr strCommand.txt,tF4Icon.txt,"~",13
                                         //tForecast4Val
                                         spstr strCommand.txt,tForecast4Val.txt,"~",14
                                         //alternative layout
                                         //tMRIcon
-                                        spstr strCommand.txt,tTmp.txt,"~",15
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tMRIcon.txt,sys0,1
+                                        spstr strCommand.txt,tMRIcon.txt,"~",15
                                         if(tTmp.txt!="")
                                         {
                                             //value for tMRIcon, activate alternative layout

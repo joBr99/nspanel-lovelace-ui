@@ -16,7 +16,7 @@ Page cardEntities
             //remove background & activate reparse mode
             vis p0,0
             recmod=1
-            bauds=115200
+            bauds=921600
             //debug stuff
             vis tTmp,0
             vis tSend,0
@@ -1172,9 +1172,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",5
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon1.txt,sys0,1
+                                            spstr strCommand.txt,tIcon1.txt,"~",5
                                             vis tIcon1,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",6
@@ -1296,9 +1294,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",11
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon2.txt,sys0,1
+                                            spstr strCommand.txt,tIcon2.txt,"~",11
                                             vis tIcon2,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",12
@@ -1420,9 +1416,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",17
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon3.txt,sys0,1
+                                            spstr strCommand.txt,tIcon3.txt,"~",17
                                             vis tIcon3,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",18
@@ -1544,9 +1538,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",23
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon4.txt,sys0,1
+                                            spstr strCommand.txt,tIcon4.txt,"~",23
                                             vis tIcon4,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",24
