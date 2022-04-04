@@ -35,20 +35,6 @@ Button b0
         Touch Press Event
             page cardEntities
         
-Button b1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : serial
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            page pageSerialTest
-        
 Button b3
     Attributes
         Scope                               : local
@@ -175,4 +161,18 @@ Button b11
     Events
         Touch Press Event
             page cardGrid
+        
+Button b1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : bauds=115200
+        Max. Text Size                      : 20
+    
+    Events
+        Touch Press Event
+            bauds=115200
         

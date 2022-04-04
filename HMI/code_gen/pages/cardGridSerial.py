@@ -21,9 +21,7 @@ for i in range(1,7):
               }}else
               {{
                 // change icon
-                spstr strCommand.txt,tTmp.txt,",",{idxstart+2}
-                covx tTmp.txt,sys0,0,0
-                substr pageIcons.tIcons.txt,bEntity{i}.txt,sys0,1
+                spstr strCommand.txt,bEntity{i}.txt,",",{idxstart+2}
                 vis bEntity{i},1
                 // change icon color
                 spstr strCommand.txt,tTmp.txt,",",{idxstart+3}
