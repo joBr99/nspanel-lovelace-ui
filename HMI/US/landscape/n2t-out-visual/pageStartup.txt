@@ -296,7 +296,7 @@ Text tMsg1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 59
+        x coordinate                        : 52
         y coordinate                        : 223
         Width                               : 375
         Height                              : 30
@@ -326,7 +326,7 @@ Text tMsg2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 42
+        x coordinate                        : 35
         y coordinate                        : 256
         Width                               : 408
         Height                              : 25
@@ -356,7 +356,7 @@ Text tMsg3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 42
+        x coordinate                        : 35
         y coordinate                        : 278
         Width                               : 408
         Height                              : 25
@@ -402,7 +402,7 @@ Text tVersion
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 29
+        Text                                : 30
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -483,7 +483,7 @@ Hotspot mSpinner
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 171
+        x coordinate                        : 164
         y coordinate                        : 49
         Width                               : 140
         Height                              : 140
