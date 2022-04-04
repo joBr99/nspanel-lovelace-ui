@@ -3,28 +3,28 @@ text = sharedhead + """
             if(tInstruction.txt=="entityUpd")
             {
               //heading
-              spstr strCommand.txt,tHeading.txt,",",1
+              spstr strCommand.txt,tHeading.txt,"~",1
 """ + navigation
 
 text += """
               //entity name
-              spstr strCommand.txt,entn.txt,",",3
+              spstr strCommand.txt,entn.txt,"~",3
               //currentTemp
-              spstr strCommand.txt,tTmp.txt,",",4
+              spstr strCommand.txt,tTmp.txt,"~",4
               covx tTmp.txt,xTempCurr.val,0,0
               //dstTemp
-              spstr strCommand.txt,tTmp.txt,",",4
+              spstr strCommand.txt,tTmp.txt,"~",4
               covx tTmp.txt,xTempDest.val,0,0
               //status
-              spstr strCommand.txt,tStatus.txt,",",6
+              spstr strCommand.txt,tStatus.txt,"~",6
               //minTemp
-              spstr strCommand.txt,tTmp.txt,",",7
+              spstr strCommand.txt,tTmp.txt,"~",7
               covx tTmp.txt,xTempMin.val,0,0
               //maxTemp
-              spstr strCommand.txt,tTmp.txt,",",8
+              spstr strCommand.txt,tTmp.txt,"~",8
               covx tTmp.txt,xTempMax.val,0,0
               //tempStep
-              spstr strCommand.txt,tTmp.txt,",",9
+              spstr strCommand.txt,tTmp.txt,"~",9
               covx tTmp.txt,xTempStep.val,0,0
               // disable all buttons
               vis bt0,0
@@ -41,20 +41,19 @@ text += """
 start = 10
 for i in range(0,9):
     idxstart = start + i*4
-    text += f"""              //bt{i}
-              spstr strCommand.txt,tTmp.txt,",",{idxstart}
-              if(tTmp.txt!="")
+    text += f"""
+              //bt{i}
+              spstr strCommand.txt,bt{i}.txt,"~",{idxstart}
+              if(bt{i}.txt!="")
               {{
-                // set icon
-                bt{i}.txt=tTmp.txt
                 // set text color on active state
-                spstr strCommand.txt,tTmp.txt,",",{idxstart+1}
+                spstr strCommand.txt,tTmp.txt,"~",{idxstart+1}
                 covx tTmp.txt,bt{i}.pco2,0,0
                 // set state
-                spstr strCommand.txt,tTmp.txt,",",{idxstart+2}
+                spstr strCommand.txt,tTmp.txt,"~",{idxstart+2}
                 covx tTmp.txt,bt{i}.val,0,0
                 // save action
-                spstr strCommand.txt,va{i}.txt,",",{idxstart+3}
+                spstr strCommand.txt,va{i}.txt,"~",{idxstart+3}
                 //enable
                 vis bt{i},1
               }}"""
