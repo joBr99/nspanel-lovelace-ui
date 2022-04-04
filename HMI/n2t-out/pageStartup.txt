@@ -14,7 +14,7 @@ Page pageStartup
         Preinitialize Event
             vis p0,0
             recmod=1
-            bauds=921600
+            bauds=115200
             vis tSend,0
             vis tInstruction,0
             vis tTmp,0

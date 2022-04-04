@@ -2,14 +2,14 @@ Program.s
 	0    Component(s)
 	11   Line(s) of event code
 	11   Unique line(s) of event code
-pageTest
-	12   Component(s)
-	12   Line(s) of event code
-	12   Unique line(s) of event code
 pageIcons
 	6    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
+pageTest
+	13   Component(s)
+	13   Line(s) of event code
+	13   Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	178  Line(s) of event code
@@ -17,7 +17,7 @@ popupNotify
 pageStartup
 	19   Component(s)
 	150  Line(s) of event code
-	114  Unique line(s) of event code
+	113  Unique line(s) of event code
 cardMedia
 	30   Component(s)
 	329  Line(s) of event code
@@ -30,18 +30,18 @@ popupShutter
 	19   Component(s)
 	178  Line(s) of event code
 	101  Unique line(s) of event code
-screensaver
-	33   Component(s)
-	195  Line(s) of event code
-	152  Unique line(s) of event code
-cardAlarm
-	35   Component(s)
-	343  Line(s) of event code
-	213  Unique line(s) of event code
 cardGrid
 	39   Component(s)
 	418  Line(s) of event code
 	243  Unique line(s) of event code
+cardAlarm
+	35   Component(s)
+	343  Line(s) of event code
+	213  Unique line(s) of event code
+screensaver
+	33   Component(s)
+	195  Line(s) of event code
+	152  Unique line(s) of event code
 cardThermo
 	41   Component(s)
 	451  Line(s) of event code
@@ -53,6 +53,6 @@ cardEntities
 
 Total
 	12   Page(s)
-	340  Component(s)
-	3549 Line(s) of event code
-	1041 Unique line(s) of event code
+	341  Component(s)
+	3550 Line(s) of event code
+	1040 Unique line(s) of event code

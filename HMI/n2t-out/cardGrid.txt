@@ -16,7 +16,7 @@ Page cardGrid
             //remove background & activate reparse mode
             vis p0,0
             recmod=1
-            bauds=921600
+            bauds=115200
             //debug stuff
             vis tTmp,0
             vis tSend,0

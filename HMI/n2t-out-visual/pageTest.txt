@@ -83,8 +83,8 @@ Button b3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 345
-        y coordinate                        : 195
+        x coordinate                        : 347
+        y coordinate                        : 184
         Width                               : 102
         Height                              : 63
         Effect                              : load
@@ -399,4 +399,40 @@ Button b11
     Events
         Touch Press Event
             page cardGrid
+        
+Button b1
+    Attributes
+        ID                                  : 12
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 349
+        y coordinate                        : 252
+        Width                               : 102
+        Height                              : 63
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 1
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 0
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : bauds=115200
+        Max. Text Size                      : 20
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            bauds=115200
         
