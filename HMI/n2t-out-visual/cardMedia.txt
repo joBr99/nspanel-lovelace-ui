@@ -93,8 +93,8 @@ Text tTmp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 450
-        y coordinate                        : 145
+        x coordinate                        : 14
+        y coordinate                        : 156
         Width                               : 27
         Height                              : 30
         Effect                              : load
@@ -153,8 +153,8 @@ Text tId
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 449
-        y coordinate                        : 187
+        x coordinate                        : 49
+        y coordinate                        : 159
         Width                               : 30
         Height                              : 30
         Effect                              : load
