@@ -46,8 +46,7 @@ for i in range(0,9):
               if(tTmp.txt!="")
               {{
                 // set icon
-                covx tTmp.txt,sys0,0,0
-                substr pageIcons.tIcons.txt,bt{i}.txt,sys0,1
+                bt{i}.txt=tTmp.txt
                 // set text color on active state
                 spstr strCommand.txt,tTmp.txt,",",{idxstart+1}
                 covx tTmp.txt,bt{i}.pco2,0,0

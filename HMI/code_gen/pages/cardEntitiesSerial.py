@@ -7,7 +7,7 @@ head = sharedhead + """
 """ + navigation
 print(head)
 start = 3
-for i in range(1,7):
+for i in range(1,5):
     idxstart = start + (i-1)*6
     item = f"""
               // get Type
@@ -28,9 +28,7 @@ for i in range(1,7):
               }}else
               {{
                 // change icon
-                spstr strCommand.txt,tTmp.txt,"~",{idxstart+2}
-                covx tTmp.txt,sys0,0,0
-                substr pageIcons.tIcons.txt,tIcon{i}.txt,sys0,1
+                spstr strCommand.txt,tIcon{i}.txt,"~",{idxstart+2}
                 vis tIcon{i},1
                 // change icon color
                 spstr strCommand.txt,tTmp.txt,"~",{idxstart+3}
