@@ -5,7 +5,7 @@ import codecs
 print("Calculate NSPanel hex command from JSON payload\n")
 
 #value = input("Enter JSON:\n")
-value = "entityUpdHeading,Heading1234"
+value = "weatherUpdate~1~9.4 C~Wed~2~14.1 C~Thu~3~12.4 C~Fri~4~7.6 C~Sat~5~8.5 C~6~90 %"
 
 def crc16(data:bytes, poly:hex=0xA001) -> str:
     '''
@@ -21,13 +21,13 @@ def crc16(data:bytes, poly:hex=0xA001) -> str:
     return crc
     
 
-payload = bytes(value, 'ascii')
+payload = bytes(value, 'utf-8')
 
 header = binascii.unhexlify('55BB')
 
-print("length:", len(value))
+print("length:", len(payload))
 
-length = len(value).to_bytes(2, 'little')
+length = len(payload).to_bytes(2, 'little')
 
 bytes_payload = header + length + payload
 
