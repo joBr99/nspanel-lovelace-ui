@@ -10,10 +10,6 @@ pageTest
 	13   Component(s)
 	13   Line(s) of event code
 	13   Unique line(s) of event code
-cardThermo
-	41   Component(s)
-	442  Line(s) of event code
-	245  Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	178  Line(s) of event code
@@ -42,6 +38,10 @@ cardGrid
 	39   Component(s)
 	418  Line(s) of event code
 	243  Unique line(s) of event code
+cardThermo
+	41   Component(s)
+	442  Line(s) of event code
+	246  Unique line(s) of event code
 screensaver
 	33   Component(s)
 	195  Line(s) of event code
