@@ -432,7 +432,7 @@ Timer tmSerial
                                         //alternative layout
                                         //tMRIcon
                                         spstr strCommand.txt,tMRIcon.txt,"~",15
-                                        if(tTmp.txt!="")
+                                        if(tMRIcon.txt!="")
                                         {
                                             //value for tMRIcon, activate alternative layout
                                             vis tMainIcon,0

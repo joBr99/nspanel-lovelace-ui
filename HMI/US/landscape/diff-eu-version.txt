@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-05 20:30:06.540918537 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-04-05 20:30:07.536951384 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-04-05 21:14:10.888441480 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-04-05 20:30:07.536951384 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-04-05 21:14:10.888441480 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200

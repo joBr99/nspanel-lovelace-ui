@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-05 20:30:06.540918537 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-05 20:30:07.032935506 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-05 21:14:10.308440588 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-05 20:30:07.036935643 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-05 21:14:10.312440595 +0000
 @@ -113,7 +113,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -34,8 +34,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                          spstr strCommand.txt,tTmp.txt,"~",12
                                          covx tTmp.txt,sys0,0,0
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-05 20:30:07.036935643 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-05 21:14:10.312440595 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -848,8 +848,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-05 20:30:07.036935643 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-05 21:14:10.312440595 +0000
 @@ -613,7 +613,9 @@
                                          }else
                                          {
@@ -917,8 +917,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                              // change icon color
                                              spstr strCommand.txt,tTmp.txt,"~",36
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-05 20:30:07.036935643 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-05 21:14:10.312440595 +0000
 @@ -540,7 +540,9 @@
                                          //entity name
                                          spstr strCommand.txt,entn.txt,"~",3
@@ -942,8 +942,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                          spstr strCommand.txt,tSpeaker.txt,"~",9
                                          if(tSpeaker.txt!="")
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-05 20:30:07.036935643 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-05 21:14:10.312440595 +0000
 @@ -704,9 +704,12 @@
                                          vis bt7,0
                                          vis bt8,0
@@ -1112,8 +1112,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                              spstr strCommand.txt,tTmp.txt,"~",43
                                              covx tTmp.txt,bt8.pco2,0,0
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-04-05 20:30:07.032935506 +0000
+--- HMI/n2t-out/pageIcons.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-04-05 21:14:10.308440588 +0000
 @@ -22,6 +22,16 @@
          Text          : 
          Max. Text Size: 35
@@ -1133,8 +1133,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
          Scope                               : global
 Only in HMI/US/portrait/n2t-out: pageSerialTest.txt
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-05 20:30:07.032935506 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-05 21:14:10.308440588 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -1163,8 +1163,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/pageTest.txt	2022-04-05 20:30:07.032935506 +0000
+--- HMI/n2t-out/pageTest.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-04-05 21:14:10.312440595 +0000
 @@ -35,6 +35,20 @@
          Touch Press Event
              page cardEntities
@@ -1205,8 +1205,8 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
 -            bauds=115200
 -        
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-05 20:30:07.032935506 +0000
+--- HMI/n2t-out/popupLight.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-05 21:14:10.312440595 +0000
 @@ -442,7 +442,9 @@
                                      if(tInstruction.txt=="entityUpdateDetail")
                                      {
@@ -1219,8 +1219,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                          // change icon color
                                          spstr strCommand.txt,tTmp.txt,"~",2
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-04-05 20:30:06.544918675 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-05 20:30:07.032935506 +0000
+--- HMI/n2t-out/screensaver.txt	2022-04-05 21:14:09.784439783 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-05 21:14:10.312440595 +0000
 @@ -48,6 +48,26 @@
          Scope: local
          Value: 0
@@ -1286,7 +1286,7 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
                                          tMainIconAlt.txt=tMainIcon.txt
                                          //tMainText
                                          spstr strCommand.txt,tMainText.txt,"~",2
-@@ -408,30 +410,40 @@
+@@ -408,31 +410,41 @@
                                          //tForecast1
                                          spstr strCommand.txt,tForecast1.txt,"~",3
                                          //tF1Icon
@@ -1326,9 +1326,11 @@ diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
                                          //alternative layout
                                          //tMRIcon
 -                                        spstr strCommand.txt,tMRIcon.txt,"~",15
+-                                        if(tMRIcon.txt!="")
 +                                        spstr strCommand.txt,tTmp.txt,"~",15
 +                                        covx tTmp.txt,sys0,0,0
 +                                        substr pageIcons.tIcons.txt,tMRIcon.txt,sys0,1
-                                         if(tTmp.txt!="")
++                                        if(tTmp.txt!="")
                                          {
                                              //value for tMRIcon, activate alternative layout
+                                             vis tMainIcon,0
