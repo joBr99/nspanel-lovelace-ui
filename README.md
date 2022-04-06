@@ -398,7 +398,7 @@ It is possible to schedule a brightness change for the screen at specific times.
 #### Override Icons or Names
 
 To override Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
-Only the icons listed in the [Icon Cheetsheet](https://htmlpreview.github.io/?https://github.com/joBr99/nspanel-lovelace-ui/tree/main/HMI/icon-cheatsheet.html) are useable.
+Only the icons listed in the [Icon Cheetsheet](https://htmlpreview.github.io/?https://github.com/joBr99/nspanel-lovelace-ui/blob/main/HMI/icon-cheatsheet.html) are useable.
 
 ```yaml
         entities:
