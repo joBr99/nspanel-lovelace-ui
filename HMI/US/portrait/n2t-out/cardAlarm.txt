@@ -579,9 +579,7 @@ Timer tmSerial
                                         //id arm4
                                         spstr strCommand.txt,va4.txt,"~",10
                                         //icon
-                                        spstr strCommand.txt,tTmp.txt,"~",11
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tIcon.txt,sys0,1
+                                        spstr strCommand.txt,tIcon.txt,"~",11
                                         //icon color
                                         spstr strCommand.txt,tTmp.txt,"~",12
                                         covx tTmp.txt,sys0,0,0
