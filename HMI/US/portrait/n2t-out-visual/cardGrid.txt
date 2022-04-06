@@ -498,7 +498,7 @@ Button bPrev
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 2
+        Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -552,7 +552,7 @@ Button bNext
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 2
+        Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -599,7 +599,7 @@ Button bEntity1
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -657,7 +657,7 @@ Button bEntity2
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -715,7 +715,7 @@ Button bEntity3
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -773,7 +773,7 @@ Button bEntity4
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -831,7 +831,7 @@ Button bEntity5
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -889,7 +889,7 @@ Button bEntity6
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -1050,9 +1050,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",5
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bEntity1.txt,sys0,1
+                                            spstr strCommand.txt,bEntity1.txt,"~",5
                                             vis bEntity1,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",6
@@ -1073,9 +1071,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",11
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bEntity2.txt,sys0,1
+                                            spstr strCommand.txt,bEntity2.txt,"~",11
                                             vis bEntity2,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",12
@@ -1096,9 +1092,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",17
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bEntity3.txt,sys0,1
+                                            spstr strCommand.txt,bEntity3.txt,"~",17
                                             vis bEntity3,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",18
@@ -1119,9 +1113,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",23
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bEntity4.txt,sys0,1
+                                            spstr strCommand.txt,bEntity4.txt,"~",23
                                             vis bEntity4,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",24
@@ -1142,9 +1134,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",29
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bEntity5.txt,sys0,1
+                                            spstr strCommand.txt,bEntity5.txt,"~",29
                                             vis bEntity5,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",30
@@ -1165,9 +1155,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",35
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,bEntity6.txt,sys0,1
+                                            spstr strCommand.txt,bEntity6.txt,"~",35
                                             vis bEntity6,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",36
