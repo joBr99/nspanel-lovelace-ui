@@ -464,14 +464,6 @@ Since release 1.1 you can update the berry driver directly from the Tasmota Cons
 1. Make sure to use the [tasmota32-nspanel.bin](https://github.com/tasmota/install/raw/main/firmware/unofficial/tasmota32-nspanel.bin) Tasmota build.
 2. Make sure to use HTTP and **not HTTPS**
 
-### My flashing doesn't start at all
-
-Try to send the FlashNextion command a second time.
-
-### My flashing got interrupted and the loading bar does not longer change.
-
-Reboot Tasmota and try to flash it a second time.
-
 ### Waiting for content - This is taking longer than usual on the screen
 
 Please check your MQTT Topics in your apps.yaml and your mqtt configuration on tasmota.
