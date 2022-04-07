@@ -283,7 +283,6 @@ class LuiPagesGen(object):
             if entity.state == "disarmed":
                 color = rgb_dec565([13,160,53])
                 icon = get_icon_id("shield-off")
-                test = entity.attributes.get("code_arm_required", "false")
                 if not entity.attributes.get("code_arm_required", False):
                     numpad = "disable"
                 bits = entity.attributes.supported_features
