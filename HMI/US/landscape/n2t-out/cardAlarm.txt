@@ -113,7 +113,7 @@ Text tCode
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 3333
+        Text                                : 
         Max. Text Size                      : 10
     
 Text tIcon
