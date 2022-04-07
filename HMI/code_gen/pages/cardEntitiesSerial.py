@@ -7,7 +7,7 @@ head = sharedhead + """
 """ + navigation
 print(head)
 start = 3
-for i in range(1,5):
+for i in range(1,7):
     idxstart = start + (i-1)*6
     item = f"""
               // get Type

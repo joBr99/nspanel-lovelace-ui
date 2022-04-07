@@ -22,16 +22,6 @@ Variable (string) vaDate
         Text          :  
         Max. Text Size: 35
     
-Text tIcons
-    Attributes
-        Scope                               : global
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : îî´îï§îîî îî£îîî°îîîîî½îîîîîî¾îîîîî¤î·îºîîî©±ï¤ï¡îî î î­î¦îî¦îºîîî¯î¾î¾î¶î­ïîî¸î¸­î°î³î¸ïî¢î·î¥
-        Max. Text Size                      : 185
-    
 Text tTmp1
     Attributes
         Scope                               : global

@@ -100,7 +100,7 @@ class LuiPagesGen(object):
 
         altLayout = ""
         if self._config._config_screensaver.raw_config.get("alternativeLayout", False) is True:
-            altLayout = f"~26~{we.attributes.humidity} %"
+            altLayout = f"~{get_icon_id('water-percent')}~{we.attributes.humidity} %"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
 
