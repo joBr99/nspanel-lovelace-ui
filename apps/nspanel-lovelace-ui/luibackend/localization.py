@@ -165,24 +165,6 @@ translations = {
             'disarm': "Disarm",
             'run': "Run",
         },
-        'es-419': {
-            'PRESS': "Presionar",
-            'ACTIVATE': "Activar",
-            'aux_heat': "Calor auxiliar",
-            'cooling': "Enfriando",
-            'drying': "Secando",
-            'fan': "Ventilador",
-            'idle': "Inactivo",
-            'off': "Apagado",
-            'arm_away': "Activar fuera de casa",
-            'arm_custom_bypass': "Bypass personalizado",
-            'arm_home': "Activar en casa",
-            'arm_night': "Armado nocturno",
-            'clear_code': "Limpiar",
-            'code': "Código",
-            'disarm': "Desactivar",
-            'run': "Ejecutar",
-        },
         'es': {
             'PRESS': "Pulsa",
             'ACTIVATE': "Activar",
@@ -527,7 +509,7 @@ translations = {
             'disarm': "Rozbrój",
             'run': "Uruchom",
         },
-        'pt-BR': {
+        'pt': {
             'PRESS': "Pressione",
             'ACTIVATE': "Ativar",
             'aux_heat': "Aquecedor aux",
