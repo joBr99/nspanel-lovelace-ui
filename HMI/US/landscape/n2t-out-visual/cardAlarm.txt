@@ -205,7 +205,7 @@ Text tCode
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : password
-        Text                                : 3333
+        Text                                : 
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
