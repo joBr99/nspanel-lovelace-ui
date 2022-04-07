@@ -540,9 +540,7 @@ Timer tmSerial
                                         //entity name
                                         spstr strCommand.txt,entn.txt,"~",3
                                         //icon
-                                        spstr strCommand.txt,tTmp.txt,"~",4
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tIcon.txt,sys0,1
+                                        spstr strCommand.txt,tIcon.txt,"~",4
                                         //title
                                         spstr strCommand.txt,tTitle.txt,"~",5
                                         //author
@@ -552,9 +550,7 @@ Timer tmSerial
                                         covx tTmp.txt,sys0,0,0
                                         hVolume.val=sys0
                                         //icon
-                                        spstr strCommand.txt,tTmp.txt,"~",8
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tPlayPause.txt,sys0,1
+                                        spstr strCommand.txt,tPlayPause.txt,"~",8
                                         //speaker current
                                         spstr strCommand.txt,tSpeaker.txt,"~",9
                                         if(tSpeaker.txt!="")

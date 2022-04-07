@@ -371,7 +371,7 @@ Text tHeading
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 60
-        y coordinate                        : 24
+        y coordinate                        : 22
         Width                               : 200
         Height                              : 30
         Effect                              : load
@@ -380,7 +380,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 1
+        Font ID                             : 2
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -1728,7 +1728,7 @@ Button bPrev
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 2
+        Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -1782,7 +1782,7 @@ Button bNext
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 2
+        Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -2959,9 +2959,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",5
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon1.txt,sys0,1
+                                            spstr strCommand.txt,tIcon1.txt,"~",5
                                             vis tIcon1,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",6
@@ -3083,9 +3081,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",11
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon2.txt,sys0,1
+                                            spstr strCommand.txt,tIcon2.txt,"~",11
                                             vis tIcon2,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",12
@@ -3207,9 +3203,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",17
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon3.txt,sys0,1
+                                            spstr strCommand.txt,tIcon3.txt,"~",17
                                             vis tIcon3,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",18
@@ -3331,9 +3325,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",23
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon4.txt,sys0,1
+                                            spstr strCommand.txt,tIcon4.txt,"~",23
                                             vis tIcon4,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",24
@@ -3455,9 +3447,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",29
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon5.txt,sys0,1
+                                            spstr strCommand.txt,tIcon5.txt,"~",29
                                             vis tIcon5,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",30
@@ -3579,9 +3569,7 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tTmp.txt,"~",35
-                                            covx tTmp.txt,sys0,0,0
-                                            substr pageIcons.tIcons.txt,tIcon6.txt,sys0,1
+                                            spstr strCommand.txt,tIcon6.txt,"~",35
                                             vis tIcon6,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",36

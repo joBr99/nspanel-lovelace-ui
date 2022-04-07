@@ -229,7 +229,7 @@ Text tIcon
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 2
+        Font ID                             : 3
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -275,7 +275,7 @@ Button bNext
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 2
+        Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -322,7 +322,7 @@ Button bPrev
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 2
+        Font ID                             : 3
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -1109,9 +1109,7 @@ Timer tmSerial
                                         //id arm4
                                         spstr strCommand.txt,va4.txt,"~",10
                                         //icon
-                                        spstr strCommand.txt,tTmp.txt,"~",11
-                                        covx tTmp.txt,sys0,0,0
-                                        substr pageIcons.tIcons.txt,tIcon.txt,sys0,1
+                                        spstr strCommand.txt,tIcon.txt,"~",11
                                         //icon color
                                         spstr strCommand.txt,tTmp.txt,"~",12
                                         covx tTmp.txt,sys0,0,0
