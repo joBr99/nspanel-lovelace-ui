@@ -199,7 +199,7 @@ Text tCode
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 0
+        Font ID                             : 2
         Back. Color                         : 10565
         Font Color                          : 40179
         Horizontal Alignment                : center
