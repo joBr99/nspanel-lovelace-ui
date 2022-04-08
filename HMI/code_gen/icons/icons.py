@@ -26,15 +26,32 @@ def get_icon_id(ma_name):
         return icons["alert-circle-outline"]
     """)
 
-# write documentation file
-with open(os.path.join(__location__, "../..","icons.md"), 'w') as f:
-    f.write("""
-# Icons IDs
-This file contains the Icons IDs included in the display firmware, addressable via serial.
-
-MD Icon Name | Icon
------------- | ----
-""")
+# write mapping lib for typescript
+with open(os.path.join(__location__, "../../../iobroker", "icon_mapping.ts"), 'w') as f:
+    f.write("let iconMap = new Map<string, string>([\n")
     for icon in icon_metadata:
-        val = icon["name"]
-        f.write(f"mdi:{val} | ![{val}](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/{val}.svg)\n")
+        iconchar = chr(int(icon['hex'], 16))
+        name = icon["name"]
+        f.write(f"    [\"{name}\", \"{iconchar}\"],\n")
+    f.write("]);\n")
+    f.write("""
+function get_icon(ma_name:string):string{
+    if(iconMap.has(ma_name)){
+        return iconMap.get(ma_name);
+    }
+    return iconMap.get("alert-circle-outline");
+}
+""");
+
+# write documentation file
+#with open(os.path.join(__location__, "../..","icons.md"), 'w') as f:
+#    f.write("""
+## Icons IDs
+#This file contains the Icons IDs included in the display firmware, addressable via serial.
+#
+#MD Icon Name | Icon
+#------------ | ----
+#""")
+#    for icon in icon_metadata:
+#        val = icon["name"]
+#        f.write(f"mdi:{val} | ![{val}](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/{val}.svg)\n")
