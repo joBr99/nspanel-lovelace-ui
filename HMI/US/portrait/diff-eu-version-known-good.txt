@@ -525,14 +525,14 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          Scope      : local
-@@ -1648,6 +2104,254 @@
+@@ -1642,6 +2098,250 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
 +                                        // get Type
-+                                        spstr strCommand.txt,type5.txt,",",27
++                                        spstr strCommand.txt,type5.txt,"~",27
 +                                        // get internal name
-+                                        spstr strCommand.txt,entn5.txt,",",28
++                                        spstr strCommand.txt,entn5.txt,"~",28
 +                                        if(type5.txt=="delete"||type5.txt=="")
 +                                        {
 +                                            vis bUp5,0
@@ -547,16 +547,14 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                        }else
 +                                        {
 +                                            // change icon
-+                                            spstr strCommand.txt,tTmp.txt,",",29
-+                                            covx tTmp.txt,sys0,0,0
-+                                            substr pageIcons.tIcons.txt,tIcon5.txt,sys0,1
++                                            spstr strCommand.txt,tIcon5.txt,"~",29
 +                                            vis tIcon5,1
 +                                            // change icon color
-+                                            spstr strCommand.txt,tTmp.txt,",",30
++                                            spstr strCommand.txt,tTmp.txt,"~",30
 +                                            covx tTmp.txt,sys0,0,0
 +                                            tIcon5.pco=sys0
 +                                            // set name
-+                                            spstr strCommand.txt,tEntity5.txt,",",31
++                                            spstr strCommand.txt,tEntity5.txt,"~",31
 +                                            vis tEntity5,1
 +                                        }
 +                                        if(type5.txt=="shutter")
@@ -579,7 +577,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis hSlider5,0
 +                                            vis nNum5,0
 +                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,",",32
++                                            spstr strCommand.txt,tTmp.txt,"~",32
 +                                            covx tTmp.txt,sys0,0,0
 +                                            btOnOff5.val=sys0
 +                                        }
@@ -593,7 +591,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis hSlider5,0
 +                                            vis nNum5,0
 +                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,",",32
++                                            spstr strCommand.txt,tTmp.txt,"~",32
 +                                            covx tTmp.txt,sys0,0,0
 +                                            btOnOff5.val=sys0
 +                                        }
@@ -610,7 +608,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            bText5.pco=65535
 +                                            bText5.pco2=65535
 +                                            // get Text (optional Value)
-+                                            spstr strCommand.txt,bText5.txt,",",32
++                                            spstr strCommand.txt,bText5.txt,"~",32
 +                                        }
 +                                        if(type5.txt=="button")
 +                                        {
@@ -625,7 +623,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            bText5.pco=1374
 +                                            bText5.pco2=1374
 +                                            // get Text (optional Value)
-+                                            spstr strCommand.txt,bText5.txt,",",32
++                                            spstr strCommand.txt,bText5.txt,"~",32
 +                                        }
 +                                        if(type5.txt=="number")
 +                                        {
@@ -638,7 +636,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis hSlider5,1
 +                                            vis nNum5,1
 +                                            // get config (optional Value) (use bText as variable)
-+                                            spstr strCommand.txt,bText5.txt,",",32
++                                            spstr strCommand.txt,bText5.txt,"~",32
 +                                            //first value is current value
 +                                            spstr bText5.txt,tTmp.txt,"|",0
 +                                            covx tTmp.txt,sys0,0,0
@@ -654,9 +652,9 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            hSlider5.maxval=sys0
 +                                        }
 +                                        // get Type
-+                                        spstr strCommand.txt,type6.txt,",",33
++                                        spstr strCommand.txt,type6.txt,"~",33
 +                                        // get internal name
-+                                        spstr strCommand.txt,entn6.txt,",",34
++                                        spstr strCommand.txt,entn6.txt,"~",34
 +                                        if(type6.txt=="delete"||type6.txt=="")
 +                                        {
 +                                            vis bUp6,0
@@ -671,16 +669,14 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                        }else
 +                                        {
 +                                            // change icon
-+                                            spstr strCommand.txt,tTmp.txt,",",35
-+                                            covx tTmp.txt,sys0,0,0
-+                                            substr pageIcons.tIcons.txt,tIcon6.txt,sys0,1
++                                            spstr strCommand.txt,tIcon6.txt,"~",35
 +                                            vis tIcon6,1
 +                                            // change icon color
-+                                            spstr strCommand.txt,tTmp.txt,",",36
++                                            spstr strCommand.txt,tTmp.txt,"~",36
 +                                            covx tTmp.txt,sys0,0,0
 +                                            tIcon6.pco=sys0
 +                                            // set name
-+                                            spstr strCommand.txt,tEntity6.txt,",",37
++                                            spstr strCommand.txt,tEntity6.txt,"~",37
 +                                            vis tEntity6,1
 +                                        }
 +                                        if(type6.txt=="shutter")
@@ -703,7 +699,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis hSlider6,0
 +                                            vis nNum6,0
 +                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,",",38
++                                            spstr strCommand.txt,tTmp.txt,"~",38
 +                                            covx tTmp.txt,sys0,0,0
 +                                            btOnOff6.val=sys0
 +                                        }
@@ -717,7 +713,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis hSlider6,0
 +                                            vis nNum6,0
 +                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,",",38
++                                            spstr strCommand.txt,tTmp.txt,"~",38
 +                                            covx tTmp.txt,sys0,0,0
 +                                            btOnOff6.val=sys0
 +                                        }
@@ -734,7 +730,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            bText6.pco=65535
 +                                            bText6.pco2=65535
 +                                            // get Text (optional Value)
-+                                            spstr strCommand.txt,bText6.txt,",",38
++                                            spstr strCommand.txt,bText6.txt,"~",38
 +                                        }
 +                                        if(type6.txt=="button")
 +                                        {
@@ -749,7 +745,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            bText6.pco=1374
 +                                            bText6.pco2=1374
 +                                            // get Text (optional Value)
-+                                            spstr strCommand.txt,bText6.txt,",",38
++                                            spstr strCommand.txt,bText6.txt,"~",38
 +                                        }
 +                                        if(type6.txt=="number")
 +                                        {
@@ -762,7 +758,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis hSlider6,1
 +                                            vis nNum6,1
 +                                            // get config (optional Value) (use bText as variable)
-+                                            spstr strCommand.txt,bText6.txt,",",38
++                                            spstr strCommand.txt,bText6.txt,"~",38
 +                                            //first value is current value
 +                                            spstr bText6.txt,tTmp.txt,"|",0
 +                                            covx tTmp.txt,sys0,0,0
@@ -777,6 +773,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            covx tTmp.txt,sys0,0,0
 +                                            hSlider6.maxval=sys0
 +                                        }
+                                     }
                                      }
                                      if(tInstruction.txt=="pageType")
                                      {
