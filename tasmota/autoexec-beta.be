@@ -201,7 +201,7 @@ class Nextion : Driver
         self.sendnx("connect")        
     end
     
-    def open_url(url)
+    def open_url_at(url, pos)
 
         import string
         var host
@@ -228,6 +228,7 @@ class Nextion : Driver
         self.tcp.connect(host,port)
         log("FLH: Connected:"+str(self.tcp.connected()),3)
         var get_req = "GET "+get+" HTTP/1.0\r\n"
+		get_req += string.format("Range: bytes=%d-\r\n", pos)
 		get_req += string.format("HOST: %s:%s\r\n\r\n",host,port)
         self.tcp.write(get_req)
         var a = self.tcp.available()
@@ -256,25 +257,26 @@ class Nextion : Driver
             end
         end
         #print(headers)
-		# check http respose for code 200
-		var tag = "200 OK"
-        i = string.find(headers,tag)
-        if (i>0) 
-            log("FLH: HTTP Respose is 200 OK",3)
+		# check http respose for code 200/206
+        if string.find(headers,"200 OK")>0 || string.find(headers,"206 Partial Content")>0
+            log("FLH: HTTP Respose is 200 OK or 206 Partial Content",3)
 		else
-            log("FLH: HTTP Respose is not 200 OK",3)
+            log("FLH: HTTP Respose is not 200 OK or 206 Partial Content",3)
 			print(headers)
 			return -1
         end
-		# check http respose for content-length
-        tag = "Content-Length: "
-        i = string.find(headers,tag)
-        if (i>0) 
-            var i2 = string.find(headers,"\r\n",i)
-            var s = headers[i+size(tag)..i2-1]
-            self.flash_size=int(s)
-        end
-        log("FLH: Flash file size: "+str(self.flash_size),3)
+		# only set flash size if pos is zero
+		if pos == 0
+			# check http respose for content-length
+			var tag = "Content-Length: "
+			i = string.find(headers,tag)
+			if (i>0) 
+				var i2 = string.find(headers,"\r\n",i)
+				var s = headers[i+size(tag)..i2-1]
+				self.flash_size=int(s)
+			end
+			log("FLH: Flash file size: "+str(self.flash_size),3)
+		end
 
     end
 
