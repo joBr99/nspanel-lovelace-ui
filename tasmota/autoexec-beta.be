@@ -162,9 +162,11 @@ class Nextion : Driver
                         self.awaiting_offset = 0
                         self.flash_offset = msg.get(0,4)
                         log("FLH: Flash offset marker "+str(self.flash_offset),3)
-						self.open_url_at(self.url, self.flash_offset)
-						self.flash_written = self.flash_offset
-						self.flash_offset = 0
+						if self.flash_offset != 0
+							self.open_url_at(self.url, self.flash_offset)
+							self.flash_written = self.flash_offset
+							self.flash_offset = 0
+						end
                         self.write_block()
                     elif size(msg)==1 && msg[0]==0x05
                         self.write_block()
