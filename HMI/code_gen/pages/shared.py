@@ -160,7 +160,7 @@ navigation = """
               }
               if(tTmp.txt=="1")
               {
-                vis bPrev,1
+                vis bNext,1
                 bNext.txt=""
               }
 """
