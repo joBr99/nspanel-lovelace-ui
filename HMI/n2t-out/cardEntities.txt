@@ -1151,7 +1151,7 @@ Timer tmSerial
                                         }
                                         if(tTmp.txt=="1")
                                         {
-                                            vis bPrev,1
+                                            vis bNext,1
                                             bNext.txt="î³"
                                         }
                                         // get Type
