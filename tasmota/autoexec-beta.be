@@ -129,12 +129,7 @@ class Nextion : Driver
         end
         if size(to_write)>0
             self.flash_written += size(to_write)
-            if self.flash_offset==0 || self.flash_written>self.flash_offset
-                self.ser.write(to_write)
-                self.flash_offset = 0
-            else
-                tasmota.set_timer(10,/->self.write_block())
-            end
+            self.ser.write(to_write)
         end
         log("FLH: Total "+str(self.flash_written),3)
         if (self.flash_written==self.flash_size)
@@ -165,7 +160,6 @@ class Nextion : Driver
 						if self.flash_offset != 0
 							self.open_url_at(self.url, self.flash_offset)
 							self.flash_written = self.flash_offset
-							self.flash_offset = 0
 						end
                         self.write_block()
                     elif size(msg)==1 && msg[0]==0x05
