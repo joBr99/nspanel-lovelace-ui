@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-10 11:19:04.736144327 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-04-10 11:19:05.732151037 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-10 11:25:50.396815209 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-04-10 11:25:51.180810731 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -10,69 +10,9 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 +    // fix touch offset (Removed for US version)
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
-diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-04-10 11:19:04.736144327 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-04-10 11:19:05.732151037 +0000
-@@ -543,7 +543,7 @@
-                                         }
-                                         if(tTmp.txt=="1")
-                                         {
--                                            vis bNext,1
-+                                            vis bPrev,1
-                                             bNext.txt="î³"
-                                         }
-                                         //text arm1
-diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-10 11:19:04.740144354 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-04-10 11:19:05.732151037 +0000
-@@ -1151,7 +1151,7 @@
-                                         }
-                                         if(tTmp.txt=="1")
-                                         {
--                                            vis bNext,1
-+                                            vis bPrev,1
-                                             bNext.txt="î³"
-                                         }
-                                         // get Type
-diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-04-10 11:19:04.736144327 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-04-10 11:19:05.732151037 +0000
-@@ -599,7 +599,7 @@
-                                         }
-                                         if(tTmp.txt=="1")
-                                         {
--                                            vis bNext,1
-+                                            vis bPrev,1
-                                             bNext.txt="î³"
-                                         }
-                                         // get Type
-diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-04-10 11:19:04.736144327 +0000
-+++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-04-10 11:19:05.732151037 +0000
-@@ -534,7 +534,7 @@
-                                         }
-                                         if(tTmp.txt=="1")
-                                         {
--                                            vis bNext,1
-+                                            vis bPrev,1
-                                             bNext.txt="î³"
-                                         }
-                                         //entity name
-diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-04-10 11:19:04.736144327 +0000
-+++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-04-10 11:19:05.732151037 +0000
-@@ -671,7 +671,7 @@
-                                         }
-                                         if(tTmp.txt=="1")
-                                         {
--                                            vis bNext,1
-+                                            vis bPrev,1
-                                             bNext.txt="î³"
-                                         }
-                                         //entity name
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-10 11:19:04.736144327 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-04-10 11:19:05.732151037 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-10 11:25:50.396815209 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-04-10 11:25:51.180810731 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
