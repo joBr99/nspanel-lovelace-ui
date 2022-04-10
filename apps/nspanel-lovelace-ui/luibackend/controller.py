@@ -13,9 +13,10 @@ class LuiController(object):
         self._config = config
         self._send_mqtt_msg = send_mqtt_msg
 
-        # first card (default, after startup)
-        self._current_card = self._config.getCard(0)
+        self._current_card = self._config._config_screensaver
         self._previous_cards = []
+        # first card (default, after startup)
+        self._previous_cards.append(self._config.getCard(0))
         
         self._pages_gen = LuiPagesGen(ha_api, config, send_mqtt_msg)
 
@@ -28,10 +29,6 @@ class LuiController(object):
 
         # Setup date callback
         ha_api.run_daily(self._pages_gen.update_date, time)
-        
-        # weather callback
-        weather_interval = 15 * 60 # 15 minutes
-        ha_api.run_every(self.weather_update, "now", weather_interval)
 
         # register callbacks
         self.register_callbacks()
@@ -62,8 +59,8 @@ class LuiController(object):
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
         
         # send panel to screensaver
-        self._pages_gen.page_type("screensaver")
-        self.weather_update("")
+        self._pages_gen.render_card(self._current_card)
+
 
     def update_screensaver_brightness_state_callback(self, entity, attribute, old, new, kwargs):
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
@@ -77,9 +74,6 @@ class LuiController(object):
             self.current_screensaver_brightness = kwargs['value']
             brightness = kwargs['value']
         self._send_mqtt_msg(f"dimmode~{brightness}")
-
-    def weather_update(self, kwargs):
-        self._pages_gen.update_screensaver_weather()
         
     def calc_current_screensaver_brightness(self):
         current_screensaver_brightness = 20
@@ -104,7 +98,7 @@ class LuiController(object):
 
     def register_callbacks(self):
         items = self._config.get_all_entity_names()
-        LOGGER.debug(f"Registering callbacks for the following items: {items}")
+        LOGGER.info(f"Registering callbacks for the following items: {items}")
         for item in items:
             if self._ha_api.entity_exists(item):
                 self._ha_api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
@@ -138,16 +132,20 @@ class LuiController(object):
                 dstCard = self._config.searchCard(self._config.get("screensaver.defaultCard"))
                 if dstCard is not None:
                     self._previous_cards = []
-                    self._current_card = dstCard
+                    self._previous_cards.append(dstCard)
             # check for double tap if configured and render current page
             if self._config.get("screensaver.doubleTapToUnlock") and int(value) >= 2:
+                self._current_card = self._previous_cards.pop()
                 self._pages_gen.render_card(self._current_card)
             elif not self._config.get("screensaver.doubleTapToUnlock"):
+                self._current_card = self._previous_cards.pop()
                 self._pages_gen.render_card(self._current_card)
             return
             
         if button_type == "sleepReached":
-            self._pages_gen.generate_screensaver_page()
+            self._previous_cards.append(self._current_card)
+            self._current_card = self._config._config_screensaver
+            self._pages_gen.render_card(self._current_card)
             return
 
         if button_type == "bExit":
