@@ -136,6 +136,13 @@ class Nextion : Driver
         if (self.flash_written==self.flash_size)
             log("FLH: Flashing complete - Time elapsed: %d", (tasmota.millis()-self.flash_start_millis)/1000)
             self.flash_mode = 0
+			self.ser = nil
+			tasmota.gc()
+			self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
+			# this didn't help to get back to normal speed, so instead reload entire script
+			#load('autoexec.be')
+			# setting speed back to 115200 and reloading berry script both caused issues ... so just restart tasmota after flashing is complete
+			#tasmota.cmd("Restart 1")
         end
 
     end
@@ -151,7 +158,9 @@ class Nextion : Driver
                     if string.find(strv,"comok 2")>=0
                         log("FLH: Send (High Speed) flash start")
 						self.flash_start_millis = tasmota.millis()
-                        self.sendnx(string.format("whmi-wris %d,115200,res0",self.flash_size))
+                        #self.sendnx(string.format("whmi-wris %d,115200,res0",self.flash_size))
+                        self.sendnx(string.format("whmi-wris %d,921600,res0",self.flash_size))
+						self.ser = serial(17, 16, 921600, serial.SERIAL_8N1)
                     elif size(msg)==1 && msg[0]==0x08
                         log("FLH: Waiting offset...",3)
                         self.awaiting_offset = 1
