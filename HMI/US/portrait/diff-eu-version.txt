@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-08 20:30:53.290164509 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-08 20:30:53.734183782 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-10 11:19:04.736144327 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-10 11:19:05.244147749 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -10,9 +10,21 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    // fix touch offset (Removed for US version)
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
+diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
+--- HMI/n2t-out/cardAlarm.txt	2022-04-10 11:19:04.736144327 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-10 11:19:05.248147776 +0000
+@@ -543,7 +543,7 @@
+                                         }
+                                         if(tTmp.txt=="1")
+                                         {
+-                                            vis bNext,1
++                                            vis bPrev,1
+                                             bNext.txt="î³"
+                                         }
+                                         //text arm1
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-08 20:30:53.290164509 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-08 20:30:53.738183956 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-10 11:19:04.740144354 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-10 11:19:05.244147749 +0000
 @@ -62,6 +62,26 @@
              vis bText4,0
              vis hSlider4,0
@@ -525,6 +537,15 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Timer tmSerial
      Attributes
          Scope      : local
+@@ -1151,7 +1607,7 @@
+                                         }
+                                         if(tTmp.txt=="1")
+                                         {
+-                                            vis bNext,1
++                                            vis bPrev,1
+                                             bNext.txt="î³"
+                                         }
+                                         // get Type
 @@ -1642,6 +2098,250 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
@@ -776,9 +797,45 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      }
                                      if(tInstruction.txt=="pageType")
                                      {
+diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
+--- HMI/n2t-out/cardGrid.txt	2022-04-10 11:19:04.736144327 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-10 11:19:05.248147776 +0000
+@@ -599,7 +599,7 @@
+                                         }
+                                         if(tTmp.txt=="1")
+                                         {
+-                                            vis bNext,1
++                                            vis bPrev,1
+                                             bNext.txt="î³"
+                                         }
+                                         // get Type
+diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
+--- HMI/n2t-out/cardMedia.txt	2022-04-10 11:19:04.736144327 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-10 11:19:05.244147749 +0000
+@@ -534,7 +534,7 @@
+                                         }
+                                         if(tTmp.txt=="1")
+                                         {
+-                                            vis bNext,1
++                                            vis bPrev,1
+                                             bNext.txt="î³"
+                                         }
+                                         //entity name
+diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
+--- HMI/n2t-out/cardThermo.txt	2022-04-10 11:19:04.736144327 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-10 11:19:05.248147776 +0000
+@@ -671,7 +671,7 @@
+                                         }
+                                         if(tTmp.txt=="1")
+                                         {
+-                                            vis bNext,1
++                                            vis bPrev,1
+                                             bNext.txt="î³"
+                                         }
+                                         //entity name
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-08 20:30:53.290164509 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-08 20:30:53.734183782 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-10 11:19:04.736144327 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-10 11:19:05.244147749 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -798,8 +855,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-04-08 20:30:53.290164509 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-08 20:30:53.738183956 +0000
+--- HMI/n2t-out/screensaver.txt	2022-04-10 11:19:04.736144327 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-10 11:19:05.244147749 +0000
 @@ -48,6 +48,26 @@
          Scope: local
          Value: 0
