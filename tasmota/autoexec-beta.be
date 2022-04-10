@@ -23,6 +23,7 @@ class Nextion : Driver
     var tcp
     var ser
     var last_per
+	var url
 
     def split_55(b)
       var ret = []
@@ -161,6 +162,9 @@ class Nextion : Driver
                         self.awaiting_offset = 0
                         self.flash_offset = msg.get(0,4)
                         log("FLH: Flash offset marker "+str(self.flash_offset),3)
+						self.open_url_at(self.url, self.flash_offset)
+						self.flash_written = self.flash_offset
+						self.flash_offset = 0
                         self.write_block()
                     elif size(msg)==1 && msg[0]==0x05
                         self.write_block()
@@ -202,7 +206,7 @@ class Nextion : Driver
     end
     
     def open_url_at(url, pos)
-
+		self.url = url
         import string
         var host
         var port
