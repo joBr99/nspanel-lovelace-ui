@@ -28,19 +28,24 @@ def get_icon_id(ma_name):
 
 # write mapping lib for typescript
 with open(os.path.join(__location__, "../../../iobroker", "icon_mapping.ts"), 'w') as f:
-    f.write("let iconMap = new Map<string, string>([\n")
+    f.write("""
+export class IconsSelector {
+    iconMap = new Map<string, string>([
+""")
     for icon in icon_metadata:
         iconchar = chr(int(icon['hex'], 16))
         name = icon["name"]
-        f.write(f"    [\"{name}\", \"{iconchar}\"],\n")
+        f.write(f"        [\"{name}\", \"{iconchar}\"],\n")
     f.write("]);\n")
     f.write("""
-function get_icon(ma_name:string):string{
-    if(iconMap.has(ma_name)){
-        return iconMap.get(ma_name);
+    GetIcon(ma_name:string):string{
+        if(this.iconMap.has(ma_name)){
+            return this.iconMap.get(ma_name)!;
+        }
+        return ""; 
     }
-    return iconMap.get("alert-circle-outline");
 }
+
 """);
 
 # write documentation file
