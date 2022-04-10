@@ -57,8 +57,12 @@ jobs:
         echo portrait
         python Nextion2Text.py -c ignore-id.py -p font -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
         diff -bur HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
+
+    - name: Run n2t US P DIFF DIFF
+      continue-on-error: true
+      run: |
         diff -u HMI/US/portrait/diff-eu-version-known-good.txt HMI/US/portrait/diff-eu-version.txt | grep -E "^\+" > HMI/US/portrait/diff-filtered.txt
-  
+
     - name: Run n2t US L DIFF
       continue-on-error: true
       run: |      
