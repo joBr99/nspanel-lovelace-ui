@@ -274,22 +274,6 @@ class Nextion : Driver
             var s = headers[i+size(tag)..i2-1]
             self.flash_size=int(s)
         end
-        if self.flash_size==0
-            log("FLH: No size header, counting ...",3)
-            self.flash_size = size(self.flash_buff)
-            #print("counting start ...")
-            while self.tcp.connected()
-                while self.tcp.available()>0
-                    self.flash_size += size(self.tcp.readbytes())
-                end
-                tasmota.delay(50)
-            end
-            #print("counting end ...",self.flash_size)
-            self.tcp.close()
-            self.open_url(url)
-        else
-            log("FLH: Size found in header, skip count",3)
-        end
         log("FLH: Flash file size: "+str(self.flash_size),3)
 
     end
