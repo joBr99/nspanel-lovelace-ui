@@ -1,3 +1,4 @@
+from helper import dict_recursive_update
 import logging
 
 LOGGER = logging.getLogger(__name__)
@@ -41,6 +42,12 @@ class Card(object):
         else:
             for e in self.entities:
                 entityIds.append(e.entityId)
+        # additional keys to check
+        add_ent_keys = ['weatherOverrideForecast1', 'weatherOverrideForecast2', 'weatherOverrideForecast3', 'weatherOverrideForecast4']
+        for ent_key in add_ent_keys:
+            val = self.raw_config.get(ent_key)
+            if val is not None:
+                entityIds.append(val.get("entity"))
         return entityIds
 
 class LuiBackendConfig(object):
@@ -91,7 +98,8 @@ class LuiBackendConfig(object):
             'weatherOverrideForecast4': None,
             'doubleTapToUnlock': False,
             'alternativeLayout': False,
-            'defaultCard': None
+            'defaultCard': None,
+            'key': 'screensaver'
         },
         'hiddenCards': []
     }
@@ -106,10 +114,8 @@ class LuiBackendConfig(object):
 
         self.load(config_in)
 
-    def load(self, args):
-        for k, v in args.items():
-            if k in self._DEFAULT_CONFIG:
-                self._config[k] = v
+    def load(self, inconfig):
+        self._config = dict_recursive_update(inconfig, self._DEFAULT_CONFIG)
         LOGGER.info(f"Loaded config: {self._config}")
         
         # parse cards displayed on panel
@@ -145,6 +151,7 @@ class LuiBackendConfig(object):
             entities.extend(card.get_entity_list())
         for card in self._config_hidden_cards:
             entities.extend(card.get_entity_list())
+        entities.extend(self._config_screensaver.get_entity_list())
         return entities
 
     def getCard(self, pos):
