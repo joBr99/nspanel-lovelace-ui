@@ -15,6 +15,7 @@ class Nextion : Driver
     static flash_block_size = 4096
 
     var flash_mode
+	var flash_start_millis
     var flash_size
     var flash_written
     var flash_buff
@@ -125,7 +126,7 @@ class Nextion : Driver
         var per = (self.flash_written*100)/self.flash_size
         if (self.last_per!=per) 
             self.last_per = per
-            tasmota.publish_result(string.format("{\"Flashing\":{\"complete\": %d}}",per), "RESULT") 
+            tasmota.publish_result(string.format("{\"Flashing\":{\"complete\": %d, \"time_elapsed\": %d}}",per , (tasmota.millis()-self.flash_start_millis)/1000), "RESULT") 
         end
         if size(to_write)>0
             self.flash_written += size(to_write)
@@ -133,7 +134,7 @@ class Nextion : Driver
         end
         log("FLH: Total "+str(self.flash_written),3)
         if (self.flash_written==self.flash_size)
-            log("FLH: Flashing complete")
+            log("FLH: Flashing complete - Time elapsed: %d", (tasmota.millis()-self.flash_start_millis)/1000)
             self.flash_mode = 0
         end
 
@@ -149,6 +150,7 @@ class Nextion : Driver
                     var strv = msg[0..-4].asstring()
                     if string.find(strv,"comok 2")>=0
                         log("FLH: Send (High Speed) flash start")
+						self.flash_start_millis = tasmota.millis()
                         self.sendnx(string.format("whmi-wris %d,115200,res0",self.flash_size))
                     elif size(msg)==1 && msg[0]==0x08
                         log("FLH: Waiting offset...",3)
