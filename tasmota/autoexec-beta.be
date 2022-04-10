@@ -139,10 +139,6 @@ class Nextion : Driver
 			self.ser = nil
 			tasmota.gc()
 			self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
-			# this didn't help to get back to normal speed, so instead reload entire script
-			#load('autoexec.be')
-			# setting speed back to 115200 and reloading berry script both caused issues ... so just restart tasmota after flashing is complete
-			#tasmota.cmd("Restart 1")
         end
 
     end
