@@ -96,7 +96,7 @@ type PageItem = {
     interpolateColor: (boolean | undefined),// fade between color on and off, useColor on Page or PageItem must be enabled
     minValue: (number | undefined),         // the minimum value for the fade calculation, if smaller the minimum value will be used
     maxValue: (number | undefined),         // the maximum value for the fade calculation, if larger the maximum value will be used
-    buttonText: (string | undefined)        // the Button Text, default is "Press"
+    name: (string | undefined)              // the Name which should be displayed, default is the name of the object itself
 }
 ```
 
@@ -129,7 +129,7 @@ pages: [
             "items": [
         <PageItem>{ id: "alias.0.Netz", icon: "flash", interpolateColor: true, offColor: BatteryFull, onColor: Red, minValue: -1000, maxValue: 1000 },
         <PageItem>{ id: "alias.0.Hausverbrauch", icon: "flash", interpolateColor: true, offColor: BatteryFull, onColor: Red, maxValue: 1000 },
-        <PageItem>{ id: "alias.0.Pv", icon: "solar-power", interpolateColor: true, offColor: Off, onColor: BatteryFull, maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Pv", name: "Solar" ,icon: "solar-power", interpolateColor: true, offColor: Off, onColor: BatteryFull, maxValue: 1000 },
         <PageItem>{ id: "alias.0.Batterie", icon: "battery-medium", interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
             ]
         }]
