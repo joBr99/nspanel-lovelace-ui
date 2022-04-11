@@ -200,7 +200,12 @@ function HandleHardwareButton(method: string): void {
     else {
         return;
     }
+
+    // Set pageId to -1, because of the navigation arrows
+    let tempPageId = pageId;
+    pageId = -1;
     GeneratePage(page);
+    pageId = tempPageId;
 }
 
 function HandleStartupProcess(): void {
@@ -560,6 +565,8 @@ function GetNavigationString(pageId: number): string {
             return "0|1";
         case config.pages.length - 1:
             return "1|0";
+        case -1:
+            return "0|0";
         default:
             return "1|1";
     }
