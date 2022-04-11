@@ -15,7 +15,7 @@ var Wohnen: PageEntities =
     "heading": "Haus",
     "useColor": true,
     "items": [
-        <PageItem>{ id: "alias.0.Stern"},
+        <PageItem>{ id: "alias.0.Stern", name: "Sternsteckdose"},
         <PageItem>{ id: "alias.0.Erker"},
         <PageItem>{ id: "alias.0.Küche", interpolateColor: true },
         <PageItem>{ id: "alias.0.Wand" }
@@ -83,7 +83,7 @@ export const config: Config = {
             "type": "cardThermo",
             "heading": "Thermostat",
             "useColor": true,
-            "items": [<PageItem>{ id: "alias.0.WzNsPanel" }]
+            "items": [<PageItem>{ id: "alias.0.WzNsPanel", name: "Wohnzimmer" }]
         }
     ],
     button1Page: button1Page,
@@ -284,7 +284,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
     if (existsObject(pageItem.id)) {
         let o = getObject(pageItem.id)
         var val = null;
-        name = o.common.name.de
+        name = pageItem.name !== undefined ? pageItem.name : o.common.name.de
 
         if (existsState(pageItem.id + ".GET")) {
             val = getState(pageItem.id + ".GET").val;
@@ -299,7 +299,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         switch (o.common.role) {
             case "light":
                 type = "light"
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("thermometer");
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lightbulb");
                 var optVal = "0"
 
                 if (val === true || val === "true") {
@@ -363,7 +363,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
             case "button":
                 type = "button";
                 iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("gesture-tap-button");
-                let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : "PRESS";
+                let buttonText = pageItem.name !== undefined ? pageItem.name : "PRESS";
                 iconColor = GetIconColor(pageItem, true, useColors);
                 return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + + iconColor + "~" + name + "~" + buttonText;
 
@@ -434,12 +434,12 @@ function GetUnitOfMeasurement(id: string): string {
 function GenerateThermoPage(page: PageThermo): Payload[] {
     var id = page.items[0].id
     var out_msgs: Array<Payload> = [];
-    out_msgs.push({ payload: "pageType,cardThermo" });
+    out_msgs.push({ payload: "pageType~cardThermo" });
 
     // ioBroker
     if (existsObject(id)) {
         let o = getObject(id)
-        let name = o.common.name.de
+        let name = page.items[0].name !== undefined ? page.items[0].name : o.common.name.de
         let currentTemp = 0;
         if (existsState(id + ".ACTUAL"))
             currentTemp = parseInt(getState(id + ".ACTUAL").val) * 10;
@@ -454,11 +454,11 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
         let status = ""
         if (existsState(id + ".MODE"))
             status = getState(id + ".MODE").val;
-        let minTemp = 50
-        let maxTemp = 350
+        let minTemp = 180
+        let maxTemp = 300
         let stepTemp = 5
 
-        out_msgs.push({ payload: "entityUpd~" + id + "~" + name + "~" + currentTemp + "~" + destTemp + "~" + status + "~" + minTemp + "~" + maxTemp + "~" + stepTemp })
+        out_msgs.push({ payload: "entityUpd~" + name + "~" + GetNavigationString(pageId) + "~" + id + "~" + currentTemp + "~" + destTemp + "~" + status + "~" + minTemp + "~" + maxTemp + "~" + stepTemp })
     }
 
     return out_msgs
@@ -558,8 +558,7 @@ function GetNavigationString(pageId: number): string {
     switch (pageId) {
         case 0:
             return "0|1";
-        case config.pages.length:
-            log("asd")
+        case config.pages.length - 1:
             return "1|0";
         default:
             return "1|1";
@@ -824,7 +823,7 @@ type PageItem = {
     interpolateColor: (boolean | undefined),
     minValue: (number | undefined),
     maxValue: (number | undefined),
-    buttonText: (string | undefined)
+    name: (string | undefined)
 }
 
 type Config = {
