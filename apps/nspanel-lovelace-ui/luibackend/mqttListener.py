@@ -54,6 +54,8 @@ class LuiMqttListener(object):
 
                 if entity_id == "updateDisplayNoYes" and value == "yes":
                     self._updater.update_panel_driver()
+                if entity_id == "updateBerryNoYes" and value == "yes":
+                    self._updater.update_berry_driver()
 
                 self._controller.button_press(entity_id, btype, value)
             if msg[1] == "pageOpenDetail":
