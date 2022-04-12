@@ -31,7 +31,7 @@ class LuiMqttListener(object):
         # run action based on received command
         if msg[0] == "event":
             if msg[1] == "startup":
-                display_firmware_version = int(msg[2])
+                self._updater.request_berry_driver_version()
                 model = None
                 if display_firmware_version >= 23:
                     model = msg[3]
