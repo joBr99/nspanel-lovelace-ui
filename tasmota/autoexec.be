@@ -309,7 +309,7 @@ tasmota.add_driver(nextion)
 
 def get_current_version(cmd, idx, payload, payload_json)
 	import string
-	var version_of_this_script = 3
+	var version_of_this_script = 4
 	var jm = string.format("{\"nlui_driver_version\":\"%s\"}", version_of_this_script)
 	tasmota.publish_result(jm, "RESULT")
 end
