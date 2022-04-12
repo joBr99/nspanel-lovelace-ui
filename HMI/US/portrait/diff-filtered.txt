@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-04-12 16:30:13.640648189 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-04-12 16:30:13.108641053 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-12 16:30:13.624647974 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-04-12 16:30:13.108641053 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-12 16:30:13.624647974 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-04-12 16:33:01.782114883 +0000
++--- HMI/n2t-out/Program.s.txt	2022-04-12 16:33:01.294111694 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-12 16:33:01.762114752 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-04-12 16:33:01.294111694 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-12 16:33:01.762114752 +0000
 +@@ -62,6 +62,16 @@
 +@@ -117,6 +127,18 @@
 +@@ -153,6 +175,15 @@
@@ -49,20 +49,11 @@
 +@@ -967,6 +1146,33 @@
 +@@ -1072,6 +1278,28 @@
 +@@ -1642,6 +1870,128 @@
-+--- HMI/n2t-out/pageStartup.txt	2022-04-12 16:30:13.108641053 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-12 16:30:13.624647974 +0000
-+@@ -152,7 +152,7 @@
-+         Disable release event after dragging: 0
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+-        Text                                : 31
-++        Text                                : 30
-+         Max. Text Size                      : 10
-+     
-+ Picture p0
++--- HMI/n2t-out/pageStartup.txt	2022-04-12 16:33:01.294111694 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-12 16:33:01.762114752 +0000
 +diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
-+--- HMI/n2t-out/screensaver.txt	2022-04-12 16:30:13.108641053 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-12 16:30:13.624647974 +0000
++--- HMI/n2t-out/screensaver.txt	2022-04-12 16:33:01.294111694 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-12 16:33:01.762114752 +0000
 +@@ -48,6 +48,26 @@
 +         Scope: local
 +         Value: 0
