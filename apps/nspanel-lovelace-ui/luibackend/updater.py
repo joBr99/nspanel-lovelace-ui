@@ -82,6 +82,7 @@ class Updater:
             return False
 
     def request_berry_driver_version(self):
+        self.current_tasmota_driver_version = None
         topic = self.topic_send.replace("CustomSend", "GetDriverVersion")
         self._send_mqtt_msg("X", topic=topic)
 
