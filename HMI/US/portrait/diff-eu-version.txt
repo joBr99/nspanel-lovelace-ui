@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-12 16:20:51.221116465 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-12 16:20:51.597111331 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-12 16:30:13.108641053 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-12 16:30:13.624647974 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-12 16:20:51.221116465 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-12 16:20:51.597111331 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-12 16:30:13.108641053 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-12 16:30:13.624647974 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -463,8 +463,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-12 16:20:51.221116465 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-12 16:20:51.597111331 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-12 16:30:13.108641053 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-12 16:30:13.624647974 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -474,6 +474,15 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
          Max. Text Size                      : 100
      
  Text tVersion
+@@ -152,7 +152,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 31
++        Text                                : 30
+         Max. Text Size                      : 10
+     
+ Picture p0
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -484,8 +493,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-04-12 16:20:51.221116465 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-12 16:20:51.597111331 +0000
+--- HMI/n2t-out/screensaver.txt	2022-04-12 16:30:13.108641053 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-12 16:30:13.624647974 +0000
 @@ -48,6 +48,26 @@
          Scope: local
          Value: 0
