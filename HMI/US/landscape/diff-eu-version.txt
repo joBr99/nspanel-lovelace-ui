@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-12 19:02:32.754160910 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-04-12 19:02:33.614166242 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-12 19:23:42.977686931 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-04-12 19:23:43.769693891 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-12 19:02:32.754160910 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-04-12 19:02:33.618166267 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-12 19:23:42.977686931 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-04-12 19:23:43.769693891 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -23,8 +23,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-04-12 19:02:32.758160910 +0000
-+++ HMI/US/landscape/n2t-out/popupLight.txt	2022-04-12 19:02:33.618166267 +0000
+--- HMI/n2t-out/popupLight.txt	2022-04-12 19:23:42.977686931 +0000
++++ HMI/US/landscape/n2t-out/popupLight.txt	2022-04-12 19:23:43.769693891 +0000
 @@ -570,43 +570,25 @@
                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                          udelete payloadLength-1
@@ -37,117 +37,6 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
 -                                        {
 -                                            page screensaver
 -                                        }
-                                         if(tId.txt=="cardEntities")
-                                         {
-                                             page cardEntities
-                                         }
--                                        if(tId.txt=="cardGrid")
--                                        {
--                                            page cardGrid
--                                        }
--                                        if(tId.txt=="popupLight")
-+                                        if(tId.txt=="cardMedia")
-                                         {
--                                            pageIcons.tTmp1.txt=tTmp.txt
--                                            page popupLight
-+                                            page cardMedia
-                                         }
--                                        if(tId.txt=="popupShutter")
-+                                        if(tId.txt=="pageStartup")
-                                         {
--                                            pageIcons.tTmp1.txt=tTmp.txt
--                                            page popupShutter
-+                                            page pageStartup
-                                         }
-                                         if(tId.txt=="popupNotify")
-                                         {
-                                             page popupNotify
-                                         }
--                                        if(tId.txt=="cardThermo")
--                                        {
--                                            page cardThermo
--                                        }
--                                        if(tId.txt=="cardMedia")
-+                                        if(tId.txt=="cardGrid")
-                                         {
--                                            page cardMedia
-+                                            page cardGrid
-                                         }
-                                         if(tId.txt=="cardAlarm")
-                                         {
-diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-04-12 19:02:32.758160910 +0000
-+++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-04-12 19:02:33.618166267 +0000
-@@ -339,43 +339,25 @@
-                                             pageIcons.tTmp1.txt=tTmp.txt
-                                             page popupLight
-                                         }
--                                        if(tId.txt=="pageStartup")
--                                        {
--                                            page pageStartup
--                                        }
--                                        if(tId.txt=="screensaver")
--                                        {
--                                            page screensaver
--                                        }
-                                         if(tId.txt=="cardEntities")
-                                         {
-                                             page cardEntities
-                                         }
--                                        if(tId.txt=="cardGrid")
--                                        {
--                                            page cardGrid
--                                        }
--                                        if(tId.txt=="popupLight")
--                                        {
--                                            pageIcons.tTmp1.txt=tTmp.txt
--                                            page popupLight
--                                        }
--                                        if(tId.txt=="popupShutter")
--                                        {
--                                            pageIcons.tTmp1.txt=tTmp.txt
--                                            page popupShutter
--                                        }
--                                        if(tId.txt=="popupNotify")
-+                                        if(tId.txt=="cardMedia")
-                                         {
--                                            page popupNotify
-+                                            page cardMedia
-                                         }
-                                         if(tId.txt=="cardThermo")
-                                         {
-                                             page cardThermo
-                                         }
--                                        if(tId.txt=="cardMedia")
-+                                        if(tId.txt=="pageStartup")
-                                         {
--                                            page cardMedia
-+                                            page pageStartup
-+                                        }
-+                                        if(tId.txt=="cardGrid")
-+                                        {
-+                                            page cardGrid
-                                         }
-                                         if(tId.txt=="cardAlarm")
-                                         {
-diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-04-12 19:02:32.758160910 +0000
-+++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-04-12 19:02:33.618166267 +0000
-@@ -366,43 +366,30 @@
-                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-                                         udelete payloadLength-1
-                                         bufferPos=0
--                                        if(tId.txt=="pageStartup")
--                                        {
--                                            page pageStartup
--                                        }
--                                        if(tId.txt=="screensaver")
-+                                        if(tId.txt=="popupLight")
-                                         {
--                                            page screensaver
-+                                            pageIcons.tTmp1.txt=tTmp.txt
-+                                            page popupLight
-                                         }
                                          if(tId.txt=="cardEntities")
                                          {
                                              page cardEntities
