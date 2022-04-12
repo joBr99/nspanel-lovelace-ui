@@ -53,7 +53,7 @@ class Updater:
                     return False
                 # send notification about the update
                 if self.mode == "auto-notify":
-                    update_msg = "There's an update available for the Tasmota      Berry driver, do you want to start the update  now?                                                                      If you encounter issues after the update or      this message appears frequently, please check the manual and repeat the installation steps   for the Tasmota Berry driver. "
+                    update_msg = "There's an update available for the Tasmota    Berry driver, do you want to start the update  now?                                                                      If you encounter issues after the update or      this message appears frequently, please checkthe manual and repeat the installation steps   for the Tasmota Berry driver. "
                     self.send_message_page("updateBerryNoYes", "Driver Update available!", update_msg, "Dismiss", "Yes")
                     return True
                 return False
