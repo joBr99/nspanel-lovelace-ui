@@ -336,7 +336,6 @@ def update_berry_driver(cmd, idx, payload, payload_json)
 			if s == true
 				var jm = string.format("{\"nlui_driver_update\":\"%s\"}", "succeeded")
 				tasmota.publish_result(jm, "RESULT")
-				tasmota.cmd("Restart 1")
 			else 
 				var jm = string.format("{\"nlui_driver_update\":\"%s\"}", "failed")
 				tasmota.publish_result(jm, "RESULT")
