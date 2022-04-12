@@ -10,14 +10,14 @@ pageIcons
 	6    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	150  Line(s) of event code
-	113  Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	178  Line(s) of event code
 	117  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	150  Line(s) of event code
+	113  Unique line(s) of event code
 screensaver
 	33   Component(s)
 	195  Line(s) of event code
