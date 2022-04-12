@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-04-12 16:15:30.750970856 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-04-12 16:15:30.351143292 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-12 16:15:30.734970090 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-04-12 16:15:30.351143292 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-12 16:15:30.734970090 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-04-12 16:20:51.613111113 +0000
++--- HMI/n2t-out/Program.s.txt	2022-04-12 16:20:51.221116465 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-12 16:20:51.597111331 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-04-12 16:20:51.221116465 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-12 16:20:51.597111331 +0000
 +@@ -62,6 +62,16 @@
 +@@ -117,6 +127,18 @@
 +@@ -153,6 +175,15 @@
@@ -49,11 +49,11 @@
 +@@ -967,6 +1146,33 @@
 +@@ -1072,6 +1278,28 @@
 +@@ -1642,6 +1870,128 @@
-+--- HMI/n2t-out/pageStartup.txt	2022-04-12 16:15:30.351143292 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-12 16:15:30.734970090 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-04-12 16:20:51.221116465 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-12 16:20:51.597111331 +0000
 +diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
-+--- HMI/n2t-out/screensaver.txt	2022-04-12 16:15:30.351143292 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-12 16:15:30.734970090 +0000
++--- HMI/n2t-out/screensaver.txt	2022-04-12 16:20:51.221116465 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-12 16:20:51.597111331 +0000
 +@@ -48,6 +48,26 @@
 +         Scope: local
 +         Value: 0
