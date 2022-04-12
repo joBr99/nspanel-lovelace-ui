@@ -22,6 +22,10 @@ screensaver
 	33   Component(s)
 	195  Line(s) of event code
 	152  Unique line(s) of event code
+cardEntities
+	74   Component(s)
+	1157 Line(s) of event code
+	479  Unique line(s) of event code
 cardMedia
 	30   Component(s)
 	329  Line(s) of event code
@@ -38,10 +42,6 @@ cardThermo
 	41   Component(s)
 	442  Line(s) of event code
 	247  Unique line(s) of event code
-cardEntities
-	86   Component(s)
-	1350 Line(s) of event code
-	548  Unique line(s) of event code
 popupShutter
 	19   Component(s)
 	178  Line(s) of event code
@@ -53,6 +53,6 @@ popupLight
 
 Total
 	12   Page(s)
-	365  Component(s)
-	3926 Line(s) of event code
-	1060 Unique line(s) of event code
+	353  Component(s)
+	3733 Line(s) of event code
+	1003 Unique line(s) of event code
