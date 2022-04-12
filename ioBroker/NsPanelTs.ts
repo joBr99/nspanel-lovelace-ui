@@ -1,3 +1,4 @@
+var Icons = new IconsSelector();
 
 const Months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 const Days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -14,7 +15,7 @@ var Wohnen: PageEntities =
     "heading": "Haus",
     "useColor": true,
     "items": [
-        <PageItem>{ id: "alias.0.Stern"},
+        <PageItem>{ id: "alias.0.Stern", name: "Sternsteckdose"},
         <PageItem>{ id: "alias.0.Erker"},
         <PageItem>{ id: "alias.0.Küche", interpolateColor: true },
         <PageItem>{ id: "alias.0.Wand" }
@@ -27,10 +28,10 @@ var Strom: PageEntities =
     "heading": "Strom",
     "useColor": true,
     "items": [
-        <PageItem>{ id: "alias.0.Netz", icon: 4, interpolateColor: true, offColor: BatteryFull, onColor: Red , minValue: -1000, maxValue: 1000 },
-        <PageItem>{ id: "alias.0.Hausverbrauch", icon: 4, interpolateColor: true, offColor: BatteryFull, onColor: Red , maxValue: 1000 },
-        <PageItem>{ id: "alias.0.Pv", icon: 4, interpolateColor: true, offColor: Off, onColor: BatteryFull , maxValue: 1000 },
-        <PageItem>{ id: "alias.0.Batterie", icon: 34, interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
+        <PageItem>{ id: "alias.0.Netz", icon: "flash", interpolateColor: true, offColor: BatteryFull, onColor: Red, minValue: -1000, maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Hausverbrauch", icon: "flash", interpolateColor: true, offColor: BatteryFull, onColor: Red, maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Pv", icon: "solar-power", interpolateColor: true, offColor: Off, onColor: BatteryFull, maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Batterie", icon: "battery-medium", interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
     ]
 };
 
@@ -62,10 +63,10 @@ var button2Page: PageEntities =
 export const config: Config = {
     panelRecvTopic: "mqtt.0.tele.WzDisplay.RESULT",
     panelSendTopic: "mqtt.0.cmnd.WzDisplay.CustomSend",
-    firstScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.HUMIDITY", ScreensaverEntityIcon: 26, ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%" },
-    secondScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.PRECIPITATION_CHANCE", ScreensaverEntityIcon: 19, ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%" },
-    thirdScreensaverEntity: { ScreensaverEntity: "alias.0.Batterie.ACTUAL", ScreensaverEntityIcon: 34, ScreensaverEntityText: "Batterie", ScreensaverEntityUnitText: "%" },
-    fourthScreensaverEntity: { ScreensaverEntity: "alias.0.Pv.ACTUAL", ScreensaverEntityIcon: 32, ScreensaverEntityText: "PV", ScreensaverEntityUnitText: "W" },
+    firstScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.HUMIDITY", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%" },
+    secondScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.PRECIPITATION_CHANCE", ScreensaverEntityIcon: "weather-pouring", ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%" },
+    thirdScreensaverEntity: { ScreensaverEntity: "alias.0.Batterie.ACTUAL", ScreensaverEntityIcon: "battery-medium", ScreensaverEntityText: "Batterie", ScreensaverEntityUnitText: "%" },
+    fourthScreensaverEntity: { ScreensaverEntity: "alias.0.Pv.ACTUAL", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "PV", ScreensaverEntityUnitText: "W" },
     timeoutScreensaver: 15,
     dimmode: 8,
     screenSaverDoubleClick: false,
@@ -82,7 +83,7 @@ export const config: Config = {
             "type": "cardThermo",
             "heading": "Thermostat",
             "useColor": true,
-            "items": [<PageItem>{ id: "alias.0.WzNsPanel" }]
+            "items": [<PageItem>{ id: "alias.0.WzNsPanel", name: "Wohnzimmer" }]
         }
     ],
     button1Page: button1Page,
@@ -90,7 +91,7 @@ export const config: Config = {
 };
 
 var subscriptions: any = {};
-
+var screensaverEnabled : boolean = false;
 var pageId = 0;
 
 schedule("* * * * *", function () {
@@ -144,24 +145,29 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
     if (typ == "event") {
         switch (method) {
             case "startup":
+                screensaverEnabled = false;
                 UnsubscribeWatcher();
                 HandleStartupProcess();
                 pageId = 0;
                 GeneratePage(config.pages[0]);
                 break;
+            case "sleepReached":
+                screensaverEnabled = true;
+                HandleScreensaver();
+                break;
             case "pageOpenDetail":
+                screensaverEnabled = false;
                 UnsubscribeWatcher();
                 let pageItem = config.pages[pageId].items.find(e => e.id === words[3]);
                 if (pageItem !== undefined)
                     SendToPanel(GenerateDetailPage(words[2], pageItem));
             case "buttonPress2":
+                screensaverEnabled = false;
                 HandleButtonEvent(words);
-                break;
-            case "screensaverOpen":
-                HandleScreensaver();
                 break;
             case "button1":
             case "button2":
+                screensaverEnabled = false;
                 HandleHardwareButton(method);
             default:
                 break;
@@ -194,14 +200,19 @@ function HandleHardwareButton(method: string): void {
     else {
         return;
     }
+
+    // Set pageId to -1, because of the navigation arrows
+    let tempPageId = pageId;
+    pageId = -1;
     GeneratePage(page);
+    pageId = tempPageId;
 }
 
 function HandleStartupProcess(): void {
     SendDate();
     SendTime();
-    SendToPanel({ payload: "timeout," + config.timeoutScreensaver });
-    SendToPanel({ payload: "dimmode," + config.dimmode });
+    SendToPanel({ payload: "timeout~" + config.timeoutScreensaver });
+    SendToPanel({ payload: "dimmode~" + config.dimmode });
 }
 
 function SendDate(): void {
@@ -210,7 +221,7 @@ function SendDate(): void {
     var date = d.getDate();
     var month = Months[d.getMonth()];
     var year = d.getFullYear();
-    var _sendDate = "date,?" + day + " " + date + " " + month + " " + year;
+    var _sendDate = "date~" + day + " " + date + " " + month + " " + year;
     SendToPanel(<Payload>{ payload: _sendDate });
 }
 
@@ -225,28 +236,40 @@ function SendTime(): void {
     if (d.getMinutes() < 10) {
         min = "0" + d.getMinutes().toString();
     }
-    SendToPanel(<Payload>{ payload: "time," + hr + ":" + min });
+    SendToPanel(<Payload>{ payload: "time~" + hr + ":" + min });
 }
 
 function GenerateEntitiesPage(page: PageEntities): Payload[] {
     var out_msgs: Array<Payload> = [];
-    out_msgs = [{ payload: "pageType,cardEntities" }, { payload: "entityUpdHeading," + page.heading }]
-    out_msgs.push({ payload: GeneratePageElements(page.items, 4, page.useColor) });
+    out_msgs = [{ payload: "pageType~cardEntities" }]
+    out_msgs.push({ payload: GeneratePageElements(page) });
     return out_msgs
 }
 
 function GenerateGridPage(page: PageGrid): Payload[] {
     var out_msgs: Array<Payload> = [];
-    out_msgs = [{ payload: "pageType,cardGrid" }, { payload: "entityUpdHeading," + page.heading }]
-    out_msgs.push({ payload: GeneratePageElements(page.items, 6, page.useColor) });
+    out_msgs = [{ payload: "pageType~cardGrid" }]
+    out_msgs.push({ payload: GeneratePageElements(page) });
     return out_msgs
 }
 
-function GeneratePageElements(pageItems: PageItem[], maxItems: number, useColors: boolean = false): string {
-    let pageData = "entityUpd";
+function GeneratePageElements(page: Page): string {
+    let maxItems = 0;
+    switch (page.type) {
+        case "cardThermo":
+            maxItems = 1;
+            break;
+        case "cardEntities":
+            maxItems = 4;
+            break;
+        case "cardGrid":
+            maxItems = 6;
+            break;
+    }
+    let pageData = "entityUpd~" + page.heading + "~" + GetNavigationString(pageId)
     for (let index = 0; index < maxItems; index++) {
-        if (pageItems[index] !== undefined) {
-            pageData += CreateEntity(pageItems[index], index + 1, useColors);
+        if (page.items[index] !== undefined) {
+            pageData += CreateEntity(page.items[index], index + 1, page.useColor);
         }
         else {
             pageData += CreateEntity(<PageItem>{ id: "delete" }, index + 1);
@@ -256,9 +279,9 @@ function GeneratePageElements(pageItems: PageItem[], maxItems: number, useColors
 }
 
 function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = false): string {
-    var iconId = 0
+    var iconId = "0"
     if (pageItem.id == "delete") {
-        return ",delete,,,,,"
+        return "~delete~~~~~"
     }
     var name: string;
     var type: string;
@@ -266,7 +289,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
     if (existsObject(pageItem.id)) {
         let o = getObject(pageItem.id)
         var val = null;
-        name = o.common.name.de
+        name = pageItem.name !== undefined ? pageItem.name : o.common.name.de
 
         if (existsState(pageItem.id + ".GET")) {
             val = getState(pageItem.id + ".GET").val;
@@ -281,7 +304,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         switch (o.common.role) {
             case "light":
                 type = "light"
-                iconId = pageItem.icon !== undefined ? pageItem.icon : 1;
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lightbulb");
                 var optVal = "0"
 
                 if (val === true || val === "true") {
@@ -289,11 +312,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
                 }
 
-                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + "," + optVal;
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
 
             case "dimmer":
                 type = "light"
-                iconId = pageItem.icon !== undefined ? pageItem.icon : 1;
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lightbulb");
                 var optVal = "0"
                 if (existsState(pageItem.id + ".ON_ACTUAL")) {
                     val = getState(pageItem.id + ".ON_ACTUAL").val;
@@ -308,19 +331,19 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".ACTUAL") ? getState(pageItem.id + ".ACTUAL").val : true, useColors);
                 }
 
-                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + "," + optVal;
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
 
             case "blind":
                 type = "shutter"
-                iconId = pageItem.icon !== undefined ? pageItem.icon : 11;
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("window-open");
                 iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".ACTUAL") ? getState(pageItem.id + ".ACTUAL").val : true, useColors);
-                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + ","
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~"
 
             case "info":
             case "value.temperature":
             case "thermostat":
                 type = "text";
-                iconId = pageItem.icon !== undefined ? pageItem.icon : o.common.role == "value.temperature" || o.common.role == "thermostat" ? 2 : 0;
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == "value.temperature" || o.common.role == "thermostat" ? Icons.GetIcon("thermometer") : Icons.GetIcon("information-outline");
                 let unit = "";
                 var optVal = "0"
                 if (existsState(pageItem.id + ".ON_ACTUAL")) {
@@ -335,26 +358,26 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 }
 
                 if (o.common.role == "value.temperature") {
-                    iconId = pageItem.icon !== undefined ? pageItem.icon : 2;
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("thermometer");
                 }
 
                 iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
 
-                return "," + type + "," + pageItem.id + "," + iconId + "," + iconColor + "," + name + "," + optVal + " " + unit;
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal + " " + unit;
 
             case "button":
                 type = "button";
-                iconId = pageItem.icon !== undefined ? pageItem.icon : 3;
-                let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : "PRESS";
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("gesture-tap-button");
+                let buttonText = pageItem.name !== undefined ? pageItem.name : "PRESS";
                 iconColor = GetIconColor(pageItem, true, useColors);
-                return "," + type + "," + pageItem.id + "," + iconId + "," + + iconColor + "," + name + "," + buttonText;
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + + iconColor + "~" + name + "~" + buttonText;
 
             default:
-                return ",delete,,,,";
+                return "~delete~~~~~";
         }
     }
 
-    return ",delete,,,,,"
+    return "~delete~~~~~"
 }
 
 function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: boolean): number {
@@ -384,8 +407,7 @@ function RegisterEntityWatcher(id: string): void {
         return;
     }
     subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {
-        log("RegisterEntityWatcher PageId:" + pageId.toString())
-        GeneratePage(config.pages[pageId]);
+        SendToPanel({ payload: GeneratePageElements(config.pages[pageId]) });
     }))
 }
 
@@ -417,15 +439,15 @@ function GetUnitOfMeasurement(id: string): string {
 function GenerateThermoPage(page: PageThermo): Payload[] {
     var id = page.items[0].id
     var out_msgs: Array<Payload> = [];
-    out_msgs.push({ payload: "pageType,cardThermo" });
+    out_msgs.push({ payload: "pageType~cardThermo" });
 
     // ioBroker
     if (existsObject(id)) {
         let o = getObject(id)
-        let name = o.common.name.de
+        let name = page.items[0].name !== undefined ? page.items[0].name : o.common.name.de
         let currentTemp = 0;
         if (existsState(id + ".ACTUAL"))
-            currentTemp = parseInt(getState(id + ".ACTUAL").val) * 10;
+            currentTemp = (Math.round(parseFloat(getState(id + ".ACTUAL").val) * 10)/10)*10;
 
         let destTemp = 0;
         if (existsState(id + ".SET")) {
@@ -441,7 +463,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
         let maxTemp = 300
         let stepTemp = 5
 
-        out_msgs.push({ payload: "entityUpd," + id + "," + name + "," + currentTemp + "," + destTemp + "," + status + "," + minTemp + "," + maxTemp + "," + stepTemp })
+        out_msgs.push({ payload: "entityUpd~" + name + "~" + GetNavigationString(pageId) + "~" + id + "~" + currentTemp + "~" + destTemp + "~" + status + "~" + minTemp + "~" + maxTemp + "~" + stepTemp })
     }
 
     return out_msgs
@@ -537,6 +559,19 @@ function HandleButtonEvent(words): void {
             break;
     }
 }
+function GetNavigationString(pageId: number): string {
+    switch (pageId) {
+        case 0:
+            return "0|1";
+        case config.pages.length - 1:
+            return "1|0";
+        case -1:
+            return "0|0";
+        default:
+            return "1|1";
+    }
+}
+
 
 function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
@@ -545,7 +580,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
     if (existsObject(id)) {
         var o = getObject(id)
         var val: (boolean | number) = 0;
-        let icon = 1;
+        let icon = Icons.GetIcon("lightbulb");
         var iconColor = rgb_dec565(config.defaultColor);
         if (type == "popupLight") {
             let switchVal = "0"
@@ -564,7 +599,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     iconColor = GetIconColor(pageItem, true, false);
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail," + icon + "," + + iconColor + "," + switchVal + ",disable,disable,disable" })
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + + iconColor + "~" + switchVal + ",disable,disable,disable" })
             }
 
             if (o.common.role == "dimmer") {
@@ -594,7 +629,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 //if (attr_support_color.includes("color_temp"))
                 // colortemp = Math.trunc(scale(attr.color_temp, attr.min_mireds, attr.max_mireds, 0, 100))
 
-                out_msgs.push({ payload: "entityUpdateDetail," + icon + "," + iconColor + "," + switchVal + "," + brightness + "," + colorTemp + "," + colorMode })
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
             }
 
         }
@@ -622,12 +657,13 @@ function UnsubscribeWatcher(): void {
 }
 
 function HandleScreensaver(): void {
+    SendToPanel({ payload: "pageType~screensaver"})
     UnsubscribeWatcher();
     HandleScreensaverUpdate();
 }
 
 function HandleScreensaverUpdate(): void {
-    if (config.weatherEntity != null && existsObject(config.weatherEntity)) {
+    if (screensaverEnabled && config.weatherEntity != null && existsObject(config.weatherEntity)) {
         var icon = getState(config.weatherEntity + ".ICON").val;
 
         let temperature: string =
@@ -635,8 +671,8 @@ function HandleScreensaverUpdate(): void {
                 existsState(config.weatherEntity + ".TEMP") ? getState(config.weatherEntity + ".TEMP").val : "null";
 
         let payloadString =
-            "weatherUpdate,?" + GetAccuWeatherIcon(parseInt(icon)) + "?"
-            + temperature + " " + config.temperatureUnit + "?"
+            "weatherUpdate~" + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + "~"
+            + temperature + " " + config.temperatureUnit + "~"
 
         payloadString += GetScreenSaverEntityString(config.firstScreensaverEntity);
         payloadString += GetScreenSaverEntityString(config.secondScreensaverEntity);
@@ -650,54 +686,54 @@ function HandleScreensaverUpdate(): void {
 function GetScreenSaverEntityString(configElement: ScreenSaverElement | null): string {
     if (configElement != null && configElement.ScreensaverEntity != null && existsState(configElement.ScreensaverEntity)) {
         let u1 = getState(configElement.ScreensaverEntity).val;
-        return configElement.ScreensaverEntityText + "?" + configElement.ScreensaverEntityIcon + "?" + u1 + " " + configElement.ScreensaverEntityUnitText + "?";
+        return configElement.ScreensaverEntityText + "~" + Icons.GetIcon(configElement.ScreensaverEntityIcon) + "~" + u1 + " " + configElement.ScreensaverEntityUnitText + "~";
     }
     else {
-        return "???";
+        return "~~~";
     }
 }
 
-function GetAccuWeatherIcon(icon: number): number {
+function GetAccuWeatherIcon(icon: number): string {
     switch (icon) {
         case 24:        // Ice        
         case 30:        // Hot    
         case 31:        // Cold    
-            return 11;  // exceptional
+            return "window-open";  // exceptional
 
         case 7:         // Cloudy
         case 8:         // Dreary (Overcast)        
         case 38:        // Mostly Cloudy
-            return 12;  // cloudy
+            return "weather-cloudy";  // cloudy
 
         case 11:        // fog
-            return 13;  // fog
+            return "weather-fog";  // fog
 
         case 25:        // Sleet    
-            return 14;  // Hail
+            return "weather-hail";  // Hail
 
         case 15:        // T-Storms    
-            return 15;  // lightning
+            return "weather-lightning";  // lightning
 
         case 16:        // Mostly Cloudy w/ T-Storms
         case 17:        // Partly Sunny w/ T-Storms
         case 41:        // Partly Cloudy w/ T-Storms       
         case 42:        // Mostly Cloudy w/ T-Storms
-            return 16;  // lightning-rainy
+            return "weather-lightning-rainy";  // lightning-rainy
 
         case 33:        // Clear
         case 34:        // Mostly Clear
         case 37:        // Hazy Moonlight
-            return 17;
+            return "weather-night";
 
         case 3:         // Partly Sunny
         case 4:         // Intermittent Clouds
         case 6:         // Mostly Cloudy
         case 35: 	    // Partly Cloudy
         case 36: 	    // Intermittent Clouds
-            return 18;  // partlycloudy 
+            return "weather-partly-cloudy";  // partlycloudy 
 
         case 18:        // pouring
-            return 19;  // pouring
+            return "weather-pouring";  // pouring
 
         case 12:        // Showers
         case 13:        // Mostly Cloudy w/ Showers
@@ -705,7 +741,7 @@ function GetAccuWeatherIcon(icon: number): number {
         case 26:        // Freezing Rain
         case 39:        // Partly Cloudy w/ Showers
         case 40:        // Mostly Cloudy w/ Showers
-            return 20;  // rainy
+            return "weather-rainy";  // rainy
 
         case 19:        // Flurries
         case 20:        // Mostly Cloudy w/ Flurries
@@ -714,21 +750,21 @@ function GetAccuWeatherIcon(icon: number): number {
         case 23:        // Mostly Cloudy w/ Snow
         case 43:        // Mostly Cloudy w/ Flurries
         case 44:        // Mostly Cloudy w/ Snow
-            return 21;  // snowy
+            return "weather-snowy";  // snowy
 
         case 29:        // Rain and Snow
-            return 22;  // snowy-rainy
+            return "weather-snowy-rainy";  // snowy-rainy
 
         case 1:         // Sunny
         case 2: 	    // Mostly Sunny
         case 5:         // Hazy Sunshine
-            return 23;  // sunny
+            return "weather-sunny";  // sunny
 
         case 32:        // windy
-            return 24;  // windy
+            return "weather-windy";  // windy
 
         default:
-            return 1;
+            return "alert-circle-outline";
     }
 }
 
@@ -787,14 +823,14 @@ interface PageThermo extends Page {
 
 type PageItem = {
     id: string,
-    icon: (number | undefined),
+    icon: (string | undefined),
     onColor: (RGB | undefined),
     offColor: (RGB | undefined),
     useColor: (boolean | undefined),
     interpolateColor: (boolean | undefined),
     minValue: (number | undefined),
     maxValue: (number | undefined),
-    buttonText: (string | undefined)
+    name: (string | undefined)
 }
 
 type Config = {
@@ -823,7 +859,7 @@ type Config = {
 
 type ScreenSaverElement = {
     ScreensaverEntity: string | null,
-    ScreensaverEntityIcon: number | null,
+    ScreensaverEntityIcon: string | null,
     ScreensaverEntityText: string | null,
     ScreensaverEntityUnitText: string | null,
 }

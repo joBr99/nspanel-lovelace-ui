@@ -32,18 +32,8 @@ You can find this in the device raw settings.
 - Create a state with a mqtt client or create one per hand. The mqtt adapter will not create the state CustomSend
     - you only need to send a dummy message to cmnd/<yourPanel>/CustomSend 
     - then the state will be created 
+- Put the file icon_mapping.ts in the global folder
 
-## Update the screensaver string
-The screensaver string which is send to the display looks something like this:
-weatherUpdate,?23?11 °C?26?54%?Batterie?4?12 %?PV?23?123W
-All fields are seperated by a question mark. In detail the fields are:
-weatherUpdate,?Icon?Text?Icon (default humidity)?Text next to the last icon?Text for the left icon on the right side?Icon?Text under the icon?Text for the right icon on the left side?Icon?Text under the icon
-
-See the icons currently usable in the following table:
-
-[Icon Table](../HMI#icons-ids)
-
-You can change the string and devices in the config object.
 
 ## Hardware buttons
 If you like you can add special pages for the buttons.
@@ -66,11 +56,11 @@ const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
 var config: Config = {
     panelRecvTopic: "mqtt.0.tele.WzDisplay.RESULT",       // This is the object where the panel send the data to.
     panelSendTopic: "mqtt.0.cmnd.WzDisplay.CustomSend",   // This is the object where data is send to the panel.
-    firstScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.HUMIDITY", ScreensaverEntityIcon: 26, ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%" },
+    firstScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.HUMIDITY", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%" },
                                                         // Items which should be presented on the screensaver page
-    secondScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.PRECIPITATION_CHANCE", ScreensaverEntityIcon: 19, ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%" },
-    thirdScreensaverEntity: { ScreensaverEntity: "alias.0.Batterie.ACTUAL", ScreensaverEntityIcon: 34, ScreensaverEntityText: "Batterie", ScreensaverEntityUnitText: "%" },
-    fourthScreensaverEntity: { ScreensaverEntity: "alias.0.Pv.ACTUAL", ScreensaverEntityIcon: 32, ScreensaverEntityText: "PV", ScreensaverEntityUnitText: "W" },
+    secondScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.PRECIPITATION_CHANCE", ScreensaverEntityIcon: "weather-pouring", ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%" },
+    thirdScreensaverEntity: { ScreensaverEntity: "alias.0.Batterie.ACTUAL", ScreensaverEntityIcon: "battery-medium", ScreensaverEntityText: "Batterie", ScreensaverEntityUnitText: "%" },
+    fourthScreensaverEntity: { ScreensaverEntity: "alias.0.Pv.ACTUAL", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "PV", ScreensaverEntityUnitText: "W" },
     screenSaverDoubleClick: false,                        // Doubletouch needed for leaving screensaver.                                                           
     timeoutScreensaver: 15,                               // Timeout for screensaver
     dimmode: 8,                                           // Display dim
@@ -82,45 +72,12 @@ var config: Config = {
     defaultOnColor: RGB,                                  // Default on state color for items
     defaultOffColor: RGB,                                 // Default off state color for page
     temperatureUnit: "°C",                                // Unit to append on temperature sensors
-<<<<<<< HEAD
     pages: [Wohnen, Strom,
         {
             "type": "cardThermo",
             "heading": "Thermostat",
             "useColor": true,
             "items": [<PageItem>{ id: "alias.0.WzNsPanel" }]
-=======
-    pages: [
-        {
-            "type": "cardEntities",                       // card type (cardEntities, cardThermo)
-            "heading": "Testseite",                       // heading
-            "useColor": false,                             // should colors be enabled on this page, can be overridden in PageItem
-            "items": [                                    // items array (up to 4 on cardEntities, 1 for cardThermo)
-                <PageItem>{ id: "alias.0.Rolladen_Eltern" },                // device which must be configured in the device panel. Use only the folder for the device, not the set, get states ...
-                <PageItem>{ id: "alias.0.Erker" },
-                <PageItem>{ id: "alias.0.Küche", useColor: true },
-                <PageItem>{ id: "alias.0.Wand", useColor: true  }
-
-            ]
-        },
-        {
-            "type": "cardEntities",
-            "heading": "Strom",
-            "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
-            "items": [
-                <PageItem>{ id: "alias.0.Netz" },
-                <PageItem>{ id: "alias.0.Hausverbrauch", icon: 4, interpolateColor: true, offColor: BatteryFull, onColor: Red , maxValue: 1000 },
-                <PageItem>{ id: "alias.0.Pv" },
-                <PageItem>{ id: "alias.0.Batterie", icon: 34, interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
-
-            ]
-        },
-        {
-            "type": "cardThermo",
-            "heading": "Thermostat",
-            "useColor": false,                            // should colors be enabled on this page, can be overridden in PageItem
-            "item": "alias.0.WzNsPanel"                   // Needs to be a thermostat in the device panel
->>>>>>> 8a48ff35d408a7712a3052ee3cf8fc84e8b699c7
         }
     ],
     button1Page: button1Page,                             // A cardEntities, cardThermo or nothing. This will be opened when pressing button1 
@@ -139,7 +96,7 @@ type PageItem = {
     interpolateColor: (boolean | undefined),// fade between color on and off, useColor on Page or PageItem must be enabled
     minValue: (number | undefined),         // the minimum value for the fade calculation, if smaller the minimum value will be used
     maxValue: (number | undefined),         // the maximum value for the fade calculation, if larger the maximum value will be used
-    buttonText: (string | undefined)        // the Button Text, default is "Press"
+    name: (string | undefined)              // the Name which should be displayed, default is the name of the object itself
 }
 ```
 
@@ -170,10 +127,10 @@ pages: [
             "heading": "Strom",
             "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
             "items": [
-                <PageItem>{ id: "alias.0.Netz" },
-                <PageItem>{ id: "alias.0.Hausverbrauch" },
-                <PageItem>{ id: "alias.0.Pv" },
-                <PageItem>{ id: "alias.0.Batterie" }
+        <PageItem>{ id: "alias.0.Netz", icon: "flash", interpolateColor: true, offColor: BatteryFull, onColor: Red, minValue: -1000, maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Hausverbrauch", icon: "flash", interpolateColor: true, offColor: BatteryFull, onColor: Red, maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Pv", name: "Solar" ,icon: "solar-power", interpolateColor: true, offColor: Off, onColor: BatteryFull, maxValue: 1000 },
+        <PageItem>{ id: "alias.0.Batterie", icon: "battery-medium", interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
             ]
         }]
 ```
