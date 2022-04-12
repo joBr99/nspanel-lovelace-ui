@@ -86,8 +86,8 @@ class Updater:
         self._send_mqtt_msg("X", topic=topic)
 
     def update_berry_driver(self):
-        topic = self.topic_send.replace("CustomSend", "UpdateDriverVersion")
-        self._send_mqtt_msg(self.desired_tasmota_driver_url, topic=topic)
+        topic = self.topic_send.replace("CustomSend", "Backlog")
+        self._send_mqtt_msg(f"UpdateDriverVersion {self.desired_tasmota_driver_url}; Restart 1", topic=topic)
     def update_panel_driver(self):
         topic = self.topic_send.replace("CustomSend", "FlashNextion")
         self._send_mqtt_msg(self.desired_display_firmware_url, topic=topic)
