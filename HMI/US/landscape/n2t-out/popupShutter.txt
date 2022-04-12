@@ -366,30 +366,43 @@ Timer tmSerial
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                         udelete payloadLength-1
                                         bufferPos=0
-                                        if(tId.txt=="popupLight")
+                                        if(tId.txt=="pageStartup")
                                         {
-                                            pageIcons.tTmp1.txt=tTmp.txt
-                                            page popupLight
+                                            page pageStartup
+                                        }
+                                        if(tId.txt=="screensaver")
+                                        {
+                                            page screensaver
                                         }
                                         if(tId.txt=="cardEntities")
                                         {
                                             page cardEntities
                                         }
-                                        if(tId.txt=="cardMedia")
+                                        if(tId.txt=="cardGrid")
                                         {
-                                            page cardMedia
+                                            page cardGrid
                                         }
-                                        if(tId.txt=="pageStartup")
+                                        if(tId.txt=="popupLight")
                                         {
-                                            page pageStartup
+                                            pageIcons.tTmp1.txt=tTmp.txt
+                                            page popupLight
+                                        }
+                                        if(tId.txt=="popupShutter")
+                                        {
+                                            pageIcons.tTmp1.txt=tTmp.txt
+                                            page popupShutter
                                         }
                                         if(tId.txt=="popupNotify")
                                         {
                                             page popupNotify
                                         }
-                                        if(tId.txt=="cardGrid")
+                                        if(tId.txt=="cardThermo")
                                         {
-                                            page cardGrid
+                                            page cardThermo
+                                        }
+                                        if(tId.txt=="cardMedia")
+                                        {
+                                            page cardMedia
                                         }
                                         if(tId.txt=="cardAlarm")
                                         {
