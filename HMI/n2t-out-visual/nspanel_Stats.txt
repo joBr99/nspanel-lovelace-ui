@@ -40,8 +40,8 @@ cardGrid
 	244  Unique line(s) of event code
 screensaver
 	33   Component(s)
-	195  Line(s) of event code
-	152  Unique line(s) of event code
+	266  Line(s) of event code
+	218  Unique line(s) of event code
 cardAlarm
 	35   Component(s)
 	343  Line(s) of event code
@@ -54,5 +54,5 @@ cardEntities
 Total
 	12   Page(s)
 	341  Component(s)
-	3590 Line(s) of event code
-	948  Unique line(s) of event code
+	3661 Line(s) of event code
+	1002 Unique line(s) of event code
