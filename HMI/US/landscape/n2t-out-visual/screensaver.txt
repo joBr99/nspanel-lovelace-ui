@@ -980,6 +980,77 @@ Timer tmSerial
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
                                     }
+                                    if(tInstruction.txt=="color")
+                                    {
+                                        spstr strCommand.txt,tTmp.txt,"~",1
+                                        covx tTmp.txt,tTime.bco,0,0
+                                        screensaver.bco=tTime.bco
+                                        tAMPM.bco=tTime.bco
+                                        tDate.bco=tTime.bco
+                                        tMainIcon.bco=tTime.bco
+                                        tMainText.bco=tTime.bco
+                                        tMainIconAlt.bco=tTime.bco
+                                        tMainTextAlt.bco=tTime.bco
+                                        tMRIcon.bco=tTime.bco
+                                        tMR.bco=tTime.bco
+                                        tMRIcon.bco=tTime.bco
+                                        tForecast1.bco=tTime.bco
+                                        tForecast1Val.bco=tTime.bco
+                                        tF1Icon.bco=tTime.bco
+                                        tForecast2.bco=tTime.bco
+                                        tForecast2Val.bco=tTime.bco
+                                        tF2Icon.bco=tTime.bco
+                                        tForecast3.bco=tTime.bco
+                                        tForecast3Val.bco=tTime.bco
+                                        tF3Icon.bco=tTime.bco
+                                        tForecast4.bco=tTime.bco
+                                        tForecast4Val.bco=tTime.bco
+                                        tF4Icon.bco=tTime.bco
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,tTime.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        covx tTmp.txt,tAMPM.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        covx tTmp.txt,tDate.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        covx tTmp.txt,tMainIcon.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        covx tTmp.txt,tMainText.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",7
+                                        covx tTmp.txt,tForecast1.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",8
+                                        covx tTmp.txt,tForecast2.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",9
+                                        covx tTmp.txt,tForecast3.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        covx tTmp.txt,tForecast4.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",11
+                                        covx tTmp.txt,tF1Icon.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",12
+                                        covx tTmp.txt,tF2Icon.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",13
+                                        covx tTmp.txt,tF3Icon.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",14
+                                        covx tTmp.txt,tF4Icon.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",15
+                                        covx tTmp.txt,tForecast1Val.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        covx tTmp.txt,tForecast2Val.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",17
+                                        covx tTmp.txt,tForecast3Val.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",18
+                                        covx tTmp.txt,tForecast4Val.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",19
+                                        covx tTmp.txt,t10.bco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",20
+                                        covx tTmp.txt,tMainIconAlt.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",21
+                                        covx tTmp.txt,tMainTextAlt.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        covx tTmp.txt,tMRIcon.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",23
+                                        covx tTmp.txt,tMR.pco,0,0
+                                    }
                                     if(tInstruction.txt=="pageType")
                                     {
                                         dim=100

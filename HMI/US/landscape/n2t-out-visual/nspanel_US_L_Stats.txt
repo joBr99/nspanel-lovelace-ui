@@ -10,10 +10,6 @@ pageTest
 	13   Component(s)
 	13   Line(s) of event code
 	13   Unique line(s) of event code
-screensaver
-	33   Component(s)
-	195  Line(s) of event code
-	152  Unique line(s) of event code
 cardMedia
 	30   Component(s)
 	329  Line(s) of event code
@@ -50,9 +46,13 @@ popupLight
 	27   Component(s)
 	320  Line(s) of event code
 	173  Unique line(s) of event code
+screensaver
+	33   Component(s)
+	266  Line(s) of event code
+	218  Unique line(s) of event code
 
 Total
 	12   Page(s)
 	341  Component(s)
-	3571 Line(s) of event code
-	947  Unique line(s) of event code
+	3642 Line(s) of event code
+	1001 Unique line(s) of event code
