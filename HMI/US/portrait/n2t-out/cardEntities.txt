@@ -202,7 +202,7 @@ Text tEntity1
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : tEntity1
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
     
 Text tEntity2
     Attributes
@@ -212,7 +212,7 @@ Text tEntity2
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : tEntity2
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
     
 Text tEntity3
     Attributes
@@ -222,7 +222,7 @@ Text tEntity3
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : tEntity3
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
     
 Text tEntity4
     Attributes
@@ -232,7 +232,7 @@ Text tEntity4
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : tEntity4
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
     
 Text tIcon1
     Attributes
@@ -322,7 +322,7 @@ Text tEntity5
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : tEntity5
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
     
 Text tIcon5
     Attributes

@@ -1,59 +1,25 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-04-12 16:15:30.750970856 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-04-12 16:15:30.351143292 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-12 16:15:30.734970090 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-04-12 16:15:30.351143292 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-12 16:15:30.734970090 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-04-13 02:11:58.591366127 +0000
++--- HMI/n2t-out/Program.s.txt	2022-04-13 02:11:58.191361375 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-13 02:11:58.575365937 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-04-13 02:11:58.191361375 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-13 02:11:58.575365937 +0000
 +@@ -62,6 +62,16 @@
 +@@ -117,6 +127,18 @@
 +@@ -153,6 +175,15 @@
-+@@ -171,7 +202,7 @@
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+         Text                                : tEntity1
-+-        Max. Text Size                      : 30
-++        Max. Text Size                      : 50
-+     
-+ Text tEntity2
-+     Attributes
-+@@ -181,7 +212,7 @@
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+         Text                                : tEntity2
-+-        Max. Text Size                      : 30
-++        Max. Text Size                      : 50
-+     
-+ Text tEntity3
-+     Attributes
-+@@ -191,7 +222,7 @@
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+         Text                                : tEntity3
-+-        Max. Text Size                      : 30
-++        Max. Text Size                      : 50
-+     
-+ Text tEntity4
-+     Attributes
-+@@ -201,7 +232,7 @@
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+         Text                                : tEntity4
-+-        Max. Text Size                      : 30
-++        Max. Text Size                      : 50
-+     
-+ Text tIcon1
-+     Attributes
 +@@ -283,6 +314,26 @@
-++        Max. Text Size                      : 50
 +@@ -402,6 +453,34 @@
 +@@ -859,6 +938,106 @@
 +@@ -967,6 +1146,33 @@
 +@@ -1072,6 +1278,28 @@
 +@@ -1642,6 +1870,128 @@
-+--- HMI/n2t-out/pageStartup.txt	2022-04-12 16:15:30.351143292 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-12 16:15:30.734970090 +0000
++                                     }
++                                     if(tInstruction.txt=="pageType")
++                                     {
++--- HMI/n2t-out/pageStartup.txt	2022-04-13 02:11:58.191361375 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-13 02:11:58.575365937 +0000
 +diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
-+--- HMI/n2t-out/screensaver.txt	2022-04-12 16:15:30.351143292 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-12 16:15:30.734970090 +0000
++--- HMI/n2t-out/screensaver.txt	2022-04-13 02:11:58.191361375 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-13 02:11:58.579365984 +0000
 +@@ -48,6 +48,26 @@
 +         Scope: local
 +         Value: 0

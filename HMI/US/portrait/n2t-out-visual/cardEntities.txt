@@ -363,7 +363,7 @@ Text tEntity1
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : tEntity1
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -393,7 +393,7 @@ Text tEntity2
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : tEntity2
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -423,7 +423,7 @@ Text tEntity3
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : tEntity3
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -453,7 +453,7 @@ Text tEntity4
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : tEntity4
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -723,7 +723,7 @@ Text tEntity5
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : tEntity5
-        Max. Text Size                      : 50
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1186,8 +1186,8 @@ Button bDown2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 269
-        y coordinate                        : 153
+        x coordinate                        : 265
+        y coordinate                        : 180
         Width                               : 50
         Height                              : 50
         Effect                              : load
