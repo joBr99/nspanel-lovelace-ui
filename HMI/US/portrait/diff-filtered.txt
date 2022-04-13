@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-04-13 20:13:59.713214007 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-04-13 20:13:59.313209160 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-13 20:13:59.697213814 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-04-13 20:13:59.313209160 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-13 20:13:59.701213862 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-04-13 20:17:07.294468268 +0000
++--- HMI/n2t-out/Program.s.txt	2022-04-13 20:17:06.882470529 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-13 20:17:07.278468356 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-04-13 20:17:06.886470507 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-13 20:17:07.278468356 +0000
 +@@ -62,6 +62,16 @@
 +@@ -117,6 +127,18 @@
 +@@ -153,6 +175,15 @@
@@ -15,64 +15,11 @@
 +                                     }
 +                                     if(tInstruction.txt=="pageType")
 +                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-04-13 20:13:59.313209160 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-13 20:13:59.697213814 +0000
-+diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-04-13 20:13:59.313209160 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-13 20:13:59.697213814 +0000
-+@@ -570,43 +570,25 @@
-+                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-+                                         udelete payloadLength-1
-+                                         bufferPos=0
-+-                                        if(tId.txt=="pageStartup")
-+-                                        {
-+-                                            page pageStartup
-+-                                        }
-+-                                        if(tId.txt=="screensaver")
-+-                                        {
-+-                                            page screensaver
-+-                                        }
-+                                         if(tId.txt=="cardEntities")
-+                                         {
-+                                             page cardEntities
-+                                         }
-+-                                        if(tId.txt=="cardGrid")
-+-                                        {
-+-                                            page cardGrid
-+-                                        }
-+-                                        if(tId.txt=="popupLight")
-++                                        if(tId.txt=="cardMedia")
-+                                         {
-+-                                            pageIcons.tTmp1.txt=tTmp.txt
-+-                                            page popupLight
-++                                            page cardMedia
-+                                         }
-+-                                        if(tId.txt=="popupShutter")
-++                                        if(tId.txt=="pageStartup")
-+                                         {
-+-                                            pageIcons.tTmp1.txt=tTmp.txt
-+-                                            page popupShutter
-++                                            page pageStartup
-+                                         }
-+                                         if(tId.txt=="popupNotify")
-+                                         {
-+                                             page popupNotify
-+                                         }
-+-                                        if(tId.txt=="cardThermo")
-+-                                        {
-+-                                            page cardThermo
-+-                                        }
-+-                                        if(tId.txt=="cardMedia")
-++                                        if(tId.txt=="cardGrid")
-+                                         {
-+-                                            page cardMedia
-++                                            page cardGrid
-+                                         }
-+                                         if(tId.txt=="cardAlarm")
-+                                         {
++--- HMI/n2t-out/pageStartup.txt	2022-04-13 20:17:06.886470507 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-13 20:17:07.278468356 +0000
 +diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
-+--- HMI/n2t-out/screensaver.txt	2022-04-13 20:13:59.313209160 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-13 20:13:59.697213814 +0000
++--- HMI/n2t-out/screensaver.txt	2022-04-13 20:17:06.886470507 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-13 20:17:07.278468356 +0000
 +@@ -450,77 +450,6 @@
 +                                         //tMR
 +                                         spstr strCommand.txt,tMR.txt,"~",16
