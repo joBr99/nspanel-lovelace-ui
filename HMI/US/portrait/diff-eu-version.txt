@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-12 19:23:42.977686931 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-12 19:23:43.361690306 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-13 19:28:22.560583074 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-13 19:28:22.940587610 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-12 19:23:42.977686931 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-12 19:23:43.361690306 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-13 19:28:22.560583074 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-13 19:28:22.940587610 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -65,42 +65,6 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Text tHeading
      Attributes
          Scope                               : local
-@@ -171,7 +202,7 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : tEntity1
--        Max. Text Size                      : 30
-+        Max. Text Size                      : 50
-     
- Text tEntity2
-     Attributes
-@@ -181,7 +212,7 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : tEntity2
--        Max. Text Size                      : 30
-+        Max. Text Size                      : 50
-     
- Text tEntity3
-     Attributes
-@@ -191,7 +222,7 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : tEntity3
--        Max. Text Size                      : 30
-+        Max. Text Size                      : 50
-     
- Text tEntity4
-     Attributes
-@@ -201,7 +232,7 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : tEntity4
--        Max. Text Size                      : 30
-+        Max. Text Size                      : 50
-     
- Text tIcon1
-     Attributes
 @@ -283,6 +314,26 @@
          Text                                : 
          Max. Text Size                      : 50
@@ -113,7 +77,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +        Send Component ID                   : disabled
 +        Associated Keyboard                 : none
 +        Text                                : tEntity5
-+        Max. Text Size                      : 50
++        Max. Text Size                      : 30
 +    
 +Text tIcon5
 +    Attributes
@@ -463,8 +427,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-12 19:23:42.977686931 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-12 19:23:43.361690306 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-13 19:28:22.560583074 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-13 19:28:22.940587610 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -484,8 +448,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-04-12 19:23:42.977686931 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-12 19:23:43.361690306 +0000
+--- HMI/n2t-out/popupLight.txt	2022-04-13 19:28:22.560583074 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-13 19:28:22.940587610 +0000
 @@ -570,43 +570,25 @@
                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                          udelete payloadLength-1
@@ -537,36 +501,28 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                          if(tId.txt=="cardAlarm")
                                          {
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-04-12 19:23:42.977686931 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-12 19:23:43.361690306 +0000
-@@ -48,6 +48,26 @@
+--- HMI/n2t-out/screensaver.txt	2022-04-13 19:28:22.560583074 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-13 19:28:22.940587610 +0000
+@@ -48,6 +48,18 @@
          Scope: local
          Value: 0
      
-+Text tInstruction
++Variable (string) tInstruction
 +    Attributes
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : 
-+        Max. Text Size                      : 50
++        Scope         : local
++        Text          : 
++        Max. Text Size: 50
 +    
-+Text tTmp
++Variable (string) tTmp
 +    Attributes
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : 
-+        Max. Text Size                      : 50
++        Scope         : local
++        Text          : 
++        Max. Text Size: 50
 +    
  Text tTime
      Attributes
          Scope                               : local
-@@ -278,26 +298,6 @@
+@@ -278,26 +290,6 @@
          Text                                : 
          Max. Text Size                      : 10
      
