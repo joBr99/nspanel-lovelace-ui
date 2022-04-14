@@ -4,6 +4,10 @@ const Months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "A
 const Days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
 const Red: RGB = { red: 255, green: 0, blue: 0 };
 const White: RGB = { red: 255, green: 255, blue: 255 };
+const Yellow: RGB = { red: 253, green: 216, blue: 53 };
+const Green: RGB = { red: 96, green: 176, blue: 62 }
+const Brown: RGB = { red: 120, green: 80, blue: 59 }
+const Gray: RGB = { red: 69, green: 69, blue: 69 }
 const Off: RGB = { red: 68, green: 115, blue: 158 };
 const On: RGB = { red: 253, green: 216, blue: 53 };
 const BatteryFull: RGB = { red: 96, green: 176, blue: 62 }
@@ -32,6 +36,19 @@ var Strom: PageEntities =
         <PageItem>{ id: "alias.0.Hausverbrauch", icon: "flash", interpolateColor: true, offColor: BatteryFull, onColor: Red, maxValue: 1000 },
         <PageItem>{ id: "alias.0.Pv", icon: "solar-power", interpolateColor: true, offColor: Off, onColor: BatteryFull, maxValue: 1000 },
         <PageItem>{ id: "alias.0.Batterie", icon: "battery-medium", interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
+    ]
+};
+
+var Müll: PageEntities =
+{
+    "type": "cardEntities",
+    "heading": "Müllkalender",
+    "useColor": true,
+    "items": [
+        <PageItem>{ id: "alias.0.WzNsPanel.Müll.Bio_Tonne"    ,unit:"Tage",  icon: "trash-can",onColor: Brown},
+        <PageItem>{ id: "alias.0.WzNsPanel.Müll.Graue_Tonne"   ,unit:"Tage",icon: "trash-can",onColor: Gray},
+        <PageItem>{ id: "alias.0.WzNsPanel.Müll.Grüne_Tonne"    ,unit:"Tage",icon: "trash-can",onColor: Green},
+        <PageItem>{ id: "alias.0.WzNsPanel.Müll.Gelbe_Tonne"    ,unit:"Tage",icon: "trash-can",onColor: Yellow}
     ]
 };
 
@@ -78,7 +95,7 @@ export const config: Config = {
     defaultOnColor: On,
     defaultColor: Off,
     temperatureUnit: "°C",
-    pages: [Wohnen, Strom,
+    pages: [Wohnen, Strom, Müll,
         {
             "type": "cardThermo",
             "heading": "Thermostat",
@@ -349,12 +366,12 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 var optVal = "0"
                 if (existsState(pageItem.id + ".ON_ACTUAL")) {
                     optVal = getState(pageItem.id + ".ON_ACTUAL").val;
-                    unit = GetUnitOfMeasurement(pageItem.id + ".ON_ACTUAL");
+                    unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + ".ON_ACTUAL");
                     RegisterEntityWatcher(pageItem.id + ".ON_ACTUAL");
                 }
                 else if (existsState(pageItem.id + ".ACTUAL")) {
                     optVal = getState(pageItem.id + ".ACTUAL").val;
-                    unit = GetUnitOfMeasurement(pageItem.id + ".ACTUAL");
+                    unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + ".ACTUAL");
                     RegisterEntityWatcher(pageItem.id + ".ACTUAL");
                 }
 
@@ -831,7 +848,8 @@ type PageItem = {
     interpolateColor: (boolean | undefined),
     minValue: (number | undefined),
     maxValue: (number | undefined),
-    name: (string | undefined)
+    name: (string | undefined),
+    unit: (string | undefined)
 }
 
 type Config = {
