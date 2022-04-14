@@ -302,9 +302,10 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         var iconColor = rgb_dec565(config.defaultColor);
 
         switch (o.common.role) {
+            case "socket":   
             case "light":
                 type = "light"
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lightbulb");
+                 iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == "socket"  ? Icons.GetIcon("power-socket-de") : Icons.GetIcon("lightbulb");
                 var optVal = "0"
 
                 if (val === true || val === "true") {
