@@ -170,6 +170,8 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                 break;
             case "sleepReached":
                 screensaverEnabled = true;
+                if(pageId < 0)
+                    pageId = 0;
                 HandleScreensaver();
                 break;
             case "pageOpenDetail":
@@ -210,19 +212,16 @@ function HandleHardwareButton(method: string): void {
     let page: (PageThermo | PageEntities | PageGrid);
     if (config.button1Page !== null && method == "button1") {
         page = config.button1Page;
+        pageId = -1;
     }
     else if (config.button2Page !== null && method == "button2") {
         page = config.button2Page;
+        pageId = -2;
     }
     else {
         return;
     }
-
-    // Set pageId to -1, because of the navigation arrows
-    let tempPageId = pageId;
-    pageId = -1;
     GeneratePage(page);
-    pageId = tempPageId;
 }
 
 function HandleStartupProcess(): void {
@@ -425,7 +424,12 @@ function RegisterEntityWatcher(id: string): void {
         return;
     }
     subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {
-        SendToPanel({ payload: GeneratePageElements(config.pages[pageId]) });
+        if(pageId >= 0)
+            SendToPanel({ payload: GeneratePageElements(config.pages[pageId]) });
+        if(pageId == -1 && config.button1Page != undefined)
+            SendToPanel({ payload: GeneratePageElements(config.button1Page) });
+        if(pageId == -2 && config.button2Page != undefined)
+            SendToPanel({ payload: GeneratePageElements(config.button2Page) });
     }))
 }
 
