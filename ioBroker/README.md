@@ -96,7 +96,8 @@ type PageItem = {
     interpolateColor: (boolean | undefined),// fade between color on and off, useColor on Page or PageItem must be enabled
     minValue: (number | undefined),         // the minimum value for the fade calculation, if smaller the minimum value will be used
     maxValue: (number | undefined),         // the maximum value for the fade calculation, if larger the maximum value will be used
-    name: (string | undefined)              // the Name which should be displayed, default is the name of the object itself
+    name: (string | undefined),             // the Name which should be displayed, default is the name of the object itself
+    unit: (string | undefined)              // the unit which should be displayed, default is the unit of the object itself
 }
 ```
 
