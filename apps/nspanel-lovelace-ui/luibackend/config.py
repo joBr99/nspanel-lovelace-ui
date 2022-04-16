@@ -1,14 +1,9 @@
 from helper import dict_recursive_update
-import logging
-
-LOGGER = logging.getLogger(__name__)
-
-HA_API = None
 
 class Entity(object):
     def __init__(self, entity_input_config):
         if type(entity_input_config) is not dict:
-            LOGGER.error("Config error, not a dict check your entity configs")
+            #self._ha_api.log("Config error, not a dict check your entity configs")
             self.entityId = "error"
             self.nameOverride = None
             self.iconOverride = None
@@ -33,7 +28,7 @@ class Card(object):
         for e in card_input_config.get("entities", []):
             self.entities.append(Entity(e))
         self.id = f"{self.cardType}_{self.key}".replace(".","_").replace("~","_").replace(" ","_")
-        LOGGER.info(f"Created Card {self.cardType} with pos {pos} and id {self.id}")
+        #self._ha_api.log(f"Created Card {self.cardType} with pos {pos} and id {self.id}")
     
     def get_entity_list(self):
         entityIds = []
@@ -105,8 +100,7 @@ class LuiBackendConfig(object):
     }
 
     def __init__(self, ha_api, config_in):
-        global HA_API
-        HA_API = ha_api
+        self._ha_api = ha_api
         self._config = {}
         self._config_cards = []
         self._config_screensaver = None
@@ -115,8 +109,9 @@ class LuiBackendConfig(object):
         self.load(config_in)
 
     def load(self, inconfig):
+        self._ha_api.log(f"Input config: {inconfig}")
         self._config = dict_recursive_update(inconfig, self._DEFAULT_CONFIG)
-        LOGGER.info(f"Loaded config: {self._config}")
+        self._ha_api.log(f"Loaded config: {self._config}")
         
         # parse cards displayed on panel
         pos = 0

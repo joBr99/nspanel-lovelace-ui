@@ -1,10 +1,7 @@
-import logging
 import datetime
 from helper import scale, pos_to_color
 
 from pages import LuiPagesGen
-
-LOGGER = logging.getLogger(__name__)
 
 class LuiController(object):
 
@@ -40,13 +37,19 @@ class LuiController(object):
         
         # calculate current brightness
         self.current_screensaver_brightness = self.calc_current_screensaver_brightness()
+
         # call update_screensaver_brightness on changes of entity configured in brightnessScreensaverTracking
         bst = self._config.get("sleepTracking")
         if bst is not None and self._ha_api.entity_exists(bst):
             self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=bst)
 
+        # register callback for state changes on tracked value
+        sleep_brightness_config = self._config.get("sleepBrightness")
+        if type(sleep_brightness_config) == str and self._ha_api.entity_exists(sleep_brightness_config):
+            self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=sleep_brightness_config)
+
     def startup(self):
-        LOGGER.info(f"Startup Event")
+        self._ha_api.log(f"Startup Event")
         # send time and date on startup
         self._pages_gen.update_time("")
         self._pages_gen.update_date("")
@@ -63,6 +66,10 @@ class LuiController(object):
 
 
     def update_screensaver_brightness_state_callback(self, entity, attribute, old, new, kwargs):
+        x = type(self._config.get("sleepBrightness"))
+        y = self._config.get("sleepBrightness")
+        if type(self._config.get("sleepBrightness")) == str:
+            self.current_screensaver_brightness = self.calc_current_screensaver_brightness()
         self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
         
     def update_screensaver_brightness(self, kwargs):
@@ -77,19 +84,22 @@ class LuiController(object):
         
     def calc_current_screensaver_brightness(self):
         current_screensaver_brightness = 20
+        sleep_brightness_config = self._config.get("sleepBrightness")
         # set brightness of screensaver
-        if type(self._config.get("sleepBrightness")) == int:
-            current_screensaver_brightness = self._config.get("sleepBrightness")
-        elif type(self._config.get("sleepBrightness")) == list:
-            sorted_timesets = sorted(self._config.get("sleepBrightness"), key=lambda d: self._ha_api.parse_time(d['time']))
+        if type(sleep_brightness_config) == int:
+            current_screensaver_brightness = sleep_brightness_config
+        elif type(sleep_brightness_config) == str:
+                current_screensaver_brightness = int(float(self._ha_api.get_state(sleep_brightness_config)))
+        elif type(sleep_brightness_config) == list:
+            sorted_timesets = sorted(sleep_brightness_config, key=lambda d: self._ha_api.parse_time(d['time']))
             # calc current screensaver brightness
             found_current_dim_value = False
             for index, timeset in enumerate(sorted_timesets):
-                LOGGER.info("Current time %s", self._ha_api.get_now().time())
+                self._ha_api.log("Current time %s", self._ha_api.get_now().time())
                 if self._ha_api.parse_time(timeset["time"]) > self._ha_api.get_now().time() and not found_current_dim_value:
                     # first time after current time, set dim value
                     current_screensaver_brightness = sorted_timesets[index-1]["value"]
-                    LOGGER.info("Setting dim value to %s", sorted_timesets[index-1])
+                    self._ha_api.log("Setting dim value to %s", sorted_timesets[index-1])
                     found_current_dim_value = True
             # still no dim value
             if not found_current_dim_value:
@@ -98,16 +108,16 @@ class LuiController(object):
 
     def register_callbacks(self):
         items = self._config.get_all_entity_names()
-        LOGGER.info(f"Registering callbacks for the following items: {items}")
+        self._ha_api.log(f"Registering callbacks for the following items: {items}")
         for item in items:
             if self._ha_api.entity_exists(item):
                 self._ha_api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
 
     def state_change_callback(self, entity, attribute, old, new, kwargs):
-        LOGGER.debug(f"Got callback for: {entity}")
-        LOGGER.debug(f"Current page has the following items: {self._current_card.get_entity_list()}")
+        self._ha_api.log(f"Got callback for: {entity}", level="DEBUG")
+        self._ha_api.log(f"Current page has the following items: {self._current_card.get_entity_list()}", level="DEBUG")
         if entity in self._current_card.get_entity_list():
-            LOGGER.debug(f"Callback Entity is on current page: {entity}")
+            self._ha_api.log(f"Callback Entity is on current page: {entity}", level="DEBUG")
             self._pages_gen.render_card(self._current_card, send_page_type=False)
             # send detail page update, just in case
             if self._current_card.cardType in ["cardGrid", "cardEntities"]:
@@ -124,7 +134,7 @@ class LuiController(object):
             self._pages_gen.generate_light_detail_page(entity_id)
 
     def button_press(self, entity_id, button_type, value):
-        LOGGER.info(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
+        self._ha_api.log(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
         # internal buttons
         if entity_id == "screensaver" and button_type == "bExit":
             # get default card if there is one
