@@ -19,6 +19,7 @@ EU Model and US Model supported (in portrait and landscape orientation)
 - Media Player Card
 - Alarm Control Panel
 - Screensaver Page with Time, Date and Weather Information
+- Localization possible (currently 38 languages)
 - **Everything is dynamically configurable by a yaml config, no need to code or touch Nextion Editor**
 
 It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
