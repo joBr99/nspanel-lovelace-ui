@@ -1,21 +1,18 @@
 import json
 
-import logging
-
-LOGGER = logging.getLogger(__name__)
-
 class LuiMqttListener(object):
 
     def __init__(self, mqtt_api, topic, controller, updater):
         self._controller = controller
         self._updater = updater
+        self._mqtt_api = mqtt_api
         # Setup, mqtt subscription and callback
         mqtt_api.mqtt_subscribe(topic=topic)
         mqtt_api.listen_event(self.mqtt_event_callback, "MQTT_MESSAGE", topic=topic, namespace='mqtt')
 
 
     def mqtt_event_callback(self, event_name, data, kwargs):
-        LOGGER.debug(f'MQTT callback for: {data}')
+        self._mqtt_api.log(f'MQTT callback for: {data}')
         # Parse Json Message from Tasmota and strip out message from nextion display
         data = json.loads(data["payload"])
         if("nlui_driver_version" in data):
@@ -25,7 +22,7 @@ class LuiMqttListener(object):
         if("CustomRecv" not in data):
             return
         msg = data["CustomRecv"]
-        LOGGER.info(f"Received Message from Screen: {msg}")
+        self._mqtt_api.log(f"Received Message from Screen: {msg}")
         # Split message into parts seperated by ","
         msg = msg.split(",")
         # run action based on received command

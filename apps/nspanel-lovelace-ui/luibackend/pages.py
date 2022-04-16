@@ -1,4 +1,3 @@
-import logging
 import datetime
 import dateutil.parser as dp
 
@@ -12,8 +11,6 @@ import importlib
 babel_spec = importlib.util.find_spec("babel")
 if babel_spec is not None:
     import babel.dates
-
-LOGGER = logging.getLogger(__name__)
 
 class LuiPagesGen(object):
 
@@ -64,7 +61,7 @@ class LuiPagesGen(object):
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
         else:
-            LOGGER.error(f"Skipping Weather Update, entity {we_name} not found")
+            self._ha_api.error(f"Skipping Weather Update, entity {we_name} not found")
             return
 
         icon_cur        = get_icon_id_ha("weather", state=we.state)
@@ -84,7 +81,7 @@ class LuiPagesGen(object):
                 icon = get_icon_id_ha("weather", state=we.attributes.forecast[i-1]['condition'])
                 down = convert_temperature(we.attributes.forecast[i-1]['temperature'], unit)
             else:
-                LOGGER.info(f"Forecast {i} is overriden with {wOF}")
+                self._ha_api.log(f"Forecast {i} is overriden with {wOF}")
                 icon = wOF.get("icon")
                 name = wOF.get("name")
                 entity = self._ha_api.get_entity(wOF.get("entity"))
@@ -107,7 +104,7 @@ class LuiPagesGen(object):
         # type of the item is the string before the "." in the entityId
         entityType = entityId.split(".")[0]
         
-        LOGGER.debug(f"Generating item for {entityId} with type {entityType}",)
+        self._ha_api.log(f"Generating item for {entityId} with type {entityType}", level="DEBUG")
         # Internal types
         if entityType == "delete":
             return f"~{entityType}~~~~~"
@@ -326,7 +323,7 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(command)
         
     def render_card(self, card, send_page_type=True):
-        LOGGER.info(f"Started rendering of page {card.pos} with type {card.cardType}")
+        self._ha_api.log(f"Started rendering of page {card.pos} with type {card.cardType}")
         if len(self._config._config_cards) == 1:
             navigation = "0|0"
         else:

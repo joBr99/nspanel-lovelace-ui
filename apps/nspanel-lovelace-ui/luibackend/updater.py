@@ -1,9 +1,8 @@
-import logging
-
-LOGGER = logging.getLogger(__name__)
-
 class Updater:
-    def __init__(self, send_mqtt_msg, topic_send, mode, desired_display_firmware_version, desired_display_firmware_model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
+    def __init__(self, log, send_mqtt_msg, topic_send, mode, desired_display_firmware_version, desired_display_firmware_model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
+        
+        self._log = log
+        
         self.desired_display_firmware_version = desired_display_firmware_version
         self.desired_display_firmware_model = desired_display_firmware_model
         self.desired_display_firmware_url     = desired_display_firmware_url
@@ -43,10 +42,10 @@ class Updater:
         # return's true if a notification was send to the panel
         # run pre req check
         if self.check_pre_req():
-            LOGGER.info("Update Pre-Check sucessful Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_display_firmware_version)
+            self._log("Update Pre-Check sucessful Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_display_firmware_version)
             # check if tasmota driver needs update
             if self.current_tasmota_driver_version < self.desired_tasmota_driver_version:
-                LOGGER.info("Update of Tasmota Driver needed")
+                self._log("Update of Tasmota Driver needed")
                 # in auto mode just do the update
                 if self.mode == "auto":
                     self.update_berry_driver()
@@ -59,14 +58,14 @@ class Updater:
                 return False
             # check if model has changed
             if self.current_display_model is not None and self.current_display_model != self.desired_display_firmware_model:
-                LOGGER.info(f"Mismatch between Display Firmware ({self.current_display_model}) and configured model ({self.desired_display_firmware_model})")
+                self._log(f"Mismatch between Display Firmware ({self.current_display_model}) and configured model ({self.desired_display_firmware_model})")
                 update_msg = f"The configured display firmware model has changed, do you want to start the update now? Current Model: {self.current_display_model}         Configured Model: {self.desired_display_firmware_model} If the update fails check the installation          manual and flash your version again over the Tasmota console. Be patient, the update will   take a while."
                 self.send_message_page("updateDisplayNoYes", "Display Update available!", update_msg, "Dismiss", "Yes")
                 return True
 
             # check if display firmware needs an update
             if self.current_display_firmware_version < self.desired_display_firmware_version:
-                LOGGER.info("Update of Display Firmware needed")
+                self._log("Update of Display Firmware needed")
                 # in auto mode just do the update
                 if self.mode == "auto":
                     self.update_panel_driver()
@@ -78,7 +77,7 @@ class Updater:
                     return True
                 return False
         else:
-            LOGGER.info("Update Pre-Check failed Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_display_firmware_version)
+            self._log("Update Pre-Check failed Tasmota Driver Version: %s Panel Version: %s", self.current_tasmota_driver_version, self.current_display_firmware_version)
             return False
 
     def request_berry_driver_version(self):
