@@ -72,7 +72,7 @@ class Updater:
                     return False
                 # send notification about the update
                 if self.mode == "auto-notify":
-                    update_msg = "There's a firmware update available for the      Nextion screen of the NSPanel. Do you want tostart the update now?                                         If the update fails check the installation         manual and flash again over the Tasmota console. Be patient, the update will take a while."
+                    update_msg = "There's a firmware update available for the      Nextion screen of the NSPanel. Do you want tostart the update now?                                         If the update fails check the installation         manual and flash again over the Tasmota        console.                                                                 Be patient, the update will take a while."
                     self.send_message_page("updateDisplayNoYes", "Display Update available!", update_msg, "Dismiss", "Yes")
                     return True
                 return False
