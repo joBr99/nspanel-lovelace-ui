@@ -349,6 +349,48 @@ key | optional | type | default | description
 `screensaver` | True | complex | | configuration for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items
 
+Possible languages for locale config key:
+
+  - `af_xx` - Afrikaans
+  - `ar_xx` - Arabic
+  - `bg_xx` - Bulgarian
+  - `ca_xx` - Catalan
+  - `cs_xx` - Czech
+  - `da_xx` - Danish
+  - `de_xx` - German
+  - `el_xx` - Greek
+  - `en_xx` - English
+  - `es_xx` - Spanish
+  - `et_xx` - Estonian
+  - `fa_xx` - Persian
+  - `fi_xx` - Finnish
+  - `fr_xx` - French
+  - `he_xx` - Hebrew
+  - `hr_xx` - Croatian
+  - `hu_xx` - Hungarian
+  - `hy_xx` - Armenian
+  - `id_xx` - Indonesian
+  - `is_xx` - Icelandic
+  - `it_xx` - Italian
+  - `lb_xx` - Luxembourgish
+  - `lt_xx` - Lithuanian
+  - `lv_xx` - Latvian
+  - `nb_xx` - Norwegian
+  - `nl_xx` - Dutch
+  - `nn_xx` - Norwegian
+  - `pl_xx` - Polish
+  - `pt_xx` - Portuguese
+  - `ro_xx` - Romanian
+  - `ru_xx` - Russian
+  - `sk_xx` - Slovak
+  - `sl_xx` - Slovenian
+  - `sv_xx` - Swedish
+  - `th_xx` - Thai
+  - `tr_xx` - Turkish
+  - `uk_xx` - Ukrainian
+  - `vi_xx` - Vietnamese
+
+
 Possible configuration values for a card in card config:
 
 key | optional | type | default | description
