@@ -1,5 +1,3 @@
-from helper import dict_recursive_update
-
 class Entity(object):
     def __init__(self, entity_input_config):
         if type(entity_input_config) is not dict:
@@ -47,57 +45,13 @@ class Card(object):
 
 class LuiBackendConfig(object):
 
-    _DEFAULT_CONFIG = {
-        'panelRecvTopic': "tele/tasmota_your_mqtt_topic/RESULT",
-        'panelSendTopic': "cmnd/tasmota_your_mqtt_topic/CustomSend",
-        'updateMode': "auto-notify",
-        'model': "eu",
-        'sleepTimeout': 20,
-        'sleepBrightness': 20,
-        'sleepTracking': None,
-        'locale': "en_US",
-        'timeFormat': "%H:%M",
-        'dateFormatBabel': "full",
-        'dateFormat': "%A, %d. %B %Y",
-        'cards': [{
-            'type': 'cardEntities',
-            'entities': [{
-                'entity': 'switch.test_item',
-                'name': 'Test Item'
-                }, {
-                'entity': 'switch.test_item'
-            }],
-            'title': 'Example Entities Page'
-        }, {
-            'type': 'cardGrid',
-            'entities': [{
-                'entity': 'switch.test_item'
-                }, {
-                'entity': 'switch.test_item'
-                }, {
-                'entity': 'switch.test_item'
-                }
-            ],
-            'title': 'Example Grid Page'
-        }, {
-            'type': 'climate',
-            'entity': 'climate.test_item',
-        }],
-        'screensaver': {
-            'type': 'screensaver',
-            'entity': 'weather.example',
-            'weatherUnit': 'celsius',
-            'weatherOverrideForecast1': None,
-            'weatherOverrideForecast2': None,
-            'weatherOverrideForecast3': None,
-            'weatherOverrideForecast4': None,
-            'doubleTapToUnlock': False,
-            'alternativeLayout': False,
-            'defaultCard': None,
-            'key': 'screensaver'
-        },
-        'hiddenCards': []
-    }
+    def dict_recursive_update(self, source: dict, target: dict) -> dict:
+        for sk, sv in source.items():
+            if sk in target and isinstance(target[sk], dict):
+                target[sk] = self.dict_recursive_update(sv, target[sk])
+            else:
+                target[sk] = sv
+        return target
 
     def __init__(self, ha_api, config_in):
         self._ha_api = ha_api
@@ -106,12 +60,64 @@ class LuiBackendConfig(object):
         self._config_screensaver = None
         self._config_hidden_cards = []
 
+        self._DEFAULT_CONFIG = {
+            'panelRecvTopic': "tele/tasmota_your_mqtt_topic/RESULT",
+            'panelSendTopic': "cmnd/tasmota_your_mqtt_topic/CustomSend",
+            'updateMode': "auto-notify",
+            'model': "eu",
+            'sleepTimeout': 20,
+            'sleepBrightness': 20,
+            'sleepTracking': None,
+            'locale': "en_US",
+            'timeFormat': "%H:%M",
+            'dateFormatBabel': "full",
+            'dateFormat': "%A, %d. %B %Y",
+            'cards': [{
+                'type': 'cardEntities',
+                'entities': [{
+                    'entity': 'switch.test_item',
+                    'name': 'Test Item'
+                    }, {
+                    'entity': 'switch.test_item'
+                }],
+                'title': 'Example Entities Page'
+            }, {
+                'type': 'cardGrid',
+                'entities': [{
+                    'entity': 'switch.test_item'
+                    }, {
+                    'entity': 'switch.test_item'
+                    }, {
+                    'entity': 'switch.test_item'
+                    }
+                ],
+                'title': 'Example Grid Page'
+            }, {
+                'type': 'climate',
+                'entity': 'climate.test_item',
+            }],
+            'screensaver': {
+                'type': 'screensaver',
+                'entity': 'weather.example',
+                'weatherUnit': 'celsius',
+                'weatherOverrideForecast1': None,
+                'weatherOverrideForecast2': None,
+                'weatherOverrideForecast3': None,
+                'weatherOverrideForecast4': None,
+                'doubleTapToUnlock': False,
+                'alternativeLayout': False,
+                'defaultCard': None,
+                'key': 'screensaver'
+            },
+            'hiddenCards': []
+        }
+
         self.load(config_in)
 
     def load(self, inconfig):
-        self._ha_api.log(f"Input config: {inconfig}")
-        self._config = dict_recursive_update(inconfig, self._DEFAULT_CONFIG)
-        self._ha_api.log(f"Loaded config: {self._config}")
+        self._ha_api.log("Input config: %s", inconfig)
+        self._config = self.dict_recursive_update(inconfig, self._DEFAULT_CONFIG)
+        self._ha_api.log("Loaded config: %s", self._config)
         
         # parse cards displayed on panel
         pos = 0
