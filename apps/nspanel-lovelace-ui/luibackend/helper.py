@@ -55,11 +55,3 @@ def get_attr_safe(entity, attr, default):
     if res is None:
         res = default
     return res
-
-def dict_recursive_update(source: dict, target: dict) -> dict:
-    for sk, sv in source.items():
-        if sk in target and isinstance(target[sk], dict):
-            target[sk] = dict_recursive_update(sv, target[sk])
-        else:
-            target[sk] = sv
-    return target
