@@ -230,6 +230,8 @@ US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
 For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml`
 
+NOTE: This is not the configuration of the AppDaemon Addon in HomeAssistant. You will find this file under: config/appdaemon/appdeamon.yaml
+
 ```yaml
 ---
 secrets: /config/secrets.yaml
