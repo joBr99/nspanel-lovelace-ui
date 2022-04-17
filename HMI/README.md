@@ -79,6 +79,8 @@ change the page type:
 
 `color~background~time~timeAMPM~date~tMainIcon~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tF1Icon~tF2Icon~tF3Icon~tF4Icon~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMainIconAlt~tMainTextAlt~tMRIcon~tMR`
 
+`notify~heading~text`
+
 ### cardEntities Page
 
 The following message can be used to update the content on the cardEntities Page
