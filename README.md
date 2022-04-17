@@ -445,6 +445,14 @@ It is possible to schedule a brightness change for the screen at specific times.
         value: 0
 ```
 
+```yaml
+    sleepBrightness:
+      - time: "sunrise"
+        value: 10
+      - time: "sunset + 1:00:00"
+        value: 0
+```
+
 #### Override Icons or Names
 
 To override Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
