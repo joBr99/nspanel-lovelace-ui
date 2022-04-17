@@ -10,6 +10,10 @@ pageTest
 	13   Component(s)
 	13   Line(s) of event code
 	13   Unique line(s) of event code
+screensaver
+	35   Component(s)
+	282  Line(s) of event code
+	229  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	338  Line(s) of event code
@@ -38,10 +42,6 @@ cardGrid
 	39   Component(s)
 	418  Line(s) of event code
 	244  Unique line(s) of event code
-screensaver
-	33   Component(s)
-	266  Line(s) of event code
-	218  Unique line(s) of event code
 cardAlarm
 	35   Component(s)
 	343  Line(s) of event code
@@ -53,6 +53,6 @@ cardEntities
 
 Total
 	12   Page(s)
-	341  Component(s)
-	3661 Line(s) of event code
-	1002 Unique line(s) of event code
+	343  Component(s)
+	3677 Line(s) of event code
+	1012 Unique line(s) of event code
