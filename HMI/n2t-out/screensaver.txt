@@ -646,6 +646,16 @@ TouchCap tc0
     
     Events
         Touch Press Event
+            if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+            {
+                if(dim!=0)
+                {
+                    tNotifyHead.txt=""
+                    tNotifyText.txt=""
+                    vis tNotifyHead,0
+                    vis tNotifyText,0
+                }
+            }
             dim=dimValueNormal
             vaTap.val+=1
             covx vaTap.val,tTmp.txt,0,0
