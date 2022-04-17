@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-15 16:21:24.696789846 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-15 16:21:25.032794102 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-17 18:33:11.488952559 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-17 18:33:11.968955186 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-15 16:21:24.696789846 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-15 16:21:25.032794102 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-17 18:33:11.492952581 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-17 18:33:11.968955186 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -427,8 +427,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-15 16:21:24.696789846 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-15 16:21:25.032794102 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-17 18:33:11.492952581 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-17 18:33:11.968955186 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -447,3 +447,63 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
+diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
+--- HMI/n2t-out/screensaver.txt	2022-04-17 18:33:11.492952581 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-17 18:33:11.968955186 +0000
+@@ -17,8 +17,6 @@
+             vis tInstruction,0
+             vis tTmp,0
+             vis p0,0
+-            vis tNotifyHead,0
+-            vis tNotifyText,0
+             //load gloabl time string from pageIcons
+             //tTime.txt=vaTime.txt
+             spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+@@ -292,26 +290,6 @@
+         Text                                : 
+         Max. Text Size                      : 10
+     
+-Text tNotifyHead
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : 
+-        Max. Text Size                      : 35
+-    
+-Text tNotifyText
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : 
+-        Max. Text Size                      : 35
+-    
+ Picture p0
+     Attributes
+         Scope                               : local
+@@ -543,20 +521,6 @@
+                                         spstr strCommand.txt,tTmp.txt,"~",23
+                                         covx tTmp.txt,tMR.pco,0,0
+                                     }
+-                                    if(tInstruction.txt=="notify")
+-                                    {
+-                                        spstr strCommand.txt,tNotifyHead.txt,"~",1
+-                                        spstr strCommand.txt,tNotifyText.txt,"~",2
+-                                        if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+-                                        {
+-                                            vis tNotifyHead,1
+-                                            vis tNotifyText,1
+-                                        }else
+-                                        {
+-                                            vis tNotifyHead,0
+-                                            vis tNotifyText,0
+-                                        }
+-                                    }
+                                     if(tInstruction.txt=="pageType")
+                                     {
+                                         dim=100
