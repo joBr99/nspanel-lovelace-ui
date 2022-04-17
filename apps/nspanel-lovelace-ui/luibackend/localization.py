@@ -512,25 +512,6 @@ translations = {
         'pt': {
             'PRESS': "Pressione",
             'ACTIVATE': "Ativar",
-            'aux_heat': "Aquecedor aux",
-            'cooling': "Resfriando",
-            'drying': "Secando",
-            'fan': "Ventilando",
-            'idle': "Oscioso",
-            'off': "Desligado",
-            'arm_away': "Armar ausente",
-            'arm_custom_bypass': "Bypass personalizado",
-            'arm_home': "Armar em casa",
-            'arm_night': "Acionamento noturno",
-            'arm_vacation': "Armar férias",
-            'clear_code': "Limpar",
-            'code': "Código",
-            'disarm': "Desarmar",
-            'run': "Executar",
-        },
-        'pt': {
-            'PRESS': "Pressione",
-            'ACTIVATE': "Ativar",
             'aux_heat': "Calor auxiliar",
             'cooling': "Resfriar",
             'drying': "Secagem",
@@ -712,8 +693,7 @@ translations = {
 }
 
 def get_translation(locale, input):
-    locale = locale.split("_")[0]
-    en_fallback_res = translations.get("en").get(input, input)
+    en_fallback_res = translations.get("en_US").get(input, input)
     if locale in translations:
         return translations.get(locale).get(input, en_fallback_res)
     else:
