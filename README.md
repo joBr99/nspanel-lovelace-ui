@@ -10,6 +10,10 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 
 EU Model and US Model supported (in portrait and landscape orientation)
 
+Content of the screen is controlled by a AppDaemon Python Script installed on your HomeAssistant Instance.
+
+(or a TypeScript on your ioBroker Instance in case you are an ioBroker User)
+
 ## Features
 
 - Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light
@@ -19,6 +23,8 @@ EU Model and US Model supported (in portrait and landscape orientation)
 - Media Player Card
 - Alarm Control Panel
 - Screensaver Page with Time, Date and Weather Information
+- Localization possible (currently 38 languages)
+- **Everything is dynamically configurable by a yaml config, no need to code or touch Nextion Editor**
 
 It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
 To control the panel and update it with content from HomeAssistant there is an [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
@@ -224,6 +230,8 @@ US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
 For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml`
 
+NOTE: This are not the options of the AppDaemon Addon in HomeAssistant. You will find this file under: `config/appdaemon/appdeamon.yaml`
+
 ```yaml
 ---
 secrets: /config/secrets.yaml
@@ -348,6 +356,48 @@ key | optional | type | default | description
 `cards` | False | complex | | configuration for cards that are displayed on panel
 `screensaver` | True | complex | | configuration for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items
+
+Possible languages for locale config key:
+
+  - `af_xx` - Afrikaans
+  - `ar_xx` - Arabic
+  - `bg_xx` - Bulgarian
+  - `ca_xx` - Catalan
+  - `cs_xx` - Czech
+  - `da_xx` - Danish
+  - `de_xx` - German
+  - `el_xx` - Greek
+  - `en_xx` - English
+  - `es_xx` - Spanish
+  - `et_xx` - Estonian
+  - `fa_xx` - Persian
+  - `fi_xx` - Finnish
+  - `fr_xx` - French
+  - `he_xx` - Hebrew
+  - `hr_xx` - Croatian
+  - `hu_xx` - Hungarian
+  - `hy_xx` - Armenian
+  - `id_xx` - Indonesian
+  - `is_xx` - Icelandic
+  - `it_xx` - Italian
+  - `lb_xx` - Luxembourgish
+  - `lt_xx` - Lithuanian
+  - `lv_xx` - Latvian
+  - `nb_xx` - Norwegian
+  - `nl_xx` - Dutch
+  - `nn_xx` - Norwegian
+  - `pl_xx` - Polish
+  - `pt_xx` - Portuguese
+  - `ro_xx` - Romanian
+  - `ru_xx` - Russian
+  - `sk_xx` - Slovak
+  - `sl_xx` - Slovenian
+  - `sv_xx` - Swedish
+  - `th_xx` - Thai
+  - `tr_xx` - Turkish
+  - `uk_xx` - Ukrainian
+  - `vi_xx` - Vietnamese
+
 
 Possible configuration values for a card in card config:
 
