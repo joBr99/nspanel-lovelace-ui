@@ -1,6 +1,3 @@
-import logging
-import traceback
-
 import hassapi as hass
 
 from luibackend.config import LuiBackendConfig
