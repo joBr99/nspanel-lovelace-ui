@@ -67,17 +67,25 @@ class LuiPagesGen(object):
         icon_cur        = get_icon_id_ha("weather", state=we.state)
         text_cur        = convert_temperature(we.attributes.temperature, unit)
 
+        # seconds between first and second forecast item
+        interval = (dp.parse(we.attributes.forecast[1]['datetime']) - dp.parse(we.attributes.forecast[0]['datetime'])).total_seconds()
+
         weather_res = ""
         for i in range(1,5):
             wOF = self._config._config_screensaver.raw_config.get(f"weatherOverrideForecast{i}")
             if wOF is None:
                 up = we.attributes.forecast[i-1]['datetime']
-                #up   = datetime.datetime.fromisoformat(up)
                 up   = dp.parse(up)
                 if babel_spec is not None:
-                    up = babel.dates.format_date(up, "E", locale=self._locale)
+                    if interval >= 86400.0:
+                        up = babel.dates.format_date(up, "E", locale=self._locale)
+                    else:
+                        up = babel.dates.format_time(up, "H:mm", locale=self._locale)
                 else:
-                    up = up.strftime("%a")
+                    if interval >= 86400.0:
+                        up = up.strftime('%a')
+                    else:
+                        up = up.strftime('%H:%M')
                 icon = get_icon_id_ha("weather", state=we.attributes.forecast[i-1]['condition'])
                 down = convert_temperature(we.attributes.forecast[i-1]['temperature'], unit)
             else:
