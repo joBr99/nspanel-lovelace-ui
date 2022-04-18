@@ -100,6 +100,7 @@ class LuiBackendConfig(object):
                 'type': 'screensaver',
                 'entity': 'weather.example',
                 'weatherUnit': 'celsius',
+                'forecastSkip': 0,
                 'weatherOverrideForecast1': None,
                 'weatherOverrideForecast2': None,
                 'weatherOverrideForecast3': None,
