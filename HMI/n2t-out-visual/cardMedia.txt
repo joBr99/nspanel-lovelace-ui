@@ -40,7 +40,7 @@ Variable (string) entn
         ID            : 18
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 80
     
 Variable (string) vaSpeakerList
     Attributes
