@@ -70,7 +70,6 @@ class LuiPagesGen(object):
         forecastSkip = self._config._config_screensaver.raw_config.get(f"forecastSkip")+1
         # check if the first 2 forecast items are on the same day
         same_day = dp.parse(we.attributes.forecast[0]['datetime']).weekday() == dp.parse(we.attributes.forecast[forecastSkip]['datetime']).weekday()
-        self._ha_api.log("test123 %s", same_day)
         weather_res = ""
         for i in range(1,5):
             wOF = self._config._config_screensaver.raw_config.get(f"weatherOverrideForecast{i}")
