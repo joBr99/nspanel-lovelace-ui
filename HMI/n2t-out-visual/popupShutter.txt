@@ -56,8 +56,8 @@ Variable (string) entn
     Attributes
         ID            : 18
         Scope         : local
-        Text          : newtxt
-        Max. Text Size: 50
+        Text          : 
+        Max. Text Size: 80
     
 Text tEntity
     Attributes

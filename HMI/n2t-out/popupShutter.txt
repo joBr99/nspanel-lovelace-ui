@@ -46,8 +46,8 @@ Variable (string) strCommand
 Variable (string) entn
     Attributes
         Scope         : local
-        Text          : newtxt
-        Max. Text Size: 50
+        Text          : 
+        Max. Text Size: 80
     
 Text tEntity
     Attributes
