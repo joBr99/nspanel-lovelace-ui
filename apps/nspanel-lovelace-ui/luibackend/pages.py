@@ -67,27 +67,34 @@ class LuiPagesGen(object):
         icon_cur        = get_icon_id_ha("weather", state=we.state)
         text_cur        = convert_temperature(we.attributes.temperature, unit)
 
-        # seconds between first and second forecast item
-        interval = (dp.parse(we.attributes.forecast[1]['datetime']) - dp.parse(we.attributes.forecast[0]['datetime'])).total_seconds()
-
+        forecastSkip = self._config._config_screensaver.raw_config.get(f"forecastSkip")+1
+        # check if the first 2 forecast items are on the same day
+        same_day = dp.parse(we.attributes.forecast[0]['datetime']).weekday() == dp.parse(we.attributes.forecast[forecastSkip]['datetime']).weekday()
+        self._ha_api.log("test123 %s", same_day)
         weather_res = ""
         for i in range(1,5):
             wOF = self._config._config_screensaver.raw_config.get(f"weatherOverrideForecast{i}")
             if wOF is None:
-                up = we.attributes.forecast[i-1]['datetime']
-                up   = dp.parse(up)
-                if babel_spec is not None:
-                    if interval >= 86400.0:
-                        up = babel.dates.format_date(up, "E", locale=self._locale)
+                fid = (i-1)*forecastSkip
+                if len(we.attributes.forecast) >= fid:
+                    up = we.attributes.forecast[fid]['datetime']
+                    up   = dp.parse(up)
+                    if babel_spec is not None:
+                        if same_day:
+                            up = babel.dates.format_time(up, "H:mm", locale=self._locale)
+                        else:
+                            up = babel.dates.format_date(up, "E", locale=self._locale)
                     else:
-                        up = babel.dates.format_time(up, "H:mm", locale=self._locale)
+                        if same_day:
+                            up = up.strftime('%H:%M')
+                        else:
+                            up = up.strftime('%a')
+                    icon = get_icon_id_ha("weather", state=we.attributes.forecast[fid]['condition'])
+                    down = convert_temperature(we.attributes.forecast[fid]['temperature'], unit)
                 else:
-                    if interval >= 86400.0:
-                        up = up.strftime('%a')
-                    else:
-                        up = up.strftime('%H:%M')
-                icon = get_icon_id_ha("weather", state=we.attributes.forecast[i-1]['condition'])
-                down = convert_temperature(we.attributes.forecast[i-1]['temperature'], unit)
+                    up = ""
+                    icon = ""
+                    down = ""
             else:
                 self._ha_api.log(f"Forecast {i} is overriden with {wOF}")
                 icon = wOF.get("icon")
