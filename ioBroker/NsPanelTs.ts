@@ -327,6 +327,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 if (val === true || val === "true") {
                     optVal = "1"
                     iconColor = GetIconColor(pageItem, true, useColors);
+                } else {
+                    iconColor = GetIconColor(pageItem, false, useColors);
                 }
 
                 return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
