@@ -1,7 +1,7 @@
 Program.s
 	0    Component(s)
-	11   Line(s) of event code
-	11   Unique line(s) of event code
+	10   Line(s) of event code
+	10   Unique line(s) of event code
 pageIcons
 	6    Component(s)
 	0    Line(s) of event code
@@ -34,14 +34,14 @@ cardThermo
 	41   Component(s)
 	442  Line(s) of event code
 	247  Unique line(s) of event code
-cardAlarm
-	35   Component(s)
-	343  Line(s) of event code
-	214  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	150  Line(s) of event code
 	113  Unique line(s) of event code
+cardAlarm
+	35   Component(s)
+	343  Line(s) of event code
+	214  Unique line(s) of event code
 screensaver
 	35   Component(s)
 	292  Line(s) of event code
@@ -54,5 +54,5 @@ cardEntities
 Total
 	12   Page(s)
 	343  Component(s)
-	3687 Line(s) of event code
-	1018 Unique line(s) of event code
+	3686 Line(s) of event code
+	1017 Unique line(s) of event code
