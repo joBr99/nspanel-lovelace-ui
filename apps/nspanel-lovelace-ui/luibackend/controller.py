@@ -73,7 +73,7 @@ class LuiController(object):
     def update_screensaver_brightness(self, kwargs):
         bst = self._config.get("sleepTracking")
         brightness = 0
-        if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state == "not_home":
+        if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state in ["not_home", "off"]:
             brightness = 0
         else:
             self.current_screensaver_brightness = kwargs['value']
