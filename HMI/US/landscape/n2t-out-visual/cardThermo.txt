@@ -52,7 +52,7 @@ Variable (string) entn
         ID            : 21
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 80
     
 Variable (string) va0
     Attributes

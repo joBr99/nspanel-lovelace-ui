@@ -296,7 +296,7 @@ Text tMsg1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 52
+        x coordinate                        : 57
         y coordinate                        : 223
         Width                               : 375
         Height                              : 30
@@ -326,7 +326,7 @@ Text tMsg2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 35
+        x coordinate                        : 40
         y coordinate                        : 256
         Width                               : 408
         Height                              : 25
@@ -356,7 +356,7 @@ Text tMsg3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 35
+        x coordinate                        : 25
         y coordinate                        : 278
         Width                               : 408
         Height                              : 25
@@ -462,7 +462,7 @@ Button bSendStartup
             recmod=1
             bauds=115200
             // startup event
-            tSend.txt="event,startup,"+tVersion.txt+",us-l"
+            tSend.txt="event,startup,"+tVersion.txt+",eu"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -483,7 +483,7 @@ Hotspot mSpinner
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 164
+        x coordinate                        : 169
         y coordinate                        : 49
         Width                               : 140
         Height                              : 140

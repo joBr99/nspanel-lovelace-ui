@@ -69,25 +69,25 @@ Variable (string) entn1
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 70
+        Max. Text Size: 80
     
 Variable (string) entn2
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 70
+        Max. Text Size: 80
     
 Variable (string) entn3
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 70
+        Max. Text Size: 80
     
 Variable (string) entn4
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 70
+        Max. Text Size: 80
     
 Variable (string) type5
     Attributes
@@ -105,13 +105,13 @@ Variable (string) entn5
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 80
     
 Variable (string) entn6
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 80
     
 Text tHeading
     Attributes
