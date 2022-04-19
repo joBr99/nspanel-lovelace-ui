@@ -56,8 +56,8 @@ Variable (string) entn
     Attributes
         ID            : 18
         Scope         : local
-        Text          : newtxt
-        Max. Text Size: 50
+        Text          : 
+        Max. Text Size: 80
     
 Text tEntity
     Attributes
@@ -67,7 +67,7 @@ Text tEntity
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 80
+        x coordinate                        : 82
         y coordinate                        : 108
         Width                               : 195
         Height                              : 30
@@ -97,7 +97,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 27
+        x coordinate                        : 29
         y coordinate                        : 109
         Width                               : 45
         Height                              : 30
@@ -127,7 +127,7 @@ Text tSend
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 15
+        x coordinate                        : 17
         y coordinate                        : 0
         Width                               : 348
         Height                              : 22
@@ -157,7 +157,7 @@ Text tTmp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 421
+        x coordinate                        : 423
         y coordinate                        : 277
         Width                               : 34
         Height                              : 30
@@ -187,7 +187,7 @@ Text tInstruction
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 15
+        x coordinate                        : 17
         y coordinate                        : 290
         Width                               : 100
         Height                              : 30
@@ -217,7 +217,7 @@ Text tId
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 115
+        x coordinate                        : 117
         y coordinate                        : 290
         Width                               : 100
         Height                              : 30
@@ -247,7 +247,7 @@ Text t1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 79
+        x coordinate                        : 81
         y coordinate                        : 164
         Width                               : 100
         Height                              : 30
@@ -294,7 +294,7 @@ Slider hPosition
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 80
+        x coordinate                        : 82
         y coordinate                        : 194
         Width                               : 335
         Height                              : 43
@@ -338,7 +338,7 @@ Button b0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 412
+        x coordinate                        : 414
         y coordinate                        : 8
         Width                               : 50
         Height                              : 50
@@ -385,7 +385,7 @@ Button bDown1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 408
+        x coordinate                        : 410
         y coordinate                        : 96
         Width                               : 50
         Height                              : 50
@@ -432,7 +432,7 @@ Button bStop1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 356
+        x coordinate                        : 358
         y coordinate                        : 96
         Width                               : 50
         Height                              : 50
@@ -479,7 +479,7 @@ Button bUp1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 304
+        x coordinate                        : 306
         y coordinate                        : 96
         Width                               : 50
         Height                              : 50

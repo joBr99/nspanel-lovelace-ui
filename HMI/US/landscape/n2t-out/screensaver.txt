@@ -17,6 +17,8 @@ Page screensaver
             vis tInstruction,0
             vis tTmp,0
             vis p0,0
+            vis tNotifyHead,0
+            vis tNotifyText,0
             //load gloabl time string from pageIcons
             //tTime.txt=vaTime.txt
             spstr pageIcons.vaTime.txt,tTime.txt,"?",0
@@ -47,6 +49,18 @@ Variable (int32) vaTap
     Attributes
         Scope: local
         Value: 0
+    
+Variable (string) tInstruction
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
+    
+Variable (string) tTmp
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
     
 Text tTime
     Attributes
@@ -278,7 +292,7 @@ Text tMR
         Text                                : 
         Max. Text Size                      : 10
     
-Text tTmp
+Text tNotifyHead
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -286,9 +300,9 @@ Text tTmp
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 50
+        Max. Text Size                      : 35
     
-Text tInstruction
+Text tNotifyText
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -296,7 +310,7 @@ Text tInstruction
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 50
+        Max. Text Size                      : 35
     
 Picture p0
     Attributes
@@ -529,6 +543,20 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",23
                                         covx tTmp.txt,tMR.pco,0,0
                                     }
+                                    if(tInstruction.txt=="notify")
+                                    {
+                                        spstr strCommand.txt,tNotifyHead.txt,"~",1
+                                        spstr strCommand.txt,tNotifyText.txt,"~",2
+                                        if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+                                        {
+                                            vis tNotifyHead,1
+                                            vis tNotifyText,1
+                                        }else
+                                        {
+                                            vis tNotifyHead,0
+                                            vis tNotifyText,0
+                                        }
+                                    }
                                     if(tInstruction.txt=="pageType")
                                     {
                                         dim=100
@@ -618,6 +646,16 @@ TouchCap tc0
     
     Events
         Touch Press Event
+            if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+            {
+                if(dim!=0)
+                {
+                    tNotifyHead.txt=""
+                    tNotifyText.txt=""
+                    vis tNotifyHead,0
+                    vis tNotifyText,0
+                }
+            }
             dim=dimValueNormal
             vaTap.val+=1
             covx vaTap.val,tTmp.txt,0,0

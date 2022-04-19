@@ -54,7 +54,7 @@ Variable (string) entn
         ID            : 9
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 80
     
 Variable (string) tSend
     Attributes
