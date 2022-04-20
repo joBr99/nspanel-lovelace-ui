@@ -24,7 +24,7 @@ Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 500
+        Max. Text Size: 750
     
 Variable (string) entn
     Attributes
@@ -36,7 +36,7 @@ Variable (string) vaSpeakerList
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 200
+        Max. Text Size: 400
     
 Variable (int32) vaSpeakerPos
     Attributes
