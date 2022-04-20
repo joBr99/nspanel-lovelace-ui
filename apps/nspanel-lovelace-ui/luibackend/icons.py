@@ -42,7 +42,7 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
     if ha_type == "script":
         return "script-text"
     if ha_type == "switch":
-        return "light-switch" if state == "on" else "light-switch-off"
+        return "light-switch"
     if ha_type == "number":
         return "ray-vertex"
     if ha_type == "light":
