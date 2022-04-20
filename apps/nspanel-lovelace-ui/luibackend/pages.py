@@ -174,6 +174,10 @@ class LuiPagesGen(object):
             min_v = entity.attributes.get("min", 0)
             max_v = entity.attributes.get("max", 100)
             return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
+        if entityType == "input_text":
+            icon_id = get_icon_id_ha("input_text", overwrite=icon)
+            value = entity.state
+            return f"~text~{entityId}~{icon_id}~17299~{name}~{value}"
         return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~error~"
 
     def generate_entities_page(self, navigation, heading, items):
