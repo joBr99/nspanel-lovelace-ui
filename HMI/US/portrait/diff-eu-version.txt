@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/Program.s.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -44,7 +44,7 @@
      Attributes
          Scope         : local
@@ -23,8 +23,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
  Variable (string) tSend
      Attributes
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -462,8 +462,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -69,25 +69,25 @@
      Attributes
          Scope         : local
@@ -511,9 +511,16 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
  Text tHeading
      Attributes
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-19 18:31:22.456132087 +0000
-@@ -30,7 +30,7 @@
+--- HMI/n2t-out/cardMedia.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-20 06:06:40.491761816 +0000
+@@ -24,19 +24,19 @@
+     Attributes
+         Scope         : local
+         Text          : 
+-        Max. Text Size: 750
++        Max. Text Size: 500
+     
+ Variable (string) entn
      Attributes
          Scope         : local
          Text          : 
@@ -522,9 +529,16 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
      
  Variable (string) vaSpeakerList
      Attributes
+         Scope         : local
+         Text          : 
+-        Max. Text Size: 400
++        Max. Text Size: 200
+     
+ Variable (int32) vaSpeakerPos
+     Attributes
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -42,7 +42,7 @@
      Attributes
          Scope         : local
@@ -535,8 +549,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
  Variable (string) va0
      Attributes
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/pageIcons.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -30,7 +30,7 @@
          Send Component ID                   : disabled
          Associated Keyboard                 : none
@@ -556,8 +570,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
  Picture p0
      Attributes
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -577,8 +591,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/popupLight.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -59,8 +59,8 @@
  Variable (string) entn
      Attributes
@@ -591,8 +605,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
  Variable (int32) mode
      Attributes
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -46,8 +46,8 @@
  Variable (string) entn
      Attributes
@@ -605,8 +619,8 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
  Text tEntity
      Attributes
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-04-19 18:31:22.068125874 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-19 18:31:22.456132087 +0000
+--- HMI/n2t-out/screensaver.txt	2022-04-20 06:06:40.151757588 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-20 06:06:40.491761816 +0000
 @@ -17,8 +17,6 @@
              vis tInstruction,0
              vis tTmp,0
