@@ -357,7 +357,8 @@ key | optional | type | default | description
 `screensaver` | True | complex | | configuration for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items
 
-Possible languages for locale config key:
+<details><summary>Possible languages for locale config key</summary>
+<p>
 
   - `af_xx` - Afrikaans
   - `ar_xx` - Arabic
@@ -398,6 +399,8 @@ Possible languages for locale config key:
   - `uk_xx` - Ukrainian
   - `vi_xx` - Vietnamese
 
+</p>
+</details>
 
 Possible configuration values for a card in card config:
 
