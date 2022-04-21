@@ -51,10 +51,8 @@ For more detailed Instructions see the following Sections:
 - [Installation - Home Automation Part (Homeassistant)](#installation---home-automation-part-home-assistant)
    - [Installing AppDaemon](#installing-appdaemon)
    - [Installing Studio Code Server (optional, recommended)](#installing-studio-code-server-optional-recommended)
-   - [Installing HACS (optional, recommended)](#installing-hacs-optional-recommended)
+   - [Installing HACS](#installing-hacs)
    - [Installing AppDeamon Backend Application](#installing-appdeamon-backend-application)
-      - [With HACS (recommended)](#with-hacs-recommended)
-      - [Manually](#manually)
    - [Installing Tasmota to your NSPanel](#installing---tasmota-to-your-nspanel)
 
 - [Installation - Home Automation Part (IoBroker)](#installation---home-automation-part-iobroker)
@@ -111,7 +109,7 @@ For localisation (date in your local language) you need to add the python packag
 You will need a way to edit the `apps.yaml` config file in the Appdaemon folder. 
 Install Studio Code Server from Home Assistant's Supervisor Add-on Store to easily edit configuration Files on your HomeAssistant Instance.
 
-### Installing HACS (optional, recommended)
+### Installing HACS
 
 HACS is the Home Assistant Community Store and allows for community integrations and
 automations to be updated cleanly and easily from the Home Assistant web user interface.
@@ -122,8 +120,6 @@ can be installed by a click on a button.
 If you want to use HACS, you will have to follow [their documentation on how to install HACS](https://hacs.xyz/docs/setup/download).
 
 ### Installing AppDaemon Backend Application 
-
-#### With HACS (recommended)
 
 To install Lovelace UI Backend App with HACS, you will need to make sure that you enabled
 AppDaemon automations in HACS, as these are not enabled by default:
@@ -150,13 +146,6 @@ Now, to install NSPanel Lovelace UI Backend with HACS, follow these steps:
 6. A confirmation panel will appear, click on `Download`, and wait for HACS to
    proceed with the download
 6. The Backend Application is now installed, and HACS will inform you when updates are available
-
-#### Manually
-
-Installing the Backend Application manually can be summarized by putting the content of the
-`apps/` directory of this repository (the `nspanel-lovelace-ui/` directory) into the `apps/`
-directory of your AppDaemon installation.
-
 
 ## Installation - Home Automation Part (IoBroker)
 
