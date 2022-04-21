@@ -53,7 +53,6 @@ For more detailed Instructions see the following Sections:
    - [Installing Studio Code Server (optional, recommended)](#installing-studio-code-server-optional-recommended)
    - [Installing HACS](#installing-hacs)
    - [Installing AppDeamon Backend Application](#installing-appdeamon-backend-application)
-   - [Installing Tasmota to your NSPanel](#installing---tasmota-to-your-nspanel)
 
 - [Installation - Home Automation Part (IoBroker)](#installation---home-automation-part-iobroker)
 
