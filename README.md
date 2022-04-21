@@ -28,6 +28,7 @@ Content of the screen is controlled by a AppDaemon Python Script installed on yo
 
 It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
 To control the panel and update it with content from HomeAssistant there is an [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
+Alternatively there’s a third-party [ESPHome component](https://github.com/sairon/esphome-nspanel-lovelace-ui) which allows using ESPHome instead of Tasmota.
 
 See the following picture to get an idea of the look of this firmware for NSPanel.
 
