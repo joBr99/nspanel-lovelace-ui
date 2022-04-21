@@ -51,7 +51,7 @@ For more detailed Instructions see the following Sections:
 
 - [Installation - Home Automation Part (IoBroker)](#installation---home-automation-part-iobroker)
 
-- [Installation - NSPanel Part](#installation---nspanel-part)
+- [Installation - NSPanel Part (Firmware)](#installation---nspanel-part)
 
 - [Configuration](#configuration)
    - [Configuring the MQTT integration in AppDaemon](#configuring-the-mqtt-integration-in-appdaemon)
