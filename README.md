@@ -48,19 +48,10 @@ For more detailed Instructions see the following Sections:
 - [Requirements](#requirements)
 
 - [Installation - Home Automation Part (Home Assistant)](#installation---home-automation-part-home-assistant)
-   - [Installing AppDaemon](#installing-appdaemon)
-   - [Installing Studio Code Server (optional, recommended)](#installing-studio-code-server-optional-recommended)
-   - [Installing HACS](#installing-hacs)
-   - [Installing AppDeamon Backend Application](#installing-appdeamon-backend-application)
 
 - [Installation - Home Automation Part (IoBroker)](#installation---home-automation-part-iobroker)
 
-- [Installation - NSPanel Part](#installation---nspanel-part)
-   - [Flash Tasmota to your NSPanel](#flash-tasmota-to-your-nspanel)
-   - [Configure Tasmota Template for NSPanel](#configure-tasmota-template-for-nspanel)
-   - [Setup your MQTT Server in Tasmota](#setup-your-mqtt-server-in-tasmota)
-   - [Upload Berry Driver to Tasmota](#upload-berry-driver-to-tasmota)
-   - [Flash Firmware to Nextion Screen](#flash-firmware-to-nextion-screen)
+- [Installation - NSPanel Part (Firmware)](#installation---nspanel-part)
 
 - [Configuration](#configuration)
    - [Configuring the MQTT integration in AppDaemon](#configuring-the-mqtt-integration-in-appdaemon)
