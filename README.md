@@ -351,7 +351,10 @@ key | optional | type | default | description
 `class` | False | string | | The name of the Class.
 `config` | False | complex | | Config/Mapping between Homeassistant and your NsPanel
 
-Possible configuration values for config key:
+
+
+<details><summary>Possible configuration values for config key</summary>
+<p>
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
@@ -369,6 +372,8 @@ key | optional | type | default | description
 `cards` | False | complex | | configuration for cards that are displayed on panel
 `screensaver` | True | complex | | configuration for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items
+
+
 
 <details><summary>Possible languages for locale config key</summary>
 <p>
@@ -415,7 +420,8 @@ key | optional | type | default | description
 </p>
 </details>
 
-Possible configuration values for a card in card config:
+<details><summary>Possible configuration values for a card in card config</summary>
+<p>
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
@@ -425,7 +431,12 @@ key | optional | type | default | description
 `entity` | False | string | `None` | contains the entity of the current card, valid for cardThermo, cardAlarm and cardMedia
 `key` | True | string | `None` | Used by navigate items
 
-Possible configuration values for screensaver config:
+
+</p>
+</details>
+
+<details><summary>Possible configuration values for screensaver config</summary>
+<p>
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
@@ -469,6 +480,12 @@ It is possible to schedule a brightness change for the screen at specific times.
         value: 0
 ```
 
+</p>
+</details>
+
+<details><summary>Overrides and Navigation</summary>
+<p>
+
 #### Override Icons or Names
 
 To override Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
@@ -499,6 +516,18 @@ will allow you to navigate to a cardGrid page with the configured key testKey
           - entity: light.test_item
         key: testKey
 ```
+
+
+</p>
+</details>
+
+
+</p>
+</details>
+
+
+
+
 
 ## How to update
 
