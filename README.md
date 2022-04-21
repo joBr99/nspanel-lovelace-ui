@@ -162,7 +162,9 @@ Thanks to [britzelpuf](https://github.com/britzelpuf) for this integration.
 
 ## Installation - NSPanel Part
 
-This section describes how to free your nspanel from stock firmware and get it ready for Lovelace UI 🎉 You only need to do one **Tasmota** OR **ESPHome**
+This section describes how to free your nspanel from stock firmware and get it ready for Lovelace UI 🎉 
+
+You only need to do one **Tasmota** OR **ESPHome**
 
 <details><summary>Installation Instructions for Tasmota (Recommended)</summary>
 <p>
