@@ -45,23 +45,13 @@ Some (not all) screenshots from the US Portrait Version:
 
 For more detailed Instructions see the following Sections:
 
-- [How It Works](#how-it-works)
 - [Requirements](#requirements)
 
-- [Installation - Home Automation Part (Homeassistant)](#installation---home-automation-part-home-assistant)
-   - [Installing AppDaemon](#installing-appdaemon)
-   - [Installing Studio Code Server (optional, recommended)](#installing-studio-code-server-optional-recommended)
-   - [Installing HACS](#installing-hacs)
-   - [Installing AppDeamon Backend Application](#installing-appdeamon-backend-application)
+- [Installation - Home Automation Part (Home Assistant)](#installation---home-automation-part-home-assistant)
 
 - [Installation - Home Automation Part (IoBroker)](#installation---home-automation-part-iobroker)
 
-- [Installation - NSPanel Part](#installation-nspanel-part)
-   - [Flash Tasmota to your NSPanel](#flash-tasmota-to-your-nspanel)
-   - [Configure Tasmota Template for NSPanel](#configure-tasmota-template-for-nspanel)
-   - [Setup your MQTT Server in Tasmota](#setup-your-mqtt-server-in-tasmota)
-   - [Upload Berry Driver to Tasmota](#upload-berry-driver-to-tasmota)
-   - [Flash Firmware to Nextion Screen](#flash-firmware-to-nextion-screen)
+- [Installation - NSPanel Part](#installation---nspanel-part)
 
 - [Configuration](#configuration)
    - [Configuring the MQTT integration in AppDaemon](#configuring-the-mqtt-integration-in-appdaemon)
@@ -70,27 +60,28 @@ For more detailed Instructions see the following Sections:
 - [FAQ](#faq---frequently-asked-questions)
 
 
-## How It Works
-
-The NSPanel has two components an esp32 which runs Tasmota in this project and the nextion display, which is controlled by the esp32 via serial.
-This project contains a display firmware, which can be controlled over serial/mqtt. 
-It's controlled by an AppDaemon Application, which crafts the required commands from your HomeAssistant Instance.
-
-For more details on how the display firmware works see the [README File in the HMI Folder](HMI/README.md)
-
 ## Requirements
 
  - NSPanel
  - USB to Serial TTL Adapter
- - Running [Home Assistant Instance](https://www.home-assistant.io/installation/)
- - Installed [MQTT Broker](https://www.home-assistant.io/docs/mqtt/broker) alongside Homeassistant
+ - Running Instance of the Home Automation Platform of your Choise
+   - Running [Home Assistant Instance](https://www.home-assistant.io/installation/)
+     - with installed [MQTT Broker](https://www.home-assistant.io/docs/mqtt/broker)
+   - Running [ioBroker Instance](https://www.iobroker.net/#en/documentation)
+     - with installed MQTT Broker
 
 ## Installation - Home Automation Part (Home Assistant)
 
+This section describes the Installation Steps for HomeAssistant, follow each step.
+
+<details><summary>1. Installing HomeAssiant Add-Ons</summary>
+<p>
+
 ### Installing AppDaemon
 
-The recommended backend application for this firmware is written in a python for [AppDaemon](https://github.com/AppDaemon/appdaemon). 
-This means it requires a working and running version of AppDaemon.
+
+The backend application for HomeAssistant is written in a python for [AppDaemon](https://github.com/AppDaemon/appdaemon). 
+This means it requires a working and running installation of AppDaemon.
 
 The easiest way to install it is through Home Assistant's Supervisor Add-on Store, it will be automaticly connected to your Home Assistant Instance.
 
@@ -108,6 +99,12 @@ For localisation (date in your local language) you need to add the python packag
 You will need a way to edit the `apps.yaml` config file in the Appdaemon folder. 
 Install Studio Code Server from Home Assistant's Supervisor Add-on Store to easily edit configuration Files on your HomeAssistant Instance.
 
+</p>
+</details>
+
+<details><summary>2. Installing HomeAssiant Community Store</summary>
+<p>
+
 ### Installing HACS
 
 HACS is the Home Assistant Community Store and allows for community integrations and
@@ -117,6 +114,12 @@ manual steps that HACS will handle for you: you will be notified of updates, and
 can be installed by a click on a button.
 
 If you want to use HACS, you will have to follow [their documentation on how to install HACS](https://hacs.xyz/docs/setup/download).
+
+</p>
+</details>
+
+<details><summary>3. Installing Lovelace AppDaemon Backend Application </summary>
+<p>
 
 ### Installing AppDaemon Backend Application 
 
@@ -144,16 +147,25 @@ Now, to install NSPanel Lovelace UI Backend with HACS, follow these steps:
    `Download this repository with HACS`
 6. A confirmation panel will appear, click on `Download`, and wait for HACS to
    proceed with the download
-6. The Backend Application is now installed, and HACS will inform you when updates are available
+7. The Backend Application is now installed, and HACS will inform you when updates are available
+
+</p>
+</details>
 
 ## Installation - Home Automation Part (IoBroker)
 
 If you are looking for an ioBroker Integration instead of HomeAssistant take a look into the [Readme](ioBroker/README.md) of the iobroker folder.
 Thanks to [britzelpuf](https://github.com/britzelpuf) for this integration.
 
+
+
+
 ## Installation - NSPanel Part
 
-This section describes how to free your nspanel from stock firmware and get it ready for Lovelace UI 🎉
+This section describes how to free your nspanel from stock firmware and get it ready for Lovelace UI 🎉 You only need to do one **Tasmota** OR **ESPHome**
+
+<details><summary>Installation Instructions for Tasmota (Recommended)</summary>
+<p>
 
 ### Flash Tasmota to your NSPanel
 
@@ -211,6 +223,19 @@ EU Version: `FlashNextion http://nspanel.pky.eu/lui-release.tft`
 US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
 
 US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
+
+</p>
+</details>
+
+<details><summary>Installation Instructions for ESPHome</summary>
+<p>
+
+TODO
+
+</p>
+</details>
+
+
 
 ## Configuration
 
