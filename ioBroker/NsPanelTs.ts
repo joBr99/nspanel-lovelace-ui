@@ -13,6 +13,10 @@ const On: RGB = { red: 253, green: 216, blue: 53 };
 const BatteryFull: RGB = { red: 96, green: 176, blue: 62 }
 const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
 
+//Datenpunkte für Nachricht an Screensaver 
+var popupNotifyHeading = "0_userdata.0.NSPanel.1.popupNotifyHeading";
+var popupNotifyText = "0_userdata.0.NSPanel.1.popupNotifyText";
+
 var Wohnen: PageEntities =
 {
     "type": "cardEntities",
@@ -118,6 +122,10 @@ schedule("0 * * * *", function () {
     SendDate();
 });
 
+//Send message to screensaver
+on({id: [popupNotifyHeading, popupNotifyText], change: "ne"}, async function (obj) {
+    setState(config.panelSendTopic,(['notify~',getState(popupNotifyHeading).val,'~',getState(popupNotifyText).val].join('')));
+});
 
 // Only monitor the extra nodes if present
 var updateArray: string[] = [];
