@@ -234,7 +234,7 @@ US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 <details><summary>Installation Instructions for ESPHome</summary>
 <p>
 
-TODO
+Support for ESPHome is WIP, see this third-party [ESPHome component](https://github.com/sairon/esphome-nspanel-lovelace-ui) which allows using ESPHome instead of Tasmota.
 
 </p>
 </details>
