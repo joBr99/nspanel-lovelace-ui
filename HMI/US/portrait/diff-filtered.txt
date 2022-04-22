@@ -1,9 +1,9 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-04-22 17:03:52.209823253 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-22 17:03:52.181823027 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-04-22 17:08:01.749321611 +0000
++--- HMI/n2t-out/Program.s.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-04-22 17:08:01.645320299 +0000
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-04-22 17:08:01.645320299 +0000
 +@@ -44,7 +44,7 @@
 +     Attributes
 +         Scope         : local
@@ -13,6 +13,60 @@
 +     
 + Variable (string) tSend
 +     Attributes
++@@ -150,7 +150,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -182,7 +182,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -365,7 +365,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -395,7 +395,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -425,7 +425,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -455,7 +455,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
 +@@ -735,7 +735,7 @@
 +                     btlen tSend.txt,sys0
 +                     crcrest 1,0xffff // reset CRC
@@ -22,14 +76,16 @@
 +                     crcputs tSend.txt,0
 +                     //send cmd
 +                     printh 55 bb
-+--- HMI/n2t-out/cardEntities.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-04-22 17:08:01.649320349 +0000
 +@@ -62,6 +62,16 @@
 +@@ -97,25 +107,37 @@
 +     Attributes
 +         Scope         : local
++         Text          : 
 +-        Max. Text Size: 80
 ++        Max. Text Size: 70
++     
 + Variable (string) entn2
 +     Attributes
 +         Scope         : local
@@ -40,10 +96,8 @@
 + Variable (string) entn3
 +     Attributes
 +         Scope         : local
-+         Text          : 
 +-        Max. Text Size: 80
 ++        Max. Text Size: 70
-+     
 + Variable (string) entn4
 +     Attributes
 +         Scope         : local
@@ -168,8 +222,8 @@
 +                     //send cmd
 +                     printh 55 bb
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-04-22 17:08:01.645320299 +0000
 +@@ -69,25 +69,25 @@
 +     Attributes
 +         Scope         : local
@@ -298,8 +352,8 @@
 +                     //send cmd
 +                     printh 55 bb
 +diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/cardMedia.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-04-22 17:08:01.645320299 +0000
 +@@ -24,19 +24,19 @@
 +     Attributes
 +         Scope         : local
@@ -323,6 +377,87 @@
 +     
 + Variable (int32) vaSpeakerPos
 +     Attributes
++@@ -134,7 +134,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -163,7 +163,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -192,7 +192,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -232,7 +232,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -262,7 +262,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -301,7 +301,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -352,7 +352,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -415,7 +415,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -447,7 +447,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
 +@@ -697,7 +697,7 @@
 +                     btlen tSend.txt,sys0
 +                     crcrest 1,0xffff // reset CRC
@@ -333,8 +468,8 @@
 +                     //send cmd
 +                     printh 55 bb
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-04-22 17:08:01.649320349 +0000
 +@@ -42,7 +42,7 @@
 +     Attributes
 +         Scope         : local
@@ -344,6 +479,15 @@
 +     
 + Variable (string) va0
 +     Attributes
++@@ -237,7 +237,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
 +@@ -273,7 +273,7 @@
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
@@ -354,6 +498,15 @@
 +             //send cmd
 +             printh 55 bb
 +@@ -309,7 +309,7 @@
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++-            crcputs sys0,2
+++            crcputs sys0,1
++             crcputs tSend.txt,0
++             //send cmd
++             printh 55 bb
++@@ -341,7 +341,7 @@
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
 +             crcputh 55 bb
@@ -453,8 +606,8 @@
 +                     //send cmd
 +                     printh 55 bb
 +diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
-+--- HMI/n2t-out/pageIcons.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/pageIcons.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-04-22 17:08:01.645320299 +0000
 +@@ -30,7 +30,7 @@
 +         Send Component ID                   : disabled
 +         Associated Keyboard                 : none
@@ -473,11 +626,11 @@
 +     
 + Picture p0
 +     Attributes
-+--- HMI/n2t-out/pageStartup.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-04-22 17:08:01.645320299 +0000
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/popupLight.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-04-22 17:08:01.645320299 +0000
 +@@ -29,7 +29,7 @@
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
@@ -544,8 +697,8 @@
 +             //send cmd
 +             printh 55 bb
 +diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
-+--- HMI/n2t-out/popupNotify.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/popupNotify.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-04-22 17:08:01.645320299 +0000
 +@@ -120,7 +120,7 @@
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
@@ -574,8 +727,8 @@
 +             //send cmd
 +             printh 55 bb
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/popupShutter.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-04-22 17:08:01.645320299 +0000
 +@@ -29,7 +29,7 @@
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
@@ -642,8 +795,8 @@
 +             //send cmd
 +             printh 55 bb
 +diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
-+--- HMI/n2t-out/screensaver.txt	2022-04-22 17:03:51.797819925 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-22 17:03:52.181823027 +0000
++--- HMI/n2t-out/screensaver.txt	2022-04-22 17:08:01.265315504 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-04-22 17:08:01.645320299 +0000
 +@@ -17,8 +17,6 @@
 +             vis tInstruction,0
 +             vis tTmp,0
