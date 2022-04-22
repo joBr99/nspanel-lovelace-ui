@@ -13,6 +13,13 @@ const On: RGB = { red: 253, green: 216, blue: 53 };
 const BatteryFull: RGB = { red: 96, green: 176, blue: 62 }
 const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
 
+//Alexa2-Instanz
+var alexaInstanz = "alexa2.0"
+var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuendes Device
+//If alexaSpeakerList is defined, then entries are used, otherwise all relevant devices from the ioBroker Alexa2 adapter
+const alexaSpeakerList = []; //Example ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino"];
+
+
 var Wohnen: PageEntities =
 {
     "type": "cardEntities",
@@ -52,6 +59,13 @@ var Müll: PageEntities =
     ]
 };
 
+var Alexa: PageMedia = 
+{
+    "type": "cardMedia",
+    "heading": "Alexa",
+    "useColor": true,
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Alexa.PlayerBuero" }]
+};
 
 var button1Page: PageGrid =
 {
@@ -95,7 +109,7 @@ export const config: Config = {
     defaultOnColor: On,
     defaultColor: Off,
     temperatureUnit: "°C",
-    pages: [Wohnen, Strom, Müll,
+    pages: [Wohnen, Strom, Müll, Alexa,
         {
             "type": "cardThermo",
             "heading": "Thermostat",
@@ -205,11 +219,14 @@ function GeneratePage(page: Page): void {
         case "cardGrid":
             SendToPanel(GenerateGridPage(<PageGrid>page));
             break;
+        case "cardMedia":
+            SendToPanel(GenerateMediaPage(<PageMedia>page));
+            break;
     }
 }
 
 function HandleHardwareButton(method: string): void {
-    let page: (PageThermo | PageEntities | PageGrid);
+    let page: (PageThermo | PageMedia | PageEntities | PageGrid);
     if (config.button1Page !== null && method == "button1") {
         page = config.button1Page;
         pageId = -1;
@@ -273,6 +290,9 @@ function GeneratePageElements(page: Page): string {
     let maxItems = 0;
     switch (page.type) {
         case "cardThermo":
+            maxItems = 1;
+            break;
+        case "cardMedia":
             maxItems = 1;
             break;
         case "cardEntities":
@@ -493,6 +513,65 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
     return out_msgs
 }
 
+function GenerateMediaPage(page: PageMedia): Payload[] {
+    var id = page.items[0].id
+    var out_msgs: Array<Payload> = [];
+    out_msgs.push({ payload: "pageType~cardMedia" });
+    if (existsObject(id)) {
+        let name = getState(id + ".ALBUM").val;    
+        let media_icon = Icons.GetIcon("playlist-music");
+        let title = getState(id + ".TITLE").val;
+        let author = getState(id + ".ARTIST").val;
+        let volume = getState(id + ".VOLUME").val;
+        var iconplaypause = Icons.GetIcon("pause"); //pause
+        var onoffbutton = 1374;
+        if (getState(id + ".STATE").val) {
+            onoffbutton = 65535;
+            iconplaypause = Icons.GetIcon("pause"); //pause
+        } else {
+            iconplaypause = Icons.GetIcon("play"); //play
+        }
+        let currentSpeaker = getState(([alexaInstanz,'.Echo-Devices.',alexaDevice,'.Info.name'].join(''))).val;
+        //console.log(id);
+                
+//-------------------------------------------------------------------------------------------------------------
+// nachfolgend alle Alexa-Devices (ist Online / Player- und Commands-Verzeichnis vorhanden) auflisten und verketten
+// Wenn Konstante alexaSpeakerList mind. einen Eintrag enthält, wird die Konstante verwendet - ansonsten Alle Devices aus dem Alexa Adapter
+        let speakerlist = "";
+        if (alexaSpeakerList.length > 0) {
+            for (let i_index in alexaSpeakerList) {
+                speakerlist = speakerlist + alexaSpeakerList[i_index] + "?";
+            }
+        } else {        
+            let i_list = Array.prototype.slice.apply($('[state.id="' + alexaInstanz + '.Echo-Devices.*.Info.name"]'));
+            for (let i_index in i_list) {
+                let i = i_list[i_index];
+                let deviceId = i;
+                deviceId = deviceId.split('.');
+                if (getState(([alexaInstanz,'.Echo-Devices.',deviceId[3],'.online'].join(''))).val &&
+                    existsObject(([alexaInstanz,'.Echo-Devices.',deviceId[3],'.Player'].join(''))) &&
+                    existsObject(([alexaInstanz,'.Echo-Devices.',deviceId[3],'.Commands'].join('')))) {
+                        speakerlist = speakerlist + getState(i).val + "?";
+                }
+            }
+        }
+        speakerlist = speakerlist.substring(0,speakerlist.length-1);
+//--------------------------------------------------------------------------------------------------------------
+        out_msgs.push({ payload: "entityUpd~" +
+                                  name + "~" +
+                                  id + "~" +
+                                  id + "~" +         //????
+                                  media_icon + "~" +
+                                  title + "~" +
+                                  author + "~" +
+                                  volume + "~" +
+                                  iconplaypause + "~" +
+                                  currentSpeaker + "~" +
+                                  speakerlist + "~" +
+                                  onoffbutton});
+    }
+    return out_msgs
+}
 
 function setIfExists(id: string, value: any, type: string | null = null): boolean {
     if (type === null) {
@@ -575,6 +654,37 @@ function HandleButtonEvent(words): void {
         case "positionSlider":
         case "brightnessSlider":
             setIfExists(id + ".SET", parseInt(words[4])) ? true : setIfExists(id + ".ACTUAL", parseInt(words[4]));
+            break;
+        case "media-back":
+            setIfExists(id + ".PREV", true)
+            break;
+        case "media-pause":
+            if (getState(id + ".STATE").val === true) {
+                setIfExists(id + ".PAUSE", true)
+            } else {
+                setIfExists(id + ".PLAY", true)
+            }
+            break;
+        case "media-next":
+            setIfExists(id + ".NEXT", true)
+            break;
+        case "volumeSlider":
+            setIfExists(id + ".VOLUME", parseInt(words[4]))
+            break;
+        case "speaker-sel":
+            let i_list = Array.prototype.slice.apply($('[state.id="' + alexaInstanz + '.Echo-Devices.*.Info.name"]'));
+            for (let i_index in i_list) {
+                let i = i_list[i_index];
+                if ((getState(i).val) === words[4]){
+                    let deviceId = i;
+                    deviceId = deviceId.split('.');
+                    setIfExists(alexaInstanz + ".Echo-Devices." + alexaDevice + ".Commands.textCommand", "Schiebe meine Musik auf " + words[4]);
+                    alexaDevice = deviceId[3]
+                }
+            }
+            break;
+        case "media-OnOff":
+            setIfExists(id + ".STOP", true)
             break;
         case "tempUpd":
             setIfExists(id + ".SET", parseInt(words[4]) / 10)
@@ -845,6 +955,11 @@ interface PageThermo extends Page {
     items: PageItem[],
 };
 
+interface PageMedia extends Page {
+    type: "cardMedia",
+    items: PageItem[],
+};
+
 type PageItem = {
     id: string,
     icon: (string | undefined),
@@ -877,9 +992,9 @@ type Config = {
     defaultColor: RGB,
     defaultOnColor: RGB,
     defaultOffColor: RGB,
-    pages: (PageThermo | PageEntities | PageGrid)[],
-    button1Page: (PageThermo | PageEntities | PageGrid | null),
-    button2Page: (PageThermo | PageEntities | PageGrid | null),
+    pages: (PageThermo | PageMedia | PageEntities | PageGrid)[],
+    button1Page: (PageThermo | PageMedia | PageEntities | PageGrid | null),
+    button2Page: (PageThermo | PageMedia | PageEntities | PageGrid | null),
 };
 
 type ScreenSaverElement = {
