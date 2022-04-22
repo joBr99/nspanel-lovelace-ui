@@ -659,11 +659,14 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
         }
 
         if (type == "popupShutter") {
-            if (existsState(id + ".ACTUAL"))
+            if (existsState(id + ".ACTUAL")) {
                 val = getState(id + ".ACTUAL").val;
-            else if (existsState(id + ".SET"))
+                RegisterDetailEntityWatcher(id + ".ACTUAL", pageItem, type);
+            } else if (existsState(id + ".SET")) {
                 val = getState(id + ".SET").val;
-            out_msgs.push({ payload: "entityUpdateDetail," + val })
+                RegisterDetailEntityWatcher(id + ".SET", pageItem, type);
+            }
+            out_msgs.push({ payload: "entityUpdateDetail~" + val })
         }
     }
     return out_msgs
