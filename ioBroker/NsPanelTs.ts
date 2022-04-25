@@ -13,12 +13,16 @@ const On: RGB = { red: 253, green: 216, blue: 53 };
 const BatteryFull: RGB = { red: 96, green: 176, blue: 62 }
 const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
 
+
 //Alexa2-Instanz
 var alexaInstanz = "alexa2.0"
 var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuendes Device
 //If alexaSpeakerList is defined, then entries are used, otherwise all relevant devices from the ioBroker Alexa2 adapter
 const alexaSpeakerList = []; //Example ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino"];
 
+//Datenpunkte für Nachricht an Screensaver 
+var popupNotifyHeading = "0_userdata.0.NSPanel.1.popupNotifyHeading";
+var popupNotifyText = "0_userdata.0.NSPanel.1.popupNotifyText";
 
 var Wohnen: PageEntities =
 {
@@ -132,6 +136,10 @@ schedule("0 * * * *", function () {
     SendDate();
 });
 
+//Send message to screensaver
+on({id: [popupNotifyHeading, popupNotifyText], change: "ne"}, async function (obj) {
+    setState(config.panelSendTopic,(['notify~',getState(popupNotifyHeading).val,'~',getState(popupNotifyText).val].join('')));
+});
 
 // Only monitor the extra nodes if present
 var updateArray: string[] = [];
@@ -769,11 +777,14 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
         }
 
         if (type == "popupShutter") {
-            if (existsState(id + ".ACTUAL"))
+            if (existsState(id + ".ACTUAL")) {
                 val = getState(id + ".ACTUAL").val;
-            else if (existsState(id + ".SET"))
+                RegisterDetailEntityWatcher(id + ".ACTUAL", pageItem, type);
+            } else if (existsState(id + ".SET")) {
                 val = getState(id + ".SET").val;
-            out_msgs.push({ payload: "entityUpdateDetail," + val })
+                RegisterDetailEntityWatcher(id + ".SET", pageItem, type);
+            }
+            out_msgs.push({ payload: "entityUpdateDetail~" + val })
         }
     }
     return out_msgs

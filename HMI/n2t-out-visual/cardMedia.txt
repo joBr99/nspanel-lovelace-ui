@@ -306,7 +306,7 @@ Text t2
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -355,7 +355,7 @@ Text tPlayPause
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -404,7 +404,7 @@ Text t0
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -484,7 +484,7 @@ Text t1
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -534,7 +534,7 @@ Text t3
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -613,7 +613,7 @@ Text tSpeaker
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -704,7 +704,7 @@ Text t5
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -767,7 +767,7 @@ Slider hVolume
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -814,7 +814,7 @@ Button bNext
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -868,7 +868,7 @@ Button bPrev
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -1120,7 +1120,7 @@ Timer tmSleep
                     btlen tSend.txt,sys0
                     crcrest 1,0xffff // reset CRC
                     crcputh 55 bb
-                    crcputs sys0,1
+                    crcputs sys0,2
                     crcputs tSend.txt,0
                     //send cmd
                     printh 55 bb

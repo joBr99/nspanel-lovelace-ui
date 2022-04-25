@@ -68,8 +68,10 @@ class LuiPagesGen(object):
         text_cur        = convert_temperature(we.attributes.temperature, unit)
 
         forecastSkip = self._config._config_screensaver.raw_config.get(f"forecastSkip")+1
-        # check if the first 2 forecast items are on the same day
-        same_day = dp.parse(we.attributes.forecast[0]['datetime']).weekday() == dp.parse(we.attributes.forecast[forecastSkip]['datetime']).weekday()
+        # check if the difference between the first 2 forecast items is less than 24h
+        difference = (dp.parse(we.attributes.forecast[forecastSkip]['datetime']) - dp.parse(we.attributes.forecast[0]['datetime']))
+        total_seconds = difference.total_seconds()
+        same_day = total_seconds < 86400
         weather_res = ""
         for i in range(1,5):
             wOF = self._config._config_screensaver.raw_config.get(f"weatherOverrideForecast{i}")
@@ -77,7 +79,7 @@ class LuiPagesGen(object):
                 fid = (i-1)*forecastSkip
                 if len(we.attributes.forecast) >= fid:
                     up = we.attributes.forecast[fid]['datetime']
-                    up   = dp.parse(up)
+                    up   = dp.parse(up).astimezone()
                     if babel_spec is not None:
                         if same_day:
                             up = babel.dates.format_time(up, "H:mm", locale=self._locale)
