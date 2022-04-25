@@ -27,7 +27,6 @@ const alexaSpeakerList = []; //Example ["Echo Spot Buero","Überall","Gartenhaus
 var popupNotifyHeading = "0_userdata.0.NSPanel.1.popupNotifyHeading";
 var popupNotifyText = "0_userdata.0.NSPanel.1.popupNotifyText";
 
-
 var Wohnen: PageEntities =
 {
     "type": "cardEntities",
@@ -140,10 +139,6 @@ schedule("0 * * * *", function () {
     SendDate();
 });
 
-//Send message to screensaver
-on({id: [popupNotifyHeading, popupNotifyText], change: "ne"}, async function (obj) {
-    setState(config.panelSendTopic,(['notify~',getState(popupNotifyHeading).val,'~',getState(popupNotifyText).val].join('')));
-});
 
 // Only monitor the extra nodes if present
 var updateArray: string[] = [];
@@ -389,9 +384,33 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("window-open");
                 iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".ACTUAL") ? getState(pageItem.id + ".ACTUAL").val : true, useColors);
                 return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~"
-
+            
+            case "door":
+            
+            case "window":
+                type = "text";
+                if (existsState(pageItem.id + ".ACTUAL")) {
+                    if (getState(pageItem.id + ".ACTUAL").val) {
+                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == "door"  ? Icons.GetIcon("door-open") : Icons.GetIcon("window-open-variant");
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                        var windowState = "opened"
+                    } else {
+                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == "door"  ? Icons.GetIcon("door-closed") : Icons.GetIcon("window-closed-variant");
+                        //iconId = Icons.GetIcon("window-closed-variant");
+                        iconColor = GetIconColor(pageItem, true, useColors);
+                        var windowState = "closed"
+                    }
+                    RegisterEntityWatcher(pageItem.id + ".ACTUAL");
+                }
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + windowState;
+            
             case "info":
+            case "humidity":
             case "value.temperature":
+            case "value.humidity":
+            case "sensor.door":
+            case "sensor.window":
+                
             case "thermostat":
                 type = "text";
                 iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == "value.temperature" || o.common.role == "thermostat" ? Icons.GetIcon("thermometer") : Icons.GetIcon("information-outline");
@@ -781,14 +800,11 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
         }
 
         if (type == "popupShutter") {
-            if (existsState(id + ".ACTUAL")) {
+            if (existsState(id + ".ACTUAL"))
                 val = getState(id + ".ACTUAL").val;
-                RegisterDetailEntityWatcher(id + ".ACTUAL", pageItem, type);
-            } else if (existsState(id + ".SET")) {
+            else if (existsState(id + ".SET"))
                 val = getState(id + ".SET").val;
-                RegisterDetailEntityWatcher(id + ".SET", pageItem, type);
-            }
-            out_msgs.push({ payload: "entityUpdateDetail~" + val })
+            out_msgs.push({ payload: "entityUpdateDetail," + val })
         }
     }
     return out_msgs
