@@ -14,6 +14,9 @@ const BatteryFull: RGB = { red: 96, green: 176, blue: 62 }
 const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
 
 
+//----Ability to choose between Accu-Weather Forcast or self-defined values in the screensaver---------------------------------
+var weatherForecast = true; //true = WheatherForecast 5 Days --- false = Config --> firstScreensaverEntity - fourthScreensaverEntity ...
+
 //Alexa2-Instanz
 var alexaInstanz = "alexa2.0"
 var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuendes Device
@@ -23,6 +26,7 @@ const alexaSpeakerList = []; //Example ["Echo Spot Buero","Überall","Gartenhaus
 //Datenpunkte für Nachricht an Screensaver 
 var popupNotifyHeading = "0_userdata.0.NSPanel.1.popupNotifyHeading";
 var popupNotifyText = "0_userdata.0.NSPanel.1.popupNotifyText";
+
 
 var Wohnen: PageEntities =
 {
@@ -819,10 +823,22 @@ function HandleScreensaverUpdate(): void {
             "weatherUpdate~" + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + "~"
             + temperature + " " + config.temperatureUnit + "~"
 
-        payloadString += GetScreenSaverEntityString(config.firstScreensaverEntity);
-        payloadString += GetScreenSaverEntityString(config.secondScreensaverEntity);
-        payloadString += GetScreenSaverEntityString(config.thirdScreensaverEntity);
-        payloadString += GetScreenSaverEntityString(config.fourthScreensaverEntity);
+        if (weatherForecast == true) {
+            // Accu-Weather Forecast Tag 2 - Tag 5 -- Wenn weatherForecast = true
+            for (let i = 2; i < 6; i++) {
+                let TempMax = getState("accuweather.0.Summary.TempMax_d" + i).val;
+                let DayOfWeek = getState("accuweather.0.Summary.DayOfWeek_d" + i).val;
+                let WeatherIcon = GetAccuWeatherIcon(getState("accuweather.0.Summary.WeatherIcon_d" + i).val);
+                payloadString += DayOfWeek + "~" + Icons.GetIcon(WeatherIcon) + "~" + TempMax + " °C~";
+            }
+        } 
+        else {
+            //In Config definierte Zustände wenn weatherForecast = false
+            payloadString += GetScreenSaverEntityString(config.firstScreensaverEntity);
+            payloadString += GetScreenSaverEntityString(config.secondScreensaverEntity);
+            payloadString += GetScreenSaverEntityString(config.thirdScreensaverEntity);
+            payloadString += GetScreenSaverEntityString(config.fourthScreensaverEntity);
+        }
 
         SendToPanel(<Payload>{ payload: payloadString });
     }
