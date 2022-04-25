@@ -533,7 +533,7 @@ Button bNext
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -587,7 +587,7 @@ Button bDown
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -641,7 +641,7 @@ Button bUp
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -695,7 +695,7 @@ Button bPrev
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -744,7 +744,7 @@ Dual-state Button bt0
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -793,7 +793,7 @@ Dual-state Button bt1
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -842,7 +842,7 @@ Dual-state Button bt2
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -891,7 +891,7 @@ Dual-state Button bt3
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -940,7 +940,7 @@ Dual-state Button bt4
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -989,7 +989,7 @@ Dual-state Button bt5
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -1038,7 +1038,7 @@ Dual-state Button bt6
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -1087,7 +1087,7 @@ Dual-state Button bt7
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -1136,7 +1136,7 @@ Dual-state Button bt8
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -1502,7 +1502,7 @@ Timer tmSleep
                     btlen tSend.txt,sys0
                     crcrest 1,0xffff // reset CRC
                     crcputh 55 bb
-                    crcputs sys0,1
+                    crcputs sys0,2
                     crcputs tSend.txt,0
                     //send cmd
                     printh 55 bb
