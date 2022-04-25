@@ -357,8 +357,7 @@ key | optional | type | default | description
 
 
 
-<details><summary>Possible configuration values for config key</summary>
-<p>
+### Possible configuration values for config key
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
@@ -424,8 +423,8 @@ key | optional | type | default | description
 </p>
 </details>
 
-<details><summary>Possible configuration values for a card in card config</summary>
-<p>
+#### Possible configuration values for a card in card config</summary>
+
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
@@ -436,11 +435,7 @@ key | optional | type | default | description
 `key` | True | string | `None` | Used by navigate items
 
 
-</p>
-</details>
-
-<details><summary>Possible configuration values for screensaver config</summary>
-<p>
+#### Possible configuration values for screensaver config
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
@@ -484,11 +479,6 @@ It is possible to schedule a brightness change for the screen at specific times.
         value: 0
 ```
 
-</p>
-</details>
-
-<details><summary>Overrides and Navigation</summary>
-<p>
 
 #### Override Icons or Names
 
@@ -521,13 +511,6 @@ will allow you to navigate to a cardGrid page with the configured key testKey
         key: testKey
 ```
 
-
-</p>
-</details>
-
-
-</p>
-</details>
 
 
 

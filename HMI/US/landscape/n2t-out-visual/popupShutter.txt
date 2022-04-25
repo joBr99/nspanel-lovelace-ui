@@ -37,7 +37,7 @@ Page popupShutter
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -67,7 +67,7 @@ Text tEntity
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 82
+        x coordinate                        : 80
         y coordinate                        : 108
         Width                               : 195
         Height                              : 30
@@ -97,7 +97,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 29
+        x coordinate                        : 27
         y coordinate                        : 109
         Width                               : 45
         Height                              : 30
@@ -127,7 +127,7 @@ Text tSend
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 17
+        x coordinate                        : 15
         y coordinate                        : 0
         Width                               : 348
         Height                              : 22
@@ -157,7 +157,7 @@ Text tTmp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 423
+        x coordinate                        : 421
         y coordinate                        : 277
         Width                               : 34
         Height                              : 30
@@ -187,7 +187,7 @@ Text tInstruction
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 17
+        x coordinate                        : 15
         y coordinate                        : 290
         Width                               : 100
         Height                              : 30
@@ -217,7 +217,7 @@ Text tId
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 117
+        x coordinate                        : 115
         y coordinate                        : 290
         Width                               : 100
         Height                              : 30
@@ -247,7 +247,7 @@ Text t1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 81
+        x coordinate                        : 79
         y coordinate                        : 164
         Width                               : 100
         Height                              : 30
@@ -294,7 +294,7 @@ Slider hPosition
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 82
+        x coordinate                        : 80
         y coordinate                        : 194
         Width                               : 335
         Height                              : 43
@@ -322,7 +322,7 @@ Slider hPosition
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -338,7 +338,7 @@ Button b0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 414
+        x coordinate                        : 412
         y coordinate                        : 8
         Width                               : 50
         Height                              : 50
@@ -369,7 +369,7 @@ Button b0
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -385,7 +385,7 @@ Button bDown1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 410
+        x coordinate                        : 408
         y coordinate                        : 96
         Width                               : 50
         Height                              : 50
@@ -416,7 +416,7 @@ Button bDown1
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -432,7 +432,7 @@ Button bStop1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 358
+        x coordinate                        : 356
         y coordinate                        : 96
         Width                               : 50
         Height                              : 50
@@ -463,7 +463,7 @@ Button bStop1
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -479,7 +479,7 @@ Button bUp1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 306
+        x coordinate                        : 304
         y coordinate                        : 96
         Width                               : 50
         Height                              : 50
@@ -510,7 +510,7 @@ Button bUp1
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
