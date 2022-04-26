@@ -1,4 +1,31 @@
+/*-----------------------------------------------------------------------
+joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
+
+NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
+icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
+
+Mögliche Aliase:    
+    Info - Werte aus Datenpunkt 
+    Licht - An/Aus (Schalter)
+    Steckdose - An/Aus (Schalter)
+    Dimmer - An/Aus, Brightness
+    Farbtemperatur - An/Aus, Farbtemperatur und Brightness 
+    HUE-Licht - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (HUE kann auch fehlen) 
+    RGB-Licht - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
+    RGB-Licht-einzeln - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
+    Jalousien - Up, Stop, Down, Position 
+    Fenster - Sensor open 
+    Tür - Sensor open 
+    Taste - Für Szenen oder Radiosender, etc. --> Nur Funktionsaufruf - Kein Taster wie MonoButton - True/False
+    ??? wahrscheinlich wäre Tastensensor besser geeignet, um Alias-Taste langfristig für einen MonoButton (Taster) zu verwenden ???
+    Thermostat - Aktuelle Raumtemperatur, Setpoint, etc. 
+    Feuchtigkeit - Anzeige von Humidity - Datenpunkten, ananlog Info 
+    Medien - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
+    Wetter - Aktuelle Außen-Temperatur und aktuelles Accu-Wheather-Icon für Screensaver
+---------------------------------------------------------------------------------------
+*/ 
 var Icons = new IconsSelector();
+var timeoutSlider;
 
 const Months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 const Days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -24,8 +51,22 @@ var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuendes Device
 const alexaSpeakerList = []; //Example ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino"];
 
 //Datenpunkte für Nachricht an Screensaver 
-var popupNotifyHeading = "0_userdata.0.NSPanel.1.popupNotifyHeading";
-var popupNotifyText = "0_userdata.0.NSPanel.1.popupNotifyText";
+var popupNotifyHeading = "0_userdata.0.WzDisplay.popupNotifyHeading";
+var popupNotifyText = "0_userdata.0.WzDisplay.popupNotifyText";
+
+var Test_Licht: PageEntities =
+{
+    "type": "cardEntities",
+    "heading": "Color Aliase",
+    "useColor": true,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLichteinzeln", name: "RGB-Licht Hex-Color", interpolateColor: true},
+        //<PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", name: "Farbtemperatur", interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLicht", name: "RGB-Licht", minValueBrightness: 0, maxValueBrightness: 70, interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestCTmitHUE", name: "HUE-Licht-CT", minValueBrightness: 0, maxValueBrightness: 70, minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestHUELicht", name: "HUE-Licht-Color", minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true}
+    ]
+};
 
 var Wohnen: PageEntities =
 {
@@ -116,7 +157,12 @@ export const config: Config = {
     defaultOnColor: On,
     defaultColor: Off,
     temperatureUnit: "°C",
-    pages: [Wohnen, Strom, Müll, Alexa,
+    pages: [
+            //Test_Licht, 
+            Wohnen, 
+            Strom, 
+            Müll, 
+            Alexa,
         {
             "type": "cardThermo",
             "heading": "Thermostat",
@@ -128,6 +174,8 @@ export const config: Config = {
     button2Page: button2Page
 };
 
+// _________________________________ End configuration _____________________________________
+
 var subscriptions: any = {};
 var screensaverEnabled : boolean = false;
 var pageId = 0;
@@ -138,7 +186,6 @@ schedule("* * * * *", function () {
 schedule("0 * * * *", function () {
     SendDate();
 });
-
 
 // Only monitor the extra nodes if present
 var updateArray: string[] = [];
@@ -359,7 +406,109 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 }
 
                 return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
+                
+            case "hue":
 
+                type = "light"
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lightbulb");
+                var optVal = "0"
+
+                if (existsState(pageItem.id + ".ON_ACTUAL")) {
+                    val = getState(pageItem.id + ".ON_ACTUAL").val;
+                    RegisterEntityWatcher(pageItem.id + ".ON_ACTUAL");
+                }
+
+                if (val === true || val === "true") {
+                    optVal = "1"
+                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".DIMMER") ? 100 - getState(pageItem.id + ".DIMMER").val : true, useColors);
+                }
+
+                if (existsState(pageItem.id + ".HUE")) {
+                    if (getState(pageItem.id + ".HUE").val != null) {
+                        let huecolor = hsv2rgb(getState(pageItem.id + ".HUE").val,1,1);
+                        let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])}
+                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                        //RegisterDetailEntityWatcher(id + ".HUE", pageItem, type);
+                    } 
+                }
+
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
+
+            case "ct":
+
+                type = "light"
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lightbulb");
+                var optVal = "0"
+
+                if (existsState(pageItem.id + ".ON")) {
+                    val = getState(pageItem.id + ".ON").val;
+                    RegisterEntityWatcher(pageItem.id + ".ON");
+                }
+
+                if (val === true || val === "true") {
+                    optVal = "1"
+                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".DIMMER") ? 100 - getState(pageItem.id + ".DIMMER").val : true, useColors);
+                }
+
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
+
+            case "rgb":
+
+                type = "light"
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lightbulb");
+                var optVal = "0"
+
+                if (existsState(pageItem.id + ".ON_ACTUAL")) {
+                    val = getState(pageItem.id + ".ON_ACTUAL").val;
+                    RegisterEntityWatcher(pageItem.id + ".ON_ACTUAL");
+                }
+
+                if (val === true || val === "true") {
+                    optVal = "1"
+                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".DIMMER") ? 100 - getState(pageItem.id + ".DIMMER").val : true, useColors);
+                }
+
+                if (existsState(pageItem.id + ".RED") && existsState(pageItem.id + ".GREEN") && existsState(pageItem.id + ".BLUE")) {
+                    if (getState(pageItem.id + ".RED").val != null && getState(pageItem.id + ".GREEN").val != null && getState(pageItem.id + ".BLUE").val != null) {
+                        let rgbRed = getState(pageItem.id + ".RED").val;
+                        let rgbGreen = getState(pageItem.id + ".GREEN").val;
+                        let rgbBlue = getState(pageItem.id + ".BLUE").val;
+                        let rgb = <RGB>{ red: Math.round(rgbRed), green: Math.round(rgbGreen), blue: Math.round(rgbBlue)}
+                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                    } 
+                }
+
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
+
+            case "rgbSingle":
+
+                type = "light"
+                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lightbulb");
+                var optVal = "0"
+
+                if (existsState(pageItem.id + ".ON_ACTUAL")) {
+                    val = getState(pageItem.id + ".ON_ACTUAL").val;
+                    RegisterEntityWatcher(pageItem.id + ".ON_ACTUAL");
+                }
+
+                if (val === true || val === "true") {
+                    optVal = "1"
+                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".DIMMER") ? 100 - getState(pageItem.id + ".DIMMER").val : true, useColors);
+                }
+
+                if (existsState(pageItem.id + ".RGB")) {
+                    if (getState(pageItem.id + ".RGB").val != null) {
+                        var hex = getState(pageItem.id + ".RGB").val;
+                        var hexRed = parseInt(hex[1]+hex[2],16);
+                        var hexGreen = parseInt(hex[3]+hex[4],16);
+                        var hexBlue = parseInt(hex[5]+hex[6],16);
+                        let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue)}
+                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                    } 
+                }
+
+                return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
+  
             case "dimmer":
                 type = "light"
                 iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lightbulb");
@@ -374,7 +523,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 }
                 if (val === true || val === "true") {
                     optVal = "1"
-                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".ACTUAL") ? getState(pageItem.id + ".ACTUAL").val : true, useColors);
+                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".ACTUAL") ? 100 - getState(pageItem.id + ".ACTUAL").val : true, useColors);
                 }
 
                 return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
@@ -453,8 +602,10 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: boolean): number {
     // dimmer
     if ((pageItem.useColor || useColors) && pageItem.interpolateColor && typeof (value) === "number") {
-        let maxValue = pageItem.maxValue !== undefined ? pageItem.maxValue : 100;
-        let minValue = pageItem.minValue !== undefined ? pageItem.minValue : 0;
+        let maxValue = pageItem.maxValueBrightness !== undefined ? pageItem.maxValueBrightness : 100;
+        let minValue = pageItem.minValueBrightness !== undefined ? pageItem.minValueBrightness : 0;
+        if (pageItem.maxValue !== undefined) maxValue = pageItem.maxValue;
+        if (pageItem.minValue !== undefined) minValue = pageItem.minValue;
         value = value > maxValue ? maxValue : value;
         value = value < minValue ? minValue : value;
         return rgb_dec565(
@@ -465,10 +616,10 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
             ));
     }
 
-    if ((pageItem.useColor || useColors) && ((typeof (value) === "boolean" && value) || value > (pageItem.minValue !== undefined ? pageItem.minValue : 0))) {
+    if ((pageItem.useColor || useColors) && ((typeof (value) === "boolean" && value) || value > (pageItem.minValueBrightness !== undefined ? pageItem.minValueBrightness : 0) || value > (pageItem.minValue !== undefined ? pageItem.minValue : 0))) {
         return rgb_dec565(pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor)
     }
-
+    
     return rgb_dec565(pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor);
 }
 
@@ -667,6 +818,14 @@ function HandleButtonEvent(words): void {
                         break;
                     case "dimmer":
                         setIfExists(id + ".ON_SET", action) ? true : setIfExists(id + ".ON_ACTUAL", action);
+                        break;
+                    case "ct":
+                        setIfExists(id + ".ON", action);
+                        break;
+                    case "rgb":
+                    case "rgbSingle":
+                    case "hue": // Armilar
+                        setIfExists(id + ".ON_ACTUAL", action);
                 }
             }
             break;
@@ -683,8 +842,74 @@ function HandleButtonEvent(words): void {
             toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET")
             break;
         case "positionSlider":
+           (function () {if (timeoutSlider) {clearTimeout(timeoutSlider); timeoutSlider = null;}})();
+            timeoutSlider = setTimeout(async function () {
+                setIfExists(id + ".SET", parseInt(words[4])) ? true : setIfExists(id + ".ACTUAL", parseInt(words[4]));
+                //console.log("PositionSlider feuert");
+            }, 250);    
+            break;
         case "brightnessSlider":
+            (function () {if (timeoutSlider) {clearTimeout(timeoutSlider); timeoutSlider = null;}})();
+            timeoutSlider = setTimeout(async function () {
+                if (existsObject(id)) {
+                    let o = getObject(id);
+                    let pageItem = config.pages[pageId].items.find(e => e.id === id);
+                    //console.log(o.common.role);
+                    switch (o.common.role) {
+                        case "dimmer":
+                            if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {  
+                                let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness))
+                                setIfExists(id + ".SET", sliderPos) ? true : setIfExists(id + ".ACTUAL", sliderPos);
+                            } else {
             setIfExists(id + ".SET", parseInt(words[4])) ? true : setIfExists(id + ".ACTUAL", parseInt(words[4]));
+                                setIfExists(id + ".SET", parseInt(words[4])) ? true : setIfExists(id + ".ACTUAL", parseInt(words[4]));
+                            }
+                            break;
+                        case "rgb":
+                        case "ct":
+                        case "rgbSingle":
+                        case "hue":
+                            if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {  
+                                let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness))
+                                setIfExists(id + ".DIMMER", sliderPos);
+                            } else {
+                                setIfExists(id + ".DIMMER", parseInt(words[4]));
+                            }
+                            break;
+                    }
+                }
+            }, 250);
+            break;
+        case "colorTempSlider": // Armilar - Slider tickt verkehrt - Hell = 0 / Dunkel = 100 -> Korrektur
+            (function () {if (timeoutSlider) {clearTimeout(timeoutSlider); timeoutSlider = null;}})();
+            timeoutSlider = setTimeout(async function () {
+                let pageItem = config.pages[pageId].items.find(e => e.id === id);
+                if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                    let colorTempK = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
+                    setIfExists(id + ".TEMPERATURE", (colorTempK));
+                } else {
+                    setIfExists(id + ".TEMPERATURE", 100 - words[4]);
+                }
+            }, 250);
+            break;
+        case "colorWheel":
+            let colorCoordinates = words[4].split('|');
+            let rgb = pos_to_color(colorCoordinates[0], colorCoordinates[1]);
+            //console.log(rgb);
+            //console.log(getHue(rgb.red, rgb.green, rgb.blue));
+            let o = getObject(id);
+            switch (o.common.role) {
+                case "hue":
+                    setIfExists(id + ".HUE", getHue(rgb.red, rgb.green, rgb.blue));
+                    break;
+                case "rgb":
+                    setIfExists(id + ".RED", rgb.red);
+                    setIfExists(id + ".GREEN", rgb.green);
+                    setIfExists(id + ".BLUE", rgb.blue);
+                    break;    
+                case "rgbSingle":
+                    setIfExists(id + ".RGB", ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue));          
+            }
             break;
         case "media-back":
             setIfExists(id + ".PREV", true)
@@ -737,11 +962,11 @@ function GetNavigationString(pageId: number): string {
     }
 }
 
-
 function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
     var out_msgs: Array<Payload> = [];
     let id = pageItem.id
+
     if (existsObject(id)) {
         var o = getObject(id)
         var val: (boolean | number) = 0;
@@ -749,6 +974,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
         var iconColor = rgb_dec565(config.defaultColor);
         if (type == "popupLight") {
             let switchVal = "0"
+            let brightness = 0;
             if (o.common.role == "light") {
                 if (existsState(id + ".GET")) {
                     val = getState(id + ".GET").val;
@@ -767,32 +993,251 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + + iconColor + "~" + switchVal + ",disable,disable,disable" })
             }
 
+            //Dimmer
             if (o.common.role == "dimmer") {
                 if (existsState(id + ".ON_ACTUAL")) {
                     val = getState(id + ".ON_ACTUAL").val;
                     RegisterDetailEntityWatcher(id + ".ON_ACTUAL", pageItem, type);
-                }
-
+                } 
                 else if (existsState(id + ".ON_SET")) {
                     val = getState(id + ".ON_SET").val;
                     RegisterDetailEntityWatcher(id + ".ON_SET", pageItem, type);
-                }
+                } 
 
                 if (val === true) {
                     var iconColor = GetIconColor(pageItem, val, false);
                     switchVal = "1"
                 }
-                let brightness = 0;
+
                 if (existsState(id + ".ACTUAL")) {
-                    brightness = Math.trunc(scale(getState(id + ".ACTUAL").val, 0, 100, 0, 100))
-                    iconColor = GetIconColor(pageItem, brightness, false);
-                    RegisterDetailEntityWatcher(id + ".ACTUAL", pageItem, type);
+                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                        brightness = Math.trunc(scale(getState(id + ".ACTUAL").val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                    } else {
+                        brightness = getState(id + ".ACTUAL").val;
+                    }
+                } else {
+                    console.warn("Alisas-Datenpunkt: " + id + ".ACTUAL could not be read");
                 }
+
+                if (val === true) {
+                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                    switchVal = "1";
+                } else {
+                    iconColor = GetIconColor(pageItem, false, true);
+                }
+
+                RegisterDetailEntityWatcher(id + ".ACTUAL", pageItem, type);
+                
                 let colorTemp = "disable"
                 let colorMode = "disable"
-                //let attr_support_color = attr.supported_color_modes
-                //if (attr_support_color.includes("color_temp"))
-                // colortemp = Math.trunc(scale(attr.color_temp, attr.min_mireds, attr.max_mireds, 0, 100))
+
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
+            }
+            //HUE-Licht
+            if (o.common.role == "hue") {
+                
+                if (existsState(id + ".ON_ACTUAL")) {
+                    val = getState(id + ".ON_ACTUAL").val;
+                    RegisterDetailEntityWatcher(id + ".ON_ACTUAL", pageItem, type);
+                }
+
+                if (existsState(id + ".DIMMER")) {
+                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                        brightness = Math.trunc(scale(getState(id + ".DIMMER").val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                    } else {
+                        brightness = getState(id + ".DIMMER").val;
+                    }
+                    RegisterDetailEntityWatcher(id + ".DIMMER", pageItem, type);
+                } else {
+                    console.warn("Alias-Datenpunkt: " + id + ".DIMMER could not be read");
+                }
+
+                if (val === true) {
+                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                    switchVal = "1";
+                } else {
+                    iconColor = GetIconColor(pageItem, false, true);
+                }
+
+                var colorMode = "disable"
+                if (existsState(id + ".HUE")) {
+                    if (getState(id + ".HUE").val != null) {
+                        colorMode = "enable";
+                        let huecolor = hsv2rgb(getState(id + ".HUE").val,1,1);
+                        let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])}
+                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                        //RegisterDetailEntityWatcher(id + ".HUE", pageItem, type);
+                    } 
+                }
+
+                var colorTemp = 0;
+                if (existsState(id + ".TEMPERATURE")) {
+                    if (getState(id + ".TEMPERATURE").val != null) {
+                        if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                            colorTemp = Math.trunc(scale(getState(id + ".TEMPERATURE").val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                        } else {
+                            colorTemp = 100 - getState(id + ".TEMPERATURE").val;
+                        }
+                        //RegisterDetailEntityWatcher(id + ".TEMPERATURE", pageItem, type);
+                    } 
+                } else {
+                    console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
+                }
+
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
+            }
+
+            //RGB-Licht
+            if (o.common.role == "rgb") {
+                
+                if (existsState(id + ".ON_ACTUAL")) {
+                    val = getState(id + ".ON_ACTUAL").val;
+                    RegisterDetailEntityWatcher(id + ".ON_ACTUAL", pageItem, type);
+                }
+
+                if (existsState(id + ".DIMMER")) {
+                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                        brightness = Math.trunc(scale(getState(id + ".DIMMER").val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                    } else {
+                        brightness = getState(id + ".DIMMER").val;
+                    }
+                    RegisterDetailEntityWatcher(id + ".DIMMER", pageItem, type);
+                } else {
+                    console.warn("Alias-Datenpunkt: " + id + ".DIMMER could not be read");
+                }
+
+                if (val === true) {
+                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                    switchVal = "1";
+                } else {
+                    iconColor = GetIconColor(pageItem, false, true);
+                }
+
+                var colorMode = "disable"
+                if (existsState(id + ".RED") && existsState(id + ".GREEN") && existsState(id + ".BLUE")) {
+                    if (getState(id + ".RED").val != null && getState(id + ".GREEN").val != null && getState(id + ".BLUE").val != null) {
+                        colorMode = "enable";
+                        let rgb = <RGB>{ red: Math.round(getState(id + ".RED").val), green: Math.round(getState(id + ".GREEN").val), blue: Math.round(getState(id + ".BLUE").val)}
+                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                        //RegisterDetailEntityWatcher(id + ".HUE", pageItem, type);
+                    } 
+                }
+
+                var colorTemp = 0;
+                if (existsState(id + ".TEMPERATURE")) {
+                    if (getState(id + ".TEMPERATURE").val != null) {
+                        if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                            colorTemp = Math.trunc(scale(getState(id + ".TEMPERATURE").val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                        } else {
+                            colorTemp = 100 - getState(id + ".TEMPERATURE").val;
+                        }
+                        //RegisterDetailEntityWatcher(id + ".TEMPERATURE", pageItem, type);
+                    } 
+                } else {
+                    console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
+                }
+
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
+            }
+
+            //RGB-Licht-einzeln (HEX)
+            if (o.common.role == "rgbSingle") {
+                
+                if (existsState(id + ".ON_ACTUAL")) {
+                    val = getState(id + ".ON_ACTUAL").val;
+                    RegisterDetailEntityWatcher(id + ".ON_ACTUAL", pageItem, type);
+                }
+
+                if (existsState(id + ".DIMMER")) {
+                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                        brightness = Math.trunc(scale(getState(id + ".DIMMER").val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                    } else {
+                        brightness = getState(id + ".DIMMER").val;
+                    }
+                    RegisterDetailEntityWatcher(id + ".DIMMER", pageItem, type);
+                } else {
+                    console.warn("Alias-Datenpunkt: " + id + ".DIMMER could not be read");
+                }
+
+                if (val === true) {
+                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                    switchVal = "1";
+                } else {
+                    iconColor = GetIconColor(pageItem, false, true);
+                }
+
+                var colorMode = "disable"
+                if (existsState(id + ".RGB")) {
+                    if (getState(id + ".RGB").val != null) {
+                        colorMode = "enable";
+                        var hex = getState(id + ".RGB").val;
+                        var hexRed = parseInt(hex[1]+hex[2],16);
+                        var hexGreen = parseInt(hex[3]+hex[4],16);
+                        var hexBlue = parseInt(hex[5]+hex[6],16);
+                        let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue)}
+                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                        //RegisterDetailEntityWatcher(id + ".HUE", pageItem, type);
+                    } 
+                }
+
+                var colorTemp = 0;
+                if (existsState(id + ".TEMPERATURE")) {
+                    if (getState(id + ".TEMPERATURE").val != null) {
+                        if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                            colorTemp = Math.trunc(scale(getState(id + ".TEMPERATURE").val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                        } else {
+                            colorTemp = 100 - getState(id + ".TEMPERATURE").val;
+                        }
+                        //RegisterDetailEntityWatcher(id + ".TEMPERATURE", pageItem, type);
+                    } 
+                } else {
+                    console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
+                }
+
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
+            }
+
+            //Farbtemperatur
+            if (o.common.role == "ct") {
+
+                if (existsState(id + ".ON")) {
+                    val = getState(id + ".ON").val;
+                    RegisterDetailEntityWatcher(id + ".ON", pageItem, type);
+                }
+                
+                if (existsState(id + ".DIMMER")) {
+                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                        brightness = Math.trunc(scale(getState(id + ".DIMMER").val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                    } else {
+                        brightness = getState(id + ".DIMMER").val;
+                    }
+                    RegisterDetailEntityWatcher(id + ".DIMMER", pageItem, type);
+                } else {
+                    console.warn("Alias-Datenpunkt: " + id + ".DIMMER could not be read");
+                }
+
+                if (val === true) {
+                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                    switchVal = "1";
+                } else {
+                    iconColor = GetIconColor(pageItem, false, true);
+                }
+
+                var colorMode = "disable"
+
+                var colorTemp = 0;
+                if (existsState(id + ".TEMPERATURE")) {
+                    if (getState(id + ".TEMPERATURE").val != null) {
+                        if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                            colorTemp = Math.trunc(scale(getState(id + ".TEMPERATURE").val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                        } else {
+                            colorTemp = 100 - getState(id + ".TEMPERATURE").val;
+                        }
+                        //RegisterDetailEntityWatcher(id + ".TEMPERATURE", pageItem, type);
+                    } 
+                } else {
+                    console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
+                }
 
                 out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
             }
@@ -800,18 +1245,21 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
         }
 
         if (type == "popupShutter") {
-            if (existsState(id + ".ACTUAL"))
+            if (existsState(id + ".ACTUAL")) {
                 val = getState(id + ".ACTUAL").val;
-            else if (existsState(id + ".SET"))
+                RegisterDetailEntityWatcher(id + ".ACTUAL", pageItem, type);
+            } else if (existsState(id + ".SET")) {
                 val = getState(id + ".SET").val;
-            out_msgs.push({ payload: "entityUpdateDetail," + val })
+                RegisterDetailEntityWatcher(id + ".SET", pageItem, type);
+            }
+            out_msgs.push({ payload: "entityUpdateDetail~" + val })
         }
     }
     return out_msgs
 }
 
 function scale(number: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
-    return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    return (outMax+outMin)-((number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin);
 }
 
 function UnsubscribeWatcher(): void {
@@ -966,6 +1414,68 @@ function rgb_dec565(rgb: RGB): number {
     return ((Math.floor(rgb.red / 255 * 31) << 11) | (Math.floor(rgb.green / 255 * 63) << 5) | (Math.floor(rgb.blue / 255 * 31)));
 }
 
+function rad2deg(rad) {
+  return (360 + 180 * rad / Math.PI) % 360;
+}
+
+function ColorToHex(color) {
+  var hexadecimal = color.toString(16);
+  return hexadecimal.length == 1 ? "0" + hexadecimal : hexadecimal;
+}
+
+function ConvertRGBtoHex(red: number, green: number, blue: Number) {
+  return "#" + ColorToHex(red) + ColorToHex(green) + ColorToHex(blue);
+}
+
+function hsv2rgb(hue: number, saturation: number, value: number) {
+  hue /= 60;
+  let chroma = value * saturation;
+  let x = chroma * (1 - Math.abs((hue % 2) - 1));
+  let rgb = hue <= 1? [chroma, x, 0]:
+            hue <= 2? [x, chroma, 0]:
+            hue <= 3? [0, chroma, x]:
+            hue <= 4? [0, x, chroma]:
+            hue <= 5? [x, 0, chroma]:
+                      [chroma, 0, x];
+  return rgb.map(v => (v + value - chroma) * 255);
+}
+
+function getHue(red: number, green: number, blue:number) {
+    var min = Math.min(Math.min(red, green), blue);
+    var max = Math.max(Math.max(red, green), blue);
+    if (min == max) {
+        return 0;
+    }
+    var hue = 0;
+    if (max == red) {
+        hue = (green - blue) / (max - min);
+    } else if (max == green) {
+        hue = 2 + (blue - red) / (max - min);
+    } else {
+        hue = 4 + (red - green) / (max - min);
+    }
+    hue = hue * 60;
+    if (hue < 0) hue = hue + 360;
+    return Math.round(hue);
+}
+
+function pos_to_color(x: number, y: number): RGB {
+    var r = 160/2;
+    var x = Math.round((x - r) / r * 100) / 100;
+    var y = Math.round((r - y) / r * 100) / 100;
+    
+    r = Math.sqrt(x*x + y*y);
+    let sat = 0
+    if (r > 1) {
+        sat = 0;
+    } else {
+        sat = r;
+    }
+    var hsv = rad2deg(Math.atan2(y, x));
+    var rgb = hsv2rgb(hsv,sat,1);
+    return <RGB>{ red: Math.round(rgb[0]), green: Math.round(rgb[1]), blue: Math.round(rgb[2]) };
+}
+
 type RGB = {
     red: number,
     green: number,
@@ -1010,6 +1520,10 @@ type PageItem = {
     offColor: (RGB | undefined),
     useColor: (boolean | undefined),
     interpolateColor: (boolean | undefined),
+    minValueBrightness: (number | undefined),
+    maxValueBrightness: (number | undefined),
+    minValueColorTemp: (number | undefined),
+    maxValueColorTemp: (number | undefined),
     minValue: (number | undefined),
     maxValue: (number | undefined),
     name: (string | undefined),
