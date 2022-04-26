@@ -527,18 +527,147 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
         let destTemp = 0;
         if (existsState(id + ".SET")) {
             destTemp = getState(id + ".SET").val.toFixed(2) * 10;
-            log(id + ".SET " + destTemp)
         }
-
 
         let status = ""
         if (existsState(id + ".MODE"))
             status = getState(id + ".MODE").val;
-        let minTemp = 180
-        let maxTemp = 300
+        let minTemp = 180 //Min Temp 5°C
+        let maxTemp = 300 //Max Temp 30°C
         let stepTemp = 5
+        
+        //Dynamically add attributes if defined in alias
+        var thermButton = 0;
+        let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
+        if ((i_list.length - 3) != 0) {
+            console.log(i_list.length -3)
+            if ((i_list.length -3)%2 == 0) {
+                if ((i_list.length - 3) == 2) {
+                    thermButton = 6;
+                } else {
+                    thermButton = 5;
+                }
+            } else {
+                if ((i_list.length - 3) == 1) {
+                    thermButton = 2;
+                } else if ((i_list.length - 3) == 3) {
+                    thermButton = 1;
+                } else {
+                    thermButton = 0;
+                }    
+            }
+                
+            var i = 0;    
+            var bt = ["","","","","","","","",""];  
+            for (i = 0; i < thermButton; i++) {
+                bt[i] = "~~~~";
+            }
+            for (let i_index in i_list) {
+                let thermostatState = i_list[i_index].split('.');
+                if (thermostatState[thermostatState.length-1] != "SET" && thermostatState[thermostatState.length-1] != "ACTUAL" && thermostatState[thermostatState.length-1] != "MODE")  {
+                    i++;
+                    
+                    switch (thermostatState[thermostatState.length-1]) {
+                        case "HUMIDITY":
+                            if (existsState(id + ".HUMIDITY") && getState(id + ".HUMIDITY").val != null) {
+                                if (parseInt(getState(id + ".HUMIDITY").val) < 40) {
+                                    bt[i-1] =  Icons.GetIcon("water-percent") + "~65504~1~bt" + (i-1) + "~";
+                                } else if (parseInt(getState(id + ".HUMIDITY").val) < 30) {
+                                    bt[i-1] =  Icons.GetIcon("water-percent") + "~63488~1~bt" + (i-1) + "~";
+                                } else if (parseInt(getState(id + ".HUMIDITY").val) > 65) {
+                                    bt[i-1] =  Icons.GetIcon("water-percent") + "~65504~1~bt" + (i-1) + "~";
+                                } else if (parseInt(getState(id + ".HUMIDITY").val) > 75) {
+                                    bt[i-1] =  Icons.GetIcon("water-percent") + "~63488~1~bt" + (i-1) + "~";
+                                }
+                            } else i--;
+                            break;
+                        case "LOWBAT":
+                            if (existsState(id + ".LOWBAT") && getState(id + ".LOWBAT").val != null) {
+                                if (getState(id + ".LOWBAT").val) {
+                                    bt[i-1] =  Icons.GetIcon("battery-low") + "~63488~1~bt" + (i-1) + "~";
+                                } else {
+                                    bt[i-1] =  Icons.GetIcon("battery-high") + "~2016~1~bt" + (i-1) + "~";
+                                }
+                            } else i--;
+                            break;
+                        case "MAINTAIN":
+                            if (existsState(id + ".MAINTAIN") && getState(id + ".MAINTAIN").val != null) {
+                                if (getState(id + ".MAINTAIN").val >> .1) {
+                                    bt[i-1] =  Icons.GetIcon("fire") + "~60897~1~bt" + (i-1) + "~";
+                                } else {
+                                    bt[i-1] =  Icons.GetIcon("fire") + "~33840~0~bt" + (i-1) + "~";
+                                }
+                            } else i--;
+                            break;
+                        case "UNREACH":
+                            if (existsState(id + ".UNREACH") && getState(id + ".UNREACH").val != null) {
+                                if (getState(id + ".UNREACH").val) {
+                                    bt[i-1] =  Icons.GetIcon("wifi-off") + "~63488~1~bt" + (i-1) + "~";
+                                } else {
+                                    bt[i-1] =  Icons.GetIcon("wifi") + "~2016~1~bt" + (i-1) + "~";
+                                }
+                            } else i--;
+                            break;
+                        case "POWER":
+                            if (existsState(id + ".POWER") && getState(id + ".POWER").val != null) {
+                                if (getState(id + ".POWER").val) {
+                                    bt[i-1] =  Icons.GetIcon("power-standby") + "~2016~1~bt" + (i-1) + "~";
+                                } else {
+                                    bt[i-1] =  Icons.GetIcon("power-standby") + "~33840~1~bt" + (i-1) + "~";
+                                }
+                            } else i--;
+                            break;
+                        case "ERROR":
+                            if (existsState(id + ".ERROR") && getState(id + ".ERROR").val != null) {
+                                if (getState(id + ".ERROR").val) {
+                                    bt[i-1] =  Icons.GetIcon("alert-circle") + "~63488~1~bt" + (i-1) + "~";
+                                } else {
+                                    bt[i-1] =  Icons.GetIcon("alert-circle") + "~33840~1~bt" + (i-1) + "~";
+                                }
+                            } else i--;
+                            break;
+                        case "WORKING":
+                            if (existsState(id + ".WORKING") && getState(id + ".WORKING").val != null) {
+                                if (getState(id + ".WORKING").val) {
+                                    bt[i-1] =  Icons.GetIcon("briefcase-check") + "~2016~1~bt" + (i-1) + "~";
+                                } else {
+                                    bt[i-1] =  Icons.GetIcon("briefcase-check") + "~33840~1~bt" + (i-1) + "~";
+                                }
+                            } else i--;
+                            break;
+                        case "BOOST":
+                            if (existsState(id + ".BOOST") && getState(id + ".BOOST").val != null) {
+                                if (getState(id + ".BOOST").val) {
+                                    bt[i-1] =  Icons.GetIcon("fast-forward-60") + "~2016~1~bt" + (i-1) + "~";
+                                } else {
+                                    bt[i-1] =  Icons.GetIcon("fast-forward-60") + "~33840~1~bt" + (i-1) + "~";
+                                }
+                            } else i--;                            
+                            break;
+                        case "PARTY":
+                            if (existsState(id + ".PARTY") && getState(id + ".PARTY").val != null) {
+                                if (getState(id + ".PARTY").val) {
+                                    bt[i-1] =  Icons.GetIcon("party-popper") + "~2016~1~bt" + (i-1) + "~";
+                                } else {
+                                    bt[i-1] =  Icons.GetIcon("party-popper") + "~33840~1~bt" + (i-1) + "~";
+                                }
+                            } else i--;
+                            break;
+                        default:
+                            i--;
+                            break;
+                    }
+                }
+            }
+            for (let j = i; j < 9; j++) {
+                bt[j] = "~~~~";
+            }
+        }
+        
+        let icon_res = bt[0] + bt[1] + bt[2] + bt[3] + bt[4] + bt[5] + bt[6] + bt[7] + bt[8];
 
-        out_msgs.push({ payload: "entityUpd~" + name + "~" + GetNavigationString(pageId) + "~" + id + "~" + currentTemp + "~" + destTemp + "~" + status + "~" + minTemp + "~" + maxTemp + "~" + stepTemp })
+
+        out_msgs.push({ payload: "entityUpd~" + name + "~" + GetNavigationString(pageId) + "~" + id + "~" + currentTemp + "~" + destTemp + "~" + status + "~" + minTemp + "~" + maxTemp + "~" + stepTemp + "~" +icon_res})
     }
 
     return out_msgs
