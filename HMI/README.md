@@ -98,6 +98,7 @@ The following message can be used to update the content on the cardEntities Page
 `~button~button.entityName~3~17299~bt-name~bt-text`
 
 `~switch~switch.entityName~4~17299~Switch1~0`
+`~number~input_number.entityName~4~17299~Number123~value|min|max`
 
 ### popupLight Page
 
