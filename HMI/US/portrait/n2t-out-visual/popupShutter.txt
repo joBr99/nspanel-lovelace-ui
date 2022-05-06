@@ -56,8 +56,8 @@ Variable (string) entn
     Attributes
         ID            : 18
         Scope         : local
-        Text          : newtxt
-        Max. Text Size: 50
+        Text          : 
+        Max. Text Size: 80
     
 Text tEntity
     Attributes
@@ -294,7 +294,7 @@ Text tInfo1
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 25
+        Max. Text Size                      : 40
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0

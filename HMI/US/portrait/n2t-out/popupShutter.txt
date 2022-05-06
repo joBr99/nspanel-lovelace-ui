@@ -46,8 +46,8 @@ Variable (string) strCommand
 Variable (string) entn
     Attributes
         Scope         : local
-        Text          : newtxt
-        Max. Text Size: 50
+        Text          : 
+        Max. Text Size: 80
     
 Text tEntity
     Attributes
@@ -127,7 +127,7 @@ Text tInfo1
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 25
+        Max. Text Size                      : 40
     
 Picture p0
     Attributes
