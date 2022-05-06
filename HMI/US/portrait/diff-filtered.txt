@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-06 16:09:54.651733438 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-06 16:09:54.295728867 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 16:09:54.639733284 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-06 16:09:54.295728867 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 16:09:54.639733284 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-06 16:15:46.478825287 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-06 16:15:46.086827231 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 16:15:46.462825367 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-06 16:15:46.086827231 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 16:15:46.466825347 +0000
 +@@ -62,6 +62,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -25,8 +25,8 @@
 +                                     if(tInstruction.txt=="pageType")
 +                                     {
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-05-06 16:09:54.295728867 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-06 16:09:54.639733284 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-05-06 16:15:46.086827231 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-06 16:15:46.462825367 +0000
 +@@ -71,25 +71,25 @@
 +     Attributes
 +         Scope         : local
@@ -73,32 +73,11 @@
 +     
 + Text tHeading
 +     Attributes
-+diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
-+--- HMI/n2t-out/pageIcons.txt	2022-05-06 16:09:54.295728867 +0000
-++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-05-06 16:09:54.639733284 +0000
-+@@ -30,7 +30,7 @@
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+         Text                                : 
-+-        Max. Text Size                      : 80
-++        Max. Text Size                      : 50
-+     
-+ Text tTmp2
-+     Attributes
-+@@ -40,7 +40,7 @@
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+         Text                                : 
-+-        Max. Text Size                      : 80
-++        Max. Text Size                      : 50
-+     
-+ Picture p0
-+     Attributes
-+--- HMI/n2t-out/pageStartup.txt	2022-05-06 16:09:54.295728867 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 16:09:54.639733284 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-06 16:15:46.086827231 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 16:15:46.462825367 +0000
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-05-06 16:09:54.295728867 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-06 16:09:54.639733284 +0000
++--- HMI/n2t-out/popupLight.txt	2022-05-06 16:15:46.086827231 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-06 16:15:46.462825367 +0000
 +@@ -59,8 +59,8 @@
 + Variable (string) entn
 +     Attributes
@@ -110,22 +89,9 @@
 +     
 + Variable (int32) mode
 +     Attributes
-+@@ -535,12 +535,6 @@
-+                                                 vis pColorWheel,1
-+                                             }
-+                                         }
-+-                                        // set t0 Color (Localization)
-+-                                        spstr strCommand.txt,t0.txt,"~",6
-+-                                        // set t4 Temperature (Localization)
-+-                                        spstr strCommand.txt,t4.txt,"~",7
-+-                                        // set t1 Brightness (Localization)
-+-                                        spstr strCommand.txt,t0.txt,"~",8
-+                                     }
-+                                     if(tInstruction.txt=="time")
-+                                     {
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-05-06 16:09:54.295728867 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-06 16:09:54.639733284 +0000
++--- HMI/n2t-out/popupShutter.txt	2022-05-06 16:15:46.086827231 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-06 16:15:46.462825367 +0000
 +@@ -46,8 +46,8 @@
 + Variable (string) entn
 +     Attributes
@@ -137,33 +103,16 @@
 +     
 + Text tEntity
 +     Attributes
-+@@ -109,7 +109,7 @@
++@@ -127,7 +127,7 @@
++         Send Component ID                   : disabled
++         Associated Keyboard                 : none
 +         Text                                : 
-+         Max. Text Size                      : 20
-+     
-+-Text tPosHeading
-++Text t1
-+     Attributes
-+         Scope                               : local
-+         Dragging                            : 0
-+@@ -119,16 +119,6 @@
-+         Text                                : Position
-+         Max. Text Size                      : 15
-+     
-+-Text tInfo1
-+-    Attributes
-+-        Scope                               : local
-+-        Dragging                            : 0
-+-        Disable release event after dragging: 0
-+-        Send Component ID                   : disabled
-+-        Associated Keyboard                 : none
-+-        Text                                : 
 +-        Max. Text Size                      : 40
-+-    
+++        Max. Text Size                      : 25
++     
 + Picture p0
 +     Attributes
-+         Scope                               : local
-+@@ -157,7 +147,7 @@
++@@ -157,7 +157,7 @@
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
 +             crcputh 55 bb
@@ -172,14 +121,3 @@
 +             crcputs tSend.txt,0
 +             //send cmd
 +             printh 55 bb
-+@@ -341,10 +331,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",1
-+                                         covx tTmp.txt,sys0,0,0
-+                                         hPosition.val=sys0
-+-                                        // set tinfo1 text
-+-                                        spstr strCommand.txt,tInfo1.txt,"~",2
-+-                                        // set tPosHeading (localization)
-+-                                        spstr strCommand.txt,tPosHeading.txt,"~",3
-+                                     }
-+                                     if(tInstruction.txt=="dimmode")
-+                                     {
