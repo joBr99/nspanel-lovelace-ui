@@ -171,6 +171,10 @@ class LuiPagesGen(object):
             icon_id = get_icon_id_ha("script", overwrite=icon)
             text = get_translation(self._locale,"run")
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+        if entityType == "lock":
+            icon_id = get_icon_id_ha("lock", state=entity.state, overwrite=icon)
+            text = get_translation(self._locale,"lock") if entity.state == "unlocked" else get_translation(self._locale,"lock")
+            return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         if entityType == "number":
             icon_id = get_icon_id_ha("number", overwrite=icon)
             min_v = entity.attributes.get("min", 0)
