@@ -182,7 +182,10 @@ class LuiController(object):
                 self._ha_api.turn_off(entity_id)
 
         if button_type == "number-set":
-            self._ha_api.get_entity(entity_id).call_service("set_value", value=value)
+            if entity_id.startswith('fan'):
+                self._ha_api.get_entity(entity_id).call_service("set_percentage", percentage=value)
+            else:
+                self._ha_api.get_entity(entity_id).call_service("set_value", value=value)
 
         # for shutter / covers
         if button_type == "up":
