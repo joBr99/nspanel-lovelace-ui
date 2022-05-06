@@ -535,6 +535,12 @@ Timer tmSerial
                                                 vis pColorWheel,1
                                             }
                                         }
+                                        // set t0 Color (Localization)
+                                        spstr strCommand.txt,t0.txt,"~",6
+                                        // set t4 Temperature (Localization)
+                                        spstr strCommand.txt,t4.txt,"~",7
+                                        // set t1 Brightness (Localization)
+                                        spstr strCommand.txt,t0.txt,"~",8
                                     }
                                     if(tInstruction.txt=="time")
                                     {

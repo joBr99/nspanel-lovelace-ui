@@ -98,7 +98,7 @@ Text tIcon1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 11
-        y coordinate                        : 21
+        y coordinate                        : 35
         Width                               : 45
         Height                              : 30
         Effect                              : load
@@ -239,7 +239,7 @@ Text tId
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text t1
+Text tPosHeading
     Attributes
         ID                                  : 17
         Scope                               : local
@@ -265,6 +265,36 @@ Text t1
         Input Type                          : character
         Text                                : Position
         Max. Text Size                      : 15
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tInfo1
+    Attributes
+        ID                                  : 19
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 61
+        y coordinate                        : 51
+        Width                               : 195
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 38066
+        Horizontal Alignment                : left
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 25
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -596,6 +626,10 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sys0,0,0
                                         hPosition.val=sys0
+                                        // set tinfo1 text
+                                        spstr strCommand.txt,tInfo1.txt,"~",2
+                                        // set tPosHeading (localization)
+                                        spstr strCommand.txt,tPosHeading.txt,"~",3
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
