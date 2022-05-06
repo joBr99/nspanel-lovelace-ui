@@ -15,6 +15,8 @@ translations = {
             'code': "Kode",
             'disarm': "Skakel Af",
             'run': "Hardloop",
+            'lock': "Sluit toe",
+            'unlock': "Sluit oop",
         },
         'ar': {
             'ACTIVATE': "تفعيل",
@@ -32,6 +34,8 @@ translations = {
             'code': "الرمز",
             'disarm': "تعطيل",
             'run': "تشغيل",
+            'lock': "قفل",
+            'unlock': "فتح",
         },
         'bg': {
             'ACTIVATE': "Активирай",
@@ -50,6 +54,8 @@ translations = {
             'code': "Код",
             'disarm': "Деактивирaне",
             'run': "Изпълни",
+            'lock': "Заключване",
+            'unlock': "Отключване",
         },
         'ca': {
             'PRESS': "Prem",
@@ -69,6 +75,8 @@ translations = {
             'code': "Codi",
             'disarm': "Desactivar",
             'run': "Executa",
+            'lock': "Bloquejar",
+            'unlock': "Desbloquejar",
         },
         'cs': {
             'PRESS': "Stisknutí",
@@ -88,6 +96,8 @@ translations = {
             'code': "Kód",
             'disarm': "Odbezpečit",
             'run': "Spustit",
+            'lock': "Zamknout",
+            'unlock': "Odemknout",
         },
         'da': {
             'PRESS': "Tryk",
@@ -107,6 +117,8 @@ translations = {
             'code': "Kode",
             'disarm': "Frakobl",
             'run': "Kør",
+            'lock': "Lås",
+            'unlock': "Lås op",
         },
         'de': {
             'PRESS': "Drücken",
@@ -126,6 +138,8 @@ translations = {
             'code': "Code",
             'disarm': "Deaktivieren",
             'run': "Ausführen",
+            'lock': "Verriegeln",
+            'unlock': "Entriegeln",
         },
         'el': {
             'PRESS': "Πατήστε",
@@ -145,6 +159,8 @@ translations = {
             'code': "Κωδικός",
             'disarm': "Αφοπλισμός",
             'run': "Εκτέλεση",
+            'lock': "Κλείδωμα",
+            'unlock': "Ξεκλείδωμα",
         },
         'en': {
             'PRESS': "Press",
@@ -164,6 +180,8 @@ translations = {
             'code': "Code",
             'disarm': "Disarm",
             'run': "Run",
+            'lock': "Lock",
+            'unlock': "Unlock",
         },
         'es': {
             'PRESS': "Pulsa",
@@ -183,6 +201,8 @@ translations = {
             'code': "Código",
             'disarm': "Desarmar",
             'run': "Ejecutar",
+            'lock': "Bloquear",
+            'unlock': "Desbloquear",
         },
         'et': {
             'PRESS': "Vajuta nuppu",
@@ -202,6 +222,8 @@ translations = {
             'code': "Kood",
             'disarm': "Valvest maha",
             'run': "Käivita",
+            'lock': "Lukusta",
+            'unlock': "Ava",
         },
         'fa': {
             'ACTIVATE': "فعال سازی",
@@ -219,6 +241,8 @@ translations = {
             'code': "کد",
             'disarm': "دزدگیر خاموش",
             'run': "اجرا",
+            'lock': "قفل",
+            'unlock': "باز کردن",
         },
         'fi': {
             'PRESS': "Paina",
@@ -238,6 +262,8 @@ translations = {
             'code': "Koodi",
             'disarm': "Poista hälytys",
             'run': "Suorita",
+            'lock': "Lukitse",
+            'unlock': "Avaa lukitus",
         },
         'fr': {
             'PRESS': "Appui",
@@ -257,6 +283,8 @@ translations = {
             'code': "Code",
             'disarm': "Désarmer",
             'run': "Exécuter",
+            'lock': "Verrouiller",
+            'unlock': "Déverrouiller",
         },
         'he': {
             'PRESS': "לחיצה",
@@ -276,6 +304,8 @@ translations = {
             'code': "קוד",
             'disarm': "לא דרוך",
             'run': "רוץ",
+            'lock': "נעילה",
+            'unlock': "ביטול נעילה",
         },
         'hr': {
             'ACTIVATE': "Aktivirati",
@@ -293,6 +323,8 @@ translations = {
             'code': "Kod",
             'disarm': "Deaktiviraj",
             'run': "Pokreni",
+            'lock': "zaključati",
+            'unlock': "Otključati",
         },
         'hu': {
             'PRESS': "Gombnyomás",
@@ -312,6 +344,8 @@ translations = {
             'code': "Kód",
             'disarm': "Hatástalanít",
             'run': "Futtatás",
+            'lock': "Bezár",
+            'unlock': "Kinyit",
         },
         'hy': {
             'ACTIVATE': "Ակտիվացնել",
@@ -328,6 +362,8 @@ translations = {
             'clear_code': "Մաքրել",
             'code': "Կոդ",
             'disarm': "Զինաթափել",
+            'lock': "Կողպեք",
+            'unlock': "Բացել",
         },
         'id': {
             'PRESS': "Tekan",
@@ -347,6 +383,8 @@ translations = {
             'code': "Kode",
             'disarm': "Nonaktifkan",
             'run': "Jalankan",
+            'lock': "Kunci",
+            'unlock': "Buka",
         },
         'is': {
             'PRESS': "Ýttu á",
@@ -365,6 +403,8 @@ translations = {
             'code': "Kóði",
             'disarm': "Taka af verði",
             'run': "Keyra",
+            'lock': "Læsa",
+            'unlock': "Aflæsa",
         },
         'it': {
             'PRESS': "Premi",
@@ -384,6 +424,8 @@ translations = {
             'code': "Codice",
             'disarm': "Disattiva",
             'run': "Esegui",
+            'lock': "Blocca",
+            'unlock': "Sblocca",
         },
         'lb': {
             'ACTIVATE': "Aktivéieren",
@@ -401,6 +443,8 @@ translations = {
             'code': "Code",
             'disarm': "Desaktivéieren",
             'run': "Ausféieren",
+            'lock': "Spären",
+            'unlock': "Entspären",
         },
         'lt': {
             'ACTIVATE': "Suaktyvinti",
@@ -417,6 +461,8 @@ translations = {
             'code': "Kodas",
             'disarm': "Atrakinti",
             'run': "Paleisti",
+            'lock': "Užrakinti",
+            'unlock': "Atrakinti",
         },
         'lv': {
             'ACTIVATE': "Aktivizēt",
@@ -433,6 +479,8 @@ translations = {
             'clear_code': "Notīrīt",
             'code': "Kods",
             'disarm': "Atslēgt",
+            'lock': "Aizslēgt",
+            'unlock': "Atslēgt",
         },
         'nb': {
             'PRESS': "trykk",
@@ -452,6 +500,8 @@ translations = {
             'code': "Kode",
             'disarm': "Deaktivere",
             'run': "Kjør",
+            'lock': "Lås",
+            'unlock': "Lås opp",
         },
         'nl': {
             'PRESS': "Klik",
@@ -471,6 +521,8 @@ translations = {
             'code': "Code",
             'disarm': "Uitschakelen",
             'run': "Uitvoeren",
+            'lock': "Vergrendelen",
+            'unlock': "Ontgrendelen",
         },
         'nn': {
             'ACTIVATE': "Aktiver",
@@ -489,6 +541,8 @@ translations = {
             'code': "Kode",
             'disarm': "Skru av",
             'run': "Køyr",
+            'lock': "Lås",
+            'unlock': "Lås opp",
         },
         'pl': {
             'PRESS': "Naciśnij",
@@ -508,6 +562,8 @@ translations = {
             'code': "Kod",
             'disarm': "Rozbrój",
             'run': "Uruchom",
+            'lock': "Zablokuj",
+            'unlock': "Odblokuj",
         },
         'pt': {
             'PRESS': "Pressione",
@@ -526,6 +582,8 @@ translations = {
             'code': "Código",
             'disarm': "Desarmar",
             'run': "Executar",
+            'lock': "Bloquear",
+            'unlock': "Desbloquear",
         },
         'ro': {
             'ACTIVATE': "Activați",
@@ -544,6 +602,8 @@ translations = {
             'code': "Cod",
             'disarm': "Dezarmat",
             'run': "Rulați",
+            'lock': "Blocat",
+            'unlock': "Deblocare",
         },
         'ru': {
             'PRESS': "Нажать",
@@ -563,6 +623,8 @@ translations = {
             'code': "Код",
             'disarm': "Снять с охраны",
             'run': "Запустить",
+            'lock': "Закрыть",
+            'unlock': "Открыть",
         },
         'sk': {
             'ACTIVATE': "Aktivovať",
@@ -581,6 +643,8 @@ translations = {
             'code': "Kód",
             'disarm': "Odkódovať",
             'run': "Spustiť",
+            'lock': "Zamknúť",
+            'unlock': "Odomknúť",
         },
         'sl': {
             'PRESS': "Pritisnite",
@@ -599,6 +663,8 @@ translations = {
             'code': "Koda",
             'disarm': "Izklopi",
             'run': "Poženi",
+            'lock': "Zakleni",
+            'unlock': "Odkleni",
         },
         'sv': {
             'PRESS': "Tryck",
@@ -618,6 +684,8 @@ translations = {
             'code': "Kod",
             'disarm': "Larma från",
             'run': "Kör",
+            'lock': "Lås",
+            'unlock': "Lås upp",
         },
         'th': {
             'PRESS': "กด",
@@ -635,6 +703,8 @@ translations = {
             'clear_code': "ล้าง",
             'code': "รหัส",
             'disarm': "ปิดระบบสัญญาณกันขโมย",
+            'lock': "ล็อค",
+            'unlock': "ปลดล็อค",
         },
         'tr': {
             'PRESS': "Basınız",
@@ -654,6 +724,8 @@ translations = {
             'code': "Kod",
             'disarm': "Etkisiz hale getir",
             'run': "Çalıştır",
+            'lock': "Kilitle",
+            'unlock': "Kilidi aç",
         },
         'uk': {
             'PRESS': "Натисніть",
@@ -672,6 +744,8 @@ translations = {
             'code': "Код",
             'disarm': "DISARM",
             'run': "Запустити",
+            'lock': "Блокувати",
+            'unlock': "Розблокувати",
         },
         'vi': {
             'ACTIVATE': "Kích hoạt",
@@ -689,13 +763,15 @@ translations = {
             'code': "Mã số",
             'disarm': "Vô hiệu hoá",
             'run': "Chạy",
+            'lock': "Khóa",
+            'unlock': "Mở khóa",
         },
 }
 
 def get_translation(locale, input):
-    locale = locale.split("_")[0]
-    en_fallback_res = translations.get("en").get(input, input)
+    en_fallback_res = translations.get("en_US").get(input, input)
     if locale in translations:
         return translations.get(locale).get(input, en_fallback_res)
     else:
         return en_fallback_res
+
