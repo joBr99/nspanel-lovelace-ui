@@ -52,7 +52,7 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
     if ha_type == "cover":
         return "window-open" if state == "open" else "window-closed"
     if ha_type == "lock":
-        return "lock-open" if state == "open" else "lock"
+        return "lock-open" if state == "unlocked" else "lock"
 
     elif ha_type == "sensor":
         if state == "on":
