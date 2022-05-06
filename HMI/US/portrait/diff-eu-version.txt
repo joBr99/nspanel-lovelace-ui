@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-06 15:50:18.520343411 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 15:50:18.920520744 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-06 15:52:03.665117664 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 15:52:04.049120145 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-05-06 15:50:18.524345319 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-06 15:50:18.920520744 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-05-06 15:52:03.665117664 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-06 15:52:04.049120145 +0000
 @@ -46,7 +46,7 @@
      Attributes
          Scope         : local
@@ -77,8 +77,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
              //send cmd
              printh 55 bb
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-06 15:50:18.524345319 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 15:50:18.920520744 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-06 15:52:03.665117664 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 15:52:04.049120145 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -493,8 +493,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-05-06 15:50:18.520343411 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-06 15:50:18.920520744 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-05-06 15:52:03.665117664 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-06 15:52:04.049120145 +0000
 @@ -71,25 +71,25 @@
      Attributes
          Scope         : local
@@ -542,8 +542,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
  Text tHeading
      Attributes
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-05-06 15:50:18.520343411 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-06 15:50:18.920520744 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-05-06 15:52:03.665117664 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-06 15:52:04.049120145 +0000
 @@ -25,19 +25,19 @@
      Attributes
          Scope         : local
@@ -658,8 +658,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
              //send cmd
              printh 55 bb
 diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
---- HMI/n2t-out/pageIcons.txt	2022-05-06 15:50:18.520343411 +0000
-+++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-05-06 15:50:18.920520744 +0000
+--- HMI/n2t-out/pageIcons.txt	2022-05-06 15:52:03.665117664 +0000
++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-05-06 15:52:04.049120145 +0000
 @@ -30,7 +30,7 @@
          Send Component ID                   : disabled
          Associated Keyboard                 : none
@@ -679,8 +679,8 @@ diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
  Picture p0
      Attributes
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-06 15:50:18.520343411 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 15:50:18.920520744 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-06 15:52:03.665117664 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 15:52:04.049120145 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -700,8 +700,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-05-06 15:50:18.524345319 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-06 15:50:18.920520744 +0000
+--- HMI/n2t-out/popupLight.txt	2022-05-06 15:52:03.665117664 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-06 15:52:04.049120145 +0000
 @@ -59,8 +59,8 @@
  Variable (string) entn
      Attributes
@@ -714,8 +714,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
  Variable (int32) mode
      Attributes
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-05-06 15:50:18.524345319 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-06 15:50:18.920520744 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-05-06 15:52:03.665117664 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-06 15:52:04.049120145 +0000
 @@ -46,8 +46,8 @@
  Variable (string) entn
      Attributes
@@ -727,7 +727,24 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
      
  Text tEntity
      Attributes
-@@ -147,7 +147,7 @@
+@@ -119,16 +119,6 @@
+         Text                                : Position
+         Max. Text Size                      : 15
+     
+-Text tInfo1
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : 
+-        Max. Text Size                      : 40
+-    
+ Picture p0
+     Attributes
+         Scope                               : local
+@@ -157,7 +147,7 @@
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
              crcputh 55 bb
@@ -736,3 +753,12 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
              crcputs tSend.txt,0
              //send cmd
              printh 55 bb
+@@ -341,8 +331,6 @@
+                                         spstr strCommand.txt,tTmp.txt,"~",1
+                                         covx tTmp.txt,sys0,0,0
+                                         hPosition.val=sys0
+-                                        // set tinfo1 text
+-                                        spstr strCommand.txt,tInfo1.txt,"~",2
+                                     }
+                                     if(tInstruction.txt=="dimmode")
+                                     {
