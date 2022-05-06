@@ -80,6 +80,8 @@ Page cardEntities
             vis bText5,0
             vis hSlider5,0
             vis nNum5,0
+            vis bPrev,0
+            vis bNext,0
         
 Variable (string) strCommand
     Attributes
@@ -1600,7 +1602,7 @@ Button bPrev
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -1647,7 +1649,7 @@ Button bNext
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
