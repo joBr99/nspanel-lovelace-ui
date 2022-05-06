@@ -17,6 +17,8 @@ Page screensaver
             vis tInstruction,0
             vis tTmp,0
             vis p0,0
+            vis tNotifyHead,0
+            vis tNotifyText,0
             //load gloabl time string from pageIcons
             //tTime.txt=vaTime.txt
             spstr pageIcons.vaTime.txt,tTime.txt,"?",0
@@ -290,6 +292,26 @@ Text tMR
         Text                                : 
         Max. Text Size                      : 10
     
+Text tNotifyHead
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 35
+    
+Text tNotifyText
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 35
+    
 Picture p0
     Attributes
         Scope                               : local
@@ -521,6 +543,20 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",23
                                         covx tTmp.txt,tMR.pco,0,0
                                     }
+                                    if(tInstruction.txt=="notify")
+                                    {
+                                        spstr strCommand.txt,tNotifyHead.txt,"~",1
+                                        spstr strCommand.txt,tNotifyText.txt,"~",2
+                                        if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+                                        {
+                                            vis tNotifyHead,1
+                                            vis tNotifyText,1
+                                        }else
+                                        {
+                                            vis tNotifyHead,0
+                                            vis tNotifyText,0
+                                        }
+                                    }
                                     if(tInstruction.txt=="pageType")
                                     {
                                         dim=100
@@ -610,6 +646,16 @@ TouchCap tc0
     
     Events
         Touch Press Event
+            if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+            {
+                if(dim!=0)
+                {
+                    tNotifyHead.txt=""
+                    tNotifyText.txt=""
+                    vis tNotifyHead,0
+                    vis tNotifyText,0
+                }
+            }
             dim=dimValueNormal
             vaTap.val+=1
             covx vaTap.val,tTmp.txt,0,0
@@ -618,7 +664,7 @@ TouchCap tc0
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
