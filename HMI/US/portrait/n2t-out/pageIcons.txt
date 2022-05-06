@@ -30,7 +30,7 @@ Text tTmp1
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 50
+        Max. Text Size                      : 80
     
 Text tTmp2
     Attributes
@@ -40,7 +40,7 @@ Text tTmp2
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 50
+        Max. Text Size                      : 80
     
 Picture p0
     Attributes
