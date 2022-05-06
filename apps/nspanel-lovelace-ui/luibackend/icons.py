@@ -47,6 +47,8 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
         return "ray-vertex"
     if ha_type == "light":
         return "lightbulb"
+    if ha_type == "fan":
+        return "fan"
     if ha_type == "input_boolean":
         return "check-circle-outline" if state == "on" else "close-circle-outline"
     if ha_type == "cover":

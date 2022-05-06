@@ -181,6 +181,9 @@ class LuiPagesGen(object):
             min_v = entity.attributes.get("min", 0)
             max_v = entity.attributes.get("max", 100)
             return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
+        if entityType == "fan":
+            icon_id = get_icon_id_ha("fan", overwrite=icon)
+            return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.percentage}|0|100"
         if entityType == "input_text":
             icon_id = get_icon_id_ha("input_text", overwrite=icon)
             value = entity.state
