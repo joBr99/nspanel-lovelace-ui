@@ -207,6 +207,11 @@ class LuiController(object):
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean'):
                 self._ha_api.get_entity(entity_id).call_service("toggle")
+            elif entity_id.startswith('lock'):
+                if self._ha_api.get_entity(entity_id).state == "locked":
+                    self._ha_api.get_entity(entity_id).call_service("unlock")
+                else:
+                    self._ha_api.get_entity(entity_id).call_service("lock")
             else:
                 self._ha_api.get_entity(entity_id).call_service("press")
 
