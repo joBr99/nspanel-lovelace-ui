@@ -34,6 +34,8 @@ Page cardGrid
             vis tEntity4,0
             vis tEntity5,0
             vis tEntity6,0
+            vis bPrev,0
+            vis bNext,0
         
 Variable (string) strCommand
     Attributes

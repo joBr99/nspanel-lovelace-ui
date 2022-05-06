@@ -39,6 +39,8 @@ Page cardThermo
             vis bt6,0
             vis bt7,0
             vis bt8,0
+            vis bPrev,0
+            vis bNext,0
         
 Variable (string) strCommand
     Attributes
