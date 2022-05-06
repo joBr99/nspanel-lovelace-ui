@@ -17,7 +17,7 @@ popupNotify
 popupShutter
 	19   Component(s)
 	191  Line(s) of event code
-	108  Unique line(s) of event code
+	107  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	338  Line(s) of event code
