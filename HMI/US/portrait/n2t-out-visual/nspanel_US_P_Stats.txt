@@ -17,7 +17,7 @@ popupNotify
 popupShutter
 	20   Component(s)
 	193  Line(s) of event code
-	110  Unique line(s) of event code
+	109  Unique line(s) of event code
 cardGrid
 	39   Component(s)
 	420  Line(s) of event code
