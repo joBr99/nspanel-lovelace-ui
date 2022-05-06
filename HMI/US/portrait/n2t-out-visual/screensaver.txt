@@ -25,6 +25,8 @@ Page screensaver
             vis tInstruction,0
             vis tTmp,0
             vis p0,0
+            vis tNotifyHead,0
+            vis tNotifyText,0
             //load gloabl time string from pageIcons
             //tTime.txt=vaTime.txt
             spstr pageIcons.vaTime.txt,tTime.txt,"?",0
@@ -763,6 +765,66 @@ Text tMR
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+Text tNotifyHead
+    Attributes
+        ID                                  : 33
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 240
+        Width                               : 320
+        Height                              : 58
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 3
+        Back. Color                         : 0
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 35
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tNotifyText
+    Attributes
+        ID                                  : 34
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 298
+        Width                               : 320
+        Height                              : 58
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 3
+        Back. Color                         : 0
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 35
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
 Picture p0
     Attributes
         ID                                  : 1
@@ -1005,6 +1067,20 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",23
                                         covx tTmp.txt,tMR.pco,0,0
                                     }
+                                    if(tInstruction.txt=="notify")
+                                    {
+                                        spstr strCommand.txt,tNotifyHead.txt,"~",1
+                                        spstr strCommand.txt,tNotifyText.txt,"~",2
+                                        if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+                                        {
+                                            vis tNotifyHead,1
+                                            vis tNotifyText,1
+                                        }else
+                                        {
+                                            vis tNotifyHead,0
+                                            vis tNotifyText,0
+                                        }
+                                    }
                                     if(tInstruction.txt=="pageType")
                                     {
                                         dim=100
@@ -1096,6 +1172,16 @@ TouchCap tc0
     
     Events
         Touch Press Event
+            if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+            {
+                if(dim!=0)
+                {
+                    tNotifyHead.txt=""
+                    tNotifyText.txt=""
+                    vis tNotifyHead,0
+                    vis tNotifyText,0
+                }
+            }
             dim=dimValueNormal
             vaTap.val+=1
             covx vaTap.val,tTmp.txt,0,0
@@ -1104,7 +1190,7 @@ TouchCap tc0
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb

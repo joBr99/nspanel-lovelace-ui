@@ -42,6 +42,8 @@ Page cardGrid
             vis tEntity4,0
             vis tEntity5,0
             vis tEntity6,0
+            vis bPrev,0
+            vis bNext,0
         
 Variable (string) strCommand
     Attributes
@@ -527,7 +529,7 @@ Button bPrev
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -574,7 +576,7 @@ Button bNext
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -632,7 +634,7 @@ Button bEntity1
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -690,7 +692,7 @@ Button bEntity2
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -748,7 +750,7 @@ Button bEntity3
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -806,7 +808,7 @@ Button bEntity4
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -864,7 +866,7 @@ Button bEntity5
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -922,7 +924,7 @@ Button bEntity6
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
             crcputh 55 bb
-            crcputs sys0,1
+            crcputs sys0,2
             crcputs tSend.txt,0
             //send cmd
             printh 55 bb
@@ -1276,7 +1278,7 @@ Timer tmSleep
                     btlen tSend.txt,sys0
                     crcrest 1,0xffff // reset CRC
                     crcputh 55 bb
-                    crcputs sys0,1
+                    crcputs sys0,2
                     crcputs tSend.txt,0
                     //send cmd
                     printh 55 bb
