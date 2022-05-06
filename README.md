@@ -18,7 +18,7 @@ NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 
 ## Features
 
-- Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light, input_text (read-only), lock
+- Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light, input_text (read-only), lock, fan
 - Grid Page with support for cover, switch, input_boolean, button, scenes, light and lock
 - Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
 - Thermostat Page 
