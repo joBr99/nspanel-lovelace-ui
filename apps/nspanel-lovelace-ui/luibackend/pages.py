@@ -24,7 +24,7 @@ class LuiPagesGen(object):
         attr = entity.attributes
         default_color_on  = rgb_dec565([253, 216, 53])
         default_color_off = rgb_dec565([68, 115, 158])
-        icon_color = default_color_on if entity.state == "on" else default_color_off
+        icon_color = default_color_on if entity.state in ["on", "unlocked"] else default_color_off
 
         if "rgb_color" in attr:
             color = attr.rgb_color
@@ -173,8 +173,9 @@ class LuiPagesGen(object):
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         if entityType == "lock":
             icon_id = get_icon_id_ha("lock", state=entity.state, overwrite=icon)
+            icon_color = self.get_entity_color(entity)
             text = get_translation(self._locale,"lock") if entity.state == "unlocked" else get_translation(self._locale,"lock")
-            return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+            return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
         if entityType == "number":
             icon_id = get_icon_id_ha("number", overwrite=icon)
             min_v = entity.attributes.get("min", 0)
