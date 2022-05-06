@@ -109,7 +109,7 @@ Text tId
         Text                                : 
         Max. Text Size                      : 20
     
-Text t1
+Text tPosHeading
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -343,6 +343,8 @@ Timer tmSerial
                                         hPosition.val=sys0
                                         // set tinfo1 text
                                         spstr strCommand.txt,tInfo1.txt,"~",2
+                                        // set tPosHeading (localization)
+                                        spstr strCommand.txt,tPosHeading.txt,"~",3
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
