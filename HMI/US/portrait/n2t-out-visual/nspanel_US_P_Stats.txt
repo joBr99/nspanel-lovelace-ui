@@ -25,7 +25,7 @@ pageStartup
 popupLight
 	27   Component(s)
 	338  Line(s) of event code
-	182  Unique line(s) of event code
+	183  Unique line(s) of event code
 screensaver
 	33   Component(s)
 	266  Line(s) of event code
@@ -38,14 +38,14 @@ cardAlarm
 	35   Component(s)
 	343  Line(s) of event code
 	214  Unique line(s) of event code
-cardGrid
-	39   Component(s)
-	418  Line(s) of event code
-	244  Unique line(s) of event code
 cardThermo
 	41   Component(s)
 	442  Line(s) of event code
 	247  Unique line(s) of event code
+cardGrid
+	39   Component(s)
+	418  Line(s) of event code
+	244  Unique line(s) of event code
 cardEntities
 	74   Component(s)
 	1157 Line(s) of event code
