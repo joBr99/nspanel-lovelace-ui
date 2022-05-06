@@ -49,10 +49,10 @@ cardThermo
 cardEntities
 	74   Component(s)
 	1159 Line(s) of event code
-	482  Unique line(s) of event code
+	481  Unique line(s) of event code
 
 Total
 	12   Page(s)
 	356  Component(s)
 	3894 Line(s) of event code
-	1081 Unique line(s) of event code
+	1080 Unique line(s) of event code

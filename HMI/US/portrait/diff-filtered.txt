@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-06 16:25:26.648277407 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-06 16:25:26.256271726 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 16:25:26.636277233 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-06 16:25:26.256271726 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 16:25:26.636277233 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-06 19:28:28.194497383 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-06 19:28:27.798491086 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 19:28:28.182497193 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-06 19:28:27.798491086 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 19:28:28.186497256 +0000
 +@@ -62,6 +62,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -17,6 +17,7 @@
 ++            crcputs sys0,2
 ++            crcputs sys0,2
 ++            crcputs sys0,2
+++            crcputs sys0,2
 +@@ -969,6 +1148,33 @@
 ++            crcputs sys0,2
 +@@ -1074,6 +1280,28 @@
@@ -24,5 +25,5 @@
 +                                     }
 +                                     if(tInstruction.txt=="pageType")
 +                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-05-06 16:25:26.256271726 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 16:25:26.636277233 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-06 19:28:27.798491086 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 19:28:28.182497193 +0000
