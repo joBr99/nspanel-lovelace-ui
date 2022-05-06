@@ -1,9 +1,9 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-06 15:00:32.080234971 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 15:00:32.064234717 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-06 15:15:12.202541951 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-06 15:15:11.662432193 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 15:15:12.138528943 +0000
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-06 15:00:32.064234717 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-05-06 15:15:11.666433006 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-06 15:15:12.138528943 +0000
 +@@ -46,7 +46,7 @@
 +     Attributes
 +         Scope         : local
@@ -67,8 +67,8 @@
 +             crcputs tSend.txt,0
 +             //send cmd
 +             printh 55 bb
-+--- HMI/n2t-out/cardEntities.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 15:00:32.068234780 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-06 15:15:11.666433006 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 15:15:12.138528943 +0000
 +@@ -62,6 +62,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -91,8 +91,8 @@
 +                                     if(tInstruction.txt=="pageType")
 +                                     {
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-06 15:00:32.068234780 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-05-06 15:15:11.662432193 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-06 15:15:12.138528943 +0000
 +@@ -71,25 +71,25 @@
 +     Attributes
 +         Scope         : local
@@ -140,8 +140,8 @@
 + Text tHeading
 +     Attributes
 +diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-06 15:00:32.064234717 +0000
++--- HMI/n2t-out/cardMedia.txt	2022-05-06 15:15:11.662432193 +0000
+++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-06 15:15:12.138528943 +0000
 +@@ -25,19 +25,19 @@
 +     Attributes
 +         Scope         : local
@@ -256,8 +256,8 @@
 +             //send cmd
 +             printh 55 bb
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-06 15:00:32.064234717 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-05-06 15:15:11.666433006 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-06 15:15:12.138528943 +0000
 +@@ -44,7 +44,7 @@
 +     Attributes
 +         Scope         : local
@@ -385,8 +385,8 @@
 +             //send cmd
 +             printh 55 bb
 +diff -bur HMI/n2t-out/pageIcons.txt HMI/US/portrait/n2t-out/pageIcons.txt
-+--- HMI/n2t-out/pageIcons.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-05-06 15:00:32.064234717 +0000
++--- HMI/n2t-out/pageIcons.txt	2022-05-06 15:15:11.662432193 +0000
+++++ HMI/US/portrait/n2t-out/pageIcons.txt	2022-05-06 15:15:12.138528943 +0000
 +@@ -30,7 +30,7 @@
 +         Send Component ID                   : disabled
 +         Associated Keyboard                 : none
@@ -405,11 +405,11 @@
 +     
 + Picture p0
 +     Attributes
-+--- HMI/n2t-out/pageStartup.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 15:00:32.064234717 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-06 15:15:11.662432193 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 15:15:12.138528943 +0000
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-06 15:00:32.064234717 +0000
++--- HMI/n2t-out/popupLight.txt	2022-05-06 15:15:11.662432193 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-06 15:15:12.138528943 +0000
 +@@ -59,8 +59,8 @@
 + Variable (string) entn
 +     Attributes
@@ -421,26 +421,3 @@
 +     
 + Variable (int32) mode
 +     Attributes
-+diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-05-06 15:00:31.684228675 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-06 15:00:32.064234717 +0000
-+@@ -46,8 +46,8 @@
-+ Variable (string) entn
-+     Attributes
-+         Scope         : local
-+-        Text          : 
-+-        Max. Text Size: 80
-++        Text          : newtxt
-++        Max. Text Size: 50
-+     
-+ Text tEntity
-+     Attributes
-+@@ -147,7 +147,7 @@
-+             btlen tSend.txt,sys0
-+             crcrest 1,0xffff // reset CRC
-+             crcputh 55 bb
-+-            crcputs sys0,2
-++            crcputs sys0,1
-+             crcputs tSend.txt,0
-+             //send cmd
-+             printh 55 bb
