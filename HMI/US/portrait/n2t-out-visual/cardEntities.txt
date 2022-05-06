@@ -80,6 +80,8 @@ Page cardEntities
             vis bText5,0
             vis hSlider5,0
             vis nNum5,0
+            vis bPrev,0
+            vis bNext,0
         
 Variable (string) strCommand
     Attributes
