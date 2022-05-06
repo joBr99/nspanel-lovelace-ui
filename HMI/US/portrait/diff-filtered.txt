@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-06 16:21:34.826249806 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-06 16:21:34.354244093 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 16:21:34.738248741 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-06 16:21:34.358244142 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 16:21:34.742248790 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-06 16:25:26.648277407 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-06 16:25:26.256271726 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-06 16:25:26.636277233 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-06 16:25:26.256271726 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-06 16:25:26.636277233 +0000
 +@@ -62,6 +62,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -24,17 +24,5 @@
 +                                     }
 +                                     if(tInstruction.txt=="pageType")
 +                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-05-06 16:21:34.358244142 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 16:21:34.742248790 +0000
-+diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-05-06 16:21:34.358244142 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-06 16:21:34.738248741 +0000
-+@@ -157,7 +157,7 @@
-+             btlen tSend.txt,sys0
-+             crcrest 1,0xffff // reset CRC
-+             crcputh 55 bb
-+-            crcputs sys0,2
-++            crcputs sys0,1
-+             crcputs tSend.txt,0
-+             //send cmd
-+             printh 55 bb
++--- HMI/n2t-out/pageStartup.txt	2022-05-06 16:25:26.256271726 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-06 16:25:26.636277233 +0000
