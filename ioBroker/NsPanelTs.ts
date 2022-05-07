@@ -1119,7 +1119,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     iconColor = GetIconColor(pageItem, true, false);
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + + iconColor + "~" + switchVal + ",disable,disable,disable" })
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + + iconColor + "~" + switchVal + ",disable,disable,disable" + "~Color~Temperature~Brightness" })
             }
 
             //Dimmer
@@ -1160,7 +1160,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 let colorTemp = "disable"
                 let colorMode = "disable"
 
-                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode + "~Color~Temperature~Brightness" })
             }
             //HUE-Licht
             if (o.common.role == "hue") {
@@ -1213,7 +1213,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode + "~Color~Temperature~Brightness" })
             }
 
             //RGB-Licht
@@ -1266,7 +1266,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode + "~Color~Temperature~Brightness" })
             }
 
             //RGB-Licht-einzeln (HEX)
@@ -1323,7 +1323,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode + "~Color~Temperature~Brightness" })
             }
 
             //Farbtemperatur
@@ -1368,7 +1368,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode })
+                out_msgs.push({ payload: "entityUpdateDetail~" + icon + "~" + iconColor + "~" + switchVal + "~" + brightness + "~" + colorTemp + "~" + colorMode + "~Color~Temperature~Brightness" })
             }
 
         }
@@ -1381,7 +1381,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 val = getState(id + ".SET").val;
                 RegisterDetailEntityWatcher(id + ".SET", pageItem, type);
             }
-            out_msgs.push({ payload: "entityUpdateDetail~" + val })
+            out_msgs.push({ payload: "entityUpdateDetail~" + val + "~~Position" })
         }
     }
     return out_msgs
