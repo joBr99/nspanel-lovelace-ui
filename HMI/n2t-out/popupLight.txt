@@ -540,7 +540,7 @@ Timer tmSerial
                                         // set t4 Temperature (Localization)
                                         spstr strCommand.txt,t4.txt,"~",7
                                         // set t1 Brightness (Localization)
-                                        spstr strCommand.txt,t0.txt,"~",8
+                                        spstr strCommand.txt,t1.txt,"~",8
                                     }
                                     if(tInstruction.txt=="time")
                                     {
