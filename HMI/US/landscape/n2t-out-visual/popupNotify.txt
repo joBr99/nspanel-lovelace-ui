@@ -310,7 +310,7 @@ Button b2
         Style                               : flat
         Font ID                             : 2
         Back. Color                         : 6371
-        Back. Picture ID (Pressed)          : 9
+        Back. Picture ID (Pressed)          : 8
         Back. Color (Pressed)               : 1024
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535
@@ -359,7 +359,7 @@ Button b1
         Style                               : flat
         Font ID                             : 2
         Back. Color                         : 6371
-        Back. Picture ID (Pressed)          : 9
+        Back. Picture ID (Pressed)          : 8
         Back. Color (Pressed)               : 1024
         Font Color (Unpressed)              : 65535
         Font Color (Pressed)                : 65535

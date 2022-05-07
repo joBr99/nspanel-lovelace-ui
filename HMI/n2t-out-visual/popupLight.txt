@@ -537,8 +537,8 @@ Slider hTempSlider
         Fill                                : image
         Cursor width                        : auto
         Cursor height                       : 255
-        Back. Picture ID                    : 8
-        Slided Back. Picture ID             : 10
+        Back. Picture ID                    : 7
+        Slided Back. Picture ID             : 8
         Position                            : 50
         Upper range limit                   : 100
         Lower range limit                   : 0
