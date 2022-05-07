@@ -411,7 +411,7 @@ class LuiPagesGen(object):
         entity = self._ha_api.get_entity(entity)
         pos = int(entity.attributes.get("current_position", 50))
         pos_translation = get_translation(self._locale, "position")
-        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~~{pos_translation}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos}~{pos_translation}")
 
     def send_message_page(self, id, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
