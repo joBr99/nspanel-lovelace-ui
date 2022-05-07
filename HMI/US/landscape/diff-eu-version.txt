@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-07 08:40:23.298285970 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-07 08:40:24.122300547 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-07 09:49:49.312383427 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-07 09:49:50.284371694 +0000
 @@ -11,6 +11,4 @@
      // dim value
      int dimValue=40
@@ -8,3 +8,15 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    // fix touch offset
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
+diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
+--- HMI/n2t-out/pageStartup.txt	2022-05-07 09:49:49.312383427 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-07 09:49:50.284371694 +0000
+@@ -177,7 +177,7 @@
+             recmod=1
+             bauds=115200
+             // startup event
+-            tSend.txt="event,startup,"+tVersion.txt+",eu"
++            tSend.txt="event,startup,"+tVersion.txt+",us-l"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC
