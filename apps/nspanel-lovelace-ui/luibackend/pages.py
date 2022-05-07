@@ -402,16 +402,16 @@ class LuiPagesGen(object):
                 color = "enable"
             else:
                 color = "disable"
+        color_translation      = "Color"
         brightness_translation = get_translation(self._locale, "brightness")
         color_temp_translation = get_translation(self._locale, "color_temperature")
-        color_translation      = "Color"
-        self._send_mqtt_msg(f"entityUpdateDetail~{get_icon_id('lightbulb')}~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{get_icon_id('lightbulb')}~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}")
     
     def generate_shutter_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)
         pos = int(entity.attributes.get("current_position", 50))
         pos_translation = get_translation(self._locale, "position")
-        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~~{pos_translation}")
 
     def send_message_page(self, id, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
