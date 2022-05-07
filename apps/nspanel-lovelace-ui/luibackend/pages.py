@@ -183,7 +183,8 @@ class LuiPagesGen(object):
             return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
         if entityType == "fan":
             icon_id = get_icon_id_ha("fan", overwrite=icon)
-            return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.attributes.percentage}|0|100"
+            icon_color = self.get_entity_color(entity)
+            return f"~number~{entityId}~{icon_id}~{icon_color}~{name}~{entity.attributes.percentage}|0|100"
         if entityType == "input_text":
             icon_id = get_icon_id_ha("input_text", overwrite=icon)
             value = entity.state
