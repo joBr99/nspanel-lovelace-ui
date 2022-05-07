@@ -17,6 +17,9 @@ translations = {
             'run': "Hardloop",
             'lock': "Sluit toe",
             'unlock': "Sluit oop",
+            'brightness': "Helderheid",
+            'color_temperature': "Kleur temperatuur",
+            'position': "Posisie",
         },
         'ar': {
             'ACTIVATE': "تفعيل",
@@ -36,6 +39,9 @@ translations = {
             'run': "تشغيل",
             'lock': "قفل",
             'unlock': "فتح",
+            'brightness': "السطوع",
+            'color_temperature': "درجة حرارة اللون",
+            'position': "موضع",
         },
         'bg': {
             'ACTIVATE': "Активирай",
@@ -56,6 +62,9 @@ translations = {
             'run': "Изпълни",
             'lock': "Заключване",
             'unlock': "Отключване",
+            'brightness': "Яркост",
+            'color_temperature': "Цветова температура",
+            'position': "Позиция",
         },
         'ca': {
             'PRESS': "Prem",
@@ -77,6 +86,9 @@ translations = {
             'run': "Executa",
             'lock': "Bloquejar",
             'unlock': "Desbloquejar",
+            'brightness': "Brillantor",
+            'color_temperature': "Temperatura de color",
+            'position': "Posició",
         },
         'cs': {
             'PRESS': "Stisknutí",
@@ -98,6 +110,9 @@ translations = {
             'run': "Spustit",
             'lock': "Zamknout",
             'unlock': "Odemknout",
+            'brightness': "Jas",
+            'color_temperature': "Teplota barvy",
+            'position': "Pozice",
         },
         'da': {
             'PRESS': "Tryk",
@@ -119,6 +134,9 @@ translations = {
             'run': "Kør",
             'lock': "Lås",
             'unlock': "Lås op",
+            'brightness': "Lysstyrke",
+            'color_temperature': "Farvetemperatur",
+            'position': "Position",
         },
         'de': {
             'PRESS': "Drücken",
@@ -140,6 +158,9 @@ translations = {
             'run': "Ausführen",
             'lock': "Verriegeln",
             'unlock': "Entriegeln",
+            'brightness': "Helligkeit",
+            'color_temperature': "Farbtemperatur",
+            'position': "Position",
         },
         'el': {
             'PRESS': "Πατήστε",
@@ -161,6 +182,9 @@ translations = {
             'run': "Εκτέλεση",
             'lock': "Κλείδωμα",
             'unlock': "Ξεκλείδωμα",
+            'brightness': "Φωτεινότητα",
+            'color_temperature': "Θερμοκρασία χρώματος",
+            'position': "Θέση",
         },
         'en': {
             'PRESS': "Press",
@@ -182,6 +206,9 @@ translations = {
             'run': "Run",
             'lock': "Lock",
             'unlock': "Unlock",
+            'brightness': "Brightness",
+            'color_temperature': "Color temperature",
+            'position': "Position",
         },
         'es': {
             'PRESS': "Pulsa",
@@ -203,6 +230,9 @@ translations = {
             'run': "Ejecutar",
             'lock': "Bloquear",
             'unlock': "Desbloquear",
+            'brightness': "Brillo",
+            'color_temperature': "Temperatura del color",
+            'position': "Posición",
         },
         'et': {
             'PRESS': "Vajuta nuppu",
@@ -224,6 +254,9 @@ translations = {
             'run': "Käivita",
             'lock': "Lukusta",
             'unlock': "Ava",
+            'brightness': "Heledus",
+            'color_temperature': "Värvustemperatuur",
+            'position': "Asend",
         },
         'fa': {
             'ACTIVATE': "فعال سازی",
@@ -243,6 +276,9 @@ translations = {
             'run': "اجرا",
             'lock': "قفل",
             'unlock': "باز کردن",
+            'brightness': "روشنایی",
+            'color_temperature': "دمای رنگ",
+            'position': "موقعیت",
         },
         'fi': {
             'PRESS': "Paina",
@@ -264,6 +300,9 @@ translations = {
             'run': "Suorita",
             'lock': "Lukitse",
             'unlock': "Avaa lukitus",
+            'brightness': "Kirkkaus",
+            'color_temperature': "Värilämpötila",
+            'position': "Sijainti",
         },
         'fr': {
             'PRESS': "Appui",
@@ -285,6 +324,9 @@ translations = {
             'run': "Exécuter",
             'lock': "Verrouiller",
             'unlock': "Déverrouiller",
+            'brightness': "Luminosité",
+            'color_temperature': "Température de couleur",
+            'position': "Position",
         },
         'he': {
             'PRESS': "לחיצה",
@@ -306,6 +348,9 @@ translations = {
             'run': "רוץ",
             'lock': "נעילה",
             'unlock': "ביטול נעילה",
+            'brightness': "בהירות",
+            'color_temperature': "טמפרטורת הצבע",
+            'position': "מיקום",
         },
         'hr': {
             'ACTIVATE': "Aktivirati",
@@ -325,6 +370,9 @@ translations = {
             'run': "Pokreni",
             'lock': "zaključati",
             'unlock': "Otključati",
+            'brightness': "Svjetlina",
+            'color_temperature': "Temperatura boje",
+            'position': "Pozicija",
         },
         'hu': {
             'PRESS': "Gombnyomás",
@@ -346,6 +394,9 @@ translations = {
             'run': "Futtatás",
             'lock': "Bezár",
             'unlock': "Kinyit",
+            'brightness': "Fényerő",
+            'color_temperature': "Színhőmérséklet",
+            'position': "Pozíció",
         },
         'hy': {
             'ACTIVATE': "Ակտիվացնել",
@@ -364,6 +415,9 @@ translations = {
             'disarm': "Զինաթափել",
             'lock': "Կողպեք",
             'unlock': "Բացել",
+            'brightness': "Պայծառություն",
+            'color_temperature': "Գունային ջերմաստիճան",
+            'position': "Դիրք",
         },
         'id': {
             'PRESS': "Tekan",
@@ -385,6 +439,9 @@ translations = {
             'run': "Jalankan",
             'lock': "Kunci",
             'unlock': "Buka",
+            'brightness': "Kecerahan",
+            'color_temperature': "Temperatur warna",
+            'position': "Posisi",
         },
         'is': {
             'PRESS': "Ýttu á",
@@ -405,6 +462,9 @@ translations = {
             'run': "Keyra",
             'lock': "Læsa",
             'unlock': "Aflæsa",
+            'brightness': "Birtustig",
+            'color_temperature': "Litastig",
+            'position': "Staðsetning",
         },
         'it': {
             'PRESS': "Premi",
@@ -426,6 +486,9 @@ translations = {
             'run': "Esegui",
             'lock': "Blocca",
             'unlock': "Sblocca",
+            'brightness': "Luminosità",
+            'color_temperature': "Temperatura colore",
+            'position': "Apertura",
         },
         'lb': {
             'ACTIVATE': "Aktivéieren",
@@ -445,6 +508,9 @@ translations = {
             'run': "Ausféieren",
             'lock': "Spären",
             'unlock': "Entspären",
+            'brightness': "Hellegkeet",
+            'color_temperature': "Faarf Temperatur",
+            'position': "Positioun",
         },
         'lt': {
             'ACTIVATE': "Suaktyvinti",
@@ -463,6 +529,9 @@ translations = {
             'run': "Paleisti",
             'lock': "Užrakinti",
             'unlock': "Atrakinti",
+            'brightness': "Ryškumas",
+            'color_temperature': "Spalvos temperatūra",
+            'position': "Padėtis",
         },
         'lv': {
             'ACTIVATE': "Aktivizēt",
@@ -481,6 +550,9 @@ translations = {
             'disarm': "Atslēgt",
             'lock': "Aizslēgt",
             'unlock': "Atslēgt",
+            'brightness': "Spilgtums",
+            'color_temperature': "Krāsu temperatūra",
+            'position': "Pozīcija",
         },
         'nb': {
             'PRESS': "trykk",
@@ -502,6 +574,9 @@ translations = {
             'run': "Kjør",
             'lock': "Lås",
             'unlock': "Lås opp",
+            'brightness': "Lysstyrke",
+            'color_temperature': "Fargetemperatur",
+            'position': "Posisjon",
         },
         'nl': {
             'PRESS': "Klik",
@@ -523,6 +598,9 @@ translations = {
             'run': "Uitvoeren",
             'lock': "Vergrendelen",
             'unlock': "Ontgrendelen",
+            'brightness': "Helderheid",
+            'color_temperature': "Kleurtemperatuur",
+            'position': "Positie",
         },
         'nn': {
             'ACTIVATE': "Aktiver",
@@ -543,6 +621,9 @@ translations = {
             'run': "Køyr",
             'lock': "Lås",
             'unlock': "Lås opp",
+            'brightness': "Lysstyrke",
+            'color_temperature': "Fargetemperatur",
+            'position': "Posisjon",
         },
         'pl': {
             'PRESS': "Naciśnij",
@@ -564,6 +645,9 @@ translations = {
             'run': "Uruchom",
             'lock': "Zablokuj",
             'unlock': "Odblokuj",
+            'brightness': "Jasność",
+            'color_temperature': "Temperatura barwy",
+            'position': "Pozycja",
         },
         'pt': {
             'PRESS': "Pressione",
@@ -584,6 +668,9 @@ translations = {
             'run': "Executar",
             'lock': "Bloquear",
             'unlock': "Desbloquear",
+            'brightness': "Brilho",
+            'color_temperature': "Temperatura de cor",
+            'position': "Posição",
         },
         'ro': {
             'ACTIVATE': "Activați",
@@ -604,6 +691,9 @@ translations = {
             'run': "Rulați",
             'lock': "Blocat",
             'unlock': "Deblocare",
+            'brightness': "Luminozitate",
+            'color_temperature': "Temperatură de culoare",
+            'position': "Poziţie",
         },
         'ru': {
             'PRESS': "Нажать",
@@ -625,6 +715,9 @@ translations = {
             'run': "Запустить",
             'lock': "Закрыть",
             'unlock': "Открыть",
+            'brightness': "Яркость",
+            'color_temperature': "Цветовая температура",
+            'position': "Положение",
         },
         'sk': {
             'ACTIVATE': "Aktivovať",
@@ -645,6 +738,9 @@ translations = {
             'run': "Spustiť",
             'lock': "Zamknúť",
             'unlock': "Odomknúť",
+            'brightness': "Jas",
+            'color_temperature': "Teplota farby",
+            'position': "Poloha",
         },
         'sl': {
             'PRESS': "Pritisnite",
@@ -665,6 +761,9 @@ translations = {
             'run': "Poženi",
             'lock': "Zakleni",
             'unlock': "Odkleni",
+            'brightness': "Svetlost",
+            'color_temperature': "Temperatura barve",
+            'position': "Položaj",
         },
         'sv': {
             'PRESS': "Tryck",
@@ -686,6 +785,9 @@ translations = {
             'run': "Kör",
             'lock': "Lås",
             'unlock': "Lås upp",
+            'brightness': "Ljusstyrka",
+            'color_temperature': "Färgtemperatur",
+            'position': "Position",
         },
         'th': {
             'PRESS': "กด",
@@ -705,6 +807,9 @@ translations = {
             'disarm': "ปิดระบบสัญญาณกันขโมย",
             'lock': "ล็อค",
             'unlock': "ปลดล็อค",
+            'brightness': "ความสว่าง",
+            'color_temperature': "อุณหภูมิสี",
+            'position': "ตำแหน่ง",
         },
         'tr': {
             'PRESS': "Basınız",
@@ -726,6 +831,9 @@ translations = {
             'run': "Çalıştır",
             'lock': "Kilitle",
             'unlock': "Kilidi aç",
+            'brightness': "Parlaklık",
+            'color_temperature': "Renk sıcaklığı",
+            'position': "Pozisyon",
         },
         'uk': {
             'PRESS': "Натисніть",
@@ -746,6 +854,9 @@ translations = {
             'run': "Запустити",
             'lock': "Блокувати",
             'unlock': "Розблокувати",
+            'brightness': "Яскравість",
+            'color_temperature': "Кольорова температура",
+            'position': "Положення",
         },
         'vi': {
             'ACTIVATE': "Kích hoạt",
@@ -765,6 +876,9 @@ translations = {
             'run': "Chạy",
             'lock': "Khóa",
             'unlock': "Mở khóa",
+            'brightness': "Độ sáng",
+            'color_temperature': "Nhiệt độ màu",
+            'position': "Vị trí",
         },
 }
 
@@ -774,4 +888,3 @@ def get_translation(locale, input):
         return translations.get(locale).get(input, en_fallback_res)
     else:
         return en_fallback_res
-
