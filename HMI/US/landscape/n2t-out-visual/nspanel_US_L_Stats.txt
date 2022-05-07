@@ -10,14 +10,14 @@ pageTest
 	13   Component(s)
 	13   Line(s) of event code
 	13   Unique line(s) of event code
-popupShutter
-	20   Component(s)
-	193  Line(s) of event code
-	109  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	341  Line(s) of event code
 	185  Unique line(s) of event code
+popupShutter
+	20   Component(s)
+	193  Line(s) of event code
+	109  Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	196  Line(s) of event code

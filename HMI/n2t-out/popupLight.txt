@@ -100,7 +100,7 @@ Text t1
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : Brightness
-        Max. Text Size                      : 15
+        Max. Text Size                      : 50
     
 Text t2
     Attributes
@@ -130,7 +130,7 @@ Text t4
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : Temperature
-        Max. Text Size                      : 15
+        Max. Text Size                      : 50
     
 Text tSend
     Attributes
@@ -180,7 +180,7 @@ Text t0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : Color
-        Max. Text Size                      : 15
+        Max. Text Size                      : 50
     
 Picture p0
     Attributes
