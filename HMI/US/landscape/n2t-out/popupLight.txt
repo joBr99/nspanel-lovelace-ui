@@ -536,11 +536,11 @@ Timer tmSerial
                                             }
                                         }
                                         // set t0 Color (Localization)
-                                        spstr strCommand.txt,t0.txt,"~",6
+                                        spstr strCommand.txt,t0.txt,"~",7
                                         // set t4 Temperature (Localization)
-                                        spstr strCommand.txt,t4.txt,"~",7
+                                        spstr strCommand.txt,t4.txt,"~",8
                                         // set t1 Brightness (Localization)
-                                        spstr strCommand.txt,t1.txt,"~",8
+                                        spstr strCommand.txt,t1.txt,"~",9
                                     }
                                     if(tInstruction.txt=="time")
                                     {
