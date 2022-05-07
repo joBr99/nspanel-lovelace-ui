@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-07 08:29:46.318974628 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-07 08:29:47.118962012 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-07 08:40:23.298285970 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-07 08:40:24.122300547 +0000
 @@ -11,6 +11,4 @@
      // dim value
      int dimValue=40
@@ -8,71 +8,3 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    // fix touch offset
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
-diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-07 08:29:46.318974628 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-07 08:29:47.118962012 +0000
-@@ -177,7 +177,7 @@
-             recmod=1
-             bauds=115200
-             // startup event
--            tSend.txt="event,startup,"+tVersion.txt+",eu"
-+            tSend.txt="event,startup,"+tVersion.txt+",us-l"
-             //send calc crc
-             btlen tSend.txt,sys0
-             crcrest 1,0xffff // reset CRC
-diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-05-07 08:29:46.318974628 +0000
-+++ HMI/US/landscape/n2t-out/popupLight.txt	2022-05-07 08:29:47.118962012 +0000
-@@ -535,12 +535,6 @@
-                                                 vis pColorWheel,1
-                                             }
-                                         }
--                                        // set t0 Color (Localization)
--                                        spstr strCommand.txt,t0.txt,"~",6
--                                        // set t4 Temperature (Localization)
--                                        spstr strCommand.txt,t4.txt,"~",7
--                                        // set t1 Brightness (Localization)
--                                        spstr strCommand.txt,t0.txt,"~",8
-                                     }
-                                     if(tInstruction.txt=="time")
-                                     {
-diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-05-07 08:29:46.318974628 +0000
-+++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-05-07 08:29:47.118962012 +0000
-@@ -109,7 +109,7 @@
-         Text                                : 
-         Max. Text Size                      : 20
-     
--Text tPosHeading
-+Text t1
-     Attributes
-         Scope                               : local
-         Dragging                            : 0
-@@ -119,16 +119,6 @@
-         Text                                : Position
-         Max. Text Size                      : 15
-     
--Text tInfo1
--    Attributes
--        Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Text                                : 
--        Max. Text Size                      : 40
--    
- Picture p0
-     Attributes
-         Scope                               : local
-@@ -341,10 +331,6 @@
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,sys0,0,0
-                                         hPosition.val=sys0
--                                        // set tinfo1 text
--                                        spstr strCommand.txt,tInfo1.txt,"~",2
--                                        // set tPosHeading (localization)
--                                        spstr strCommand.txt,tPosHeading.txt,"~",3
-                                     }
-                                     if(tInstruction.txt=="dimmode")
-                                     {
