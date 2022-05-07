@@ -154,7 +154,7 @@ Text t1
         Opacity                             : 127
         x coordinate                        : 10
         y coordinate                        : 226
-        Width                               : 244
+        Width                               : 211
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
