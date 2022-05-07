@@ -30,10 +30,6 @@ screensaver
 	35   Component(s)
 	292  Line(s) of event code
 	235  Unique line(s) of event code
-popupLight
-	27   Component(s)
-	341  Line(s) of event code
-	185  Unique line(s) of event code
 cardMedia
 	30   Component(s)
 	331  Line(s) of event code
@@ -42,6 +38,10 @@ cardAlarm
 	35   Component(s)
 	345  Line(s) of event code
 	216  Unique line(s) of event code
+popupLight
+	27   Component(s)
+	341  Line(s) of event code
+	185  Unique line(s) of event code
 cardThermo
 	41   Component(s)
 	444  Line(s) of event code
