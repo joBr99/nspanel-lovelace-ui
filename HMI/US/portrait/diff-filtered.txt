@@ -1,7 +1,7 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-07 15:22:55.272427291 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-07 15:22:54.832432189 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-07 15:22:55.220427870 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-07 15:22:54.836432145 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-07 15:22:55.224427825 +0000
-+--- HMI/n2t-out/pageStartup.txt	2022-05-07 15:22:54.832432189 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-07 15:22:55.224427825 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-07 15:37:52.120790687 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-07 15:37:51.728763344 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-07 15:37:52.104789571 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-07 15:37:51.728763344 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-07 15:37:52.104789571 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-07 15:37:51.728763344 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-07 15:37:52.104789571 +0000

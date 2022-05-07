@@ -154,7 +154,7 @@ Text t1
         Opacity                             : 127
         x coordinate                        : 10
         y coordinate                        : 319
-        Width                               : 100
+        Width                               : 240
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -165,11 +165,11 @@ Text t1
         Font ID                             : 0
         Back. Color                         : 6371
         Font Color                          : 65535
-        Horizontal Alignment                : center
+        Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : Brightness
-        Max. Text Size                      : 15
+        Max. Text Size                      : 50
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -244,7 +244,7 @@ Text t4
         Opacity                             : 127
         x coordinate                        : 9
         y coordinate                        : 234
-        Width                               : 116
+        Width                               : 242
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -255,11 +255,11 @@ Text t4
         Font ID                             : 0
         Back. Color                         : 6371
         Font Color                          : 65535
-        Horizontal Alignment                : center
+        Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : Temperature
-        Max. Text Size                      : 15
+        Max. Text Size                      : 50
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -394,7 +394,7 @@ Text t0
         Opacity                             : 127
         x coordinate                        : 12
         y coordinate                        : 57
-        Width                               : 64
+        Width                               : 141
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -405,11 +405,11 @@ Text t0
         Font ID                             : 0
         Back. Color                         : 6371
         Font Color                          : 65535
-        Horizontal Alignment                : center
+        Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : Color
-        Max. Text Size                      : 15
+        Max. Text Size                      : 50
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -618,8 +618,8 @@ Button bColor
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 83
-        y coordinate                        : 57
+        x coordinate                        : 12
+        y coordinate                        : 89
         Width                               : 50
         Height                              : 50
         Effect                              : load
