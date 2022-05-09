@@ -37,7 +37,6 @@ Erforderliche Adapter:
 Upgrades in Konsole:
 Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
 TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lui-release.tft
-TFT EU DEV Version      : FlashNextion http://nspanel.pky.eu/lui.tft
 ---------------------------------------------------------------------------------------
 */ 
 
@@ -849,10 +848,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 }
 
                 return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
-/*---------------------------------------------------------
-            case "wled":
-                type = "number"
-----------------------------------------------------------*/
+                
             case "hue":
 
                 type = "light"
