@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------
 joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 
-- abgestimmt auf TFT 34 / v2.8.2 (LATEST) / BerryDriver 4 / Tasmota 11.1.0
+- abgestimmt auf TFT 34 / v2.8.1 / BerryDriver 4 / Tasmota 11.1.0
 
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -36,7 +36,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
 Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lui-release.tft
+TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.8.1.tft
 ---------------------------------------------------------------------------------------
 */ 
 
