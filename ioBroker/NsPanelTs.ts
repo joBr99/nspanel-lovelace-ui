@@ -573,7 +573,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    require("request")((['http://',get_current_tasmota_ip_address(),'/cm?cmnd=FlashNextion http://nspanel.pky.eu/lui.tft'].join('')), async function (error, response, result) {
+    require("request")((['http://',get_current_tasmota_ip_address(),'/cm?cmnd=FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.8.1.tft'].join('')), async function (error, response, result) {
     });
 }
 
