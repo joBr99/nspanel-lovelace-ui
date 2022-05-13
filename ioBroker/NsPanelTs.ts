@@ -1,12 +1,44 @@
 /*-----------------------------------------------------------------------
-joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
+TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker
+- abgestimmt auf TFT 34 / v2.8.1 (LATEST) / BerryDriver 4 / Tasmota 11.1.0
 
-- abgestimmt auf TFT 34 / v2.8.1 / BerryDriver 4 / Tasmota 11.1.0
+joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
 
-Mögliche Aliase:    
+ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
+
+ReleaseNotes:
+Bugfixes und Erweiterungen seit letzter Verion:
+    - Automatischer Dimmode versetzt NSPanel im Normalbetrieb in Dimmodus ohne Screensaver
+    - Auto-Update in definiertem Zustand
+    - manuelle Updates aktiv
+    - cardAlarm aktiv
+    - popupNotify aktiv
+    
+Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
+Tasmota Konsole: 
+    Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
+    Rule2 1 (Rule aktivieren)
+    Rule2 0 (Rule deaktivieren) 
+
+Mögliche Seiten-Ansichten:
+    screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
+                          (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höschsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)   
+    cardEtities Page    - 4 vertikale angeordnete Steuerelemente - auch als Subpage
+    cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
+    cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
+    cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnes Player angelegt werden
+    cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
+
+Popup-Pages:
+    popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farb-Temperatur" und "Farbauswahl" bereitgestellt
+    popupShutter Page   - die Shutter-Potition (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
+    popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
+    screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
+
+Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)    
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
     Lautstärke:         - Volume (SET/ACTUAL) und MUTE 
@@ -30,20 +62,30 @@ Mögliche Aliase:
     Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles Accu-Wheather-Icon (Icon) für Screensaver
 
+Interne Sonoff-Sensoren (über Tasmota):
+    ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden
+    Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden 
+                          (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!! 
+                          ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
+    Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
+
+Tasmota-Status0 - (zyklische Ausführung) 
+    liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
+
 Erforderliche Adapter:
-    Accu-Wheater:       - Bei Nutzung der Wetterfunktionen im Screensaver
+    Accu-Wheater:       - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
 
 Upgrades in Konsole:
-Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.8.1.tft
+    Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.8.1.tft
 ---------------------------------------------------------------------------------------
 */ 
-
 var Icons = new IconsSelector();
 var timeoutSlider: any;
-var NSPanel_Path = "0_userdata.0.NSPanel.1."
-var Debug = false;
+const NSPanel_Path = "0_userdata.0.NSPanel.1."
+const Debug = false;
+var manually_Update = true;
 
 const Months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 const Days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -96,7 +138,7 @@ var weatherForecast = true; //true = WheatherForecast 5 Days --- false = Config 
 
 //Alexa-Instanz
 var alexaInstanz = "alexa2.0"
-var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuerndes Device (Seriennummer)
+var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
@@ -104,13 +146,26 @@ var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuerndes Device (Seriennumm
 const alexaSpeakerList = ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino","Echo Dot Küche"];
 
 //Datenpunkte für Nachricht an Screensaver 
-var popupNotifyHeading = NSPanel_Path + "popupNotifyHeading";
-var popupNotifyText = NSPanel_Path + "popupNotifyText";
+var screensaverNotifyHeading = NSPanel_Path + "ScreensaverInfo.popupNotifyHeading";
+var screensaverNotifyText = NSPanel_Path + "ScreensaverInfo.popupNotifyText";
+createState(screensaverNotifyHeading, {type: 'string'});
+createState(screensaverNotifyText, {type: 'string'});
 
-var tasmotaOTAURL = "http://ota.tasmota.com/tasmota32/release/tasmota32-DE.bin"
-
-//cardAlarm - Konfiguration
-// ....
+//Datenpunkte für Nachricht popupNotify Page 
+var popupNotifyHeading = NSPanel_Path + "popupNotify.popupNotifyHeading";
+var popupNotifyText = NSPanel_Path + "popupNotify.popupNotifyText";
+var popupNotifyInternalName = NSPanel_Path + "popupNotify.popupNotifyInternalName"; // Wird mit Button-Action zurückgeschrieben
+var popupNotifyButton1Text = NSPanel_Path + "popupNotify.popupNotifyButton1Text";
+var popupNotifyButton2Text = NSPanel_Path + "popupNotify.popupNotifyButton2Text";
+var popupNotifySleepTimeout = NSPanel_Path + "popupNotify.popupNotifySleepTimeout"; // in sek. / wenn 0, dann bleibt die Nachricht stehen
+var popupNotifyAction = NSPanel_Path + "popupNotify.popupNotifyAction"; // Antwort aus dem Panel true/false
+createState(popupNotifyHeading, {type: 'string'});
+createState(popupNotifyText, {type: 'string'});
+createState(popupNotifyInternalName, {type: 'string'});
+createState(popupNotifyButton1Text, {type: 'string'});
+createState(popupNotifyButton2Text, {type: 'string'});
+createState(popupNotifySleepTimeout, {type: 'number'});
+createState(popupNotifyAction, {type: 'boolean'});
 
 var Test_Licht: PageEntities =
 {
@@ -375,8 +430,28 @@ export const config: Config = {
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
 //Notification an Screensaver
-on({id: [popupNotifyHeading, popupNotifyText], change: "ne"}, async function (obj) {
+on({id: [screensaverNotifyHeading, screensaverNotifyText], change: "ne"}, async function (obj) {
     setState(config.panelSendTopic,(['notify~',getState(popupNotifyHeading).val,'~',getState(popupNotifyText).val].join('')));
+});
+
+//popupNotify - Notification an separate Seite
+on({id: [popupNotifyInternalName, popupNotifyHeading, popupNotifyText, popupNotifyButton1Text, popupNotifyButton2Text, popupNotifySleepTimeout], change: "ne"}, async function (obj) {
+    var notification = "entityUpdateDetail"                    + "~"
+                       + getState(popupNotifyInternalName).val + "~"
+                       + getState(popupNotifyHeading).val      + "~" 
+                       + "65504"                                + "~" //Farbe Headline - gelb
+                       + getState(popupNotifyButton1Text).val  + "~"
+                       + "63488"                               + "~"  //Farbe Button1 - rot
+                       + getState(popupNotifyButton2Text).val  + "~"
+                       + "2016"                               + "~"   //Farbe Button2 - grün
+                       + getState(popupNotifyText).val         + "~"
+                       + "65535"                               + "~"  //Farbe Text - weiß
+                       + getState(popupNotifySleepTimeout).val;
+    clearTimeout(timer);
+    var timer = setTimeout(function() {
+        setState(config.panelSendTopic, "pageType~popupNotify");
+        setState(config.panelSendTopic, notification);
+    }, 500);                   
 });
 
 var subscriptions: any = {};
@@ -398,6 +473,16 @@ schedule({hour: 3, minute: 30}, function () {
     setState(config.panelSendTopic, 'pageType~pageStartup');
 });
 
+//´timeDimMode Day
+schedule({hour: getState(NSPanel_Path+ "NSPanel_Dimmode_hourDay").val, minute: 0}, function () {
+    ScreensaverDimmode();
+});
+
+//´timeDimMode Night
+schedule({hour: getState(NSPanel_Path+ "NSPanel_Dimmode_hourNight").val, minute: 0}, function () {
+    ScreensaverDimmode();
+});
+
 //Updates vergleichen aktuell alle 30 Minuten 
 schedule("*/30 * * * *", function () {
     get_tasmota_status0();
@@ -413,45 +498,102 @@ check_updates();
 
 //------------------Begin Update Functions
 function check_updates() {
+    
+    const desired_display_firmware_version = 34;
+    const berry_driver_version = 4;
+
+    if (Debug) console.log("Check-Updates");
     //Tasmota-Firmware-Vergleich
     if (existsObject(NSPanel_Path + "Tasmota_Firmware.currentVersion") && existsObject(NSPanel_Path + "Tasmota_Firmware.onlineVersion")) {
         if (getState(NSPanel_Path + "Tasmota_Firmware.currentVersion").val !== getState(NSPanel_Path + "Tasmota_Firmware.onlineVersion").val) {
             if (existsState(NSPanel_Path + "NSPanel_autoUpdate")) {
                 if (getState(NSPanel_Path + "NSPanel_autoUpdate").val) {
+                    if (Debug) console.log("Auto-Updates eingeschaltet - Update wird durchgeführt");
                     //Tasmota Upgrade durchführen
                     update_tasmota_firmware()
                     //Aktuelle Tasmota Version = Online Tasmota Version
                     setState(NSPanel_Path + "Tasmota_Firmware.currentVersion", getState(NSPanel_Path + "Tasmota_Firmware.onlineVersion").val);
-                }
+                } else {
+                    //Auf Tasmota-Updates hinweisen
+                    if (Debug) console.log("Automatische Updates aus");
+                    let Path = NSPanel_Path + 'popupNotify.';
+                    let InternalName = 'TasmotaFirmwareUpdate';
+                    let Headline = 'Tasmota-Firmware Update';
+                    let Text = ['Es ist eine neue Version der Tasmota-Firmware','\r\n','verfügbar','\r\n','\r\n','Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.currentVersion')).val),'\r\n','Verfügbare Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.onlineVersion')).val),'\r\n','\r\n','Upgrade durchführen?'].join('');
+                    let Button1 = 'Nein';
+                    let Button2 = 'Ja';
+                    let Timeout = 0;
+                    setStateDelayed((String(Path) + 'popupNotifyHeading'), Headline, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyText'), ([formatDate(getDateObject((new Date().getTime())), "TT.MM.JJJJ SS:mm:ss"),'\r\n','\r\n',Text].join('')), false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyButton1Text'), Button1, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyButton2Text'), Button2, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifySleepTimeout'), Timeout, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyInternalName'), InternalName, false, parseInt(((0) || "").toString(), 60000), false);                      
+                }              
             }
         } else {
             if (Debug) console.log("Tasmota-Version auf NSPanel aktuell");
         }
     }
     //Tasmota-Berry-Driver-Vergleich
-    if (existsObject(NSPanel_Path + "Berry_Driver.currentVersion") && existsObject(NSPanel_Path + "Berry_Driver.onlineVersion")) {
-        if (getState(NSPanel_Path + "Berry_Driver.currentVersion").val !== getState(NSPanel_Path + "Berry_Driver.onlineVersion").val) {
+    if (existsObject(NSPanel_Path + "Berry_Driver.currentVersion")) {
+        if (getState(NSPanel_Path + "Berry_Driver.currentVersion").val < berry_driver_version) {
             if (existsState(NSPanel_Path + "NSPanel_autoUpdate")) {
                 if (getState(NSPanel_Path + "NSPanel_autoUpdate").val) {
                     //Tasmota Berry-Driver Update durchführen
                     update_berry_driver_version()
                     //Aktuelle Berry-Driver Version = Online Berry-Driver Version
                     setState(NSPanel_Path + "Berry_Driver.currentVersion", getState(NSPanel_Path + "Berry_Driver.onlineVersion").val);
+                    if (Debug) console.log("Berry-Driver automatisch aktualisiert");
+                } else {
+                    //Auf BerryDriver-Update hinweisen
+                    if (Debug) console.log("Automatische Updates aus");
+                    let Path = NSPanel_Path + 'popupNotify.';
+                    let InternalName = 'BerryDriverUpdate';
+                    let Headline = 'Berry-Driver Update';
+                    let Text = ['Es ist eine neue Version des Berry-Drivers','\r\n','(Tasmota) verfügbar','\r\n','\r\n','Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Berry_Driver.currentVersion')).val),'\r\n','Verfügbare Version: ' + String(berry_driver_version),'\r\n','\r\n','Upgrade durchführen?'].join('');
+                    let Button1 = 'Nein';
+                    let Button2 = 'Ja';
+                    let Timeout = 0;
+                    setStateDelayed((String(Path) + 'popupNotifyHeading'), Headline, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyText'), ([formatDate(getDateObject((new Date().getTime())), "TT.MM.JJJJ SS:mm:ss"),'\r\n','\r\n',Text].join('')), false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyButton1Text'), Button1, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyButton2Text'), Button2, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifySleepTimeout'), Timeout, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyInternalName'), InternalName, false, parseInt(((0) || "").toString(), 60000), false);
                 }
-            }
+            }            
         } else {
             if (Debug) console.log("Berry-Driver auf NSPanel aktuell");
         }
     }
     //TFT-Firmware-Vergleich
-    if (existsObject(NSPanel_Path + "Display_Firmware.currentVersion") && existsObject(NSPanel_Path + "Display_Firmware.onlineVersion")) {
-        if (getState(NSPanel_Path + "Display_Firmware.currentVersion").val !== getState(NSPanel_Path + "Display_Firmware.onlineVersion").val) {
+    if (existsObject(NSPanel_Path + "Display_Firmware.currentVersion")) {
+        if (parseInt(getState(NSPanel_Path + "Display_Firmware.currentVersion").val) !== desired_display_firmware_version) {
             if (existsState(NSPanel_Path + "NSPanel_autoUpdate")) {
                 if (getState(NSPanel_Path + "NSPanel_autoUpdate").val) {
                     //TFT-Firmware Update durchführen
                     update_tft_firmware()
                     //Aktuelle TFT-Firmware Version = Online TFT-Firmware Version
                     setState(NSPanel_Path + "Display_Firmware.currentVersion", getState(NSPanel_Path + "Display_Firmware.onlineVersion").val);
+                
+                    if (Debug) console.log("Display_Firmware automatisch aktualisiert");
+                } else {
+                    //Auf TFT-Firmware hinweisen
+                    if (Debug) console.log("Automatische Updates aus");
+                    let Path = NSPanel_Path + 'popupNotify.';
+                    let InternalName = 'TFTFirmwareUpdate';
+                    let Headline = 'TFT-Firmware Update';
+                    let Text = ['Es ist eine neue Version der TFT-Firmware','\r\n','verfügbar','\r\n','\r\n','Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Display_Firmware.currentVersion')).val),'\r\n','Verfügbare Version: ' + String(desired_display_firmware_version),'\r\n','\r\n','Upgrade durchführen?'].join('');
+                    let Button1 = 'Nein';
+                    let Button2 = 'Ja';
+                    let Timeout = 0;
+                    setStateDelayed((String(Path) + 'popupNotifyHeading'), Headline, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyText'), ([formatDate(getDateObject((new Date().getTime())), "TT.MM.JJJJ SS:mm:ss"),'\r\n','\r\n',Text].join('')), false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyButton1Text'), Button1, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyButton2Text'), Button2, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifySleepTimeout'), Timeout, false, parseInt(((0) || "").toString(), 60000), false);
+                    setStateDelayed((String(Path) + 'popupNotifyInternalName'), InternalName, false, parseInt(((0) || "").toString(), 60000), false);
                 }
             }
         } else {
@@ -459,6 +601,24 @@ function check_updates() {
         }
     }
 }
+
+on({id: [].concat([NSPanel_Path + 'popupNotify.popupNotifyAction']), change: "any"}, async function (obj) {
+    if ((obj.state ? obj.state.val : "") == false) {
+        manually_Update = false
+        if (Debug) console.log('Es wurde Button1 gedrückt');
+    } else if ((obj.state ? obj.state.val : "") == true) {
+        if (manually_Update) {
+            if (getState(NSPanel_Path + "popupNotify.popupNotifyInternalName").val = "TasmotaFirmwareUpdate") {
+                update_tasmota_firmware();
+            } else if (getState(NSPanel_Path + "popupNotify.popupNotifyInternalName").val = "BerryDriverUpdate") {
+                update_berry_driver_version();
+            } else if (getState(NSPanel_Path + "popupNotify.popupNotifyInternalName").val = "TFTFirmwareUpdate") {
+                update_tft_firmware();
+            }
+        }
+        if (Debug) console.log('Es wurde Button2 gedrückt');
+    }
+});
 
 function get_panel_update_data() {
     createState(NSPanel_Path + "NSPanel_autoUpdate", false, {read: true, write: true, name: "Auto-Updater", type: "boolean", def: false});
@@ -539,8 +699,8 @@ function check_version_tft_firmware() {
         var NSPanel_JSON = JSON.parse(result) 				//JSON Resultat in Variable Schreiben
         var NSPanelTagName = NSPanel_JSON.tag_name 			//created_at; published_at; name ; draft ; prerelease
         var NSPanelVersion = NSPanelTagName.replace(/v/i, ""); 		//Aus Variable überflüssiges "v" filtern und in Release-Variable schreiben
-        createState(NSPanel_Path + "TFT_Firmware.currentVersion");
-        setIfExists(NSPanel_Path + 'TFT_Firmware.currentVersion', NSPanelVersion);
+        createState(NSPanel_Path + "TFT_Firmware.onlineVersion");
+        setIfExists(NSPanel_Path + 'TFT_Firmware.onlineVersion', NSPanelVersion);
     });
 }
 
@@ -573,7 +733,11 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    require("request")((['http://',get_current_tasmota_ip_address(),'/cm?cmnd=FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.8.1.tft'].join('')), async function (error, response, result) {
+    const tft_version : string = "v2.8.1";
+    var desired_display_firmware_url = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-" + tft_version + ".tft"
+    require("request")((['http://',get_current_tasmota_ip_address(),'/cm?cmnd=FlashNextion ', desired_display_firmware_url].join('')), async function (error, response, result) {
+        createState(NSPanel_Path + "TFT_Firmware.onlineVersion");
+        setIfExists(NSPanel_Path + 'TFT_Firmware.onlineVersion', tft_version);
     });
 }
 
@@ -581,11 +745,11 @@ function update_tasmota_firmware() {
     require("request")((['http://',get_current_tasmota_ip_address(),'/cm?cmnd=Upgrade 1'].join('')), async function (error, response, result) {
     });
 }
-
 //------------------End Update Functions
 
 // Only monitor the extra nodes if present
 var updateArray: string[] = [];
+
 if (config.firstScreensaverEntity !== null && config.firstScreensaverEntity.ScreensaverEntity != null && existsState(config.firstScreensaverEntity.ScreensaverEntity)) {
     updateArray.push(config.firstScreensaverEntity.ScreensaverEntity)
 }
@@ -624,6 +788,13 @@ function SendToPanel(val: Payload | Payload[]): void {
         setState(config.panelSendTopic, val.payload);
 }
 
+
+on({id: [].concat([NSPanel_Path + 'Alarm.AlarmState']), change: "ne"}, async function (obj) {
+  if ((obj.state ? obj.state.val : "") == 'armed' || (obj.state ? obj.state.val : "") == 'disarmed' || (obj.state ? obj.state.val : "") == 'triggered') {
+     GeneratePage(config.pages[8]);   //----------- muss noch dynamisch gefunden werden ------------------------------------------- 
+  }
+});
+
 function HandleMessage(typ: string, method: string, page: number, words: Array<string>): void {
     if (typ == "event") {
         switch (method) {
@@ -649,6 +820,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
             case "buttonPress2":
                 screensaverEnabled = false;
                 HandleButtonEvent(words);
+                if (Debug) console.log(words[0] + " - " + words[1] + " - " + words[2] + " - " + words[3] + " - " + words[4]);
                 break;
             case "button1":
             case "button2":
@@ -725,8 +897,6 @@ function SendTime(): void {
         min = "0" + d.getMinutes().toString();
     }
     SendToPanel(<Payload>{ payload: "time~" + hr + ":" + min });
-
-    ScreensaverDimmode();
 }
 
 function ScreensaverDimmode() {
@@ -1415,70 +1585,92 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
     var id = page.items[0].id
     var out_msgs: Array<Payload> = [];
     out_msgs.push({ payload: "pageType~cardAlarm" });
+    var nsPath = NSPanel_Path + "Alarm."
 
-    var armed: boolean = true;
-    
-    if (armed) {
-        var arm1 = "Deaktivieren";                  //arm1*~*
-        var arm1ActionName = "D1";                  //arm1ActionName*~*
-        var arm2 = "";                              //arm2*~*
-        var arm2ActionName = "";                    //arm2ActionName*~*
-        var arm3 = "";                              //arm3*~*
-        var arm3ActionName = "";                    //arm3ActionName*~*
-        var arm4 = "";                              //arm4*~*
-        var arm4ActionName = "";                    //arm4ActionName*~*
-        var icon = Icons.GetIcon("shield-home");    //icon*~*
-        var iconcolor = 63488;                      //iconcolor*~*
-        var numpadStatus = 1;                       //numpadStatus*~*
-        var flashing = "disable";                    //flashing*
-    } 
-    else {
-        var arm1 = "Alarm 1";                       //arm1*~*
-        var arm1ActionName = "A1";                  //arm1ActionName*~*
-        var arm2 = "Alarm 2";                       //arm2*~*
-        var arm2ActionName = "A2";                  //arm2ActionName*~*
-        var arm3 = "Alarm 3";                       //arm3*~*
-        var arm3ActionName = "A3";                  //arm3ActionName*~*
-        var arm4 = "Alarm 4";                       //arm4*~*
-        var arm4ActionName = "A4";                  //arm4ActionName*~*
-        var icon = Icons.GetIcon("shield-off");     //icon*~*
-        var iconcolor = 2016;                       //iconcolor*~*
-        var numpadStatus = 1;                       //numpadStatus*~*
-        var flashing = "disable";                    //flashing*        
+    if (existsState(nsPath + "AlarmPin") == false || existsState(nsPath + "AlarmState") == false || existsState(nsPath + "AlarmType") == false) {
+        createState(nsPath + "AlarmPin", "0000", {type: 'string'}, function() {setState(nsPath + "AlarmPin", "0000")});
+        createState(nsPath + "AlarmState", "disarmed", {type: 'string'}, function() {setState(nsPath + "AlarmState", "disarmed")});
+        createState(nsPath + "AlarmType", "0", {type: 'string'}, function() {setState(nsPath + "AlarmType", "0")});
     }
 
-    flashing = "disable"
-    var entityState = "arming"
-    if (entityState == "arming" || entityState == "pending") {
-        iconcolor = rgb_dec565({ red: 243, green: 179, blue: 0 }); 
-        icon = Icons.GetIcon("shield");
-        flashing = "enable"
-    }
-    if (entityState == "triggered") {
-        iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 }); 
-        icon = Icons.GetIcon("bell-ring");
-        flashing = "enable"
-    }
-        
-    out_msgs.push({ payload:    "entityUpd~" +                      //entityUpd~*
-                                id + "~" +                          //internalNameEntity*~*
-                                GetNavigationString(pageId) + "~" + //navigation*~* --> hiddenCards
-                                arm1 + "~" +                        //arm1*~*
-                                arm1ActionName + "~" +              //arm1ActionName*~*
-                                arm2 + "~" +                        //arm2*~*
-                                arm2ActionName + "~" +              //arm2ActionName*~*
-                                arm3 + "~" +                        //arm3*~*
-                                arm3ActionName + "~" +              //arm3ActionName*~*
-                                arm4 + "~" +                        //arm4*~*
-                                arm4ActionName + "~" +              //arm4ActionName*~*
-                                icon + "~" +                        //icon*~* 39=Disarmed 35=Shield_Home, 40
-                                iconcolor + "~" +                   //iconcolor*~* 2016=green  63488=red
-                                numpadStatus + "~" +                //numpadStatus*~*
-                                flashing});                         //flashing*
+    if (existsState(nsPath + "AlarmPin") && existsState(nsPath + "AlarmState") && existsState(nsPath + "AlarmType")) {
+        var entityPin = getState(nsPath + "AlarmPin").val;
+        var entityState = getState(nsPath + "AlarmState").val;
+        var entityType = getState(nsPath + "AlarmType").val 
+        var arm1: string, arm2: string, arm3: string, arm4: string; 
+        var arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
+        var icon = "0";
+        var iconcolor = 63488;
+        var numpadStatus = "disable";
+        var flashing = "disable";
+
+        console.log(id);
+
+        if (entityState == "armed" || entityState == "triggered") {
+            arm1 = "Deaktivieren";                                      //arm1*~*
+            arm1ActionName = "D1";                                      //arm1ActionName*~*
+            arm2 = "";                                                  //arm2*~*
+            arm2ActionName = "";                                        //arm2ActionName*~*
+            arm3 = "";                                                  //arm3*~*
+            arm3ActionName = "";                                        //arm3ActionName*~*
+            arm4 = "";                                                  //arm4*~*
+            arm4ActionName = "";                                        //arm4ActionName*~*
+        } 
+        if (entityState == "disarmed" || entityState == "arming" || entityState == "pending") {
+            arm1 = "Vollschutz";                                        //arm1*~*
+            arm1ActionName = "A1";                                      //arm1ActionName*~*
+            arm2 = "Zuhause";                                           //arm2*~*
+            arm2ActionName = "A2";                                      //arm2ActionName*~*
+            arm3 = "Nacht";                                             //arm3*~*
+            arm3ActionName = "A3";                                      //arm3ActionName*~*
+            arm4 = "Besuch";                                            //arm4*~*
+            arm4ActionName = "A4";                                      //arm4ActionName*~*
+        }
+
+        if (entityState == "armed") {
+            icon = Icons.GetIcon("shield-home");                        //icon*~*
+            iconcolor = 63488;                                          //iconcolor*~*
+            numpadStatus = "enable";                                    //numpadStatus*~*
+            flashing = "disable";                                       //flashing*
+        }
+        if (entityState == "disarmed") {
+            icon = Icons.GetIcon("shield-off");                         //icon*~*
+            iconcolor = 2016;                                           //iconcolor*~*
+            numpadStatus = "enable";                                    //numpadStatus*~*
+            flashing = "disable";                                       //flashing*
+        }
+        if (entityState == "arming" || entityState == "pending") {
+            icon = Icons.GetIcon("shield");                             //icon*~*
+            iconcolor = rgb_dec565({ red: 243, green: 179, blue: 0 });  //iconcolor*~*
+            numpadStatus = "disable";                                   //numpadStatus*~*
+            flashing = "enable"                                         //flashing*
+        }
+        if (entityState == "triggered") {
+            iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 });  //icon*~*
+            icon = Icons.GetIcon("bell-ring");                          //iconcolor*~*
+            numpadStatus = "enable";                                   //numpadStatus*~*
+            flashing = "enable"                                         //flashing*
+        }
+         
+    out_msgs.push({ payload:    "entityUpd~" +                          //entityUpd~*
+                                id + "~" +                              //internalNameEntity*~*
+                                GetNavigationString(pageId) + "~" +     //navigation*~* --> hiddenCards
+                                arm1 + "~" +                            //arm1*~*
+                                arm1ActionName + "~" +                  //arm1ActionName*~*
+                                arm2 + "~" +                            //arm2*~*
+                                arm2ActionName + "~" +                  //arm2ActionName*~*
+                                arm3 + "~" +                            //arm3*~*
+                                arm3ActionName + "~" +                  //arm3ActionName*~*
+                                arm4 + "~" +                            //arm4*~*
+                                arm4ActionName + "~" +                  //arm4ActionName*~*
+                                icon + "~" +                            //icon*~*
+                                iconcolor + "~" +                       //iconcolor*~*
+                                numpadStatus + "~" +                    //numpadStatus*~*
+                                flashing});                             //flashing*
     
     if (Debug) console.log(out_msgs);
-
     return out_msgs
+    }
 }
 
 function setIfExists(id: string, value: any, type: string | null = null): boolean {
@@ -1508,8 +1700,8 @@ function toggleState(id: string): boolean {
 }
 
 function HandleButtonEvent(words): void {
-    let id = words[2]
-    let buttonAction = words[3];
+    var id = words[2]
+    var buttonAction = words[3];
 
     if (Debug) {
         console.log(words[0] + " - " + words[1] + " - " + words[2] + " - " + words[3] + " - " + words[4] + " - PageId: " + pageId);
@@ -1546,8 +1738,19 @@ function HandleButtonEvent(words): void {
                     GeneratePage(config.pages[pageId]);
                 }
             } else {
+                if (Debug) console.log("bExit: " + words[4] + " - "+ pageId)
                 GeneratePage(config.pages[pageId]);
             }
+            break;
+        case "notifyAction":
+            if (words[4] == "yes") {
+                setIfExists(popupNotifyInternalName, words[2]); 
+                setIfExists(popupNotifyAction , true);
+            } else if (words[4] == "no") {
+                setIfExists(popupNotifyInternalName, words[2]);
+                setIfExists(popupNotifyAction , false)
+            }
+            setIfExists(config.panelSendTopic, "exitPopup")
             break;
         case "OnOff":
             if (existsObject(id)) {
@@ -1644,8 +1847,8 @@ function HandleButtonEvent(words): void {
         case "colorWheel":
             let colorCoordinates = words[4].split('|');
             let rgb = pos_to_color(colorCoordinates[0], colorCoordinates[1]);
-            //console.log(rgb);
-            //console.log(getHue(rgb.red, rgb.green, rgb.blue));
+            if (Debug) console.log(rgb);
+            if (Debug) console.log(getHue(rgb.red, rgb.green, rgb.blue));
             let o = getObject(id);
             switch (o.common.role) {
                 case "hue":
@@ -1703,19 +1906,57 @@ function HandleButtonEvent(words): void {
             setIfExists(id + ".SET", parseInt(words[4])) ? true : setIfExists(id + ".ACTUAL", parseInt(words[4]));
             break;
         case "A1": //Alarm-Page Alarm 1 aktivieren
-            console.log("auf mediaAlarm - Alarm 1 - Wert: " + words[4] + " - reagieren - noch nicht implementiert");
-            break;
+            if (words[4] != "") {
+                setIfExists(id + ".TYPE", "A1");
+                setIfExists(id + ".PIN", words[4]);
+                setIfExists(id + ".ACTUAL", "arming");
+                setTimeout(function(){
+                    GeneratePage(config.pages[pageId]);
+                },250)
+            }
+            break; 
         case "A2": //Alarm-Page Alarm 2 aktivieren
-            console.log("auf mediaAlarm - Alarm 1 - Wert: " + words[4] + " - reagieren - noch nicht implementiert");
-            break;  
+            if (words[4] != "") {
+                setIfExists(id + ".TYPE", "A2");
+                setIfExists(id + ".PIN", words[4]);
+                setIfExists(id + ".ACTUAL", "arming");
+                setTimeout(function(){
+                    GeneratePage(config.pages[pageId]);
+                },250)
+            }
+            break; 
         case "A3": //Alarm-Page Alarm 3 aktivieren
-            console.log("auf mediaAlarm - Alarm 1 - Wert: " + words[4] + " - reagieren - noch nicht implementiert");
-            break;  
+            if (words[4] != "") {
+                setIfExists(id + ".TYPE", "A3");
+                setIfExists(id + ".PIN", words[4]);
+                setIfExists(id + ".ACTUAL", "arming");
+                setTimeout(function(){
+                    GeneratePage(config.pages[pageId]);
+                },250)
+            }
+            break; 
         case "A4": //Alarm-Page Alarm 4 aktivieren
-            console.log("auf mediaAlarm - Alarm 1 - Wert: " + words[4] + " - reagieren - noch nicht implementiert");
+            if (words[4] != "") {
+                setIfExists(id + ".TYPE", "A4");
+                setIfExists(id + ".PIN", words[4]);
+                setIfExists(id + ".ACTUAL", "arming");
+                setTimeout(function(){
+                    GeneratePage(config.pages[pageId]);
+                },250)
+            }
             break;         
         case "D1": //Alarm-Page Alarm Deaktivieren
-            console.log("auf mediaAlarm - Alarm 1 - Wert: " + words[4] + " - reagieren - noch nicht implementiert");
+            if (Debug) console.log("D1: "  + getState(id + ".PIN").val);
+            if (words[4] != "") {
+                if (getState(id + ".PIN").val == words[4]) {
+                    setIfExists(id + ".PIN", "0000");
+                    setIfExists(id + ".TYPE", "D1");
+                    setIfExists(id + ".ACTUAL", "pending");
+                    setTimeout(function(){
+                        GeneratePage(config.pages[pageId]);
+                    },250)
+                }
+            }
             break;  
         default:
             break;
