@@ -581,4 +581,5 @@ Click download.
 Development happens in the EU version, so it is possible that the US Version isn't up to date with the current development version of the EU firmware, the lastet US versions are still downloadable with the following links:
 
 `FlashNextion http://nspanel.pky.eu/lui-us-l.tft`
+
 `FlashNextion http://nspanel.pky.eu/lui-us-p.tft`
