@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-07 23:31:11.384705439 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-07 23:31:12.408706139 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-13 22:10:34.040970512 +0000
 @@ -11,6 +11,4 @@
      // dim value
      int dimValue=40
@@ -8,9 +8,479 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    // fix touch offset
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
+diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
+--- HMI/n2t-out/cardAlarm.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-05-13 22:10:34.040970512 +0000
+@@ -466,90 +466,6 @@
+             prints crcval,2
+             tCode.txt=""
+         
+-Hotspot mSwipeNext
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing right button if swiped on the right side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",1
+-            if(tTmp.txt=="1")
+-            {
+-                click bNext,1
+-            }
+-        
+-Hotspot mSwipeUp
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing up button if swiped on the top side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="2")
+-            {
+-                click bPrev,1
+-            }
+-        
+-Hotspot mSwipePrev
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing left button if swiped on the left side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="1")
+-            {
+-                click bPrev,1
+-            }
+-        
+ Timer tmSerial
+     Attributes
+         Scope      : local
+diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
+--- HMI/n2t-out/cardEntities.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-05-13 22:10:34.040970512 +0000
+@@ -1074,90 +1074,6 @@
+                 page popupLight
+             }
+         
+-Hotspot mSwipeNext
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing right button if swiped on the right side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",1
+-            if(tTmp.txt=="1")
+-            {
+-                click bNext,1
+-            }
+-        
+-Hotspot mSwipeUp
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing up button if swiped on the top side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="2")
+-            {
+-                click bPrev,1
+-            }
+-        
+-Hotspot mSwipePrev
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing left button if swiped on the left side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="1")
+-            {
+-                click bPrev,1
+-            }
+-        
+ Timer tmSerial
+     Attributes
+         Scope      : local
+diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
+--- HMI/n2t-out/cardGrid.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-05-13 22:10:34.040970512 +0000
+@@ -522,90 +522,6 @@
+                 page pageTest
+             }
+         
+-Hotspot mSwipeNext
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing right button if swiped on the right side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",1
+-            if(tTmp.txt=="1")
+-            {
+-                click bNext,1
+-            }
+-        
+-Hotspot mSwipeUp
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing up button if swiped on the top side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="2")
+-            {
+-                click bPrev,1
+-            }
+-        
+-Hotspot mSwipePrev
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing left button if swiped on the left side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="1")
+-            {
+-                click bPrev,1
+-            }
+-        
+ Timer tmSerial
+     Attributes
+         Scope      : local
+diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
+--- HMI/n2t-out/cardMedia.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-05-13 22:10:34.040970512 +0000
+@@ -456,90 +456,6 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Hotspot mSwipeNext
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing right button if swiped on the right side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",1
+-            if(tTmp.txt=="1")
+-            {
+-                click bNext,1
+-            }
+-        
+-Hotspot mSwipeUp
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing up button if swiped on the top side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="2")
+-            {
+-                click bPrev,1
+-            }
+-        
+-Hotspot mSwipePrev
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing left button if swiped on the left side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="1")
+-            {
+-                click bPrev,1
+-            }
+-        
+ Timer tmSerial
+     Attributes
+         Scope      : local
+diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
+--- HMI/n2t-out/cardThermo.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-05-13 22:10:34.044970838 +0000
+@@ -594,90 +594,6 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Hotspot mSwipeNext
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing right button if swiped on the right side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",1
+-            if(tTmp.txt=="1")
+-            {
+-                click bNext,1
+-            }
+-        
+-Hotspot mSwipeUp
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing up button if swiped on the top side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="2")
+-            {
+-                click bPrev,1
+-            }
+-        
+-Hotspot mSwipePrev
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-    
+-    Events
+-        Touch Press Event
+-            //This thin hotspot down the edge will intercept swipes
+-            //from the bezel into the screen area before the
+-            //Nextion register touch for any other components -
+-            //IF the hotspot is 'layered' at the top (use the up
+-            //arrow at the far left of the Nextion Editor Tool Bar).
+-            //
+-            //Calibrate how wide the edge hotspot has to be on your
+-            //own physical device using this screen to test the
+-            //x & y coordinates where the swipe is first detected.)
+-            //---------------------------
+-            //The navigation text is stored as local variable within tld.txt
+-            //Pressing left button if swiped on the left side of the screen
+-            //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="1")
+-            {
+-                click bPrev,1
+-            }
+-        
+ Timer tmSerial
+     Attributes
+         Scope      : local
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-07 23:31:11.384705439 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-07 23:31:12.412706142 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-13 22:10:34.040970512 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
