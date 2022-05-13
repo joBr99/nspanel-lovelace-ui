@@ -22,6 +22,10 @@ screensaver
 	35   Component(s)
 	292  Line(s) of event code
 	235  Unique line(s) of event code
+cardMedia
+	33   Component(s)
+	346  Line(s) of event code
+	177  Unique line(s) of event code
 popupShutter
 	20   Component(s)
 	193  Line(s) of event code
@@ -30,10 +34,6 @@ popupLight
 	27   Component(s)
 	341  Line(s) of event code
 	185  Unique line(s) of event code
-cardMedia
-	33   Component(s)
-	346  Line(s) of event code
-	177  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	435  Line(s) of event code

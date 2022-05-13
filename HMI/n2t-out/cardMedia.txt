@@ -223,7 +223,7 @@ Text t1
     
     Events
         Touch Press Event
-            hVolume.val=hVolume.val-5
+            hVolume.val=hVolume.val-1
             // event,buttonPress2,internalNameEntity,volumeSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
@@ -253,7 +253,7 @@ Text t3
     
     Events
         Touch Press Event
-            hVolume.val=hVolume.val+5
+            hVolume.val=hVolume.val+1
             // event,buttonPress2,internalNameEntity,volumeSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
