@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-07 23:31:11.384705439 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-07 23:31:11.864705767 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-13 22:10:33.556931032 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -10,9 +10,75 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    // fix touch offset (Removed for US version)
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
+diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
+--- HMI/n2t-out/cardAlarm.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-13 22:10:33.556931032 +0000
+@@ -466,7 +466,7 @@
+             prints crcval,2
+             tCode.txt=""
+         
+-Hotspot mSwipeNext
++Hotspot mSwipePrev
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -486,15 +486,15 @@
+             //x & y coordinates where the swipe is first detected.)
+             //---------------------------
+             //The navigation text is stored as local variable within tld.txt
+-            //Pressing right button if swiped on the right side of the screen
++            //Pressing left button if swiped on the left side of the screen
+             //
+-            spstr tId.txt,tTmp.txt,"|",1
++            spstr tId.txt,tTmp.txt,"|",0
+             if(tTmp.txt=="1")
+             {
+-                click bNext,1
++                click bPrev,1
+             }
+         
+-Hotspot mSwipeUp
++Hotspot mSwipeNext
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -514,15 +514,15 @@
+             //x & y coordinates where the swipe is first detected.)
+             //---------------------------
+             //The navigation text is stored as local variable within tld.txt
+-            //Pressing up button if swiped on the top side of the screen
++            //Pressing right button if swiped on the right side of the screen
+             //
+-            spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="2")
++            spstr tId.txt,tTmp.txt,"|",1
++            if(tTmp.txt=="1")
+             {
+-                click bPrev,1
++                click bNext,1
+             }
+         
+-Hotspot mSwipePrev
++Hotspot mSwipeUp
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -542,10 +542,10 @@
+             //x & y coordinates where the swipe is first detected.)
+             //---------------------------
+             //The navigation text is stored as local variable within tld.txt
+-            //Pressing left button if swiped on the left side of the screen
++            //Pressing up button if swiped on the top side of the screen
+             //
+             spstr tId.txt,tTmp.txt,"|",0
+-            if(tTmp.txt=="1")
++            if(tTmp.txt=="2")
+             {
+                 click bPrev,1
+             }
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-07 23:31:11.388705442 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-07 23:31:11.868705770 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-13 22:10:33.556931032 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -294,10 +360,10 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                page popupLight
 +            }
 +        
- Timer tmSerial
+ Hotspot mSwipeNext
      Attributes
-         Scope      : local
-@@ -1644,6 +1872,128 @@
+         Scope                               : local
+@@ -1728,6 +1956,128 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
@@ -427,8 +493,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-05-07 23:31:11.388705442 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-07 23:31:11.868705770 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-13 22:10:33.556931032 +0000
 @@ -247,26 +247,30 @@
              prints tSend.txt,0
              prints crcval,2
@@ -748,8 +814,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-07 23:31:11.384705439 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-07 23:31:11.864705767 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-13 22:10:33.092893183 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-13 22:10:33.556931032 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
