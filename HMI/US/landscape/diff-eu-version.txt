@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-13 22:18:51.556125857 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-13 22:18:52.344165434 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-14 09:49:26.544742017 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-14 09:49:27.344742896 +0000
 @@ -11,6 +11,4 @@
      // dim value
      int dimValue=40
@@ -9,8 +9,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-05-13 22:18:51.556125857 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-05-13 22:18:52.348165635 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-05-14 09:49:26.548742022 +0000
++++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-05-14 09:49:27.344742896 +0000
 @@ -466,90 +466,6 @@
              prints crcval,2
              tCode.txt=""
@@ -103,8 +103,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
      Attributes
          Scope      : local
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-13 22:18:51.560126058 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-05-13 22:18:52.348165635 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-14 09:49:26.548742022 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-05-14 09:49:27.348742900 +0000
 @@ -1074,90 +1074,6 @@
                  page popupLight
              }
@@ -197,8 +197,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
      Attributes
          Scope      : local
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-05-13 22:18:51.556125857 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-05-13 22:18:52.348165635 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-05-14 09:49:26.548742022 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-05-14 09:49:27.344742896 +0000
 @@ -522,90 +522,6 @@
                  page pageTest
              }
@@ -291,8 +291,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
      Attributes
          Scope      : local
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-05-13 22:18:51.556125857 +0000
-+++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-05-13 22:18:52.348165635 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-05-14 09:49:26.548742022 +0000
++++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-05-14 09:49:27.344742896 +0000
 @@ -223,7 +223,7 @@
      
      Events
@@ -403,9 +403,331 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
      Attributes
          Scope      : local
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-05-13 22:18:51.556125857 +0000
-+++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-05-13 22:18:52.348165635 +0000
-@@ -594,90 +594,6 @@
+--- HMI/n2t-out/cardThermo.txt	2022-05-14 09:49:26.548742022 +0000
++++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-05-14 09:49:27.348742900 +0000
+@@ -17,12 +17,9 @@
+             vis tInstruction,0
+             vis tTmp,0
+             vis tId,0
+-            vis xTempMin1,0
+-            vis xTempMax1,0
+-            vis xTempStep1,0
+-            vis xTempMin2,0
+-            vis xTempMax2,0
+-            vis xTempStep2,0
++            vis xTempMin,0
++            vis xTempMax,0
++            vis xTempStep,0
+             //tEntity.txt=tHeading.txt
+             // disable all buttons
+             vis bt0,0
+@@ -34,10 +31,6 @@
+             vis bt6,0
+             vis bt7,0
+             vis bt8,0
+-            vis t0,0
+-            vis bUp2,0
+-            vis bDown2,0
+-            vis xTempDest2,0
+             vis bPrev,0
+             vis bNext,0
+         
+@@ -116,7 +109,7 @@
+         Associated Keyboard                 : none
+         Value                               : 0
+     
+-XFloat xTempDest1
++XFloat xTempDest
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -125,7 +118,7 @@
+         Associated Keyboard                 : none
+         Value                               : 0
+     
+-XFloat xTempMin1
++XFloat xTempMin
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -134,7 +127,7 @@
+         Associated Keyboard                 : none
+         Value                               : 0
+     
+-XFloat xTempMax1
++XFloat xTempMax
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -143,43 +136,7 @@
+         Associated Keyboard                 : none
+         Value                               : 0
+     
+-XFloat xTempStep1
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Value                               : 0
+-    
+-XFloat xTempDest2
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Value                               : 0
+-    
+-XFloat xTempMin2
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Value                               : 0
+-    
+-XFloat xTempMax2
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Value                               : 0
+-    
+-XFloat xTempStep2
++XFloat xTempStep
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -258,36 +215,6 @@
+         Text                                : î
+         Max. Text Size                      : 10
+     
+-Text tCurTempLbl
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : Currently
+-        Max. Text Size                      : 30
+-    
+-Text tStateLbl
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : State
+-        Max. Text Size                      : 30
+-    
+-Text t0
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : î
+-        Max. Text Size                      : 10
+-    
+ Picture p0
+     Attributes
+         Scope                               : local
+@@ -379,7 +306,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Dual-state Button bt2
++Dual-state Button bt1
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -406,7 +333,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Dual-state Button bt4
++Dual-state Button bt2
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -433,7 +360,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Dual-state Button bt6
++Dual-state Button bt3
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -460,7 +387,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Dual-state Button bt8
++Dual-state Button bt4
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -487,7 +414,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Dual-state Button bt1
++Dual-state Button bt5
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -514,7 +441,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Dual-state Button bt3
++Dual-state Button bt6
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -541,7 +468,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Dual-state Button bt5
++Dual-state Button bt7
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -568,7 +495,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Dual-state Button bt7
++Dual-state Button bt8
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -607,9 +534,9 @@
+     
+     Events
+         Touch Press Event
+-            if(xTempDest1.val<xTempMax1.val)
++            if(xTempDest.val<xTempMax.val)
+             {
+-                xTempDest1.val=xTempDest1.val+xTempStep1.val
++                xTempDest.val=xTempDest.val+xTempStep.val
+             }
+             // event,buttonPress2,entn,tempUpd,X
+             //craft command
+@@ -617,7 +544,7 @@
+             tSend.txt+=entn.txt+","
+             tSend.txt+="tempUpd,"
+             //convert temperature
+-            covx xTempDest1.val,tTmp.txt,0,0
++            covx xTempDest.val,tTmp.txt,0,0
+             tSend.txt+=tTmp.txt
+             //send calc crc
+             btlen tSend.txt,sys0
+@@ -643,81 +570,9 @@
+     
+     Events
+         Touch Press Event
+-            if(xTempDest1.val>xTempMin1.val)
+-            {
+-                xTempDest1.val=xTempDest1.val-xTempStep1.val
+-            }
+-            // event,buttonPress2,entn,tempUpd,X
+-            //craft command
+-            tSend.txt="event,buttonPress2,"
+-            tSend.txt+=entn.txt+","
+-            tSend.txt+="tempUpd,"
+-            //convert temperature
+-            covx xTempDest1.val,tTmp.txt,0,0
+-            tSend.txt+=tTmp.txt
+-            //send calc crc
+-            btlen tSend.txt,sys0
+-            crcrest 1,0xffff // reset CRC
+-            crcputh 55 bb
+-            crcputs sys0,2
+-            crcputs tSend.txt,0
+-            //send cmd
+-            printh 55 bb
+-            prints sys0,2
+-            prints tSend.txt,0
+-            prints crcval,2
+-        
+-Dual-state Button bUp2
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        State                               : unpressed
+-        Text                                : î
+-        Max. Text Size                      : 10
+-    
+-    Events
+-        Touch Press Event
+-            if(xTempDest2.val<xTempMax2.val)
+-            {
+-                xTempDest2.val=xTempDest2.val+xTempStep2.val
+-            }
+-            // event,buttonPress2,entn,tempUpd,X
+-            //craft command
+-            tSend.txt="event,buttonPress2,"
+-            tSend.txt+=entn.txt+","
+-            tSend.txt+="tempUpd,"
+-            //convert temperature
+-            covx xTempDest2.val,tTmp.txt,0,0
+-            tSend.txt+=tTmp.txt
+-            //send calc crc
+-            btlen tSend.txt,sys0
+-            crcrest 1,0xffff // reset CRC
+-            crcputh 55 bb
+-            crcputs sys0,2
+-            crcputs tSend.txt,0
+-            //send cmd
+-            printh 55 bb
+-            prints sys0,2
+-            prints tSend.txt,0
+-            prints crcval,2
+-        
+-Dual-state Button bDown2
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        State                               : unpressed
+-        Text                                : î¿
+-        Max. Text Size                      : 10
+-    
+-    Events
+-        Touch Press Event
+-            if(xTempDest2.val>xTempMin2.val)
++            if(xTempDest.val>xTempMin.val)
+             {
+-                xTempDest2.val=xTempDest2.val-xTempStep2.val
++                xTempDest.val=xTempDest.val-xTempStep.val
+             }
+             // event,buttonPress2,entn,tempUpd,X
+             //craft command
+@@ -725,7 +580,7 @@
+             tSend.txt+=entn.txt+","
+             tSend.txt+="tempUpd,"
+             //convert temperature
+-            covx xTempDest2.val,tTmp.txt,0,0
++            covx xTempDest.val,tTmp.txt,0,0
+             tSend.txt+=tTmp.txt
+             //send calc crc
+             btlen tSend.txt,sys0
+@@ -739,90 +594,6 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -496,9 +818,32 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
  Timer tmSerial
      Attributes
          Scope      : local
+@@ -912,18 +683,18 @@
+                                         covx tTmp.txt,xTempCurr.val,0,0
+                                         //dstTemp
+                                         spstr strCommand.txt,tTmp.txt,"~",5
+-                                        covx tTmp.txt,xTempDest1.val,0,0
++                                        covx tTmp.txt,xTempDest.val,0,0
+                                         //status
+                                         spstr strCommand.txt,tStatus.txt,"~",6
+                                         //minTemp
+                                         spstr strCommand.txt,tTmp.txt,"~",7
+-                                        covx tTmp.txt,xTempMin1.val,0,0
++                                        covx tTmp.txt,xTempMin.val,0,0
+                                         //maxTemp
+                                         spstr strCommand.txt,tTmp.txt,"~",8
+-                                        covx tTmp.txt,xTempMax1.val,0,0
++                                        covx tTmp.txt,xTempMax.val,0,0
+                                         //tempStep
+                                         spstr strCommand.txt,tTmp.txt,"~",9
+-                                        covx tTmp.txt,xTempStep1.val,0,0
++                                        covx tTmp.txt,xTempStep.val,0,0
+                                         // disable all buttons
+                                         vis bt0,0
+                                         vis bt1,0
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-13 22:18:51.556125857 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-13 22:18:52.344165434 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-14 09:49:26.544742017 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-14 09:49:27.344742896 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200

@@ -17,9 +17,12 @@ Page cardThermo
             vis tInstruction,0
             vis tTmp,0
             vis tId,0
-            vis xTempMin,0
-            vis xTempMax,0
-            vis xTempStep,0
+            vis xTempMin1,0
+            vis xTempMax1,0
+            vis xTempStep1,0
+            vis xTempMin2,0
+            vis xTempMax2,0
+            vis xTempStep2,0
             //tEntity.txt=tHeading.txt
             // disable all buttons
             vis bt0,0
@@ -31,6 +34,10 @@ Page cardThermo
             vis bt6,0
             vis bt7,0
             vis bt8,0
+            vis t0,0
+            vis bUp2,0
+            vis bDown2,0
+            vis xTempDest2,0
             vis bPrev,0
             vis bNext,0
         
@@ -109,7 +116,7 @@ XFloat xTempCurr
         Associated Keyboard                 : none
         Value                               : 0
     
-XFloat xTempDest
+XFloat xTempDest1
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -118,7 +125,7 @@ XFloat xTempDest
         Associated Keyboard                 : none
         Value                               : 0
     
-XFloat xTempMin
+XFloat xTempMin1
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -127,7 +134,7 @@ XFloat xTempMin
         Associated Keyboard                 : none
         Value                               : 0
     
-XFloat xTempMax
+XFloat xTempMax1
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -136,7 +143,43 @@ XFloat xTempMax
         Associated Keyboard                 : none
         Value                               : 0
     
-XFloat xTempStep
+XFloat xTempStep1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+XFloat xTempDest2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+XFloat xTempMin2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+XFloat xTempMax2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+XFloat xTempStep2
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -206,6 +249,36 @@ Text tStatus
         Max. Text Size                      : 10
     
 Text t2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 10
+    
+Text tCurTempLbl
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Currently
+        Max. Text Size                      : 30
+    
+Text tStateLbl
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : State
+        Max. Text Size                      : 30
+    
+Text t0
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -306,7 +379,7 @@ Dual-state Button bt0
             prints tSend.txt,0
             prints crcval,2
         
-Dual-state Button bt1
+Dual-state Button bt2
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -333,7 +406,7 @@ Dual-state Button bt1
             prints tSend.txt,0
             prints crcval,2
         
-Dual-state Button bt2
+Dual-state Button bt4
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -360,7 +433,7 @@ Dual-state Button bt2
             prints tSend.txt,0
             prints crcval,2
         
-Dual-state Button bt3
+Dual-state Button bt6
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -387,7 +460,7 @@ Dual-state Button bt3
             prints tSend.txt,0
             prints crcval,2
         
-Dual-state Button bt4
+Dual-state Button bt8
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -414,7 +487,7 @@ Dual-state Button bt4
             prints tSend.txt,0
             prints crcval,2
         
-Dual-state Button bt5
+Dual-state Button bt1
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -441,7 +514,7 @@ Dual-state Button bt5
             prints tSend.txt,0
             prints crcval,2
         
-Dual-state Button bt6
+Dual-state Button bt3
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -468,7 +541,7 @@ Dual-state Button bt6
             prints tSend.txt,0
             prints crcval,2
         
-Dual-state Button bt7
+Dual-state Button bt5
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -495,7 +568,7 @@ Dual-state Button bt7
             prints tSend.txt,0
             prints crcval,2
         
-Dual-state Button bt8
+Dual-state Button bt7
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -534,9 +607,9 @@ Dual-state Button btUp1
     
     Events
         Touch Press Event
-            if(xTempDest.val<xTempMax.val)
+            if(xTempDest1.val<xTempMax1.val)
             {
-                xTempDest.val=xTempDest.val+xTempStep.val
+                xTempDest1.val=xTempDest1.val+xTempStep1.val
             }
             // event,buttonPress2,entn,tempUpd,X
             //craft command
@@ -544,7 +617,7 @@ Dual-state Button btUp1
             tSend.txt+=entn.txt+","
             tSend.txt+="tempUpd,"
             //convert temperature
-            covx xTempDest.val,tTmp.txt,0,0
+            covx xTempDest1.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
@@ -570,9 +643,9 @@ Dual-state Button btDown1
     
     Events
         Touch Press Event
-            if(xTempDest.val>xTempMin.val)
+            if(xTempDest1.val>xTempMin1.val)
             {
-                xTempDest.val=xTempDest.val-xTempStep.val
+                xTempDest1.val=xTempDest1.val-xTempStep1.val
             }
             // event,buttonPress2,entn,tempUpd,X
             //craft command
@@ -580,7 +653,79 @@ Dual-state Button btDown1
             tSend.txt+=entn.txt+","
             tSend.txt+="tempUpd,"
             //convert temperature
-            covx xTempDest.val,tTmp.txt,0,0
+            covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Dual-state Button bUp2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            if(xTempDest2.val<xTempMax2.val)
+            {
+                xTempDest2.val=xTempDest2.val+xTempStep2.val
+            }
+            // event,buttonPress2,entn,tempUpd,X
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="tempUpd,"
+            //convert temperature
+            covx xTempDest2.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Dual-state Button bDown2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î¿
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            if(xTempDest2.val>xTempMin2.val)
+            {
+                xTempDest2.val=xTempDest2.val-xTempStep2.val
+            }
+            // event,buttonPress2,entn,tempUpd,X
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="tempUpd,"
+            //convert temperature
+            covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
@@ -767,18 +912,18 @@ Timer tmSerial
                                         covx tTmp.txt,xTempCurr.val,0,0
                                         //dstTemp
                                         spstr strCommand.txt,tTmp.txt,"~",5
-                                        covx tTmp.txt,xTempDest.val,0,0
+                                        covx tTmp.txt,xTempDest1.val,0,0
                                         //status
                                         spstr strCommand.txt,tStatus.txt,"~",6
                                         //minTemp
                                         spstr strCommand.txt,tTmp.txt,"~",7
-                                        covx tTmp.txt,xTempMin.val,0,0
+                                        covx tTmp.txt,xTempMin1.val,0,0
                                         //maxTemp
                                         spstr strCommand.txt,tTmp.txt,"~",8
-                                        covx tTmp.txt,xTempMax.val,0,0
+                                        covx tTmp.txt,xTempMax1.val,0,0
                                         //tempStep
                                         spstr strCommand.txt,tTmp.txt,"~",9
-                                        covx tTmp.txt,xTempStep.val,0,0
+                                        covx tTmp.txt,xTempStep1.val,0,0
                                         // disable all buttons
                                         vis bt0,0
                                         vis bt1,0
