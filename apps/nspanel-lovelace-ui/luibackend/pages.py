@@ -244,7 +244,7 @@ class LuiPagesGen(object):
             padding_len = 8-len_hvac_modes
             icon_res = icon_res + "~"*4*padding_len
             
-            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}~tCurTempLbl~tStateLbl~tALbl"
+            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}~Currently~State~Action"
         self._send_mqtt_msg(command)
 
     def generate_media_page(self, navigation, entity):
