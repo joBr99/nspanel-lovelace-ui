@@ -123,9 +123,9 @@ The following message can be used to update the content on the cardEntities Page
 
 ### cardThermo Page
 
-`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*currentTemp*~*destTemp*~*status*~*minTemp*~*maxTemp*~*stepTemp*[[~*iconId*~*activeColor*~*state*~*hvac_action*]]`
+`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*currentTemp*~*destTemp*~*status*~*minTemp*~*maxTemp*~*stepTemp*[[~*iconId*~*activeColor*~*state*~*hvac_action*]]~tCurTempLbl~tStateLbl~tALbl`
 
-`[[]]` are not part of the command~ this part repeats 9 times for the buttons
+`[[]]` are not part of the command~ this part repeats 8 times for the buttons
 
 ### cardMedia Page
 
