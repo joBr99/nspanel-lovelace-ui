@@ -1,9 +1,9 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-14 12:54:21.607138209 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-14 12:54:21.199132759 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-14 12:54:21.591137995 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-14 14:37:59.286394006 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-14 14:37:58.882388573 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-14 14:37:59.270393790 +0000
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-05-14 12:54:21.203132813 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-14 12:54:21.591137995 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-05-14 14:37:58.882388573 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-14 14:37:59.274393844 +0000
 +@@ -466,7 +466,7 @@
 +             prints crcval,2
 +             tCode.txt=""
@@ -67,14 +67,14 @@
 +             {
 +                 click bPrev,1
 +             }
-+--- HMI/n2t-out/cardEntities.txt	2022-05-14 12:54:21.203132813 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-14 12:54:21.591137995 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-14 14:37:58.882388573 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-14 14:37:59.274393844 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
 +@@ -1728,6 +1956,128 @@
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-05-14 12:54:21.203132813 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-14 12:54:21.591137995 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-05-14 14:37:58.882388573 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-14 14:37:59.274393844 +0000
 +@@ -17,12 +17,9 @@
 +             vis tInstruction,0
 +             vis tTmp,0
@@ -91,7 +91,7 @@
 +             //tEntity.txt=tHeading.txt
 +             // disable all buttons
 +             vis bt0,0
-+@@ -33,10 +30,7 @@
++@@ -33,14 +30,7 @@
 +             vis bt5,0
 +             vis bt6,0
 +             vis bt7,0
@@ -99,11 +99,15 @@
 +-            vis bUp2,0
 +-            vis bDown2,0
 +-            vis xTempDest2,0
++-            vis t2,0
++-            vis btUp1,0
++-            vis btDown1,0
++-            vis xTempDest1,0
 ++            vis bt8,0
 +             vis bPrev,0
 +             vis bNext,0
 +         
-+@@ -100,30 +94,12 @@
++@@ -104,30 +94,12 @@
 +         Text          : 
 +         Max. Text Size: 10
 +     
@@ -135,47 +139,56 @@
 + XFloat xTempCurr
 +     Attributes
 +         Scope                               : local
-+@@ -133,7 +109,7 @@
++@@ -137,16 +109,7 @@
 +         Associated Keyboard                 : none
 +         Value                               : 0
 +     
 +-XFloat xTempDest1
++-    Attributes
++-        Scope                               : local
++-        Dragging                            : 0
++-        Disable release event after dragging: 0
++-        Send Component ID                   : disabled
++-        Associated Keyboard                 : none
++-        Value                               : 0
++-    
++-XFloat xTempMin1
 ++XFloat xTempDest
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
-+@@ -142,7 +118,7 @@
-+         Associated Keyboard                 : none
-+         Value                               : 0
-+     
-+-XFloat xTempMin1
-++XFloat xTempMin
-+     Attributes
-+         Scope                               : local
-+         Dragging                            : 0
-+@@ -151,7 +127,7 @@
++@@ -155,7 +118,7 @@
 +         Associated Keyboard                 : none
 +         Value                               : 0
 +     
 +-XFloat xTempMax1
-++XFloat xTempMax
+++XFloat xTempMin
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
-+@@ -160,7 +136,7 @@
++@@ -164,7 +127,7 @@
 +         Associated Keyboard                 : none
 +         Value                               : 0
 +     
 +-XFloat xTempStep1
-++XFloat xTempStep
+++XFloat xTempMax
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
-+@@ -169,41 +145,45 @@
++@@ -173,7 +136,7 @@
 +         Associated Keyboard                 : none
 +         Value                               : 0
 +     
 +-XFloat xTempDest2
+++XFloat xTempStep
++     Attributes
++         Scope                               : local
++         Dragging                            : 0
++@@ -182,41 +145,45 @@
++         Associated Keyboard                 : none
++         Value                               : 0
++     
++-XFloat xTempMin2
 ++Text tSend
 +     Attributes
 +         Scope                               : local
@@ -187,7 +200,7 @@
 ++        Text                                : newtxt
 ++        Max. Text Size                      : 100
 +     
-+-XFloat xTempMin2
++-XFloat xTempMax2
 ++Text tTmp
 +     Attributes
 +         Scope                               : local
@@ -199,7 +212,7 @@
 ++        Text                                : 
 ++        Max. Text Size                      : 10
 +     
-+-XFloat xTempMax2
++-XFloat xTempStep2
 ++Text tInstruction
 +     Attributes
 +         Scope                               : local
@@ -211,7 +224,7 @@
 ++        Text                                : 
 ++        Max. Text Size                      : 20
 +     
-+-XFloat xTempStep2
++-XFloat xTempDest
 ++Text tId
 +     Attributes
 +         Scope                               : local
@@ -225,7 +238,7 @@
 +     
 + Text tHeading
 +     Attributes
-+@@ -235,46 +215,6 @@
++@@ -248,56 +215,6 @@
 +         Text                                : î
 +         Max. Text Size                      : 10
 +     
@@ -269,10 +282,20 @@
 +-        Text                                : Action
 +-        Max. Text Size                      : 30
 +-    
++-Text t1
++-    Attributes
++-        Scope                               : local
++-        Dragging                            : 0
++-        Disable release event after dragging: 0
++-        Send Component ID                   : disabled
++-        Associated Keyboard                 : none
++-        Text                                : î
++-        Max. Text Size                      : 10
++-    
 + Picture p0
 +     Attributes
 +         Scope                               : local
-+@@ -307,26 +247,30 @@
++@@ -330,26 +247,30 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -311,7 +334,7 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -339,21 +283,30 @@
++@@ -362,21 +283,30 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -346,7 +369,7 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -366,21 +319,26 @@
++@@ -389,21 +319,26 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -378,7 +401,7 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -393,7 +351,7 @@
++@@ -416,7 +351,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -387,7 +410,7 @@
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
-+@@ -407,7 +365,7 @@
++@@ -430,7 +365,7 @@
 +         Touch Press Event
 +             //craft command
 +             tSend.txt="event,buttonPress2,"+entn.txt
@@ -396,7 +419,7 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -420,7 +378,7 @@
++@@ -443,7 +378,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -405,7 +428,7 @@
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
-+@@ -434,7 +392,7 @@
++@@ -457,7 +392,7 @@
 +         Touch Press Event
 +             //craft command
 +             tSend.txt="event,buttonPress2,"+entn.txt
@@ -414,7 +437,7 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -447,13 +405,13 @@
++@@ -470,13 +405,13 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -430,7 +453,7 @@
 +         Text                                : î
 +         Max. Text Size                      : 10
 +     
-+@@ -461,7 +419,7 @@
++@@ -484,7 +419,7 @@
 +         Touch Press Event
 +             //craft command
 +             tSend.txt="event,buttonPress2,"+entn.txt
@@ -439,7 +462,7 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -480,7 +438,7 @@
++@@ -503,7 +438,7 @@
 +         Dragging                            : 0
 +         Disable release event after dragging: 0
 +         Send Component ID                   : disabled
@@ -448,7 +471,7 @@
 +         Text                                : î
 +         Max. Text Size                      : 10
 +     
-+@@ -501,13 +459,13 @@
++@@ -524,13 +459,13 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -464,7 +487,7 @@
 +         Text                                : î
 +         Max. Text Size                      : 10
 +     
-+@@ -515,7 +473,7 @@
++@@ -538,7 +473,7 @@
 +         Touch Press Event
 +             //craft command
 +             tSend.txt="event,buttonPress2,"+entn.txt
@@ -473,7 +496,7 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -528,7 +486,7 @@
++@@ -551,7 +486,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -482,7 +505,7 @@
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
-+@@ -542,43 +500,7 @@
++@@ -565,115 +500,7 @@
 +         Touch Press Event
 +             //craft command
 +             tSend.txt="event,buttonPress2,"+entn.txt
@@ -523,88 +546,88 @@
 +-            //convert temperature
 +-            covx xTempDest1.val,tTmp.txt,0,0
 +-            tSend.txt+=tTmp.txt
-++            tSend.txt+=",hvac_action,"+va5.txt
-+             //send calc crc
-+             btlen tSend.txt,sys0
-+             crcrest 1,0xffff // reset CRC
-+@@ -591,30 +513,21 @@
-+             prints tSend.txt,0
-+             prints crcval,2
-+         
++-            //send calc crc
++-            btlen tSend.txt,sys0
++-            crcrest 1,0xffff // reset CRC
++-            crcputh 55 bb
++-            crcputs sys0,2
++-            crcputs tSend.txt,0
++-            //send cmd
++-            printh 55 bb
++-            prints sys0,2
++-            prints tSend.txt,0
++-            prints crcval,2
++-        
 +-Dual-state Button btDown1
-++Dual-state Button bt6
-+     Attributes
-+         Scope                               : local
-+         Dragging                            : 0
-+         Disable release event after dragging: 0
-+         Send Component ID                   : disabled
++-    Attributes
++-        Scope                               : local
++-        Dragging                            : 0
++-        Disable release event after dragging: 0
++-        Send Component ID                   : disabled
 +-        State                               : unpressed
 +-        Text                                : î¿
-++        State                               : pressed
-++        Text                                : î
-+         Max. Text Size                      : 10
-+     
-+     Events
-+         Touch Press Event
++-        Max. Text Size                      : 10
++-    
++-    Events
++-        Touch Press Event
 +-            if(xTempDest1.val>xTempMin1.val)
 +-            {
 +-                xTempDest1.val=xTempDest1.val-xTempStep1.val
 +-            }
 +-            // event,buttonPress2,entn,tempUpd,X
-+             //craft command
++-            //craft command
 +-            tSend.txt="event,buttonPress2,"
 +-            tSend.txt+=entn.txt+","
 +-            tSend.txt+="tempUpd,"
 +-            //convert temperature
 +-            covx xTempDest1.val,tTmp.txt,0,0
 +-            tSend.txt+=tTmp.txt
-++            tSend.txt="event,buttonPress2,"+entn.txt
-++            tSend.txt+=",hvac_action,"+va6.txt
-+             //send calc crc
-+             btlen tSend.txt,sys0
-+             crcrest 1,0xffff // reset CRC
-+@@ -627,30 +540,21 @@
-+             prints tSend.txt,0
-+             prints crcval,2
-+         
++-            //send calc crc
++-            btlen tSend.txt,sys0
++-            crcrest 1,0xffff // reset CRC
++-            crcputh 55 bb
++-            crcputs sys0,2
++-            crcputs tSend.txt,0
++-            //send cmd
++-            printh 55 bb
++-            prints sys0,2
++-            prints tSend.txt,0
++-            prints crcval,2
++-        
 +-Dual-state Button bUp2
-++Dual-state Button bt7
-+     Attributes
-+         Scope                               : local
-+         Dragging                            : 0
-+         Disable release event after dragging: 0
-+         Send Component ID                   : disabled
++-    Attributes
++-        Scope                               : local
++-        Dragging                            : 0
++-        Disable release event after dragging: 0
++-        Send Component ID                   : disabled
 +-        State                               : unpressed
 +-        Text                                : î
-++        State                               : pressed
-++        Text                                : î
-+         Max. Text Size                      : 10
-+     
-+     Events
-+         Touch Press Event
++-        Max. Text Size                      : 10
++-    
++-    Events
++-        Touch Press Event
 +-            if(xTempDest2.val<xTempMax2.val)
 +-            {
 +-                xTempDest2.val=xTempDest2.val+xTempStep2.val
 +-            }
 +-            // event,buttonPress2,entn,tempUpd,X
-+             //craft command
++-            //craft command
 +-            tSend.txt="event,buttonPress2,"
 +-            tSend.txt+=entn.txt+","
 +-            tSend.txt+="tempUpd,"
 +-            //convert temperature
 +-            covx xTempDest2.val,tTmp.txt,0,0
 +-            tSend.txt+=tTmp.txt
-++            tSend.txt="event,buttonPress2,"+entn.txt
-++            tSend.txt+=",hvac_action,"+va7.txt
+++            tSend.txt+=",hvac_action,"+va5.txt
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -663,30 +567,21 @@
++@@ -686,30 +513,21 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
 +-Dual-state Button bDown2
-++Dual-state Button bt8
+++Dual-state Button bt6
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
@@ -631,15 +654,88 @@
 +-            covx xTempDest2.val,tTmp.txt,0,0
 +-            tSend.txt+=tTmp.txt
 ++            tSend.txt="event,buttonPress2,"+entn.txt
+++            tSend.txt+=",hvac_action,"+va6.txt
++             //send calc crc
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++@@ -722,30 +540,21 @@
++             prints tSend.txt,0
++             prints crcval,2
++         
++-Dual-state Button btUp
+++Dual-state Button bt7
++     Attributes
++         Scope                               : local
++         Dragging                            : 0
++         Disable release event after dragging: 0
++         Send Component ID                   : disabled
++-        State                               : unpressed
++-        Text                                : î
+++        State                               : pressed
+++        Text                                : î
++         Max. Text Size                      : 10
++     
++     Events
++         Touch Press Event
++-            if(xTempDest.val<xTempMax1.val)
++-            {
++-                xTempDest.val=xTempDest.val+xTempStep1.val
++-            }
++-            // event,buttonPress2,entn,tempUpd,X
++             //craft command
++-            tSend.txt="event,buttonPress2,"
++-            tSend.txt+=entn.txt+","
++-            tSend.txt+="tempUpd,"
++-            //convert temperature
++-            covx xTempDest.val,tTmp.txt,0,0
++-            tSend.txt+=tTmp.txt
+++            tSend.txt="event,buttonPress2,"+entn.txt
+++            tSend.txt+=",hvac_action,"+va7.txt
++             //send calc crc
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++@@ -758,30 +567,21 @@
++             prints tSend.txt,0
++             prints crcval,2
++         
++-Dual-state Button btDown
+++Dual-state Button bt8
++     Attributes
++         Scope                               : local
++         Dragging                            : 0
++         Disable release event after dragging: 0
++         Send Component ID                   : disabled
++-        State                               : unpressed
++-        Text                                : î¿
+++        State                               : pressed
+++        Text                                : î
++         Max. Text Size                      : 10
++     
++     Events
++         Touch Press Event
++-            if(xTempDest.val>xTempMin1.val)
++-            {
++-                xTempDest.val=xTempDest.val-xTempStep1.val
++-            }
++-            // event,buttonPress2,entn,tempUpd,X
++             //craft command
++-            tSend.txt="event,buttonPress2,"
++-            tSend.txt+=entn.txt+","
++-            tSend.txt+="tempUpd,"
++-            //convert temperature
++-            covx xTempDest.val,tTmp.txt,0,0
++-            tSend.txt+=tTmp.txt
+++            tSend.txt="event,buttonPress2,"+entn.txt
 ++            tSend.txt+=",hvac_action,"+va8.txt
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -872,18 +767,18 @@
++@@ -967,19 +767,18 @@
 +                                         covx tTmp.txt,xTempCurr.val,0,0
 +                                         //dstTemp
 +                                         spstr strCommand.txt,tTmp.txt,"~",5
 +-                                        covx tTmp.txt,xTempDest1.val,0,0
++-                                        xTempDest1.val=xTempDest.val
 ++                                        covx tTmp.txt,xTempDest.val,0,0
 +                                         //status
 +                                         spstr strCommand.txt,tStatus.txt,"~",6
@@ -658,7 +754,7 @@
 +                                         // disable all buttons
 +                                         vis bt0,0
 +                                         vis bt1,0
-+@@ -893,6 +788,7 @@
++@@ -989,6 +788,7 @@
 +                                         vis bt5,0
 +                                         vis bt6,0
 +                                         vis bt7,0
@@ -666,7 +762,7 @@
 +                                         //bt0
 +                                         spstr strCommand.txt,bt0.txt,"~",10
 +                                         if(bt0.txt!="")
-+@@ -1013,12 +909,21 @@
++@@ -1109,12 +909,21 @@
 +                                             //enable
 +                                             vis bt7,1
 +                                         }
@@ -694,8 +790,8 @@
 +                                     }
 +                                     if(tInstruction.txt=="pageType")
 +                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-05-14 12:54:21.199132759 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-14 12:54:21.591137995 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-14 14:37:58.882388573 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-14 14:37:59.274393844 +0000
 +@@ -351,7 +351,7 @@
 +     
 +     Events
