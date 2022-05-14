@@ -250,7 +250,7 @@ class LuiPagesGen(object):
     def generate_media_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
-            command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your|apps.yaml in AppDaemon~~0~{{get_icon_id('alert-circle-outline')}~~~disable"
+            command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your|apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
         else:
             entity        = self._ha_api.get_entity(item)
             heading       = entity.attributes.friendly_name
