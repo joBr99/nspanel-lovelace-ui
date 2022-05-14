@@ -37,6 +37,10 @@ Page cardThermo
             vis bUp2,0
             vis bDown2,0
             vis xTempDest2,0
+            vis t2,0
+            vis btUp1,0
+            vis btDown1,0
+            vis xTempDest1,0
             vis bPrev,0
             vis bNext,0
         
@@ -205,6 +209,15 @@ XFloat xTempStep2
         Associated Keyboard                 : none
         Value                               : 0
     
+XFloat xTempDest
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
 Text tHeading
     Attributes
         Scope                               : local
@@ -274,6 +287,16 @@ Text tALbl
         Associated Keyboard                 : none
         Text                                : Action
         Max. Text Size                      : 30
+    
+Text t1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 10
     
 Picture p0
     Attributes
@@ -699,6 +722,78 @@ Dual-state Button bDown2
             prints tSend.txt,0
             prints crcval,2
         
+Dual-state Button btUp
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            if(xTempDest.val<xTempMax1.val)
+            {
+                xTempDest.val=xTempDest.val+xTempStep1.val
+            }
+            // event,buttonPress2,entn,tempUpd,X
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="tempUpd,"
+            //convert temperature
+            covx xTempDest.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Dual-state Button btDown
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î¿
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            if(xTempDest.val>xTempMin1.val)
+            {
+                xTempDest.val=xTempDest.val-xTempStep1.val
+            }
+            // event,buttonPress2,entn,tempUpd,X
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="tempUpd,"
+            //convert temperature
+            covx xTempDest.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Hotspot mSwipeNext
     Attributes
         Scope                               : local
@@ -873,6 +968,7 @@ Timer tmSerial
                                         //dstTemp
                                         spstr strCommand.txt,tTmp.txt,"~",5
                                         covx tTmp.txt,xTempDest1.val,0,0
+                                        xTempDest1.val=xTempDest.val
                                         //status
                                         spstr strCommand.txt,tStatus.txt,"~",6
                                         //minTemp
