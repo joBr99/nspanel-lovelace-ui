@@ -1,9 +1,9 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-14 14:51:20.695641824 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-14 14:51:20.255641436 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-14 14:51:20.647641526 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-14 15:34:35.238264619 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-14 15:34:34.762258765 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-14 15:34:35.170263783 +0000
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-05-14 14:51:20.259641424 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-14 14:51:20.647641526 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-05-14 15:34:34.762258765 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-14 15:34:35.170263783 +0000
 +@@ -466,7 +466,7 @@
 +             prints crcval,2
 +             tCode.txt=""
@@ -67,14 +67,14 @@
 +             {
 +                 click bPrev,1
 +             }
-+--- HMI/n2t-out/cardEntities.txt	2022-05-14 14:51:20.259641424 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-14 14:51:20.651641551 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-14 15:34:34.762258765 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-14 15:34:35.170263783 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
 +@@ -1728,6 +1956,128 @@
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-05-14 14:51:20.259641424 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-14 14:51:20.651641551 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-05-14 15:34:34.762258765 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-14 15:34:35.170263783 +0000
 +@@ -17,12 +17,9 @@
 +             vis tInstruction,0
 +             vis tTmp,0
@@ -95,11 +95,11 @@
 +             vis bt5,0
 +             vis bt6,0
 +             vis bt7,0
-+-            vis t0,0
++-            vis tCF2,0
 +-            vis bUp2,0
 +-            vis bDown2,0
 +-            vis xTempDest2,0
-+-            vis t2,0
++-            vis tCF1,0
 +-            vis btUp1,0
 +-            vis btDown1,0
 +-            vis xTempDest1,0
@@ -238,10 +238,20 @@
 +     
 + Text tHeading
 +     Attributes
-+@@ -248,56 +215,6 @@
-+         Text                                : î
++@@ -238,57 +205,7 @@
++         Text                                : 
 +         Max. Text Size                      : 10
 +     
++-Text tCF1
++-    Attributes
++-        Scope                               : local
++-        Dragging                            : 0
++-        Disable release event after dragging: 0
++-        Send Component ID                   : disabled
++-        Associated Keyboard                 : none
++-        Text                                : î
++-        Max. Text Size                      : 10
++-    
 +-Text tCurTempLbl
 +-    Attributes
 +-        Scope                               : local
@@ -262,7 +272,7 @@
 +-        Text                                : State
 +-        Max. Text Size                      : 30
 +-    
-+-Text t0
++-Text tCF2
 +-    Attributes
 +-        Scope                               : local
 +-        Dragging                            : 0
@@ -282,19 +292,11 @@
 +-        Text                                : Action
 +-        Max. Text Size                      : 30
 +-    
-+-Text t1
-+-    Attributes
-+-        Scope                               : local
-+-        Dragging                            : 0
-+-        Disable release event after dragging: 0
-+-        Send Component ID                   : disabled
-+-        Associated Keyboard                 : none
-+-        Text                                : î
-+-        Max. Text Size                      : 10
-+-    
-+ Picture p0
++-Text tCF
+++Text t2
 +     Attributes
 +         Scope                               : local
++         Dragging                            : 0
 +@@ -330,26 +247,30 @@
 +             prints tSend.txt,0
 +             prints crcval,2
@@ -614,7 +616,7 @@
 +-            //craft command
 +-            tSend.txt="event,buttonPress2,"
 +-            tSend.txt+=entn.txt+","
-+-            tSend.txt+="tempUpd,"
++-            tSend.txt+="tempUpd2,"
 +-            //convert temperature
 +-            covx xTempDest2.val,tTmp.txt,0,0
 +-            tSend.txt+=tTmp.txt
@@ -649,7 +651,7 @@
 +             //craft command
 +-            tSend.txt="event,buttonPress2,"
 +-            tSend.txt+=entn.txt+","
-+-            tSend.txt+="tempUpd,"
++-            tSend.txt+="tempUpd2,"
 +-            //convert temperature
 +-            covx xTempDest2.val,tTmp.txt,0,0
 +-            tSend.txt+=tTmp.txt
@@ -762,7 +764,7 @@
 +                                         //bt0
 +                                         spstr strCommand.txt,bt0.txt,"~",10
 +                                         if(bt0.txt!="")
-+@@ -1109,12 +909,21 @@
++@@ -1109,33 +909,20 @@
 +                                             //enable
 +                                             vis bt7,1
 +                                         }
@@ -772,6 +774,27 @@
 +-                                        spstr strCommand.txt,tStateLbl.txt,"~",43
 +-                                        //Text tALbl
 +-                                        spstr strCommand.txt,tALbl.txt,"~",44
++-                                        //Text tCF
++-                                        spstr strCommand.txt,tCF.txt,"~",45
++-                                        tCF1.txt=tCF.txt
++-                                        tCF2.txt=tCF.txt
++-                                        //Second Temperature
++-                                        spstr strCommand.txt,tTmp.txt,"~",46
++-                                        if(tTmp.txt!="")
++-                                        {
++-                                            covx tTmp.txt,xTempDest2.val,0,0
++-                                            vis btUp,0
++-                                            vis xTempDest,0
++-                                            vis btDown,0
++-                                            vis tCF,0
++-                                            vis btUp1,1
++-                                            vis xTempDest1,1
++-                                            vis btDown1,1
++-                                            vis tCF1,1
++-                                            vis bUp2,1
++-                                            vis xTempDest2,1
++-                                            vis bDown2,1
++-                                            vis tCF2,1
 ++                                        //bt8
 ++                                        spstr strCommand.txt,bt8.txt,"~",42
 ++                                        if(bt8.txt!="")
@@ -786,12 +809,11 @@
 ++                                            spstr strCommand.txt,va8.txt,"~",45
 ++                                            //enable
 ++                                            vis bt8,1
-++                                        }
++                                         }
 +                                     }
 +                                     if(tInstruction.txt=="pageType")
-+                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-05-14 14:51:20.255641436 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-14 14:51:20.647641526 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-14 15:34:34.762258765 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-14 15:34:35.170263783 +0000
 +@@ -351,7 +351,7 @@
 +     
 +     Events
