@@ -198,8 +198,6 @@ class LuiPagesGen(object):
             command += self.generate_entities_item(item)
         self._send_mqtt_msg(command)
 
-
-
     def generate_thermo_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
@@ -243,29 +241,20 @@ class LuiPagesGen(object):
                 icon_res += f"~{icon_id}~{color_on}~{state}~{mode}"
     
             len_hvac_modes = len(hvac_modes)
-            if len_hvac_modes%2 == 0:
-                # even
-                padding_len = int((4-len_hvac_modes)/2)
-                icon_res =  "~"*4*padding_len + icon_res + "~"*4*padding_len
-                # use last 4 icons
-                icon_res =  "~"*4*5 + icon_res
-            else:
-                # uneven
-                padding_len = int((5-len_hvac_modes)/2)
-                icon_res =  "~"*4*padding_len + icon_res + "~"*4*padding_len
-                # use first 5 icons
-                icon_res = icon_res + "~"*4*4
+            padding_len = 9-len_hvac_modes
+            icon_res = icon_res + "~"*4*padding_len
+            
             command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}"
         self._send_mqtt_msg(command)
 
     def generate_media_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
-            command = f"entityUpd~|Not found||{item}|{get_icon_id('alert-circle-outline')}|Please check your|apps.yaml in AppDaemon|50|{get_icon_id('alert-circle-outline')}"
+            command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your|apps.yaml in AppDaemon~~0~{{get_icon_id('alert-circle-outline')}~~~disable"
         else:
             entity        = self._ha_api.get_entity(item)
             heading       = entity.attributes.friendly_name
-            icon          = 0
+            icon          = get_icon_id('alert-circle-outline')
             title         = get_attr_safe(entity, "media_title", "")
             author        = get_attr_safe(entity, "media_artist", "")
             volume        = int(get_attr_safe(entity, "volume_level", 0)*100)
@@ -295,7 +284,7 @@ class LuiPagesGen(object):
     def generate_alarm_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
-            command = f"entityUpd~{item}~~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
+            command = f"entityUpd~{item}~{navigation}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
         else:
             entity        = self._ha_api.get_entity(item)
             icon = get_icon_id("shield-off")
@@ -351,14 +340,16 @@ class LuiPagesGen(object):
             command = f"entityUpd~{item}~{navigation}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}"
         self._send_mqtt_msg(command)
         
-    def render_card(self, card, send_page_type=True):
+    def render_card(self, card, send_page_type=True):    
         self._ha_api.log(f"Started rendering of page {card.pos} with type {card.cardType}")
+        
         if len(self._config._config_cards) == 1:
             navigation = "0|0"
         else:
             navigation = "1|1"
         if card.pos is None:
-            navigation = "2|0"
+            navigation = "2|0"            
+
         # Switch to page
         if send_page_type:
             self.page_type(card.cardType)
