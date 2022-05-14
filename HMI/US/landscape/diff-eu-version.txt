@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-14 09:49:26.544742017 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-14 09:49:27.344742896 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-14 09:57:28.485725830 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-14 09:57:29.289737932 +0000
 @@ -11,6 +11,4 @@
      // dim value
      int dimValue=40
@@ -9,8 +9,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-05-14 09:49:26.548742022 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-05-14 09:49:27.344742896 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-05-14 09:57:28.485725830 +0000
++++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-05-14 09:57:29.289737932 +0000
 @@ -466,90 +466,6 @@
              prints crcval,2
              tCode.txt=""
@@ -103,8 +103,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
      Attributes
          Scope      : local
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-14 09:49:26.548742022 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-05-14 09:49:27.348742900 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-14 09:57:28.489725890 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-05-14 09:57:29.289737932 +0000
 @@ -1074,90 +1074,6 @@
                  page popupLight
              }
@@ -197,8 +197,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
      Attributes
          Scope      : local
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-05-14 09:49:26.548742022 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-05-14 09:49:27.344742896 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-05-14 09:57:28.485725830 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-05-14 09:57:29.289737932 +0000
 @@ -522,90 +522,6 @@
                  page pageTest
              }
@@ -291,8 +291,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
      Attributes
          Scope      : local
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-05-14 09:49:26.548742022 +0000
-+++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-05-14 09:49:27.344742896 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-05-14 09:57:28.485725830 +0000
++++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-05-14 09:57:29.289737932 +0000
 @@ -223,7 +223,7 @@
      
      Events
@@ -403,8 +403,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
      Attributes
          Scope      : local
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-05-14 09:49:26.548742022 +0000
-+++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-05-14 09:49:27.348742900 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-05-14 09:57:28.489725890 +0000
++++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-05-14 09:57:29.289737932 +0000
 @@ -17,12 +17,9 @@
              vis tInstruction,0
              vis tTmp,0
@@ -842,8 +842,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
                                          vis bt0,0
                                          vis bt1,0
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-14 09:49:26.544742017 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-14 09:49:27.344742896 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-14 09:57:28.485725830 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-14 09:57:29.289737932 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
