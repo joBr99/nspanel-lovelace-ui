@@ -33,11 +33,11 @@ Page cardThermo
             vis bt5,0
             vis bt6,0
             vis bt7,0
-            vis t0,0
+            vis tCF2,0
             vis bUp2,0
             vis bDown2,0
             vis xTempDest2,0
-            vis t2,0
+            vis tCF1,0
             vis btUp1,0
             vis btDown1,0
             vis xTempDest1,0
@@ -238,7 +238,7 @@ Text tStatus
         Text                                : 
         Max. Text Size                      : 10
     
-Text t2
+Text tCF1
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -268,7 +268,7 @@ Text tStateLbl
         Text                                : State
         Max. Text Size                      : 30
     
-Text t0
+Text tCF2
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -288,7 +288,7 @@ Text tALbl
         Text                                : Action
         Max. Text Size                      : 30
     
-Text t1
+Text tCF
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -670,7 +670,7 @@ Dual-state Button bUp2
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd,"
+            tSend.txt+="tempUpd2,"
             //convert temperature
             covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
@@ -706,7 +706,7 @@ Dual-state Button bDown2
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd,"
+            tSend.txt+="tempUpd2,"
             //convert temperature
             covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
@@ -1115,6 +1115,28 @@ Timer tmSerial
                                         spstr strCommand.txt,tStateLbl.txt,"~",43
                                         //Text tALbl
                                         spstr strCommand.txt,tALbl.txt,"~",44
+                                        //Text tCF
+                                        spstr strCommand.txt,tCF.txt,"~",45
+                                        tCF1.txt=tCF.txt
+                                        tCF2.txt=tCF.txt
+                                        //Second Temperature
+                                        spstr strCommand.txt,tTmp.txt,"~",46
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,xTempDest2.val,0,0
+                                            vis btUp,0
+                                            vis xTempDest,0
+                                            vis btDown,0
+                                            vis tCF,0
+                                            vis btUp1,1
+                                            vis xTempDest1,1
+                                            vis btDown1,1
+                                            vis tCF1,1
+                                            vis bUp2,1
+                                            vis xTempDest2,1
+                                            vis bDown2,1
+                                            vis tCF2,1
+                                        }
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
