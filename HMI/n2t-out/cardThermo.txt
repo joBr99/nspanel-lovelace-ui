@@ -598,7 +598,7 @@ Dual-state Button btUp1
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd,"
+            tSend.txt+="tempUpdHigh,"
             //convert temperature
             covx xTempDest1.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
@@ -634,7 +634,7 @@ Dual-state Button btDown1
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd,"
+            tSend.txt+="tempUpdHigh,"
             //convert temperature
             covx xTempDest1.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
@@ -670,7 +670,7 @@ Dual-state Button bUp2
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd2,"
+            tSend.txt+="tempUpdLow,"
             //convert temperature
             covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
@@ -706,7 +706,7 @@ Dual-state Button bDown2
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd2,"
+            tSend.txt+="tempUpdLow,"
             //convert temperature
             covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
