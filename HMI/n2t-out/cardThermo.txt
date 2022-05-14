@@ -33,7 +33,6 @@ Page cardThermo
             vis bt5,0
             vis bt6,0
             vis bt7,0
-            vis bt8,0
             vis t0,0
             vis bUp2,0
             vis bDown2,0
@@ -101,11 +100,29 @@ Variable (string) va7
         Text          : 
         Max. Text Size: 10
     
-Variable (string) va8
+Variable (string) tInstruction
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tId
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tTmp
     Attributes
         Scope         : local
         Text          : 
         Max. Text Size: 10
+    
+Variable (string) tSend
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 100
     
 XFloat xTempCurr
     Attributes
@@ -188,46 +205,6 @@ XFloat xTempStep2
         Associated Keyboard                 : none
         Value                               : 0
     
-Text tSend
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : newtxt
-        Max. Text Size                      : 100
-    
-Text tTmp
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
-    
-Text tInstruction
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text tId
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
 Text tHeading
     Attributes
         Scope                               : local
@@ -287,6 +264,16 @@ Text t0
         Associated Keyboard                 : none
         Text                                : î
         Max. Text Size                      : 10
+    
+Text tALbl
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Action
+        Max. Text Size                      : 30
     
 Picture p0
     Attributes
@@ -393,7 +380,7 @@ Dual-state Button bt2
         Touch Press Event
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt
-            tSend.txt+=",hvac_action,"+va1.txt
+            tSend.txt+=",hvac_action,"+va2.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -420,7 +407,7 @@ Dual-state Button bt4
         Touch Press Event
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt
-            tSend.txt+=",hvac_action,"+va2.txt
+            tSend.txt+=",hvac_action,"+va4.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -447,34 +434,7 @@ Dual-state Button bt6
         Touch Press Event
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt
-            tSend.txt+=",hvac_action,"+va3.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Dual-state Button bt8
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt
-            tSend.txt+=",hvac_action,"+va4.txt
+            tSend.txt+=",hvac_action,"+va6.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -501,7 +461,7 @@ Dual-state Button bt1
         Touch Press Event
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt
-            tSend.txt+=",hvac_action,"+va5.txt
+            tSend.txt+=",hvac_action,"+va1.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -528,7 +488,7 @@ Dual-state Button bt3
         Touch Press Event
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt
-            tSend.txt+=",hvac_action,"+va6.txt
+            tSend.txt+=",hvac_action,"+va3.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -555,7 +515,7 @@ Dual-state Button bt5
         Touch Press Event
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt
-            tSend.txt+=",hvac_action,"+va7.txt
+            tSend.txt+=",hvac_action,"+va5.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -582,7 +542,7 @@ Dual-state Button bt7
         Touch Press Event
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt
-            tSend.txt+=",hvac_action,"+va8.txt
+            tSend.txt+=",hvac_action,"+va7.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -933,7 +893,6 @@ Timer tmSerial
                                         vis bt5,0
                                         vis bt6,0
                                         vis bt7,0
-                                        vis bt8,0
                                         //bt0
                                         spstr strCommand.txt,bt0.txt,"~",10
                                         if(bt0.txt!="")
@@ -1054,21 +1013,12 @@ Timer tmSerial
                                             //enable
                                             vis bt7,1
                                         }
-                                        //bt8
-                                        spstr strCommand.txt,bt8.txt,"~",42
-                                        if(bt8.txt!="")
-                                        {
-                                            // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,"~",43
-                                            covx tTmp.txt,bt8.pco2,0,0
-                                            // set state
-                                            spstr strCommand.txt,tTmp.txt,"~",44
-                                            covx tTmp.txt,bt8.val,0,0
-                                            // save action
-                                            spstr strCommand.txt,va8.txt,"~",45
-                                            //enable
-                                            vis bt8,1
-                                        }
+                                        //Text tCurTempLbl
+                                        spstr strCommand.txt,tCurTempLbl.txt,"~",42
+                                        //Text tStateLbl
+                                        spstr strCommand.txt,tStateLbl.txt,"~",43
+                                        //Text tALbl
+                                        spstr strCommand.txt,tALbl.txt,"~",44
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
