@@ -206,7 +206,7 @@ class LuiPagesGen(object):
             temperature_unit = "°C"
 
         else:
-            temperature_unit_icon = get_icon_id("temperature-celsius")
+            temperature_unit_icon = get_icon_id("temperature-fahrenheit")
             temperature_unit = "°F"
 
         if not self._ha_api.entity_exists(item):
