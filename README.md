@@ -493,7 +493,7 @@ Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?ht
 ```
 
 #### Fahrenheit on cardThermo
-```
+```yaml
       - type: cardThermo
         entity: climate.example_item
         temperatureUnit: fahrenheit
