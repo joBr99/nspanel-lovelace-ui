@@ -492,6 +492,12 @@ Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?ht
             icon: lightbulb
 ```
 
+#### Fahrenheit on cardThermo
+```
+      - type: cardThermo
+        entity: climate.example_item
+        temperatureUnit: fahrenheit
+```
 #### Subpages
 
 You can configure entities with with the prefix `navigate`, that are navigating to cards, in case it's hidden card, the navigation items will change and the arrow is bringing you back to the privious page.
