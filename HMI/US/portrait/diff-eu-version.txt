@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-14 20:08:22.302573663 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-14 20:08:22.698580145 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-15 08:50:22.549240409 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-15 08:50:22.973267856 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-05-14 20:08:22.302573663 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-14 20:08:22.698580145 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-05-15 08:50:22.549240409 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-15 08:50:22.977268115 +0000
 @@ -466,7 +466,7 @@
              prints crcval,2
              tCode.txt=""
@@ -77,8 +77,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                  click bPrev,1
              }
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-14 20:08:22.302573663 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-14 20:08:22.698580145 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-15 08:50:22.553240668 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-15 08:50:22.977268115 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -493,8 +493,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-05-14 20:08:22.302573663 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-14 20:08:22.698580145 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-05-15 08:50:22.549240409 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-15 08:50:22.977268115 +0000
 @@ -17,12 +17,9 @@
              vis tInstruction,0
              vis tTmp,0
@@ -527,7 +527,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              vis bPrev,0
              vis bNext,0
          
-@@ -104,30 +94,12 @@
+@@ -104,31 +94,13 @@
          Text          : 
          Max. Text Size: 10
      
@@ -556,28 +556,21 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
 -        Text          : 
 -        Max. Text Size: 100
 -    
- XFloat xTempCurr
+-XFloat xTempDest1
++XFloat xTempCurr
      Attributes
          Scope                               : local
-@@ -137,16 +109,7 @@
+         Dragging                            : 0
+@@ -137,7 +109,7 @@
          Associated Keyboard                 : none
          Value                               : 0
      
--XFloat xTempDest1
--    Attributes
--        Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Value                               : 0
--    
 -XFloat xTempMin1
 +XFloat xTempDest
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -155,7 +118,7 @@
+@@ -146,7 +118,7 @@
          Associated Keyboard                 : none
          Value                               : 0
      
@@ -586,7 +579,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -164,7 +127,7 @@
+@@ -155,7 +127,7 @@
          Associated Keyboard                 : none
          Value                               : 0
      
@@ -595,7 +588,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -173,7 +136,7 @@
+@@ -164,7 +136,7 @@
          Associated Keyboard                 : none
          Value                               : 0
      
@@ -604,7 +597,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -182,41 +145,45 @@
+@@ -173,41 +145,45 @@
          Associated Keyboard                 : none
          Value                               : 0
      
@@ -658,7 +651,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
      
  Text tHeading
      Attributes
-@@ -238,57 +205,7 @@
+@@ -229,57 +205,7 @@
          Text                                : 
          Max. Text Size                      : 10
      
@@ -717,7 +710,24 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -330,26 +247,30 @@
+@@ -289,16 +215,6 @@
+         Text                                : î
+         Max. Text Size                      : 10
+     
+-Text tCurTemp
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        Associated Keyboard                 : none
+-        Text                                : 
+-        Max. Text Size                      : 30
+-    
+ Picture p0
+     Attributes
+         Scope                               : local
+@@ -331,26 +247,30 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -756,7 +766,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -362,21 +283,30 @@
+@@ -363,21 +283,30 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -791,7 +801,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -389,21 +319,26 @@
+@@ -390,21 +319,26 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -823,7 +833,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -416,7 +351,7 @@
+@@ -417,7 +351,7 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -832,7 +842,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -430,7 +365,7 @@
+@@ -431,7 +365,7 @@
          Touch Press Event
              //craft command
              tSend.txt="event,buttonPress2,"+entn.txt
@@ -841,7 +851,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -443,7 +378,7 @@
+@@ -444,7 +378,7 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -850,7 +860,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -457,7 +392,7 @@
+@@ -458,7 +392,7 @@
          Touch Press Event
              //craft command
              tSend.txt="event,buttonPress2,"+entn.txt
@@ -859,7 +869,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -470,13 +405,13 @@
+@@ -471,13 +405,13 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -875,7 +885,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
          Text                                : î
          Max. Text Size                      : 10
      
-@@ -484,7 +419,7 @@
+@@ -485,7 +419,7 @@
          Touch Press Event
              //craft command
              tSend.txt="event,buttonPress2,"+entn.txt
@@ -884,7 +894,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -503,7 +438,7 @@
+@@ -504,7 +438,7 @@
          Dragging                            : 0
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -893,7 +903,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
          Text                                : î
          Max. Text Size                      : 10
      
-@@ -524,13 +459,13 @@
+@@ -525,13 +459,13 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -909,7 +919,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
          Text                                : î
          Max. Text Size                      : 10
      
-@@ -538,7 +473,7 @@
+@@ -539,7 +473,7 @@
          Touch Press Event
              //craft command
              tSend.txt="event,buttonPress2,"+entn.txt
@@ -918,7 +928,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -551,7 +486,7 @@
+@@ -552,7 +486,7 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -927,7 +937,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -565,115 +500,7 @@
+@@ -566,115 +500,7 @@
          Touch Press Event
              //craft command
              tSend.txt="event,buttonPress2,"+entn.txt
@@ -1044,7 +1054,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -686,30 +513,21 @@
+@@ -687,30 +513,21 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -1080,7 +1090,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -722,30 +540,21 @@
+@@ -723,30 +540,21 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -1116,7 +1126,7 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -758,30 +567,21 @@
+@@ -759,30 +567,21 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -1152,8 +1162,13 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -967,19 +767,18 @@
-                                         covx tTmp.txt,xTempCurr.val,0,0
+@@ -964,22 +763,22 @@
+                                         //entity name
+                                         spstr strCommand.txt,entn.txt,"~",3
+                                         //currentTemp
+-                                        spstr strCommand.txt,tCurTemp.txt,"~",4
++                                        spstr strCommand.txt,tTmp.txt,"~",4
++                                        covx tTmp.txt,xTempCurr.val,0,0
                                          //dstTemp
                                          spstr strCommand.txt,tTmp.txt,"~",5
 -                                        covx tTmp.txt,xTempDest1.val,0,0
@@ -1233,8 +1248,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                      }
                                      if(tInstruction.txt=="pageType")
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-14 20:08:22.302573663 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-14 20:08:22.698580145 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-15 08:50:22.549240409 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-15 08:50:22.977268115 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled

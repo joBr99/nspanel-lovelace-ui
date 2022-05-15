@@ -128,15 +128,6 @@ Variable (string) tSend
         Text          : 
         Max. Text Size: 100
     
-XFloat xTempCurr
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
-    
 XFloat xTempDest1
     Attributes
         Scope                               : local
@@ -297,6 +288,16 @@ Text tCF
         Associated Keyboard                 : none
         Text                                : î
         Max. Text Size                      : 10
+    
+Text tCurTemp
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 30
     
 Picture p0
     Attributes
@@ -963,8 +964,7 @@ Timer tmSerial
                                         //entity name
                                         spstr strCommand.txt,entn.txt,"~",3
                                         //currentTemp
-                                        spstr strCommand.txt,tTmp.txt,"~",4
-                                        covx tTmp.txt,xTempCurr.val,0,0
+                                        spstr strCommand.txt,tCurTemp.txt,"~",4
                                         //dstTemp
                                         spstr strCommand.txt,tTmp.txt,"~",5
                                         covx tTmp.txt,xTempDest1.val,0,0
