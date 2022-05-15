@@ -95,6 +95,7 @@ class LuiBackendConfig(object):
             }, {
                 'type': 'climate',
                 'entity': 'climate.test_item',
+                'temperatureUnit': 'celsius'
             }],
             'screensaver': {
                 'type': 'screensaver',
