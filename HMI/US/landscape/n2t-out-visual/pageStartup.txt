@@ -418,8 +418,8 @@ Picture p0
         Opacity                             : 127
         x coordinate                        : 0
         y coordinate                        : 0
-        Width                               : 480
-        Height                              : 320
+        Width                               : 479
+        Height                              : 319
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
