@@ -169,7 +169,7 @@ Number nNum1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 46
         Height                              : 50
         Effect                              : load
@@ -199,7 +199,7 @@ Number nNum2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 180
+        y coordinate                        : 154
         Width                               : 46
         Height                              : 50
         Effect                              : load
@@ -229,7 +229,7 @@ Number nNum3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 260
+        y coordinate                        : 232
         Width                               : 45
         Height                              : 50
         Effect                              : load
@@ -259,7 +259,7 @@ Number nNum4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 44
         Height                              : 50
         Effect                              : load
@@ -289,7 +289,7 @@ Number nNum5
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 268
-        y coordinate                        : 420
+        y coordinate                        : 391
         Width                               : 44
         Height                              : 50
         Effect                              : load
@@ -348,10 +348,10 @@ Text tEntity1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
-        y coordinate                        : 70
-        Width                               : 300
-        Height                              : 30
+        x coordinate                        : 49
+        y coordinate                        : 76
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -366,7 +366,7 @@ Text tEntity1
         Input Type                          : character
         Text                                : tEntity1
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -378,10 +378,10 @@ Text tEntity2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
-        y coordinate                        : 150
-        Width                               : 300
-        Height                              : 30
+        x coordinate                        : 49
+        y coordinate                        : 152
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -396,7 +396,7 @@ Text tEntity2
         Input Type                          : character
         Text                                : tEntity2
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -408,10 +408,10 @@ Text tEntity3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
+        x coordinate                        : 49
         y coordinate                        : 230
-        Width                               : 300
-        Height                              : 30
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -426,7 +426,7 @@ Text tEntity3
         Input Type                          : character
         Text                                : tEntity3
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -438,10 +438,10 @@ Text tEntity4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
+        x coordinate                        : 49
         y coordinate                        : 310
-        Width                               : 300
-        Height                              : 30
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -456,7 +456,7 @@ Text tEntity4
         Input Type                          : character
         Text                                : tEntity4
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -468,9 +468,9 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 118
-        y coordinate                        : 105
-        Width                               : 45
+        x coordinate                        : 15
+        y coordinate                        : 84
+        Width                               : 33
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -498,9 +498,9 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 118
-        y coordinate                        : 185
-        Width                               : 45
+        x coordinate                        : 15
+        y coordinate                        : 163
+        Width                               : 33
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -528,9 +528,9 @@ Text tIcon3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 118
-        y coordinate                        : 270
-        Width                               : 45
+        x coordinate                        : 13
+        y coordinate                        : 241
+        Width                               : 33
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -558,9 +558,9 @@ Text tIcon4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 118
-        y coordinate                        : 350
-        Width                               : 45
+        x coordinate                        : 15
+        y coordinate                        : 321
+        Width                               : 32
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -708,10 +708,10 @@ Text tEntity5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
+        x coordinate                        : 49
         y coordinate                        : 390
-        Width                               : 300
-        Height                              : 30
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -726,7 +726,7 @@ Text tEntity5
         Input Type                          : character
         Text                                : tEntity5
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -738,9 +738,9 @@ Text tIcon5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 121
-        y coordinate                        : 430
-        Width                               : 45
+        x coordinate                        : 15
+        y coordinate                        : 401
+        Width                               : 33
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -786,7 +786,7 @@ Slider hSlider1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 103
+        y coordinate                        : 80
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -829,7 +829,7 @@ Slider hSlider2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 183
+        y coordinate                        : 157
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -872,7 +872,7 @@ Slider hSlider3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 263
+        y coordinate                        : 235
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -915,7 +915,7 @@ Slider hSlider4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 343
+        y coordinate                        : 314
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -958,7 +958,7 @@ Slider hSlider5
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 420
+        y coordinate                        : 394
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -1001,7 +1001,7 @@ Button bDown1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1048,7 +1048,7 @@ Button bUp1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1095,7 +1095,7 @@ Button bStop1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 215
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1142,7 +1142,7 @@ Button bStop2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 215
-        y coordinate                        : 180
+        y coordinate                        : 154
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1189,7 +1189,7 @@ Button bDown2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 180
+        y coordinate                        : 154
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1236,7 +1236,7 @@ Button bUp2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 180
+        y coordinate                        : 154
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1283,7 +1283,7 @@ Button bStop3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 215
-        y coordinate                        : 260
+        y coordinate                        : 232
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1330,7 +1330,7 @@ Button bDown3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 260
+        y coordinate                        : 233
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1377,7 +1377,7 @@ Button bUp3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 260
+        y coordinate                        : 232
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1424,7 +1424,7 @@ Button bStop4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 215
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1471,7 +1471,7 @@ Button bDown4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1518,7 +1518,7 @@ Button bUp4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1666,7 +1666,7 @@ Button bText1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 105
+        y coordinate                        : 82
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -1713,7 +1713,7 @@ Button bText2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 185
+        y coordinate                        : 159
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -1760,7 +1760,7 @@ Button bText3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 270
+        y coordinate                        : 242
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -1807,7 +1807,7 @@ Button bText4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 350
+        y coordinate                        : 321
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -1854,7 +1854,7 @@ Button bStop5
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 218
-        y coordinate                        : 420
+        y coordinate                        : 391
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1901,7 +1901,7 @@ Button bDown5
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 268
-        y coordinate                        : 420
+        y coordinate                        : 391
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1948,7 +1948,7 @@ Button bUp5
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 168
-        y coordinate                        : 420
+        y coordinate                        : 391
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1995,7 +1995,7 @@ Button bText5
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 168
-        y coordinate                        : 430
+        y coordinate                        : 401
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -2042,7 +2042,7 @@ Dual-state Button btOnOff1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2087,7 +2087,7 @@ Dual-state Button btOnOff2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 180
+        y coordinate                        : 154
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2132,7 +2132,7 @@ Dual-state Button btOnOff3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 260
+        y coordinate                        : 232
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2177,7 +2177,7 @@ Dual-state Button btOnOff4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2222,7 +2222,7 @@ Dual-state Button btOnOff5
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 268
-        y coordinate                        : 420
+        y coordinate                        : 391
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2292,10 +2292,10 @@ Hotspot m2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 11
-        y coordinate                        : 230
+        x coordinate                        : 13
+        y coordinate                        : 221
         Width                               : 150
-        Height                              : 75
+        Height                              : 71
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2323,8 +2323,8 @@ Hotspot m1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 12
-        y coordinate                        : 150
+        x coordinate                        : 14
+        y coordinate                        : 142
         Width                               : 150
         Height                              : 75
         Effect                              : load
@@ -2354,8 +2354,8 @@ Hotspot m0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 13
-        y coordinate                        : 70
+        x coordinate                        : 14
+        y coordinate                        : 64
         Width                               : 150
         Height                              : 75
         Effect                              : load
@@ -2385,10 +2385,10 @@ Hotspot m3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 12
-        y coordinate                        : 310
+        x coordinate                        : 16
+        y coordinate                        : 302
         Width                               : 150
-        Height                              : 75
+        Height                              : 73
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2416,10 +2416,10 @@ Hotspot m4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 14
-        y coordinate                        : 390
+        x coordinate                        : 13
+        y coordinate                        : 380
         Width                               : 150
-        Height                              : 75
+        Height                              : 73
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2447,9 +2447,9 @@ Hotspot mSwipeNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 310
-        y coordinate                        : 5
-        Width                               : 8
+        x coordinate                        : 313
+        y coordinate                        : 3
+        Width                               : 5
         Height                              : 470
         Effect                              : load
         Effect Priority                     : 0
@@ -2487,7 +2487,7 @@ Hotspot mSwipeUp
         x coordinate                        : 10
         y coordinate                        : 0
         Width                               : 300
-        Height                              : 9
+        Height                              : 8
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2523,7 +2523,7 @@ Hotspot mSwipePrev
         Opacity                             : 127
         x coordinate                        : 0
         y coordinate                        : 5
-        Width                               : 9
+        Width                               : 7
         Height                              : 470
         Effect                              : load
         Effect Priority                     : 0
