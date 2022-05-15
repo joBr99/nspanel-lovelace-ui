@@ -223,7 +223,7 @@ Text t1
     
     Events
         Touch Press Event
-            hVolume.val=hVolume.val-5
+            hVolume.val=hVolume.val-1
             // event,buttonPress2,internalNameEntity,volumeSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
@@ -253,7 +253,7 @@ Text t3
     
     Events
         Touch Press Event
-            hVolume.val=hVolume.val+5
+            hVolume.val=hVolume.val+1
             // event,buttonPress2,internalNameEntity,volumeSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
@@ -455,6 +455,90 @@ Button bPrev
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+        
+Hotspot mSwipeNext
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing right button if swiped on the right side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",1
+            if(tTmp.txt=="1")
+            {
+                click bNext,1
+            }
+        
+Hotspot mSwipeUp
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing up button if swiped on the top side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",0
+            if(tTmp.txt=="2")
+            {
+                click bPrev,1
+            }
+        
+Hotspot mSwipePrev
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing left button if swiped on the left side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",0
+            if(tTmp.txt=="1")
+            {
+                click bPrev,1
+            }
         
 Timer tmSerial
     Attributes
