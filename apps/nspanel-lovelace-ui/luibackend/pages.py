@@ -48,7 +48,10 @@ class LuiPagesGen(object):
         else:
             dateformat = self._config.get("dateFormat")
             date = datetime.datetime.now().strftime(dateformat)
-        self._send_mqtt_msg(f"date~{date}")
+            
+        addTemplate = self._config.get("dateAdditonalTemplate", "")
+        addDateText = self._ha_api.render_template(addTemplate)
+        self._send_mqtt_msg(f"date~{date}{addDateText}")
 
     def page_type(self, target_page):
         self._send_mqtt_msg(f"pageType~{target_page}")
@@ -57,7 +60,7 @@ class LuiPagesGen(object):
         global babel_spec
         we_name = self._config._config_screensaver.entity.entityId
         unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
-
+        
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
         else:
