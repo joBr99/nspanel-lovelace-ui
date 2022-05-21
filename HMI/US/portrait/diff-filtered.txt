@@ -1,9 +1,9 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 06:19:26.297558167 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-21 06:19:25.833549791 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 06:19:26.257557445 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 09:32:13.014429294 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-21 09:32:12.542424222 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 09:32:12.970428821 +0000
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-05-21 06:19:25.833549791 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 06:19:26.261557518 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-05-21 09:32:12.546424265 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 09:32:12.970428821 +0000
 +@@ -466,7 +466,7 @@
 +             prints crcval,2
 +             tCode.txt=""
@@ -67,32 +67,14 @@
 +             {
 +                 click bPrev,1
 +             }
-+--- HMI/n2t-out/cardEntities.txt	2022-05-21 06:19:25.833549791 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 06:19:26.261557518 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-21 09:32:12.546424265 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 09:32:12.974428864 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
 +@@ -1728,6 +1956,128 @@
 +diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-05-21 06:19:25.833549791 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 06:19:26.261557518 +0000
-+@@ -198,7 +198,7 @@
-+         Disable release event after dragging: 0
-+         Send Component ID                   : disabled
-+         State                               : unpressed
-+-        Text                                : newtxt
-++        Text                                : 
-+         Max. Text Size                      : 10
-+     
-+     Events
-+@@ -223,7 +223,7 @@
-+         Disable release event after dragging: 0
-+         Send Component ID                   : disabled
-+         State                               : unpressed
-+-        Text                                : newtxt
-++        Text                                : 
-+         Max. Text Size                      : 10
-+     
-+     Events
++--- HMI/n2t-out/cardQR.txt	2022-05-21 09:32:12.546424265 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 09:32:12.970428821 +0000
 +@@ -295,7 +295,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
@@ -141,8 +123,8 @@
 +         
 + Hotspot mSwipePrev
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-05-21 06:19:25.833549791 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 06:19:26.261557518 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-05-21 09:32:12.546424265 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 09:32:12.974428864 +0000
 +@@ -795,7 +795,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
@@ -190,26 +172,5 @@
 +             }
 +         
 + Hotspot mSwipePrev
-+--- HMI/n2t-out/pageStartup.txt	2022-05-21 06:19:25.833549791 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 06:19:26.261557518 +0000
-+diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-05-21 06:19:25.833549791 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-05-21 06:19:26.261557518 +0000
-+@@ -176,17 +176,3 @@
-+         Touch Press Event
-+             bauds=115200
-+         
-+-Button b2
-+-    Attributes
-+-        Scope                               : local
-+-        Dragging                            : 0
-+-        Disable release event after dragging: 0
-+-        Send Component ID                   : disabled
-+-        State                               : unpressed
-+-        Text                                : qr
-+-        Max. Text Size                      : 10
-+-    
-+-    Events
-+-        Touch Press Event
-+-            page cardQR
-+-        
++--- HMI/n2t-out/pageStartup.txt	2022-05-21 09:32:12.546424265 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 09:32:12.970428821 +0000

@@ -176,3 +176,17 @@ Button b1
         Touch Press Event
             bauds=115200
         
+Button b2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : qr
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            page cardQR
+        

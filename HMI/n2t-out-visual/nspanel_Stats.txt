@@ -18,6 +18,10 @@ pageStartup
 	19   Component(s)
 	150  Line(s) of event code
 	113  Unique line(s) of event code
+cardQR
+	28   Component(s)
+	247  Line(s) of event code
+	137  Unique line(s) of event code
 cardMedia
 	33   Component(s)
 	346  Line(s) of event code
@@ -42,10 +46,6 @@ cardGrid
 	42   Component(s)
 	435  Line(s) of event code
 	252  Unique line(s) of event code
-cardQR
-	28   Component(s)
-	247  Line(s) of event code
-	137  Unique line(s) of event code
 cardAlarm
 	38   Component(s)
 	360  Line(s) of event code
