@@ -1277,6 +1277,28 @@ Timer tmSerial
                                             vis bText1,0
                                             vis hSlider1,0
                                             vis nNum1,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",8
+                                            spstr tId.txt,tTmp.txt,"|",0
+                                            if(tTmp.txt=="0")
+                                            {
+                                                bUp1.bco2=27501
+                                                tsw bUp1,0
+                                            }else
+                                            {
+                                                bUp1.bco2=14823
+                                                tsw bUp1,1
+                                            }
+                                            spstr tId.txt,tTmp.txt,"|",1
+                                            if(tTmp.txt=="0")
+                                            {
+                                                bDown1.bco2=27501
+                                                tsw bDown1,0
+                                            }else
+                                            {
+                                                bDown1.bco2=14823
+                                                tsw bDown1,1
+                                            }
                                         }
                                         if(type1.txt=="light")
                                         {
@@ -1399,6 +1421,28 @@ Timer tmSerial
                                             vis bText2,0
                                             vis hSlider2,0
                                             vis nNum2,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",14
+                                            spstr tId.txt,tTmp.txt,"|",0
+                                            if(tTmp.txt=="0")
+                                            {
+                                                bUp2.bco2=27501
+                                                tsw bUp2,0
+                                            }else
+                                            {
+                                                bUp2.bco2=14823
+                                                tsw bUp2,1
+                                            }
+                                            spstr tId.txt,tTmp.txt,"|",1
+                                            if(tTmp.txt=="0")
+                                            {
+                                                bDown2.bco2=27501
+                                                tsw bDown2,0
+                                            }else
+                                            {
+                                                bDown2.bco2=14823
+                                                tsw bDown2,1
+                                            }
                                         }
                                         if(type2.txt=="light")
                                         {
@@ -1521,6 +1565,28 @@ Timer tmSerial
                                             vis bText3,0
                                             vis hSlider3,0
                                             vis nNum3,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",20
+                                            spstr tId.txt,tTmp.txt,"|",0
+                                            if(tTmp.txt=="0")
+                                            {
+                                                bUp3.bco2=27501
+                                                tsw bUp3,0
+                                            }else
+                                            {
+                                                bUp3.bco2=14823
+                                                tsw bUp3,1
+                                            }
+                                            spstr tId.txt,tTmp.txt,"|",1
+                                            if(tTmp.txt=="0")
+                                            {
+                                                bDown3.bco2=27501
+                                                tsw bDown3,0
+                                            }else
+                                            {
+                                                bDown3.bco2=14823
+                                                tsw bDown3,1
+                                            }
                                         }
                                         if(type3.txt=="light")
                                         {
@@ -1643,6 +1709,28 @@ Timer tmSerial
                                             vis bText4,0
                                             vis hSlider4,0
                                             vis nNum4,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",26
+                                            spstr tId.txt,tTmp.txt,"|",0
+                                            if(tTmp.txt=="0")
+                                            {
+                                                bUp4.bco2=27501
+                                                tsw bUp4,0
+                                            }else
+                                            {
+                                                bUp4.bco2=14823
+                                                tsw bUp4,1
+                                            }
+                                            spstr tId.txt,tTmp.txt,"|",1
+                                            if(tTmp.txt=="0")
+                                            {
+                                                bDown4.bco2=27501
+                                                tsw bDown4,0
+                                            }else
+                                            {
+                                                bDown4.bco2=14823
+                                                tsw bDown4,1
+                                            }
                                         }
                                         if(type4.txt=="light")
                                         {
@@ -1782,6 +1870,10 @@ Timer tmSerial
                                         if(tId.txt=="cardAlarm")
                                         {
                                             page cardAlarm
+                                        }
+                                        if(tId.txt=="cardQR")
+                                        {
+                                            page cardQR
                                         }
                                     }
                                     if(tInstruction.txt=="time")
