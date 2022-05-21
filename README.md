@@ -79,7 +79,7 @@ For more detailed Instructions see the following Sections:
 
 This section describes the Installation Steps for HomeAssistant, follow each step.
 
-<details><summary>1. Installing HomeAssiant Add-Ons</summary>
+<details><summary>1. Installing HomeAssistant Add-Ons</summary>
 <p>
 
 ### Installing AppDaemon
@@ -107,7 +107,7 @@ Install Studio Code Server from Home Assistant's Supervisor Add-on Store to easi
 </p>
 </details>
 
-<details><summary>2. Installing HomeAssiant Community Store</summary>
+<details><summary>2. Installing HomeAssistant Community Store</summary>
 <p>
 
 ### Installing HACS
@@ -459,7 +459,7 @@ key | optional | type | default | description
 `weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
-`defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key)
+`defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
 
 Example for the weatherOverride config options:
