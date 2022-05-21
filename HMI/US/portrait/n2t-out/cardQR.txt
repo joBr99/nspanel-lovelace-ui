@@ -137,7 +137,7 @@ Text tHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : testHeading
+        Text                                : 
         Max. Text Size                      : 40
     
 Picture p0
@@ -153,7 +153,7 @@ QR Code qr0
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        Text                                : WIFI:S:SSID;T:WPA;P:PASSWORD;;
+        Text                                : 
         Max. Text Size                      : 105
     
 Button bNext
