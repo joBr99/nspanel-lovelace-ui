@@ -252,7 +252,7 @@ Text tHeading
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : testHeading
+        Text                                : 
         Max. Text Size                      : 40
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -291,7 +291,7 @@ QR Code qr0
         Effect Priority                     : 0
         Effect Time                         : 300
         Logo overlay                        : no
-        Text                                : WIFI:S:SSID;T:WPA;P:PASSWORD;;
+        Text                                : 
         Max. Text Size                      : 105
     
 Button bNext
