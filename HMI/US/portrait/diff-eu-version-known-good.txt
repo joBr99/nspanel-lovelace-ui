@@ -338,6 +338,28 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                            vis bText5,0
 +                                            vis hSlider5,0
 +                                            vis nNum5,0
++                                            // get Button State (optional Value)
++                                            spstr strCommand.txt,tId.txt,"~",32
++                                            spstr tId.txt,tTmp.txt,"|",0
++                                            if(tTmp.txt=="0")
++                                            {
++                                                bUp5.pco=27501
++                                                tsw bUp5,0
++                                            }else
++                                            {
++                                                bUp5.pco=65535
++                                                tsw bUp5,1
++                                            }
++                                            spstr tId.txt,tTmp.txt,"|",1
++                                            if(tTmp.txt=="0")
++                                            {
++                                                bDown5.pco=27501
++                                                tsw bDown5,0
++                                            }else
++                                            {
++                                                bDown5.pco=65535
++                                                tsw bDown5,1
++                                            }
 +                                        }
 +                                        if(type5.txt=="light")
 +                                        {
