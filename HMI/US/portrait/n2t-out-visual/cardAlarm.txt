@@ -1345,6 +1345,10 @@ Timer tmSerial
                                         {
                                             page cardAlarm
                                         }
+                                        if(tId.txt=="cardQR")
+                                        {
+                                            page cardQR
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
