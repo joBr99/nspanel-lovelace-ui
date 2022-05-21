@@ -27,6 +27,16 @@ Page cardQR
             vis tId,0
             vis bPrev,0
             vis bNext,0
+            //ui e1
+            vis btOnOff1,0
+            vis tIcon1,0
+            vis tEntity1,0
+            vis bText1,0
+            //ui e2
+            vis btOnOff2,0
+            vis tIcon2,0
+            vis tEntity2,0
+            vis bText2,0
         
 Variable (string) strCommand
     Attributes
@@ -83,6 +93,20 @@ Variable (string) entn2
         Scope         : local
         Text          : 
         Max. Text Size: 80
+    
+Variable (string) type1
+    Attributes
+        ID            : 28
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) type2
+    Attributes
+        ID            : 29
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
     
 Text tEntity1
     Attributes
@@ -228,7 +252,7 @@ Text tHeading
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : testHeading
+        Text                                : 
         Max. Text Size                      : 40
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -267,7 +291,7 @@ QR Code qr0
         Effect Priority                     : 0
         Effect Time                         : 300
         Logo overlay                        : no
-        Text                                : WIFI:S:SSID;T:WPA;P:PASSWORD;;
+        Text                                : 
         Max. Text Size                      : 105
     
 Button bNext
@@ -720,8 +744,9 @@ Timer tmSerial
                                     spstr strCommand.txt,tInstruction.txt,"~",0
                                     if(tInstruction.txt=="entityUpd")
                                     {
-                                        //entn
-                                        spstr strCommand.txt,entn.txt,"~",1
+                                        // command format: entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
+                                        //tHeading
+                                        spstr strCommand.txt,tHeading.txt,"~",1
                                         // navigation icons
                                         spstr strCommand.txt,tId.txt,"~",2
                                         spstr tId.txt,tTmp.txt,"|",0
@@ -749,10 +774,130 @@ Timer tmSerial
                                             vis bNext,1
                                             bNext.txt="î³"
                                         }
-                                        //text heading
-                                        spstr strCommand.txt,tHeading.txt,"~",3
                                         //text qrcode
-                                        spstr strCommand.txt,qr0.txt,"~",4
+                                        spstr strCommand.txt,qr0.txt,"~",3
+                                        // get Type
+                                        spstr strCommand.txt,type1.txt,"~",4
+                                        // get internal name
+                                        spstr strCommand.txt,entn1.txt,"~",5
+                                        if(type1.txt=="delete"||type1.txt=="")
+                                        {
+                                            vis btOnOff1,0
+                                            vis tEntity1,0
+                                            vis tIcon1,0
+                                            vis bText1,0
+                                        }else
+                                        {
+                                            // change icon
+                                            spstr strCommand.txt,tIcon1.txt,"~",6
+                                            vis tIcon1,1
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",7
+                                            covx tTmp.txt,sys0,0,0
+                                            tIcon1.pco=sys0
+                                            // set name
+                                            spstr strCommand.txt,tEntity1.txt,"~",8
+                                            vis tEntity1,1
+                                        }
+                                        if(type1.txt=="light")
+                                        {
+                                            vis btOnOff1,1
+                                            vis bText1,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tTmp.txt,"~",9
+                                            covx tTmp.txt,sys0,0,0
+                                            btOnOff1.val=sys0
+                                        }
+                                        if(type1.txt=="switch")
+                                        {
+                                            vis btOnOff1,1
+                                            vis bText1,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tTmp.txt,"~",9
+                                            covx tTmp.txt,sys0,0,0
+                                            btOnOff1.val=sys0
+                                        }
+                                        if(type1.txt=="text")
+                                        {
+                                            vis btOnOff1,0
+                                            vis bText1,1
+                                            tsw bText1,0
+                                            bText1.pco=65535
+                                            bText1.pco2=65535
+                                            // get Text (optional Value)
+                                            spstr strCommand.txt,bText1.txt,"~",9
+                                        }
+                                        if(type1.txt=="button")
+                                        {
+                                            vis btOnOff1,0
+                                            vis bText1,1
+                                            tsw bText1,1
+                                            bText1.pco=1374
+                                            bText1.pco2=1374
+                                            // get Text (optional Value)
+                                            spstr strCommand.txt,bText1.txt,"~",9
+                                        }
+                                        // get Type
+                                        spstr strCommand.txt,type2.txt,"~",10
+                                        // get internal name
+                                        spstr strCommand.txt,entn2.txt,"~",11
+                                        if(type2.txt=="delete"||type2.txt=="")
+                                        {
+                                            vis btOnOff2,0
+                                            vis tEntity2,0
+                                            vis tIcon2,0
+                                            vis bText2,0
+                                        }else
+                                        {
+                                            // change icon
+                                            spstr strCommand.txt,tIcon2.txt,"~",12
+                                            vis tIcon2,1
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",13
+                                            covx tTmp.txt,sys0,0,0
+                                            tIcon2.pco=sys0
+                                            // set name
+                                            spstr strCommand.txt,tEntity2.txt,"~",14
+                                            vis tEntity2,1
+                                        }
+                                        if(type2.txt=="light")
+                                        {
+                                            vis btOnOff2,1
+                                            vis bText2,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tTmp.txt,"~",15
+                                            covx tTmp.txt,sys0,0,0
+                                            btOnOff2.val=sys0
+                                        }
+                                        if(type2.txt=="switch")
+                                        {
+                                            vis btOnOff2,1
+                                            vis bText2,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tTmp.txt,"~",15
+                                            covx tTmp.txt,sys0,0,0
+                                            btOnOff2.val=sys0
+                                        }
+                                        if(type2.txt=="text")
+                                        {
+                                            vis btOnOff2,0
+                                            vis bText2,1
+                                            tsw bText2,0
+                                            bText2.pco=65535
+                                            bText2.pco2=65535
+                                            // get Text (optional Value)
+                                            spstr strCommand.txt,bText2.txt,"~",15
+                                        }
+                                        if(type2.txt=="button")
+                                        {
+                                            vis btOnOff2,0
+                                            vis bText2,1
+                                            tsw bText2,1
+                                            bText2.pco=1374
+                                            bText2.pco2=1374
+                                            // get Text (optional Value)
+                                            spstr strCommand.txt,bText2.txt,"~",15
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
