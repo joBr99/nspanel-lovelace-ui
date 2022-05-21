@@ -1,9 +1,9 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 06:10:30.627846144 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-21 06:10:30.103842720 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 06:10:30.539845715 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 06:19:26.297558167 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-21 06:19:25.833549791 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 06:19:26.257557445 +0000
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-05-21 06:10:30.107842748 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 06:10:30.539845715 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-05-21 06:19:25.833549791 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 06:19:26.261557518 +0000
 +@@ -466,7 +466,7 @@
 +             prints crcval,2
 +             tCode.txt=""
@@ -67,14 +67,14 @@
 +             {
 +                 click bPrev,1
 +             }
-+--- HMI/n2t-out/cardEntities.txt	2022-05-21 06:10:30.107842748 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 06:10:30.543845735 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-21 06:19:25.833549791 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 06:19:26.261557518 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
 +@@ -1728,6 +1956,128 @@
 +diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-05-21 06:10:30.107842748 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 06:10:30.539845715 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-21 06:19:25.833549791 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 06:19:26.261557518 +0000
 +@@ -198,7 +198,7 @@
 +         Disable release event after dragging: 0
 +         Send Component ID                   : disabled
@@ -141,8 +141,8 @@
 +         
 + Hotspot mSwipePrev
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-05-21 06:10:30.107842748 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 06:10:30.539845715 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-05-21 06:19:25.833549791 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 06:19:26.261557518 +0000
 +@@ -795,7 +795,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
@@ -190,20 +190,11 @@
 +             }
 +         
 + Hotspot mSwipePrev
-+--- HMI/n2t-out/pageStartup.txt	2022-05-21 06:10:30.107842748 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 06:10:30.539845715 +0000
-+@@ -351,7 +351,7 @@
-+     
-+     Events
-+         Timer Event
-+-            xpic mSpinner.x,mSpinner.y,spinner_w.val,140,frame_ptr.val,0,9 // draw the current frame
-++            xpic mSpinner.x,mSpinner.y,spinner_w.val,140,frame_ptr.val,0,11 // draw the current frame
-+             frame_ptr.val+=spinner_w.val%frapic_w.val // advance the pointer to the next frame in the pic resource and roll over at the end
-+             doevents // finish drawing before next timer event triggers
-+             if(frame_ptr.val==1820)
++--- HMI/n2t-out/pageStartup.txt	2022-05-21 06:19:25.833549791 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 06:19:26.261557518 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-05-21 06:10:30.107842748 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-05-21 06:10:30.539845715 +0000
++--- HMI/n2t-out/pageTest.txt	2022-05-21 06:19:25.833549791 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-05-21 06:19:26.261557518 +0000
 +@@ -176,17 +176,3 @@
 +         Touch Press Event
 +             bauds=115200
