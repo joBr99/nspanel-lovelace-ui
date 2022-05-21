@@ -147,7 +147,7 @@ class LuiPagesGen(object):
             pos = int(entity.attributes.get("current_position", 50))
             if pos == 100:
                 status = "0|1"
-            elif pos == 0
+            elif pos == 0:
                 status = "1|0"
             else:
                 status = "1|1"
