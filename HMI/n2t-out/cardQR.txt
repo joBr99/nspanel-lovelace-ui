@@ -461,8 +461,10 @@ Timer tmSerial
                                             vis bNext,1
                                             bNext.txt="î³"
                                         }
+                                        //text heading
+                                        spstr strCommand.txt,tHeading.txt,"~",3
                                         //text qrcode
-                                        spstr strCommand.txt,qr0.txt,"~",3
+                                        spstr strCommand.txt,qr0.txt,"~",4
                                     }
                                     if(tInstruction.txt=="time")
                                     {
