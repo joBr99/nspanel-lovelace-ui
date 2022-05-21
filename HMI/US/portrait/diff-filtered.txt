@@ -1,35 +1,15 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 09:32:13.014429294 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-21 09:32:12.542424222 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 09:32:12.970428821 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 09:36:00.982617483 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-21 09:36:00.466591225 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 09:36:00.950615855 +0000
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-05-21 09:32:12.546424265 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 09:32:12.970428821 +0000
-+@@ -466,7 +466,7 @@
-+             prints crcval,2
-+             tCode.txt=""
-+         
-+-Hotspot mSwipeNext
-++Hotspot mSwipePrev
-+     Attributes
-+         Scope                               : local
-+         Dragging                            : 0
-+@@ -486,15 +486,15 @@
-+             //x & y coordinates where the swipe is first detected.)
-+             //---------------------------
-+             //The navigation text is stored as local variable within tld.txt
-+-            //Pressing right button if swiped on the right side of the screen
-++            //Pressing left button if swiped on the left side of the screen
-+             //
-+-            spstr tId.txt,tTmp.txt,"|",1
-++            spstr tId.txt,tTmp.txt,"|",0
-+             if(tTmp.txt=="1")
-+             {
-+-                click bNext,1
-++                click bPrev,1
++--- HMI/n2t-out/cardAlarm.txt	2022-05-21 09:36:00.466591225 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 09:36:00.954616058 +0000
++@@ -494,7 +494,7 @@
++                 click bNext,1
 +             }
 +         
 +-Hotspot mSwipeUp
-++Hotspot mSwipeNext
+++Hotspot mSwipePrev
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
@@ -38,15 +18,13 @@
 +             //---------------------------
 +             //The navigation text is stored as local variable within tld.txt
 +-            //Pressing up button if swiped on the top side of the screen
-++            //Pressing right button if swiped on the right side of the screen
+++            //Pressing left button if swiped on the left side of the screen
 +             //
-+-            spstr tId.txt,tTmp.txt,"|",0
++             spstr tId.txt,tTmp.txt,"|",0
 +-            if(tTmp.txt=="2")
-++            spstr tId.txt,tTmp.txt,"|",1
 ++            if(tTmp.txt=="1")
 +             {
-+-                click bPrev,1
-++                click bNext,1
++                 click bPrev,1
 +             }
 +         
 +-Hotspot mSwipePrev
@@ -67,14 +45,14 @@
 +             {
 +                 click bPrev,1
 +             }
-+--- HMI/n2t-out/cardEntities.txt	2022-05-21 09:32:12.546424265 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 09:32:12.974428864 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-21 09:36:00.466591225 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 09:36:00.954616058 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
 +@@ -1728,6 +1956,128 @@
 +diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-05-21 09:32:12.546424265 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 09:32:12.970428821 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-21 09:36:00.466591225 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 09:36:00.954616058 +0000
 +@@ -295,7 +295,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
@@ -123,8 +101,8 @@
 +         
 + Hotspot mSwipePrev
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-05-21 09:32:12.546424265 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 09:32:12.974428864 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-05-21 09:36:00.466591225 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 09:36:00.954616058 +0000
 +@@ -795,7 +795,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
@@ -172,5 +150,5 @@
 +             }
 +         
 + Hotspot mSwipePrev
-+--- HMI/n2t-out/pageStartup.txt	2022-05-21 09:32:12.546424265 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 09:32:12.970428821 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-21 09:36:00.466591225 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 09:36:00.950615855 +0000
