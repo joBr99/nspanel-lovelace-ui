@@ -99,6 +99,10 @@ sharedfoot = """
               {
                 page cardAlarm
               }
+              if(tId.txt=="cardQR")
+              {
+                page cardQR
+              }
             }
             if(tInstruction.txt=="time")
             {
