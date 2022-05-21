@@ -1,4 +1,4 @@
-Page popupNotify
+Page cardQR
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -14,66 +14,99 @@ Page popupNotify
         Preinitialize Event
             vis p0,0
             vis tSend,0
-            vis tTmp,0
             vis tInstruction,0
+            vis tTmp,0
             vis tId,0
+            vis bPrev,0
+            vis bNext,0
         
 Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 1000
+        Max. Text Size: 200
     
 Variable (string) entn
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 30
+        Max. Text Size: 80
     
-Variable (int32) vaOldSleepT
+Variable (string) tSend
     Attributes
-        Scope: local
-        Value: 0
+        Scope         : local
+        Text          : 
+        Max. Text Size: 100
     
-Text tSend
+Variable (string) tTmp
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) tId
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tInstruction
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) entn1
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
+Variable (string) entn2
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
+Text tEntity1
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : newtxt
-        Max. Text Size                      : 100
+        Text                                : tEntity1
+        Max. Text Size                      : 30
     
-Text tTmp
+Text tIcon1
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
+        Text                                : î°
+        Max. Text Size                      : 5
     
-Text tInstruction
+Text tEntity2
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
+        Text                                : tEntity1
+        Max. Text Size                      : 30
     
-Text tId
+Text tIcon2
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
+        Text                                : î°
+        Max. Text Size                      : 5
     
 Text tHeading
     Attributes
@@ -82,18 +115,8 @@ Text tHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 
+        Text                                : testHeading
         Max. Text Size                      : 40
-    
-Text tText
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 500
     
 Picture p0
     Attributes
@@ -102,20 +125,28 @@ Picture p0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
     
-Button b0
+QR Code qr0
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Text                                : WIFI:S:SSID;T:WPA;P:PASSWORD;;
+        Max. Text Size                      : 105
+    
+Button bNext
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î
+        Text                                : î³
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            sleepTimeout=vaOldSleepT.val
-            tSend.txt="event,buttonPress2,popupNotify,bExit"
+            tSend.txt="event,buttonPress2,cardAlarm,bNext"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -128,77 +159,224 @@ Button b0
             prints tSend.txt,0
             prints crcval,2
         
-Button b2
+Button bPrev
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : 
+        Text                                : î°
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            sleepTimeout=vaOldSleepT.val
-            //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",notifyAction,yes"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button b1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            sleepTimeout=vaOldSleepT.val
-            //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",notifyAction,no"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Timer tmSleep
-    Attributes
-        Scope      : local
-        Period (ms): 1000
-        Enabled    : yes
-    
-    Events
-        Timer Event
-            if(sleepTimeout!=0)
+            tSend.txt="event,buttonPress2,cardAlarm,"
+            if(bPrev.txt=="î¶")
             {
-                sleepValue+=1
-                if(sleepTimeout<=sleepValue)
-                {
-                    sleepValue=0
-                    click b0,1
-                    click b0,0
-                }
+                tSend.txt+="bUp"
+            }else
+            {
+                tSend.txt+="bPrev"
+            }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bText1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bText2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Dual-state Button btOnOff1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
+            covx btOnOff1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Dual-state Button btOnOff2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
+            covx btOnOff1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Hotspot mSwipeNext
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing right button if swiped on the right side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",1
+            if(tTmp.txt=="1")
+            {
+                click bNext,1
+            }
+        
+Hotspot mSwipeUp
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing up button if swiped on the top side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",0
+            if(tTmp.txt=="2")
+            {
+                click bPrev,1
+            }
+        
+Hotspot mSwipePrev
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing left button if swiped on the left side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",0
+            if(tTmp.txt=="1")
+            {
+                click bPrev,1
             }
         
 Timer tmSerial
@@ -252,48 +430,41 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
-                                    if(tInstruction.txt=="entityUpdateDetail")
+                                    if(tInstruction.txt=="entityUpd")
                                     {
-                                        // get entn
+                                        //entn
                                         spstr strCommand.txt,entn.txt,"~",1
-                                        // get Heading
-                                        spstr strCommand.txt,tHeading.txt,"~",2
-                                        // heading color
-                                        spstr strCommand.txt,tTmp.txt,"~",3
-                                        covx tTmp.txt,sys0,0,0
-                                        tHeading.pco=sys0
-                                        // get b1
-                                        spstr strCommand.txt,b1.txt,"~",4
-                                        if(b1.txt!="")
+                                        // navigation icons
+                                        spstr strCommand.txt,tId.txt,"~",2
+                                        spstr tId.txt,tTmp.txt,"|",0
+                                        if(tTmp.txt=="0")
                                         {
-                                            vis b1,1
+                                            vis bPrev,0
                                         }
-                                        // b1 color
-                                        spstr strCommand.txt,tTmp.txt,"~",5
-                                        covx tTmp.txt,sys0,0,0
-                                        b1.pco=sys0
-                                        // get b2
-                                        spstr strCommand.txt,b2.txt,"~",6
-                                        if(b2.txt!="")
+                                        if(tTmp.txt=="1")
                                         {
-                                            vis b2,1
+                                            vis bPrev,1
+                                            bPrev.txt="î°"
                                         }
-                                        // b2 color
-                                        spstr strCommand.txt,tTmp.txt,"~",7
-                                        covx tTmp.txt,sys0,0,0
-                                        b2.pco=sys0
-                                        // get tText
-                                        spstr strCommand.txt,tText.txt,"~",8
-                                        // tText color
-                                        spstr strCommand.txt,tTmp.txt,"~",9
-                                        covx tTmp.txt,sys0,0,0
-                                        tText.pco=sys0
-                                        //preserve old sleepTimeout
-                                        vaOldSleepT.val=sleepTimeout
-                                        // sleep timeout
-                                        spstr strCommand.txt,tTmp.txt,"~",10
-                                        covx tTmp.txt,sys0,0,0
-                                        sleepTimeout=sys0
+                                        if(tTmp.txt=="2")
+                                        {
+                                            vis bPrev,1
+                                            bPrev.txt="î¶"
+                                        }
+                                        spstr tId.txt,tTmp.txt,"|",1
+                                        if(tTmp.txt=="0")
+                                        {
+                                            vis bNext,0
+                                        }
+                                        if(tTmp.txt=="1")
+                                        {
+                                            vis bNext,1
+                                            bNext.txt="î³"
+                                        }
+                                        //text heading
+                                        spstr strCommand.txt,tHeading.txt,"~",3
+                                        //text qrcode
+                                        spstr strCommand.txt,qr0.txt,"~",4
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -310,6 +481,7 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
+                                        dim=dimValue
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
@@ -317,13 +489,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sleepTimeout,0,0
                                     }
-                                    if(tInstruction.txt=="exitPopup")
-                                    {
-                                        click b0,1
-                                    }
                                     if(tInstruction.txt=="pageType")
                                     {
-                                        sleepTimeout=vaOldSleepT.val
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,"~",1
@@ -334,11 +501,6 @@ Timer tmSerial
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                         udelete payloadLength-1
                                         bufferPos=0
-                                        if(tId.txt=="popupLight")
-                                        {
-                                            pageIcons.tTmp1.txt=tTmp.txt
-                                            page popupLight
-                                        }
                                         if(tId.txt=="pageStartup")
                                         {
                                             page pageStartup
@@ -396,14 +558,35 @@ Timer tmSerial
                     // next character
                     bufferPos++
                 }
-                if(bufferPos==usize)
+            }
+        
+Timer tmSleep
+    Attributes
+        Scope      : local
+        Period (ms): 1000
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            if(sleepTimeout!=0&&dimValue!=dim)
+            {
+                sleepValue+=1
+                if(sleepTimeout<=sleepValue)
                 {
-                    // copy whole buffer to t1.txt, for debugging
-                    //ucopy t2.txt,0,usize,0
-                    // ucopy n2.val,0,usize,0
-                    // clear whole buffer
-                    //code_c
-                    //bufferPos=0
+                    sleepValue=0
+                    dim=dimValue
+                    tSend.txt="event,sleepReached,cardAlarm"
+                    //send calc crc
+                    btlen tSend.txt,sys0
+                    crcrest 1,0xffff // reset CRC
+                    crcputh 55 bb
+                    crcputs sys0,2
+                    crcputs tSend.txt,0
+                    //send cmd
+                    printh 55 bb
+                    prints sys0,2
+                    prints tSend.txt,0
+                    prints crcval,2
                 }
             }
         

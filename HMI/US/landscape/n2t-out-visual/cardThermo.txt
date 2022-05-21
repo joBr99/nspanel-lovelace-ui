@@ -158,7 +158,7 @@ XFloat xTempDest1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 307
+        x coordinate                        : 310
         y coordinate                        : 118
         Width                               : 120
         Height                              : 60
@@ -188,7 +188,7 @@ XFloat xTempMin1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 395
+        x coordinate                        : 398
         y coordinate                        : 71
         Width                               : 50
         Height                              : 22
@@ -218,7 +218,7 @@ XFloat xTempMax1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 395
+        x coordinate                        : 398
         y coordinate                        : 93
         Width                               : 45
         Height                              : 20
@@ -248,7 +248,7 @@ XFloat xTempStep1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 396
+        x coordinate                        : 399
         y coordinate                        : 181
         Width                               : 45
         Height                              : 20
@@ -278,7 +278,7 @@ XFloat xTempDest2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 154
+        x coordinate                        : 157
         y coordinate                        : 118
         Width                               : 120
         Height                              : 60
@@ -308,7 +308,7 @@ XFloat xTempMin2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 243
+        x coordinate                        : 246
         y coordinate                        : 69
         Width                               : 50
         Height                              : 21
@@ -338,7 +338,7 @@ XFloat xTempMax2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 243
+        x coordinate                        : 246
         y coordinate                        : 91
         Width                               : 45
         Height                              : 20
@@ -368,7 +368,7 @@ XFloat xTempStep2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 244
+        x coordinate                        : 247
         y coordinate                        : 179
         Width                               : 45
         Height                              : 20
@@ -398,7 +398,7 @@ XFloat xTempDest
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 233
+        x coordinate                        : 236
         y coordinate                        : 119
         Width                               : 120
         Height                              : 60
@@ -428,7 +428,7 @@ Text tHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 76
+        x coordinate                        : 79
         y coordinate                        : 26
         Width                               : 320
         Height                              : 30
@@ -458,7 +458,7 @@ Text tStatus
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 23
+        x coordinate                        : 26
         y coordinate                        : 200
         Width                               : 97
         Height                              : 30
@@ -488,7 +488,7 @@ Text tCF1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 428
+        x coordinate                        : 431
         y coordinate                        : 116
         Width                               : 25
         Height                              : 30
@@ -518,7 +518,7 @@ Text tCurTempLbl
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 28
         y coordinate                        : 85
         Width                               : 95
         Height                              : 30
@@ -548,7 +548,7 @@ Text tStateLbl
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 24
+        x coordinate                        : 27
         y coordinate                        : 162
         Width                               : 95
         Height                              : 30
@@ -578,7 +578,7 @@ Text tCF2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 275
+        x coordinate                        : 278
         y coordinate                        : 116
         Width                               : 25
         Height                              : 30
@@ -608,7 +608,7 @@ Text tALbl
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 19
+        x coordinate                        : 22
         y coordinate                        : 260
         Width                               : 67
         Height                              : 30
@@ -638,7 +638,7 @@ Text tCF
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 354
+        x coordinate                        : 357
         y coordinate                        : 116
         Width                               : 25
         Height                              : 30
@@ -668,7 +668,7 @@ Text tCurTemp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 28
         y coordinate                        : 121
         Width                               : 95
         Height                              : 30
@@ -715,7 +715,7 @@ Button bNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 403
+        x coordinate                        : 406
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -762,7 +762,7 @@ Button bPrev
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 21
+        x coordinate                        : 24
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -816,7 +816,7 @@ Dual-state Button bt0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 94
+        x coordinate                        : 97
         y coordinate                        : 255
         Width                               : 40
         Height                              : 40
@@ -865,7 +865,7 @@ Dual-state Button bt2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 184
+        x coordinate                        : 187
         y coordinate                        : 255
         Width                               : 40
         Height                              : 40
@@ -914,7 +914,7 @@ Dual-state Button bt4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 274
+        x coordinate                        : 277
         y coordinate                        : 255
         Width                               : 40
         Height                              : 40
@@ -963,7 +963,7 @@ Dual-state Button bt6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 364
+        x coordinate                        : 367
         y coordinate                        : 255
         Width                               : 40
         Height                              : 40
@@ -1012,7 +1012,7 @@ Dual-state Button bt1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 139
+        x coordinate                        : 142
         y coordinate                        : 255
         Width                               : 40
         Height                              : 40
@@ -1061,7 +1061,7 @@ Dual-state Button bt3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 229
+        x coordinate                        : 232
         y coordinate                        : 255
         Width                               : 40
         Height                              : 40
@@ -1110,7 +1110,7 @@ Dual-state Button bt5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 319
+        x coordinate                        : 322
         y coordinate                        : 255
         Width                               : 40
         Height                              : 40
@@ -1159,7 +1159,7 @@ Dual-state Button bt7
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 409
+        x coordinate                        : 412
         y coordinate                        : 255
         Width                               : 40
         Height                              : 40
@@ -1208,7 +1208,7 @@ Dual-state Button btUp1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 343
+        x coordinate                        : 346
         y coordinate                        : 67
         Width                               : 50
         Height                              : 50
@@ -1266,7 +1266,7 @@ Dual-state Button btDown1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 343
+        x coordinate                        : 346
         y coordinate                        : 179
         Width                               : 50
         Height                              : 50
@@ -1324,7 +1324,7 @@ Dual-state Button bUp2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 190
+        x coordinate                        : 193
         y coordinate                        : 67
         Width                               : 50
         Height                              : 50
@@ -1382,7 +1382,7 @@ Dual-state Button bDown2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 190
+        x coordinate                        : 193
         y coordinate                        : 179
         Width                               : 50
         Height                              : 50
@@ -1440,7 +1440,7 @@ Dual-state Button btUp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 269
+        x coordinate                        : 272
         y coordinate                        : 68
         Width                               : 50
         Height                              : 50
@@ -1498,7 +1498,7 @@ Dual-state Button btDown
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 269
+        x coordinate                        : 272
         y coordinate                        : 180
         Width                               : 50
         Height                              : 50
@@ -1556,9 +1556,9 @@ Hotspot mSwipeNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 472
+        x coordinate                        : 471
         y coordinate                        : 5
-        Width                               : 8
+        Width                               : 9
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
@@ -1593,10 +1593,10 @@ Hotspot mSwipeUp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 11
+        x coordinate                        : 12
         y coordinate                        : 0
-        Width                               : 425
-        Height                              : 8
+        Width                               : 453
+        Height                              : 9
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -1972,6 +1972,10 @@ Timer tmSerial
                                         if(tId.txt=="cardAlarm")
                                         {
                                             page cardAlarm
+                                        }
+                                        if(tId.txt=="cardQR")
+                                        {
+                                            page cardQR
                                         }
                                     }
                                     if(tInstruction.txt=="time")
