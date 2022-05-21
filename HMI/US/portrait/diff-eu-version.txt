@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-21 11:16:08.810315927 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 11:16:09.234319021 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-21 11:46:43.729351186 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 11:16:09.238319050 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -788,10 +788,6 @@
                                          {
                                              page cardAlarm
@@ -25,8 +25,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                      // end of user code
                                      udelete payloadLength-1
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 11:16:09.238319050 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -320,21 +320,21 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 -                                            spstr tId.txt,tTmp.txt,"|",0
 -                                            if(tTmp.txt=="0")
 -                                            {
--                                                bUp1.bco2=27501
+-                                                bUp1.pco=27501
 -                                                tsw bUp1,0
 -                                            }else
 -                                            {
--                                                bUp1.bco2=14823
+-                                                bUp1.pco=65535
 -                                                tsw bUp1,1
 -                                            }
 -                                            spstr tId.txt,tTmp.txt,"|",1
 -                                            if(tTmp.txt=="0")
 -                                            {
--                                                bDown1.bco2=27501
+-                                                bDown1.pco=27501
 -                                                tsw bDown1,0
 -                                            }else
 -                                            {
--                                                bDown1.bco2=14823
+-                                                bDown1.pco=65535
 -                                                tsw bDown1,1
 -                                            }
                                          }
@@ -349,21 +349,21 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 -                                            spstr tId.txt,tTmp.txt,"|",0
 -                                            if(tTmp.txt=="0")
 -                                            {
--                                                bUp2.bco2=27501
+-                                                bUp2.pco=27501
 -                                                tsw bUp2,0
 -                                            }else
 -                                            {
--                                                bUp2.bco2=14823
+-                                                bUp2.pco=65535
 -                                                tsw bUp2,1
 -                                            }
 -                                            spstr tId.txt,tTmp.txt,"|",1
 -                                            if(tTmp.txt=="0")
 -                                            {
--                                                bDown2.bco2=27501
+-                                                bDown2.pco=27501
 -                                                tsw bDown2,0
 -                                            }else
 -                                            {
--                                                bDown2.bco2=14823
+-                                                bDown2.pco=65535
 -                                                tsw bDown2,1
 -                                            }
                                          }
@@ -378,21 +378,21 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 -                                            spstr tId.txt,tTmp.txt,"|",0
 -                                            if(tTmp.txt=="0")
 -                                            {
--                                                bUp3.bco2=27501
+-                                                bUp3.pco=27501
 -                                                tsw bUp3,0
 -                                            }else
 -                                            {
--                                                bUp3.bco2=14823
+-                                                bUp3.pco=65535
 -                                                tsw bUp3,1
 -                                            }
 -                                            spstr tId.txt,tTmp.txt,"|",1
 -                                            if(tTmp.txt=="0")
 -                                            {
--                                                bDown3.bco2=27501
+-                                                bDown3.pco=27501
 -                                                tsw bDown3,0
 -                                            }else
 -                                            {
--                                                bDown3.bco2=14823
+-                                                bDown3.pco=65535
 -                                                tsw bDown3,1
 -                                            }
                                          }
@@ -407,21 +407,21 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 -                                            spstr tId.txt,tTmp.txt,"|",0
 -                                            if(tTmp.txt=="0")
 -                                            {
--                                                bUp4.bco2=27501
+-                                                bUp4.pco=27501
 -                                                tsw bUp4,0
 -                                            }else
 -                                            {
--                                                bUp4.bco2=14823
+-                                                bUp4.pco=65535
 -                                                tsw bUp4,1
 -                                            }
 -                                            spstr tId.txt,tTmp.txt,"|",1
 -                                            if(tTmp.txt=="0")
 -                                            {
--                                                bDown4.bco2=27501
+-                                                bDown4.pco=27501
 -                                                tsw bDown4,0
 -                                            }else
 -                                            {
--                                                bDown4.bco2=14823
+-                                                bDown4.pco=65535
 -                                                tsw bDown4,1
 -                                            }
                                          }
@@ -568,8 +568,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="time")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-21 11:16:09.238319050 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -869,10 +869,6 @@
                                          {
                                              page cardAlarm
@@ -582,8 +582,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                      if(tInstruction.txt=="time")
                                      {
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-21 11:16:09.234319021 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -740,10 +740,6 @@
                                          {
                                              page cardAlarm
@@ -596,8 +596,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                      // end of user code
                                      udelete payloadLength-1
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 11:16:09.238319050 +0000
+--- HMI/n2t-out/cardQR.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -461,10 +461,8 @@
                                              vis bNext,1
                                              bNext.txt="î³"
@@ -622,8 +622,8 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
                                      // end of user code
                                      udelete payloadLength-1
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 11:16:09.238319050 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -1192,10 +1192,6 @@
                                          {
                                              page cardAlarm
@@ -636,8 +636,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                      if(tInstruction.txt=="time")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 11:16:09.234319021 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -677,8 +677,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
                                      // end of user code
                                      udelete payloadLength-1
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-21 11:16:09.238319050 +0000
+--- HMI/n2t-out/popupLight.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -618,10 +618,6 @@
                                          {
                                              page cardAlarm
@@ -691,8 +691,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                      // end of user code
                                      udelete payloadLength-1
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-05-21 11:16:09.234319021 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -381,10 +381,6 @@
                                          {
                                              page cardAlarm
@@ -705,8 +705,8 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
                                      // end of user code
                                      udelete payloadLength-1
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-21 11:16:09.234319021 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -422,10 +422,6 @@
                                          {
                                              page cardAlarm
@@ -719,8 +719,8 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
                                      // end of user code
                                      udelete payloadLength-1
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-05-21 11:16:08.814315956 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-21 11:16:09.238319050 +0000
+--- HMI/n2t-out/screensaver.txt	2022-05-21 11:46:43.733351142 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-21 11:46:44.281345162 +0000
 @@ -607,10 +607,6 @@
                                          {
                                              page cardAlarm
