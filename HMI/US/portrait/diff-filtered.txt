@@ -1,9 +1,9 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 11:46:44.301344943 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-21 11:46:43.729351186 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 11:46:44.281345162 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 12:30:16.280145878 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-21 12:30:15.820142077 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 12:30:16.264145746 +0000
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-05-21 12:30:15.824142110 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -788,10 +788,6 @@
 +                                         {
 +                                             page cardAlarm
@@ -15,8 +15,8 @@
 +                                     }
 +                                     // end of user code
 +                                     udelete payloadLength-1
-+--- HMI/n2t-out/cardEntities.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-21 12:30:15.824142110 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 12:30:16.268145779 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
 +@@ -1277,28 +1505,6 @@
@@ -148,8 +148,8 @@
 +                                     if(tInstruction.txt=="time")
 +                                     {
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-05-21 12:30:15.824142110 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -869,10 +869,6 @@
 +                                         {
 +                                             page cardAlarm
@@ -162,8 +162,8 @@
 +                                     if(tInstruction.txt=="time")
 +                                     {
 +diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/cardMedia.txt	2022-05-21 12:30:15.824142110 +0000
+++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -740,10 +740,6 @@
 +                                         {
 +                                             page cardAlarm
@@ -176,8 +176,8 @@
 +                                     // end of user code
 +                                     udelete payloadLength-1
 +diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-21 12:30:15.824142110 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -461,10 +461,8 @@
 +                                             vis bNext,1
 +                                             bNext.txt="î³"
@@ -202,8 +202,8 @@
 +                                     // end of user code
 +                                     udelete payloadLength-1
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-05-21 12:30:15.824142110 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -1192,10 +1192,6 @@
 +                                         {
 +                                             page cardAlarm
@@ -215,8 +215,8 @@
 +                                     }
 +                                     if(tInstruction.txt=="time")
 +                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-21 12:30:15.820142077 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -152,7 +152,7 @@
 +         Disable release event after dragging: 0
 +         Send Component ID                   : disabled
@@ -238,8 +238,8 @@
 +                                     // end of user code
 +                                     udelete payloadLength-1
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/popupLight.txt	2022-05-21 12:30:15.824142110 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -618,10 +618,6 @@
 +                                         {
 +                                             page cardAlarm
@@ -252,8 +252,8 @@
 +                                     // end of user code
 +                                     udelete payloadLength-1
 +diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
-+--- HMI/n2t-out/popupNotify.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/popupNotify.txt	2022-05-21 12:30:15.824142110 +0000
+++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -381,10 +381,6 @@
 +                                         {
 +                                             page cardAlarm
@@ -266,8 +266,8 @@
 +                                     // end of user code
 +                                     udelete payloadLength-1
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/popupShutter.txt	2022-05-21 12:30:15.820142077 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -422,10 +422,6 @@
 +                                         {
 +                                             page cardAlarm
@@ -280,8 +280,8 @@
 +                                     // end of user code
 +                                     udelete payloadLength-1
 +diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
-+--- HMI/n2t-out/screensaver.txt	2022-05-21 11:46:43.733351142 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-21 11:46:44.281345162 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-21 12:30:15.824142110 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-21 12:30:16.268145779 +0000
 +@@ -607,10 +607,6 @@
 +                                         {
 +                                             page cardAlarm

@@ -11,3 +11,4 @@ Program.s
     // dim value
     int dimValue=40
     int dimValueNormal=100
+    page pageStartup
