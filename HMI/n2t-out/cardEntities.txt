@@ -1282,21 +1282,21 @@ Timer tmSerial
                                             spstr tId.txt,tTmp.txt,"|",0
                                             if(tTmp.txt=="0")
                                             {
-                                                bUp1.bco2=27501
+                                                bUp1.pco=27501
                                                 tsw bUp1,0
                                             }else
                                             {
-                                                bUp1.bco2=14823
+                                                bUp1.pco=65535
                                                 tsw bUp1,1
                                             }
                                             spstr tId.txt,tTmp.txt,"|",1
                                             if(tTmp.txt=="0")
                                             {
-                                                bDown1.bco2=27501
+                                                bDown1.pco=27501
                                                 tsw bDown1,0
                                             }else
                                             {
-                                                bDown1.bco2=14823
+                                                bDown1.pco=65535
                                                 tsw bDown1,1
                                             }
                                         }
@@ -1426,21 +1426,21 @@ Timer tmSerial
                                             spstr tId.txt,tTmp.txt,"|",0
                                             if(tTmp.txt=="0")
                                             {
-                                                bUp2.bco2=27501
+                                                bUp2.pco=27501
                                                 tsw bUp2,0
                                             }else
                                             {
-                                                bUp2.bco2=14823
+                                                bUp2.pco=65535
                                                 tsw bUp2,1
                                             }
                                             spstr tId.txt,tTmp.txt,"|",1
                                             if(tTmp.txt=="0")
                                             {
-                                                bDown2.bco2=27501
+                                                bDown2.pco=27501
                                                 tsw bDown2,0
                                             }else
                                             {
-                                                bDown2.bco2=14823
+                                                bDown2.pco=65535
                                                 tsw bDown2,1
                                             }
                                         }
@@ -1570,21 +1570,21 @@ Timer tmSerial
                                             spstr tId.txt,tTmp.txt,"|",0
                                             if(tTmp.txt=="0")
                                             {
-                                                bUp3.bco2=27501
+                                                bUp3.pco=27501
                                                 tsw bUp3,0
                                             }else
                                             {
-                                                bUp3.bco2=14823
+                                                bUp3.pco=65535
                                                 tsw bUp3,1
                                             }
                                             spstr tId.txt,tTmp.txt,"|",1
                                             if(tTmp.txt=="0")
                                             {
-                                                bDown3.bco2=27501
+                                                bDown3.pco=27501
                                                 tsw bDown3,0
                                             }else
                                             {
-                                                bDown3.bco2=14823
+                                                bDown3.pco=65535
                                                 tsw bDown3,1
                                             }
                                         }
@@ -1714,21 +1714,21 @@ Timer tmSerial
                                             spstr tId.txt,tTmp.txt,"|",0
                                             if(tTmp.txt=="0")
                                             {
-                                                bUp4.bco2=27501
+                                                bUp4.pco=27501
                                                 tsw bUp4,0
                                             }else
                                             {
-                                                bUp4.bco2=14823
+                                                bUp4.pco=65535
                                                 tsw bUp4,1
                                             }
                                             spstr tId.txt,tTmp.txt,"|",1
                                             if(tTmp.txt=="0")
                                             {
-                                                bDown4.bco2=27501
+                                                bDown4.pco=27501
                                                 tsw bDown4,0
                                             }else
                                             {
-                                                bDown4.bco2=14823
+                                                bDown4.pco=65535
                                                 tsw bDown4,1
                                             }
                                         }
