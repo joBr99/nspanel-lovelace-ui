@@ -420,7 +420,7 @@ class LuiPagesGen(object):
     
     def generate_shutter_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)
-        pos = int(entity.attributes.get("current_position"))
+        pos = entity.attributes.get("current_position")
         if pos is None:
             pos = entity.state
         pos_translation = get_translation(self._locale, "position")
