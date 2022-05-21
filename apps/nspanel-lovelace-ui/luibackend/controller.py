@@ -136,8 +136,12 @@ class LuiController(object):
         # internal buttons
         if entity_id == "screensaver" and button_type == "bExit":
             # get default card if there is one
-            if self._config.get("screensaver.defaultCard") is not None:
-                dstCard = self._config.searchCard(self._config.get("screensaver.defaultCard"))
+            defaultCard = self._config.get("screensaver.defaultCard")
+            if defaultCard is not None:
+                defaultCard = self._ha_api.render_template(defaultCard)
+                self._ha_api.log(f"Searching for the following page as defaultPage: {defaultCard}")
+                dstCard = self._config.searchCard(defaultCard)
+                self._ha_api.log(f"Result for the following page as defaultPage: {dstCard}")
                 if dstCard is not None:
                     self._previous_cards = []
                     self._previous_cards.append(dstCard)
