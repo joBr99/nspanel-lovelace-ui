@@ -1,53 +1,10 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 14:48:41.566666422 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-21 14:48:41.110663520 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 14:48:41.554666346 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-21 14:48:41.114663546 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 14:48:41.554666346 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-21 14:55:46.457058049 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-21 14:55:46.021052258 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-21 14:55:46.413057465 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-21 14:55:46.025052311 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-21 14:55:46.417057518 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
 +@@ -1816,6 +2044,150 @@
-++                                            // get Button State (optional Value)
-++                                            spstr strCommand.txt,tId.txt,"~",32
-++                                            spstr tId.txt,tTmp.txt,"|",0
-++                                            if(tTmp.txt=="0")
-++                                            {
-++                                                bUp5.pco=27501
-++                                                tsw bUp5,0
-++                                            }else
-++                                            {
-++                                                bUp5.pco=65535
-++                                                tsw bUp5,1
-++                                            }
-++                                            spstr tId.txt,tTmp.txt,"|",1
-++                                            if(tTmp.txt=="0")
-++                                            {
-++                                                bDown5.pco=27501
-++                                                tsw bDown5,0
-++                                            }else
-++                                            {
-++                                                bDown5.pco=65535
-++                                                tsw bDown5,1
-++                                            }
-+diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-05-21 14:48:41.110663520 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-21 14:48:41.554666346 +0000
-+@@ -137,7 +137,7 @@
-+         Disable release event after dragging: 0
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+-        Text                                : 
-++        Text                                : testHeading
-+         Max. Text Size                      : 40
-+     
-+ Picture p0
-+@@ -153,7 +153,7 @@
-+         Dragging                            : 0
-+         Disable release event after dragging: 0
-+         Send Component ID                   : disabled
-+-        Text                                : 
-++        Text                                : WIFI:S:SSID;T:WPA;P:PASSWORD;;
-+         Max. Text Size                      : 105
-+     
-+ Button bNext
-+--- HMI/n2t-out/pageStartup.txt	2022-05-21 14:48:41.110663520 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 14:48:41.554666346 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-21 14:55:46.025052311 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-21 14:55:46.413057465 +0000
