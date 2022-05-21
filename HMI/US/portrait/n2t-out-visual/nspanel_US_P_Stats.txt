@@ -10,53 +10,53 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
+popupNotify
+	17   Component(s)
+	200  Line(s) of event code
+	125  Unique line(s) of event code
+popupShutter
+	20   Component(s)
+	197  Line(s) of event code
+	111  Unique line(s) of event code
+popupLight
+	27   Component(s)
+	507  Line(s) of event code
+	170  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	150  Line(s) of event code
 	113  Unique line(s) of event code
-popupShutter
-	20   Component(s)
-	193  Line(s) of event code
-	109  Unique line(s) of event code
-cardMedia
-	33   Component(s)
-	346  Line(s) of event code
-	177  Unique line(s) of event code
-popupNotify
-	17   Component(s)
-	196  Line(s) of event code
-	123  Unique line(s) of event code
 screensaver
 	35   Component(s)
 	292  Line(s) of event code
 	235  Unique line(s) of event code
-cardQR
-	28   Component(s)
-	247  Line(s) of event code
-	137  Unique line(s) of event code
-cardAlarm
-	38   Component(s)
-	360  Line(s) of event code
-	222  Unique line(s) of event code
-cardGrid
-	42   Component(s)
-	435  Line(s) of event code
-	252  Unique line(s) of event code
 cardThermo
 	56   Component(s)
-	542  Line(s) of event code
-	288  Unique line(s) of event code
-popupLight
-	27   Component(s)
-	341  Line(s) of event code
-	185  Unique line(s) of event code
+	546  Line(s) of event code
+	290  Unique line(s) of event code
+cardAlarm
+	38   Component(s)
+	364  Line(s) of event code
+	224  Unique line(s) of event code
+cardMedia
+	33   Component(s)
+	350  Line(s) of event code
+	179  Unique line(s) of event code
+cardGrid
+	42   Component(s)
+	439  Line(s) of event code
+	254  Unique line(s) of event code
+cardQR
+	30   Component(s)
+	363  Line(s) of event code
+	205  Unique line(s) of event code
 cardEntities
 	77   Component(s)
-	1174 Line(s) of event code
-	487  Unique line(s) of event code
+	1283 Line(s) of event code
+	540  Unique line(s) of event code
 
 Total
 	13   Page(s)
-	412  Component(s)
-	4300 Line(s) of event code
-	1118 Unique line(s) of event code
+	414  Component(s)
+	4715 Line(s) of event code
+	1172 Unique line(s) of event code
