@@ -295,7 +295,7 @@ Dual-state Button btOnOff2
             prints tSend.txt,0
             prints crcval,2
         
-Hotspot mSwipePrev
+Hotspot mSwipeNext
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -315,12 +315,12 @@ Hotspot mSwipePrev
             //x & y coordinates where the swipe is first detected.)
             //---------------------------
             //The navigation text is stored as local variable within tld.txt
-            //Pressing left button if swiped on the left side of the screen
+            //Pressing right button if swiped on the right side of the screen
             //
-            spstr tId.txt,tTmp.txt,"|",0
+            spstr tId.txt,tTmp.txt,"|",1
             if(tTmp.txt=="1")
             {
-                click bPrev,1
+                click bNext,1
             }
         
 Hotspot mSwipeUp
@@ -351,7 +351,7 @@ Hotspot mSwipeUp
                 click bPrev,1
             }
         
-Hotspot mSwipeNext
+Hotspot mSwipePrev
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -371,12 +371,12 @@ Hotspot mSwipeNext
             //x & y coordinates where the swipe is first detected.)
             //---------------------------
             //The navigation text is stored as local variable within tld.txt
-            //Pressing right button if swiped on the right side of the screen
+            //Pressing left button if swiped on the left side of the screen
             //
-            spstr tId.txt,tTmp.txt,"|",1
+            spstr tId.txt,tTmp.txt,"|",0
             if(tTmp.txt=="1")
             {
-                click bNext,1
+                click bPrev,1
             }
         
 Timer tmSerial
