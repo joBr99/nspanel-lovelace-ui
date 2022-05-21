@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-21 12:30:15.820142077 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-21 12:30:16.796150142 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-21 14:27:14.739536696 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-21 14:27:15.731231871 +0000
 @@ -11,6 +11,4 @@
      // dim value
      int dimValue=40
@@ -8,9 +8,212 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    // fix touch offset
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
+diff -bur HMI/n2t-out/cardQR.txt HMI/US/landscape/n2t-out/cardQR.txt
+--- HMI/n2t-out/cardQR.txt	2022-05-21 14:27:14.739536696 +0000
++++ HMI/US/landscape/n2t-out/cardQR.txt	2022-05-21 14:27:15.731231871 +0000
+@@ -19,16 +19,6 @@
+             vis tId,0
+             vis bPrev,0
+             vis bNext,0
+-            //ui e1
+-            vis btOnOff1,0
+-            vis tIcon1,0
+-            vis tEntity1,0
+-            vis bText1,0
+-            //ui e2
+-            vis btOnOff2,0
+-            vis tIcon2,0
+-            vis tEntity2,0
+-            vis bText2,0
+         
+ Variable (string) strCommand
+     Attributes
+@@ -78,18 +68,6 @@
+         Text          : 
+         Max. Text Size: 80
+     
+-Variable (string) type1
+-    Attributes
+-        Scope         : local
+-        Text          : 
+-        Max. Text Size: 10
+-    
+-Variable (string) type2
+-    Attributes
+-        Scope         : local
+-        Text          : 
+-        Max. Text Size: 10
+-    
+ Text tEntity1
+     Attributes
+         Scope                               : local
+@@ -137,7 +115,7 @@
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+         Associated Keyboard                 : none
+-        Text                                : 
++        Text                                : testHeading
+         Max. Text Size                      : 40
+     
+ Picture p0
+@@ -153,7 +131,7 @@
+         Dragging                            : 0
+         Disable release event after dragging: 0
+         Send Component ID                   : disabled
+-        Text                                : 
++        Text                                : WIFI:S:SSID;T:WPA;P:PASSWORD;;
+         Max. Text Size                      : 105
+     
+ Button bNext
+@@ -454,9 +432,8 @@
+                                     spstr strCommand.txt,tInstruction.txt,"~",0
+                                     if(tInstruction.txt=="entityUpd")
+                                     {
+-                                        // command format: entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
+-                                        //tHeading
+-                                        spstr strCommand.txt,tHeading.txt,"~",1
++                                        //entn
++                                        spstr strCommand.txt,entn.txt,"~",1
+                                         // navigation icons
+                                         spstr strCommand.txt,tId.txt,"~",2
+                                         spstr tId.txt,tTmp.txt,"|",0
+@@ -484,130 +461,10 @@
+                                             vis bNext,1
+                                             bNext.txt="î³"
+                                         }
++                                        //text heading
++                                        spstr strCommand.txt,tHeading.txt,"~",3
+                                         //text qrcode
+-                                        spstr strCommand.txt,qr0.txt,"~",3
+-                                        // get Type
+-                                        spstr strCommand.txt,type1.txt,"~",4
+-                                        // get internal name
+-                                        spstr strCommand.txt,entn1.txt,"~",5
+-                                        if(type1.txt=="delete"||type1.txt=="")
+-                                        {
+-                                            vis btOnOff1,0
+-                                            vis tEntity1,0
+-                                            vis tIcon1,0
+-                                            vis bText1,0
+-                                        }else
+-                                        {
+-                                            // change icon
+-                                            spstr strCommand.txt,tIcon1.txt,"~",6
+-                                            vis tIcon1,1
+-                                            // change icon color
+-                                            spstr strCommand.txt,tTmp.txt,"~",7
+-                                            covx tTmp.txt,sys0,0,0
+-                                            tIcon1.pco=sys0
+-                                            // set name
+-                                            spstr strCommand.txt,tEntity1.txt,"~",8
+-                                            vis tEntity1,1
+-                                        }
+-                                        if(type1.txt=="light")
+-                                        {
+-                                            vis btOnOff1,1
+-                                            vis bText1,0
+-                                            // get Button State (optional Value)
+-                                            spstr strCommand.txt,tTmp.txt,"~",9
+-                                            covx tTmp.txt,sys0,0,0
+-                                            btOnOff1.val=sys0
+-                                        }
+-                                        if(type1.txt=="switch")
+-                                        {
+-                                            vis btOnOff1,1
+-                                            vis bText1,0
+-                                            // get Button State (optional Value)
+-                                            spstr strCommand.txt,tTmp.txt,"~",9
+-                                            covx tTmp.txt,sys0,0,0
+-                                            btOnOff1.val=sys0
+-                                        }
+-                                        if(type1.txt=="text")
+-                                        {
+-                                            vis btOnOff1,0
+-                                            vis bText1,1
+-                                            tsw bText1,0
+-                                            bText1.pco=65535
+-                                            bText1.pco2=65535
+-                                            // get Text (optional Value)
+-                                            spstr strCommand.txt,bText1.txt,"~",9
+-                                        }
+-                                        if(type1.txt=="button")
+-                                        {
+-                                            vis btOnOff1,0
+-                                            vis bText1,1
+-                                            tsw bText1,1
+-                                            bText1.pco=1374
+-                                            bText1.pco2=1374
+-                                            // get Text (optional Value)
+-                                            spstr strCommand.txt,bText1.txt,"~",9
+-                                        }
+-                                        // get Type
+-                                        spstr strCommand.txt,type2.txt,"~",10
+-                                        // get internal name
+-                                        spstr strCommand.txt,entn2.txt,"~",11
+-                                        if(type2.txt=="delete"||type2.txt=="")
+-                                        {
+-                                            vis btOnOff2,0
+-                                            vis tEntity2,0
+-                                            vis tIcon2,0
+-                                            vis bText2,0
+-                                        }else
+-                                        {
+-                                            // change icon
+-                                            spstr strCommand.txt,tIcon2.txt,"~",12
+-                                            vis tIcon2,1
+-                                            // change icon color
+-                                            spstr strCommand.txt,tTmp.txt,"~",13
+-                                            covx tTmp.txt,sys0,0,0
+-                                            tIcon2.pco=sys0
+-                                            // set name
+-                                            spstr strCommand.txt,tEntity2.txt,"~",14
+-                                            vis tEntity2,1
+-                                        }
+-                                        if(type2.txt=="light")
+-                                        {
+-                                            vis btOnOff2,1
+-                                            vis bText2,0
+-                                            // get Button State (optional Value)
+-                                            spstr strCommand.txt,tTmp.txt,"~",15
+-                                            covx tTmp.txt,sys0,0,0
+-                                            btOnOff2.val=sys0
+-                                        }
+-                                        if(type2.txt=="switch")
+-                                        {
+-                                            vis btOnOff2,1
+-                                            vis bText2,0
+-                                            // get Button State (optional Value)
+-                                            spstr strCommand.txt,tTmp.txt,"~",15
+-                                            covx tTmp.txt,sys0,0,0
+-                                            btOnOff2.val=sys0
+-                                        }
+-                                        if(type2.txt=="text")
+-                                        {
+-                                            vis btOnOff2,0
+-                                            vis bText2,1
+-                                            tsw bText2,0
+-                                            bText2.pco=65535
+-                                            bText2.pco2=65535
+-                                            // get Text (optional Value)
+-                                            spstr strCommand.txt,bText2.txt,"~",15
+-                                        }
+-                                        if(type2.txt=="button")
+-                                        {
+-                                            vis btOnOff2,0
+-                                            vis bText2,1
+-                                            tsw bText2,1
+-                                            bText2.pco=1374
+-                                            bText2.pco2=1374
+-                                            // get Text (optional Value)
+-                                            spstr strCommand.txt,bText2.txt,"~",15
+-                                        }
++                                        spstr strCommand.txt,qr0.txt,"~",4
+                                     }
+                                     if(tInstruction.txt=="time")
+                                     {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-21 12:30:15.820142077 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-21 12:30:16.796150142 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-21 14:27:14.739536696 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-21 14:27:15.731231871 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
