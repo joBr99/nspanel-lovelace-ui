@@ -135,6 +135,9 @@ The following message can be used to update the content on the cardEntities Page
 
 `entityUpd~*internalNameEntity*~*navigation*~*arm1*~*arm1ActionName*~*arm2*~*arm2ActionName*~*arm3*~*arm3ActionName*~*arm4*~*arm4ActionName*~*icon*~*iconcolor*~*numpadStatus*~*flashing*`
 
+### cardQR Page
+
+`entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2`
 
 ## Messages from Nextion Display
 

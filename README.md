@@ -25,8 +25,9 @@ NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 - Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
 - Thermostat Page 
 - Media Player Card
-- Alarm Control Panel
+- Alarm Control Card
 - Screensaver Page with Time, Date and Weather Information
+- Card with QrCode to display WiFi Information
 - Localization possible (currently 38 languages)
 - **Everything is dynamically configurable by a yaml config, no need to code or touch Nextion Editor**
 
@@ -349,6 +350,14 @@ nspanel-1:
         entity: media_player.example_item
       - type: cardAlarm
         entity: alarm_control_panel.alarmo
+      - type: cardQR
+        title: Guest Wifi
+        qr_code: "WIFI:S:test_ssid;T:WPA;P:test_pw;;"
+        entities:
+          - entity: iText.Name.test_ssid
+            icon: wifi
+          - entity: iText.Password.test_pw
+            icon: key
 ```
 
 key | optional | type | default | description
