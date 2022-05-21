@@ -144,7 +144,14 @@ class LuiPagesGen(object):
         name = name if name is not None else entity.attributes.friendly_name
         if entityType == "cover":
             icon_id = get_icon_id_ha("cover", state=entity.state, overwrite=icon)
-            return f"~shutter~{entityId}~{icon_id}~17299~{name}~"
+            pos = int(entity.attributes.get("current_position", 50))
+            if pos == 100:
+                status = "0|1"
+            elif pos == 0
+                status = "1|0"
+            else:
+                status = "1|1"
+            return f"~shutter~{entityId}~{icon_id}~17299~{name}~{status}"
         if entityType in "light":
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity)

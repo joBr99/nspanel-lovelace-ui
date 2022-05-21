@@ -53,23 +53,23 @@ for i in range(1,5):
                 spstr tId.txt,tTmp.txt,"|",0
                 if(tTmp.txt=="0")
                 {{
-                  bUp{i}.bco2=27501
+                  bUp{i}.pco=27501
                   tsw bUp{i},0
                 }}
                 else
                 {{
-                  bUp{i}.bco2=14823
+                  bUp{i}.pco=65535
                   tsw bUp{i},1
                 }}
                 spstr tId.txt,tTmp.txt,"|",1
                 if(tTmp.txt=="0")
                 {{
-                  bDown{i}.bco2=27501
+                  bDown{i}.pco=27501
                   tsw bDown{i},0
                 }}
                 else
                 {{
-                  bDown{i}.bco2=14823
+                  bDown{i}.pco=65535
                   tsw bDown{i},1
                 }}
               }}
