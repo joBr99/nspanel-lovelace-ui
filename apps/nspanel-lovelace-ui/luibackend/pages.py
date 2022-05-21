@@ -220,7 +220,7 @@ class LuiPagesGen(object):
             temperature_unit = "°F"
 
         if not self._ha_api.entity_exists(item):
-            command = f"entityUpd~{heading}~{navigation}~{item}~220~220~Not found~150~300~5"
+            command = f"entityUpd~Not found~{navigation}~{item}~check~220~apps.yaml~150~300~5~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Please~your~~"
         else:
             entity       = self._ha_api.get_entity(item)
             heading      = entity.attributes.friendly_name
@@ -269,7 +269,7 @@ class LuiPagesGen(object):
     def generate_media_page(self, navigation, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
-            command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your|apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
+            command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
         else:
             entity        = self._ha_api.get_entity(item)
             heading       = entity.attributes.friendly_name
