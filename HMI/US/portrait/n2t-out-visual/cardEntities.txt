@@ -2672,25 +2672,40 @@ Timer tmSerial
                                             vis nNum1,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tId.txt,"~",8
+                                            // up button
                                             spstr tId.txt,tTmp.txt,"|",0
-                                            if(tTmp.txt=="0")
-                                            {
-                                                bUp1.pco=27501
-                                                tsw bUp1,0
-                                            }else
+                                            if(tTmp.txt!="")
                                             {
                                                 bUp1.pco=65535
                                                 tsw bUp1,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bUp1.pco=27501
+                                                tsw bUp1,0
                                             }
+                                            // stop button
                                             spstr tId.txt,tTmp.txt,"|",1
-                                            if(tTmp.txt=="0")
+                                            if(tTmp.txt!="")
+                                            {
+                                                bStop1.pco=65535
+                                                bStop1.txt=tTmp.txt
+                                                tsw bStop1,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bStop1.pco=27501
+                                                tsw bStop1,0
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt!="")
+                                            {
+                                                bDown1.pco=65535
+                                                bDown1.txt=tTmp.txt
+                                                tsw bDown1,1
+                                            }else if(tTmp.txt!="disable")
                                             {
                                                 bDown1.pco=27501
                                                 tsw bDown1,0
-                                            }else
-                                            {
-                                                bDown1.pco=65535
-                                                tsw bDown1,1
                                             }
                                         }
                                         if(type1.txt=="light")
@@ -2816,25 +2831,40 @@ Timer tmSerial
                                             vis nNum2,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tId.txt,"~",14
+                                            // up button
                                             spstr tId.txt,tTmp.txt,"|",0
-                                            if(tTmp.txt=="0")
-                                            {
-                                                bUp2.pco=27501
-                                                tsw bUp2,0
-                                            }else
+                                            if(tTmp.txt!="")
                                             {
                                                 bUp2.pco=65535
                                                 tsw bUp2,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bUp2.pco=27501
+                                                tsw bUp2,0
                                             }
+                                            // stop button
                                             spstr tId.txt,tTmp.txt,"|",1
-                                            if(tTmp.txt=="0")
+                                            if(tTmp.txt!="")
+                                            {
+                                                bStop2.pco=65535
+                                                bStop2.txt=tTmp.txt
+                                                tsw bStop2,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bStop2.pco=27501
+                                                tsw bStop2,0
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt!="")
+                                            {
+                                                bDown2.pco=65535
+                                                bDown2.txt=tTmp.txt
+                                                tsw bDown2,1
+                                            }else if(tTmp.txt!="disable")
                                             {
                                                 bDown2.pco=27501
                                                 tsw bDown2,0
-                                            }else
-                                            {
-                                                bDown2.pco=65535
-                                                tsw bDown2,1
                                             }
                                         }
                                         if(type2.txt=="light")
@@ -2960,25 +2990,40 @@ Timer tmSerial
                                             vis nNum3,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tId.txt,"~",20
+                                            // up button
                                             spstr tId.txt,tTmp.txt,"|",0
-                                            if(tTmp.txt=="0")
-                                            {
-                                                bUp3.pco=27501
-                                                tsw bUp3,0
-                                            }else
+                                            if(tTmp.txt!="")
                                             {
                                                 bUp3.pco=65535
                                                 tsw bUp3,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bUp3.pco=27501
+                                                tsw bUp3,0
                                             }
+                                            // stop button
                                             spstr tId.txt,tTmp.txt,"|",1
-                                            if(tTmp.txt=="0")
+                                            if(tTmp.txt!="")
+                                            {
+                                                bStop3.pco=65535
+                                                bStop3.txt=tTmp.txt
+                                                tsw bStop3,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bStop3.pco=27501
+                                                tsw bStop3,0
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt!="")
+                                            {
+                                                bDown3.pco=65535
+                                                bDown3.txt=tTmp.txt
+                                                tsw bDown3,1
+                                            }else if(tTmp.txt!="disable")
                                             {
                                                 bDown3.pco=27501
                                                 tsw bDown3,0
-                                            }else
-                                            {
-                                                bDown3.pco=65535
-                                                tsw bDown3,1
                                             }
                                         }
                                         if(type3.txt=="light")
@@ -3104,25 +3149,40 @@ Timer tmSerial
                                             vis nNum4,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tId.txt,"~",26
+                                            // up button
                                             spstr tId.txt,tTmp.txt,"|",0
-                                            if(tTmp.txt=="0")
-                                            {
-                                                bUp4.pco=27501
-                                                tsw bUp4,0
-                                            }else
+                                            if(tTmp.txt!="")
                                             {
                                                 bUp4.pco=65535
                                                 tsw bUp4,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bUp4.pco=27501
+                                                tsw bUp4,0
                                             }
+                                            // stop button
                                             spstr tId.txt,tTmp.txt,"|",1
-                                            if(tTmp.txt=="0")
+                                            if(tTmp.txt!="")
+                                            {
+                                                bStop4.pco=65535
+                                                bStop4.txt=tTmp.txt
+                                                tsw bStop4,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bStop4.pco=27501
+                                                tsw bStop4,0
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt!="")
+                                            {
+                                                bDown4.pco=65535
+                                                bDown4.txt=tTmp.txt
+                                                tsw bDown4,1
+                                            }else if(tTmp.txt!="disable")
                                             {
                                                 bDown4.pco=27501
                                                 tsw bDown4,0
-                                            }else
-                                            {
-                                                bDown4.pco=65535
-                                                tsw bDown4,1
                                             }
                                         }
                                         if(type4.txt=="light")
@@ -3248,25 +3308,40 @@ Timer tmSerial
                                             vis nNum5,0
                                             // get Button State (optional Value)
                                             spstr strCommand.txt,tId.txt,"~",32
+                                            // up button
                                             spstr tId.txt,tTmp.txt,"|",0
-                                            if(tTmp.txt=="0")
-                                            {
-                                                bUp5.pco=27501
-                                                tsw bUp5,0
-                                            }else
+                                            if(tTmp.txt!="")
                                             {
                                                 bUp5.pco=65535
                                                 tsw bUp5,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bUp5.pco=27501
+                                                tsw bUp5,0
                                             }
+                                            // stop button
                                             spstr tId.txt,tTmp.txt,"|",1
-                                            if(tTmp.txt=="0")
+                                            if(tTmp.txt!="")
+                                            {
+                                                bStop5.pco=65535
+                                                bStop5.txt=tTmp.txt
+                                                tsw bStop5,1
+                                            }else if(tTmp.txt!="disable")
+                                            {
+                                                bStop5.pco=27501
+                                                tsw bStop5,0
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt!="")
+                                            {
+                                                bDown5.pco=65535
+                                                bDown5.txt=tTmp.txt
+                                                tsw bDown5,1
+                                            }else if(tTmp.txt!="disable")
                                             {
                                                 bDown5.pco=27501
                                                 tsw bDown5,0
-                                            }else
-                                            {
-                                                bDown5.pco=65535
-                                                tsw bDown5,1
                                             }
                                         }
                                         if(type5.txt=="light")
