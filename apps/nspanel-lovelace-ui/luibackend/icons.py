@@ -61,32 +61,71 @@ sensor_mapping = {
 }
 
 cover_mapping_open = {
-    "awning":   "window-open",
-    "blind":    "blinds-open",
-    "curtain":  "curtains-closed",
-    "damper":   "checkbox-blank-circle",
-    "door":     "door-open",
-    "garage":   "garage-open",
-    "gate":     "gate-open",
-    "shade":    "blinds-open",
-    "shutter":  "window-shutter-open",
-    "window":   "window-open"
+    "awning": "window-open",
+    "blind": "blinds-open",
+    "curtain": "curtains-closed",
+    "damper": "checkbox-blank-circle",
+    "door": "door-open",
+    "garage": "garage-open",
+    "gate": "gate-open",
+    "shade": "blinds-open",
+    "shutter": "window-shutter-open",
+    "window": "window-open"
 }
 
 cover_mapping_closed = {
-    "awning":   "window-closed",
-    "blind":    "blinds",
-    "curtain":  "curtains",
-    "damper":   "circle-slice-8",
-    "door":     "door-closed",
-    "garage":   "garage",
-    "gate":     "gate",
-    "shade":    "blinds",
-    "shutter":  "window-shutter",
-    "window":   "window-closed"
+    "awning": "window-closed",
+    "blind": "blinds",
+    "curtain": "curtains",
+    "damper": "circle-slice-8",
+    "door": "door-closed",
+    "garage": "garage",
+    "gate": "gate",
+    "shade": "blinds",
+    "shutter": "window-shutter",
+    "window": "window-closed"
 }
 
-def map_to_mdi_name(ha_type, state=None, device_class=None):
+cover_mapping_action_open = {
+    "awning":   "arrow-up",
+    "blind":    "arrow-up",
+    "curtain":  "arrow-expand-horizontal",
+    "damper":   "arrow-up",
+    "door":     "arrow-expand-horizontal",
+    "garage":   "arrow-up",
+    "gate":     "arrow-expand-horizontal",
+    "shade":    "arrow-up",
+    "shutter":  "arrow-up",
+    "window": "arrow-up"
+}
+
+cover_mapping_action_close = {
+    "awning": "arrow-down",
+    "blind": "arrow-down",
+    "curtain": "arrow-collapse-horizontal",
+    "damper": "arrow-down",
+    "door": "arrow-collapse-horizontal",
+    "garage": "arrow-down",
+    "gate": "arrow-collapse-horizontal",
+    "shade":  "arrow-down",
+    "shutter": "arrow-down",
+    "window": "arrow-down"
+}
+
+cover_mapping_action_stop = {
+    "awning": "stop",
+    "blind": "stop",
+    "curtain": "stop",
+    "damper": "stop",
+    "door": "stop",
+    "garage": "stop",
+    "gate": "stop",
+    "shade": "stop",
+    "shutter": "stop",
+    "window": "stop"
+}
+
+def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
     if ha_type == "weather":
         return weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
     if ha_type == "button":
@@ -129,3 +168,22 @@ def get_icon_id_ha(ha_name, state=None, device_class=None, overwrite=None):
     if overwrite is not None:
         return get_icon_id(overwrite)
     return get_icon_id(map_to_mdi_name(ha_name, state, device_class))
+
+def get_action_id_ha(ha_type, action, device_class=None, overwrite=None):
+    if overwrite is not None:
+        return get_icon_id(overwrite)
+    if ha_type == "cover":
+        if device_class is None:
+            device_class = "window"
+        if action == "open":
+            actionicon = cover_mapping_action_open[device_class] if device_class in cover_mapping_action_open else "alert-circle-outline"
+        elif action == "close":
+            actionicon = cover_mapping_action_close[device_class] if device_class in cover_mapping_action_close else "alert-circle-outline"
+        elif action == "stop":
+            actionicon = cover_mapping_action_stop[device_class] if device_class in cover_mapping_action_stop else "alert-circle-outline"
+        else:
+            actionicon = "alert-circle-outline"
+    else:
+        actionicon = "alert-circle-outline"
+    return get_icon_id(actionicon)
+
