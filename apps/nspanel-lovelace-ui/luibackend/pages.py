@@ -429,6 +429,9 @@ class LuiPagesGen(object):
         if pos is None:
             pos_status = entity.state
             pos = "disable"
+        else:
+            pos_status = pos
+
         
         icon_up   = get_icon_id("arrow-up")
         icon_stop = get_icon_id("stop")
