@@ -154,7 +154,7 @@ QR Code qr0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Text                                : 
-        Max. Text Size                      : 105
+        Max. Text Size                      : 100
     
 Button bNext
     Attributes
@@ -302,8 +302,8 @@ Dual-state Button btOnOff2
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
-            covx btOnOff1.val,tTmp.txt,0,0
+            tSend.txt="event,buttonPress2,"+entn2.txt+",OnOff,"
+            covx btOnOff2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0

@@ -33,7 +33,7 @@ popupLight
 cardQR
 	30   Component(s)
 	363  Line(s) of event code
-	205  Unique line(s) of event code
+	207  Unique line(s) of event code
 popupShutter
 	20   Component(s)
 	244  Line(s) of event code
