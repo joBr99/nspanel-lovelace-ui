@@ -34,7 +34,7 @@ Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 200
+        Max. Text Size: 270
     
 Variable (string) entn
     Attributes
