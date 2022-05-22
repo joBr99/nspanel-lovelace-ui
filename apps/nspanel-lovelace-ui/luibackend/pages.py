@@ -411,6 +411,10 @@ class LuiPagesGen(object):
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
             self.update_screensaver_weather()
+            # send color if configured in screensaver
+            color = card.raw_config.get("color")
+            if color is not None:
+                self._send_mqtt_msg(f"color~{color}")
         if card.cardType == "cardQR":
             qrcode = card.raw_config.get("qrCode", "")
             self.generate_qr_page(navigation, card.title, card.entities, card.cardType, qrcode)
