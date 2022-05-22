@@ -143,10 +143,13 @@ class LuiPagesGen(object):
         entity = self._ha_api.get_entity(entityId)
         name = name if name is not None else entity.attributes.friendly_name
         if entityType == "cover":
-            icon_id   = get_icon_id_ha("cover", state=entity.state, overwrite=icon)
+
+            device_class = entity.attributes.get("device_class", "")
+            icon_id = get_icon_id_ha("cover", state=entity.state, device_class=device_class, overwrite=icon)
             icon_up   = get_icon_id("arrow-up")
             icon_stop = get_icon_id("stop")
             icon_down = get_icon_id("arrow-down")
+            
             pos = int(entity.attributes.get("current_position", 50))
             if pos == 100:
                 status = f"disable|{icon_stop}|{icon_down}"
