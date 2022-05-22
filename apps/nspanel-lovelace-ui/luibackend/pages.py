@@ -174,7 +174,7 @@ class LuiPagesGen(object):
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
             if cardType == "cardGrid":
-                icon_id = entity.state
+                icon_id = entity.state[:4]
             else:
                 icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
             icon_color = self.get_entity_color(entity)
