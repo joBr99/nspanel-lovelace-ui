@@ -371,6 +371,15 @@ class LuiPagesGen(object):
             command = f"entityUpd~{item}~{navigation}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}"
         self._send_mqtt_msg(command)
         
+
+    def generate_qr_page(self, navigation, heading, items, cardType):
+        command = f"entityUpd~heading~{navigation}~~"
+        # Get items and construct cmd string
+        for item in items:
+            command += self.generate_entities_item(item, cardType)
+        self._send_mqtt_msg(command)
+
+
     def render_card(self, card, send_page_type=True):    
         self._ha_api.log(f"Started rendering of page {card.pos} with type {card.cardType}")
         
@@ -397,6 +406,8 @@ class LuiPagesGen(object):
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
             self.update_screensaver_weather()
+        if card.cardType == "generate_qr_page":
+            self.generate_qr_page(navigation, card.title, card.entities, card.cardType)
 
 
     def generate_light_detail_page(self, entity):
