@@ -18,6 +18,10 @@ pageStartup
 	19   Component(s)
 	154  Line(s) of event code
 	115  Unique line(s) of event code
+popupShutter
+	20   Component(s)
+	241  Line(s) of event code
+	138  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	345  Line(s) of event code
@@ -50,10 +54,6 @@ cardEntities
 	77   Component(s)
 	1343 Line(s) of event code
 	571  Unique line(s) of event code
-popupShutter
-	20   Component(s)
-	241  Line(s) of event code
-	138  Unique line(s) of event code
 
 Total
 	13   Page(s)
