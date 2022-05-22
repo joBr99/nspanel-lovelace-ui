@@ -169,7 +169,7 @@ Number nNum1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 46
         Height                              : 50
         Effect                              : load
@@ -199,7 +199,7 @@ Number nNum2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 180
+        y coordinate                        : 154
         Width                               : 46
         Height                              : 50
         Effect                              : load
@@ -229,7 +229,7 @@ Number nNum3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 260
+        y coordinate                        : 232
         Width                               : 45
         Height                              : 50
         Effect                              : load
@@ -259,7 +259,7 @@ Number nNum4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 44
         Height                              : 50
         Effect                              : load
@@ -288,8 +288,8 @@ Number nNum5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 265
-        y coordinate                        : 420
+        x coordinate                        : 268
+        y coordinate                        : 391
         Width                               : 44
         Height                              : 50
         Effect                              : load
@@ -348,10 +348,10 @@ Text tEntity1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
-        y coordinate                        : 70
-        Width                               : 300
-        Height                              : 30
+        x coordinate                        : 49
+        y coordinate                        : 76
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -366,7 +366,7 @@ Text tEntity1
         Input Type                          : character
         Text                                : tEntity1
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -378,10 +378,10 @@ Text tEntity2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
-        y coordinate                        : 150
-        Width                               : 300
-        Height                              : 30
+        x coordinate                        : 49
+        y coordinate                        : 152
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -396,7 +396,7 @@ Text tEntity2
         Input Type                          : character
         Text                                : tEntity2
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -408,10 +408,10 @@ Text tEntity3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
+        x coordinate                        : 49
         y coordinate                        : 230
-        Width                               : 300
-        Height                              : 30
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -426,7 +426,7 @@ Text tEntity3
         Input Type                          : character
         Text                                : tEntity3
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -438,10 +438,10 @@ Text tEntity4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
+        x coordinate                        : 49
         y coordinate                        : 310
-        Width                               : 300
-        Height                              : 30
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -456,7 +456,7 @@ Text tEntity4
         Input Type                          : character
         Text                                : tEntity4
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -468,9 +468,9 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 118
-        y coordinate                        : 105
-        Width                               : 45
+        x coordinate                        : 15
+        y coordinate                        : 84
+        Width                               : 33
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -498,9 +498,9 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 118
-        y coordinate                        : 185
-        Width                               : 45
+        x coordinate                        : 15
+        y coordinate                        : 163
+        Width                               : 33
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -528,9 +528,9 @@ Text tIcon3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 118
-        y coordinate                        : 270
-        Width                               : 45
+        x coordinate                        : 13
+        y coordinate                        : 241
+        Width                               : 33
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -558,9 +558,9 @@ Text tIcon4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 118
-        y coordinate                        : 350
-        Width                               : 45
+        x coordinate                        : 15
+        y coordinate                        : 321
+        Width                               : 32
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -708,10 +708,10 @@ Text tEntity5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
+        x coordinate                        : 49
         y coordinate                        : 390
-        Width                               : 300
-        Height                              : 30
+        Width                               : 115
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -726,7 +726,7 @@ Text tEntity5
         Input Type                          : character
         Text                                : tEntity5
         Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -738,9 +738,9 @@ Text tIcon5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 118
-        y coordinate                        : 430
-        Width                               : 45
+        x coordinate                        : 15
+        y coordinate                        : 401
+        Width                               : 33
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -786,7 +786,7 @@ Slider hSlider1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 100
+        y coordinate                        : 80
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -829,7 +829,7 @@ Slider hSlider2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 180
+        y coordinate                        : 157
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -872,7 +872,7 @@ Slider hSlider3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 260
+        y coordinate                        : 235
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -915,7 +915,7 @@ Slider hSlider4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 340
+        y coordinate                        : 314
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -958,7 +958,7 @@ Slider hSlider5
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 164
-        y coordinate                        : 420
+        y coordinate                        : 394
         Width                               : 100
         Height                              : 43
         Effect                              : load
@@ -1001,7 +1001,7 @@ Button bDown1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1048,7 +1048,7 @@ Button bUp1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1095,7 +1095,7 @@ Button bStop1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 215
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1142,7 +1142,7 @@ Button bStop2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 215
-        y coordinate                        : 180
+        y coordinate                        : 154
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1188,8 +1188,8 @@ Button bDown2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 269
-        y coordinate                        : 153
+        x coordinate                        : 265
+        y coordinate                        : 154
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1236,7 +1236,7 @@ Button bUp2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 180
+        y coordinate                        : 154
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1283,7 +1283,7 @@ Button bStop3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 215
-        y coordinate                        : 260
+        y coordinate                        : 232
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1330,7 +1330,7 @@ Button bDown3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 260
+        y coordinate                        : 233
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1377,7 +1377,7 @@ Button bUp3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 260
+        y coordinate                        : 232
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1424,7 +1424,7 @@ Button bStop4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 215
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1471,7 +1471,7 @@ Button bDown4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1518,7 +1518,7 @@ Button bUp4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1666,7 +1666,7 @@ Button bText1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 105
+        y coordinate                        : 82
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -1713,7 +1713,7 @@ Button bText2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 185
+        y coordinate                        : 159
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -1760,7 +1760,7 @@ Button bText3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 270
+        y coordinate                        : 242
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -1807,7 +1807,7 @@ Button bText4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 350
+        y coordinate                        : 321
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -1853,8 +1853,8 @@ Button bStop5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 215
-        y coordinate                        : 420
+        x coordinate                        : 218
+        y coordinate                        : 391
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1900,8 +1900,8 @@ Button bDown5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 265
-        y coordinate                        : 420
+        x coordinate                        : 268
+        y coordinate                        : 391
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1947,8 +1947,8 @@ Button bUp5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 165
-        y coordinate                        : 420
+        x coordinate                        : 168
+        y coordinate                        : 391
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1994,8 +1994,8 @@ Button bText5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 165
-        y coordinate                        : 430
+        x coordinate                        : 168
+        y coordinate                        : 401
         Width                               : 145
         Height                              : 30
         Effect                              : load
@@ -2042,7 +2042,7 @@ Dual-state Button btOnOff1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 100
+        y coordinate                        : 77
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2087,7 +2087,7 @@ Dual-state Button btOnOff2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 180
+        y coordinate                        : 154
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2132,7 +2132,7 @@ Dual-state Button btOnOff3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 260
+        y coordinate                        : 232
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2177,7 +2177,7 @@ Dual-state Button btOnOff4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 265
-        y coordinate                        : 340
+        y coordinate                        : 311
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2221,8 +2221,8 @@ Dual-state Button btOnOff5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 265
-        y coordinate                        : 420
+        x coordinate                        : 268
+        y coordinate                        : 391
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -2292,10 +2292,10 @@ Hotspot m2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 230
-        Width                               : 320
-        Height                              : 75
+        x coordinate                        : 13
+        y coordinate                        : 221
+        Width                               : 150
+        Height                              : 71
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2323,9 +2323,9 @@ Hotspot m1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 150
-        Width                               : 320
+        x coordinate                        : 14
+        y coordinate                        : 142
+        Width                               : 150
         Height                              : 75
         Effect                              : load
         Effect Priority                     : 0
@@ -2354,9 +2354,9 @@ Hotspot m0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 70
-        Width                               : 320
+        x coordinate                        : 14
+        y coordinate                        : 64
+        Width                               : 150
         Height                              : 75
         Effect                              : load
         Effect Priority                     : 0
@@ -2385,10 +2385,10 @@ Hotspot m3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 310
-        Width                               : 320
-        Height                              : 75
+        x coordinate                        : 16
+        y coordinate                        : 302
+        Width                               : 150
+        Height                              : 73
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2416,10 +2416,10 @@ Hotspot m4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 390
-        Width                               : 320
-        Height                              : 75
+        x coordinate                        : 13
+        y coordinate                        : 380
+        Width                               : 150
+        Height                              : 73
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2437,6 +2437,117 @@ Hotspot m4
             {
                 //popupLight.tEntity.txt=tEntity5.txt
                 page popupLight
+            }
+        
+Hotspot mSwipeNext
+    Attributes
+        ID                                  : 74
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 313
+        y coordinate                        : 3
+        Width                               : 5
+        Height                              : 470
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing right button if swiped on the right side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",1
+            if(tTmp.txt=="1")
+            {
+                click bNext,1
+            }
+        
+Hotspot mSwipeUp
+    Attributes
+        ID                                  : 75
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 10
+        y coordinate                        : 0
+        Width                               : 300
+        Height                              : 8
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing up button if swiped on the top side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",0
+            if(tTmp.txt=="2")
+            {
+                click bPrev,1
+            }
+        
+Hotspot mSwipePrev
+    Attributes
+        ID                                  : 76
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 5
+        Width                               : 7
+        Height                              : 470
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing left button if swiped on the left side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",0
+            if(tTmp.txt=="1")
+            {
+                click bPrev,1
             }
         
 Timer tmSerial
@@ -2559,6 +2670,44 @@ Timer tmSerial
                                             vis bText1,0
                                             vis hSlider1,0
                                             vis nNum1,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",8
+                                            // up button
+                                            spstr tId.txt,tTmp.txt,"|",0
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bUp1.pco=27501
+                                                tsw bUp1,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bUp1.pco=65535
+                                                bUp1.txt=tTmp.txt
+                                                tsw bUp1,1
+                                            }
+                                            // stop button
+                                            spstr tId.txt,tTmp.txt,"|",1
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bStop1.pco=27501
+                                                tsw bStop1,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bStop1.pco=65535
+                                                bStop1.txt=tTmp.txt
+                                                tsw bStop1,1
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bDown1.pco=27501
+                                                tsw bDown1,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bDown1.pco=65535
+                                                bDown1.txt=tTmp.txt
+                                                tsw bDown1,1
+                                            }
                                         }
                                         if(type1.txt=="light")
                                         {
@@ -2681,6 +2830,44 @@ Timer tmSerial
                                             vis bText2,0
                                             vis hSlider2,0
                                             vis nNum2,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",14
+                                            // up button
+                                            spstr tId.txt,tTmp.txt,"|",0
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bUp2.pco=27501
+                                                tsw bUp2,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bUp2.pco=65535
+                                                bUp2.txt=tTmp.txt
+                                                tsw bUp2,1
+                                            }
+                                            // stop button
+                                            spstr tId.txt,tTmp.txt,"|",1
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bStop2.pco=27501
+                                                tsw bStop2,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bStop2.pco=65535
+                                                bStop2.txt=tTmp.txt
+                                                tsw bStop2,1
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bDown2.pco=27501
+                                                tsw bDown2,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bDown2.pco=65535
+                                                bDown2.txt=tTmp.txt
+                                                tsw bDown2,1
+                                            }
                                         }
                                         if(type2.txt=="light")
                                         {
@@ -2803,6 +2990,44 @@ Timer tmSerial
                                             vis bText3,0
                                             vis hSlider3,0
                                             vis nNum3,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",20
+                                            // up button
+                                            spstr tId.txt,tTmp.txt,"|",0
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bUp3.pco=27501
+                                                tsw bUp3,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bUp3.pco=65535
+                                                bUp3.txt=tTmp.txt
+                                                tsw bUp3,1
+                                            }
+                                            // stop button
+                                            spstr tId.txt,tTmp.txt,"|",1
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bStop3.pco=27501
+                                                tsw bStop3,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bStop3.pco=65535
+                                                bStop3.txt=tTmp.txt
+                                                tsw bStop3,1
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bDown3.pco=27501
+                                                tsw bDown3,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bDown3.pco=65535
+                                                bDown3.txt=tTmp.txt
+                                                tsw bDown3,1
+                                            }
                                         }
                                         if(type3.txt=="light")
                                         {
@@ -2925,6 +3150,44 @@ Timer tmSerial
                                             vis bText4,0
                                             vis hSlider4,0
                                             vis nNum4,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",26
+                                            // up button
+                                            spstr tId.txt,tTmp.txt,"|",0
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bUp4.pco=27501
+                                                tsw bUp4,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bUp4.pco=65535
+                                                bUp4.txt=tTmp.txt
+                                                tsw bUp4,1
+                                            }
+                                            // stop button
+                                            spstr tId.txt,tTmp.txt,"|",1
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bStop4.pco=27501
+                                                tsw bStop4,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bStop4.pco=65535
+                                                bStop4.txt=tTmp.txt
+                                                tsw bStop4,1
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bDown4.pco=27501
+                                                tsw bDown4,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bDown4.pco=65535
+                                                bDown4.txt=tTmp.txt
+                                                tsw bDown4,1
+                                            }
                                         }
                                         if(type4.txt=="light")
                                         {
@@ -3047,6 +3310,44 @@ Timer tmSerial
                                             vis bText5,0
                                             vis hSlider5,0
                                             vis nNum5,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",32
+                                            // up button
+                                            spstr tId.txt,tTmp.txt,"|",0
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bUp5.pco=27501
+                                                tsw bUp5,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bUp5.pco=65535
+                                                bUp5.txt=tTmp.txt
+                                                tsw bUp5,1
+                                            }
+                                            // stop button
+                                            spstr tId.txt,tTmp.txt,"|",1
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bStop5.pco=27501
+                                                tsw bStop5,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bStop5.pco=65535
+                                                bStop5.txt=tTmp.txt
+                                                tsw bStop5,1
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",2
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bDown5.pco=27501
+                                                tsw bDown5,0
+                                            }else if(tTmp.txt!="")
+                                            {
+                                                bDown5.pco=65535
+                                                bDown5.txt=tTmp.txt
+                                                tsw bDown5,1
+                                            }
                                         }
                                         if(type5.txt=="light")
                                         {
@@ -3186,6 +3487,10 @@ Timer tmSerial
                                         if(tId.txt=="cardAlarm")
                                         {
                                             page cardAlarm
+                                        }
+                                        if(tId.txt=="cardQR")
+                                        {
+                                            page cardQR
                                         }
                                     }
                                     if(tInstruction.txt=="time")

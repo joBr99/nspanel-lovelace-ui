@@ -64,7 +64,7 @@ Text tSend
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 15
+        x coordinate                        : 17
         y coordinate                        : 0
         Width                               : 230
         Height                              : 15
@@ -94,7 +94,7 @@ Text tTmp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 29
+        x coordinate                        : 31
         y coordinate                        : 156
         Width                               : 27
         Height                              : 30
@@ -124,7 +124,7 @@ Text tInstruction
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 311
+        x coordinate                        : 313
         y coordinate                        : 0
         Width                               : 100
         Height                              : 20
@@ -154,7 +154,7 @@ Text tId
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 64
+        x coordinate                        : 66
         y coordinate                        : 159
         Width                               : 30
         Height                              : 30
@@ -184,7 +184,7 @@ Text tHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 126
+        x coordinate                        : 128
         y coordinate                        : 26
         Width                               : 228
         Height                              : 30
@@ -214,9 +214,9 @@ Text tTitle
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 99
+        x coordinate                        : 101
         y coordinate                        : 78
-        Width                               : 360
+        Width                               : 358
         Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
@@ -244,9 +244,9 @@ Text tAuthor
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 100
+        x coordinate                        : 102
         y coordinate                        : 108
-        Width                               : 360
+        Width                               : 358
         Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
@@ -274,7 +274,7 @@ Text t2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 321
+        x coordinate                        : 319
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -323,7 +323,7 @@ Text tPlayPause
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 218
+        x coordinate                        : 216
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -372,7 +372,7 @@ Text t0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 111
+        x coordinate                        : 109
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -421,7 +421,7 @@ Text tIcon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 26
+        x coordinate                        : 28
         y coordinate                        : 75
         Width                               : 71
         Height                              : 62
@@ -451,7 +451,7 @@ Text t1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 20
+        x coordinate                        : 24
         y coordinate                        : 201
         Width                               : 50
         Height                              : 50
@@ -475,7 +475,7 @@ Text t1
     
     Events
         Touch Press Event
-            hVolume.val=hVolume.val-5
+            hVolume.val=hVolume.val-1
             // event,buttonPress2,internalNameEntity,volumeSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
@@ -501,7 +501,7 @@ Text t3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 412
+        x coordinate                        : 410
         y coordinate                        : 201
         Width                               : 50
         Height                              : 50
@@ -525,7 +525,7 @@ Text t3
     
     Events
         Touch Press Event
-            hVolume.val=hVolume.val+5
+            hVolume.val=hVolume.val+1
             // event,buttonPress2,internalNameEntity,volumeSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",volumeSlider,"
@@ -551,7 +551,7 @@ Text t4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 36
+        x coordinate                        : 38
         y coordinate                        : 262
         Width                               : 50
         Height                              : 50
@@ -581,7 +581,7 @@ Text tSpeaker
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 109
+        x coordinate                        : 111
         y coordinate                        : 262
         Width                               : 267
         Height                              : 50
@@ -630,7 +630,7 @@ Text t6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 396
+        x coordinate                        : 398
         y coordinate                        : 262
         Width                               : 50
         Height                              : 50
@@ -672,7 +672,7 @@ Text t5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 412
+        x coordinate                        : 410
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -738,9 +738,9 @@ Slider hVolume
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 74
+        x coordinate                        : 78
         y coordinate                        : 206
-        Width                               : 335
+        Width                               : 328
         Height                              : 43
         Effect                              : load
         Effect Priority                     : 0
@@ -784,7 +784,7 @@ Button bNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 406
+        x coordinate                        : 408
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -831,7 +831,7 @@ Button bPrev
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 24
+        x coordinate                        : 26
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -876,6 +876,117 @@ Button bPrev
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+        
+Hotspot mSwipeNext
+    Attributes
+        ID                                  : 30
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 471
+        y coordinate                        : 5
+        Width                               : 9
+        Height                              : 310
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing right button if swiped on the right side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",1
+            if(tTmp.txt=="1")
+            {
+                click bNext,1
+            }
+        
+Hotspot mSwipeUp
+    Attributes
+        ID                                  : 31
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 12
+        y coordinate                        : 0
+        Width                               : 451
+        Height                              : 9
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing up button if swiped on the top side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",0
+            if(tTmp.txt=="2")
+            {
+                click bPrev,1
+            }
+        
+Hotspot mSwipePrev
+    Attributes
+        ID                                  : 32
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 5
+        Width                               : 9
+        Height                              : 310
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+    Events
+        Touch Press Event
+            //This thin hotspot down the edge will intercept swipes
+            //from the bezel into the screen area before the
+            //Nextion register touch for any other components -
+            //IF the hotspot is 'layered' at the top (use the up
+            //arrow at the far left of the Nextion Editor Tool Bar).
+            //
+            //Calibrate how wide the edge hotspot has to be on your
+            //own physical device using this screen to test the
+            //x & y coordinates where the swipe is first detected.)
+            //---------------------------
+            //The navigation text is stored as local variable within tld.txt
+            //Pressing left button if swiped on the left side of the screen
+            //
+            spstr tId.txt,tTmp.txt,"|",0
+            if(tTmp.txt=="1")
+            {
+                click bPrev,1
+            }
         
 Timer tmSerial
     Attributes
@@ -1077,6 +1188,10 @@ Timer tmSerial
                                         if(tId.txt=="cardAlarm")
                                         {
                                             page cardAlarm
+                                        }
+                                        if(tId.txt=="cardQR")
+                                        {
+                                            page cardQR
                                         }
                                     }
                                     // end of user code

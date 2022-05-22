@@ -16,6 +16,8 @@ Or an TypeScript on your ioBroker Instance in case you are an ioBroker User.
 
 NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 
+![nspanel-rl](doc-pics/nspanel-rl.png)
+
 ## Features
 
 - Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light, input_text (read-only), lock, fan
@@ -23,8 +25,9 @@ NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 - Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
 - Thermostat Page 
 - Media Player Card
-- Alarm Control Panel
+- Alarm Control Card
 - Screensaver Page with Time, Date and Weather Information
+- Card with QrCode to display WiFi Information
 - Localization possible (currently 38 languages)
 - **Everything is dynamically configurable by a yaml config, no need to code or touch Nextion Editor**
 
@@ -76,7 +79,7 @@ For more detailed Instructions see the following Sections:
 
 This section describes the Installation Steps for HomeAssistant, follow each step.
 
-<details><summary>1. Installing HomeAssiant Add-Ons</summary>
+<details><summary>1. Installing HomeAssistant Add-Ons</summary>
 <p>
 
 ### Installing AppDaemon
@@ -104,7 +107,7 @@ Install Studio Code Server from Home Assistant's Supervisor Add-on Store to easi
 </p>
 </details>
 
-<details><summary>2. Installing HomeAssiant Community Store</summary>
+<details><summary>2. Installing HomeAssistant Community Store</summary>
 <p>
 
 ### Installing HACS
@@ -347,6 +350,14 @@ nspanel-1:
         entity: media_player.example_item
       - type: cardAlarm
         entity: alarm_control_panel.alarmo
+      - type: cardQR
+        title: Guest Wifi
+        qr_code: "WIFI:S:test_ssid;T:WPA;P:test_pw;;"
+        entities:
+          - entity: iText.Name.test_ssid
+            icon: wifi
+          - entity: iText.Password.test_pw
+            icon: key
 ```
 
 key | optional | type | default | description
@@ -370,7 +381,8 @@ key | optional | type | default | description
 `sleepTracking` | True | string | None | Forces screensaver brightness to 0 in case entity state is not_home or off, can be a group, person or device_tracker entity.
 `locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
 `dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
-`timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  `"%I:%M   ?%p"`
+`timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  <pre>`"%I:%M   ?%p"`</pre>
+`dateAdditonalTemplate` | True | string | `" - {{ states('sun.sun') }}"` | Addional Text dispayed after Date, can contain Homeassistant Templates
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
 `cards` | False | complex | | configuration for cards that are displayed on panel
 `screensaver` | True | complex | | configuration for screensaver
@@ -447,7 +459,7 @@ key | optional | type | default | description
 `weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
-`defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key)
+`defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
 
 Example for the weatherOverride config options:
@@ -492,6 +504,12 @@ Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?ht
             icon: lightbulb
 ```
 
+#### Fahrenheit on cardThermo
+```yaml
+      - type: cardThermo
+        entity: climate.example_item
+        temperatureUnit: fahrenheit
+```
 #### Subpages
 
 You can configure entities with with the prefix `navigate`, that are navigating to cards, in case it's hidden card, the navigation items will change and the arrow is bringing you back to the privious page.
