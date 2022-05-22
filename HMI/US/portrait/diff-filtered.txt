@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-22 08:36:42.679636410 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-22 08:36:42.175632757 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-22 08:36:42.611635917 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-22 08:36:42.175632757 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-22 08:36:42.615635946 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-22 08:52:06.071870294 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-22 08:52:05.367816736 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-22 08:52:05.927852627 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-22 08:52:05.367816736 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-22 08:52:05.927852627 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
 +@@ -1880,6 +2108,166 @@
@@ -26,5 +26,5 @@
 ++                                            if(tTmp.txt=="disable")
 ++                                            }else if(tTmp.txt!="")
 ++                                                bDown5.txt=tTmp.txt
-+--- HMI/n2t-out/pageStartup.txt	2022-05-22 08:36:42.175632757 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-22 08:36:42.611635917 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-22 08:52:05.367816736 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-22 08:52:05.927852627 +0000
