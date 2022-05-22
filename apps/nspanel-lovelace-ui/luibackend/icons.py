@@ -31,6 +31,31 @@ sensor_mapping = {
     "power": "flash"    
 }
 
+cover_mapping_open = {
+    "awning":   "window-open",
+    "blind":    "blinds-open",
+    "curtain":  "curtains-closed",
+    "damper":   "checkbox-blank-circle",
+    "door":     "door-open",
+    "garage":   "garage",
+    "gate":     "gate",
+    "shade":    "blinds-open",
+    "shutter":  "window-shutter-open",
+    "window":   "window-open"
+}
+
+cover_mapping_closed = {
+    "awning":   "window-closed",
+    "blind":    "blinds",
+    "curtain":  "curtains",
+    "damper":   "circle-slice-8",
+    "door":     "door-closed",
+    "garage":   "garage-open",
+    "gate":     "gate-open",
+    "shade":    "blinds",
+    "shutter":  "window-shutter",
+    "window":   "window-closed"
+}
 
 def map_to_mdi_name(ha_type, state=None, device_class=None):
     if ha_type == "weather":
@@ -52,19 +77,12 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
     if ha_type == "input_boolean":
         return "check-circle-outline" if state == "on" else "close-circle-outline"
     if ha_type == "cover":
-        if device_class == "awning" or device_class == "blind" or device_class == "curtain":
-            return "blinds-open" if state == "open" else "blinds"
-        elif device_class == "door":
-            return "door-open" if state == "open" else "door-closed" 
-        elif device_class == "garage":
-            return "garage-open" if state == "open" else "garage"
-        elif device_class == "gate":
-            return "gate-open" if state == "open" else "gate"
-        elif device_class == "shade" or device_class == "shutter":
-            return "window-shutter-open" if state == "open" else "window-shutter"
+        if device_class is None:
+            device_class = "window"
+        if state == "closed":
+            return cover_mapping_closed[device_class] if device_class in cover_mapping_closed else "alert-circle-outline"
         else:
-        # This should run for None, window or damper
-            return "window-open" if state == "open" else "window-closed"
+            return cover_mapping_open[device_class] if device_class in cover_mapping_open else "alert-circle-outline"
     if ha_type == "lock":
         return "lock-open" if state == "unlocked" else "lock"
 
