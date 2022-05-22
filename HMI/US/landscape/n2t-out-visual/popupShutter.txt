@@ -652,7 +652,7 @@ Timer tmSerial
                                             bUp1.txt=tTmp.txt
                                             tsw bUp1,1
                                             bUp1.pco=65535
-                                        }else if(tTmp.txt!="disable")
+                                        }else if(tTmp.txt=="disable")
                                         {
                                             tsw bUp1,0
                                             bUp1.pco=27501
@@ -664,7 +664,7 @@ Timer tmSerial
                                             bStop1.txt=tTmp.txt
                                             tsw bStop1,1
                                             bStop1.pco=65535
-                                        }else if(tTmp.txt!="disable")
+                                        }else if(tTmp.txt=="disable")
                                         {
                                             tsw bStop1,0
                                             bStop1.pco=27501
@@ -676,7 +676,7 @@ Timer tmSerial
                                             bDown1.txt=tTmp.txt
                                             tsw bDown1,1
                                             bDown1.pco=65535
-                                        }else if(tTmp.txt!="disable")
+                                        }else if(tTmp.txt=="disable")
                                         {
                                             tsw bDown1,0
                                             bDown1.pco=27501

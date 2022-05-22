@@ -1513,7 +1513,7 @@ Timer tmSerial
                                             {
                                                 bUp1.pco=65535
                                                 tsw bUp1,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bUp1.pco=27501
                                                 tsw bUp1,0
@@ -1525,7 +1525,7 @@ Timer tmSerial
                                                 bStop1.pco=65535
                                                 bStop1.txt=tTmp.txt
                                                 tsw bStop1,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bStop1.pco=27501
                                                 tsw bStop1,0
@@ -1537,7 +1537,7 @@ Timer tmSerial
                                                 bDown1.pco=65535
                                                 bDown1.txt=tTmp.txt
                                                 tsw bDown1,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bDown1.pco=27501
                                                 tsw bDown1,0
@@ -1672,7 +1672,7 @@ Timer tmSerial
                                             {
                                                 bUp2.pco=65535
                                                 tsw bUp2,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bUp2.pco=27501
                                                 tsw bUp2,0
@@ -1684,7 +1684,7 @@ Timer tmSerial
                                                 bStop2.pco=65535
                                                 bStop2.txt=tTmp.txt
                                                 tsw bStop2,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bStop2.pco=27501
                                                 tsw bStop2,0
@@ -1696,7 +1696,7 @@ Timer tmSerial
                                                 bDown2.pco=65535
                                                 bDown2.txt=tTmp.txt
                                                 tsw bDown2,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bDown2.pco=27501
                                                 tsw bDown2,0
@@ -1831,7 +1831,7 @@ Timer tmSerial
                                             {
                                                 bUp3.pco=65535
                                                 tsw bUp3,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bUp3.pco=27501
                                                 tsw bUp3,0
@@ -1843,7 +1843,7 @@ Timer tmSerial
                                                 bStop3.pco=65535
                                                 bStop3.txt=tTmp.txt
                                                 tsw bStop3,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bStop3.pco=27501
                                                 tsw bStop3,0
@@ -1855,7 +1855,7 @@ Timer tmSerial
                                                 bDown3.pco=65535
                                                 bDown3.txt=tTmp.txt
                                                 tsw bDown3,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bDown3.pco=27501
                                                 tsw bDown3,0
@@ -1990,7 +1990,7 @@ Timer tmSerial
                                             {
                                                 bUp4.pco=65535
                                                 tsw bUp4,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bUp4.pco=27501
                                                 tsw bUp4,0
@@ -2002,7 +2002,7 @@ Timer tmSerial
                                                 bStop4.pco=65535
                                                 bStop4.txt=tTmp.txt
                                                 tsw bStop4,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bStop4.pco=27501
                                                 tsw bStop4,0
@@ -2014,7 +2014,7 @@ Timer tmSerial
                                                 bDown4.pco=65535
                                                 bDown4.txt=tTmp.txt
                                                 tsw bDown4,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bDown4.pco=27501
                                                 tsw bDown4,0
@@ -2149,7 +2149,7 @@ Timer tmSerial
                                             {
                                                 bUp5.pco=65535
                                                 tsw bUp5,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bUp5.pco=27501
                                                 tsw bUp5,0
@@ -2161,7 +2161,7 @@ Timer tmSerial
                                                 bStop5.pco=65535
                                                 bStop5.txt=tTmp.txt
                                                 tsw bStop5,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bStop5.pco=27501
                                                 tsw bStop5,0
@@ -2173,7 +2173,7 @@ Timer tmSerial
                                                 bDown5.pco=65535
                                                 bDown5.txt=tTmp.txt
                                                 tsw bDown5,1
-                                            }else if(tTmp.txt!="disable")
+                                            }else if(tTmp.txt=="disable")
                                             {
                                                 bDown5.pco=27501
                                                 tsw bDown5,0
