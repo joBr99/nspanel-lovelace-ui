@@ -71,6 +71,7 @@ class LuiBackendConfig(object):
             'locale': "en_US",
             'timeFormat': "%H:%M",
             'dateFormatBabel': "full",
+            'dateAdditonalTemplate': "",
             'dateFormat': "%A, %d. %B %Y",
             'cards': [{
                 'type': 'cardEntities',
@@ -95,6 +96,7 @@ class LuiBackendConfig(object):
             }, {
                 'type': 'climate',
                 'entity': 'climate.test_item',
+                'temperatureUnit': 'celsius'
             }],
             'screensaver': {
                 'type': 'screensaver',

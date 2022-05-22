@@ -402,7 +402,7 @@ Text tVersion
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 34
+        Text                                : 35
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -625,6 +625,10 @@ Timer tmSerial
                                         {
                                             page cardAlarm
                                         }
+                                        if(tId.txt=="cardQR")
+                                        {
+                                            page cardQR
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
@@ -647,7 +651,7 @@ Timer tmSpinner
     
     Events
         Timer Event
-            xpic mSpinner.x,mSpinner.y,spinner_w.val,140,frame_ptr.val,0,11 // draw the current frame
+            xpic mSpinner.x,mSpinner.y,spinner_w.val,140,frame_ptr.val,0,9 // draw the current frame
             frame_ptr.val+=spinner_w.val%frapic_w.val // advance the pointer to the next frame in the pic resource and roll over at the end
             doevents // finish drawing before next timer event triggers
             if(frame_ptr.val==1820)

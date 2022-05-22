@@ -41,7 +41,7 @@ Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 200
     
 Variable (string) entn
     Attributes
@@ -339,12 +339,63 @@ Timer tmSerial
                                     {
                                         // get Position value
                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                        covx tTmp.txt,sys0,0,0
-                                        hPosition.val=sys0
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            vis tPosHeading,0
+                                            vis hPosition,0
+                                        }else
+                                        {
+                                            covx tTmp.txt,sys0,0,0
+                                            hPosition.val=sys0
+                                            vis tPosHeading,1
+                                            vis hPosition,1
+                                        }
                                         // set tinfo1 text
                                         spstr strCommand.txt,tInfo1.txt,"~",2
                                         // set tPosHeading (localization)
                                         spstr strCommand.txt,tPosHeading.txt,"~",3
+                                        // set tIcon1
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon1.txt=tTmp.txt
+                                        }
+                                        // set icon bUp
+                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            tsw bUp1,0
+                                            bUp1.pco=27501
+                                        }else if(tTmp.txt!="")
+                                        {
+                                            bUp1.txt=tTmp.txt
+                                            tsw bUp1,1
+                                            bUp1.pco=65535
+                                        }
+                                        // set icon bStop
+                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            tsw bStop1,0
+                                            bStop1.pco=27501
+                                        }else if(tTmp.txt!="")
+                                        {
+                                            bStop1.txt=tTmp.txt
+                                            tsw bStop1,1
+                                            bStop1.pco=65535
+                                        }
+                                        // set icon bDown
+                                        spstr strCommand.txt,tTmp.txt,"~",7
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            tsw bDown1,0
+                                            bDown1.pco=27501
+                                        }else if(tTmp.txt!="")
+                                        {
+                                            bDown1.txt=tTmp.txt
+                                            tsw bDown1,1
+                                            bDown1.pco=65535
+                                        }
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
@@ -422,6 +473,10 @@ Timer tmSerial
                                         {
                                             page cardAlarm
                                         }
+                                        if(tId.txt=="cardQR")
+                                        {
+                                            page cardQR
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
@@ -432,15 +487,6 @@ Timer tmSerial
                     }
                     // next character
                     bufferPos++
-                }
-                if(bufferPos==usize)
-                {
-                    // copy whole buffer to t1.txt, for debugging
-                    //ucopy t2.txt,0,usize,0
-                    // ucopy n2.val,0,usize,0
-                    // clear whole buffer
-                    //code_c
-                    //bufferPos=0
                 }
             }
         

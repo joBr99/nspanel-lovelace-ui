@@ -883,6 +883,7 @@ translations = {
 }
 
 def get_translation(locale, input):
+    locale = locale.split("_")[0]
     en_fallback_res = translations.get("en").get(input, input)
     if locale in translations:
         return translations.get(locale).get(input, en_fallback_res)

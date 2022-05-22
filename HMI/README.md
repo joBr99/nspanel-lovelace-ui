@@ -89,7 +89,7 @@ The following message can be used to update the content on the cardEntities Page
 
 `~light~light.entityName~1~17299~Light1~0`
 
-`~shutter~cover.entityName~0~17299~Shutter2~`
+`~shutter~cover.entityName~0~17299~Shutter2~iconUp|iconStop|iconDown`
 
 `~delete~~~~~`
 
@@ -111,7 +111,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupShutter Page
 
-`entityUpdateDetail~*ignored*~*sliderPos*~2ndrow~textPosition`
+`entityUpdateDetail~*ignored*~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown`
 
 `entityUpdateDetail~1~77`
 
@@ -123,9 +123,9 @@ The following message can be used to update the content on the cardEntities Page
 
 ### cardThermo Page
 
-`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*currentTemp*~*destTemp*~*status*~*minTemp*~*maxTemp*~*stepTemp*[[~*iconId*~*activeColor*~*state*~*hvac_action*]]`
+`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*currentTemp*~*destTemp*~*status*~*minTemp*~*maxTemp*~*stepTemp*[[~*iconId*~*activeColor*~*state*~*hvac_action*]]~tCurTempLbl~tStateLbl~tALbl~iconTemperature~dstTempTwoTempMode`
 
-`[[]]` are not part of the command~ this part repeats 9 times for the buttons
+`[[]]` are not part of the command~ this part repeats 8 times for the buttons
 
 ### cardMedia Page
 
@@ -135,6 +135,9 @@ The following message can be used to update the content on the cardEntities Page
 
 `entityUpd~*internalNameEntity*~*navigation*~*arm1*~*arm1ActionName*~*arm2*~*arm2ActionName*~*arm3*~*arm3ActionName*~*arm4*~*arm4ActionName*~*icon*~*iconcolor*~*numpadStatus*~*flashing*`
 
+### cardQR Page
+
+`entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2`
 
 ## Messages from Nextion Display
 
