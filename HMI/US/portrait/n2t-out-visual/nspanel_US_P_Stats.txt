@@ -29,7 +29,7 @@ popupLight
 cardQR
 	30   Component(s)
 	363  Line(s) of event code
-	205  Unique line(s) of event code
+	207  Unique line(s) of event code
 cardThermo
 	56   Component(s)
 	546  Line(s) of event code

@@ -49,7 +49,7 @@ cardMedia
 cardQR
 	30   Component(s)
 	363  Line(s) of event code
-	205  Unique line(s) of event code
+	207  Unique line(s) of event code
 cardEntities
 	65   Component(s)
 	1133 Line(s) of event code
