@@ -116,7 +116,7 @@ class LuiPagesGen(object):
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
 
-    def generate_entities_item(self, entity):
+    def generate_entities_item(self, entity, cardType):
         entityId = entity.entityId
         icon = entity.iconOverride
         name = entity.nameOverride
@@ -170,9 +170,12 @@ class LuiPagesGen(object):
             return f"~switch~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
         if entityType in ["sensor", "binary_sensor"]:
             device_class = entity.attributes.get("device_class", "")
-            icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
+            if cardType == "cardGrid":
+                icon_id = entity.state
+            else:
+                icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
             icon_color = self.get_entity_color(entity)
             return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{value}"
         if entityType in ["button", "input_button"]:
@@ -207,11 +210,11 @@ class LuiPagesGen(object):
             return f"~text~{entityId}~{icon_id}~17299~{name}~{value}"
         return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~error~"
 
-    def generate_entities_page(self, navigation, heading, items):
+    def generate_entities_page(self, navigation, heading, items, cardType):
         command = f"entityUpd~{heading}~{navigation}"
         # Get items and construct cmd string
         for item in items:
-            command += self.generate_entities_item(item)
+            command += self.generate_entities_item(item, cardType)
         self._send_mqtt_msg(command)
 
     def generate_thermo_page(self, navigation, entity, temp_unit):
@@ -380,7 +383,7 @@ class LuiPagesGen(object):
             self.page_type(card.cardType)
 
         if card.cardType in ["cardEntities", "cardGrid"]:
-            self.generate_entities_page(navigation, card.title, card.entities)
+            self.generate_entities_page(navigation, card.title, card.entities, card.cardType)
             return
         if card.cardType == "cardThermo":
             temp_unit = card.raw_config.get("temperatureUnit", "celsius")
