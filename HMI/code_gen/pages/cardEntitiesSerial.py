@@ -7,7 +7,7 @@ head = sharedhead + """
 """ + navigation
 print(head)
 start = 3
-for i in range(1,6):
+for i in range(1,5):
     idxstart = start + (i-1)*6
     item = f"""
               // get Type
@@ -57,7 +57,7 @@ for i in range(1,6):
                   bUp{i}.pco=65535
                   tsw bUp{i},1
                 }}
-                else if(tTmp.txt!="disable")
+                else if(tTmp.txt=="disable")
                 {{
                   bUp{i}.pco=27501
                   tsw bUp{i},0
@@ -70,7 +70,7 @@ for i in range(1,6):
                   bStop{i}.txt=tTmp.txt
                   tsw bStop{i},1
                 }}
-                else if(tTmp.txt!="disable")
+                else if(tTmp.txt=="disable")
                 {{
                   bStop{i}.pco=27501
                   tsw bStop{i},0
@@ -83,7 +83,7 @@ for i in range(1,6):
                   bDown{i}.txt=tTmp.txt
                   tsw bDown{i},1
                 }}
-                else if(tTmp.txt!="disable")
+                else if(tTmp.txt=="disable")
                 {{
                   bDown{i}.pco=27501
                   tsw bDown{i},0
