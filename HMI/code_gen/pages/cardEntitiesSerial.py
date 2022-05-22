@@ -7,7 +7,7 @@ head = sharedhead + """
 """ + navigation
 print(head)
 start = 3
-for i in range(1,5):
+for i in range(1,6):
     idxstart = start + (i-1)*6
     item = f"""
               // get Type
@@ -50,27 +50,43 @@ for i in range(1,5):
                 vis nNum{i},0
                 // get Button State (optional Value)
                 spstr strCommand.txt,tId.txt,"~",{idxstart+5}
+                // up button
                 spstr tId.txt,tTmp.txt,"|",0
-                if(tTmp.txt=="0")
-                {{
-                  bUp{i}.pco=27501
-                  tsw bUp{i},0
-                }}
-                else
+                if(tTmp.txt!="")
                 {{
                   bUp{i}.pco=65535
                   tsw bUp{i},1
                 }}
+                else if(tTmp.txt!="disable")
+                {{
+                  bUp{i}.pco=27501
+                  tsw bUp{i},0
+                }}
+                // stop button
                 spstr tId.txt,tTmp.txt,"|",1
-                if(tTmp.txt=="0")
+                if(tTmp.txt!="")
+                {{
+                  bStop{i}.pco=65535
+                  bStop{i}.txt=tTmp.txt
+                  tsw bStop{i},1
+                }}
+                else if(tTmp.txt!="disable")
+                {{
+                  bStop{i}.pco=27501
+                  tsw bStop{i},0
+                }}
+                // down button
+                spstr tId.txt,tTmp.txt,"|",2
+                if(tTmp.txt!="")
+                {{
+                  bDown{i}.pco=65535
+                  bDown{i}.txt=tTmp.txt
+                  tsw bDown{i},1
+                }}
+                else if(tTmp.txt!="disable")
                 {{
                   bDown{i}.pco=27501
                   tsw bDown{i},0
-                }}
-                else
-                {{
-                  bDown{i}.pco=65535
-                  tsw bDown{i},1
                 }}
               }}
               if(type{i}.txt=="light")

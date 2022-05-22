@@ -143,14 +143,17 @@ class LuiPagesGen(object):
         entity = self._ha_api.get_entity(entityId)
         name = name if name is not None else entity.attributes.friendly_name
         if entityType == "cover":
-            icon_id = get_icon_id_ha("cover", state=entity.state, overwrite=icon)
+            icon_id   = get_icon_id_ha("cover", state=entity.state, overwrite=icon)
+            icon_up   = get_icon_id("arrow-up")
+            icon_stop = get_icon_id("stop")
+            icon_down = get_icon_id("arrow-down")
             pos = int(entity.attributes.get("current_position", 50))
             if pos == 100:
-                status = "0|1"
+                status = f"disable|{icon_stop}|{icon_down}"
             elif pos == 0:
-                status = "1|0"
+                status = f"{icon_up}|{icon_stop}|disable"
             else:
-                status = "1|1"
+                status = f"{icon_up}|{icon_stop}|{icon_down}"
             return f"~shutter~{entityId}~{icon_id}~17299~{name}~{status}"
         if entityType in "light":
             switch_val = 1 if entity.state == "on" else 0
@@ -420,11 +423,25 @@ class LuiPagesGen(object):
     
     def generate_shutter_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)
+        icon = entity.iconOverride
+        icon_id   = get_icon_id_ha("cover", state=entity.state, overwrite=icon)
+
         pos = entity.attributes.get("current_position")
         if pos is None:
-            pos = entity.state
+            pos_status = entity.state
+            pos = "disable"
+        
+        icon_up   = get_icon_id("arrow-up")
+        icon_stop = get_icon_id("stop")
+        icon_down = get_icon_id("arrow-down")
+
+        if pos == 100:
+            icon_up = "disable"
+        elif pos == 0:
+            icon_down = "disable"
+
         pos_translation = get_translation(self._locale, "position")
-        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos}~{pos_translation}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}")
 
     def send_message_page(self, id, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
