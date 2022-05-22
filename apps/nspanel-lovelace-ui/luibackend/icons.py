@@ -52,7 +52,19 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
     if ha_type == "input_boolean":
         return "check-circle-outline" if state == "on" else "close-circle-outline"
     if ha_type == "cover":
-        return "window-open" if state == "open" else "window-closed"
+        if device_class == "awning" or device_class == "blind" or device_class == "curtain":
+            return "blinds-open" if state == "open" else "blinds"
+        elif device_class == "door":
+            return "door-open" if state == "open" else "door-closed" 
+        elif device_class == "garage":
+            return "garage-open" if state == "open" else "garage"
+        elif device_class == "gate":
+            return "gate-open" if state == "open" else "gate"
+        elif device_class == "shade" or device_class == "shutter":
+            return "window-shutter-open" if state == "open" else "window-shutter"
+        else:
+        # This should run for None, window or damper
+            return "window-open" if state == "open" else "window-closed"
     if ha_type == "lock":
         return "lock-open" if state == "unlocked" else "lock"
 
