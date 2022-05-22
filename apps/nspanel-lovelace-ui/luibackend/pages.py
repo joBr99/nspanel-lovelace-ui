@@ -426,13 +426,15 @@ class LuiPagesGen(object):
     
     def generate_shutter_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)
-        icon = entity.iconOverride
-        icon_id   = get_icon_id_ha("cover", state=entity.state, overwrite=icon)
+        icon_id   = get_icon_id_ha("cover", state=entity.state)
 
         pos = entity.attributes.get("current_position")
         if pos is None:
             pos_status = entity.state
             pos = "disable"
+        else:
+            pos_status = pos
+
         
         icon_up   = get_icon_id("arrow-up")
         icon_stop = get_icon_id("stop")

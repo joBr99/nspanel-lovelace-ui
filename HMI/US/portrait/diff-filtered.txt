@@ -1,34 +1,28 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-22 07:58:26.469803304 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-22 07:58:25.897799068 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-22 07:58:26.425802978 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-22 07:58:25.901799098 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-22 07:58:26.425802978 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-22 08:52:06.071870294 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-22 08:52:05.367816736 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-22 08:52:05.927852627 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-22 08:52:05.367816736 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-22 08:52:05.927852627 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
-+@@ -1876,6 +2104,165 @@
++@@ -1880,6 +2108,166 @@
 ++                                            // up button
-++                                            if(tTmp.txt!="")
-++                                            }else if(tTmp.txt!="disable")
-++                                            {
-++                                                bUp5.pco=27501
-++                                                tsw bUp5,0
+++                                            if(tTmp.txt=="disable")
+++                                            }else if(tTmp.txt!="")
+++                                                bUp5.txt=tTmp.txt
 ++                                            // stop button
-++                                            if(tTmp.txt!="")
-++                                                bStop5.pco=65535
-++                                                bStop5.txt=tTmp.txt
-++                                                tsw bStop5,1
-++                                            }else if(tTmp.txt!="disable")
+++                                            if(tTmp.txt=="disable")
 ++                                            {
 ++                                                bStop5.pco=27501
 ++                                                tsw bStop5,0
+++                                            }else if(tTmp.txt!="")
+++                                            {
+++                                                bStop5.pco=65535
+++                                                bStop5.txt=tTmp.txt
+++                                                tsw bStop5,1
 ++                                            }
 ++                                            // down button
 ++                                            spstr tId.txt,tTmp.txt,"|",2
-++                                            if(tTmp.txt!="")
+++                                            if(tTmp.txt=="disable")
+++                                            }else if(tTmp.txt!="")
 ++                                                bDown5.txt=tTmp.txt
-++                                            }else if(tTmp.txt!="disable")
-++                                            {
-++                                                bDown5.pco=27501
-++                                                tsw bDown5,0
-+--- HMI/n2t-out/pageStartup.txt	2022-05-22 07:58:25.897799068 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-22 07:58:26.425802978 +0000
