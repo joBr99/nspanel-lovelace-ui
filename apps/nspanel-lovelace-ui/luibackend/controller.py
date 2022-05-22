@@ -145,6 +145,9 @@ class LuiController(object):
                 if dstCard is not None:
                     self._previous_cards = []
                     self._previous_cards.append(dstCard)
+            # set _previous_cards to first page in case it's empty
+            if len(self._previous_cards) == 0:
+                self._previous_cards.append(self._config.getCard(0))
             # check for double tap if configured and render current page
             if self._config.get("screensaver.doubleTapToUnlock") and int(value) >= 2:
                 self._current_card = self._previous_cards.pop()
