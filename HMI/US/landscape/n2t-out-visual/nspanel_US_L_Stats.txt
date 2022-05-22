@@ -26,6 +26,10 @@ cardAlarm
 	38   Component(s)
 	364  Line(s) of event code
 	224  Unique line(s) of event code
+cardGrid
+	42   Component(s)
+	439  Line(s) of event code
+	254  Unique line(s) of event code
 popupShutter
 	20   Component(s)
 	244  Line(s) of event code
@@ -42,10 +46,6 @@ cardMedia
 	33   Component(s)
 	350  Line(s) of event code
 	179  Unique line(s) of event code
-cardGrid
-	42   Component(s)
-	439  Line(s) of event code
-	254  Unique line(s) of event code
 cardQR
 	30   Component(s)
 	363  Line(s) of event code
