@@ -10,7 +10,7 @@ from localization import get_translation
 # check Babel
 import importlib
 babel_spec = importlib.util.find_spec("babel")
-if babel_spec is not None:Q
+if babel_spec is not None:
     import babel.dates
 
 class LuiPagesGen(object):
