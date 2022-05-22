@@ -3,6 +3,7 @@ import dateutil.parser as dp
 
 from icon_mapping import get_icon_id
 from icons import get_icon_id_ha
+from icons import get_action_id_ha
 from helper import scale, rgb_dec565, rgb_brightness, get_attr_safe, convert_temperature
 from localization import get_translation
 
@@ -146,9 +147,9 @@ class LuiPagesGen(object):
 
             device_class = entity.attributes.get("device_class", "")
             icon_id = get_icon_id_ha("cover", state=entity.state, device_class=device_class, overwrite=icon)
-            icon_up   = get_icon_id("arrow-up")
-            icon_stop = get_icon_id("stop")
-            icon_down = get_icon_id("arrow-down")
+            icon_up   = get_action_id_ha(ha_type="cover", action="open", device_class=device_class)
+            icon_stop = get_action_id_ha(ha_type="cover", action="stop", device_class=device_class)
+            icon_down = get_action_id_ha(ha_type="cover", action="close", device_class=device_class)
             
             pos = int(entity.attributes.get("current_position", 50))
             if pos == 100:
@@ -440,14 +441,19 @@ class LuiPagesGen(object):
             pos_status = pos
 
         
-        icon_up   = get_icon_id("arrow-up")
-        icon_stop = get_icon_id("stop")
-        icon_down = get_icon_id("arrow-down")
+        icon_up   = get_action_id_ha(ha_type="cover", action="open", device_class=device_class)
+        icon_stop = get_action_id_ha(ha_type="cover", action="stop", device_class=device_class)
+        icon_down = get_action_id_ha(ha_type="cover", action="close", device_class=device_class)
 
         if pos == 100:
             icon_up = "disable"
         elif pos == 0:
             icon_down = "disable"
+        elif pos == "disable":
+            if pos_status == "open":
+                icon_up = "disable"
+            elif pos_status == "closed":
+                icon_down = "disable"
 
         pos_translation = get_translation(self._locale, "position")
         self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}")

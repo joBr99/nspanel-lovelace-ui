@@ -60,33 +60,21 @@ sensor_mapping = {
     "voltage": "flash"
 }
 
-cover_mapping_open = {
-    "awning":   "window-open",
-    "blind":    "blinds-open",
-    "curtain":  "curtains-closed",
-    "damper":   "checkbox-blank-circle",
-    "door":     "door-open",
-    "garage":   "garage-open",
-    "gate":     "gate-open",
-    "shade":    "blinds-open",
-    "shutter":  "window-shutter-open",
-    "window":   "window-open"
+cover_mapping = {
+    #"device_class": ("icon-open",             "icon-closed",    "icon-cover-open",         "icon-cover-stop", "icon-cover-close")
+    "awning":        ("window-open",           "window-closed",  "arrow-up",                "stop",            "arrow-down"),
+    "blind":         ("blinds-open",           "blinds",         "arrow-up",                "stop",            "arrow-down"),
+    "curtain":       ("curtains-closed",       "curtains",       "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "damper":        ("checkbox-blank-circle", "circle-slice-8", "arrow-up",                "stop",            "arrow-down"),
+    "door":          ("door-open",             "door-closed",    "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "garage":        ("garage-open",           "garage",         "arrow-up",                "stop",            "arrow-down"),
+    "gate":          ("gate-open",             "gate",           "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "shade":         ("blinds-open",           "blinds",         "arrow-up",                "stop",            "arrow-down"),
+    "shutter":       ("window-shutter-open",   "window-shutter", "arrow-up",                "stop",            "arrow-down"),
+    "window":        ("window-open"            "window-closed",  "arrow-up",                "stop",            "arrow-down"),
 }
 
-cover_mapping_closed = {
-    "awning":   "window-closed",
-    "blind":    "blinds",
-    "curtain":  "curtains",
-    "damper":   "circle-slice-8",
-    "door":     "door-closed",
-    "garage":   "garage",
-    "gate":     "gate",
-    "shade":    "blinds",
-    "shutter":  "window-shutter",
-    "window":   "window-closed"
-}
-
-def map_to_mdi_name(ha_type, state=None, device_class=None):
+def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
     if ha_type == "weather":
         return weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
     if ha_type == "button":
@@ -109,9 +97,9 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
         if device_class is None:
             device_class = "window"
         if state == "closed":
-            return cover_mapping_closed[device_class] if device_class in cover_mapping_closed else "alert-circle-outline"
+            return cover_mapping[device_class][1] if device_class in cover_mapping else "alert-circle-outline"
         else:
-            return cover_mapping_open[device_class] if device_class in cover_mapping_open else "alert-circle-outline"
+            return cover_mapping[device_class][0] if device_class in cover_mapping else "alert-circle-outline"
     if ha_type == "lock":
         return "lock-open" if state == "unlocked" else "lock"
 
@@ -129,3 +117,22 @@ def get_icon_id_ha(ha_name, state=None, device_class=None, overwrite=None):
     if overwrite is not None:
         return get_icon_id(overwrite)
     return get_icon_id(map_to_mdi_name(ha_name, state, device_class))
+
+def get_action_id_ha(ha_type, action, device_class=None, overwrite=None):
+    if overwrite is not None:
+        return get_icon_id(overwrite)
+    if ha_type == "cover":
+        if device_class is None:
+            device_class = "window"
+        if action == "open":
+            actionicon = cover_mapping[device_class][2] if device_class in cover_mapping else "alert-circle-outline"
+        elif action == "close":
+            actionicon = cover_mapping[device_class][4] if device_class in cover_mapping else "alert-circle-outline"
+        elif action == "stop":
+            actionicon = cover_mapping[device_class][3] if device_class in cover_mapping else "alert-circle-outline"
+        else:
+            actionicon = "alert-circle-outline"
+    else:
+        actionicon = "alert-circle-outline"
+    return get_icon_id(actionicon)
+
