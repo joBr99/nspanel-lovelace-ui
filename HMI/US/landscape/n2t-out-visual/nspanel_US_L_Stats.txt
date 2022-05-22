@@ -52,11 +52,11 @@ cardQR
 	205  Unique line(s) of event code
 cardEntities
 	65   Component(s)
-	1117 Line(s) of event code
-	487  Unique line(s) of event code
+	1121 Line(s) of event code
+	491  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	402  Component(s)
-	4439 Line(s) of event code
-	1163 Unique line(s) of event code
+	4443 Line(s) of event code
+	1167 Unique line(s) of event code
