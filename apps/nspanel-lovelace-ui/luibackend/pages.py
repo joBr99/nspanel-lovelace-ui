@@ -426,7 +426,8 @@ class LuiPagesGen(object):
     
     def generate_shutter_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)
-        icon_id   = get_icon_id_ha("cover", state=entity.state)
+        device_class = entity.attributes.get("device_class", "")
+        icon_id   = get_icon_id_ha("cover", state=entity.state, device_class=device_class)
 
         pos = entity.attributes.get("current_position")
         if pos is None:
