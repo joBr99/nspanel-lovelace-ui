@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-22 07:55:04.215774434 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-22 07:55:04.651779305 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-22 07:58:25.897799068 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-22 07:58:26.425802978 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-22 07:55:04.219774478 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-22 07:55:04.651779305 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-22 07:58:25.901799098 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-22 07:58:26.425802978 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -464,8 +464,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-22 07:55:04.215774434 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-22 07:55:04.651779305 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-22 07:58:25.897799068 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-22 07:58:26.425802978 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
