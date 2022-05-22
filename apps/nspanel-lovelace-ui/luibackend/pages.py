@@ -10,7 +10,7 @@ from localization import get_translation
 # check Babel
 import importlib
 babel_spec = importlib.util.find_spec("babel")
-if babel_spec is not None:
+if babel_spec is not None:Q
     import babel.dates
 
 class LuiPagesGen(object):
@@ -406,7 +406,7 @@ class LuiPagesGen(object):
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
             self.update_screensaver_weather()
-        if card.cardType == "generate_qr_page":
+        if card.cardType == "cardQR":
             self.generate_qr_page(navigation, card.title, card.entities, card.cardType)
 
 
