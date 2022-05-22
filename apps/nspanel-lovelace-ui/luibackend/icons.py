@@ -27,8 +27,37 @@ sensor_mapping_off = {
 }
 
 sensor_mapping = {
+    "apparent_power": "flash",
+    "aqi": "smog",
+    "battery": "battery",
+    "carbon_dioxide": "smog",
+    "carbon_monoxide": "smog",
+    "current": "flash",
+    "date": "calendar",
+    "duration": "timer",
+    "energy": "flash",
+    "frequency": "chart-bell-curve",
+    "gas": "gas-cylinder",
+    "humidity": "air-humidifier",
+    "illuminance": "light",
+    "monetary": "cash",
+    "nitrogen_dioxide": "smog",
+    "nitrogen_monoxide": "smog",
+    "nitrous_oxide": "smog",
+    "ozone": "smog",
+    "pm1": "smog",
+    "pm10": "smog",
+    "pm25": "smog",
+    "power_factor": "flash",
+    "power": "flash",
+    "pressure": "gauge",
+    "reactive_power": "flash",
+    "signal_strength": "signal",
+    "sulphur_dioxide": "smog",
     "temperature": "thermometer",
-    "power": "flash"    
+    "timestamp": "calendar-clock",
+    "volatile_organic_compounds": "smog",
+    "voltage": "flash"
 }
 
 cover_mapping_open = {
