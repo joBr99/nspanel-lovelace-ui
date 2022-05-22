@@ -137,6 +137,11 @@ class LuiPagesGen(object):
                 return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
+        if entityType == "iText":
+                key   = entityId.split(".")[1]
+                value = entityId.split(".")[2]
+                icon_id = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
+                return f"~text~{entityId}~{icon_id}~17299~{key}~{value}"
         if not self._ha_api.entity_exists(entityId):
             return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
         
@@ -372,8 +377,8 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(command)
         
 
-    def generate_qr_page(self, navigation, heading, items, cardType):
-        command = f"entityUpd~heading~{navigation}~~"
+    def generate_qr_page(self, navigation, heading, items, cardType, qrcode):
+        command = f"entityUpd~{heading}~{navigation}~{qrcode}"
         # Get items and construct cmd string
         for item in items:
             command += self.generate_entities_item(item, cardType)
@@ -406,8 +411,10 @@ class LuiPagesGen(object):
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
             self.update_screensaver_weather()
-        if card.cardType == "generate_qr_page":
-            self.generate_qr_page(navigation, card.title, card.entities, card.cardType)
+        if card.cardType == "cardQR":
+            qrcode = card.raw_config.get("qrCode", "")
+            self.generate_qr_page(navigation, card.title, card.entities, card.cardType, qrcode)
+
 
 
     def generate_light_detail_page(self, entity):
