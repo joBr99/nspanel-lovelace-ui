@@ -352,7 +352,7 @@ nspanel-1:
         entity: alarm_control_panel.alarmo
       - type: cardQR
         title: Guest Wifi
-        qr_code: "WIFI:S:test_ssid;T:WPA;P:test_pw;;"
+        qrCode: "WIFI:S:test_ssid;T:WPA;P:test_pw;;"
         entities:
           - entity: iText.Name.test_ssid
             icon: wifi
