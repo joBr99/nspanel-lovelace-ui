@@ -230,6 +230,22 @@ EU Version: `FlashNextion http://nspanel.pky.eu/lui-release.tft`
 US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
 
 US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
+   
+#### (Optional) Seperate physical buttons from relay actions
+
+If you do not want your NSPanel physical buttons to trigger the relays and prefer to have them as software configurable buttons, open the Tasmota console of your NSPanel and enter the following:
+   
+`SetOption73 1`
+ 
+Your relays will now appear as switches in HomeAssistant and you can control your buttons by using automations:
+   
+   ![image](https://user-images.githubusercontent.com/57167030/169677954-5b811d12-dab8-4415-89aa-e4196732765e.png)
+
+You may reverse this change by entering the following in the Tasmota console of your NSPanel:
+
+`SetOption73 0`
+
+Please note: Doing this will mean that if HomeAssistant is not working for any reason your buttons will not function correctly.
 
 </p>
 </details>
