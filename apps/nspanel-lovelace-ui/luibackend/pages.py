@@ -145,7 +145,7 @@ class LuiPagesGen(object):
         name = name if name is not None else entity.attributes.friendly_name
         if entityType == "cover":
 
-            device_class = entity.attributes.get("device_class", "")
+            device_class = entity.attributes.get("device_class", "window")
             icon_id = get_icon_id_ha("cover", state=entity.state, device_class=device_class, overwrite=icon)
             icon_up   = get_action_id_ha(ha_type="cover", action="open", device_class=device_class)
             icon_stop = get_action_id_ha(ha_type="cover", action="stop", device_class=device_class)
@@ -153,12 +153,12 @@ class LuiPagesGen(object):
             
             pos = int(entity.attributes.get("current_position", 50))
             if pos == 100:
-                status = f"disable|{icon_stop}|{icon_down}"
+                status = f"disable|enable|enable"
             elif pos == 0:
-                status = f"{icon_up}|{icon_stop}|disable"
+                status = f"enable|enable|disable"
             else:
-                status = f"{icon_up}|{icon_stop}|{icon_down}"
-            return f"~shutter~{entityId}~{icon_id}~17299~{name}~{status}"
+                status = f"enable|enable|enable"
+            return f"~shutter~{entityId}~{icon_id}~17299~{name}~{icon_up}|{icon_stop}|{icon_down}|{status}"
         if entityType in "light":
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity)
@@ -444,19 +444,22 @@ class LuiPagesGen(object):
         icon_up   = get_action_id_ha(ha_type="cover", action="open", device_class=device_class)
         icon_stop = get_action_id_ha(ha_type="cover", action="stop", device_class=device_class)
         icon_down = get_action_id_ha(ha_type="cover", action="close", device_class=device_class)
-
+        icon_up_status = "enable"
+        icon_stop_status = "enable"
+        icon_down_status = "enable"
+        
         if pos == 100:
-            icon_up = "disable"
+            icon_up_status = "disable"
         elif pos == 0:
-            icon_down = "disable"
+            icon_down_status = "disable"
         elif pos == "disable":
             if pos_status == "open":
-                icon_up = "disable"
+                icon_up_status = "disable"
             elif pos_status == "closed":
-                icon_down = "disable"
+                icon_down_status = "disable"
 
         pos_translation = get_translation(self._locale, "position")
-        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}")
 
     def send_message_page(self, id, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
