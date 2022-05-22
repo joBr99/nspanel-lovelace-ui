@@ -89,7 +89,7 @@ The following message can be used to update the content on the cardEntities Page
 
 `~light~light.entityName~1~17299~Light1~0`
 
-`~shutter~cover.entityName~0~17299~Shutter2~`
+`~shutter~cover.entityName~0~17299~Shutter2~iconUp|iconStop|iconDown`
 
 `~delete~~~~~`
 
@@ -111,7 +111,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupShutter Page
 
-`entityUpdateDetail~*ignored*~*sliderPos*~2ndrow~textPosition`
+`entityUpdateDetail~*ignored*~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown`
 
 `entityUpdateDetail~1~77`
 
