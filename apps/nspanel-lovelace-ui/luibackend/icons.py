@@ -37,8 +37,8 @@ cover_mapping_open = {
     "curtain":  "curtains-closed",
     "damper":   "checkbox-blank-circle",
     "door":     "door-open",
-    "garage":   "garage",
-    "gate":     "gate",
+    "garage":   "garage-open",
+    "gate":     "gate-open",
     "shade":    "blinds-open",
     "shutter":  "window-shutter-open",
     "window":   "window-open"
@@ -50,8 +50,8 @@ cover_mapping_closed = {
     "curtain":  "curtains",
     "damper":   "circle-slice-8",
     "door":     "door-closed",
-    "garage":   "garage-open",
-    "gate":     "gate-open",
+    "garage":   "garage",
+    "gate":     "gate",
     "shade":    "blinds",
     "shutter":  "window-shutter",
     "window":   "window-closed"
