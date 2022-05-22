@@ -422,7 +422,7 @@ Button bText1
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -469,7 +469,7 @@ Button bText2
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
