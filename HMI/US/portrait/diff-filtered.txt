@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-22 19:32:14.938675636 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-22 19:32:14.502677064 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-22 19:32:14.926675675 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-22 19:32:14.502677064 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-22 19:32:14.926675675 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-23 05:51:12.049626846 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-23 05:51:11.625618526 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-23 05:51:12.005625983 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-23 05:51:11.625618526 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-23 05:51:12.005625983 +0000
 + Hotspot mSwipeNext
 +         Scope                               : local
 +@@ -1892,6 +2120,169 @@
@@ -32,8 +32,8 @@
 ++                                            }else if(tTmp.txt=="enable")
 ++                                                spstr tId.txt,bDown5.txt,"|",2
 +diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-05-22 19:32:14.502677064 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-22 19:32:14.926675675 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-23 05:51:11.625618526 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-23 05:51:12.005625983 +0000
 +@@ -34,7 +34,7 @@
 +     Attributes
 +         Scope         : local
@@ -43,5 +43,5 @@
 +     
 + Variable (string) entn
 +     Attributes
-+--- HMI/n2t-out/pageStartup.txt	2022-05-22 19:32:14.502677064 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-22 19:32:14.926675675 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-23 05:51:11.625618526 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-23 05:51:12.005625983 +0000
