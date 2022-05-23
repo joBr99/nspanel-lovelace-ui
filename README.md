@@ -461,6 +461,7 @@ key | optional | type | default | description
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
 `defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
+`color` | True | string | `None` | Used to change the default coloring on the screensaver. The color for each element is set seperately and must be specified as a decimal (not hex) RGB565 color. Valid colors range from 0-65535 (0x0000-0xFFFF hex). Format is: `background~time~timeAMPM~date~tMainIcon~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tF1Icon~tF2Icon~tF3Icon~tF4Icon~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMainIconAlt~tMainTextAlt~tMRIcon~tMR`
 
 Example for the weatherOverride config options:
 
@@ -470,6 +471,12 @@ Example for the weatherOverride config options:
         name: name
         icon: lightbulb
 ```
+
+Example for color config option:
+```yaml
+   color: 111~222~333~444~555~666~777~888~999~1111~2222~3333~4444~5555~6666~7777~8888~9999~11111~22222~33333~44444~55555
+```
+N.B. This generates a nonsensical color scheme and should not be used.
 
 #### Schedule sleep brightness
 
