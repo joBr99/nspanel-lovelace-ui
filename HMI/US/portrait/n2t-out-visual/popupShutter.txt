@@ -417,8 +417,8 @@ Button bDown1
         Opacity                             : 127
         x coordinate                        : 199
         y coordinate                        : 156
-        Width                               : 50
-        Height                              : 50
+        Width                               : 70
+        Height                              : 70
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -462,10 +462,10 @@ Button bStop1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 136
+        x coordinate                        : 125
         y coordinate                        : 156
-        Width                               : 50
-        Height                              : 50
+        Width                               : 70
+        Height                              : 70
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -509,10 +509,10 @@ Button bUp1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 73
+        x coordinate                        : 51
         y coordinate                        : 156
-        Width                               : 50
-        Height                              : 50
+        Width                               : 70
+        Height                              : 70
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
