@@ -247,8 +247,8 @@ Text tPosHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 8
-        y coordinate                        : 168
+        x coordinate                        : 106
+        y coordinate                        : 273
         Width                               : 100
         Height                              : 30
         Effect                              : load
@@ -324,8 +324,8 @@ Slider hPosition
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 9
-        y coordinate                        : 198
+        x coordinate                        : 35
+        y coordinate                        : 304
         Width                               : 250
         Height                              : 43
         Effect                              : load
@@ -415,8 +415,8 @@ Button bDown1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 112
-        y coordinate                        : 88
+        x coordinate                        : 199
+        y coordinate                        : 156
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -462,8 +462,8 @@ Button bStop1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 60
-        y coordinate                        : 88
+        x coordinate                        : 136
+        y coordinate                        : 156
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -509,8 +509,8 @@ Button bUp1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 8
-        y coordinate                        : 88
+        x coordinate                        : 73
+        y coordinate                        : 156
         Width                               : 50
         Height                              : 50
         Effect                              : load

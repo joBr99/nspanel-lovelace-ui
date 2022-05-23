@@ -42,14 +42,14 @@ cardMedia
 	33   Component(s)
 	350  Line(s) of event code
 	179  Unique line(s) of event code
-screensaver
-	35   Component(s)
-	296  Line(s) of event code
-	237  Unique line(s) of event code
 popupShutter
 	20   Component(s)
 	244  Line(s) of event code
 	138  Unique line(s) of event code
+screensaver
+	35   Component(s)
+	296  Line(s) of event code
+	237  Unique line(s) of event code
 cardEntities
 	77   Component(s)
 	1363 Line(s) of event code
