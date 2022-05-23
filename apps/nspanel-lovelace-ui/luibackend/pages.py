@@ -156,11 +156,19 @@ class LuiPagesGen(object):
             icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
             icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
             
-            pos = int(entity.attributes.get("current_position", 50))
+            pos = entity.attributes.get("current_position")
             if pos == 100:
                 status = f"disable|enable|enable"
             elif pos == 0:
                 status = f"enable|enable|disable"
+            elif pos is None:
+                pos_status = entity.state
+                if pos_status == "open":
+                    status = f"disable|enable|enable"
+                elif pos_status == "closed":
+                    status = f"enable|enable|disable"
+                else:
+                    status = f"enable|enable|enable"
             else:
                 status = f"enable|enable|enable"
             return f"~shutter~{entityId}~{icon_id}~17299~{name}~{icon_up}|{icon_stop}|{icon_down}|{status}"
