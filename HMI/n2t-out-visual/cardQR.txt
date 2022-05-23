@@ -43,7 +43,7 @@ Variable (string) strCommand
         ID            : 6
         Scope         : local
         Text          : 
-        Max. Text Size: 200
+        Max. Text Size: 275
     
 Variable (string) entn
     Attributes
@@ -292,7 +292,7 @@ QR Code qr0
         Effect Time                         : 300
         Logo overlay                        : no
         Text                                : 
-        Max. Text Size                      : 105
+        Max. Text Size                      : 100
     
 Button bNext
     Attributes
@@ -422,7 +422,7 @@ Button bText1
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -469,7 +469,7 @@ Button bText2
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -564,8 +564,8 @@ Dual-state Button btOnOff2
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
-            covx btOnOff1.val,tTmp.txt,0,0
+            tSend.txt="event,buttonPress2,"+entn2.txt+",OnOff,"
+            covx btOnOff2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0

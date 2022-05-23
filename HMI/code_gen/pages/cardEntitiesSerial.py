@@ -49,47 +49,50 @@ for i in range(1,6):
                 vis hSlider{i},0
                 vis nNum{i},0
                 // get Button State (optional Value)
-                spstr strCommand.txt,tId.txt,"~",{idxstart+5}
+                spstr strCommand.txt,tId.txt,"~",{idxstart+5}              
 
                 // up button
-                spstr tId.txt,tTmp.txt,"|",0
+                spstr tId.txt,tTmp.txt,"|",3
                 if(tTmp.txt=="disable")
                 {{
                   bUp{i}.pco=27501
+                  spstr tId.txt,bUp{i}.txt,"|",0
                   tsw bUp{i},0
                 }}
-                else if(tTmp.txt!="")
+                else if(tTmp.txt=="enable")
                 {{
                   bUp{i}.pco=65535
-                  bUp{i}.txt=tTmp.txt
+                  spstr tId.txt,bUp{i}.txt,"|",0
                   tsw bUp{i},1
                 }}
 
                 // stop button
-                spstr tId.txt,tTmp.txt,"|",1
+                spstr tId.txt,tTmp.txt,"|",4
                 if(tTmp.txt=="disable")
                 {{
                   bStop{i}.pco=27501
+                  spstr tId.txt,bStop{i}.txt,"|",1
                   tsw bStop{i},0
                 }}
-                else if(tTmp.txt!="")
+                else if(tTmp.txt=="enable")
                 {{
                   bStop{i}.pco=65535
-                  bStop{i}.txt=tTmp.txt
+                  spstr tId.txt,bStop{i}.txt,"|",1
                   tsw bStop{i},1
                 }}
 
                 // down button
-                spstr tId.txt,tTmp.txt,"|",2
+                spstr tId.txt,tTmp.txt,"|",5
                 if(tTmp.txt=="disable")
                 {{
                   bDown{i}.pco=27501
+                  spstr tId.txt,bDown{i}.txt,"|",2
                   tsw bDown{i},0
                 }}
-                else if(tTmp.txt!="")
+                else if(tTmp.txt=="enable")
                 {{
                   bDown{i}.pco=65535
-                  bDown{i}.txt=tTmp.txt
+                  spstr tId.txt,bDown{i}.txt,"|",2
                   tsw bDown{i},1
                 }}
               }}

@@ -34,7 +34,7 @@ Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 200
+        Max. Text Size: 270
     
 Variable (string) entn
     Attributes
@@ -154,7 +154,7 @@ QR Code qr0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Text                                : 
-        Max. Text Size                      : 105
+        Max. Text Size                      : 100
     
 Button bNext
     Attributes
@@ -221,7 +221,7 @@ Button bText1
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
     
     Events
         Touch Press Event
@@ -246,7 +246,7 @@ Button bText2
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
     
     Events
         Touch Press Event
@@ -302,8 +302,8 @@ Dual-state Button btOnOff2
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
-            covx btOnOff1.val,tTmp.txt,0,0
+            tSend.txt="event,buttonPress2,"+entn2.txt+",OnOff,"
+            covx btOnOff2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
