@@ -33,6 +33,7 @@ def map_color(key, theme= None, state=None):
         config_color = theme[key]
     else:
         config_color = default_screensaver_color_mapping[key]
+    return config_color
 
 def get_screensaver_color_output(theme=None):
     color_output = "color"
