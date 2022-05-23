@@ -151,10 +151,10 @@ class LuiPagesGen(object):
         if entityType == "cover":
 
             device_class = entity.attributes.get("device_class", "window")
-            icon_id = get_icon_id_ha("cover", state=entity.state, device_class=device_class, overwrite=icon)
-            icon_up   = get_action_id_ha(ha_type="cover", action="open", device_class=device_class)
-            icon_stop = get_action_id_ha(ha_type="cover", action="stop", device_class=device_class)
-            icon_down = get_action_id_ha(ha_type="cover", action="close", device_class=device_class)
+            icon_id = get_icon_id_ha(ha_type=entityType, state=entity.state, device_class=device_class, overwrite=icon)
+            icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
+            icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
+            icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
             
             pos = int(entity.attributes.get("current_position", 50))
             if pos == 100:
@@ -454,8 +454,9 @@ class LuiPagesGen(object):
     
     def generate_shutter_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)
+        entityType="cover"
         device_class = entity.attributes.get("device_class", "")
-        icon_id   = get_icon_id_ha("cover", state=entity.state, device_class=device_class)
+        icon_id   = get_icon_id_ha(entityType, state=entity.state, device_class=device_class)
 
         pos = entity.attributes.get("current_position")
         if pos is None:
@@ -465,9 +466,9 @@ class LuiPagesGen(object):
             pos_status = pos
 
         
-        icon_up   = get_action_id_ha(ha_type="cover", action="open", device_class=device_class)
-        icon_stop = get_action_id_ha(ha_type="cover", action="stop", device_class=device_class)
-        icon_down = get_action_id_ha(ha_type="cover", action="close", device_class=device_class)
+        icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
+        icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
+        icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
         icon_up_status = "enable"
         icon_stop_status = "enable"
         icon_down_status = "enable"
