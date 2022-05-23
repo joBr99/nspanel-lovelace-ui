@@ -438,7 +438,7 @@ class LuiPagesGen(object):
         if card.cardType == "screensaver":
             self.update_screensaver_weather()
             # send color if configured in theme
-            theme = self._config.get("theme")
+            theme = card.raw_config.get("theme")
             if theme is not None:
                 self._send_mqtt_msg(get_screensaver_color_output(theme))
         if card.cardType == "cardQR":
