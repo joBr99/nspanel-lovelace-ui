@@ -127,7 +127,7 @@ class LuiPagesGen(object):
             altLayout = f"~{get_icon_id('water-percent')}~{we.attributes.humidity} %"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
- 
+        
         # send color if configured in screensaver
         if theme is not None:
             if not ("AutoWeather" in theme and theme["AutoWeather"] == "auto"):
@@ -436,12 +436,7 @@ class LuiPagesGen(object):
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")
-
             self.update_screensaver_weather(theme)
-            
-            # send color if configured in theme
-            if theme is not None:
-                self._send_mqtt_msg(get_screensaver_color_output(theme))
         if card.cardType == "cardQR":
             qrcode = card.raw_config.get("qrCode", "")
             self.generate_qr_page(navigation, card.title, card.entities, card.cardType, qrcode)
