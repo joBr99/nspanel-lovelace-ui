@@ -1,6 +1,7 @@
 import datetime
 import dateutil.parser as dp
 
+from theme import get_screensaver_color_output
 from icon_mapping import get_icon_id
 from icons import get_icon_id_ha
 from icons import get_action_id_ha
@@ -61,6 +62,7 @@ class LuiPagesGen(object):
         global babel_spec
         we_name = self._config._config_screensaver.entity.entityId
         unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
+        state = {}
         
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
@@ -69,6 +71,7 @@ class LuiPagesGen(object):
             return
 
         icon_cur        = get_icon_id_ha("weather", state=we.state)
+        state["tMainIcon"] = we.state
         text_cur        = convert_temperature(we.attributes.temperature, unit)
 
         forecastSkip = self._config._config_screensaver.raw_config.get(f"forecastSkip")+1
@@ -95,6 +98,14 @@ class LuiPagesGen(object):
                         else:
                             up = up.strftime('%a')
                     icon = get_icon_id_ha("weather", state=we.attributes.forecast[fid]['condition'])
+                    if i == 1:
+                        state["tF1Icon"] = we.attributes.forecast[fid]['condition']
+                    elif i == 2:
+                        state["tF2Icon"] = we.attributes.forecast[fid]['condition']
+                    elif i == 3:
+                        state["tF3Icon"] = we.attributes.forecast[fid]['condition']
+                    elif i == 4:
+                        state["tF4Icon"] = we.attributes.forecast[fid]['condition']
                     down = convert_temperature(we.attributes.forecast[fid]['temperature'], unit)
                 else:
                     up = ""
@@ -116,6 +127,13 @@ class LuiPagesGen(object):
             altLayout = f"~{get_icon_id('water-percent')}~{we.attributes.humidity} %"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
+ 
+        # send color if configured in screensaver
+        theme = self._config.get("theme")
+        if theme is not None:
+            if not ("AutoWeather" in theme and theme["AutoWeather"] == "auto"):
+                state = None
+            self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state))
 
     def generate_entities_item(self, entity, cardType):
         entityId = entity.entityId
@@ -419,10 +437,10 @@ class LuiPagesGen(object):
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
             self.update_screensaver_weather()
-            # send color if configured in screensaver
-            color = card.raw_config.get("color")
-            if color is not None:
-                self._send_mqtt_msg(f"color~{color}")
+            # send color if configured in theme
+            theme = self._config.get("theme")
+            if theme is not None:
+                self._send_mqtt_msg(get_screensaver_color_output(theme))
         if card.cardType == "cardQR":
             qrcode = card.raw_config.get("qrCode", "")
             self.generate_qr_page(navigation, card.title, card.entities, card.cardType, qrcode)

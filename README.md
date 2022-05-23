@@ -385,6 +385,7 @@ key | optional | type | default | description
 `dateAdditonalTemplate` | True | string | `" - {{ states('sun.sun') }}"` | Addional Text dispayed after Date, can contain Homeassistant Templates
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
 `cards` | False | complex | | configuration for cards that are displayed on panel
+`theme` | True | complex | | configuration for theme
 `screensaver` | True | complex | | configuration for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items
 
@@ -461,7 +462,6 @@ key | optional | type | default | description
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
 `defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
-`color` | True | string | `None` | Used to change the default coloring on the screensaver. The color for each element is set seperately and must be specified as a decimal (not hex) RGB565 color. Valid colors range from 0-65535 (0x0000-0xFFFF hex). Format is: `background~time~timeAMPM~date~tMainIcon~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tF1Icon~tF2Icon~tF3Icon~tF4Icon~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMainIconAlt~tMainTextAlt~tMRIcon~tMR`
 
 Example for the weatherOverride config options:
 
@@ -471,12 +471,38 @@ Example for the weatherOverride config options:
         name: name
         icon: lightbulb
 ```
+#### Possible configuration values for theme config
 
-Example for color config option:
-```yaml
-   color: 111~222~333~444~555~666~777~888~999~1111~2222~3333~4444~5555~6666~7777~8888~9999~11111~22222~33333~44444~55555
-```
-N.B. This generates a nonsensical color scheme and should not be used.
+This only works for the screensaver currently.
+
+key | option | type | default | description
+-- | -- | -- | -- | --
+`background` | True | list | Black | `[R, G, B]`
+`time` | True | list | White | `[R, G, B]`
+`timeAMPM` | True | list | White | `[R, G, B]`
+`date` | True | list | White | `[R, G, B]`
+`tMainIcon` | True | list | White | `[R, G, B]`
+`tMainText` | True | list | White | `[R, G, B]`
+`tForecast1` | True | list | White | `[R, G, B]`
+`tForecast2` | True | list | White | `[R, G, B]`
+`tForecast3` | True | list | White | `[R, G, B]`
+`tForecast4` | True | list | White | `[R, G, B]`
+`tF1Icon` | True | list | White | `[R, G, B]`
+`tF2Icon` | True | list | White | `[R, G, B]`
+`tF3Icon` | True | list | White | `[R, G, B]`
+`tF4Icon` | True | list | White | `[R, G, B]`
+`tForecast1Val` | True | list | White | `[R, G, B]`
+`tForecast2Val` | True | list | White | `[R, G, B]`
+`tForecast3Val` | True | list | White | `[R, G, B]`
+`tForecast4Val` | True | list | White | `[R, G, B]`
+`bar` | True | list | White | `[R, G, B]`
+`tMainIconAlt` | True | list | White | `[R, G, B]`
+`tMainTextAlt` | True | list | White | `[R, G, B]`
+`tMRIcon` | True | list | White | `[R, G, B]`
+`tMR` | True | list | White | `[R, G, B]`
+`AutoWeather` | True | string | None | Set to `auto` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence
+
+Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red or `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same). Also note that the screen has a low contrast ratio, so colors look sigificantly different at full display brightness and lowest brightness.
 
 #### Schedule sleep brightness
 
