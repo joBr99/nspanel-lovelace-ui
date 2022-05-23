@@ -161,7 +161,7 @@ class LuiPagesGen(object):
                 status = f"disable|enable|enable"
             elif pos == 0:
                 status = f"enable|enable|disable"
-            elif pos == None:
+            elif pos is None:
                 pos_status = entity.state
                 if pos_status == "open":
                     status = f"disable|enable|enable"
