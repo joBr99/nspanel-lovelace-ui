@@ -290,7 +290,7 @@ class LuiPagesGen(object):
         else:
             entity        = self._ha_api.get_entity(item)
             heading       = entity.attributes.friendly_name
-            icon          = get_icon_id('alert-circle-outline')
+            icon          = get_icon_id('speaker-off')
             title         = get_attr_safe(entity, "media_title", "")
             author        = get_attr_safe(entity, "media_artist", "")
             volume        = int(get_attr_safe(entity, "volume_level", 0)*100)
