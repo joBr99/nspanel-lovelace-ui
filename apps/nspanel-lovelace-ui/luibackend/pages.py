@@ -1,6 +1,7 @@
 import datetime
 import dateutil.parser as dp
 
+from theme import get_screensaver_color_output
 from icon_mapping import get_icon_id
 from icons import get_icon_id_ha
 from icons import get_action_id_ha
@@ -419,10 +420,10 @@ class LuiPagesGen(object):
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
             self.update_screensaver_weather()
-            # send color if configured in screensaver
-            color = card.raw_config.get("color")
-            if color is not None:
-                self._send_mqtt_msg(f"color~{color}")
+            # send color if configured in theme
+            theme = self._config.get("theme")
+            if theme is not None:
+                self._send_mqtt_msg(get_screensaver_color_output(theme))
         if card.cardType == "cardQR":
             qrcode = card.raw_config.get("qrCode", "")
             self.generate_qr_page(navigation, card.title, card.entities, card.cardType, qrcode)
