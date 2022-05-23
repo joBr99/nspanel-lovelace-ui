@@ -385,6 +385,7 @@ key | optional | type | default | description
 `dateAdditonalTemplate` | True | string | `" - {{ states('sun.sun') }}"` | Addional Text dispayed after Date, can contain Homeassistant Templates
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
 `cards` | False | complex | | configuration for cards that are displayed on panel
+`theme` | True | complex | | configuration for theme
 `screensaver` | True | complex | | configuration for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items
 
@@ -461,7 +462,6 @@ key | optional | type | default | description
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
 `defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
-`color` | True | string | `None` | Used to change the default coloring on the screensaver. The color for each element is set seperately and must be specified as a decimal (not hex) RGB565 color. Valid colors range from 0-65535 (0x0000-0xFFFF hex). Format is: `background~time~timeAMPM~date~tMainIcon~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tF1Icon~tF2Icon~tF3Icon~tF4Icon~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMainIconAlt~tMainTextAlt~tMRIcon~tMR`
 
 Example for the weatherOverride config options:
 
@@ -471,12 +471,35 @@ Example for the weatherOverride config options:
         name: name
         icon: lightbulb
 ```
+#### Possible configuration values for theme config
 
-Example for color config option:
-```yaml
-   color: 111~222~333~444~555~666~777~888~999~1111~2222~3333~4444~5555~6666~7777~8888~9999~11111~22222~33333~44444~55555
-```
-N.B. This generates a nonsensical color scheme and should not be used.
+This only works for the screensaver currently.
+
+key | option | type | default | description
+-- | -- | -- | -- | --
+`background` | True | string | 0 (Black) | RGB565 color
+`time` | True | string | 65535 (White) | RGB565 color
+`timeAMPM` | True | string | 65535 (White) | RGB565 color
+`date` | True | string | 65535 (White) | RGB565 color
+`tMainIcon` | True | string | 65535 (White) | RGB565 color
+`tMainText` | True | string | 65535 (White) | RGB565 color
+`tForecast1` | True | string | 65535 (White) | RGB565 color
+`tForecast2` | True | string | 65535 (White) | RGB565 color
+`tForecast3` | True | string | 65535 (White) | RGB565 color
+`tForecast4` | True | string | 65535 (White) | RGB565 color
+`tF1Icon` | True | string | 65535 (White) | RGB565 color
+`tF2Icon` | True | string | 65535 (White) | RGB565 color
+`tForecast1Val` | True | string | 65535 (White) | RGB565 color
+`tForecast2Val` | True | string | 65535 (White) | RGB565 color
+`tForecast3Val` | True | string | 65535 (White) | RGB565 color
+`tForecast4Val` | True | string | 65535 (White) | RGB565 color
+`bar` | True | string | 65535 (White) | RGB565 color
+`tMainIconAlt` | True | string | 65535 (White) | RGB565 color
+`tMainTextAlt` | True | string | 65535 (White) | RGB565 color
+`tMRIcon` | True | string | 65535 (White) | RGB565 color
+`tMR` | True | string | 65535 (White) | RGB565 color
+
+RGB565 colors must be specified as decimal (not hex) RGB565 color. Valid colors range from 0-65535 (0x0000-0xFFFF hex).
 
 #### Schedule sleep brightness
 
