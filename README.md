@@ -385,7 +385,6 @@ key | optional | type | default | description
 `dateAdditonalTemplate` | True | string | `" - {{ states('sun.sun') }}"` | Addional Text dispayed after Date, can contain Homeassistant Templates
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
 `cards` | False | complex | | configuration for cards that are displayed on panel
-`theme` | True | complex | | configuration for theme
 `screensaver` | True | complex | | configuration for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items
 
@@ -460,6 +459,7 @@ key | optional | type | default | description
 `weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
+`theme` | True | complex | | configuration for theme
 `defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
 
@@ -471,9 +471,7 @@ Example for the weatherOverride config options:
         name: name
         icon: lightbulb
 ```
-#### Possible configuration values for theme config
-
-This only works for the screensaver currently.
+#### Possible configuration values for screensaver theme config
 
 key | option | type | default | description
 -- | -- | -- | -- | --
