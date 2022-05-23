@@ -77,30 +77,29 @@ cover_mapping = {
 def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
     if ha_type == "weather":
         return weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
-    if ha_type == "button":
+    elif ha_type == "button":
         return "gesture-tap-button"
-    if ha_type == "scene":
+    elif ha_type == "scene":
         return "palette"
-    if ha_type == "script":
+    elif ha_type == "script":
         return "script-text"
-    if ha_type == "switch":
+    elif ha_type == "switch":
         return "light-switch"
-    if ha_type == "number":
+    elif ha_type == "number":
         return "ray-vertex"
-    if ha_type == "light":
+    elif ha_type == "light":
         return "lightbulb"
-    if ha_type == "fan":
+    elif ha_type == "fan":
         return "fan"
-    if ha_type == "input_boolean":
+    elif ha_type == "input_boolean":
         return "check-circle-outline" if state == "on" else "close-circle-outline"
-    if ha_type == "cover":
+    elif ha_type == "cover":
         if state == "closed":
             return cover_mapping[device_class][1] if device_class in cover_mapping else "alert-circle-outline"
         else:
             return cover_mapping[device_class][0] if device_class in cover_mapping else "alert-circle-outline"
-    if ha_type == "lock":
+    elif ha_type == "lock":
         return "lock-open" if state == "unlocked" else "lock"
-
     elif ha_type == "sensor":
         if state == "on":
             return sensor_mapping_on[device_class] if device_class in sensor_mapping_on else "alert-circle-outline"
@@ -108,13 +107,13 @@ def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
             return sensor_mapping_off[device_class] if device_class in sensor_mapping_off else "alert-circle-outline"
         else:
             return sensor_mapping[device_class] if device_class in sensor_mapping else "alert-circle-outline"
+    else:
+        return "alert-circle-outline"
 
-    return "alert-circle-outline"
-
-def get_icon_id_ha(ha_name, state=None, device_class=None, overwrite=None):
+def get_icon_id_ha(ha_type, state=None, device_class=None, overwrite=None):
     if overwrite is not None:
         return get_icon_id(overwrite)
-    return get_icon_id(map_to_mdi_name(ha_name, state, device_class))
+    return get_icon_id(map_to_mdi_name(ha_type, state, device_class))
 
 def get_action_id_ha(ha_type, action, device_class=None, overwrite=None):
     if overwrite is not None:
