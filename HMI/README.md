@@ -111,7 +111,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupShutter Page
 
-`entityUpdateDetail~*ignored*~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown`
+`entityUpdateDetail~*ignored*~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown~iconUpStatus~iconStopStatus~iconDownStatus
 
 `entityUpdateDetail~1~77`
 

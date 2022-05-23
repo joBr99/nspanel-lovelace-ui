@@ -1,8 +1,10 @@
 import datetime
 import dateutil.parser as dp
 
+from theme import get_screensaver_color_output
 from icon_mapping import get_icon_id
 from icons import get_icon_id_ha
+from icons import get_action_id_ha
 from helper import scale, rgb_dec565, rgb_brightness, get_attr_safe, convert_temperature
 from localization import get_translation
 
@@ -56,10 +58,11 @@ class LuiPagesGen(object):
     def page_type(self, target_page):
         self._send_mqtt_msg(f"pageType~{target_page}")
     
-    def update_screensaver_weather(self):
+    def update_screensaver_weather(self, theme):
         global babel_spec
         we_name = self._config._config_screensaver.entity.entityId
         unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
+        state = {}
         
         if self._ha_api.entity_exists(we_name):
             we = self._ha_api.get_entity(we_name)
@@ -68,6 +71,7 @@ class LuiPagesGen(object):
             return
 
         icon_cur        = get_icon_id_ha("weather", state=we.state)
+        state["tMainIcon"] = we.state
         text_cur        = convert_temperature(we.attributes.temperature, unit)
 
         forecastSkip = self._config._config_screensaver.raw_config.get(f"forecastSkip")+1
@@ -94,6 +98,14 @@ class LuiPagesGen(object):
                         else:
                             up = up.strftime('%a')
                     icon = get_icon_id_ha("weather", state=we.attributes.forecast[fid]['condition'])
+                    if i == 1:
+                        state["tF1Icon"] = we.attributes.forecast[fid]['condition']
+                    elif i == 2:
+                        state["tF2Icon"] = we.attributes.forecast[fid]['condition']
+                    elif i == 3:
+                        state["tF3Icon"] = we.attributes.forecast[fid]['condition']
+                    elif i == 4:
+                        state["tF4Icon"] = we.attributes.forecast[fid]['condition']
                     down = convert_temperature(we.attributes.forecast[fid]['temperature'], unit)
                 else:
                     up = ""
@@ -111,12 +123,18 @@ class LuiPagesGen(object):
             weather_res+=f"~{up}~{icon}~{down}"
 
         altLayout = ""
-        if self._config._config_screensaver.raw_config.get("alternativeLayout", False) is True:
+        if self._config._config_screensaver.raw_config.get("alternativeLayout", False):
             altLayout = f"~{get_icon_id('water-percent')}~{we.attributes.humidity} %"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
+        
+        # send color if configured in screensaver
+        if theme is not None:
+            if not ("AutoWeather" in theme and theme["AutoWeather"] == "auto"):
+                state = None
+            self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state))
 
-    def generate_entities_item(self, entity):
+    def generate_entities_item(self, entity, cardType):
         entityId = entity.entityId
         icon = entity.iconOverride
         name = entity.nameOverride
@@ -136,6 +154,11 @@ class LuiPagesGen(object):
                 return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
+        if entityType == "iText":
+                key   = entityId.split(".")[1]
+                value = entityId.split(".")[2]
+                icon_id = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
+                return f"~text~{entityId}~{icon_id}~17299~{key}~{value}"
         if not self._ha_api.entity_exists(entityId):
             return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
         
@@ -143,33 +166,49 @@ class LuiPagesGen(object):
         entity = self._ha_api.get_entity(entityId)
         name = name if name is not None else entity.attributes.friendly_name
         if entityType == "cover":
-            icon_id   = get_icon_id_ha("cover", state=entity.state, overwrite=icon)
-            icon_up   = get_icon_id("arrow-up")
-            icon_stop = get_icon_id("stop")
-            icon_down = get_icon_id("arrow-down")
-            pos = int(entity.attributes.get("current_position", 50))
+
+            device_class = entity.attributes.get("device_class", "window")
+            icon_id = get_icon_id_ha(ha_type=entityType, state=entity.state, device_class=device_class, overwrite=icon)
+            icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
+            icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
+            icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
+            
+            pos = entity.attributes.get("current_position")
             if pos == 100:
-                status = f"disable|{icon_stop}|{icon_down}"
+                status = f"disable|enable|enable"
             elif pos == 0:
-                status = f"{icon_up}|{icon_stop}|disable"
+                status = f"enable|enable|disable"
+            elif pos is None:
+                pos_status = entity.state
+                if pos_status == "open":
+                    status = f"disable|enable|enable"
+                elif pos_status == "closed":
+                    status = f"enable|enable|disable"
+                else:
+                    status = f"enable|enable|enable"
             else:
-                status = f"{icon_up}|{icon_stop}|{icon_down}"
-            return f"~shutter~{entityId}~{icon_id}~17299~{name}~{status}"
+                status = f"enable|enable|enable"
+            return f"~shutter~{entityId}~{icon_id}~17299~{name}~{icon_up}|{icon_stop}|{icon_down}|{status}"
         if entityType in "light":
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity)
             icon_id = get_icon_id_ha("light", overwrite=icon)
             return f"~{entityType}~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
-        if entityType in ["switch", "input_boolean"]:
+        if entityType in ["switch", "input_boolean", "automation"]:
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity)
             icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
             return f"~switch~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
         if entityType in ["sensor", "binary_sensor"]:
             device_class = entity.attributes.get("device_class", "")
-            icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
+            if cardType == "cardGrid":
+                icon_id = entity.state[:4]
+                if icon_id[-1] == ".":
+                    icon_id = icon_id[:-1]
+            else:
+                icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
             icon_color = self.get_entity_color(entity)
             return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{value}"
         if entityType in ["button", "input_button"]:
@@ -204,11 +243,11 @@ class LuiPagesGen(object):
             return f"~text~{entityId}~{icon_id}~17299~{name}~{value}"
         return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~error~"
 
-    def generate_entities_page(self, navigation, heading, items):
+    def generate_entities_page(self, navigation, heading, items, cardType):
         command = f"entityUpd~{heading}~{navigation}"
         # Get items and construct cmd string
         for item in items:
-            command += self.generate_entities_item(item)
+            command += self.generate_entities_item(item, cardType)
         self._send_mqtt_msg(command)
 
     def generate_thermo_page(self, navigation, entity, temp_unit):
@@ -276,7 +315,7 @@ class LuiPagesGen(object):
         else:
             entity        = self._ha_api.get_entity(item)
             heading       = entity.attributes.friendly_name
-            icon          = get_icon_id('alert-circle-outline')
+            icon          = get_icon_id('speaker-off')
             title         = get_attr_safe(entity, "media_title", "")
             author        = get_attr_safe(entity, "media_artist", "")
             volume        = int(get_attr_safe(entity, "volume_level", 0)*100)
@@ -362,6 +401,15 @@ class LuiPagesGen(object):
             command = f"entityUpd~{item}~{navigation}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}"
         self._send_mqtt_msg(command)
         
+
+    def generate_qr_page(self, navigation, heading, items, cardType, qrcode):
+        command = f"entityUpd~{heading}~{navigation}~{qrcode}"
+        # Get items and construct cmd string
+        for item in items:
+            command += self.generate_entities_item(item, cardType)
+        self._send_mqtt_msg(command)
+
+
     def render_card(self, card, send_page_type=True):    
         self._ha_api.log(f"Started rendering of page {card.pos} with type {card.cardType}")
         
@@ -377,7 +425,7 @@ class LuiPagesGen(object):
             self.page_type(card.cardType)
 
         if card.cardType in ["cardEntities", "cardGrid"]:
-            self.generate_entities_page(navigation, card.title, card.entities)
+            self.generate_entities_page(navigation, card.title, card.entities, card.cardType)
             return
         if card.cardType == "cardThermo":
             temp_unit = card.raw_config.get("temperatureUnit", "celsius")
@@ -387,7 +435,12 @@ class LuiPagesGen(object):
         if card.cardType == "cardAlarm":
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
-            self.update_screensaver_weather()
+            theme = card.raw_config.get("theme")
+            self.update_screensaver_weather(theme)
+        if card.cardType == "cardQR":
+            qrcode = card.raw_config.get("qrCode", "")
+            self.generate_qr_page(navigation, card.title, card.entities, card.cardType, qrcode)
+
 
 
     def generate_light_detail_page(self, entity):
@@ -423,7 +476,9 @@ class LuiPagesGen(object):
     
     def generate_shutter_detail_page(self, entity):
         entity = self._ha_api.get_entity(entity)
-        icon_id   = get_icon_id_ha("cover", state=entity.state)
+        entityType="cover"
+        device_class = entity.attributes.get("device_class", "window")
+        icon_id   = get_icon_id_ha(entityType, state=entity.state, device_class=device_class)
 
         pos = entity.attributes.get("current_position")
         if pos is None:
@@ -433,17 +488,25 @@ class LuiPagesGen(object):
             pos_status = pos
 
         
-        icon_up   = get_icon_id("arrow-up")
-        icon_stop = get_icon_id("stop")
-        icon_down = get_icon_id("arrow-down")
-
+        icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
+        icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
+        icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
+        icon_up_status = "enable"
+        icon_stop_status = "enable"
+        icon_down_status = "enable"
+        
         if pos == 100:
-            icon_up = "disable"
+            icon_up_status = "disable"
         elif pos == 0:
-            icon_down = "disable"
+            icon_down_status = "disable"
+        elif pos == "disable":
+            if pos_status == "open":
+                icon_up_status = "disable"
+            elif pos_status == "closed":
+                icon_down_status = "disable"
 
         pos_translation = get_translation(self._locale, "position")
-        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}")
 
     def send_message_page(self, id, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")

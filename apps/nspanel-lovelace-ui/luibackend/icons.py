@@ -27,35 +27,81 @@ sensor_mapping_off = {
 }
 
 sensor_mapping = {
+    "apparent_power": "flash",
+    "aqi": "smog",
+    "battery": "battery",
+    "carbon_dioxide": "smog",
+    "carbon_monoxide": "smog",
+    "current": "flash",
+    "date": "calendar",
+    "duration": "timer",
+    "energy": "flash",
+    "frequency": "chart-bell-curve",
+    "gas": "gas-cylinder",
+    "humidity": "air-humidifier",
+    "illuminance": "light",
+    "monetary": "cash",
+    "nitrogen_dioxide": "smog",
+    "nitrogen_monoxide": "smog",
+    "nitrous_oxide": "smog",
+    "ozone": "smog",
+    "pm1": "smog",
+    "pm10": "smog",
+    "pm25": "smog",
+    "power_factor": "flash",
+    "power": "flash",
+    "pressure": "gauge",
+    "reactive_power": "flash",
+    "signal_strength": "signal",
+    "sulphur_dioxide": "smog",
     "temperature": "thermometer",
-    "power": "flash"    
+    "timestamp": "calendar-clock",
+    "volatile_organic_compounds": "smog",
+    "voltage": "flash"
 }
 
+cover_mapping = {
+    #"device_class": ("icon-open",             "icon-closed",    "icon-cover-open",         "icon-cover-stop", "icon-cover-close")
+    "awning":        ("window-open",           "window-closed",  "arrow-up",                "stop",            "arrow-down"),
+    "blind":         ("blinds-open",           "blinds",         "arrow-up",                "stop",            "arrow-down"),
+    "curtain":       ("curtains-closed",       "curtains",       "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "damper":        ("checkbox-blank-circle", "circle-slice-8", "arrow-up",                "stop",            "arrow-down"),
+    "door":          ("door-open",             "door-closed",    "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "garage":        ("garage-open",           "garage",         "arrow-up",                "stop",            "arrow-down"),
+    "gate":          ("gate-open",             "gate",           "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "shade":         ("blinds-open",           "blinds",         "arrow-up",                "stop",            "arrow-down"),
+    "shutter":       ("window-shutter-open",   "window-shutter", "arrow-up",                "stop",            "arrow-down"),
+    "window":        ("window-open",           "window-closed",  "arrow-up",                "stop",            "arrow-down"),
+}
 
-def map_to_mdi_name(ha_type, state=None, device_class=None):
+def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
     if ha_type == "weather":
         return weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
-    if ha_type == "button":
+    elif ha_type == "button":
         return "gesture-tap-button"
-    if ha_type == "scene":
+    elif ha_type == "scene":
         return "palette"
-    if ha_type == "script":
+    elif ha_type == "script":
         return "script-text"
-    if ha_type == "switch":
+    elif ha_type == "switch":
         return "light-switch"
-    if ha_type == "number":
+    elif ha_type == "automation":
+        return "robot"
+    elif ha_type == "number":
         return "ray-vertex"
-    if ha_type == "light":
+    elif ha_type == "light":
         return "lightbulb"
-    if ha_type == "fan":
+    elif ha_type == "fan":
         return "fan"
-    if ha_type == "input_boolean":
+    elif ha_type == "input_boolean":
         return "check-circle-outline" if state == "on" else "close-circle-outline"
-    if ha_type == "cover":
-        return "window-open" if state == "open" else "window-closed"
-    if ha_type == "lock":
+    elif ha_type == "cover":
+        if state == "closed":
+            return cover_mapping[device_class][1] if device_class in cover_mapping else "alert-circle-outline"
+        else:
+            return cover_mapping[device_class][0] if device_class in cover_mapping else "alert-circle-outline"
+    elif ha_type == "lock":
         return "lock-open" if state == "unlocked" else "lock"
-
     elif ha_type == "sensor":
         if state == "on":
             return sensor_mapping_on[device_class] if device_class in sensor_mapping_on else "alert-circle-outline"
@@ -63,10 +109,26 @@ def map_to_mdi_name(ha_type, state=None, device_class=None):
             return sensor_mapping_off[device_class] if device_class in sensor_mapping_off else "alert-circle-outline"
         else:
             return sensor_mapping[device_class] if device_class in sensor_mapping else "alert-circle-outline"
+    else:
+        return "alert-circle-outline"
 
-    return "alert-circle-outline"
-
-def get_icon_id_ha(ha_name, state=None, device_class=None, overwrite=None):
+def get_icon_id_ha(ha_type, state=None, device_class=None, overwrite=None):
     if overwrite is not None:
         return get_icon_id(overwrite)
-    return get_icon_id(map_to_mdi_name(ha_name, state, device_class))
+    return get_icon_id(map_to_mdi_name(ha_type, state, device_class))
+
+def get_action_id_ha(ha_type, action, device_class=None, overwrite=None):
+    if overwrite is not None:
+        return get_icon_id(overwrite)
+    if ha_type == "cover":
+        if action == "open":
+            actionicon = cover_mapping[device_class][2] if device_class in cover_mapping else "alert-circle-outline"
+        elif action == "close":
+            actionicon = cover_mapping[device_class][4] if device_class in cover_mapping else "alert-circle-outline"
+        elif action == "stop":
+            actionicon = cover_mapping[device_class][3] if device_class in cover_mapping else "alert-circle-outline"
+        else:
+            actionicon = "alert-circle-outline"
+    else:
+        actionicon = "alert-circle-outline"
+    return get_icon_id(actionicon)

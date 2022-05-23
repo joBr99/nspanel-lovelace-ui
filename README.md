@@ -20,8 +20,8 @@ NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 
 ## Features
 
-- Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light, input_text (read-only), lock, fan
-- Grid Page with support for cover, switch, input_boolean, button, scenes, light and lock
+- Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light, input_text (read-only), lock, fan and automation
+- Grid Page with support for cover, switch, input_boolean, button, scenes, light, lock and automation
 - Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
 - Thermostat Page 
 - Media Player Card
@@ -352,7 +352,7 @@ nspanel-1:
         entity: alarm_control_panel.alarmo
       - type: cardQR
         title: Guest Wifi
-        qr_code: "WIFI:S:test_ssid;T:WPA;P:test_pw;;"
+        qrCode: "WIFI:S:test_ssid;T:WPA;P:test_pw;;"
         entities:
           - entity: iText.Name.test_ssid
             icon: wifi
@@ -459,6 +459,7 @@ key | optional | type | default | description
 `weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
+`theme` | True | complex | | configuration for theme
 `defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
 
@@ -470,6 +471,36 @@ Example for the weatherOverride config options:
         name: name
         icon: lightbulb
 ```
+#### Possible configuration values for screensaver theme config
+
+key | option | type | default | description
+-- | -- | -- | -- | --
+`background` | True | list | Black | `[R, G, B]`
+`time` | True | list | White | `[R, G, B]`
+`timeAMPM` | True | list | White | `[R, G, B]`
+`date` | True | list | White | `[R, G, B]`
+`tMainIcon` | True | list | White | `[R, G, B]`
+`tMainText` | True | list | White | `[R, G, B]`
+`tForecast1` | True | list | White | `[R, G, B]`
+`tForecast2` | True | list | White | `[R, G, B]`
+`tForecast3` | True | list | White | `[R, G, B]`
+`tForecast4` | True | list | White | `[R, G, B]`
+`tF1Icon` | True | list | White | `[R, G, B]`
+`tF2Icon` | True | list | White | `[R, G, B]`
+`tF3Icon` | True | list | White | `[R, G, B]`
+`tF4Icon` | True | list | White | `[R, G, B]`
+`tForecast1Val` | True | list | White | `[R, G, B]`
+`tForecast2Val` | True | list | White | `[R, G, B]`
+`tForecast3Val` | True | list | White | `[R, G, B]`
+`tForecast4Val` | True | list | White | `[R, G, B]`
+`bar` | True | list | White | `[R, G, B]`
+`tMainIconAlt` | True | list | White | `[R, G, B]`
+`tMainTextAlt` | True | list | White | `[R, G, B]`
+`tMRIcon` | True | list | White | `[R, G, B]`
+`tMR` | True | list | White | `[R, G, B]`
+`AutoWeather` | True | string | None | Set to `auto` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence
+
+Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red or `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same). Also note that the screen has a low contrast ratio, so colors look sigificantly different at full display brightness and lowest brightness.
 
 #### Schedule sleep brightness
 
@@ -529,9 +560,35 @@ will allow you to navigate to a cardGrid page with the configured key testKey
         key: testKey
 ```
 
+#### Change behaviour of hardware buttons
 
+##### Tasmota Rules
 
+You can configure the buttons to mimic an UI element on the screen by configuring tasmota rules.
 
+The following rule will change the behaviour of the two buttons to do page navigation.
+
+```
+Rule2 on Button1#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,buttonPress2,hwbtn,bPrev"} endon on Button2#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,buttonPress2,hwbtn,bNext"} endon
+
+Rule2 1
+```
+
+##### Decouple buttons from controlling power outputs
+
+If you do not want your NSPanel physical buttons to trigger the relays and prefer to have them as software configurable buttons, open the Tasmota console of your NSPanel and enter the following:
+   
+`SetOption73 1`
+ 
+Your relays will now appear as switches in HomeAssistant and you can control your buttons by using automations:
+   
+   ![image](https://user-images.githubusercontent.com/57167030/169677954-5b811d12-dab8-4415-89aa-e4196732765e.png)
+
+You may reverse this change by entering the following in the Tasmota console of your NSPanel:
+
+`SetOption73 0`
+
+Please note: Doing this will mean that if HomeAssistant is not working for any reason your buttons will not function correctly.
 
 
 ## How to update

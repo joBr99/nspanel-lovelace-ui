@@ -145,6 +145,9 @@ class LuiController(object):
                 if dstCard is not None:
                     self._previous_cards = []
                     self._previous_cards.append(dstCard)
+            # set _previous_cards to first page in case it's empty
+            if len(self._previous_cards) == 0:
+                self._previous_cards.append(self._config.getCard(0))
             # check for double tap if configured and render current page
             if self._config.get("screensaver.doubleTapToUnlock") and int(value) >= 2:
                 self._current_card = self._previous_cards.pop()
@@ -212,7 +215,7 @@ class LuiController(object):
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('script'):
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
-            elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean'):
+            elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean') or entity_id.startswith('automation'):
                 self._ha_api.get_entity(entity_id).call_service("toggle")
             elif entity_id.startswith('lock'):
                 if self._ha_api.get_entity(entity_id).state == "locked":
