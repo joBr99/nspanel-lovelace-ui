@@ -167,6 +167,8 @@ class LuiPagesGen(object):
                     status = f"disable|enable|enable"
                 elif pos_status == "closed":
                     status = f"enable|enable|disable"
+                else:
+                    status = f"enable|enable|enable"
             else:
                 status = f"enable|enable|enable"
             return f"~shutter~{entityId}~{icon_id}~17299~{name}~{icon_up}|{icon_stop}|{icon_down}|{status}"
