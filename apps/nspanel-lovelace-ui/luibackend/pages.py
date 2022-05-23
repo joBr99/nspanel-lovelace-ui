@@ -131,9 +131,7 @@ class LuiPagesGen(object):
         # send color if configured in screensaver
         theme = self._config.get("theme")
         if theme is not None:
-            if "AutoWeather" in theme and theme["AutoWeather"] == "auto":
-                # do nothing
-            else:
+            if not ("AutoWeather" in theme and theme["AutoWeather"] == "auto"):
                 state = None
             self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state))
 

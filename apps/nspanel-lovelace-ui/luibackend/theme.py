@@ -2,25 +2,25 @@
 from helper import rgb_dec565
 
 default_screensaver_color_mapping = {
-    #"item":            "color in decimal RGB565 (1-65535)"
+    #"item":            "color in decimal RGB565 (0-65535)"
     "background":       "0",
     "time":             "65535",
     "timeAMPM":         "65535",
     "date":             "65535",
-    "tMainIcon":         "65535",
-    "tMainText":         "65535",
-    "tForecast1":        "65535",
-    "tForecast2":        "65535",
-    "tForecast3":        "65535",
-    "tForecast4":        "65535",
-    "tF1Icon":           "65535",
-    "tF2Icon":           "65535",
-    "tF3Icon":           "65535",
-    "tF4Icon":           "65535",
-    "tForecast1Val":     "65535",
-    "tForecast2Val":     "65535",
-    "tForecast3Val":     "65535",
-    "tForecast4Val":     "65535",
+    "tMainIcon":        "65535",
+    "tMainText":        "65535",
+    "tForecast1":       "65535",
+    "tForecast2":       "65535",
+    "tForecast3":       "65535",
+    "tForecast4":       "65535",
+    "tF1Icon":          "65535",
+    "tF2Icon":          "65535",
+    "tF3Icon":          "65535",
+    "tF4Icon":          "65535",
+    "tForecast1Val":    "65535",
+    "tForecast2Val":    "65535",
+    "tForecast3Val":    "65535",
+    "tForecast4Val":    "65535",
     "bar":              "65535",
     "tMainIconAlt":     "65535",
     "tMainTextAlt":     "65535",
@@ -29,7 +29,7 @@ default_screensaver_color_mapping = {
 }
 
 default_weather_icon_color_mapping = {
-    #"item-per HA"             "color in decimal RGB 565 (1-65535)"
+    #"item-per HA"             "color in decimal RGB 565 (0-65535)"
     "clear-night":              "35957", #50% grey
     "cloudy":                   "31728", #grey-blue
     "exceptional":              "63488", #red
@@ -38,7 +38,7 @@ default_weather_icon_color_mapping = {
     "lightning":                "65120", #golden-yellow
     "lightning-rainy":          "50400", #dark-golden-yellow
     "partlycloudy":             "35957", #50% grey
-    "pouring":                  "249", #blue
+    "pouring":                  "249",   #blue
     "rainy":                    "33759", #light-blue
     "snowy":                    "65535", #white
     "snowy-rainy":              "44479", #light-blue-grey
@@ -60,10 +60,9 @@ def map_color(key, theme, state=None):
         config_color = rgb_dec565(theme[key])
 #   Use Autocolouring for weather
     elif state is not None:
-        if key == "tMainIcon" or key == "tF1Icon" or key == "tF2Icon" or key == "tF3Icon" or key == "tF4Icon":
+        if key in ["tMainIcon", "tF1Icon", "tF2Icon", "tF3Icon", "tF4Icon"]:
             config_color = map_weather_icon_color(key=key, state=state)
     return config_color
-
 
 def map_weather_icon_color(key, state):
     if state[key] in default_weather_icon_color_mapping:
