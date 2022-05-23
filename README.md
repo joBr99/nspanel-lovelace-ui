@@ -477,29 +477,29 @@ This only works for the screensaver currently.
 
 key | option | type | default | description
 -- | -- | -- | -- | --
-`background` | True | string | 0 (Black) | RGB565 color
-`time` | True | string | 65535 (White) | RGB565 color
-`timeAMPM` | True | string | 65535 (White) | RGB565 color
-`date` | True | string | 65535 (White) | RGB565 color
-`tMainIcon` | True | string | 65535 (White) | RGB565 color
-`tMainText` | True | string | 65535 (White) | RGB565 color
-`tForecast1` | True | string | 65535 (White) | RGB565 color
-`tForecast2` | True | string | 65535 (White) | RGB565 color
-`tForecast3` | True | string | 65535 (White) | RGB565 color
-`tForecast4` | True | string | 65535 (White) | RGB565 color
-`tF1Icon` | True | string | 65535 (White) | RGB565 color
-`tF2Icon` | True | string | 65535 (White) | RGB565 color
-`tForecast1Val` | True | string | 65535 (White) | RGB565 color
-`tForecast2Val` | True | string | 65535 (White) | RGB565 color
-`tForecast3Val` | True | string | 65535 (White) | RGB565 color
-`tForecast4Val` | True | string | 65535 (White) | RGB565 color
-`bar` | True | string | 65535 (White) | RGB565 color
-`tMainIconAlt` | True | string | 65535 (White) | RGB565 color
-`tMainTextAlt` | True | string | 65535 (White) | RGB565 color
-`tMRIcon` | True | string | 65535 (White) | RGB565 color
-`tMR` | True | string | 65535 (White) | RGB565 color
+`background` | True | list | Black | `[R, G, B]`
+`time` | True | list | White | `[R, G, B]`
+`timeAMPM` | True | list | White | `[R, G, B]`
+`date` | True | list | White | `[R, G, B]`
+`tMainIcon` | True | list | White | `[R, G, B]`
+`tMainText` | True | list | White | `[R, G, B]`
+`tForecast1` | True | list | White | `[R, G, B]`
+`tForecast2` | True | list | White | `[R, G, B]`
+`tForecast3` | True | list | White | `[R, G, B]`
+`tForecast4` | True | list | White | `[R, G, B]`
+`tF1Icon` | True | list | White | `[R, G, B]`
+`tF2Icon` | True | list | White | `[R, G, B]`
+`tForecast1Val` | True | list | White | `[R, G, B]`
+`tForecast2Val` | True | list | White | `[R, G, B]`
+`tForecast3Val` | True | list | White | `[R, G, B]`
+`tForecast4Val` | True | list | White | `[R, G, B]`
+`bar` | True | list | White | `[R, G, B]`
+`tMainIconAlt` | True | list | White | `[R, G, B]`
+`tMainTextAlt` | True | list | White | `[R, G, B]`
+`tMRIcon` | True | list | White | `[R, G, B]`
+`tMR` | True | list | White | `[R, G, B]`
 
-RGB565 colors must be specified as decimal (not hex) RGB565 color. Valid colors range from 0-65535 (0x0000-0xFFFF hex).
+Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red ir `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same).
 
 #### Schedule sleep brightness
 
