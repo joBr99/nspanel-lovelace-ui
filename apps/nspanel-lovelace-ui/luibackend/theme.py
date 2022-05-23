@@ -2,7 +2,7 @@
 default_screensaver_color_mapping = {
     #"item":            "color in decimal RGB565 (1-65535)"
     "background":       "0",
-    "time":             "1111",
+    "time":             "65535",
     "timeAMPM":         "65535",
     "date":             "65535",
     "tMainIcon":         "65535",
