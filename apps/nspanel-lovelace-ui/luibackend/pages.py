@@ -58,7 +58,7 @@ class LuiPagesGen(object):
     def page_type(self, target_page):
         self._send_mqtt_msg(f"pageType~{target_page}")
     
-    def update_screensaver_weather(self):
+    def update_screensaver_weather(self, theme):
         global babel_spec
         we_name = self._config._config_screensaver.entity.entityId
         unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
@@ -129,7 +129,6 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
  
         # send color if configured in screensaver
-        theme = self._config.get("theme")
         if theme is not None:
             if not ("AutoWeather" in theme and theme["AutoWeather"] == "auto"):
                 state = None
@@ -436,9 +435,11 @@ class LuiPagesGen(object):
         if card.cardType == "cardAlarm":
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
-            self.update_screensaver_weather()
-            # send color if configured in theme
             theme = card.raw_config.get("theme")
+
+            self.update_screensaver_weather(theme)
+            
+            # send color if configured in theme
             if theme is not None:
                 self._send_mqtt_msg(get_screensaver_color_output(theme))
         if card.cardType == "cardQR":
