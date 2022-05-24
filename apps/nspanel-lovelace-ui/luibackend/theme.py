@@ -65,7 +65,7 @@ def map_color(key, theme, state=None):
     return config_color
 
 def map_weather_icon_color(key, state):
-    if state[key] in default_weather_icon_color_mapping:
+    if key in state and state[key] in default_weather_icon_color_mapping:
         config_color = default_weather_icon_color_mapping[state[key]]
     else:
         config_color = "65535"
