@@ -47,41 +47,26 @@ default_weather_icon_color_mapping = {
     "windy-variant":            "35957"  #50% grey
 }
 
-def get_screensaver_color_output(theme, state=None,alternativeEnable=None):
+def get_screensaver_color_output(theme, state=None):
     color_output = "color"
     for key in default_screensaver_color_mapping:
-        color_output += f"~{map_color(key=key, theme=theme, state=state, alternativeEnable=alternativeEnable)}"
+        color_output += f"~{map_color(key=key, theme=theme, state=state)}"
     return color_output
 
-def map_color(key, theme, state=None, alternativeEnable=None):
+def map_color(key, theme, state=None):
     config_color = default_screensaver_color_mapping[key]
 #   Use theme color if set
     if key in theme:
         config_color = rgb_dec565(theme[key])
 #   Use Autocolouring for weather
     elif state is not None:
-        if key in ["tMainIcon", "tF1Icon", "tF2Icon", "tF3Icon", "tF4Icon", "tMainIconAlt"]:
-            config_color = map_weather_icon_color(key=key, state=state, alternativeEnable=alternativeEnable)
+        if key in ["tMainIcon", "tF1Icon", "tF2Icon", "tF3Icon", "tF4Icon"]:
+            config_color = map_weather_icon_color(key=key, state=state)
     return config_color
 
-def map_weather_icon_color(key, state, alternativeEnable=None):
-    if alternativeEnable:
-#   Hack to make alternativelayout work. Do something better later.
-        if key in ["tMainIcon", "tF1Icon"]:
-#   Parse as if white for now. These may do something else in the future for alternativeLayout.
-            config_color = "65535"
-#   In alternativeLayout F2 is actually F1 and so on. tMainIconAlt replaces tMainIcon. Remap these
-        elif key == "tF2Icon":
-            config_color = default_weather_icon_color_mapping[state["tF1Icon"]]
-        elif key == "tF3Icon":
-            config_color = default_weather_icon_color_mapping[state["tF2Icon"]]
-        elif key == "tF4Icon":
-            config_color = default_weather_icon_color_mapping[state["tF3Icon"]]
-        elif key == "tMainIconAlt":
-            config_color = default_weather_icon_color_mapping[state["tMainIcon"]]
+def map_weather_icon_color(key, state):
+    if key in state and state[key] in default_weather_icon_color_mapping:
+        config_color = default_weather_icon_color_mapping[state[key]]
     else:
-        if key in state and state[key] in default_weather_icon_color_mapping:
-            config_color = default_weather_icon_color_mapping[state[key]]
-        else:
-            config_color = "65535"
+        config_color = "65535"
     return config_color
