@@ -85,6 +85,8 @@ def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
         return "script-text"
     elif ha_type == "switch":
         return "light-switch"
+    elif ha_type == "automation":
+        return "robot"
     elif ha_type == "number":
         return "ray-vertex"
     elif ha_type == "light":
