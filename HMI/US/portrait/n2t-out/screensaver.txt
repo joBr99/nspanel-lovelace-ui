@@ -455,19 +455,6 @@ Timer tmSerial
                                             vis tMainIconAlt,1
                                             vis tMRIcon,1
                                             vis tMR,1
-                                            vis tForecast1,0
-                                            vis tF1Icon,0
-                                            vis tForecast1Val,0
-                                            //move forecast values to the right
-                                            tForecast4.txt=tForecast3.txt
-                                            tForecast3.txt=tForecast2.txt
-                                            tForecast2.txt=tForecast1.txt
-                                            tForecast4Val.txt=tForecast3Val.txt
-                                            tForecast3Val.txt=tForecast2Val.txt
-                                            tForecast2Val.txt=tForecast1Val.txt
-                                            tF4Icon.txt=tF3Icon.txt
-                                            tF3Icon.txt=tF2Icon.txt
-                                            tF2Icon.txt=tF1Icon.txt
                                         }
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
@@ -506,8 +493,10 @@ Timer tmSerial
                                         covx tTmp.txt,tDate.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",5
                                         covx tTmp.txt,tMainIcon.pco,0,0
+                                        tMainIconAlt.pco=tMainIcon.pco
                                         spstr strCommand.txt,tTmp.txt,"~",6
                                         covx tTmp.txt,tMainText.pco,0,0
+                                        tMainTextAlt.pco=tMainText.pco
                                         spstr strCommand.txt,tTmp.txt,"~",7
                                         covx tTmp.txt,tForecast1.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",8
@@ -535,12 +524,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,t10.bco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",20
-                                        covx tTmp.txt,tMainIconAlt.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",21
-                                        covx tTmp.txt,tMainTextAlt.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",22
                                         covx tTmp.txt,tMRIcon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",23
+                                        spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,tMR.pco,0,0
                                     }
                                     if(tInstruction.txt=="notify")
