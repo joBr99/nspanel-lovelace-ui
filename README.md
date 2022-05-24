@@ -498,7 +498,7 @@ key | option | type | default | description
 `tMainTextAlt` | True | list | White | `[R, G, B]`
 `tMRIcon` | True | list | White | `[R, G, B]`
 `tMR` | True | list | White | `[R, G, B]`
-`AutoWeather` | True | string | None | Set to `auto` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence
+`autoWeather` | True | string | None | Set to `true` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence.
 
 Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red or `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same). Also note that the screen has a low contrast ratio, so colors look sigificantly different at full display brightness and lowest brightness.
 
