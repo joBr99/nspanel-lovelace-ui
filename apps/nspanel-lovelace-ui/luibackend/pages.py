@@ -123,7 +123,8 @@ class LuiPagesGen(object):
             weather_res+=f"~{up}~{icon}~{down}"
 
         altLayout = ""
-        if self._config._config_screensaver.raw_config.get("alternativeLayout", False):
+        alternativeEnable = self._config._config_screensaver.raw_config.get("alternativeLayout", False)
+        if alternativeEnable:
             altLayout = f"~{get_icon_id('water-percent')}~{we.attributes.humidity} %"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
@@ -132,7 +133,7 @@ class LuiPagesGen(object):
         if theme is not None:
             if not ("AutoWeather" in theme and theme["AutoWeather"] == "auto"):
                 state = None
-            self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state))
+            self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state, alternativeEnable=alternativeEnable))
 
     def generate_entities_item(self, entity, cardType):
         entityId = entity.entityId
