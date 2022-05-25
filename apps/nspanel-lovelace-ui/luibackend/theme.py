@@ -22,8 +22,6 @@ default_screensaver_color_mapping = {
     "tForecast3Val":    "65535",
     "tForecast4Val":    "65535",
     "bar":              "65535",
-    "tMainIconAlt":     "65535",
-    "tMainTextAlt":     "65535",
     "tMRIcon":          "65535",
     "tMR":              "65535"
 }
