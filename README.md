@@ -635,7 +635,6 @@ nspanel_popup_notification:
   mode: single
   icon: mdi:message-badge
  ```
-Note: No Buzzer may be connected to the panel. See: https://blakadder.com/nspanel-teardown/
 </details>
 
 
@@ -674,7 +673,6 @@ nspanel_screensaver_notification:
   icon: mdi:message-badge
  ```
    
-Note: No Buzzer may be connected to the panel. See: https://blakadder.com/nspanel-teardown/
 </details>
 
 
