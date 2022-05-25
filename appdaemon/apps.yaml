@@ -21,44 +21,7 @@ nspanel-1:
         name: name
         icon: lightbulb
       alternativeLayout: True
-        theme:
-          background:               [0, 0, 0]
-          time:                     [220, 0, 255]
-          timeAMPM:                 [220, 0, 255]
-          date:                     [220, 0, 255]
-          tMainIcon:                [220, 0, 255]
-          tMainText:                [220, 0, 255]
-          tForecast1:               [220, 0, 255]
-          tForecast2:               [220, 0, 255]
-          tForecast3:               [220, 0, 255]
-          tForecast4:               [220, 0, 255]
-          tF1Icon:                  [220, 0, 255]
-          tF2Icon:                  [220, 0, 255]
-          tF3Icon:                  [220, 0, 255]
-          tF4Icon:                  [220, 0, 255]
-          tForecast1Val:            [220, 0, 255]
-          tForecast2Val:            [220, 0, 255]
-          tForecast3Val:            [220, 0, 255]
-          tForecast4Val:            [220, 0, 255]
-          bar:                      [220, 0, 255]
-          tMRIcon:                  [220, 0, 255]
-          tMR:                      [220, 0, 255]
-          autoWeather:              true
-          clear-night:              [220, 0, 255]
-          cloudy:                   [220, 0, 255]
-          exceptional:              [220, 0, 255]
-          fog:                      [220, 0, 255]
-          hail:                     [220, 0, 255]
-          lightning:                [220, 0, 255]
-          lightning-rainy:          [220, 0, 255]
-          partlycloudy:             [220, 0, 255]
-          pouring:                  [220, 0, 255]
-          rainy:                    [50, 50, 255]
-          snowy:                    [220, 0, 255]
-          snowy-rainy:              [100, 100, 255]
-          sunny:                    [220, 0, 255]
-          windy:                    [220, 0, 255]
-          windy-variant:            [220, 0, 255]
+#      theme: !include /config/appdaemon/apps/screensaver-theme.yaml
     cards:
       - type: cardEntities
         entities:
