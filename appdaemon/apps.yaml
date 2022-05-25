@@ -21,6 +21,7 @@ nspanel-1:
         name: name
         icon: lightbulb
       alternativeLayout: True
+#      theme: !include /config/appdaemon/apps/screensaver-theme.yaml
     cards:
       - type: cardEntities
         entities:
