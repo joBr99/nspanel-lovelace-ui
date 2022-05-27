@@ -122,11 +122,23 @@ class LuiPagesGen(object):
                 down = f"{entity.state} {unit_of_measurement}"
             weather_res+=f"~{up}~{icon}~{down}"
 
-        altLayout = ""
+        altLayout = "~~"
         if self._config._config_screensaver.raw_config.get("alternativeLayout", False):
             altLayout = f"~{get_icon_id('water-percent')}~{we.attributes.humidity} %"
 
-        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
+        # status icons
+        status_res = ""
+        for i in range(1,2):
+            statusIcon = self._config._config_screensaver.raw_config.get(f"statusIcon{i}")
+            if statusIcon is not None:
+                icon = statusIcon.get("icon")
+                entity = self._ha_api.get_entity(statusIcon.get("entity"))
+                entityType = entityId.split(".")[0]
+                icon = get_icon_id_ha(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+                color = self.get_entity_color(entity)
+                status_res += f"~{icon}~{color}"
+
+        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}{status_res}")
         
         # send color if configured in screensaver
         if theme is not None:
