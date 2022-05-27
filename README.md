@@ -509,7 +509,7 @@ Example for the theme config:
 ```yaml
     screensaver:
       theme:
-        AutoWeather: true
+        autoWeather: true
 ```
 
 For complex setups where you want to reuse the theme over multiple panels see the config exmaples in the appdaemon folder.
