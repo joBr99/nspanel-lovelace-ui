@@ -457,6 +457,8 @@ key | optional | type | default | description
 `weatherOverrideForecast2` | True | complex | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
 `weatherOverrideForecast3` | True | complex | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
 `weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
+`statusIcon1` | True | complex | `None` | status icon left to the date string, config similar to weatherOverride
+`statusIcon2` | True | complex | `None` | status icon right to the date string, config similar to weatherOverride
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
 `theme` | True | complex | | configuration for theme
