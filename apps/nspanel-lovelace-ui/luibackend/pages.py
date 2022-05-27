@@ -128,12 +128,12 @@ class LuiPagesGen(object):
 
         # status icons
         status_res = ""
-        for i in range(1,2):
+        for i in range(1,3):
             statusIcon = self._config._config_screensaver.raw_config.get(f"statusIcon{i}")
             if statusIcon is not None:
                 icon = statusIcon.get("icon")
                 entity = self._ha_api.get_entity(statusIcon.get("entity"))
-                entityType = entityId.split(".")[0]
+                entityType = statusIcon.get("entity").split(".")[0]
                 icon = get_icon_id_ha(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
                 color = self.get_entity_color(entity)
                 status_res += f"~{icon}~{color}"
