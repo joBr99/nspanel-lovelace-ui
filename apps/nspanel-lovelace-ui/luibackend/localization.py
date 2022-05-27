@@ -20,6 +20,8 @@ translations = {
             'brightness': "Helderheid",
             'color_temperature': "Kleur temperatuur",
             'position': "Posisie",
+            'state': "Toestand",
+            'currently': "Tans",
         },
         'ar': {
             'ACTIVATE': "تفعيل",
@@ -42,6 +44,8 @@ translations = {
             'brightness': "السطوع",
             'color_temperature': "درجة حرارة اللون",
             'position': "موضع",
+            'state': "الحالة",
+            'currently': "حاليا",
         },
         'bg': {
             'ACTIVATE': "Активирай",
@@ -65,6 +69,8 @@ translations = {
             'brightness': "Яркост",
             'color_temperature': "Цветова температура",
             'position': "Позиция",
+            'state': "Състояние",
+            'currently': "В момента",
         },
         'ca': {
             'PRESS': "Prem",
@@ -89,6 +95,8 @@ translations = {
             'brightness': "Brillantor",
             'color_temperature': "Temperatura de color",
             'position': "Posició",
+            'state': "Estat",
+            'currently': "Actual",
         },
         'cs': {
             'PRESS': "Stisknutí",
@@ -113,6 +121,8 @@ translations = {
             'brightness': "Jas",
             'color_temperature': "Teplota barvy",
             'position': "Pozice",
+            'state': "Stav",
+            'currently': "Aktuálně",
         },
         'da': {
             'PRESS': "Tryk",
@@ -137,6 +147,8 @@ translations = {
             'brightness': "Lysstyrke",
             'color_temperature': "Farvetemperatur",
             'position': "Position",
+            'state': "Tilstand",
+            'currently': "Aktuelt",
         },
         'de': {
             'PRESS': "Drücken",
@@ -161,6 +173,8 @@ translations = {
             'brightness': "Helligkeit",
             'color_temperature': "Farbtemperatur",
             'position': "Position",
+            'state': "Zustand",
+            'currently': "Aktuell",
         },
         'el': {
             'PRESS': "Πατήστε",
@@ -185,6 +199,8 @@ translations = {
             'brightness': "Φωτεινότητα",
             'color_temperature': "Θερμοκρασία χρώματος",
             'position': "Θέση",
+            'state': "Κατάσταση",
+            'currently': "Αυτή τη στιγμή",
         },
         'en': {
             'PRESS': "Press",
@@ -209,6 +225,8 @@ translations = {
             'brightness': "Brightness",
             'color_temperature': "Color temperature",
             'position': "Position",
+            'state': "State",
+            'currently': "Currently",
         },
         'es': {
             'PRESS': "Pulsa",
@@ -233,6 +251,8 @@ translations = {
             'brightness': "Brillo",
             'color_temperature': "Temperatura del color",
             'position': "Posición",
+            'state': "Estado",
+            'currently': "Actualmente",
         },
         'et': {
             'PRESS': "Vajuta nuppu",
@@ -257,6 +277,8 @@ translations = {
             'brightness': "Heledus",
             'color_temperature': "Värvustemperatuur",
             'position': "Asend",
+            'state': "Olek",
+            'currently': "Hetkel",
         },
         'fa': {
             'ACTIVATE': "فعال سازی",
@@ -279,6 +301,8 @@ translations = {
             'brightness': "روشنایی",
             'color_temperature': "دمای رنگ",
             'position': "موقعیت",
+            'state': "حالت",
+            'currently': "در حال حاضر",
         },
         'fi': {
             'PRESS': "Paina",
@@ -303,6 +327,8 @@ translations = {
             'brightness': "Kirkkaus",
             'color_temperature': "Värilämpötila",
             'position': "Sijainti",
+            'state': "Tila",
+            'currently': "Tällä hetkellä",
         },
         'fr': {
             'PRESS': "Appui",
@@ -327,6 +353,8 @@ translations = {
             'brightness': "Luminosité",
             'color_temperature': "Température de couleur",
             'position': "Position",
+            'state': "État",
+            'currently': "Actuellement",
         },
         'he': {
             'PRESS': "לחיצה",
@@ -351,6 +379,8 @@ translations = {
             'brightness': "בהירות",
             'color_temperature': "טמפרטורת הצבע",
             'position': "מיקום",
+            'state': "מצב",
+            'currently': "כעת",
         },
         'hr': {
             'ACTIVATE': "Aktivirati",
@@ -373,6 +403,8 @@ translations = {
             'brightness': "Svjetlina",
             'color_temperature': "Temperatura boje",
             'position': "Pozicija",
+            'state': "Stanje",
+            'currently': "Trenutno",
         },
         'hu': {
             'PRESS': "Gombnyomás",
@@ -397,6 +429,8 @@ translations = {
             'brightness': "Fényerő",
             'color_temperature': "Színhőmérséklet",
             'position': "Pozíció",
+            'state': "Állapot",
+            'currently': "Jelenleg",
         },
         'hy': {
             'ACTIVATE': "Ակտիվացնել",
@@ -418,6 +452,8 @@ translations = {
             'brightness': "Պայծառություն",
             'color_temperature': "Գունային ջերմաստիճան",
             'position': "Դիրք",
+            'state': "Պետություն",
+            'currently': "Ներկայումս",
         },
         'id': {
             'PRESS': "Tekan",
@@ -442,6 +478,8 @@ translations = {
             'brightness': "Kecerahan",
             'color_temperature': "Temperatur warna",
             'position': "Posisi",
+            'state': "Status",
+            'currently': "Saat ini",
         },
         'is': {
             'PRESS': "Ýttu á",
@@ -465,6 +503,8 @@ translations = {
             'brightness': "Birtustig",
             'color_temperature': "Litastig",
             'position': "Staðsetning",
+            'state': "Staða",
+            'currently': "Er núna",
         },
         'it': {
             'PRESS': "Premi",
@@ -489,6 +529,8 @@ translations = {
             'brightness': "Luminosità",
             'color_temperature': "Temperatura colore",
             'position': "Apertura",
+            'state': "Stato",
+            'currently': "Attualmente",
         },
         'lb': {
             'ACTIVATE': "Aktivéieren",
@@ -511,6 +553,8 @@ translations = {
             'brightness': "Hellegkeet",
             'color_temperature': "Faarf Temperatur",
             'position': "Positioun",
+            'state': "Zoustand",
+            'currently': "Momentan",
         },
         'lt': {
             'ACTIVATE': "Suaktyvinti",
@@ -532,6 +576,8 @@ translations = {
             'brightness': "Ryškumas",
             'color_temperature': "Spalvos temperatūra",
             'position': "Padėtis",
+            'state': "Būsena",
+            'currently': "Šiuo metu",
         },
         'lv': {
             'ACTIVATE': "Aktivizēt",
@@ -553,6 +599,8 @@ translations = {
             'brightness': "Spilgtums",
             'color_temperature': "Krāsu temperatūra",
             'position': "Pozīcija",
+            'state': "Stāvoklis",
+            'currently': "Pašlaik",
         },
         'nb': {
             'PRESS': "trykk",
@@ -577,6 +625,8 @@ translations = {
             'brightness': "Lysstyrke",
             'color_temperature': "Fargetemperatur",
             'position': "Posisjon",
+            'state': "Tilstand",
+            'currently': "Er nå",
         },
         'nl': {
             'PRESS': "Klik",
@@ -601,6 +651,8 @@ translations = {
             'brightness': "Helderheid",
             'color_temperature': "Kleurtemperatuur",
             'position': "Positie",
+            'state': "Staat",
+            'currently': "Momenteel",
         },
         'nn': {
             'ACTIVATE': "Aktiver",
@@ -624,6 +676,8 @@ translations = {
             'brightness': "Lysstyrke",
             'color_temperature': "Fargetemperatur",
             'position': "Posisjon",
+            'state': "Tilstand",
+            'currently': "Akkurat no",
         },
         'pl': {
             'PRESS': "Naciśnij",
@@ -648,6 +702,8 @@ translations = {
             'brightness': "Jasność",
             'color_temperature': "Temperatura barwy",
             'position': "Pozycja",
+            'state': "Stan",
+            'currently': "Obecnie",
         },
         'pt': {
             'PRESS': "Pressione",
@@ -671,6 +727,8 @@ translations = {
             'brightness': "Brilho",
             'color_temperature': "Temperatura de cor",
             'position': "Posição",
+            'state': "Estado",
+            'currently': "Atualmente",
         },
         'ro': {
             'ACTIVATE': "Activați",
@@ -694,6 +752,8 @@ translations = {
             'brightness': "Luminozitate",
             'color_temperature': "Temperatură de culoare",
             'position': "Poziţie",
+            'state': "Status",
+            'currently': "În prezent",
         },
         'ru': {
             'PRESS': "Нажать",
@@ -718,6 +778,8 @@ translations = {
             'brightness': "Яркость",
             'color_temperature': "Цветовая температура",
             'position': "Положение",
+            'state': "Состояние",
+            'currently': "Сейчас",
         },
         'sk': {
             'ACTIVATE': "Aktivovať",
@@ -741,6 +803,8 @@ translations = {
             'brightness': "Jas",
             'color_temperature': "Teplota farby",
             'position': "Poloha",
+            'state': "Stav",
+            'currently': "Aktuálne",
         },
         'sl': {
             'PRESS': "Pritisnite",
@@ -764,6 +828,8 @@ translations = {
             'brightness': "Svetlost",
             'color_temperature': "Temperatura barve",
             'position': "Položaj",
+            'state': "Stanje",
+            'currently': "Trenutno",
         },
         'sv': {
             'PRESS': "Tryck",
@@ -788,6 +854,8 @@ translations = {
             'brightness': "Ljusstyrka",
             'color_temperature': "Färgtemperatur",
             'position': "Position",
+            'state': "Tillstånd",
+            'currently': "Nuvarande",
         },
         'th': {
             'PRESS': "กด",
@@ -810,6 +878,8 @@ translations = {
             'brightness': "ความสว่าง",
             'color_temperature': "อุณหภูมิสี",
             'position': "ตำแหน่ง",
+            'state': "สถานะ",
+            'currently': "ในขณะนี้",
         },
         'tr': {
             'PRESS': "Basınız",
@@ -834,6 +904,8 @@ translations = {
             'brightness': "Parlaklık",
             'color_temperature': "Renk sıcaklığı",
             'position': "Pozisyon",
+            'state': "Durum",
+            'currently': "Şu an",
         },
         'uk': {
             'PRESS': "Натисніть",
@@ -857,6 +929,8 @@ translations = {
             'brightness': "Яскравість",
             'color_temperature': "Кольорова температура",
             'position': "Положення",
+            'state': "Статус",
+            'currently': "В даний час",
         },
         'vi': {
             'ACTIVATE': "Kích hoạt",
@@ -879,6 +953,8 @@ translations = {
             'brightness': "Độ sáng",
             'color_temperature': "Nhiệt độ màu",
             'position': "Vị trí",
+            'state': "Trạng thái",
+            'currently': "Hiện tại",
         },
 }
 
