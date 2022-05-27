@@ -36,7 +36,7 @@ class Card(object):
             for e in self.entities:
                 entityIds.append(e.entityId)
         # additional keys to check
-        add_ent_keys = ['weatherOverrideForecast1', 'weatherOverrideForecast2', 'weatherOverrideForecast3', 'weatherOverrideForecast4']
+        add_ent_keys = ['weatherOverrideForecast1', 'weatherOverrideForecast2', 'weatherOverrideForecast3', 'weatherOverrideForecast4', 'statusIcon1', 'statusIcon2']
         for ent_key in add_ent_keys:
             val = self.raw_config.get(ent_key)
             if val is not None:
