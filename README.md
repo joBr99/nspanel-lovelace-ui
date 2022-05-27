@@ -740,9 +740,11 @@ Click redownload in the menu of the app in HACS.
 
 Select main version.
 
+__**Wait for it to load, dropdown needs to be selectable again, otherwise it will download the latest release**__
+
 ![hacs-main](doc-pics/hacs-main.png)
 
-**Wait for it to load, dropdown needs to be selectable again**
+__**Wait for it to load, dropdown needs to be selectable again, otherwise it will download the latest release**__
 
 Click download.
 
