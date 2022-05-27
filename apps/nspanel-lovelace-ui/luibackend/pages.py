@@ -278,7 +278,7 @@ class LuiPagesGen(object):
             for mode in hvac_modes:
                 icon_id = get_icon_id('alert-circle-outline')
                 color_on = 64512
-                if mode == "auto":
+                if mode in ["auto", "heat_cool"]:
                     icon_id = get_icon_id("calendar-sync")
                     color_on = 1024
                 if mode == "heat":
