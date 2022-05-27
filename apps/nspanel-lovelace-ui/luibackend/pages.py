@@ -250,7 +250,7 @@ class LuiPagesGen(object):
             command += self.generate_entities_item(item, cardType)
         self._send_mqtt_msg(command)
 
-    def generate_thermo_page(self, navigation, entity, temp_unit):
+    def generate_thermo_page(self, navigation, title, entity, temp_unit):
         item = entity.entityId
 
         if(temp_unit == "celsius"):
@@ -265,7 +265,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~Not found~{navigation}~{item}~check~220~apps.yaml~150~300~5~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Please~your~~"
         else:
             entity       = self._ha_api.get_entity(item)
-            heading      = entity.attributes.friendly_name
+            heading      = title if title is not None else entity.attributes.friendly_name
             current_temp = get_attr_safe(entity, "current_temperature", "")
             dest_temp    = int(get_attr_safe(entity, "temperature", 0)*10)
             status       = get_attr_safe(entity, "hvac_action", "")
@@ -308,13 +308,13 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}~Currently~State~Action~{temperature_unit_icon}"
         self._send_mqtt_msg(command)
 
-    def generate_media_page(self, navigation, entity):
+    def generate_media_page(self, navigation, title, entity):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
         else:
             entity        = self._ha_api.get_entity(item)
-            heading       = entity.attributes.friendly_name
+            heading       = title if title is not None else entity.attributes.friendly_name
             icon          = get_icon_id('speaker-off')
             title         = get_attr_safe(entity, "media_title", "")
             author        = get_attr_safe(entity, "media_artist", "")
@@ -347,7 +347,7 @@ class LuiPagesGen(object):
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~{item}~{navigation}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
         else:
-            entity        = self._ha_api.get_entity(item)
+            entity = self._ha_api.get_entity(item)
             icon = get_icon_id("shield-off")
             color = rgb_dec565([255,255,255])
             supported_modes = []
@@ -429,9 +429,9 @@ class LuiPagesGen(object):
             return
         if card.cardType == "cardThermo":
             temp_unit = card.raw_config.get("temperatureUnit", "celsius")
-            self.generate_thermo_page(navigation, card.entity, temp_unit)
+            self.generate_thermo_page(navigation, card.title, card.entity, temp_unit)
         if card.cardType == "cardMedia":
-            self.generate_media_page(navigation, card.entity)
+            self.generate_media_page(navigation, card.title, card.entity)
         if card.cardType == "cardAlarm":
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":
