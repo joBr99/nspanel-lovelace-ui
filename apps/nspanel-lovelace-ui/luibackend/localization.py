@@ -22,6 +22,7 @@ translations = {
             'position': "Posisie",
             'state': "Toestand",
             'currently': "Tans",
+            'operation': "Operasie",
         },
         'ar': {
             'ACTIVATE': "تفعيل",
@@ -46,6 +47,7 @@ translations = {
             'position': "موضع",
             'state': "الحالة",
             'currently': "حاليا",
+            'operation': "الوضع",
         },
         'bg': {
             'ACTIVATE': "Активирай",
@@ -71,6 +73,7 @@ translations = {
             'position': "Позиция",
             'state': "Състояние",
             'currently': "В момента",
+            'operation': "Режим",
         },
         'ca': {
             'PRESS': "Prem",
@@ -97,6 +100,7 @@ translations = {
             'position': "Posició",
             'state': "Estat",
             'currently': "Actual",
+            'operation': "Funcionament",
         },
         'cs': {
             'PRESS': "Stisknutí",
@@ -123,6 +127,7 @@ translations = {
             'position': "Pozice",
             'state': "Stav",
             'currently': "Aktuálně",
+            'operation': "Provoz",
         },
         'da': {
             'PRESS': "Tryk",
@@ -149,6 +154,7 @@ translations = {
             'position': "Position",
             'state': "Tilstand",
             'currently': "Aktuelt",
+            'operation': "Drifttype",
         },
         'de': {
             'PRESS': "Drücken",
@@ -175,6 +181,7 @@ translations = {
             'position': "Position",
             'state': "Zustand",
             'currently': "Aktuell",
+            'operation': "Aktion",
         },
         'el': {
             'PRESS': "Πατήστε",
@@ -201,6 +208,7 @@ translations = {
             'position': "Θέση",
             'state': "Κατάσταση",
             'currently': "Αυτή τη στιγμή",
+            'operation': "Λειτουργία",
         },
         'en': {
             'PRESS': "Press",
@@ -227,6 +235,7 @@ translations = {
             'position': "Position",
             'state': "State",
             'currently': "Currently",
+            'operation': "Operation",
         },
         'es': {
             'PRESS': "Pulsa",
@@ -253,6 +262,7 @@ translations = {
             'position': "Posición",
             'state': "Estado",
             'currently': "Actualmente",
+            'operation': "Modo",
         },
         'et': {
             'PRESS': "Vajuta nuppu",
@@ -279,6 +289,7 @@ translations = {
             'position': "Asend",
             'state': "Olek",
             'currently': "Hetkel",
+            'operation': "Töörežiim",
         },
         'fa': {
             'ACTIVATE': "فعال سازی",
@@ -303,6 +314,7 @@ translations = {
             'position': "موقعیت",
             'state': "حالت",
             'currently': "در حال حاضر",
+            'operation': "عملیات",
         },
         'fi': {
             'PRESS': "Paina",
@@ -329,6 +341,7 @@ translations = {
             'position': "Sijainti",
             'state': "Tila",
             'currently': "Tällä hetkellä",
+            'operation': "Toiminto",
         },
         'fr': {
             'PRESS': "Appui",
@@ -355,6 +368,7 @@ translations = {
             'position': "Position",
             'state': "État",
             'currently': "Actuellement",
+            'operation': "Opération",
         },
         'he': {
             'PRESS': "לחיצה",
@@ -381,6 +395,7 @@ translations = {
             'position': "מיקום",
             'state': "מצב",
             'currently': "כעת",
+            'operation': "פעולה",
         },
         'hr': {
             'ACTIVATE': "Aktivirati",
@@ -405,6 +420,7 @@ translations = {
             'position': "Pozicija",
             'state': "Stanje",
             'currently': "Trenutno",
+            'operation': "operacija",
         },
         'hu': {
             'PRESS': "Gombnyomás",
@@ -431,6 +447,7 @@ translations = {
             'position': "Pozíció",
             'state': "Állapot",
             'currently': "Jelenleg",
+            'operation': "Működés",
         },
         'hy': {
             'ACTIVATE': "Ակտիվացնել",
@@ -454,6 +471,7 @@ translations = {
             'position': "Դիրք",
             'state': "Պետություն",
             'currently': "Ներկայումս",
+            'operation': "Գործողություն",
         },
         'id': {
             'PRESS': "Tekan",
@@ -480,6 +498,7 @@ translations = {
             'position': "Posisi",
             'state': "Status",
             'currently': "Saat ini",
+            'operation': "Operasi",
         },
         'is': {
             'PRESS': "Ýttu á",
@@ -505,6 +524,7 @@ translations = {
             'position': "Staðsetning",
             'state': "Staða",
             'currently': "Er núna",
+            'operation': "Aðgerð",
         },
         'it': {
             'PRESS': "Premi",
@@ -531,6 +551,7 @@ translations = {
             'position': "Apertura",
             'state': "Stato",
             'currently': "Attualmente",
+            'operation': "Operazione",
         },
         'lb': {
             'ACTIVATE': "Aktivéieren",
@@ -555,6 +576,7 @@ translations = {
             'position': "Positioun",
             'state': "Zoustand",
             'currently': "Momentan",
+            'operation': "Aktioun",
         },
         'lt': {
             'ACTIVATE': "Suaktyvinti",
@@ -578,6 +600,7 @@ translations = {
             'position': "Padėtis",
             'state': "Būsena",
             'currently': "Šiuo metu",
+            'operation': "Operacija",
         },
         'lv': {
             'ACTIVATE': "Aktivizēt",
@@ -601,6 +624,7 @@ translations = {
             'position': "Pozīcija",
             'state': "Stāvoklis",
             'currently': "Pašlaik",
+            'operation': "Darbība",
         },
         'nb': {
             'PRESS': "trykk",
@@ -627,6 +651,7 @@ translations = {
             'position': "Posisjon",
             'state': "Tilstand",
             'currently': "Er nå",
+            'operation': "Operasjon",
         },
         'nl': {
             'PRESS': "Klik",
@@ -653,6 +678,7 @@ translations = {
             'position': "Positie",
             'state': "Staat",
             'currently': "Momenteel",
+            'operation': "Werking",
         },
         'nn': {
             'ACTIVATE': "Aktiver",
@@ -678,6 +704,7 @@ translations = {
             'position': "Posisjon",
             'state': "Tilstand",
             'currently': "Akkurat no",
+            'operation': "Operasjon",
         },
         'pl': {
             'PRESS': "Naciśnij",
@@ -704,6 +731,7 @@ translations = {
             'position': "Pozycja",
             'state': "Stan",
             'currently': "Obecnie",
+            'operation': "Tryb pracy",
         },
         'pt': {
             'PRESS': "Pressione",
@@ -729,6 +757,7 @@ translations = {
             'position': "Posição",
             'state': "Estado",
             'currently': "Atualmente",
+            'operation': "Operação",
         },
         'ro': {
             'ACTIVATE': "Activați",
@@ -754,6 +783,7 @@ translations = {
             'position': "Poziţie",
             'state': "Status",
             'currently': "În prezent",
+            'operation': "Operație",
         },
         'ru': {
             'PRESS': "Нажать",
@@ -780,6 +810,7 @@ translations = {
             'position': "Положение",
             'state': "Состояние",
             'currently': "Сейчас",
+            'operation': "Режим работы",
         },
         'sk': {
             'ACTIVATE': "Aktivovať",
@@ -805,6 +836,7 @@ translations = {
             'position': "Poloha",
             'state': "Stav",
             'currently': "Aktuálne",
+            'operation': "Prevádzka",
         },
         'sl': {
             'PRESS': "Pritisnite",
@@ -830,6 +862,7 @@ translations = {
             'position': "Položaj",
             'state': "Stanje",
             'currently': "Trenutno",
+            'operation': "Delovanje",
         },
         'sv': {
             'PRESS': "Tryck",
@@ -856,6 +889,7 @@ translations = {
             'position': "Position",
             'state': "Tillstånd",
             'currently': "Nuvarande",
+            'operation': "Driftläge",
         },
         'th': {
             'PRESS': "กด",
@@ -880,6 +914,7 @@ translations = {
             'position': "ตำแหน่ง",
             'state': "สถานะ",
             'currently': "ในขณะนี้",
+            'operation': "การทำงาน",
         },
         'tr': {
             'PRESS': "Basınız",
@@ -906,6 +941,7 @@ translations = {
             'position': "Pozisyon",
             'state': "Durum",
             'currently': "Şu an",
+            'operation': "İşlem",
         },
         'uk': {
             'PRESS': "Натисніть",
@@ -931,6 +967,7 @@ translations = {
             'position': "Положення",
             'state': "Статус",
             'currently': "В даний час",
+            'operation': "Режим",
         },
         'vi': {
             'ACTIVATE': "Kích hoạt",
@@ -955,6 +992,7 @@ translations = {
             'position': "Vị trí",
             'state': "Trạng thái",
             'currently': "Hiện tại",
+            'operation': "Chế độ hoạt động",
         },
 }
 
@@ -965,3 +1003,4 @@ def get_translation(locale, input):
         return translations.get(locale).get(input, en_fallback_res)
     else:
         return en_fallback_res
+
