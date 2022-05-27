@@ -1,73 +1,11 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-24 14:34:14.183683629 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-24 14:34:13.723678266 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-24 14:34:14.167683442 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-24 14:34:13.723678266 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-24 14:34:14.171683489 +0000
-+ Hotspot mSwipeNext
-+         Scope                               : local
-+@@ -1892,6 +2120,169 @@
-++                                            // up button
-++                                            spstr tId.txt,tTmp.txt,"|",3
-++                                            if(tTmp.txt=="disable")
-++                                                spstr tId.txt,bUp5.txt,"|",0
-++                                            }else if(tTmp.txt=="enable")
-++                                                spstr tId.txt,bUp5.txt,"|",0
-++                                            // stop button
-++                                            spstr tId.txt,tTmp.txt,"|",4
-++                                            if(tTmp.txt=="disable")
-++                                            {
-++                                                bStop5.pco=27501
-++                                                spstr tId.txt,bStop5.txt,"|",1
-++                                                tsw bStop5,0
-++                                            }else if(tTmp.txt=="enable")
-++                                            {
-++                                                bStop5.pco=65535
-++                                                spstr tId.txt,bStop5.txt,"|",1
-++                                                tsw bStop5,1
-++                                            }
-++                                            // down button
-++                                            spstr tId.txt,tTmp.txt,"|",5
-++                                            if(tTmp.txt=="disable")
-++                                                spstr tId.txt,bDown5.txt,"|",2
-++                                            }else if(tTmp.txt=="enable")
-++                                                spstr tId.txt,bDown5.txt,"|",2
-+diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-05-24 14:34:13.723678266 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-24 14:34:14.167683442 +0000
-+@@ -34,7 +34,7 @@
-+     Attributes
-+         Scope         : local
-+         Text          : 
-+-        Max. Text Size: 275
-++        Max. Text Size: 270
-+     
-+ Variable (string) entn
-+     Attributes
-+--- HMI/n2t-out/pageStartup.txt	2022-05-24 14:34:13.723678266 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-24 14:34:14.167683442 +0000
-+diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
-+--- HMI/n2t-out/screensaver.txt	2022-05-24 14:34:13.723678266 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-24 14:34:14.167683442 +0000
-+@@ -455,22 +455,6 @@
-+                                             vis tMainIconAlt,1
-+                                             vis tMRIcon,1
-+                                             vis tMR,1
-+-                                            vis tForecast1,0
-+-                                            vis tF1Icon,0
-+-                                            vis tForecast1Val,0
-+-                                            //move forecast values to the right
-+-                                            tForecast4.txt=tForecast3.txt
-+-                                            tForecast3.txt=tForecast2.txt
-+-                                            tForecast2.txt=tForecast1.txt
-+-                                            tForecast4Val.txt=tForecast3Val.txt
-+-                                            tForecast3Val.txt=tForecast2Val.txt
-+-                                            tForecast2Val.txt=tForecast1Val.txt
-+-                                            tF4Icon.txt=tF3Icon.txt
-+-                                            tF3Icon.txt=tF2Icon.txt
-+-                                            tF2Icon.txt=tF1Icon.txt
-+-                                            tF4Icon.pco=tF3Icon.pco
-+-                                            tF3Icon.pco=tF2Icon.pco
-+-                                            tF2Icon.pco=tF1Icon.pco
-+                                         }
-+                                         //tMR
-+                                         spstr strCommand.txt,tMR.txt,"~",16
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-27 14:25:38.900113346 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-27 14:25:38.476109147 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-27 14:25:38.884113188 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-27 14:25:38.480109187 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-27 14:25:38.888113228 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-27 14:25:38.480109187 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-27 14:25:38.888113228 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-27 14:25:38.476109147 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-27 14:25:38.888113228 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-27 14:25:38.480109187 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-27 14:25:38.888113228 +0000
