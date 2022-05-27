@@ -307,8 +307,9 @@ class LuiPagesGen(object):
             
             currently_translation = get_translation(self._locale, "currently")
             state_translation = get_translation(self._locale, "state")
+            action_translation = get_translation(self._locale, "operation")
 
-            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~~{temperature_unit_icon}"
+            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{status}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}"
         self._send_mqtt_msg(command)
 
     def generate_media_page(self, navigation, title, entity):
