@@ -468,6 +468,9 @@ Timer tmSerial
                                             tF4Icon.txt=tF3Icon.txt
                                             tF3Icon.txt=tF2Icon.txt
                                             tF2Icon.txt=tF1Icon.txt
+                                            tF4Icon.pco=tF3Icon.pco
+                                            tF3Icon.pco=tF2Icon.pco
+                                            tF2Icon.pco=tF1Icon.pco
                                         }
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
@@ -506,8 +509,10 @@ Timer tmSerial
                                         covx tTmp.txt,tDate.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",5
                                         covx tTmp.txt,tMainIcon.pco,0,0
+                                        tMainIconAlt.pco=tMainIcon.pco
                                         spstr strCommand.txt,tTmp.txt,"~",6
                                         covx tTmp.txt,tMainText.pco,0,0
+                                        tMainTextAlt.pco=tMainText.pco
                                         spstr strCommand.txt,tTmp.txt,"~",7
                                         covx tTmp.txt,tForecast1.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",8
@@ -535,12 +540,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,t10.bco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",20
-                                        covx tTmp.txt,tMainIconAlt.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",21
-                                        covx tTmp.txt,tMainTextAlt.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",22
                                         covx tTmp.txt,tMRIcon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",23
+                                        spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,tMR.pco,0,0
                                     }
                                     if(tInstruction.txt=="notify")
