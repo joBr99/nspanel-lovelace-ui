@@ -14,10 +14,6 @@ popupNotify
 	17   Component(s)
 	200  Line(s) of event code
 	125  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	154  Line(s) of event code
-	115  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	439  Line(s) of event code
@@ -46,6 +42,10 @@ screensaver
 	35   Component(s)
 	282  Line(s) of event code
 	223  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	154  Line(s) of event code
+	115  Unique line(s) of event code
 popupShutter
 	20   Component(s)
 	244  Line(s) of event code
