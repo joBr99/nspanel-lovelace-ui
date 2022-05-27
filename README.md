@@ -457,6 +457,8 @@ key | optional | type | default | description
 `weatherOverrideForecast2` | True | complex | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
 `weatherOverrideForecast3` | True | complex | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
 `weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
+`statusIcon1` | True | complex | `None` | status icon left to the date string, config similar to weatherOverride
+`statusIcon2` | True | complex | `None` | status icon right to the date string, config similar to weatherOverride
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
 `theme` | True | complex | | configuration for theme
@@ -738,9 +740,11 @@ Click redownload in the menu of the app in HACS.
 
 Select main version.
 
+**!!! Wait for it to load, dropdown needs to be selectable again, otherwise it will download the latest release !!!**
+
 ![hacs-main](doc-pics/hacs-main.png)
 
-**Wait for it to load, dropdown needs to be selectable again**
+**!!! Wait for it to load, dropdown needs to be selectable again, otherwise it will download the latest release !!!**
 
 Click download.
 
