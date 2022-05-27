@@ -120,9 +120,9 @@ Text tDate
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
+        x coordinate                        : 38
         y coordinate                        : 154
-        Width                               : 451
+        Width                               : 375
         Height                              : 38
         Effect                              : load
         Effect Priority                     : 0
@@ -810,10 +810,10 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 344
-        y coordinate                        : 2
-        Width                               : 50
-        Height                              : 45
+        x coordinate                        : 0
+        y coordinate                        : 154
+        Width                               : 38
+        Height                              : 38
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -826,7 +826,7 @@ Text tIcon1
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 
+        Text                                : î
         Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -840,10 +840,10 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 400
-        y coordinate                        : 2
-        Width                               : 45
-        Height                              : 45
+        x coordinate                        : 413
+        y coordinate                        : 154
+        Width                               : 38
+        Height                              : 38
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -856,7 +856,7 @@ Text tIcon2
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 
+        Text                                : î
         Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
