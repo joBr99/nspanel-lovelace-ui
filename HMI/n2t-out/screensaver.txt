@@ -62,6 +62,12 @@ Variable (string) tTmp
         Text          : 
         Max. Text Size: 50
     
+Variable (string) tSend
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
+    
 Text tTime
     Attributes
         Scope                               : local
@@ -81,16 +87,6 @@ Text tDate
         Associated Keyboard                 : none
         Text                                : Tuesday, 08. March 2022
         Max. Text Size                      : 35
-    
-Text tSend
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 50
     
 Text tMainIcon
     Attributes
@@ -312,6 +308,26 @@ Text tNotifyText
         Text                                : 
         Max. Text Size                      : 35
     
+Text tIcon1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 5
+    
+Text tIcon2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 5
+    
 Picture p0
     Attributes
         Scope                               : local
@@ -474,6 +490,14 @@ Timer tmSerial
                                         }
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
+                                        //statusIcon1
+                                        spstr strCommand.txt,tIcon1.txt,"~",17
+                                        spstr strCommand.txt,tTmp.txt,"~",18
+                                        covx tTmp.txt,tIcon1.pco,0,0
+                                        //statusIcon2
+                                        spstr strCommand.txt,tIcon2.txt,"~",19
+                                        spstr strCommand.txt,tTmp.txt,"~",20
+                                        covx tTmp.txt,tIcon2.pco,0,0
                                     }
                                     if(tInstruction.txt=="color")
                                     {
