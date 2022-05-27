@@ -315,7 +315,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 
+        Text                                : î
         Max. Text Size                      : 5
     
 Text tIcon2
@@ -325,7 +325,7 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 
+        Text                                : î
         Max. Text Size                      : 5
     
 Picture p0
