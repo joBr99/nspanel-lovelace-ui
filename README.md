@@ -498,13 +498,21 @@ key | option | type | default | description
 `tMainTextAlt` | True | list | White | `[R, G, B]`
 `tMRIcon` | True | list | White | `[R, G, B]`
 `tMR` | True | list | White | `[R, G, B]`
-`autoWeather` | True | string | None | Set to `true` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence.
+`autoWeather` | True | boolean | false | Set to `true` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence.
 
 If `autoWeather: true` is set. You may also override the default color mapping for any valid weather state provided by homeassistant e.g. `rainy: [50, 50, 255]` or `sunny: [255, 255, 0]`
 
 Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red or `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same). Also note that the screen has a low contrast ratio, so colors look sigificantly different at full display brightness and lowest brightness.
 
-For complex theme setups, you may configure `theme: !include /config/appdaemon/apps/screensaver-theme.yaml` and download `screensaver-theme.yaml` from the appdaemon folder and place it in the same folder as `apps.yaml`. Note: this will cause AppDaemon to throw a warning that `screensaver-theme.yaml` is not a valid yaml file - this warning can be safely ignored or you can configure `invalid_yaml_warnings: 1` (see appdaemon.yaml in the appdaemon folder).
+Example for the theme config:
+
+```yaml
+    screensaver:
+      theme:
+        AutoWeather: true
+```
+
+For complex setups where you want to reuse the theme over multiple panels see the config exmaples in the appdaemon folder.
 
 #### Schedule sleep brightness
 
