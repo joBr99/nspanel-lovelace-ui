@@ -227,7 +227,7 @@ Text tStatus
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 40
     
 Text tCF1
     Attributes

@@ -475,7 +475,7 @@ Text tStatus
         Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 40
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
