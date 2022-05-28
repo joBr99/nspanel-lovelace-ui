@@ -90,10 +90,10 @@ Text tTime
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 4
-        Width                               : 451
-        Height                              : 150
+        x coordinate                        : 37
+        y coordinate                        : 0
+        Width                               : 376
+        Height                              : 154
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -120,9 +120,9 @@ Text tDate
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 38
+        x coordinate                        : 0
         y coordinate                        : 154
-        Width                               : 375
+        Width                               : 450
         Height                              : 38
         Effect                              : load
         Effect Priority                     : 0
@@ -421,7 +421,7 @@ Text tAMPM
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 343
-        y coordinate                        : 52
+        y coordinate                        : 49
         Width                               : 104
         Height                              : 57
         Effect                              : load
@@ -811,7 +811,7 @@ Text tIcon1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 154
+        y coordinate                        : 0
         Width                               : 38
         Height                              : 38
         Effect                              : load
@@ -841,7 +841,7 @@ Text tIcon2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 413
-        y coordinate                        : 154
+        y coordinate                        : 0
         Width                               : 38
         Height                              : 38
         Effect                              : load
