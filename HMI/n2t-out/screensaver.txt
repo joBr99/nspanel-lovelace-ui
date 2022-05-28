@@ -513,6 +513,8 @@ Timer tmSerial
                                         tMRIcon.bco=tTime.bco
                                         tMR.bco=tTime.bco
                                         tMRIcon.bco=tTime.bco
+                                        tIcon1.bco=tTime.bco
+                                        tIcon2.bco=tTime.bco
                                         tForecast1.bco=tTime.bco
                                         tForecast1Val.bco=tTime.bco
                                         tF1Icon.bco=tTime.bco
