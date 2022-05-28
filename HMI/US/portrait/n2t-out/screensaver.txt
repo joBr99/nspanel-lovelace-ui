@@ -471,22 +471,6 @@ Timer tmSerial
                                             vis tMainIconAlt,1
                                             vis tMRIcon,1
                                             vis tMR,1
-                                            vis tForecast1,0
-                                            vis tF1Icon,0
-                                            vis tForecast1Val,0
-                                            //move forecast values to the right
-                                            tForecast4.txt=tForecast3.txt
-                                            tForecast3.txt=tForecast2.txt
-                                            tForecast2.txt=tForecast1.txt
-                                            tForecast4Val.txt=tForecast3Val.txt
-                                            tForecast3Val.txt=tForecast2Val.txt
-                                            tForecast2Val.txt=tForecast1Val.txt
-                                            tF4Icon.txt=tF3Icon.txt
-                                            tF3Icon.txt=tF2Icon.txt
-                                            tF2Icon.txt=tF1Icon.txt
-                                            tF4Icon.pco=tF3Icon.pco
-                                            tF3Icon.pco=tF2Icon.pco
-                                            tF2Icon.pco=tF1Icon.pco
                                         }
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
@@ -513,6 +497,8 @@ Timer tmSerial
                                         tMRIcon.bco=tTime.bco
                                         tMR.bco=tTime.bco
                                         tMRIcon.bco=tTime.bco
+                                        tIcon1.bco=tTime.bco
+                                        tIcon2.bco=tTime.bco
                                         tForecast1.bco=tTime.bco
                                         tForecast1Val.bco=tTime.bco
                                         tF1Icon.bco=tTime.bco
