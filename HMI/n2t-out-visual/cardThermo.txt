@@ -459,9 +459,9 @@ Text tStatus
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 11
-        y coordinate                        : 200
+        y coordinate                        : 190
         Width                               : 97
-        Height                              : 30
+        Height                              : 54
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -472,11 +472,11 @@ Text tStatus
         Back. Color                         : 6371
         Font Color                          : 50712
         Horizontal Alignment                : center
-        Vertical Alignment                  : center
+        Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 10
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -549,7 +549,7 @@ Text tStateLbl
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 12
-        y coordinate                        : 162
+        y coordinate                        : 156
         Width                               : 95
         Height                              : 30
         Effect                              : load
@@ -669,7 +669,7 @@ Text tCurTemp
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 13
-        y coordinate                        : 121
+        y coordinate                        : 119
         Width                               : 95
         Height                              : 30
         Effect                              : load
