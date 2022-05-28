@@ -610,7 +610,7 @@ Text tALbl
         Opacity                             : 127
         x coordinate                        : 7
         y coordinate                        : 260
-        Width                               : 67
+        Width                               : 74
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0

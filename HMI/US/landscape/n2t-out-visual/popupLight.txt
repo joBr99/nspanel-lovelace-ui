@@ -461,6 +461,9 @@ Picture pColorWheel
             sys0=sys0-pColorWheel.y
             covx sys0,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
+            tSend.txt+="|"
+            covx pColorWheel.h,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
