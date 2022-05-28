@@ -1,15 +1,15 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-28 08:26:24.036334357 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-28 08:26:23.480334206 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-28 08:26:23.988334344 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-28 08:26:23.480334206 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-28 08:26:23.988334344 +0000
-+--- HMI/n2t-out/cardQR.txt	2022-05-28 08:26:23.480334206 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-28 08:26:23.988334344 +0000
-+--- HMI/n2t-out/pageStartup.txt	2022-05-28 08:26:23.480334206 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-28 08:26:23.988334344 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-28 19:31:24.959828961 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-28 19:31:24.471828653 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-28 19:31:24.907828928 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-28 19:31:24.471828653 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-28 19:31:24.911828931 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-28 19:31:24.471828653 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-28 19:31:24.911828931 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-28 19:31:24.471828653 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-28 19:31:24.911828931 +0000
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-05-28 08:26:23.480334206 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-28 08:26:23.988334344 +0000
++--- HMI/n2t-out/popupLight.txt	2022-05-28 19:31:24.471828653 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-28 19:31:24.911828931 +0000
 +@@ -209,9 +209,6 @@
 +             sys0=sys0-pColorWheel.y
 +             covx sys0,tTmp.txt,0,0
@@ -20,6 +20,6 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+--- HMI/n2t-out/screensaver.txt	2022-05-28 08:26:23.480334206 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-28 08:26:23.988334344 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-28 19:31:24.471828653 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-28 19:31:24.911828931 +0000
 +@@ -471,22 +471,6 @@
