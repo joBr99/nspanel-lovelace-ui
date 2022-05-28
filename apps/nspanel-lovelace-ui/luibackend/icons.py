@@ -114,7 +114,13 @@ def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
 
 def get_icon_id_ha(ha_type, state=None, device_class=None, overwrite=None):
     if overwrite is not None:
-        return get_icon_id(overwrite)
+        if type(overwrite) is str:
+            return get_icon_id(overwrite)
+        if type(overwrite) is dict:
+            for overwrite_state, overwrite_icon in d.items():
+                if overwrite_state == state:
+                    return get_icon_id(overwrite_icon)
+                
     return get_icon_id(map_to_mdi_name(ha_type, state, device_class))
 
 def get_action_id_ha(ha_type, action, device_class=None, overwrite=None):
