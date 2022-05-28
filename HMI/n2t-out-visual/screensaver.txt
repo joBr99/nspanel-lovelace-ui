@@ -826,7 +826,7 @@ Text tIcon1
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : î
+        Text                                : 
         Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -856,7 +856,7 @@ Text tIcon2
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : î
+        Text                                : 
         Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
