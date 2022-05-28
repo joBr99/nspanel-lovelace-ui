@@ -277,7 +277,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~Not found~{navigation}~{item}~check~220~apps.yaml~150~300~5~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Please~your~~"
         else:
             entity       = self._ha_api.get_entity(item)
-            heading      = title if title is not None else entity.attributes.friendly_name
+            heading      = title if title == "unknown" else entity.attributes.friendly_name
             current_temp = get_attr_safe(entity, "current_temperature", "")
             dest_temp    = int(get_attr_safe(entity, "temperature", 0)*10)
             status       = get_attr_safe(entity, "hvac_action", "")
@@ -330,7 +330,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
         else:
             entity        = self._ha_api.get_entity(item)
-            heading       = title if title is not None else entity.attributes.friendly_name
+            heading       = title if title == "unknown" else entity.attributes.friendly_name
             icon          = get_icon_id('speaker-off')
             title         = get_attr_safe(entity, "media_title", "")
             author        = get_attr_safe(entity, "media_artist", "")
