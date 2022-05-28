@@ -309,7 +309,7 @@ nspanel-1:
         entities:
           - entity: switch.example_item
             name: NameOverride
-            icon: lightbulb
+            icon: mdi:lightbulb
           - entity: light.example_item
           - entity: cover.example_item
           - entity: input_boolean.example_item
@@ -355,9 +355,9 @@ nspanel-1:
         qrCode: "WIFI:S:test_ssid;T:WPA;P:test_pw;;"
         entities:
           - entity: iText.Name.test_ssid
-            icon: wifi
+            icon: mdi:wifi
           - entity: iText.Password.test_pw
-            icon: key
+            icon: mdi:key
 ```
 
 key | optional | type | default | description
@@ -453,10 +453,10 @@ key | optional | type | default | description
 -- | -- | -- | -- | --
 `entity` | True | string | `weather.example` | weather entity from homeassistant
 `weatherUnit` | True | string | `celsius` | unit for temperature, valid values are `celsius` or `fahrenheit`
-`weatherOverrideForecast1` | True | complex | `None` | sensor entity from home assistant here to override the first weather forecast item on the screensaver
-`weatherOverrideForecast2` | True | complex | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
-`weatherOverrideForecast3` | True | complex | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
-`weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
+`weatherOverrideForecast1` | True | complex | `None` | sensor entity from home assistant here to overwrite the first weather forecast item on the screensaver
+`weatherOverrideForecast2` | True | complex | `None` | sensor entity from home assistant here to overwrite the second weather forecast item on the screensaver
+`weatherOverrideForecast3` | True | complex | `None` | sensor entity from home assistant here to overwrite the third weather forecast item on the screensaver
+`weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to overwrite the forth weather forecast item on the screensaver
 `statusIcon1` | True | complex | `None` | status icon left to the date string, config similar to weatherOverride
 `statusIcon2` | True | complex | `None` | status icon right to the date string, config similar to weatherOverride
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
@@ -471,7 +471,7 @@ Example for the weatherOverride config options:
       weatherOverrideForecast4:
         entity: sensor.example_item
         name: name
-        icon: lightbulb
+        icon: mdi:lightbulb
 ```
 #### Possible configuration values for screensaver theme config
 
@@ -502,7 +502,7 @@ key | option | type | default | description
 `tMR` | True | list | White | `[R, G, B]`
 `autoWeather` | True | boolean | false | Set to `true` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence.
 
-If `autoWeather: true` is set. You may also override the default color mapping for any valid weather state provided by homeassistant e.g. `rainy: [50, 50, 255]` or `sunny: [255, 255, 0]`
+If `autoWeather: true` is set. You may also overwrite the default color mapping for any valid weather state provided by homeassistant e.g. `rainy: [50, 50, 255]` or `sunny: [255, 255, 0]`
 
 Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red or `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same). Also note that the screen has a low contrast ratio, so colors look sigificantly different at full display brightness and lowest brightness.
 
@@ -539,14 +539,14 @@ It is possible to schedule a brightness change for the screen at specific times.
 
 #### Override Icons or Names
 
-To override Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
+To overwrite Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
 Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?https://github.com/joBr99/nspanel-lovelace-ui/blob/main/HMI/icon-cheatsheet.html) are useable.
 
 ```yaml
         entities:
           - entity: light.test_item
             name: NameOverride
-            icon: lightbulb
+            icon: mdi:lightbulb
 ```
 
 It is also possible to configure different icon overwrites per state:
