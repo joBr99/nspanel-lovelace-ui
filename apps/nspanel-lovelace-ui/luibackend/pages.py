@@ -283,8 +283,10 @@ class LuiPagesGen(object):
             status       = get_attr_safe(entity, "hvac_action", "")
             state_value  = ""
             if status != "":
-                state_value  = f"{get_translation(self._locale, status)}\r\n"
-            state_value += "({get_translation(self._locale, entity.state)})"
+                state_value += f"{get_translation(self._locale, status)}\r\n("
+            state_value += f"{get_translation(self._locale, entity.state)}"
+            if status != "":
+                state_value += ")"
             min_temp     = int(get_attr_safe(entity, "min_temp", 0)*10)
             max_temp     = int(get_attr_safe(entity, "max_temp", 0)*10)
             step_temp    = int(get_attr_safe(entity, "target_temp_step", 0.5)*10) 
