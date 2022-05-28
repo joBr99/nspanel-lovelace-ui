@@ -2,10 +2,6 @@ Program.s
 	0    Component(s)
 	10   Line(s) of event code
 	10   Unique line(s) of event code
-popupLight
-	27   Component(s)
-	348  Line(s) of event code
-	188  Unique line(s) of event code
 pageIcons
 	6    Component(s)
 	0    Line(s) of event code
@@ -22,6 +18,10 @@ cardGrid
 	42   Component(s)
 	439  Line(s) of event code
 	254  Unique line(s) of event code
+popupLight
+	27   Component(s)
+	348  Line(s) of event code
+	188  Unique line(s) of event code
 cardQR
 	30   Component(s)
 	363  Line(s) of event code
