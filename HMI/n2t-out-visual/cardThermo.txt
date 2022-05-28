@@ -460,7 +460,7 @@ Text tStatus
         Opacity                             : 127
         x coordinate                        : 11
         y coordinate                        : 190
-        Width                               : 97
+        Width                               : 115
         Height                              : 54
         Effect                              : load
         Effect Priority                     : 0
@@ -520,7 +520,7 @@ Text tCurTempLbl
         Opacity                             : 127
         x coordinate                        : 13
         y coordinate                        : 85
-        Width                               : 95
+        Width                               : 115
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -550,7 +550,7 @@ Text tStateLbl
         Opacity                             : 127
         x coordinate                        : 12
         y coordinate                        : 156
-        Width                               : 95
+        Width                               : 115
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -670,7 +670,7 @@ Text tCurTemp
         Opacity                             : 127
         x coordinate                        : 13
         y coordinate                        : 119
-        Width                               : 95
+        Width                               : 115
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
