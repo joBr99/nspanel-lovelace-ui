@@ -159,7 +159,7 @@ XFloat xTempDest1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 174
-        y coordinate                        : 219
+        y coordinate                        : 227
         Width                               : 120
         Height                              : 60
         Effect                              : load
@@ -189,7 +189,7 @@ XFloat xTempMin1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 262
-        y coordinate                        : 172
+        y coordinate                        : 180
         Width                               : 50
         Height                              : 22
         Effect                              : load
@@ -219,7 +219,7 @@ XFloat xTempMax1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 262
-        y coordinate                        : 194
+        y coordinate                        : 202
         Width                               : 45
         Height                              : 20
         Effect                              : load
@@ -249,7 +249,7 @@ XFloat xTempStep1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 263
-        y coordinate                        : 282
+        y coordinate                        : 290
         Width                               : 45
         Height                              : 20
         Effect                              : load
@@ -279,7 +279,7 @@ XFloat xTempDest2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 21
-        y coordinate                        : 219
+        y coordinate                        : 227
         Width                               : 120
         Height                              : 60
         Effect                              : load
@@ -309,7 +309,7 @@ XFloat xTempMin2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 110
-        y coordinate                        : 170
+        y coordinate                        : 178
         Width                               : 50
         Height                              : 21
         Effect                              : load
@@ -339,7 +339,7 @@ XFloat xTempMax2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 110
-        y coordinate                        : 192
+        y coordinate                        : 200
         Width                               : 45
         Height                              : 20
         Effect                              : load
@@ -369,7 +369,7 @@ XFloat xTempStep2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 111
-        y coordinate                        : 280
+        y coordinate                        : 288
         Width                               : 45
         Height                              : 20
         Effect                              : load
@@ -399,7 +399,7 @@ XFloat xTempDest
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 100
-        y coordinate                        : 220
+        y coordinate                        : 228
         Width                               : 120
         Height                              : 60
         Effect                              : load
@@ -458,10 +458,10 @@ Text tStatus
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 191
-        y coordinate                        : 119
-        Width                               : 97
-        Height                              : 30
+        x coordinate                        : 190
+        y coordinate                        : 110
+        Width                               : 95
+        Height                              : 56
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -476,7 +476,7 @@ Text tStatus
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 10
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -489,7 +489,7 @@ Text tCF1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 295
-        y coordinate                        : 217
+        y coordinate                        : 225
         Width                               : 25
         Height                              : 30
         Effect                              : load
@@ -519,7 +519,7 @@ Text tCurTempLbl
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 35
-        y coordinate                        : 82
+        y coordinate                        : 76
         Width                               : 95
         Height                              : 30
         Effect                              : load
@@ -549,7 +549,7 @@ Text tStateLbl
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 192
-        y coordinate                        : 81
+        y coordinate                        : 75
         Width                               : 95
         Height                              : 30
         Effect                              : load
@@ -579,7 +579,7 @@ Text tCF2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 142
-        y coordinate                        : 217
+        y coordinate                        : 225
         Width                               : 25
         Height                              : 30
         Effect                              : load
@@ -608,9 +608,9 @@ Text tALbl
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 33
-        y coordinate                        : 403
-        Width                               : 67
+        x coordinate                        : 15
+        y coordinate                        : 402
+        Width                               : 83
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -639,7 +639,7 @@ Text tCF
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 221
-        y coordinate                        : 217
+        y coordinate                        : 225
         Width                               : 25
         Height                              : 30
         Effect                              : load
@@ -669,7 +669,7 @@ Text tCurTemp
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 35
-        y coordinate                        : 118
+        y coordinate                        : 112
         Width                               : 95
         Height                              : 30
         Effect                              : load
@@ -1209,7 +1209,7 @@ Dual-state Button btUp1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 210
-        y coordinate                        : 168
+        y coordinate                        : 176
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1267,7 +1267,7 @@ Dual-state Button btDown1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 210
-        y coordinate                        : 280
+        y coordinate                        : 288
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1325,7 +1325,7 @@ Dual-state Button bUp2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 57
-        y coordinate                        : 168
+        y coordinate                        : 176
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1383,7 +1383,7 @@ Dual-state Button bDown2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 57
-        y coordinate                        : 280
+        y coordinate                        : 288
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1441,7 +1441,7 @@ Dual-state Button btUp
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 136
-        y coordinate                        : 169
+        y coordinate                        : 177
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1499,7 +1499,7 @@ Dual-state Button btDown
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 136
-        y coordinate                        : 281
+        y coordinate                        : 289
         Width                               : 50
         Height                              : 50
         Effect                              : load

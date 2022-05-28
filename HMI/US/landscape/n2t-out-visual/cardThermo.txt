@@ -459,9 +459,9 @@ Text tStatus
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 26
-        y coordinate                        : 200
+        y coordinate                        : 186
         Width                               : 97
-        Height                              : 30
+        Height                              : 60
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -476,7 +476,7 @@ Text tStatus
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 10
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -519,7 +519,7 @@ Text tCurTempLbl
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 28
-        y coordinate                        : 85
+        y coordinate                        : 84
         Width                               : 95
         Height                              : 30
         Effect                              : load
@@ -549,7 +549,7 @@ Text tStateLbl
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 27
-        y coordinate                        : 162
+        y coordinate                        : 152
         Width                               : 95
         Height                              : 30
         Effect                              : load
@@ -669,7 +669,7 @@ Text tCurTemp
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 28
-        y coordinate                        : 121
+        y coordinate                        : 118
         Width                               : 95
         Height                              : 30
         Effect                              : load
