@@ -26,7 +26,6 @@ translations = {
             'operation': "Operasie",
             'fan_mode': "Waaier modus",
             'heating': "Verhit",
-            'heat': "Verhit",
         },
         'ar': {
             'ACTIVATE': "تفعيل",
@@ -55,7 +54,6 @@ translations = {
             'operation': "الوضع",
             'fan_mode': "وضع المروحة",
             'heating': "تدفئة",
-            'heat': "تدفئة",
         },
         'bg': {
             'ACTIVATE': "Активирай",
@@ -85,7 +83,6 @@ translations = {
             'operation': "Режим",
             'fan_mode': "Режим на вентилатора",
             'heating': "Отопление",
-            'heat': "Отопление",
         },
         'ca': {
             'PRESS': "Prem",
@@ -116,7 +113,6 @@ translations = {
             'operation': "Funcionament",
             'fan_mode': "Velocitat ventilador",
             'heating': "Escalfant",
-            'heat': "Escalfant",
         },
         'cs': {
             'PRESS': "Stisknutí",
@@ -147,7 +143,6 @@ translations = {
             'operation': "Provoz",
             'fan_mode': "Režim ventilátoru",
             'heating': "Topení",
-            'heat': "Topení",
         },
         'da': {
             'PRESS': "Tryk",
@@ -178,7 +173,6 @@ translations = {
             'operation': "Drifttype",
             'fan_mode': "Blæsertilstand",
             'heating': "Opvarmning",
-            'heat': "Opvarmning",
         },
         'de': {
             'PRESS': "Drücken",
@@ -209,7 +203,6 @@ translations = {
             'operation': "Aktion",
             'fan_mode': "Ventilator-Modus",
             'heating': "Heizung",
-            'heat': "Heizung",
         },
         'el': {
             'PRESS': "Πατήστε",
@@ -240,7 +233,6 @@ translations = {
             'operation': "Λειτουργία",
             'fan_mode': "Λειτουργία ανεμιστήρα",
             'heating': "Θέρμανση",
-            'heat': "Θέρμανση",
         },
         'en': {
             'PRESS': "Press",
@@ -271,7 +263,6 @@ translations = {
             'operation': "Operation",
             'fan_mode': "Fan mode",
             'heating': "Heating",
-            'heat': "Heating",
         },
         'es': {
             'PRESS': "Pulsa",
@@ -302,7 +293,6 @@ translations = {
             'operation': "Modo",
             'fan_mode': "Modo del ventilador",
             'heating': "Calentando",
-            'heat': "Calentando",
         },
         'et': {
             'PRESS': "Vajuta nuppu",
@@ -333,7 +323,6 @@ translations = {
             'operation': "Töörežiim",
             'fan_mode': "Ventilaatori režiim",
             'heating': "Küte",
-            'heat': "Küte",
         },
         'fa': {
             'ACTIVATE': "فعال سازی",
@@ -362,7 +351,6 @@ translations = {
             'operation': "عملیات",
             'fan_mode': "حالت فن",
             'heating': "گرمایش",
-            'heat': "گرمایش",
         },
         'fi': {
             'PRESS': "Paina",
@@ -393,7 +381,6 @@ translations = {
             'operation': "Toiminto",
             'fan_mode': "Tuuletustila",
             'heating': "Lämmitys",
-            'heat': "Lämmitys",
         },
         'fr': {
             'PRESS': "Appui",
@@ -424,7 +411,6 @@ translations = {
             'operation': "Opération",
             'fan_mode': "Mode de ventilation",
             'heating': "En chauffe",
-            'heat': "En chauffe",
         },
         'he': {
             'PRESS': "לחיצה",
@@ -455,7 +441,6 @@ translations = {
             'operation': "פעולה",
             'fan_mode': "מצב מאורר",
             'heating': "חימום",
-            'heat': "חימום",
         },
         'hr': {
             'ACTIVATE': "Aktivirati",
@@ -484,7 +469,6 @@ translations = {
             'operation': "operacija",
             'fan_mode': "Način rada s ventilatorom",
             'heating': "Grijanje",
-            'heat': "Grijanje",
         },
         'hu': {
             'PRESS': "Gombnyomás",
@@ -515,7 +499,6 @@ translations = {
             'operation': "Működés",
             'fan_mode': "Ventilátor",
             'heating': "Fűtés",
-            'heat': "Fűtés",
         },
         'hy': {
             'ACTIVATE': "Ակտիվացնել",
@@ -543,7 +526,6 @@ translations = {
             'operation': "Գործողություն",
             'fan_mode': "Երկրպագուների ռեժիմ",
             'heating': "Տաքացում",
-            'heat': "Տաքացում",
         },
         'id': {
             'PRESS': "Tekan",
@@ -574,7 +556,6 @@ translations = {
             'operation': "Operasi",
             'fan_mode': "Mode kipas",
             'heating': "Memanaskan",
-            'heat': "Memanaskan",
         },
         'is': {
             'PRESS': "Ýttu á",
@@ -604,7 +585,6 @@ translations = {
             'operation': "Aðgerð",
             'fan_mode': "Viftuhamur",
             'heating': "Kynding",
-            'heat': "Kynding",
         },
         'it': {
             'PRESS': "Premi",
@@ -635,7 +615,6 @@ translations = {
             'operation': "Operazione",
             'fan_mode': "Ventilazione",
             'heating': "Riscaldamento",
-            'heat': "Riscaldamento",
         },
         'lb': {
             'ACTIVATE': "Aktivéieren",
@@ -664,7 +643,6 @@ translations = {
             'operation': "Aktioun",
             'fan_mode': "Ventilatioun Modus",
             'heating': "Hëtzen",
-            'heat': "Hëtzen",
         },
         'lt': {
             'ACTIVATE': "Suaktyvinti",
@@ -692,7 +670,6 @@ translations = {
             'operation': "Operacija",
             'fan_mode': "Ventiliatoriaus režimas",
             'heating': "Šildymas",
-            'heat': "Šildymas",
         },
         'lv': {
             'ACTIVATE': "Aktivizēt",
@@ -720,7 +697,6 @@ translations = {
             'operation': "Darbība",
             'fan_mode': "Ventilatora režīms",
             'heating': "Sildīšana",
-            'heat': "Sildīšana",
         },
         'nb': {
             'PRESS': "trykk",
@@ -751,7 +727,6 @@ translations = {
             'operation': "Operasjon",
             'fan_mode': "Viftemodus",
             'heating': "Oppvarming",
-            'heat': "Oppvarming",
         },
         'nl': {
             'PRESS': "Klik",
@@ -782,7 +757,6 @@ translations = {
             'operation': "Werking",
             'fan_mode': "Ventilatormodus",
             'heating': "Verwarmen",
-            'heat': "Verwarmen",
         },
         'nn': {
             'ACTIVATE': "Aktiver",
@@ -812,7 +786,6 @@ translations = {
             'operation': "Operasjon",
             'fan_mode': "Viftemodus",
             'heating': "Oppvarming",
-            'heat': "Oppvarming",
         },
         'pl': {
             'PRESS': "Naciśnij",
@@ -843,7 +816,6 @@ translations = {
             'operation': "Tryb pracy",
             'fan_mode': "Tryb nawiewu",
             'heating': "grzanie",
-            'heat': "grzanie",
         },
         'pt': {
             'PRESS': "Pressione",
@@ -873,7 +845,6 @@ translations = {
             'operation': "Operação",
             'fan_mode': "Modo ventilar",
             'heating': "Aquecimento",
-            'heat': "Aquecimento",
         },
         'ro': {
             'ACTIVATE': "Activați",
@@ -903,7 +874,6 @@ translations = {
             'operation': "Operație",
             'fan_mode': "Mod ventilator",
             'heating': "Încălzește",
-            'heat': "Încălzește",
         },
         'ru': {
             'PRESS': "Нажать",
@@ -934,7 +904,6 @@ translations = {
             'operation': "Режим работы",
             'fan_mode': "Режим вентиляции",
             'heating': "Обогрев",
-            'heat': "Обогрев",
         },
         'sk': {
             'ACTIVATE': "Aktivovať",
@@ -964,7 +933,6 @@ translations = {
             'operation': "Prevádzka",
             'fan_mode': "Režim ventilátora",
             'heating': "Kúrenie",
-            'heat': "Kúrenie",
         },
         'sl': {
             'PRESS': "Pritisnite",
@@ -994,7 +962,6 @@ translations = {
             'operation': "Delovanje",
             'fan_mode': "Način ventilatorja",
             'heating': "Ogrevanje",
-            'heat': "Ogrevanje",
         },
         'sv': {
             'PRESS': "Tryck",
@@ -1025,7 +992,6 @@ translations = {
             'operation': "Driftläge",
             'fan_mode': "Fläktläge",
             'heating': "Värmer",
-            'heat': "Värmer",
         },
         'th': {
             'PRESS': "กด",
@@ -1054,7 +1020,6 @@ translations = {
             'operation': "การทำงาน",
             'fan_mode': "โหมดของพัดลม",
             'heating': "โหมดอบอุ่น",
-            'heat': "โหมดอบอุ่น",
         },
         'tr': {
             'PRESS': "Basınız",
@@ -1085,7 +1050,6 @@ translations = {
             'operation': "İşlem",
             'fan_mode': "Fan modu",
             'heating': "Isıtma",
-            'heat': "Isıtma",
         },
         'uk': {
             'PRESS': "Натисніть",
@@ -1115,7 +1079,6 @@ translations = {
             'operation': "Режим",
             'fan_mode': "Режим вентиляції",
             'heating': "Нагрівання",
-            'heat': "Нагрівання",
         },
         'vi': {
             'ACTIVATE': "Kích hoạt",
@@ -1144,15 +1107,21 @@ translations = {
             'operation': "Chế độ hoạt động",
             'fan_mode': "Chế độ quạt",
             'heating': "Làm ấm",
-            'heat': "Làm ấm",
         },
 }
 
-def get_translation(locale, input):
+def lookup(locale, inputstr):
     locale = locale.split("_")[0]
-    en_fallback_res = translations.get("en").get(input, input)
-    if locale in translations:
-        return translations.get(locale).get(input, en_fallback_res)
+    en_fallback_res = translations.get("en").get(inputstr, inputstr)
+    if locale in translations:    
+        return translations.get(locale).get(inputstr, en_fallback_res)
     else:
         return en_fallback_res
+
+def get_translation(locale, inputstr):
+    inputstr = inputstr.replace("heat", "heating").replace("dry", "drying").replace("cool", "cooling").replace("fan_only", "fan")
+    if inputstr == "heat_cool":
+        return f'{lookup(locale, "heating")}/{lookup(locale, "cooling")}}'
+        
+    return lookup(locale, inputstr)
 
