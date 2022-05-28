@@ -117,7 +117,7 @@ def get_icon_id_ha(ha_type, state=None, device_class=None, overwrite=None):
         if type(overwrite) is str:
             return get_icon_id(overwrite)
         if type(overwrite) is dict:
-            for overwrite_state, overwrite_icon in d.items():
+            for overwrite_state, overwrite_icon in overwrite.items():
                 if overwrite_state == state:
                     return get_icon_id(overwrite_icon)
                 
