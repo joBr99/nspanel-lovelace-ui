@@ -1121,7 +1121,7 @@ def lookup(locale, inputstr):
 def get_translation(locale, inputstr):
     inputstr = inputstr.replace("heat", "heating").replace("dry", "drying").replace("cool", "cooling").replace("fan_only", "fan")
     if inputstr == "heat_cool":
-        return f'{lookup(locale, "heating")}/{lookup(locale, "cooling")}}'
+        return f'{lookup(locale, "heating")}/{lookup(locale, "cooling")}'
         
     return lookup(locale, inputstr)
 
