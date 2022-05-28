@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-28 20:18:17.037462894 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-28 20:18:16.481462743 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-28 20:18:16.997462884 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-28 20:18:16.485462744 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-28 20:18:16.997462884 +0000
-+--- HMI/n2t-out/cardQR.txt	2022-05-28 20:18:16.485462744 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-28 20:18:16.997462884 +0000
-+--- HMI/n2t-out/pageStartup.txt	2022-05-28 20:18:16.481462743 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-28 20:18:16.997462884 +0000
-+--- HMI/n2t-out/screensaver.txt	2022-05-28 20:18:16.485462744 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-28 20:18:16.997462884 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-28 21:37:53.507818179 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-28 21:37:53.107812375 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-28 21:37:53.495818005 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-28 21:37:53.111812433 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-28 21:37:53.495818005 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-28 21:37:53.107812375 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-28 21:37:53.495818005 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-28 21:37:53.107812375 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-28 21:37:53.495818005 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-28 21:37:53.107812375 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-28 21:37:53.495818005 +0000
 +@@ -471,22 +471,6 @@

@@ -458,9 +458,9 @@ Text tStatus
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 26
+        x coordinate                        : 22
         y coordinate                        : 186
-        Width                               : 97
+        Width                               : 115
         Height                              : 60
         Effect                              : load
         Effect Priority                     : 0
@@ -518,9 +518,9 @@ Text tCurTempLbl
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 28
+        x coordinate                        : 24
         y coordinate                        : 84
-        Width                               : 95
+        Width                               : 115
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -548,9 +548,9 @@ Text tStateLbl
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 27
+        x coordinate                        : 23
         y coordinate                        : 152
-        Width                               : 95
+        Width                               : 115
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -668,9 +668,9 @@ Text tCurTemp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 28
+        x coordinate                        : 24
         y coordinate                        : 118
-        Width                               : 95
+        Width                               : 115
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
