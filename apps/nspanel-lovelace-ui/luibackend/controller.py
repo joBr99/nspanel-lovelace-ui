@@ -258,7 +258,7 @@ class LuiController(object):
         if button_type == "colorWheel":
             self._ha_api.log(value)
             value = value.split('|')
-            color = pos_to_color(int(value[0]), int(value[1]))
+            color = pos_to_color(int(value[0]), int(value[1]), int(value[2]))
             self._ha_api.log(color)
             self._ha_api.get_entity(entity_id).call_service("turn_on", rgb_color=color)
         
