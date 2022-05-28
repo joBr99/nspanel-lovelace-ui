@@ -549,6 +549,17 @@ Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?ht
             icon: lightbulb
 ```
 
+It is also possible to configure different icon overwrites per state:
+
+```yaml
+            icon:
+                "on": mdi:lightbulb
+                "off": mdi:lightbulb
+
+```
+
+Also it is possible to configure a text or a character by using "text:" as a prefix instead of an icon. `icon: text:X`
+
 #### Fahrenheit on cardThermo
 ```yaml
       - type: cardThermo
