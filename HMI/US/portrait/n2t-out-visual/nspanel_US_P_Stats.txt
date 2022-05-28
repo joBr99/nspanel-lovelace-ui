@@ -22,6 +22,10 @@ cardQR
 	30   Component(s)
 	363  Line(s) of event code
 	207  Unique line(s) of event code
+cardThermo
+	56   Component(s)
+	546  Line(s) of event code
+	290  Unique line(s) of event code
 cardAlarm
 	38   Component(s)
 	364  Line(s) of event code
@@ -46,10 +50,6 @@ screensaver
 	37   Component(s)
 	290  Line(s) of event code
 	229  Unique line(s) of event code
-cardThermo
-	56   Component(s)
-	546  Line(s) of event code
-	290  Unique line(s) of event code
 cardEntities
 	77   Component(s)
 	1363 Line(s) of event code
