@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-27 20:18:08.893442508 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-27 20:18:09.393466017 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-28 05:04:50.360986275 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-28 05:04:50.784984016 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-27 20:18:08.893442508 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-27 20:18:09.397466205 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-28 05:04:50.364986253 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-28 05:04:50.784984016 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -468,8 +468,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-05-27 20:18:08.893442508 +0000
-+++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-27 20:18:09.397466205 +0000
+--- HMI/n2t-out/cardQR.txt	2022-05-28 05:04:50.364986253 +0000
++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-28 05:04:50.784984016 +0000
 @@ -34,7 +34,7 @@
      Attributes
          Scope         : local
@@ -480,8 +480,8 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
  Variable (string) entn
      Attributes
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-27 20:18:08.893442508 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-27 20:18:09.397466205 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-28 05:04:50.364986253 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-28 05:04:50.784984016 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -501,8 +501,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-05-27 20:18:08.893442508 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-27 20:18:09.397466205 +0000
+--- HMI/n2t-out/popupLight.txt	2022-05-28 05:04:50.364986253 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-28 05:04:50.784984016 +0000
 @@ -209,9 +209,6 @@
              sys0=sys0-pColorWheel.y
              covx sys0,tTmp.txt,0,0
@@ -513,3 +513,29 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
+diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
+--- HMI/n2t-out/screensaver.txt	2022-05-28 05:04:50.364986253 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-28 05:04:50.784984016 +0000
+@@ -471,22 +471,6 @@
+                                             vis tMainIconAlt,1
+                                             vis tMRIcon,1
+                                             vis tMR,1
+-                                            vis tForecast1,0
+-                                            vis tF1Icon,0
+-                                            vis tForecast1Val,0
+-                                            //move forecast values to the right
+-                                            tForecast4.txt=tForecast3.txt
+-                                            tForecast3.txt=tForecast2.txt
+-                                            tForecast2.txt=tForecast1.txt
+-                                            tForecast4Val.txt=tForecast3Val.txt
+-                                            tForecast3Val.txt=tForecast2Val.txt
+-                                            tForecast2Val.txt=tForecast1Val.txt
+-                                            tF4Icon.txt=tF3Icon.txt
+-                                            tF3Icon.txt=tF2Icon.txt
+-                                            tF2Icon.txt=tF1Icon.txt
+-                                            tF4Icon.pco=tF3Icon.pco
+-                                            tF3Icon.pco=tF2Icon.pco
+-                                            tF2Icon.pco=tF1Icon.pco
+                                         }
+                                         //tMR
+                                         spstr strCommand.txt,tMR.txt,"~",16
