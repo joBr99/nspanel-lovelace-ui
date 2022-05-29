@@ -119,6 +119,10 @@ sharedfoot = """
               // get value
               spstr strCommand.txt,tTmp.txt,"~",1
               covx tTmp.txt,dimValue,0,0
+              // get value normal
+              spstr strCommand.txt,tTmp.txt,"~",2
+              covx tTmp.txt,dimValueNormal,0,0
+              dim=dimValueNormal
             }
             if(tInstruction.txt=="timeout")
             {
