@@ -359,7 +359,7 @@ class LuiPagesGen(object):
                 if entity.state == "off":
                     onoffbutton = 1374
                 else:
-                    onoffbutton = rgb_dec565([255,255,255])
+                    onoffbutton = rgb_dec565([255,152,0])
             command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~{title}~{author}~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}"
         self._send_mqtt_msg(command)
         
