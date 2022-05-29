@@ -1,87 +1,13 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-29 11:14:46.996566599 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-29 11:14:46.568572153 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-29 11:14:46.984566754 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-29 11:14:46.568572153 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-29 11:14:46.984566754 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-29 11:37:54.025674905 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-29 11:37:53.505660975 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-29 11:37:54.005674370 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-29 11:37:53.505660975 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-29 11:37:54.005674370 +0000
 +@@ -1849,6 +2077,169 @@
-+diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-05-29 11:14:46.568572153 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-29 11:14:46.984566754 +0000
-+@@ -616,33 +616,25 @@
-+                                         if(tTmp.txt=="0")
-+                                         {
-+                                             vis bPrev,0
-+-                                            tsw mSwipePrev,0
-+-                                            tsw mSwipeUp,0
-+                                         }
-+                                         if(tTmp.txt=="1")
-+                                         {
-+                                             vis bPrev,1
-+-                                            tsw mSwipePrev,1
-+-                                            tsw mSwipeUp,0
-+                                             bPrev.txt="î°"
-+                                         }
-+                                         if(tTmp.txt=="2")
-+                                         {
-+                                             vis bPrev,1
-+-                                            tsw mSwipePrev,0
-+-                                            tsw mSwipeUp,1
-+                                             bPrev.txt="î¶"
-+                                         }
-+                                         spstr tId.txt,tTmp.txt,"|",1
-+                                         if(tTmp.txt=="0")
-+                                         {
-+                                             vis bNext,0
-+-                                            tsw mSwipeNext,0
-+                                         }
-+                                         if(tTmp.txt=="1")
-+                                         {
-+                                             vis bNext,1
-+-                                            tsw mSwipeNext,1
-+                                             bNext.txt="î³"
-+                                         }
-+                                         // get Type
-+--- HMI/n2t-out/cardQR.txt	2022-05-29 11:14:46.568572153 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-29 11:14:46.984566754 +0000
-+diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-05-29 11:14:46.568572153 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-29 11:14:46.984566754 +0000
-+@@ -889,33 +889,25 @@
-+                                         if(tTmp.txt=="0")
-+                                         {
-+                                             vis bPrev,0
-+-                                            tsw mSwipePrev,0
-+-                                            tsw mSwipeUp,0
-+                                         }
-+                                         if(tTmp.txt=="1")
-+                                         {
-+                                             vis bPrev,1
-+-                                            tsw mSwipePrev,1
-+-                                            tsw mSwipeUp,0
-+                                             bPrev.txt="î°"
-+                                         }
-+                                         if(tTmp.txt=="2")
-+                                         {
-+                                             vis bPrev,1
-+-                                            tsw mSwipePrev,0
-+-                                            tsw mSwipeUp,1
-+                                             bPrev.txt="î¶"
-+                                         }
-+                                         spstr tId.txt,tTmp.txt,"|",1
-+                                         if(tTmp.txt=="0")
-+                                         {
-+                                             vis bNext,0
-+-                                            tsw mSwipeNext,0
-+                                         }
-+                                         if(tTmp.txt=="1")
-+                                         {
-+                                             vis bNext,1
-+-                                            tsw mSwipeNext,1
-+                                             bNext.txt="î³"
-+                                         }
-+                                         //entity name
-+--- HMI/n2t-out/pageStartup.txt	2022-05-29 11:14:46.568572153 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-29 11:14:46.984566754 +0000
-+--- HMI/n2t-out/screensaver.txt	2022-05-29 11:14:46.568572153 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-29 11:14:46.984566754 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-29 11:37:53.505660975 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-29 11:37:54.005674370 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-29 11:37:53.505660975 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-29 11:37:54.005674370 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-29 11:37:53.505660975 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-29 11:37:54.005674370 +0000
 +@@ -471,22 +471,6 @@
