@@ -52,11 +52,11 @@ cardAlarm
 	224  Unique line(s) of event code
 cardThermo
 	56   Component(s)
-	546  Line(s) of event code
-	290  Unique line(s) of event code
+	542  Line(s) of event code
+	292  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	404  Component(s)
-	4463 Line(s) of event code
+	4459 Line(s) of event code
 	1184 Unique line(s) of event code
