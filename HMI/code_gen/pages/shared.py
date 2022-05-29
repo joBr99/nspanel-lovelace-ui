@@ -146,25 +146,33 @@ navigation = """
               if(tTmp.txt=="0")
               {
                 vis bPrev,0
+                tsw mSwipePrev,0
+                tsw mSwipeUp,0
               }
               if(tTmp.txt=="1")
               {
                 vis bPrev,1
+                tsw mSwipePrev,1
+                tsw mSwipeUp,0
                 bPrev.txt=""
               }
               if(tTmp.txt=="2")
               {
                 vis bPrev,1
+                tsw mSwipePrev,0
+                tsw mSwipeUp,1
                 bPrev.txt=""
               }       
               spstr tId.txt,tTmp.txt,"|",1
               if(tTmp.txt=="0")
               {
                 vis bNext,0
+                tsw mSwipeNext,0
               }
               if(tTmp.txt=="1")
               {
                 vis bNext,1
+                tsw mSwipeNext,1
                 bNext.txt=""
               }
 """
