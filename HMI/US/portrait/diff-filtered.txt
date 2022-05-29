@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-29 11:04:59.486702354 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-29 11:04:58.994702886 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-29 11:04:59.430702414 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-29 11:04:58.994702886 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-29 11:04:59.430702414 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-29 11:14:46.996566599 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-29 11:14:46.568572153 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-29 11:14:46.984566754 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-29 11:14:46.568572153 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-29 11:14:46.984566754 +0000
 +@@ -1849,6 +2077,169 @@
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-05-29 11:04:58.994702886 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-29 11:04:59.430702414 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-05-29 11:14:46.568572153 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-29 11:14:46.984566754 +0000
 +@@ -616,33 +616,25 @@
 +                                         if(tTmp.txt=="0")
 +                                         {
@@ -41,11 +41,11 @@
 +                                             bNext.txt="î³"
 +                                         }
 +                                         // get Type
-+--- HMI/n2t-out/cardQR.txt	2022-05-29 11:04:58.994702886 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-29 11:04:59.430702414 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-29 11:14:46.568572153 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-29 11:14:46.984566754 +0000
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-05-29 11:04:58.998702881 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-29 11:04:59.430702414 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-05-29 11:14:46.568572153 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-29 11:14:46.984566754 +0000
 +@@ -889,33 +889,25 @@
 +                                         if(tTmp.txt=="0")
 +                                         {
@@ -80,8 +80,8 @@
 +                                             bNext.txt="î³"
 +                                         }
 +                                         //entity name
-+--- HMI/n2t-out/pageStartup.txt	2022-05-29 11:04:58.994702886 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-29 11:04:59.430702414 +0000
-+--- HMI/n2t-out/screensaver.txt	2022-05-29 11:04:58.994702886 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-29 11:04:59.430702414 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-29 11:14:46.568572153 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-29 11:14:46.984566754 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-29 11:14:46.568572153 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-29 11:14:46.984566754 +0000
 +@@ -471,22 +471,6 @@
