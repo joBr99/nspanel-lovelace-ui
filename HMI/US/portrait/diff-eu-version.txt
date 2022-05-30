@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-30 17:10:39.474892878 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 17:10:39.902823788 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-30 17:12:23.655186508 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 17:12:24.083197314 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-30 17:10:39.474892878 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 17:10:39.902823788 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-30 17:12:23.659186609 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 17:12:24.087197415 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -467,23 +467,9 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      }
                                      if(tInstruction.txt=="pageType")
                                      {
-diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-05-30 17:10:39.474892878 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-30 17:10:39.902823788 +0000
-@@ -846,10 +846,6 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-05-30 17:10:39.474892878 +0000
-+++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 17:10:39.902823788 +0000
+--- HMI/n2t-out/cardQR.txt	2022-05-30 17:12:23.659186609 +0000
++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 17:12:24.087197415 +0000
 @@ -34,7 +34,7 @@
      Attributes
          Scope         : local
@@ -494,8 +480,8 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
  Variable (string) entn
      Attributes
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-30 17:10:39.474892878 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 17:10:39.902823788 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-30 17:12:23.655186508 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 17:12:24.087197415 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -515,8 +501,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-05-30 17:10:39.474892878 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 17:10:39.902823788 +0000
+--- HMI/n2t-out/screensaver.txt	2022-05-30 17:12:23.655186508 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 17:12:24.087197415 +0000
 @@ -474,22 +474,6 @@
                                              vis tMainIconAlt,1
                                              vis tMRIcon,1
