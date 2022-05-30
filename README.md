@@ -541,6 +541,19 @@ It is possible to schedule a brightness change for the screen at specific times.
 
 `sleepOverride` overrides sleepBrightness but does not take precedence over sleepTracking. This is useful if, for example, you want your NSPanel to be brighter than usual if your light is on or if you want to override a panel dimming if you are in the room.
 
+The following example configuration does nothing during the day but at night, if the bedroom light is on the NSPanel brightness will be 20 instead of 0.
+
+```yaml
+    sleepBrightness:
+      - time: "sunrise"
+        value: 20
+      - time: "sunset"
+        value: 0
+    sleepOverride:
+      entity: light.bedroomlight
+      brightness: 20
+```
+
 #### Override Icons or Names
 
 To overwrite Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
