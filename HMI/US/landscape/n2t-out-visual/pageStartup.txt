@@ -402,7 +402,7 @@ Text tVersion
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 35
+        Text                                : 36
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0

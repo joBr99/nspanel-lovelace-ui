@@ -1,0 +1,46 @@
+#Uncomment by deleting the '#' and configure as you see fit.
+#Colors are in the format [Red, Green, Blue] and can be numbers from 0-255
+#The items shoud be self-explanatory but tMRIcon affects the humidity icon and tMR affects the humidity text.
+
+#background:       [220, 0, 0]
+#time:             [220, 0, 255]
+#timeAMPM:         [220, 0, 255]
+#date:             [220, 0, 255]
+#tMainIcon:        [220, 0, 255]
+#tMainText:        [220, 0, 255]
+#tForecast1:       [220, 0, 255]
+#tForecast2:       [220, 0, 255]
+#tForecast3:       [220, 0, 255]
+#tForecast4:       [220, 0, 255]
+#tF1Icon:          [220, 0, 255]
+#tF2Icon:          [220, 0, 255]
+#tF3Icon:          [220, 0, 255]
+#tF4Icon:          [220, 0, 255]
+#tForecast1Val:    [220, 0, 255]
+#tForecast2Val:    [220, 0, 255]
+#tForecast3Val:    [220, 0, 255]
+#tForecast4Val:    [220, 0, 255]
+#bar:              [220, 0, 255]
+#tMRIcon:          [220, 0, 255]
+#tMR:              [220, 0, 255]
+
+#autoWeather automatically colors the screensaver weather icons based upon weather. Uncomment the following line to enable.
+#autoWeather: true
+
+#If you have enabled autoWeather, the following options allow you to customise the colors used for autoWeather.
+
+#clear-night:              [150, 150, 100]
+#cloudy:                   [75, 75, 75]
+#exceptional:              [255, 50, 50]
+#fog:                      [150, 150, 150]
+#hail:                     [200, 200, 200]
+#lightning:                [200, 200, 0]
+#lightning-rainy:          [200, 200, 150]
+#partlycloudy:             [150, 150, 150]
+#pouring:                  [50, 50, 255]
+#rainy:                    [100, 100, 255]
+#snowy:                    [150, 150, 150]
+#snowy-rainy:              [150, 150, 255]
+#sunny:                    [255, 255, 0]
+#windy:                    [150, 150, 150]
+#windy-variant:            [255, 125, 125]

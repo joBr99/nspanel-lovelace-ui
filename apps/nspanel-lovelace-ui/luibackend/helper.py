@@ -11,8 +11,9 @@ def hsv2rgb(h, s, v):
     hsv = colorsys.hsv_to_rgb(h,s,v)
     return tuple(round(i * 255) for i in hsv)
     
-def pos_to_color(x, y):
-    r = 160/2
+def pos_to_color(x, y, wh):
+    #r = 160/2
+    r = wh/2
     x = round((x - r) / r * 100) / 100
     y = round((r - y) / r * 100) / 100
     

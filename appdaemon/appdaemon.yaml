@@ -5,6 +5,7 @@ appdaemon:
   longitude: 4.0
   elevation: 2
   time_zone: Europe/Berlin
+#  invalid_yaml_warnings: 1
   plugins:
     HASS:
       type: hass

@@ -50,27 +50,34 @@ Variable (string) strCommand
     
 Variable (string) tId
     Attributes
-        ID            : 17
+        ID            : 16
         Scope         : local
         Text          : 
         Max. Text Size: 25
     
 Variable (int32) vaTap
     Attributes
-        ID   : 25
+        ID   : 24
         Scope: local
         Value: 0
     
 Variable (string) tInstruction
     Attributes
-        ID            : 31
+        ID            : 30
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) tTmp
     Attributes
-        ID            : 32
+        ID            : 31
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
+    
+Variable (string) tSend
+    Attributes
+        ID            : 34
         Scope         : local
         Text          : 
         Max. Text Size: 50
@@ -135,7 +142,7 @@ Text tDate
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tSend
+Text tMainIcon
     Attributes
         ID                                  : 7
         Scope                               : local
@@ -143,38 +150,8 @@ Text tSend
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 19
-        y coordinate                        : 450
-        Width                               : 27
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 50
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text tMainIcon
-    Attributes
-        ID                                  : 8
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
         x coordinate                        : 125
-        y coordinate                        : 241
+        y coordinate                        : 254
         Width                               : 70
         Height                              : 65
         Effect                              : load
@@ -197,14 +174,14 @@ Text tMainIcon
     
 Text tMainText
     Attributes
-        ID                                  : 9
+        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 111
-        y coordinate                        : 305
+        y coordinate                        : 318
         Width                               : 110
         Height                              : 42
         Effect                              : load
@@ -227,14 +204,14 @@ Text tMainText
     
 Text tForecast1
     Attributes
-        ID                                  : 10
+        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 5
-        y coordinate                        : 368
+        y coordinate                        : 377
         Width                               : 71
         Height                              : 25
         Effect                              : load
@@ -257,14 +234,14 @@ Text tForecast1
     
 Text tForecast1Val
     Attributes
-        ID                                  : 11
+        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 2
-        y coordinate                        : 434
+        y coordinate                        : 443
         Width                               : 70
         Height                              : 24
         Effect                              : load
@@ -287,14 +264,14 @@ Text tForecast1Val
     
 Text tF1Icon
     Attributes
-        ID                                  : 12
+        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 23
-        y coordinate                        : 397
+        y coordinate                        : 406
         Width                               : 40
         Height                              : 34
         Effect                              : load
@@ -317,14 +294,14 @@ Text tF1Icon
     
 Text tForecast2
     Attributes
-        ID                                  : 13
+        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 86
-        y coordinate                        : 369
+        y coordinate                        : 378
         Width                               : 71
         Height                              : 24
         Effect                              : load
@@ -347,14 +324,14 @@ Text tForecast2
     
 Text tF2Icon
     Attributes
-        ID                                  : 14
+        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 103
-        y coordinate                        : 397
+        y coordinate                        : 406
         Width                               : 40
         Height                              : 34
         Effect                              : load
@@ -377,14 +354,14 @@ Text tF2Icon
     
 Text tForecast2Val
     Attributes
-        ID                                  : 15
+        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 83
-        y coordinate                        : 434
+        y coordinate                        : 443
         Width                               : 71
         Height                              : 24
         Effect                              : load
@@ -407,14 +384,14 @@ Text tForecast2Val
     
 Text t10
     Attributes
-        ID                                  : 16
+        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 49
-        y coordinate                        : 225
+        y coordinate                        : 233
         Width                               : 225
         Height                              : 2
         Effect                              : load
@@ -437,7 +414,7 @@ Text t10
     
 Text tAMPM
     Attributes
-        ID                                  : 18
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -467,14 +444,14 @@ Text tAMPM
     
 Text tForecast3Val
     Attributes
-        ID                                  : 19
+        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 435
+        y coordinate                        : 444
         Width                               : 70
         Height                              : 23
         Effect                              : load
@@ -497,14 +474,14 @@ Text tForecast3Val
     
 Text tF3Icon
     Attributes
-        ID                                  : 20
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 183
-        y coordinate                        : 398
+        y coordinate                        : 407
         Width                               : 40
         Height                              : 33
         Effect                              : load
@@ -527,14 +504,14 @@ Text tF3Icon
     
 Text tForecast3
     Attributes
-        ID                                  : 21
+        ID                                  : 20
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 167
-        y coordinate                        : 370
+        y coordinate                        : 379
         Width                               : 70
         Height                              : 23
         Effect                              : load
@@ -557,14 +534,14 @@ Text tForecast3
     
 Text tForecast4
     Attributes
-        ID                                  : 22
+        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 247
-        y coordinate                        : 370
+        y coordinate                        : 379
         Width                               : 70
         Height                              : 23
         Effect                              : load
@@ -587,14 +564,14 @@ Text tForecast4
     
 Text tF4Icon
     Attributes
-        ID                                  : 23
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 263
-        y coordinate                        : 398
+        y coordinate                        : 407
         Width                               : 40
         Height                              : 33
         Effect                              : load
@@ -617,14 +594,14 @@ Text tF4Icon
     
 Text tForecast4Val
     Attributes
-        ID                                  : 24
+        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 246
-        y coordinate                        : 435
+        y coordinate                        : 444
         Width                               : 70
         Height                              : 23
         Effect                              : load
@@ -647,14 +624,14 @@ Text tForecast4Val
     
 Text tMainTextAlt
     Attributes
-        ID                                  : 27
+        ID                                  : 26
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 203
-        y coordinate                        : 249
+        x coordinate                        : 184
+        y coordinate                        : 262
         Width                               : 105
         Height                              : 41
         Effect                              : load
@@ -677,14 +654,14 @@ Text tMainTextAlt
     
 Text tMainIconAlt
     Attributes
-        ID                                  : 28
+        ID                                  : 27
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 100
-        y coordinate                        : 260
+        x coordinate                        : 44
+        y coordinate                        : 273
         Width                               : 100
         Height                              : 65
         Effect                              : load
@@ -707,14 +684,14 @@ Text tMainIconAlt
     
 Text tMRIcon
     Attributes
-        ID                                  : 29
+        ID                                  : 28
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 201
-        y coordinate                        : 304
+        x coordinate                        : 182
+        y coordinate                        : 317
         Width                               : 40
         Height                              : 34
         Effect                              : load
@@ -737,14 +714,14 @@ Text tMRIcon
     
 Text tMR
     Attributes
-        ID                                  : 30
+        ID                                  : 29
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 243
-        y coordinate                        : 309
+        x coordinate                        : 224
+        y coordinate                        : 322
         Width                               : 61
         Height                              : 20
         Effect                              : load
@@ -767,14 +744,14 @@ Text tMR
     
 Text tNotifyHead
     Attributes
-        ID                                  : 33
+        ID                                  : 32
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 240
+        y coordinate                        : 253
         Width                               : 320
         Height                              : 58
         Effect                              : load
@@ -797,14 +774,14 @@ Text tNotifyHead
     
 Text tNotifyText
     Attributes
-        ID                                  : 34
+        ID                                  : 33
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 298
+        y coordinate                        : 311
         Width                               : 320
         Height                              : 58
         Effect                              : load
@@ -821,6 +798,66 @@ Text tNotifyText
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 35
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tIcon1
+    Attributes
+        ID                                  : 35
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 8
+        y coordinate                        : 220
+        Width                               : 33
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Font Color                          : 17299
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tIcon2
+    Attributes
+        ID                                  : 36
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 282
+        y coordinate                        : 220
+        Width                               : 33
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Font Color                          : 17299
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -979,22 +1016,17 @@ Timer tmSerial
                                             vis tMainIconAlt,1
                                             vis tMRIcon,1
                                             vis tMR,1
-                                            vis tForecast1,0
-                                            vis tF1Icon,0
-                                            vis tForecast1Val,0
-                                            //move forecast values to the right
-                                            tForecast4.txt=tForecast3.txt
-                                            tForecast3.txt=tForecast2.txt
-                                            tForecast2.txt=tForecast1.txt
-                                            tForecast4Val.txt=tForecast3Val.txt
-                                            tForecast3Val.txt=tForecast2Val.txt
-                                            tForecast2Val.txt=tForecast1Val.txt
-                                            tF4Icon.txt=tF3Icon.txt
-                                            tF3Icon.txt=tF2Icon.txt
-                                            tF2Icon.txt=tF1Icon.txt
                                         }
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
+                                        //statusIcon1
+                                        spstr strCommand.txt,tIcon1.txt,"~",17
+                                        spstr strCommand.txt,tTmp.txt,"~",18
+                                        covx tTmp.txt,tIcon1.pco,0,0
+                                        //statusIcon2
+                                        spstr strCommand.txt,tIcon2.txt,"~",19
+                                        spstr strCommand.txt,tTmp.txt,"~",20
+                                        covx tTmp.txt,tIcon2.pco,0,0
                                     }
                                     if(tInstruction.txt=="color")
                                     {
@@ -1010,6 +1042,8 @@ Timer tmSerial
                                         tMRIcon.bco=tTime.bco
                                         tMR.bco=tTime.bco
                                         tMRIcon.bco=tTime.bco
+                                        tIcon1.bco=tTime.bco
+                                        tIcon2.bco=tTime.bco
                                         tForecast1.bco=tTime.bco
                                         tForecast1Val.bco=tTime.bco
                                         tF1Icon.bco=tTime.bco
@@ -1030,8 +1064,10 @@ Timer tmSerial
                                         covx tTmp.txt,tDate.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",5
                                         covx tTmp.txt,tMainIcon.pco,0,0
+                                        tMainIconAlt.pco=tMainIcon.pco
                                         spstr strCommand.txt,tTmp.txt,"~",6
                                         covx tTmp.txt,tMainText.pco,0,0
+                                        tMainTextAlt.pco=tMainText.pco
                                         spstr strCommand.txt,tTmp.txt,"~",7
                                         covx tTmp.txt,tForecast1.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",8
@@ -1059,12 +1095,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,t10.bco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",20
-                                        covx tTmp.txt,tMainIconAlt.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",21
-                                        covx tTmp.txt,tMainTextAlt.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",22
                                         covx tTmp.txt,tMRIcon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",23
+                                        spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,tMR.pco,0,0
                                     }
                                     if(tInstruction.txt=="notify")
@@ -1150,7 +1182,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 26
+        ID         : 25
         Scope      : local
         Period (ms): 1000
         Enabled    : yes

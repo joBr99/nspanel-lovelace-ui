@@ -62,6 +62,12 @@ Variable (string) tTmp
         Text          : 
         Max. Text Size: 50
     
+Variable (string) tSend
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
+    
 Text tTime
     Attributes
         Scope                               : local
@@ -81,16 +87,6 @@ Text tDate
         Associated Keyboard                 : none
         Text                                : Tuesday, 08. March 2022
         Max. Text Size                      : 35
-    
-Text tSend
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 50
     
 Text tMainIcon
     Attributes
@@ -312,6 +308,26 @@ Text tNotifyText
         Text                                : 
         Max. Text Size                      : 35
     
+Text tIcon1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 5
+    
+Text tIcon2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 5
+    
 Picture p0
     Attributes
         Scope                               : local
@@ -381,6 +397,9 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
                                         dim=dimValue
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -468,9 +487,20 @@ Timer tmSerial
                                             tF4Icon.txt=tF3Icon.txt
                                             tF3Icon.txt=tF2Icon.txt
                                             tF2Icon.txt=tF1Icon.txt
+                                            tF4Icon.pco=tF3Icon.pco
+                                            tF3Icon.pco=tF2Icon.pco
+                                            tF2Icon.pco=tF1Icon.pco
                                         }
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
+                                        //statusIcon1
+                                        spstr strCommand.txt,tIcon1.txt,"~",17
+                                        spstr strCommand.txt,tTmp.txt,"~",18
+                                        covx tTmp.txt,tIcon1.pco,0,0
+                                        //statusIcon2
+                                        spstr strCommand.txt,tIcon2.txt,"~",19
+                                        spstr strCommand.txt,tTmp.txt,"~",20
+                                        covx tTmp.txt,tIcon2.pco,0,0
                                     }
                                     if(tInstruction.txt=="color")
                                     {
@@ -486,6 +516,8 @@ Timer tmSerial
                                         tMRIcon.bco=tTime.bco
                                         tMR.bco=tTime.bco
                                         tMRIcon.bco=tTime.bco
+                                        tIcon1.bco=tTime.bco
+                                        tIcon2.bco=tTime.bco
                                         tForecast1.bco=tTime.bco
                                         tForecast1Val.bco=tTime.bco
                                         tF1Icon.bco=tTime.bco
@@ -506,8 +538,10 @@ Timer tmSerial
                                         covx tTmp.txt,tDate.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",5
                                         covx tTmp.txt,tMainIcon.pco,0,0
+                                        tMainIconAlt.pco=tMainIcon.pco
                                         spstr strCommand.txt,tTmp.txt,"~",6
                                         covx tTmp.txt,tMainText.pco,0,0
+                                        tMainTextAlt.pco=tMainText.pco
                                         spstr strCommand.txt,tTmp.txt,"~",7
                                         covx tTmp.txt,tForecast1.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",8
@@ -535,12 +569,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,t10.bco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",20
-                                        covx tTmp.txt,tMainIconAlt.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",21
-                                        covx tTmp.txt,tMainTextAlt.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",22
                                         covx tTmp.txt,tMRIcon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",23
+                                        spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,tMR.pco,0,0
                                     }
                                     if(tInstruction.txt=="notify")
