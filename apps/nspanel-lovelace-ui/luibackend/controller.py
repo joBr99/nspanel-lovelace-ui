@@ -287,7 +287,7 @@ class LuiController(object):
             msg = ""
             entity = self._ha_api.get_entity(entity_id)
             if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
-                for e in entity:
+                for e in entity.attributes.open_sensors:
                     msg += f"- {self._ha_api.get_entity(e).attributes.friendly_name}\n"
             self._pages_gen.send_message_page("opnSensorNotifyRes", "", msg, "", "")
 
