@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-30 19:51:39.990229715 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-05-30 20:13:57.965045854 +0000
 @@ -11,6 +11,4 @@
      // dim value
      int dimValue=40
@@ -8,144 +8,10 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    // fix touch offset
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
-diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-05-30 19:51:39.990229715 +0000
-@@ -12,7 +12,6 @@
-     
-     Events
-         Preinitialize Event
--            dim=dimValueNormal
-             vis p0,0
-             vis tSend,0
-             vis tInstruction,0
-@@ -33,7 +32,6 @@
-             vis b8,0
-             vis b9,0
-             vis b10,0
--            vis b11,0
-             vis tCode,0
-             vis bPrev,0
-             vis bNext,0
-@@ -80,12 +78,6 @@
-         Text          : 
-         Max. Text Size: 20
-     
--Variable (string) vaAddBtn
--    Attributes
--        Scope         : local
--        Text          : 
--        Max. Text Size: 20
--    
- Text tTmp
-     Attributes
-         Scope                               : local
-@@ -333,27 +325,12 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         State                               : unpressed
--        Text                                : 
-+        Text                                : 0
-         Max. Text Size                      : 10
-     
-     Events
-         Touch Press Event
--            // event,buttonPress2,entn,arm1,tCode
--            tSend.txt="event,buttonPress2,"
--            tSend.txt+=entn.txt+","
--            tSend.txt+=vaAddBtn.txt
--            //send calc crc
--            btlen tSend.txt,sys0
--            crcrest 1,0xffff // reset CRC
--            crcputh 55 bb
--            crcputs sys0,2
--            crcputs tSend.txt,0
--            //send cmd
--            printh 55 bb
--            prints sys0,2
--            prints tSend.txt,0
--            prints crcval,2
--            tCode.txt=""
-+            tCode.txt=tCode.txt+"0"
-         
- Button b10
-     Attributes
-@@ -362,12 +339,12 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         State                               : unpressed
--        Text                                : 0
-+        Text                                : CLR
-         Max. Text Size                      : 10
-     
-     Events
-         Touch Press Event
--            tCode.txt=tCode.txt+"0"
-+            tCode.txt=""
-         
- Button arm1
-     Attributes
-@@ -489,20 +466,6 @@
-             prints crcval,2
-             tCode.txt=""
-         
--Button b11
--    Attributes
--        Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        State                               : unpressed
--        Text                                : CLR
--        Max. Text Size                      : 10
--    
--    Events
--        Touch Press Event
--            tCode.txt=""
--        
- Hotspot mSwipeNext
-     Attributes
-         Scope                               : local
-@@ -704,15 +667,6 @@
-                                         {
-                                             tmFlash.en=0
-                                         }
--                                        // extra button
--                                        spstr strCommand.txt,b9.txt,"~",15
--                                        if(b9.txt!="")
--                                        {
--                                            vis b9,1
--                                            spstr strCommand.txt,tTmp.txt,"~",16
--                                            covx tTmp.txt,b9.pco,0,0
--                                            spstr strCommand.txt,vaAddBtn.txt,"~",17
--                                        }
-                                     }
-                                     if(tInstruction.txt=="time")
-                                     {
-@@ -729,10 +683,7 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-+                                        dim=dimValue
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-05-30 19:51:39.990229715 +0000
-@@ -12,7 +12,6 @@
-     
-     Events
-         Preinitialize Event
--            dim=dimValueNormal
-             //wup=cardEntities
-             //remove background & activate reparse mode
-             vis p0,0
-@@ -1925,10 +1924,6 @@
+--- HMI/n2t-out/cardEntities.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-05-30 20:13:57.969045903 +0000
+@@ -1925,10 +1925,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
                                          covx tTmp.txt,dimValue,0,0
@@ -157,17 +23,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-05-30 19:51:39.990229715 +0000
-@@ -12,7 +12,7 @@
-     
-     Events
-         Preinitialize Event
--            dim=dimValueNormal
-+            //wup=cardEntities
-             //remove background & activate reparse mode
-             vis p0,0
-             recmod=1
+--- HMI/n2t-out/cardGrid.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-05-30 20:13:57.965045854 +0000
 @@ -846,10 +846,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -180,17 +37,9 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-05-30 19:51:39.990229715 +0000
-@@ -12,7 +12,6 @@
-     
-     Events
-         Preinitialize Event
--            dim=dimValueNormal
-             vis p0,0
-             vis tSend,0
-             vis tInstruction,0
-@@ -636,10 +635,7 @@
+--- HMI/n2t-out/cardMedia.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-05-30 20:13:57.965045854 +0000
+@@ -636,10 +636,7 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
                                          covx tTmp.txt,dimValue,0,0
@@ -203,17 +52,9 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/landscape/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/cardQR.txt	2022-05-30 19:51:39.990229715 +0000
-@@ -12,7 +12,6 @@
-     
-     Events
-         Preinitialize Event
--            dim=dimValueNormal
-             vis p0,0
-             vis tSend,0
-             vis tInstruction,0
-@@ -582,10 +581,7 @@
+--- HMI/n2t-out/cardQR.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/cardQR.txt	2022-05-30 20:13:57.965045854 +0000
+@@ -582,10 +582,7 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
                                          covx tTmp.txt,dimValue,0,0
@@ -226,17 +67,9 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/landscape/n2t-out/cardQR.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-05-30 19:51:39.990229715 +0000
-@@ -12,7 +12,6 @@
-     
-     Events
-         Preinitialize Event
--            dim=dimValueNormal
-             vis p0,0
-             vis tSend,0
-             vis tInstruction,0
-@@ -1170,10 +1169,6 @@
+--- HMI/n2t-out/cardThermo.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-05-30 20:13:57.969045903 +0000
+@@ -1170,10 +1170,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
                                          covx tTmp.txt,dimValue,0,0
@@ -248,8 +81,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-30 19:51:39.990229715 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-05-30 20:13:57.965045854 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -271,17 +104,9 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/popupLight.txt	2022-05-30 19:51:39.990229715 +0000
-@@ -12,7 +12,6 @@
-     
-     Events
-         Preinitialize Event
--            dim=dimValueNormal
-             //get entitiy name
-             tEntity.txt=pageIcons.tTmp1.txt
-             //get entity id
-@@ -561,10 +560,6 @@
+--- HMI/n2t-out/popupLight.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/popupLight.txt	2022-05-30 20:13:57.965045854 +0000
+@@ -561,10 +561,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
                                          covx tTmp.txt,dimValue,0,0
@@ -293,17 +118,9 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-05-30 19:51:39.990229715 +0000
-@@ -12,7 +12,6 @@
-     
-     Events
-         Preinitialize Event
--            dim=dimValueNormal
-             vis p0,0
-             vis tSend,0
-             vis tTmp,0
-@@ -311,10 +310,6 @@
+--- HMI/n2t-out/popupNotify.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-05-30 20:13:57.965045854 +0000
+@@ -311,10 +311,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
                                          covx tTmp.txt,dimValue,0,0
@@ -315,17 +132,9 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-05-30 19:51:39.990229715 +0000
-@@ -12,7 +12,6 @@
-     
-     Events
-         Preinitialize Event
--            dim=dimValueNormal
-             //get entitiy name
-             tEntity.txt=pageIcons.tTmp1.txt
-             //get entity id
-@@ -406,10 +405,6 @@
+--- HMI/n2t-out/popupShutter.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-05-30 20:13:57.969045903 +0000
+@@ -406,10 +406,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
                                          covx tTmp.txt,dimValue,0,0
@@ -337,8 +146,8 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
                                      if(tInstruction.txt=="time")
                                      {
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-05-30 19:51:39.086222656 +0000
-+++ HMI/US/landscape/n2t-out/screensaver.txt	2022-05-30 19:51:39.990229715 +0000
+--- HMI/n2t-out/screensaver.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/landscape/n2t-out/screensaver.txt	2022-05-30 20:13:57.969045903 +0000
 @@ -397,9 +397,6 @@
                                          spstr strCommand.txt,tTmp.txt,"~",1
                                          covx tTmp.txt,dimValue,0,0

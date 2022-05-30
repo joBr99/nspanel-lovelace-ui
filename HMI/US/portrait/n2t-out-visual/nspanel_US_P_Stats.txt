@@ -43,9 +43,9 @@ cardMedia
 	349  Line(s) of event code
 	183  Unique line(s) of event code
 cardAlarm
-	38   Component(s)
-	363  Line(s) of event code
-	228  Unique line(s) of event code
+	40   Component(s)
+	384  Line(s) of event code
+	234  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	157  Line(s) of event code
@@ -57,6 +57,6 @@ screensaver
 
 Total
 	13   Page(s)
-	416  Component(s)
-	4699 Line(s) of event code
-	1236 Unique line(s) of event code
+	418  Component(s)
+	4720 Line(s) of event code
+	1241 Unique line(s) of event code
