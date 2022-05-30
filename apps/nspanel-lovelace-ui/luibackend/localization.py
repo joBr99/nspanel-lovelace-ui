@@ -264,6 +264,12 @@ translations = {
             'fan_mode': "Fan mode",
             'heating': "Heating",
         },
+        'eo': {
+            'cooling': "malvarmigo",
+            'code': "Kodo",
+            'state': "Stato",
+            'heating': "hejtado",
+        },
         'es': {
             'PRESS': "Pulsa",
             'ACTIVATE': "Activar",
@@ -1108,10 +1114,76 @@ translations = {
             'fan_mode': "Chế độ quạt",
             'heating': "Làm ấm",
         },
+        'zh-Hans': {
+            'PRESS': "按下",
+            'ACTIVATE': "激活",
+            'aux_heat': "辅热",
+            'away_mode': "离开模式",
+            'cooling': "制冷",
+            'drying': "除湿",
+            'fan': "送风",
+            'idle': "空闲",
+            'off': "关",
+            'arm_away': "离家警戒",
+            'arm_custom_bypass': "自定义略过条件",
+            'arm_home': "在家警戒",
+            'arm_night': "夜间警戒",
+            'arm_vacation': "度假警戒",
+            'clear_code': "清除",
+            'code': "密码",
+            'disarm': "解除警戒",
+            'run': "运行",
+            'lock': "锁定",
+            'unlock': "解锁",
+            'brightness': "亮度",
+            'color_temperature': "色温",
+            'position': "位置",
+            'state': "状态",
+            'currently': "当前",
+            'operation': "运行模式",
+            'fan_mode': "风速",
+            'heating': "制热",
+        },
+        'zh-Hant': {
+            'PRESS': "按下",
+            'ACTIVATE': "啟用",
+            'aux_heat': "輔助暖氣",
+            'away_mode': "外出模式",
+            'cooling': "冷氣",
+            'drying': "除濕",
+            'fan': "風速",
+            'idle': "閒置",
+            'off': "關閉",
+            'arm_away': "離家警戒",
+            'arm_custom_bypass': "警戒模式狀態",
+            'arm_home': "在家警戒",
+            'arm_night': "夜間警戒",
+            'arm_vacation': "度假警戒",
+            'clear_code': "清除",
+            'code': "密碼",
+            'disarm': "解除警戒",
+            'run': "執行",
+            'lock': "上鎖",
+            'unlock': "解鎖",
+            'brightness': "亮度",
+            'color_temperature': "色溫",
+            'position': "位置",
+            'state': "狀態判斷",
+            'currently': "目前狀態",
+            'operation': "運轉模式",
+            'fan_mode': "風速模式",
+            'heating': "暖氣",
+        },
 }
 
 def lookup(locale, inputstr):
-    locale = locale.split("_")[0]
+    if locale in ["zh_CN", "zh_Hans_CN", "zh_Hans"]:
+        locale = "zh-Hans"
+    elif locale in ["zh_TW", "zh_Hant_TW", "zh_Hant"]:
+        locale = "zh-Hant"
+    else:
+        locale = locale.split("_")[0]
+    
     en_fallback_res = translations.get("en").get(inputstr, inputstr)
     if locale in translations:    
         return translations.get(locale).get(inputstr, en_fallback_res)
