@@ -8,6 +8,10 @@ nspanel-1:
     updateMode: "auto-notify"
     sleepTimeout: 20
     #sleepBrightness: 10
+    sleepTracking: device_tracker.amihome
+    sleepOverride:
+      entity: sensor.isthelighton
+      brightness: 99
     sleepBrightness:
       - time: "7:00:00"
         value: 10
