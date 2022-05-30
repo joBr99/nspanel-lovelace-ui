@@ -25,6 +25,7 @@ translations = {
             'currently': "Tans",
             'operation': "Operasie",
             'fan_mode': "Waaier modus",
+            'heating': "Verhit",
         },
         'ar': {
             'ACTIVATE': "تفعيل",
@@ -52,7 +53,7 @@ translations = {
             'currently': "حاليا",
             'operation': "الوضع",
             'fan_mode': "وضع المروحة",
-            'heating': "إعادة تكوين الجهاز",
+            'heating': "تدفئة",
         },
         'bg': {
             'ACTIVATE': "Активирай",
@@ -81,7 +82,7 @@ translations = {
             'currently': "В момента",
             'operation': "Режим",
             'fan_mode': "Режим на вентилатора",
-            'heating': "Преконфигуриране на устройство",
+            'heating': "Отопление",
         },
         'ca': {
             'PRESS': "Prem",
@@ -111,7 +112,7 @@ translations = {
             'currently': "Actual",
             'operation': "Funcionament",
             'fan_mode': "Velocitat ventilador",
-            'heating': "S'està reconfigurant el dispositiu",
+            'heating': "Escalfant",
         },
         'cs': {
             'PRESS': "Stisknutí",
@@ -141,7 +142,7 @@ translations = {
             'currently': "Aktuálně",
             'operation': "Provoz",
             'fan_mode': "Režim ventilátoru",
-            'heating': "Znovunastavení zařízení",
+            'heating': "Topení",
         },
         'da': {
             'PRESS': "Tryk",
@@ -171,7 +172,7 @@ translations = {
             'currently': "Aktuelt",
             'operation': "Drifttype",
             'fan_mode': "Blæsertilstand",
-            'heating': "Omkonfigurering af enhed",
+            'heating': "Opvarmning",
         },
         'de': {
             'PRESS': "Drücken",
@@ -201,7 +202,7 @@ translations = {
             'currently': "Aktuell",
             'operation': "Aktion",
             'fan_mode': "Ventilator-Modus",
-            'heating': "Gerät neu konfigurieren",
+            'heating': "Heizung",
         },
         'el': {
             'PRESS': "Πατήστε",
@@ -231,7 +232,7 @@ translations = {
             'currently': "Αυτή τη στιγμή",
             'operation': "Λειτουργία",
             'fan_mode': "Λειτουργία ανεμιστήρα",
-            'heating': "Επαναδιαμόρφωση της συσκευής",
+            'heating': "Θέρμανση",
         },
         'en': {
             'PRESS': "Press",
@@ -261,7 +262,7 @@ translations = {
             'currently': "Currently",
             'operation': "Operation",
             'fan_mode': "Fan mode",
-            'heating': "Reconfiguring device",
+            'heating': "Heating",
         },
         'es': {
             'PRESS': "Pulsa",
@@ -291,7 +292,7 @@ translations = {
             'currently': "Actualmente",
             'operation': "Modo",
             'fan_mode': "Modo del ventilador",
-            'heating': "Reconfigurando el dispositivo",
+            'heating': "Calentando",
         },
         'et': {
             'PRESS': "Vajuta nuppu",
@@ -321,7 +322,7 @@ translations = {
             'currently': "Hetkel",
             'operation': "Töörežiim",
             'fan_mode': "Ventilaatori režiim",
-            'heating': "Seadme sätete muutmine",
+            'heating': "Küte",
         },
         'fa': {
             'ACTIVATE': "فعال سازی",
@@ -349,7 +350,7 @@ translations = {
             'currently': "در حال حاضر",
             'operation': "عملیات",
             'fan_mode': "حالت فن",
-            'heating': "پیکربندی مجدد دستگاه",
+            'heating': "گرمایش",
         },
         'fi': {
             'PRESS': "Paina",
@@ -379,7 +380,7 @@ translations = {
             'currently': "Tällä hetkellä",
             'operation': "Toiminto",
             'fan_mode': "Tuuletustila",
-            'heating': "Laitetta konfiguroidaan uudelleen",
+            'heating': "Lämmitys",
         },
         'fr': {
             'PRESS': "Appui",
@@ -409,7 +410,7 @@ translations = {
             'currently': "Actuellement",
             'operation': "Opération",
             'fan_mode': "Mode de ventilation",
-            'heating': "Reconfigurer l'appareil",
+            'heating': "En chauffe",
         },
         'he': {
             'PRESS': "לחיצה",
@@ -439,7 +440,7 @@ translations = {
             'currently': "כעת",
             'operation': "פעולה",
             'fan_mode': "מצב מאורר",
-            'heating': "קביעת תצורה מחדש של התקן",
+            'heating': "חימום",
         },
         'hr': {
             'ACTIVATE': "Aktivirati",
@@ -467,7 +468,7 @@ translations = {
             'currently': "Trenutno",
             'operation': "operacija",
             'fan_mode': "Način rada s ventilatorom",
-            'heating': "Ponovno učitavanje konfiguracije",
+            'heating': "Grijanje",
         },
         'hu': {
             'PRESS': "Gombnyomás",
@@ -497,7 +498,7 @@ translations = {
             'currently': "Jelenleg",
             'operation': "Működés",
             'fan_mode': "Ventilátor",
-            'heating': "Eszköz újrakonfigurálása",
+            'heating': "Fűtés",
         },
         'hy': {
             'ACTIVATE': "Ակտիվացնել",
@@ -524,7 +525,7 @@ translations = {
             'currently': "Ներկայումս",
             'operation': "Գործողություն",
             'fan_mode': "Երկրպագուների ռեժիմ",
-            'heating': "Կարգավորման վերաբեռնում",
+            'heating': "Տաքացում",
         },
         'id': {
             'PRESS': "Tekan",
@@ -554,7 +555,7 @@ translations = {
             'currently': "Saat ini",
             'operation': "Operasi",
             'fan_mode': "Mode kipas",
-            'heating': "Mengonfigurasi ulang perangkat",
+            'heating': "Memanaskan",
         },
         'is': {
             'PRESS': "Ýttu á",
@@ -583,7 +584,7 @@ translations = {
             'currently': "Er núna",
             'operation': "Aðgerð",
             'fan_mode': "Viftuhamur",
-            'heating': "Endurhleðsla stillinga",
+            'heating': "Kynding",
         },
         'it': {
             'PRESS': "Premi",
@@ -613,7 +614,7 @@ translations = {
             'currently': "Attualmente",
             'operation': "Operazione",
             'fan_mode': "Ventilazione",
-            'heating': "Riconfigurazione del dispositivo",
+            'heating': "Riscaldamento",
         },
         'lb': {
             'ACTIVATE': "Aktivéieren",
@@ -641,7 +642,7 @@ translations = {
             'currently': "Momentan",
             'operation': "Aktioun",
             'fan_mode': "Ventilatioun Modus",
-            'heating': "Apparat frësch konfiguréieren",
+            'heating': "Hëtzen",
         },
         'lt': {
             'ACTIVATE': "Suaktyvinti",
@@ -668,7 +669,7 @@ translations = {
             'currently': "Šiuo metu",
             'operation': "Operacija",
             'fan_mode': "Ventiliatoriaus režimas",
-            'heating': "Serverio valdymas",
+            'heating': "Šildymas",
         },
         'lv': {
             'ACTIVATE': "Aktivizēt",
@@ -695,7 +696,7 @@ translations = {
             'currently': "Pašlaik",
             'operation': "Darbība",
             'fan_mode': "Ventilatora režīms",
-            'heating': "YAML konfigurācijas pārlādēšana",
+            'heating': "Sildīšana",
         },
         'nb': {
             'PRESS': "trykk",
@@ -725,7 +726,7 @@ translations = {
             'currently': "Er nå",
             'operation': "Operasjon",
             'fan_mode': "Viftemodus",
-            'heating': "Konfigurerer enheten på nytt",
+            'heating': "Oppvarming",
         },
         'nl': {
             'PRESS': "Klik",
@@ -755,7 +756,7 @@ translations = {
             'currently': "Momenteel",
             'operation': "Werking",
             'fan_mode': "Ventilatormodus",
-            'heating': "Apparaat opnieuw configureren",
+            'heating': "Verwarmen",
         },
         'nn': {
             'ACTIVATE': "Aktiver",
@@ -784,7 +785,7 @@ translations = {
             'currently': "Akkurat no",
             'operation': "Operasjon",
             'fan_mode': "Viftemodus",
-            'heating': "Konfigurasjonsomlasting",
+            'heating': "Oppvarming",
         },
         'pl': {
             'PRESS': "Naciśnij",
@@ -814,7 +815,7 @@ translations = {
             'currently': "Obecnie",
             'operation': "Tryb pracy",
             'fan_mode': "Tryb nawiewu",
-            'heating': "Ponowne konfigurowanie urządzenia",
+            'heating': "grzanie",
         },
         'pt': {
             'PRESS': "Pressione",
@@ -843,7 +844,7 @@ translations = {
             'currently': "Atualmente",
             'operation': "Operação",
             'fan_mode': "Modo ventilar",
-            'heating': "Reconfigurar dispositivo",
+            'heating': "Aquecimento",
         },
         'ro': {
             'ACTIVATE': "Activați",
@@ -872,7 +873,7 @@ translations = {
             'currently': "În prezent",
             'operation': "Operație",
             'fan_mode': "Mod ventilator",
-            'heating': "Reîncărcarea configurației YAML",
+            'heating': "Încălzește",
         },
         'ru': {
             'PRESS': "Нажать",
@@ -902,7 +903,7 @@ translations = {
             'currently': "Сейчас",
             'operation': "Режим работы",
             'fan_mode': "Режим вентиляции",
-            'heating': "Перенастройка устройства",
+            'heating': "Обогрев",
         },
         'sk': {
             'ACTIVATE': "Aktivovať",
@@ -931,7 +932,7 @@ translations = {
             'currently': "Aktuálne",
             'operation': "Prevádzka",
             'fan_mode': "Režim ventilátora",
-            'heating': "Načítavanie novej konfigurácie",
+            'heating': "Kúrenie",
         },
         'sl': {
             'PRESS': "Pritisnite",
@@ -960,7 +961,7 @@ translations = {
             'currently': "Trenutno",
             'operation': "Delovanje",
             'fan_mode': "Način ventilatorja",
-            'heating': "Ponovno konfiguriranje naprave",
+            'heating': "Ogrevanje",
         },
         'sv': {
             'PRESS': "Tryck",
@@ -990,7 +991,7 @@ translations = {
             'currently': "Nuvarande",
             'operation': "Driftläge",
             'fan_mode': "Fläktläge",
-            'heating': "Konfigurerar om enheten",
+            'heating': "Värmer",
         },
         'th': {
             'PRESS': "กด",
@@ -1018,7 +1019,7 @@ translations = {
             'currently': "ในขณะนี้",
             'operation': "การทำงาน",
             'fan_mode': "โหมดของพัดลม",
-            'heating': "โหลดการกำหนดค่า YAML อีกครั้ง",
+            'heating': "โหมดอบอุ่น",
         },
         'tr': {
             'PRESS': "Basınız",
@@ -1048,7 +1049,7 @@ translations = {
             'currently': "Şu an",
             'operation': "İşlem",
             'fan_mode': "Fan modu",
-            'heating': "Cihazı yeniden yapılandırma",
+            'heating': "Isıtma",
         },
         'uk': {
             'PRESS': "Натисніть",
@@ -1077,7 +1078,7 @@ translations = {
             'currently': "В даний час",
             'operation': "Режим",
             'fan_mode': "Режим вентиляції",
-            'heating': "Переналаштування пристрою",
+            'heating': "Нагрівання",
         },
         'vi': {
             'ACTIVATE': "Kích hoạt",
@@ -1105,15 +1106,22 @@ translations = {
             'currently': "Hiện tại",
             'operation': "Chế độ hoạt động",
             'fan_mode': "Chế độ quạt",
-            'heating': "Đang tải lại cấu hình YAML",
+            'heating': "Làm ấm",
         },
 }
 
-def get_translation(locale, input):
+def lookup(locale, inputstr):
     locale = locale.split("_")[0]
-    en_fallback_res = translations.get("en").get(input, input)
-    if locale in translations:
-        return translations.get(locale).get(input, en_fallback_res)
+    en_fallback_res = translations.get("en").get(inputstr, inputstr)
+    if locale in translations:    
+        return translations.get(locale).get(inputstr, en_fallback_res)
     else:
         return en_fallback_res
+
+def get_translation(locale, inputstr):
+    inputstr = inputstr.replace("heat", "heating").replace("dry", "drying").replace("cool", "cooling").replace("fan_only", "fan")
+    if inputstr == "heating_cooling":
+        return f'{lookup(locale, "heating")}/{lookup(locale, "cooling")}'
+        
+    return lookup(locale, inputstr)
 

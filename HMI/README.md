@@ -185,7 +185,7 @@ The following message can be used to update the content on the cardEntities Page
 
 `event,buttonPress2,internalNameEntity,colorTempSlider,50`
 
-`event,buttonPress2,internalNameEntity,colorWheel,x|y`
+`event,buttonPress2,internalNameEntity,colorWheel,x|y|wh`
 
 ### popupShutter Page
 

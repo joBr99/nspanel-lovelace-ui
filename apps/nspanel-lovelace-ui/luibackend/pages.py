@@ -281,7 +281,12 @@ class LuiPagesGen(object):
             current_temp = get_attr_safe(entity, "current_temperature", "")
             dest_temp    = int(get_attr_safe(entity, "temperature", 0)*10)
             status       = get_attr_safe(entity, "hvac_action", "")
-            state_value  = f"{get_translation(self._locale,status)} \n ({get_translation(self._locale,entity.state)})"
+            state_value  = ""
+            if status != "":
+                state_value += f"{get_translation(self._locale, status)}\r\n("
+            state_value += f"{get_translation(self._locale, entity.state)}"
+            if status != "":
+                state_value += ")"
             min_temp     = int(get_attr_safe(entity, "min_temp", 0)*10)
             max_temp     = int(get_attr_safe(entity, "max_temp", 0)*10)
             step_temp    = int(get_attr_safe(entity, "target_temp_step", 0.5)*10) 
@@ -354,7 +359,7 @@ class LuiPagesGen(object):
                 if entity.state == "off":
                     onoffbutton = 1374
                 else:
-                    onoffbutton = rgb_dec565([255,255,255])
+                    onoffbutton = rgb_dec565([255,152,0])
             command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~{title}~{author}~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}"
         self._send_mqtt_msg(command)
         
