@@ -9,6 +9,7 @@ ReleaseNotes:
 Bugfixes und Erweiterungen seit letzter Verion:
     - cardQR (für Gäste WLAN)
     - cardThermo (Neues Design für Alias Thermostat und zusätzlich für Alias Klimaanlage)
+    - Bugfixes
     
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
