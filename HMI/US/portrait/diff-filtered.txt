@@ -1,13 +1,56 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-30 17:12:24.099197718 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-30 17:12:23.655186508 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 17:12:24.083197314 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-30 17:12:23.659186609 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 17:12:24.087197415 +0000
-+@@ -1849,6 +2077,169 @@
-+--- HMI/n2t-out/cardQR.txt	2022-05-30 17:12:23.659186609 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 17:12:24.087197415 +0000
-+--- HMI/n2t-out/pageStartup.txt	2022-05-30 17:12:23.655186508 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 17:12:24.087197415 +0000
-+--- HMI/n2t-out/screensaver.txt	2022-05-30 17:12:23.655186508 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 17:12:24.087197415 +0000
-+@@ -474,22 +474,6 @@
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-30 18:24:33.421988611 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-30 18:24:32.989991642 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 18:24:33.409988695 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-30 18:24:32.993991614 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 18:24:33.409988695 +0000
++@@ -63,6 +63,16 @@
++@@ -120,6 +130,18 @@
++@@ -156,7 +178,7 @@
++-Number n0
++         Dragging                            : 0
++@@ -295,6 +317,26 @@
++@@ -414,6 +456,34 @@
++@@ -871,6 +941,106 @@
++@@ -979,6 +1149,33 @@
++@@ -1084,6 +1281,28 @@
++@@ -1859,6 +2078,169 @@
++@@ -1938,7 +2320,6 @@
++                                         spstr strCommand.txt,tTmp.txt,"~",2
++                                         covx tTmp.txt,dimValueNormal,0,0
++                                         dim=dimValueNormal
++-                                        n0.val=dimValueNormal
++                                     }
++                                     if(tInstruction.txt=="timeout")
++                                     {
++--- HMI/n2t-out/cardQR.txt	2022-05-30 18:24:32.989991642 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 18:24:33.409988695 +0000
++@@ -35,7 +35,7 @@
++--- HMI/n2t-out/pageStartup.txt	2022-05-30 18:24:32.993991614 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 18:24:33.409988695 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-30 18:24:32.993991614 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 18:24:33.409988695 +0000
++@@ -68,15 +68,6 @@
++         Text          : 
++         Max. Text Size: 50
++     
++-Number n0
++-    Attributes
++-        Scope                               : local
++-        Dragging                            : 0
++-        Disable release event after dragging: 0
++-        Send Component ID                   : disabled
++-        Associated Keyboard                 : none
++-        Value                               : 0
++-    
++ Text tTime
++     Attributes
++         Scope                               : local
++@@ -409,7 +400,6 @@
++                                         // get value normal
++                                         spstr strCommand.txt,tTmp.txt,"~",2
++                                         covx tTmp.txt,dimValueNormal,0,0
++-                                        n0.val=dimValueNormal
++                                     }
++                                     if(tInstruction.txt=="time")
++                                     {
++@@ -484,22 +474,6 @@

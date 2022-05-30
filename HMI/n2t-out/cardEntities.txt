@@ -12,6 +12,7 @@ Page cardEntities
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             //wup=cardEntities
             //remove background & activate reparse mode
             vis p0,0
@@ -147,6 +148,15 @@ Number nNum3
         Value                               : 0
     
 Number nNum4
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number n0
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -1928,6 +1938,7 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
                                         dim=dimValueNormal
+                                        n0.val=dimValueNormal
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

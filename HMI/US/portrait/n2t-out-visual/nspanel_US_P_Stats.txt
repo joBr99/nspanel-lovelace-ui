@@ -2,10 +2,10 @@ Program.s
 	0    Component(s)
 	10   Line(s) of event code
 	10   Unique line(s) of event code
-cardMedia
-	33   Component(s)
-	348  Line(s) of event code
-	182  Unique line(s) of event code
+cardQR
+	30   Component(s)
+	362  Line(s) of event code
+	211  Unique line(s) of event code
 pageIcons
 	6    Component(s)
 	0    Line(s) of event code
@@ -14,34 +14,38 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-cardQR
-	30   Component(s)
-	361  Line(s) of event code
-	210  Unique line(s) of event code
-cardGrid
-	42   Component(s)
-	438  Line(s) of event code
-	258  Unique line(s) of event code
 popupLight
 	27   Component(s)
-	351  Line(s) of event code
-	190  Unique line(s) of event code
-cardAlarm
-	38   Component(s)
-	362  Line(s) of event code
-	227  Unique line(s) of event code
-popupNotify
-	17   Component(s)
-	203  Line(s) of event code
-	127  Unique line(s) of event code
+	352  Line(s) of event code
+	191  Unique line(s) of event code
 popupShutter
 	20   Component(s)
-	247  Line(s) of event code
-	140  Unique line(s) of event code
+	248  Line(s) of event code
+	141  Unique line(s) of event code
+popupNotify
+	17   Component(s)
+	204  Line(s) of event code
+	128  Unique line(s) of event code
 cardThermo
 	56   Component(s)
-	545  Line(s) of event code
-	294  Unique line(s) of event code
+	546  Line(s) of event code
+	295  Unique line(s) of event code
+cardEntities
+	77   Component(s)
+	1363 Line(s) of event code
+	581  Unique line(s) of event code
+cardGrid
+	42   Component(s)
+	439  Line(s) of event code
+	259  Unique line(s) of event code
+cardMedia
+	33   Component(s)
+	349  Line(s) of event code
+	183  Unique line(s) of event code
+cardAlarm
+	38   Component(s)
+	363  Line(s) of event code
+	228  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	157  Line(s) of event code
@@ -50,13 +54,9 @@ screensaver
 	37   Component(s)
 	292  Line(s) of event code
 	230  Unique line(s) of event code
-cardEntities
-	77   Component(s)
-	1362 Line(s) of event code
-	580  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	416  Component(s)
-	4690 Line(s) of event code
+	4699 Line(s) of event code
 	1236 Unique line(s) of event code
