@@ -1,8 +1,114 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-30 18:27:23.395208836 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-30 18:27:22.843187876 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 18:27:23.351207165 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-05-30 18:27:22.843187876 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 18:27:23.351207165 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-30 19:51:39.538226185 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-30 19:51:39.086222656 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 19:51:39.518226029 +0000
++diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
++--- HMI/n2t-out/cardAlarm.txt	2022-05-30 19:51:39.086222656 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-30 19:51:39.522226060 +0000
++@@ -33,7 +33,6 @@
++             vis b8,0
++             vis b9,0
++             vis b10,0
++-            vis b11,0
++             vis tCode,0
++             vis bPrev,0
++             vis bNext,0
++@@ -80,12 +79,6 @@
++         Text          : 
++         Max. Text Size: 20
++     
++-Variable (string) vaAddBtn
++-    Attributes
++-        Scope         : local
++-        Text          : 
++-        Max. Text Size: 20
++-    
++ Text tTmp
++     Attributes
++         Scope                               : local
++@@ -333,27 +326,12 @@
++         Disable release event after dragging: 0
++         Send Component ID                   : disabled
++         State                               : unpressed
++-        Text                                : 
+++        Text                                : 0
++         Max. Text Size                      : 10
++     
++     Events
++         Touch Press Event
++-            // event,buttonPress2,entn,arm1,tCode
++-            tSend.txt="event,buttonPress2,"
++-            tSend.txt+=entn.txt+","
++-            tSend.txt+=vaAddBtn.txt
++-            //send calc crc
++-            btlen tSend.txt,sys0
++-            crcrest 1,0xffff // reset CRC
++-            crcputh 55 bb
++-            crcputs sys0,2
++-            crcputs tSend.txt,0
++-            //send cmd
++-            printh 55 bb
++-            prints sys0,2
++-            prints tSend.txt,0
++-            prints crcval,2
++-            tCode.txt=""
+++            tCode.txt=tCode.txt+"0"
++         
++ Button b10
++     Attributes
++@@ -362,12 +340,12 @@
++         Disable release event after dragging: 0
++         Send Component ID                   : disabled
++         State                               : unpressed
++-        Text                                : 0
+++        Text                                : CLR
++         Max. Text Size                      : 10
++     
++     Events
++         Touch Press Event
++-            tCode.txt=tCode.txt+"0"
+++            tCode.txt=""
++         
++ Button arm1
++     Attributes
++@@ -489,20 +467,6 @@
++             prints crcval,2
++             tCode.txt=""
++         
++-Button b11
++-    Attributes
++-        Scope                               : local
++-        Dragging                            : 0
++-        Disable release event after dragging: 0
++-        Send Component ID                   : disabled
++-        State                               : unpressed
++-        Text                                : CLR
++-        Max. Text Size                      : 10
++-    
++-    Events
++-        Touch Press Event
++-            tCode.txt=""
++-        
++ Hotspot mSwipeNext
++     Attributes
++         Scope                               : local
++@@ -704,15 +668,6 @@
++                                         {
++                                             tmFlash.en=0
++                                         }
++-                                        // extra button
++-                                        spstr strCommand.txt,b9.txt,"~",15
++-                                        if(b9.txt!="")
++-                                        {
++-                                            vis b9,1
++-                                            spstr strCommand.txt,tTmp.txt,"~",16
++-                                            covx tTmp.txt,b9.pco,0,0
++-                                            spstr strCommand.txt,vaAddBtn.txt,"~",17
++-                                        }
++                                     }
++                                     if(tInstruction.txt=="time")
++                                     {
++--- HMI/n2t-out/cardEntities.txt	2022-05-30 19:51:39.086222656 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 19:51:39.522226060 +0000
 +@@ -63,6 +63,16 @@
 +@@ -120,6 +130,18 @@
 +@@ -156,6 +178,15 @@
@@ -12,11 +118,11 @@
 +@@ -970,6 +1149,33 @@
 +@@ -1075,6 +1281,28 @@
 +@@ -1850,6 +2078,169 @@
-+--- HMI/n2t-out/cardQR.txt	2022-05-30 18:27:22.843187876 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 18:27:23.351207165 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-30 19:51:39.086222656 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 19:51:39.518226029 +0000
 +@@ -35,7 +35,7 @@
-+--- HMI/n2t-out/pageStartup.txt	2022-05-30 18:27:22.843187876 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 18:27:23.351207165 +0000
-+--- HMI/n2t-out/screensaver.txt	2022-05-30 18:27:22.843187876 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 18:27:23.351207165 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-30 19:51:39.086222656 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 19:51:39.522226060 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-30 19:51:39.086222656 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 19:51:39.522226060 +0000
 +@@ -474,22 +474,6 @@
