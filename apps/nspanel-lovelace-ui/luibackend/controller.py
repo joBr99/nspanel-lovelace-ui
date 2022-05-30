@@ -86,6 +86,9 @@ class LuiController(object):
             sleepBrightness                     = self.current_screensaver_brightness
             self.current_screen_brightness      = kwargs['sbr']
             brightness                          = self.current_screen_brightness
+            # same value for both values will break sleep timer of the firmware
+            if sleepBrightness==brightness:
+                sleepBrightness = sleepBrightness-1
         self._send_mqtt_msg(f"dimmode~{sleepBrightness}~{brightness}")
         
     def calc_current_brightness(self, sleep_brightness_config):
