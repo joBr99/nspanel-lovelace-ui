@@ -14,14 +14,14 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-cardGrid
-	42   Component(s)
-	435  Line(s) of event code
-	256  Unique line(s) of event code
 cardQR
 	30   Component(s)
 	361  Line(s) of event code
 	210  Unique line(s) of event code
+cardGrid
+	42   Component(s)
+	438  Line(s) of event code
+	258  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	351  Line(s) of event code
@@ -58,5 +58,5 @@ cardEntities
 Total
 	13   Page(s)
 	416  Component(s)
-	4687 Line(s) of event code
+	4690 Line(s) of event code
 	1236 Unique line(s) of event code
