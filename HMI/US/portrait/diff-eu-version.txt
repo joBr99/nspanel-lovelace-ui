@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -683,10 +683,7 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -26,8 +26,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-30 13:26:43.203424845 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -62,6 +62,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -494,8 +494,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -846,10 +846,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -508,8 +508,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -635,10 +635,7 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -523,8 +523,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/cardQR.txt	2022-05-30 13:26:43.203424845 +0000
++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -34,7 +34,7 @@
      Attributes
          Scope         : local
@@ -547,8 +547,8 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -1169,10 +1169,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -561,8 +561,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -593,8 +593,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/popupLight.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -560,10 +560,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -607,8 +607,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -310,10 +310,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -621,8 +621,8 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -405,10 +405,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -635,8 +635,8 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
                                      if(tInstruction.txt=="time")
                                      {
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/screensaver.txt	2022-05-30 13:26:43.199424901 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 13:26:43.619418949 +0000
 @@ -397,9 +397,6 @@
                                          spstr strCommand.txt,tTmp.txt,"~",1
                                          covx tTmp.txt,dimValue,0,0
