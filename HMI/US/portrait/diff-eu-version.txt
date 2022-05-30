@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-30 18:24:32.989991642 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 18:24:33.409988695 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-30 18:27:22.843187876 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 18:27:23.351207165 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-30 18:24:32.993991614 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 18:24:33.409988695 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-05-30 18:27:22.843187876 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 18:27:23.351207165 +0000
 @@ -63,6 +63,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -49,16 +49,23 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Number nNum1
      Attributes
          Scope                               : local
-@@ -156,7 +178,7 @@
+@@ -156,6 +178,15 @@
          Associated Keyboard                 : none
          Value                               : 0
      
--Number n0
 +Number nNum5
++    Attributes
++        Scope                               : local
++        Dragging                            : 0
++        Disable release event after dragging: 0
++        Send Component ID                   : disabled
++        Associated Keyboard                 : none
++        Value                               : 0
++    
+ Text tHeading
      Attributes
          Scope                               : local
-         Dragging                            : 0
-@@ -295,6 +317,26 @@
+@@ -286,6 +317,26 @@
          Text                                : 
          Max. Text Size                      : 50
      
@@ -85,7 +92,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Picture p0
      Attributes
          Scope                               : local
-@@ -414,6 +456,34 @@
+@@ -405,6 +456,34 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -120,7 +127,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Button bDown1
      Attributes
          Scope                               : local
-@@ -871,6 +941,106 @@
+@@ -862,6 +941,106 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -227,7 +234,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          Scope                               : local
-@@ -979,6 +1149,33 @@
+@@ -970,6 +1149,33 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -261,7 +268,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          Scope                               : local
-@@ -1084,6 +1281,28 @@
+@@ -1075,6 +1281,28 @@
                  page popupLight
              }
          
@@ -290,7 +297,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSwipeNext
      Attributes
          Scope                               : local
-@@ -1859,6 +2078,169 @@
+@@ -1850,6 +2078,169 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
@@ -460,17 +467,9 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      }
                                      if(tInstruction.txt=="pageType")
                                      {
-@@ -1938,7 +2320,6 @@
-                                         spstr strCommand.txt,tTmp.txt,"~",2
-                                         covx tTmp.txt,dimValueNormal,0,0
-                                         dim=dimValueNormal
--                                        n0.val=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-05-30 18:24:32.989991642 +0000
-+++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 18:24:33.409988695 +0000
+--- HMI/n2t-out/cardQR.txt	2022-05-30 18:27:22.843187876 +0000
++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 18:27:23.351207165 +0000
 @@ -35,7 +35,7 @@
      Attributes
          Scope         : local
@@ -481,8 +480,8 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
  Variable (string) entn
      Attributes
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-30 18:24:32.993991614 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 18:24:33.409988695 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-30 18:27:22.843187876 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 18:27:23.351207165 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -502,33 +501,9 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-05-30 18:24:32.993991614 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 18:24:33.409988695 +0000
-@@ -68,15 +68,6 @@
-         Text          : 
-         Max. Text Size: 50
-     
--Number n0
--    Attributes
--        Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        Associated Keyboard                 : none
--        Value                               : 0
--    
- Text tTime
-     Attributes
-         Scope                               : local
-@@ -409,7 +400,6 @@
-                                         // get value normal
-                                         spstr strCommand.txt,tTmp.txt,"~",2
-                                         covx tTmp.txt,dimValueNormal,0,0
--                                        n0.val=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="time")
-                                     {
-@@ -484,22 +474,6 @@
+--- HMI/n2t-out/screensaver.txt	2022-05-30 18:27:22.843187876 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 18:27:23.351207165 +0000
+@@ -474,22 +474,6 @@
                                              vis tMainIconAlt,1
                                              vis tMRIcon,1
                                              vis tMR,1
