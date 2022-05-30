@@ -379,6 +379,7 @@ key | optional | type | default | description
 `sleepTimeout` | True | integer | `20` | Timeout for the screen to enter screensaver, to disable screensaver use 0
 `sleepBrightness` | True | integer/complex | `20` | Brightness for the screen to enter screensaver, see example below for complex/scheduled config.
 `sleepTracking` | True | string | None | Forces screensaver brightness to 0 in case entity state is not_home or off, can be a group, person or device_tracker entity.
+`sleepOverride` | True | complex | None | Allows overriding of the sleepBrightness if entity state is on, true or home. Overrides sleepBrightness but sleepTracking takes precedence.
 `locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
 `dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
 `timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  <pre>`"%I:%M   ?%p"`</pre>
@@ -536,6 +537,9 @@ It is possible to schedule a brightness change for the screen at specific times.
         value: 0
 ```
 
+`sleepTracking` overrides this setting and sets the brightness to 0 if the state of the configured Home Assistant entity is `off` or `not_home`. You may also use a [Home Assistant group](https://www.home-assistant.io/integrations/group) to track multiple entities.
+
+`sleepOverride` overrides sleepBrightness but does not take precedence over sleepTracking. This is useful if, for example, you want your NSPanel to be brighter than usual if your light is on or if you want to override a panel dimming if you are in the room.
 
 #### Override Icons or Names
 
