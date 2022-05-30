@@ -309,7 +309,7 @@ nspanel-1:
         entities:
           - entity: switch.example_item
             name: NameOverride
-            icon: lightbulb
+            icon: mdi:lightbulb
           - entity: light.example_item
           - entity: cover.example_item
           - entity: input_boolean.example_item
@@ -355,9 +355,9 @@ nspanel-1:
         qrCode: "WIFI:S:test_ssid;T:WPA;P:test_pw;;"
         entities:
           - entity: iText.Name.test_ssid
-            icon: wifi
+            icon: mdi:wifi
           - entity: iText.Password.test_pw
-            icon: key
+            icon: mdi:key
 ```
 
 key | optional | type | default | description
@@ -453,10 +453,12 @@ key | optional | type | default | description
 -- | -- | -- | -- | --
 `entity` | True | string | `weather.example` | weather entity from homeassistant
 `weatherUnit` | True | string | `celsius` | unit for temperature, valid values are `celsius` or `fahrenheit`
-`weatherOverrideForecast1` | True | complex | `None` | sensor entity from home assistant here to override the first weather forecast item on the screensaver
-`weatherOverrideForecast2` | True | complex | `None` | sensor entity from home assistant here to override the second weather forecast item on the screensaver
-`weatherOverrideForecast3` | True | complex | `None` | sensor entity from home assistant here to override the third weather forecast item on the screensaver
-`weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to override the forth weather forecast item on the screensaver
+`weatherOverrideForecast1` | True | complex | `None` | sensor entity from home assistant here to overwrite the first weather forecast item on the screensaver
+`weatherOverrideForecast2` | True | complex | `None` | sensor entity from home assistant here to overwrite the second weather forecast item on the screensaver
+`weatherOverrideForecast3` | True | complex | `None` | sensor entity from home assistant here to overwrite the third weather forecast item on the screensaver
+`weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to overwrite the forth weather forecast item on the screensaver
+`statusIcon1` | True | complex | `None` | status icon left to the date string, config similar to weatherOverride
+`statusIcon2` | True | complex | `None` | status icon right to the date string, config similar to weatherOverride
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
 `theme` | True | complex | | configuration for theme
@@ -469,7 +471,7 @@ Example for the weatherOverride config options:
       weatherOverrideForecast4:
         entity: sensor.example_item
         name: name
-        icon: lightbulb
+        icon: mdi:lightbulb
 ```
 #### Possible configuration values for screensaver theme config
 
@@ -498,9 +500,21 @@ key | option | type | default | description
 `tMainTextAlt` | True | list | White | `[R, G, B]`
 `tMRIcon` | True | list | White | `[R, G, B]`
 `tMR` | True | list | White | `[R, G, B]`
-`AutoWeather` | True | string | None | Set to `auto` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence
+`autoWeather` | True | boolean | false | Set to `true` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence.
+
+If `autoWeather: true` is set. You may also overwrite the default color mapping for any valid weather state provided by homeassistant e.g. `rainy: [50, 50, 255]` or `sunny: [255, 255, 0]`
 
 Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red or `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same). Also note that the screen has a low contrast ratio, so colors look sigificantly different at full display brightness and lowest brightness.
+
+Example for the theme config:
+
+```yaml
+    screensaver:
+      theme:
+        autoWeather: true
+```
+
+For complex setups where you want to reuse the theme over multiple panels see the config exmaples in the appdaemon folder.
 
 #### Schedule sleep brightness
 
@@ -525,15 +539,26 @@ It is possible to schedule a brightness change for the screen at specific times.
 
 #### Override Icons or Names
 
-To override Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
+To overwrite Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
 Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?https://github.com/joBr99/nspanel-lovelace-ui/blob/main/HMI/icon-cheatsheet.html) are useable.
 
 ```yaml
         entities:
           - entity: light.test_item
             name: NameOverride
-            icon: lightbulb
+            icon: mdi:lightbulb
 ```
+
+It is also possible to configure different icon overwrites per state:
+
+```yaml
+            icon:
+                "on": mdi:lightbulb
+                "off": mdi:lightbulb
+
+```
+
+Also it is possible to configure a text or a character by using "text:" as a prefix instead of an icon. `icon: text:X`
 
 #### Fahrenheit on cardThermo
 ```yaml
@@ -590,6 +615,91 @@ You may reverse this change by entering the following in the Tasmota console of 
 
 Please note: Doing this will mean that if HomeAssistant is not working for any reason your buttons will not function correctly.
 
+#### Sending Notifications to the Panel
+
+There are two notification types, that can be triggered by sending a command over mqtt to the panel here are examples for homeassistant scripts:
+
+<details>
+<summary>Seperate Page</summary>
+<br>
+
+  This is the notification used by the backend for updates, opening it requires to the following commands to the CustomSend Topic:
+   
+  `pageType popupNotify`
+   
+  `entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout`
+
+  It is possible to exit from the page by sending `exitPopup`
+  
+Send Message to the Panel combined with a buzzer sound:
+   
+ ```yaml
+nspanel_popup_notification:
+  alias: Popup Notification
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: cmnd/tasmota_NsPanelTerrasse/Backlog
+      payload: CustomSend pageType~popupNotify; CustomSend entityUpdateDetail~id~{{
+        title }}~65535~~~~~{{ message }}~65535~{{ timeout }}; Buzzer 2,2,2
+  mode: single
+  icon: mdi:message-badge
+ ```
+
+Send Message to the Panel:
+   
+ ```yaml
+nspanel_popup_notification:
+  alias: Popup Notification
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: cmnd/tasmota_NsPanelTerrasse/Backlog
+      payload: CustomSend pageType~popupNotify; CustomSend entityUpdateDetail~id~{{
+        title }}~65535~~~~~{{ message }}~65535~{{ timeout }}
+  mode: single
+  icon: mdi:message-badge
+ ```
+</details>
+
+
+<details>
+<summary>Notification on screensaver</summary>
+<br>
+
+   The screensaver can display Notifications by sending this command to the CustomSend topic: `notify~heading~text`
+   
+
+Send Message to the Screensaver combined with a buzzer sound:
+   
+ ```yaml
+nspanel_screensaver_notification:
+  alias: Screensaver Notification
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: cmnd/tasmota_NsPanelTerrasse/Backlog
+      payload: CustomSend notify~{{ heading }}~{{ message }}; Buzzer 2,2,2
+  mode: single
+  icon: mdi:message-badge
+ ```
+
+Send Message to the Screensaver:
+   
+ ```yaml
+nspanel_screensaver_notification:
+  alias: Screensaver Notification
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: cmnd/tasmota_NsPanelTerrasse/Backlog
+      payload: CustomSend notify~{{ heading }}~{{ message }}
+  mode: single
+  icon: mdi:message-badge
+ ```
+   
+</details>
+
 
 ## How to update
 
@@ -641,9 +751,11 @@ Click redownload in the menu of the app in HACS.
 
 Select main version.
 
+**!!! Wait for it to load, dropdown needs to be selectable again, otherwise it will download the latest release !!!**
+
 ![hacs-main](doc-pics/hacs-main.png)
 
-**Wait for it to load, dropdown needs to be selectable again**
+**!!! Wait for it to load, dropdown needs to be selectable again, otherwise it will download the latest release !!!**
 
 Click download.
 

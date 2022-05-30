@@ -79,4 +79,4 @@ jobs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: ${{ steps.last-commit-message.outputs.msg }} (add nextion2text)
-        file_pattern: "**.txt"
+        #file_pattern: "**.txt"

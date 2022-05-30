@@ -22,8 +22,6 @@ default_screensaver_color_mapping = {
     "tForecast3Val":    "65535",
     "tForecast4Val":    "65535",
     "bar":              "65535",
-    "tMainIconAlt":     "65535",
-    "tMainTextAlt":     "65535",
     "tMRIcon":          "65535",
     "tMR":              "65535"
 }
@@ -61,11 +59,13 @@ def map_color(key, theme, state=None):
 #   Use Autocolouring for weather
     elif state is not None:
         if key in ["tMainIcon", "tF1Icon", "tF2Icon", "tF3Icon", "tF4Icon"]:
-            config_color = map_weather_icon_color(key=key, state=state)
+            config_color = map_weather_icon_color(key=key, theme=theme, state=state)
     return config_color
 
-def map_weather_icon_color(key, state):
-    if state[key] in default_weather_icon_color_mapping:
+def map_weather_icon_color(key, theme, state):
+    if key in state and state[key] in theme:
+        config_color = rgb_dec565(theme[state[key]])
+    elif key in state and state[key] in default_weather_icon_color_mapping:
         config_color = default_weather_icon_color_mapping[state[key]]
     else:
         config_color = "65535"

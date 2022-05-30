@@ -153,7 +153,7 @@ Text t1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 10
-        y coordinate                        : 319
+        y coordinate                        : 341
         Width                               : 240
         Height                              : 30
         Effect                              : load
@@ -183,7 +183,7 @@ Text t2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 10
-        y coordinate                        : 360
+        y coordinate                        : 382
         Width                               : 45
         Height                              : 30
         Effect                              : load
@@ -439,10 +439,10 @@ Picture pColorWheel
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 160
-        y coordinate                        : 69
-        Width                               : 160
-        Height                              : 160
+        x coordinate                        : 67
+        y coordinate                        : 89
+        Width                               : 245
+        Height                              : 245
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -460,6 +460,9 @@ Picture pColorWheel
             sys0=tch1
             sys0=sys0-pColorWheel.y
             covx sys0,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
+            covx pColorWheel.h,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
@@ -482,7 +485,7 @@ Slider hBrightness
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 61
-        y coordinate                        : 354
+        y coordinate                        : 376
         Width                               : 250
         Height                              : 43
         Effect                              : load

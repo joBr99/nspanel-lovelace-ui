@@ -459,9 +459,9 @@ Text tStatus
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 11
-        y coordinate                        : 200
-        Width                               : 97
-        Height                              : 30
+        y coordinate                        : 190
+        Width                               : 115
+        Height                              : 54
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -472,11 +472,11 @@ Text tStatus
         Back. Color                         : 6371
         Font Color                          : 50712
         Horizontal Alignment                : center
-        Vertical Alignment                  : center
+        Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
+        Max. Text Size                      : 40
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -520,7 +520,7 @@ Text tCurTempLbl
         Opacity                             : 127
         x coordinate                        : 13
         y coordinate                        : 85
-        Width                               : 95
+        Width                               : 115
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -549,8 +549,8 @@ Text tStateLbl
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 12
-        y coordinate                        : 162
-        Width                               : 95
+        y coordinate                        : 156
+        Width                               : 115
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -610,7 +610,7 @@ Text tALbl
         Opacity                             : 127
         x coordinate                        : 7
         y coordinate                        : 260
-        Width                               : 67
+        Width                               : 74
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -669,8 +669,8 @@ Text tCurTemp
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 13
-        y coordinate                        : 121
-        Width                               : 95
+        y coordinate                        : 119
+        Width                               : 115
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -1566,24 +1566,7 @@ Hotspot mSwipeNext
     
     Events
         Touch Press Event
-            //This thin hotspot down the edge will intercept swipes
-            //from the bezel into the screen area before the
-            //Nextion register touch for any other components -
-            //IF the hotspot is 'layered' at the top (use the up
-            //arrow at the far left of the Nextion Editor Tool Bar).
-            //
-            //Calibrate how wide the edge hotspot has to be on your
-            //own physical device using this screen to test the
-            //x & y coordinates where the swipe is first detected.)
-            //---------------------------
-            //The navigation text is stored as local variable within tld.txt
-            //Pressing right button if swiped on the right side of the screen
-            //
-            spstr tId.txt,tTmp.txt,"|",1
-            if(tTmp.txt=="1")
-            {
-                click bNext,1
-            }
+            click bNext,1
         
 Hotspot mSwipeUp
     Attributes
@@ -1603,24 +1586,7 @@ Hotspot mSwipeUp
     
     Events
         Touch Press Event
-            //This thin hotspot down the edge will intercept swipes
-            //from the bezel into the screen area before the
-            //Nextion register touch for any other components -
-            //IF the hotspot is 'layered' at the top (use the up
-            //arrow at the far left of the Nextion Editor Tool Bar).
-            //
-            //Calibrate how wide the edge hotspot has to be on your
-            //own physical device using this screen to test the
-            //x & y coordinates where the swipe is first detected.)
-            //---------------------------
-            //The navigation text is stored as local variable within tld.txt
-            //Pressing up button if swiped on the top side of the screen
-            //
-            spstr tId.txt,tTmp.txt,"|",0
-            if(tTmp.txt=="2")
-            {
-                click bPrev,1
-            }
+            click bPrev,1
         
 Hotspot mSwipePrev
     Attributes
@@ -1640,24 +1606,7 @@ Hotspot mSwipePrev
     
     Events
         Touch Press Event
-            //This thin hotspot down the edge will intercept swipes
-            //from the bezel into the screen area before the
-            //Nextion register touch for any other components -
-            //IF the hotspot is 'layered' at the top (use the up
-            //arrow at the far left of the Nextion Editor Tool Bar).
-            //
-            //Calibrate how wide the edge hotspot has to be on your
-            //own physical device using this screen to test the
-            //x & y coordinates where the swipe is first detected.)
-            //---------------------------
-            //The navigation text is stored as local variable within tld.txt
-            //Pressing left button if swiped on the left side of the screen
-            //
-            spstr tId.txt,tTmp.txt,"|",0
-            if(tTmp.txt=="1")
-            {
-                click bPrev,1
-            }
+            click bPrev,1
         
 Timer tmSerial
     Attributes
@@ -1721,25 +1670,33 @@ Timer tmSerial
                                         if(tTmp.txt=="0")
                                         {
                                             vis bPrev,0
+                                            tsw mSwipePrev,0
+                                            tsw mSwipeUp,0
                                         }
                                         if(tTmp.txt=="1")
                                         {
                                             vis bPrev,1
+                                            tsw mSwipePrev,1
+                                            tsw mSwipeUp,0
                                             bPrev.txt="î°"
                                         }
                                         if(tTmp.txt=="2")
                                         {
                                             vis bPrev,1
+                                            tsw mSwipePrev,0
+                                            tsw mSwipeUp,1
                                             bPrev.txt="î¶"
                                         }
                                         spstr tId.txt,tTmp.txt,"|",1
                                         if(tTmp.txt=="0")
                                         {
                                             vis bNext,0
+                                            tsw mSwipeNext,0
                                         }
                                         if(tTmp.txt=="1")
                                         {
                                             vis bNext,1
+                                            tsw mSwipeNext,1
                                             bNext.txt="î³"
                                         }
                                         //entity name
@@ -1993,6 +1950,10 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
+                                        dim=dimValueNormal
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

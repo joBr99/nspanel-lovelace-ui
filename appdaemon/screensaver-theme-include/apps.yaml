@@ -1,0 +1,15 @@
+---
+nspanel-1:
+  module: nspanel-lovelace-ui
+  class: NsPanelLovelaceUIManager
+  config:
+    panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
+    panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
+    updateMode: "auto-notify"
+    screensaver:
+      entity: weather.k3ll3r
+      theme: !include /config/appdaemon/apps/screensaver-theme.yaml
+    cards:
+      - type: cardEntities
+        entities:
+          - entity: switch.example_item
