@@ -12,7 +12,7 @@ Page cardGrid
     
     Events
         Preinitialize Event
-            //wup=cardEntities
+            dim=dimValueNormal
             //remove background & activate reparse mode
             vis p0,0
             recmod=1
