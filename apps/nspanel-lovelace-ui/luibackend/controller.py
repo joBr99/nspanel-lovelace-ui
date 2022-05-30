@@ -283,3 +283,12 @@ class LuiController(object):
         # for alarm page
         if button_type in ["disarm", "arm_home", "arm_away", "arm_night", "arm_vacation"]:
             self._ha_api.get_entity(entity_id).call_service(f"alarm_{button_type}", code=value)
+        if button_type == "opnSensorNotify":
+            msg = ""
+            entity = self._ha_api.get_entity(entity_id)
+            if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
+                for e in entity:
+                    msg += f"- {self._ha_api.get_entity(e).attributes.friendly_name}\n"
+
+            self._pages_gen.send_message_page("opnSensorNotifyRes", "", msg, "", ""):
+
