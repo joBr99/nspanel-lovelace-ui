@@ -1,27 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-30 17:02:48.759744086 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-30 17:02:48.227713141 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 17:02:48.739741932 +0000
-+diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-05-30 17:02:48.227713141 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-30 17:02:48.739741932 +0000
-+@@ -683,10 +683,7 @@
-+                                         // get value
-+                                         spstr strCommand.txt,tTmp.txt,"~",1
-+                                         covx tTmp.txt,dimValue,0,0
-+-                                        // get value normal
-+-                                        spstr strCommand.txt,tTmp.txt,"~",2
-+-                                        covx tTmp.txt,dimValueNormal,0,0
-+-                                        dim=dimValueNormal
-++                                        dim=dimValue
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
-+--- HMI/n2t-out/cardEntities.txt	2022-05-30 17:02:48.227713141 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 17:02:48.743742363 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-30 17:10:39.918821674 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-30 17:10:39.474892878 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 17:10:39.902823788 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-30 17:10:39.474892878 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 17:10:39.902823788 +0000
 +@@ -1849,6 +2077,169 @@
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-05-30 17:02:48.227713141 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-30 17:02:48.743742363 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-05-30 17:10:39.474892878 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-30 17:10:39.902823788 +0000
 +@@ -846,10 +846,6 @@
 +                                         // get value
 +                                         spstr strCommand.txt,tTmp.txt,"~",1
@@ -33,51 +18,10 @@
 +                                     }
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
-+diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-05-30 17:02:48.227713141 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-30 17:02:48.743742363 +0000
-+@@ -635,10 +635,7 @@
-+                                         // get value
-+                                         spstr strCommand.txt,tTmp.txt,"~",1
-+                                         covx tTmp.txt,dimValue,0,0
-+-                                        // get value normal
-+-                                        spstr strCommand.txt,tTmp.txt,"~",2
-+-                                        covx tTmp.txt,dimValueNormal,0,0
-+-                                        dim=dimValueNormal
-++                                        dim=dimValue
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
-+--- HMI/n2t-out/cardQR.txt	2022-05-30 17:02:48.227713141 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 17:02:48.743742363 +0000
-+@@ -581,10 +581,7 @@
-+                                         // get value
-+                                         spstr strCommand.txt,tTmp.txt,"~",1
-+                                         covx tTmp.txt,dimValue,0,0
-+-                                        // get value normal
-+-                                        spstr strCommand.txt,tTmp.txt,"~",2
-+-                                        covx tTmp.txt,dimValueNormal,0,0
-+-                                        dim=dimValueNormal
-++                                        dim=dimValue
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-05-30 17:02:48.227713141 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 17:02:48.743742363 +0000
-+diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-05-30 17:02:48.227713141 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-30 17:02:48.743742363 +0000
-+@@ -560,10 +560,6 @@
-+                                         // get value
-+                                         spstr strCommand.txt,tTmp.txt,"~",1
-+                                         covx tTmp.txt,dimValue,0,0
-+-                                        // get value normal
-+-                                        spstr strCommand.txt,tTmp.txt,"~",2
-+-                                        covx tTmp.txt,dimValueNormal,0,0
-+-                                        dim=dimValueNormal
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
-+--- HMI/n2t-out/screensaver.txt	2022-05-30 17:02:48.227713141 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 17:02:48.743742363 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-30 17:10:39.474892878 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 17:10:39.902823788 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-30 17:10:39.474892878 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 17:10:39.902823788 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-30 17:10:39.474892878 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 17:10:39.902823788 +0000
 +@@ -474,22 +474,6 @@
