@@ -67,6 +67,7 @@ class LuiBackendConfig(object):
             'model': "eu",
             'sleepTimeout': 20,
             'sleepBrightness': 20,
+            'screenBrightness': 100,
             'sleepTracking': None,
             'locale': "en_US",
             'timeFormat': "%H:%M",
