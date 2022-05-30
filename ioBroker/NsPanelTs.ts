@@ -1,21 +1,14 @@
 /*-----------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker
-- abgestimmt auf TFT 34 / v2.8.1 (LATEST) / BerryDriver 4 / Tasmota 11.1.0
-
+- abgestimmt auf TFT 36 / v2.9.0 / BerryDriver 4 / Tasmota 11.1.0
 joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
-
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
-
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
-
 ReleaseNotes:
 Bugfixes und Erweiterungen seit letzter Verion:
-    - Automatischer Dimmode versetzt NSPanel im Normalbetrieb in Dimmodus ohne Screensaver
-    - Auto-Update in definiertem Zustand
-    - manuelle Updates aktiv
-    - cardAlarm aktiv
-    - popupNotify aktiv
+    - cardQR (für Gäste WLAN)
+    - cardThermo (Neues Design für Alias Thermostat und zusätzlich für Alias Klimaanlage)
     
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -57,6 +50,7 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Taste               - Für Szenen oder Radiosender, etc. --> Nur Funktionsaufruf - Kein Taster wie MonoButton - True/False
     Tastensensor        - analog Taste
     Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc. 
+    Klimaanlage         - Buttons zur Steuerung der Klimaanlage im unteren Bereich
     Temperatur          - Anzeige von Temperture - Datenpunkten, ananlog Info
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, ananlog Info 
     Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
@@ -75,10 +69,14 @@ Tasmota-Status0 - (zyklische Ausführung)
 Erforderliche Adapter:
     Accu-Wheater:       - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
+    Geräte verwalten    - Für Erstellung der Aliase
+    Alias-Manager       - !!! ausschießlich für MEDIA-Alias
+    MQTT-Adapter        - Für Kommunikation zwischen Skript und Tasmota
+    JavaScript-Adapter
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.8.1.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.9.0.tft
 ---------------------------------------------------------------------------------------
 */ 
 var Icons = new IconsSelector();
@@ -142,8 +140,8 @@ var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
-//const alexaSpeakerList = []; //Beispiel ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino"];
-const alexaSpeakerList = ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino","Echo Dot Küche"];
+const alexaSpeakerList = []; //Beispiel ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino"];
+//const alexaSpeakerList = ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino","Echo Dot Küche"];
 
 //Datenpunkte für Nachricht an Screensaver 
 var screensaverNotifyHeading = NSPanel_Path + "ScreensaverInfo.popupNotifyHeading";
@@ -292,10 +290,28 @@ var Alexa: PageMedia =
 var Buero_Themostat: PageThermo = 
 {
     "type": "cardThermo",
-    "heading": "Thermostat",
+    "heading": "Test Thermostat",
     "useColor": true,
     "subPage": false,
-    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Thermostat_Büro" }]
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Thermostat_Büro", minValue: 50, maxValue: 300 }]
+};
+
+var Buero_Klimaanlage: PageThermo = 
+{
+    "type": "cardThermo",
+    "heading": "Test Klimaanlage",
+    "useColor": true,
+    "subPage": false,
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.TestKlimaanlage", minValue: 170, maxValue: 250}]
+};
+
+var WLAN: PageQR = 
+{
+    "type": "cardQR",
+    "heading": "Gäste WLAN",
+    "useColor": true,
+    "subPage": false,
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Guest_Wifi" }]
 };
 
 var Buero_Alarm: PageAlarm = 
@@ -413,6 +429,8 @@ export const config: Config = {
     temperatureUnit: "°C",
     pages: [
             Buero_Seite_1,
+            Buero_Klimaanlage,
+            WLAN, 
             Button_1,
             Test_Licht,
             Test_Funktionen,
@@ -431,7 +449,7 @@ export const config: Config = {
 
 //Notification an Screensaver
 on({id: [screensaverNotifyHeading, screensaverNotifyText], change: "ne"}, async function (obj) {
-    setState(config.panelSendTopic,(['notify~',getState(popupNotifyHeading).val,'~',getState(popupNotifyText).val].join('')));
+    setState(config.panelSendTopic,(['notify~',getState(screensaverNotifyHeading).val,'~',getState(screensaverNotifyText).val].join('')));
 });
 
 //popupNotify - Notification an separate Seite
@@ -443,7 +461,7 @@ on({id: [popupNotifyInternalName, popupNotifyHeading, popupNotifyText, popupNoti
                        + getState(popupNotifyButton1Text).val  + "~"
                        + "63488"                               + "~"  //Farbe Button1 - rot
                        + getState(popupNotifyButton2Text).val  + "~"
-                       + "2016"                               + "~"   //Farbe Button2 - grün
+                       + "2016"                               +  "~"   //Farbe Button2 - grün
                        + getState(popupNotifyText).val         + "~"
                        + "65535"                               + "~"  //Farbe Text - weiß
                        + getState(popupNotifySleepTimeout).val;
@@ -499,7 +517,7 @@ check_updates();
 //------------------Begin Update Functions
 function check_updates() {
     
-    const desired_display_firmware_version = 34;
+    const desired_display_firmware_version = 36;
     const berry_driver_version = 4;
 
     if (Debug) console.log("Check-Updates");
@@ -733,7 +751,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version : string = "v2.8.1";
+    const tft_version : string = "v2.9.0";
     var desired_display_firmware_url = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-" + tft_version + ".tft"
     require("request")((['http://',get_current_tasmota_ip_address(),'/cm?cmnd=FlashNextion ', desired_display_firmware_url].join('')), async function (error, response, result) {
         createState(NSPanel_Path + "TFT_Firmware.onlineVersion");
@@ -849,11 +867,14 @@ function GeneratePage(page: Page): void {
         case "cardAlarm":
             SendToPanel(GenerateAlarmPage(<PageAlarm>page));
             break;
+        case "cardQR":
+            SendToPanel(GenerateQRPage(<PageQR>page));
+            break;
     }
 }
 
 function HandleHardwareButton(method: string): void {
-    let page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid);
+    let page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | PageQR);
     if (config.button1Page !== null && method == "button1") {
         page = config.button1Page;
         pageId = -1;
@@ -937,6 +958,9 @@ function GeneratePageElements(page: Page): string {
         case "cardMedia":
             maxItems = 1;
             break;
+        case "cardQR":
+            maxItems = 1;
+            break;
         case "cardEntities":
             maxItems = 4;
             break;
@@ -961,7 +985,6 @@ function GeneratePageElements(page: Page): string {
         else {
             pageData += CreateEntity(<PageItem>{ id: "delete" }, index + 1); 
             //muss das wirklich? Wo erforderlich wird es mitgegeben!
-
         }
 */
     }
@@ -1362,162 +1385,224 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
     // ioBroker
     if (existsObject(id)) {
         let o = getObject(id)
-        let name = page.items[0].name !== undefined ? page.items[0].name : o.common.name.de
+        let name = page.heading !== undefined ? page.heading : o.common.name.de
         let currentTemp = 0;
         if (existsState(id + ".ACTUAL"))
-            currentTemp = (Math.round(parseFloat(getState(id + ".ACTUAL").val) * 10)/10)*10;
+            currentTemp = (Math.round(parseFloat(getState(id + ".ACTUAL").val) * 10)/10);
 
         let destTemp = 0;
         if (existsState(id + ".SET")) {
             destTemp = getState(id + ".SET").val.toFixed(2) * 10;
         }
-
+        let statusStr : String = "MANU"
         let status = ""
         if (existsState(id + ".MODE"))
             status = getState(id + ".MODE").val;
-        let minTemp = 50 //Min Temp 5°C
-        let maxTemp = 300 //Max Temp 30°C
+
+        let minTemp = page.items[0].minValue !== undefined ? page.items[0].minValue : 50;   //Min Temp 5°C
+        let maxTemp = page.items[0].maxValue !== undefined ? page.items[0].maxValue : 300;  //Max Temp 30°C
         let stepTemp = 5
         
         //Attribute hinzufügen, wenn im Alias definiert
-        var thermButton = 0;
         let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
         if ((i_list.length - 3) != 0) {
-            if (Debug) console.log(i_list.length -3);
-            if ((i_list.length -3)%2 == 0) {
-                if ((i_list.length - 3) == 2) {
-                    thermButton = 6;
-                } else {
-                    thermButton = 5;
-                }
-            } else {
-                if ((i_list.length - 3) == 1) {
-                    thermButton = 2;
-                } else if ((i_list.length - 3) == 3) {
-                    thermButton = 1;
-                } else {
-                    thermButton = 0;
-                }    
-            }
-                
+    
             var i = 0;    
-            var bt = ["","","","","","","","",""];  
-            for (i = 0; i < thermButton; i++) {
-                bt[i] = "~~~~";
-            }
-            for (let i_index in i_list) {
-                let thermostatState = i_list[i_index].split('.');
-                if (thermostatState[thermostatState.length-1] != "SET" && 
-                    thermostatState[thermostatState.length-1] != "ACTUAL" && 
-                    thermostatState[thermostatState.length-1] != "MODE")  {
-                    i++;
-                    
-                    switch (thermostatState[thermostatState.length-1]) {
-                        case "HUMIDITY":
-                            if (existsState(id + ".HUMIDITY") && getState(id + ".HUMIDITY").val != null) {
-                                if (parseInt(getState(id + ".HUMIDITY").val) < 40) {
-                                    bt[i-1] =  Icons.GetIcon("water-percent") + "~65504~1~" + "HUMIDITY" + "~";
-                                } else if (parseInt(getState(id + ".HUMIDITY").val) < 30) {
-                                    bt[i-1] =  Icons.GetIcon("water-percent") + "~63488~1~" + "HUMIDITY" + "~";
-                                } else if (parseInt(getState(id + ".HUMIDITY").val) > 65) {
-                                    bt[i-1] =  Icons.GetIcon("water-percent") + "~65504~1~" + "HUMIDITY" + "~";
-                                } else if (parseInt(getState(id + ".HUMIDITY").val) > 75) {
-                                    bt[i-1] =  Icons.GetIcon("water-percent") + "~63488~1~" + "HUMIDITY" + "~";
-                                }
-                            } else i--;
-                            break;
-                        case "LOWBAT":
-                            if (existsState(id + ".LOWBAT") && getState(id + ".LOWBAT").val != null) {
-                                if (getState(id + ".LOWBAT").val) {
-                                    bt[i-1] =  Icons.GetIcon("battery-low") + "~63488~1~" + "LOWBAT" + "~";
-                                } else {
-                                    bt[i-1] =  Icons.GetIcon("battery-high") + "~2016~1~" + "LOWBAT" + "~";
-                                }
-                            } else i--;
-                            break;
-                        case "MAINTAIN":
-                            if (existsState(id + ".MAINTAIN") && getState(id + ".MAINTAIN").val != null) {
-                                if (getState(id + ".MAINTAIN").val >> .1) {
-                                    bt[i-1] =  Icons.GetIcon("fire") + "~60897~1~" + "MAINTAIN" + "~";
-                                } else {
-                                    bt[i-1] =  Icons.GetIcon("fire") + "~33840~0~" + "MAINTAIN" + "~";
-                                }
-                            } else i--;
-                            break;
-                        case "UNREACH":
-                            if (existsState(id + ".UNREACH") && getState(id + ".UNREACH").val != null) {
-                                if (getState(id + ".UNREACH").val) {
-                                    bt[i-1] =  Icons.GetIcon("wifi-off") + "~63488~1~" + "UNREACH" + "~";
-                                } else {
-                                    bt[i-1] =  Icons.GetIcon("wifi") + "~2016~1~" + "UNREACH" + "~";
-                                }
-                            } else i--;
-                            break;
-                        case "POWER":
-                            if (existsState(id + ".POWER") && getState(id + ".POWER").val != null) {
-                                if (getState(id + ".POWER").val) {
-                                    bt[i-1] =  Icons.GetIcon("power-standby") + "~2016~1~" + "POWER" + "~";
-                                } else {
-                                    bt[i-1] =  Icons.GetIcon("power-standby") + "~33840~1~" + "POWER" + "~";
-                                }
-                            } else i--;
-                            break;
-                        case "ERROR":
-                            if (existsState(id + ".ERROR") && getState(id + ".ERROR").val != null) {
-                                if (getState(id + ".ERROR").val) {
-                                    bt[i-1] =  Icons.GetIcon("alert-circle") + "~63488~1~" + "ERROR" + "~";
-                                } else {
-                                    bt[i-1] =  Icons.GetIcon("alert-circle") + "~33840~1~" + "ERROR" + "~";
-                                }
-                            } else i--;
-                            break;
-                        case "WORKING":
-                            if (existsState(id + ".WORKING") && getState(id + ".WORKING").val != null) {
-                                if (getState(id + ".WORKING").val) {
-                                    bt[i-1] =  Icons.GetIcon("briefcase-check") + "~2016~1~" + "WORKING" + "~";
-                                } else {
-                                    bt[i-1] =  Icons.GetIcon("briefcase-check") + "~33840~1~" + "WORKING" + "~";
-                                }
-                            } else i--;
-                            break;
-                        case "BOOST":
-                            if (existsState(id + ".BOOST") && getState(id + ".BOOST").val != null) {
-                                if (getState(id + ".BOOST").val) {
-                                    bt[i-1] =  Icons.GetIcon("fast-forward-60") + "~2016~1~" + "BOOST" + "~";
-                                } else {
-                                    bt[i-1] =  Icons.GetIcon("fast-forward-60") + "~33840~1~" + "BOOST" + "~";
-                                }
-                            } else i--;                            
-                            break;
-                        case "PARTY":
-                            if (existsState(id + ".PARTY") && getState(id + ".PARTY").val != null) {
-                                if (getState(id + ".PARTY").val) {
-                                    bt[i-1] =  Icons.GetIcon("party-popper") + "~2016~1~" + "PARTY" + "~";
-                                } else {
-                                    bt[i-1] =  Icons.GetIcon("party-popper") + "~33840~1~" + "PARTY" + "~";
-                                }
-                            } else i--;
-                            break;
-                        default:
-                            i--;
-                            break;
+            var bt = ["~~~~","~~~~","~~~~","~~~~","~~~~","~~~~","~~~~","~~~~","~~~~"];    
+
+            if (o.common.role == "thermostat") {
+                for (let i_index in i_list) {
+                    let thermostatState = i_list[i_index].split('.');
+                    if (thermostatState[thermostatState.length-1] != "SET" && 
+                        thermostatState[thermostatState.length-1] != "ACTUAL" && 
+                        thermostatState[thermostatState.length-1] != "MODE")  {
+                        i++;
+
+                        switch (thermostatState[thermostatState.length-1]) {
+                            case "HUMIDITY":
+                                if (existsState(id + ".HUMIDITY") && getState(id + ".HUMIDITY").val != null) {
+                                    if (parseInt(getState(id + ".HUMIDITY").val) < 40) {
+                                        bt[i-1] =  Icons.GetIcon("water-percent") + "~65504~1~" + "HUMIDITY" + "~";
+                                    } else if (parseInt(getState(id + ".HUMIDITY").val) < 30) {
+                                        bt[i-1] =  Icons.GetIcon("water-percent") + "~63488~1~" + "HUMIDITY" + "~";
+                                    } else if (parseInt(getState(id + ".HUMIDITY").val) >= 40) {
+                                        bt[i-1] =  Icons.GetIcon("water-percent") + "~2016~1~" + "HUMIDITY" + "~";
+                                    } else if (parseInt(getState(id + ".HUMIDITY").val) > 65) {
+                                        bt[i-1] =  Icons.GetIcon("water-percent") + "~65504~1~" + "HUMIDITY" + "~";
+                                    } else if (parseInt(getState(id + ".HUMIDITY").val) > 75) {
+                                        bt[i-1] =  Icons.GetIcon("water-percent") + "~63488~1~" + "HUMIDITY" + "~";
+                                    }
+                                } else i--;
+                                break;
+                            case "LOWBAT":
+                                if (existsState(id + ".LOWBAT") && getState(id + ".LOWBAT").val != null) {
+                                    if (getState(id + ".LOWBAT").val) {
+                                        bt[i-1] =  Icons.GetIcon("battery-low") + "~63488~1~" + "LOWBAT" + "~";
+                                    } else {
+                                        bt[i-1] =  Icons.GetIcon("battery-high") + "~2016~1~" + "LOWBAT" + "~";
+                                    }
+                                } else i--;
+                                break;
+                            case "MAINTAIN":
+                                if (existsState(id + ".MAINTAIN") && getState(id + ".MAINTAIN").val != null) {
+                                    if (getState(id + ".MAINTAIN").val >> .1) {
+                                        bt[i-1] =  Icons.GetIcon("fire") + "~60897~1~" + "MAINTAIN" + "~";
+                                    } else {
+                                        bt[i-1] =  Icons.GetIcon("fire") + "~33840~0~" + "MAINTAIN" + "~";
+                                    }
+                                } else i--;
+                                break;
+                            case "UNREACH":
+                                if (existsState(id + ".UNREACH") && getState(id + ".UNREACH").val != null) {
+                                    if (getState(id + ".UNREACH").val) {
+                                        bt[i-1] =  Icons.GetIcon("wifi-off") + "~63488~1~" + "UNREACH" + "~";
+                                    } else {
+                                        bt[i-1] =  Icons.GetIcon("wifi") + "~2016~1~" + "UNREACH" + "~";
+                                    }
+                                } else i--;
+                                break;
+                            case "POWER":
+                                if (existsState(id + ".POWER") && getState(id + ".POWER").val != null) {
+                                    if (getState(id + ".POWER").val) {
+                                        bt[i-1] =  Icons.GetIcon("power-standby") + "~2016~1~" + "POWER" + "~";
+                                    } else {
+                                        bt[i-1] =  Icons.GetIcon("power-standby") + "~33840~1~" + "POWER" + "~";
+                                    }
+                                } else i--;
+                                break;
+                            case "ERROR":
+                                if (existsState(id + ".ERROR") && getState(id + ".ERROR").val != null) {
+                                    if (getState(id + ".ERROR").val) {
+                                        bt[i-1] =  Icons.GetIcon("alert-circle") + "~63488~1~" + "ERROR" + "~";
+                                    } else {
+                                        bt[i-1] =  Icons.GetIcon("alert-circle") + "~33840~1~" + "ERROR" + "~";
+                                    }
+                                } else i--;
+                                break;
+                            case "WORKING":
+                                if (existsState(id + ".WORKING") && getState(id + ".WORKING").val != null) {
+                                    if (getState(id + ".WORKING").val) {
+                                        bt[i-1] =  Icons.GetIcon("briefcase-check") + "~2016~1~" + "WORKING" + "~";
+                                    } else {
+                                        bt[i-1] =  Icons.GetIcon("briefcase-check") + "~33840~1~" + "WORKING" + "~";
+                                    }
+                                } else i--;
+                                break;
+                            case "BOOST":
+                                if (existsState(id + ".BOOST") && getState(id + ".BOOST").val != null) {
+                                    if (getState(id + ".BOOST").val) {
+                                        bt[i-1] =  Icons.GetIcon("fast-forward-60") + "~2016~1~" + "BOOST" + "~";
+                                    } else {
+                                        bt[i-1] =  Icons.GetIcon("fast-forward-60") + "~33840~1~" + "BOOST" + "~";
+                                    }
+                                } else i--;                            
+                                break;
+                            case "PARTY":
+                                if (existsState(id + ".PARTY") && getState(id + ".PARTY").val != null) {
+                                    if (getState(id + ".PARTY").val) {
+                                        bt[i-1] =  Icons.GetIcon("party-popper") + "~2016~1~" + "PARTY" + "~";
+                                    } else {
+                                        bt[i-1] =  Icons.GetIcon("party-popper") + "~33840~1~" + "PARTY" + "~";
+                                    }
+                                } else i--;
+                                break;
+                            default:
+                                i--;
+                                break;
+                        }
                     }
                 }
+                for (let j = i; j < 9; j++) {
+                    bt[j] = "~~~~";
+                }
             }
-            for (let j = i; j < 9; j++) {
-                bt[j] = "~~~~";
+
+            if (o.common.role == "airCondition") {
+                if (existsState(id + ".MODE") && getState(id + ".MODE").val != null) {
+                    let Mode = getState(id + ".MODE").val
+                    if (existsState(id + ".POWER") && getState(id + ".POWER").val != null) {
+                        if (Mode != 0 || getState(id + ".POWER").val) {                                 //0=ON oder .POWER = true
+                            bt[0] =  Icons.GetIcon("power-standby") + "~2016~1~" + "POWER" + "~";
+                            statusStr = "ON";
+                        } else {
+                            bt[0] =  Icons.GetIcon("power-standby") + "~35921~0~" + "POWER" + "~";
+                            statusStr = "OFF";
+                        }
+                    }
+                    if (Mode == 1) {                                                                //1=AUTO
+                        bt[1] =  Icons.GetIcon("air-conditioner") + "~1024~1~" + "AUTO" + "~";
+                        statusStr = "AUTO";
+                    } else {
+                        bt[1] =  Icons.GetIcon("air-conditioner") + "~35921~0~" + "AUTO" + "~";
+                    }
+                    if (Mode == 2) {                                                                //2=COOL
+                        bt[2] =  Icons.GetIcon("snowflake") + "~11487~1~" + "COOL" + "~";
+                        statusStr = "COOL";
+                    } else {
+                        bt[2] =  Icons.GetIcon("snowflake") + "~35921~0~" + "COOL" + "~";
+                    }
+                    if (Mode == 3) {                                                                //3=HEAT
+                        bt[3] =  Icons.GetIcon("fire") + "~64512~1~" + "HEAT" + "~";
+                        statusStr = "HEAT";
+                    } else {
+                        bt[3] =  Icons.GetIcon("fire") + "~35921~0~" + "HEAT" + "~";
+                    }
+                    if (Mode == 4) {                                                                //4=ECO
+                        bt[4] =  Icons.GetIcon("alpha-e-circle-outline") + "~2016~1~" + "ECO" + "~";
+                        statusStr = "ECO";
+                    } else {
+                        bt[4] =  Icons.GetIcon("alpha-e-circle-outline") + "~35921~0~" + "ECO" + "~";
+                    }
+                    if (Mode == 5) {                                                                //5=FANONLY
+                        bt[5] =  Icons.GetIcon("fan") + "~11487~1~" + "FAN" + "~";
+                        statusStr = "FAN ONLY";
+                    } else {
+                        bt[5] =  Icons.GetIcon("fan") + "~35921~0~" + "FAN" + "~";
+                    }
+                    if (Mode == 6) {                                                                //6=DRY
+                        bt[6] =  Icons.GetIcon("water-percent") + "~60897~1~" + "DRY" + "~";
+                        statusStr = "DRY";
+                    } else {
+                        bt[6] =  Icons.GetIcon("water-percent") + "~35921~0~" + "DRY" + "~";
+                    }
+                    if (existsState(id + ".SWING") && getState(id + ".SWING").val != null) {
+                        if (getState(id + ".POWER").val && getState(id + ".SWING").val == 1) {          //0=ON oder .SWING = true
+                            bt[7] =  Icons.GetIcon("swap-vertical-bold") + "~2016~1~" + "SWING" + "~";
+                        } else {
+                            bt[7] =  Icons.GetIcon("swap-vertical-bold") + "~35921~0~" + "SWING" + "~";
+                        }
+                    }    
+                }
             }
         }
-        
-        let icon_res = bt[0] + bt[1] + bt[2] + bt[3] + bt[4] + bt[5] + bt[6] + bt[7] + bt[8];
+
+        let icon_res = bt[0] + bt[1] + bt[2] + bt[3] + bt[4] + bt[5] + bt[6] + bt[7];
 
 
-        out_msgs.push({ payload: "entityUpd~" + name + "~" + GetNavigationString(pageId) + "~" + id + "~" + currentTemp + "~" + destTemp + "~" + status + "~" + minTemp + "~" + maxTemp + "~" + stepTemp + "~" +icon_res})
+
+        out_msgs.push({ payload: "entityUpd~" 
+                                 + name                         + "~"   //Heading
+                                 + GetNavigationString(pageId)  + "~"   //Page Navigation
+                                 + id                           + "~"   //internalNameEntiy
+                                 + currentTemp + "°C"           + "~"   //Ist-Temperatur (String)
+                                 + destTemp                     + "~"   //Soll-Temperatur (numerisch ohne Komma)
+                                 + statusStr                    + "~"   //Mode
+                                 + minTemp                      + "~"   //Thermostat Min-Temperatur
+                                 + maxTemp                      + "~"   //Thermostat Max-Temperatur
+                                 + stepTemp                     + "~"   //Schritte für Soll (5°C)
+                                 + icon_res                             //Icons Status
+                                 + "Aktuell"                    + "~"   //Bezeicher vor Aktueller Raumtemperatur
+                                 + "Status"                     + "~"   //Bezeicner vor 
+                                 + "HVAC"                       + "~"   //Bezeichner vor HVAC
+                                 +  "°C"})                              //Bezeichner Hinter Solltemp
+    
     }
+
 
     if (Debug) console.log(out_msgs);
     return out_msgs
 }
+
 
 function GenerateMediaPage(page: PageMedia): Payload[] {
     var id = page.items[0].id
@@ -1604,7 +1689,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
         var numpadStatus = "disable";
         var flashing = "disable";
 
-        console.log(id);
+        if (Debug) console.log(id);
 
         if (entityState == "armed" || entityState == "triggered") {
             arm1 = "Deaktivieren";                                      //arm1*~*
@@ -1671,6 +1756,57 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
     if (Debug) console.log(out_msgs);
     return out_msgs
     }
+}
+
+function GenerateQRPage(page: PageQR): Payload[] {
+    var id = page.items[0].id
+    var out_msgs: Array<Payload> = [];
+    out_msgs.push({ payload: "pageType~cardQR" });
+
+    let o = getObject(id)
+
+    var heading = page.heading !== undefined ? page.heading : o.common.name.de
+    let minTemp = page.items[0].minValue !== undefined ? page.items[0].minValue : 50;
+    var textQR = page.items[0].id + ".ACTUAL" !== undefined ? getState(page.items[0].id + ".ACTUAL").val : "WIFI:T:undefined;S:undefined;P:undefined;H:undefined;"
+
+    const tempstr = textQR.split(";");
+    for (let w = 0; w < tempstr.length - 1; w++) {
+        if (tempstr[w].substring(0,1) == "S") {
+            var optionalValue1 = tempstr[w].slice(2);
+        }
+        if (tempstr[w].substring(0,1) == "P") {
+            var optionalValue2 = tempstr[w].slice(2);
+        }  
+    }
+
+    var type1  = "text"                 	    
+    var internalName1 = "SSID"
+    var iconId1 = Icons.GetIcon("wifi");
+    var displayName1 = "SSID"
+    var type2 = "text"
+    var internalName2 = "Passwort"
+    var iconId2 = Icons.GetIcon("key");
+    var displayName2 = "Passwort"
+
+    out_msgs.push({ payload:    "entityUpd~" +                          //entityUpd
+                                heading + "~" +                         //heading
+                                GetNavigationString(pageId) + "~" +     //navigation
+                                textQR + "~" +                          //textQR
+                                type1 + "~" +                   	    //type
+                                internalName1 + "~" +                   //internalName
+                                iconId1 + "~" +                         //iconId
+                                65535 + "~" +                           //iconColor
+                                displayName1 + "~" +                    //displayName
+                                optionalValue1 + "~" +                  //optionalValue
+                                type2 + "~" +                           //type
+                                internalName2 + "~" +                   //internalName
+                                iconId2 + "~" +                         //iconId
+                                65535 + "~" +                           //iconColor
+                                displayName2 + "~" +                    //displayName
+                                optionalValue2});                       //optionalValue
+
+    //entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
+    return out_msgs
 }
 
 function setIfExists(id: string, value: any, type: string | null = null): boolean {
@@ -1898,9 +2034,50 @@ function HandleButtonEvent(words): void {
             setIfExists(id + ".STOP", true)
             break;
         case "hvac_action":
-            if (words[4] == "POWER" || words[4] == "BOOST" || words[4] == "PARTY") {
+            if (words[4] == "BOOST" || words[4] == "PARTY") {
                 setIfExists(words[2] + "." + words[4], !getState(words[2] + "." + words[4]).val)
+            } 
+            else {
+                var HVACMode = 0;
+                switch (words[4]) {
+                    case "POWER":
+                        HVACMode = 0;
+                        setIfExists(words[2] + "." + words[4], !getState(words[2] + "." + words[4]).val)
+                        if (getState(words[2] + "." + words[4]).val) {
+                            HVACMode = 1;
+                        }
+                        break;
+                    case "AUTO":
+                        HVACMode = 1;
+                        break;
+                    case "COOL":
+                        HVACMode = 2;
+                        break;
+                    case "HEAT":
+                        HVACMode = 3;
+                        break; 
+                    case "ECO":
+                        HVACMode = 4;
+                        break; 
+                    case "FAN":
+                        HVACMode = 5;
+                        break; 
+                    case "DRY":
+                        HVACMode = 6;
+                        break;     
+                    case "SWING":
+                        HVACMode = getState(words[2] + "." + "MODE").val;
+                        if (getState(words[2] + "." + "SWING").val == 0) { 
+                            setIfExists(words[2] + "." + "SWING", 1)    
+                        } else {
+                            setIfExists(words[2] + "." + "SWING", 0)    
+                        }
+                        break;       
+                }
+                setIfExists(words[2] + "." + "MODE", HVACMode)
+                GeneratePage(config.pages[pageId]);
             }
+
             break;
         case "number-set":
             setIfExists(id + ".SET", parseInt(words[4])) ? true : setIfExists(id + ".ACTUAL", parseInt(words[4]));
@@ -2630,6 +2807,11 @@ interface PageAlarm extends Page {
     items: PageItem[],
 };
 
+interface PageQR extends Page {
+    type: "cardQR",
+    items: PageItem[],
+};
+
 type PageItem = {
     id: string,
     icon: (string | undefined),
@@ -2676,9 +2858,9 @@ type Config = {
     defaultColor: RGB,
     defaultOnColor: RGB,
     defaultOffColor: RGB,
-    pages: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid)[],
-    button1Page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | null),
-    button2Page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | null),
+    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid)[],
+    button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | null),
+    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | null),
 };
 
 type ScreenSaverElement = {
