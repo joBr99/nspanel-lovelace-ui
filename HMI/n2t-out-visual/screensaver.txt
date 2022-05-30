@@ -82,36 +82,6 @@ Variable (string) tSend
         Text          : 
         Max. Text Size: 50
     
-Number n0
-    Attributes
-        ID                                  : 37
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 188
-        y coordinate                        : 231
-        Width                               : 100
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Value                               : 0
-        Significant digits shown            : all
-        Format                              : decimal
-        Word wrap                           : enabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Text tTime
     Attributes
         ID                                  : 5
@@ -975,7 +945,6 @@ Timer tmSerial
                                         // get value normal
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
-                                        n0.val=dimValueNormal
                                     }
                                     if(tInstruction.txt=="time")
                                     {

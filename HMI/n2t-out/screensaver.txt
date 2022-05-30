@@ -68,15 +68,6 @@ Variable (string) tSend
         Text          : 
         Max. Text Size: 50
     
-Number n0
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
-    
 Text tTime
     Attributes
         Scope                               : local
@@ -409,7 +400,6 @@ Timer tmSerial
                                         // get value normal
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
-                                        n0.val=dimValueNormal
                                     }
                                     if(tInstruction.txt=="time")
                                     {
