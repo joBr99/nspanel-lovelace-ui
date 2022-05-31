@@ -36,9 +36,10 @@ class LuiController(object):
                 self._ha_api.run_daily(self.update_screensaver_brightness, timeset["time"], value=timeset["value"])
         
         # calculate current brightness
-        self.current_screensaver_brightness = self.calc_current_screensaver_brightness()
+        self.current_screensaver_brightness = self.calc_current_brightness(self._config.get("sleepBrightness"))
+        self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))
 
-        # call update_screensaver_brightness on changes of entity configured in brightnessScreensaverTracking
+        # call update_screensaver_brightness on changes of entity configured in sleepTracking
         bst = self._config.get("sleepTracking")
         if bst is not None and self._ha_api.entity_exists(bst):
             self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=bst)
@@ -49,10 +50,14 @@ class LuiController(object):
             self._ha_api.log(f"Configuring Sleep Override. Config is {sleepOverride}")
             self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=sleepOverride["entity"])
 
-        # register callback for state changes on tracked value
+        # register callback for state changes on tracked value (for input_number) - sleepBrightness
         sleep_brightness_config = self._config.get("sleepBrightness")
         if type(sleep_brightness_config) == str and self._ha_api.entity_exists(sleep_brightness_config):
             self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=sleep_brightness_config)
+        # register callback for state changes on tracked value (for input_number) - screenBrightness
+        screen_brightness_config = self._config.get("screenBrightness")
+        if type(screen_brightness_config) == str and self._ha_api.entity_exists(screen_brightness_config):
+            self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=screen_brightness_config)            
 
     def startup(self):
         self._ha_api.log(f"Startup Event")
@@ -65,7 +70,7 @@ class LuiController(object):
         self._send_mqtt_msg(f"timeout~{timeout}")
         
         # set current screensaver brightness
-        self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
+        self.update_screensaver_brightness(kwargs={"ssbr": self.current_screensaver_brightness, "sbr": self.current_screen_brightness})
         
         # send panel to screensaver
         self._pages_gen.render_card(self._current_card)
@@ -73,8 +78,9 @@ class LuiController(object):
 
     def update_screensaver_brightness_state_callback(self, entity, attribute, old, new, kwargs):
         if type(self._config.get("sleepBrightness")) == str:
-            self.current_screensaver_brightness = self.calc_current_screensaver_brightness()
-        self.update_screensaver_brightness(kwargs={"value": self.current_screensaver_brightness})
+            self.current_screensaver_brightness = self.calc_current_brightness(self._config.get("sleepBrightness"))
+            self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))
+        self.update_screensaver_brightness(kwargs={"ssbr": self.current_screensaver_brightness, "sbr": self.current_screen_brightness})
         
     def update_screensaver_brightness(self, kwargs):
         bst = self._config.get("sleepTracking")
@@ -83,24 +89,29 @@ class LuiController(object):
             sOEntity = sleepOverride["entity"]
             sOBrightness = sleepOverride["brightness"]
 
-        brightness = 0
+        sleepBrightness = 0
 
         if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state in ["not_home", "off"]:
             self._ha_api.log(f"sleepTracking setting brightness to 0")
-            brightness = 0
+            sleepBrightness = 0
 
         elif sOEntity is not None and sOBrightness is not None and self._ha_api.entity_exists(sOEntity) and self._ha_api.get_entity(sOEntity).state in ["on", "true", "home"]:
             self._ha_api.log(f"sleepOverride setting brightness to {sOBrightness}")
-            brightness = sOBrightness
+            sleepBrightness = sOBrightness
         
         else:
-            self.current_screensaver_brightness = kwargs['value']
-            brightness = kwargs['value']
-        self._send_mqtt_msg(f"dimmode~{brightness}")
+            self.current_screensaver_brightness = kwargs['ssbr']
+            sleepBrightness                     = self.current_screensaver_brightness
+            self.current_screen_brightness      = kwargs['sbr']
+            brightness                          = self.current_screen_brightness
+            # same value for both values will break sleep timer of the firmware
+            if sleepBrightness==brightness:
+                sleepBrightness = sleepBrightness-1
+        self._send_mqtt_msg(f"dimmode~{sleepBrightness}~{brightness}")
         
-    def calc_current_screensaver_brightness(self):
+    def calc_current_brightness(self, sleep_brightness_config):
         current_screensaver_brightness = 20
-        sleep_brightness_config = self._config.get("sleepBrightness")
+        #sleep_brightness_config = self._config.get("sleepBrightness")
         # set brightness of screensaver
         if type(sleep_brightness_config) == int:
             current_screensaver_brightness = sleep_brightness_config
@@ -290,3 +301,11 @@ class LuiController(object):
         # for alarm page
         if button_type in ["disarm", "arm_home", "arm_away", "arm_night", "arm_vacation"]:
             self._ha_api.get_entity(entity_id).call_service(f"alarm_{button_type}", code=value)
+        if button_type == "opnSensorNotify":
+            msg = ""
+            entity = self._ha_api.get_entity(entity_id)
+            if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
+                for e in entity.attributes.open_sensors:
+                    msg += f"- {self._ha_api.get_entity(e).attributes.friendly_name}\n"
+            self._pages_gen.send_message_page("opnSensorNotifyRes", "", msg, "", "")
+

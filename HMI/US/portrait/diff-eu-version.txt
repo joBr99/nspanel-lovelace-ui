@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/Program.s.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 20:13:57.417039079 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,24 +11,20 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -683,10 +683,7 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-+                                        dim=dimValue
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
+--- HMI/n2t-out/cardAlarm.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-30 20:13:57.421039128 +0000
+@@ -33,7 +33,6 @@
+             vis b8,0
+             vis b9,0
+             vis b10,0
+-            vis b11,0
+             vis tCode,0
+             vis bPrev,0
+             vis bNext,0
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -62,6 +62,16 @@
+--- HMI/n2t-out/cardEntities.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 20:13:57.421039128 +0000
+@@ -63,6 +63,16 @@
              vis bText4,0
              vis hSlider4,0
              vis nNum4,0
@@ -45,7 +41,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
              vis bPrev,0
              vis bNext,0
          
-@@ -119,6 +129,18 @@
+@@ -120,6 +130,18 @@
          Text          : 
          Max. Text Size: 80
      
@@ -64,7 +60,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Number nNum1
      Attributes
          Scope                               : local
-@@ -155,6 +177,15 @@
+@@ -156,6 +178,15 @@
          Associated Keyboard                 : none
          Value                               : 0
      
@@ -80,7 +76,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Text tHeading
      Attributes
          Scope                               : local
-@@ -285,6 +316,26 @@
+@@ -286,6 +317,26 @@
          Text                                : 
          Max. Text Size                      : 50
      
@@ -107,7 +103,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Picture p0
      Attributes
          Scope                               : local
-@@ -404,6 +455,34 @@
+@@ -405,6 +456,34 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -142,7 +138,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Button bDown1
      Attributes
          Scope                               : local
-@@ -861,6 +940,106 @@
+@@ -862,6 +941,106 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -249,7 +245,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          Scope                               : local
-@@ -969,6 +1148,33 @@
+@@ -970,6 +1149,33 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -283,7 +279,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          Scope                               : local
-@@ -1074,6 +1280,28 @@
+@@ -1075,6 +1281,28 @@
                  page popupLight
              }
          
@@ -312,7 +308,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSwipeNext
      Attributes
          Scope                               : local
-@@ -1849,6 +2077,169 @@
+@@ -1850,6 +2078,169 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
@@ -482,50 +478,10 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      }
                                      if(tInstruction.txt=="pageType")
                                      {
-@@ -1924,10 +2315,6 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
-diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -846,10 +846,6 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
-diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -635,10 +635,7 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-+                                        dim=dimValue
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -34,7 +34,7 @@
+--- HMI/n2t-out/cardQR.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 20:13:57.417039079 +0000
+@@ -35,7 +35,7 @@
      Attributes
          Scope         : local
          Text          : 
@@ -534,35 +490,9 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
      
  Variable (string) entn
      Attributes
-@@ -581,10 +581,7 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-+                                        dim=dimValue
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
-diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -1169,10 +1169,6 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-29 21:20:55.500412348 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 20:13:57.421039128 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -581,73 +511,10 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -273,10 +273,6 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
-diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -560,10 +560,6 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
-diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -310,10 +310,6 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="timeout")
-                                     {
-diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -405,10 +405,6 @@
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="time")
-                                     {
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-05-29 21:20:55.128409486 +0000
-+++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-29 21:20:55.500412348 +0000
-@@ -397,9 +397,6 @@
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
-                                         dim=dimValue
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
-                                     }
-                                     if(tInstruction.txt=="time")
-                                     {
-@@ -474,22 +471,6 @@
+--- HMI/n2t-out/screensaver.txt	2022-05-30 20:13:56.889032545 +0000
++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 20:13:57.421039128 +0000
+@@ -474,22 +474,6 @@
                                              vis tMainIconAlt,1
                                              vis tMRIcon,1
                                              vis tMR,1
