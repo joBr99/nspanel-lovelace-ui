@@ -429,6 +429,7 @@ class LuiPagesGen(object):
         
 
     def generate_qr_page(self, navigation, heading, items, cardType, qrcode):
+        qrcode = self._ha_api.render_template(qrcode)
         command = f"entityUpd~{heading}~{navigation}~{qrcode}"
         # Get items and construct cmd string
         for item in items:
