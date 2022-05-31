@@ -69,6 +69,7 @@ class LuiBackendConfig(object):
             'sleepBrightness': 20,
             'screenBrightness': 100,
             'sleepTracking': None,
+            'sleepOverride': None,
             'locale': "en_US",
             'timeFormat': "%H:%M",
             'dateFormatBabel': "full",

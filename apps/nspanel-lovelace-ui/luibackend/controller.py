@@ -43,6 +43,12 @@ class LuiController(object):
         bst = self._config.get("sleepTracking")
         if bst is not None and self._ha_api.entity_exists(bst):
             self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=bst)
+        
+        # call update_screensaver_brightness on entity configured in sleepOverride
+        sleepOverride = self._config.get("sleepOverride")
+        if sleepOverride is not None and type(sleepOverride) is dict  and sleepOverride["entity"] is not None and sleepOverride["brightness"] is not None and self._ha_api.entity_exists(sleepOverride["entity"]):
+            self._ha_api.log(f"Configuring Sleep Override. Config is {sleepOverride}")
+            self._ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=sleepOverride["entity"])
 
         # register callback for state changes on tracked value (for input_number) - sleepBrightness
         sleep_brightness_config = self._config.get("sleepBrightness")
@@ -78,9 +84,21 @@ class LuiController(object):
         
     def update_screensaver_brightness(self, kwargs):
         bst = self._config.get("sleepTracking")
+        sleepOverride = self._config.get("sleepOverride")
+        if sleepOverride is not None and type(sleepOverride) is dict:
+            sOEntity = sleepOverride["entity"]
+            sOBrightness = sleepOverride["brightness"]
+
         sleepBrightness = 0
+
         if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state in ["not_home", "off"]:
+            self._ha_api.log(f"sleepTracking setting brightness to 0")
             sleepBrightness = 0
+
+        elif sOEntity is not None and sOBrightness is not None and self._ha_api.entity_exists(sOEntity) and self._ha_api.get_entity(sOEntity).state in ["on", "true", "home"]:
+            self._ha_api.log(f"sleepOverride setting brightness to {sOBrightness}")
+            sleepBrightness = sOBrightness
+        
         else:
             self.current_screensaver_brightness = kwargs['ssbr']
             sleepBrightness                     = self.current_screensaver_brightness
