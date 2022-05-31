@@ -37,11 +37,11 @@ wake screen:
 
 `wake`
 
-set brightness of screensaver:
+set brightness of screensaver and active-brightness:
 
-`dimmode~0 - (screen off)`
+`dimmode~0~100 - (screen off)`
 
-`dimmode~100 - (screen on with full brightness)`
+`dimmode~100~100 - (screen on with full brightness)`
 
 set current time:
 

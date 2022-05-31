@@ -12,6 +12,7 @@ Page popupLight
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             //get entitiy name
             tEntity.txt=pageIcons.tTmp1.txt
             //get entity id
