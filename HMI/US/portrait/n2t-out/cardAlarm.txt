@@ -12,6 +12,7 @@ Page cardAlarm
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             vis p0,0
             vis tSend,0
             vis tInstruction,0
@@ -73,6 +74,12 @@ Variable (string) va3
         Max. Text Size: 20
     
 Variable (string) va4
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) vaAddBtn
     Attributes
         Scope         : local
         Text          : 
@@ -325,12 +332,27 @@ Button b9
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : 0
+        Text                                : 
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            tCode.txt=tCode.txt+"0"
+            // event,buttonPress2,entn,arm1,tCode
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+=vaAddBtn.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            tCode.txt=""
         
 Button b10
     Attributes
@@ -339,12 +361,12 @@ Button b10
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : CLR
+        Text                                : 0
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            tCode.txt=""
+            tCode.txt=tCode.txt+"0"
         
 Button arm1
     Attributes
@@ -464,6 +486,20 @@ Button arm4
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
+        
+Button b11
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : CLR
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
             tCode.txt=""
         
 Hotspot mSwipeNext
@@ -667,6 +703,15 @@ Timer tmSerial
                                         {
                                             tmFlash.en=0
                                         }
+                                        // extra button
+                                        spstr strCommand.txt,b9.txt,"~",15
+                                        if(b9.txt!="")
+                                        {
+                                            vis b9,1
+                                            spstr strCommand.txt,tTmp.txt,"~",16
+                                            covx tTmp.txt,b9.pco,0,0
+                                            spstr strCommand.txt,vaAddBtn.txt,"~",17
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -683,7 +728,10 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
-                                        dim=dimValue
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
+                                        dim=dimValueNormal
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
