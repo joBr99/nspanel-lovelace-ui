@@ -33,6 +33,7 @@ Page cardAlarm
             vis b8,0
             vis b9,0
             vis b10,0
+            vis b11,0
             vis tCode,0
             vis bPrev,0
             vis bNext,0
@@ -678,6 +679,7 @@ Timer tmSerial
                                             vis b8,1
                                             vis b9,1
                                             vis b10,1
+                                            vis b11,1
                                             vis tCode,1
                                         }else
                                         {
@@ -692,6 +694,7 @@ Timer tmSerial
                                             vis b8,0
                                             vis b9,0
                                             vis b10,0
+                                            vis b11,0
                                             vis tCode,0
                                         }
                                         //flashing status

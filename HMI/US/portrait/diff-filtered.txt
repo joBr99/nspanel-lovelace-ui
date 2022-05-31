@@ -1,19 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-05-30 20:13:57.437039326 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-05-30 20:13:56.889032545 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-30 20:13:57.417039079 +0000
-+diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-05-30 20:13:56.889032545 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-05-30 20:13:57.421039128 +0000
-+@@ -33,7 +33,6 @@
-+             vis b8,0
-+             vis b9,0
-+             vis b10,0
-+-            vis b11,0
-+             vis tCode,0
-+             vis bPrev,0
-+             vis bNext,0
-+--- HMI/n2t-out/cardEntities.txt	2022-05-30 20:13:56.889032545 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-30 20:13:57.421039128 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-05-31 15:07:44.926974773 +0000
++--- HMI/n2t-out/Program.s.txt	2022-05-31 15:07:44.430967227 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-05-31 15:07:44.910974530 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-05-31 15:07:44.430967227 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-05-31 15:07:44.910974530 +0000
 +@@ -63,6 +63,16 @@
 +@@ -120,6 +130,18 @@
 +@@ -156,6 +178,15 @@
@@ -23,11 +12,11 @@
 +@@ -970,6 +1149,33 @@
 +@@ -1075,6 +1281,28 @@
 +@@ -1850,6 +2078,169 @@
-+--- HMI/n2t-out/cardQR.txt	2022-05-30 20:13:56.889032545 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-30 20:13:57.417039079 +0000
++--- HMI/n2t-out/cardQR.txt	2022-05-31 15:07:44.430967227 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-05-31 15:07:44.910974530 +0000
 +@@ -35,7 +35,7 @@
-+--- HMI/n2t-out/pageStartup.txt	2022-05-30 20:13:56.889032545 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-30 20:13:57.421039128 +0000
-+--- HMI/n2t-out/screensaver.txt	2022-05-30 20:13:56.889032545 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-30 20:13:57.421039128 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-05-31 15:07:44.430967227 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-05-31 15:07:44.910974530 +0000
++--- HMI/n2t-out/screensaver.txt	2022-05-31 15:07:44.430967227 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-05-31 15:07:44.910974530 +0000
 +@@ -474,22 +474,6 @@
