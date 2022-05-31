@@ -38,6 +38,8 @@ Page cardQR
             vis tIcon2,0
             vis tEntity2,0
             vis bText2,0
+            tsw m0,0
+            tsw m1,0
         
 Variable (string) strCommand
     Attributes
@@ -83,35 +85,42 @@ Variable (string) tInstruction
     
 Variable (string) entn1
     Attributes
-        ID            : 26
+        ID            : 25
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) entn2
     Attributes
-        ID            : 27
+        ID            : 26
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) type1
     Attributes
-        ID            : 28
+        ID            : 27
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type2
     Attributes
-        ID            : 29
+        ID            : 28
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
+Variable (string) vaQR
+    Attributes
+        ID            : 31
+        Scope         : local
+        Text          : 
+        Max. Text Size: 100
+    
 Text tEntity1
     Attributes
-        ID                                  : 18
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -141,7 +150,7 @@ Text tEntity1
     
 Text tIcon1
     Attributes
-        ID                                  : 19
+        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -171,7 +180,7 @@ Text tIcon1
     
 Text tEntity2
     Attributes
-        ID                                  : 22
+        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -201,7 +210,7 @@ Text tEntity2
     
 Text tIcon2
     Attributes
-        ID                                  : 23
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -231,7 +240,7 @@ Text tIcon2
     
 Text tHeading
     Attributes
-        ID                                  : 25
+        ID                                  : 24
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -275,25 +284,6 @@ Picture p0
         Effect Priority                     : 0
         Effect Time                         : 300
         Picture ID                          : 0
-    
-QR Code qr0
-    Attributes
-        ID                                  : 17
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 13
-        y coordinate                        : 91
-        Width                               : 200
-        Height                              : 200
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Logo overlay                        : no
-        Text                                : 
-        Max. Text Size                      : 100
     
 Button bNext
     Attributes
@@ -398,7 +388,7 @@ Button bPrev
         
 Button bText1
     Attributes
-        ID                                  : 20
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -445,7 +435,7 @@ Button bText1
         
 Button bText2
     Attributes
-        ID                                  : 24
+        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -537,7 +527,7 @@ Dual-state Button btOnOff1
         
 Dual-state Button btOnOff2
     Attributes
-        ID                                  : 21
+        ID                                  : 20
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -640,6 +630,38 @@ Hotspot mSwipePrev
         Touch Press Event
             click bPrev,1
         
+Hotspot m0
+    Attributes
+        ID                                  : 29
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 13
+        y coordinate                        : 91
+        Width                               : 200
+        Height                              : 200
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+Hotspot m1
+    Attributes
+        ID                                  : 30
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 128
+        y coordinate                        : 91
+        Width                               : 200
+        Height                              : 200
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
 Timer tmSerial
     Attributes
         ID         : 5
@@ -733,7 +755,7 @@ Timer tmSerial
                                             bNext.txt="î³"
                                         }
                                         //text qrcode
-                                        spstr strCommand.txt,qr0.txt,"~",3
+                                        spstr strCommand.txt,vaQR.txt,"~",3
                                         // get Type
                                         spstr strCommand.txt,type1.txt,"~",4
                                         // get internal name
@@ -855,6 +877,16 @@ Timer tmSerial
                                             bText2.pco2=1374
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText2.txt,"~",15
+                                        }
+                                        if(type2.txt=="delete"||type2.txt=="")
+                                        {
+                                            if(type1.txt=="delete"||type1.txt=="")
+                                            {
+                                                qrcode m1.x,m1.y,200,6371,65535,-1,vaQR.txt
+                                            }
+                                        }else
+                                        {
+                                            qrcode m0.x,m0.y,200,6371,65535,-1,vaQR.txt
                                         }
                                     }
                                     if(tInstruction.txt=="time")
