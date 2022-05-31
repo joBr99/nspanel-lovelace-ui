@@ -10,53 +10,53 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
+cardQR
+	30   Component(s)
+	362  Line(s) of event code
+	211  Unique line(s) of event code
 popupNotify
 	17   Component(s)
-	203  Line(s) of event code
-	127  Unique line(s) of event code
-cardAlarm
-	38   Component(s)
-	362  Line(s) of event code
-	227  Unique line(s) of event code
-popupShutter
-	20   Component(s)
-	247  Line(s) of event code
-	140  Unique line(s) of event code
-cardGrid
-	42   Component(s)
-	438  Line(s) of event code
-	258  Unique line(s) of event code
+	204  Line(s) of event code
+	128  Unique line(s) of event code
 popupLight
 	27   Component(s)
-	351  Line(s) of event code
-	190  Unique line(s) of event code
+	352  Line(s) of event code
+	191  Unique line(s) of event code
+popupShutter
+	20   Component(s)
+	248  Line(s) of event code
+	141  Unique line(s) of event code
+cardAlarm
+	40   Component(s)
+	385  Line(s) of event code
+	235  Unique line(s) of event code
 cardMedia
 	33   Component(s)
-	348  Line(s) of event code
-	182  Unique line(s) of event code
-screensaver
-	37   Component(s)
-	307  Line(s) of event code
-	245  Unique line(s) of event code
+	349  Line(s) of event code
+	183  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	157  Line(s) of event code
 	117  Unique line(s) of event code
+cardGrid
+	42   Component(s)
+	439  Line(s) of event code
+	259  Unique line(s) of event code
 cardThermo
 	56   Component(s)
-	545  Line(s) of event code
-	294  Unique line(s) of event code
+	546  Line(s) of event code
+	295  Unique line(s) of event code
+screensaver
+	37   Component(s)
+	307  Line(s) of event code
+	245  Unique line(s) of event code
 cardEntities
 	65   Component(s)
-	1132 Line(s) of event code
-	495  Unique line(s) of event code
-cardQR
-	30   Component(s)
-	361  Line(s) of event code
-	210  Unique line(s) of event code
+	1133 Line(s) of event code
+	496  Unique line(s) of event code
 
 Total
 	13   Page(s)
-	404  Component(s)
-	4476 Line(s) of event code
-	1180 Unique line(s) of event code
+	406  Component(s)
+	4507 Line(s) of event code
+	1186 Unique line(s) of event code

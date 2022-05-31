@@ -413,13 +413,18 @@ class LuiPagesGen(object):
                 icon = get_icon_id("bell-ring")
                 flashing = "enable"
 
+            #add button to show sensor state
+            add_btn = ""
+            if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
+                add_btn=f"{get_icon_id('progress-alert')}~{rgb_dec565([243,179,0])}~opnSensorNotify"
+
             # add padding to arm buttons
             arm_buttons = ""
             for b in supported_modes:
                 arm_buttons += f"~{get_translation(self._locale, b)}~{b}"
             if len(supported_modes) < 4:
                 arm_buttons += "~"*((4-len(supported_modes))*2)
-            command = f"entityUpd~{item}~{navigation}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}"
+            command = f"entityUpd~{item}~{navigation}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}~{add_btn}"
         self._send_mqtt_msg(command)
         
 
@@ -529,6 +534,6 @@ class LuiPagesGen(object):
         pos_translation = get_translation(self._locale, "position")
         self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}")
 
-    def send_message_page(self, id, heading, msg, b1, b2):
+    def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
-        self._send_mqtt_msg(f"entityUpdateDetail~{id}~{heading}~65535~{b1}~65535~{b2}~65535~{msg}~65535~0")
+        self._send_mqtt_msg(f"entityUpdateDetail~{ident}~{heading}~65535~{b1}~65535~{b2}~65535~{msg}~65535~0")
