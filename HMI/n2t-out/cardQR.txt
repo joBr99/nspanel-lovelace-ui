@@ -30,6 +30,8 @@ Page cardQR
             vis tIcon2,0
             vis tEntity2,0
             vis bText2,0
+            tsw m0,0
+            tsw m1,0
         
 Variable (string) strCommand
     Attributes
@@ -91,6 +93,12 @@ Variable (string) type2
         Text          : 
         Max. Text Size: 10
     
+Variable (string) vaQR
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 100
+    
 Text tEntity1
     Attributes
         Scope                               : local
@@ -147,15 +155,6 @@ Picture p0
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-    
-QR Code qr0
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Text                                : 
-        Max. Text Size                      : 100
     
 Button bNext
     Attributes
@@ -351,6 +350,20 @@ Hotspot mSwipePrev
         Touch Press Event
             click bPrev,1
         
+Hotspot m0
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+Hotspot m1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
 Timer tmSerial
     Attributes
         Scope      : local
@@ -443,7 +456,7 @@ Timer tmSerial
                                             bNext.txt="î³"
                                         }
                                         //text qrcode
-                                        spstr strCommand.txt,qr0.txt,"~",3
+                                        spstr strCommand.txt,vaQR.txt,"~",3
                                         // get Type
                                         spstr strCommand.txt,type1.txt,"~",4
                                         // get internal name
@@ -565,6 +578,16 @@ Timer tmSerial
                                             bText2.pco2=1374
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText2.txt,"~",15
+                                        }
+                                        if(type2.txt=="delete"||type2.txt=="")
+                                        {
+                                            if(type1.txt=="delete"||type1.txt=="")
+                                            {
+                                                qrcode m1.x,m1.y,200,6371,65535,-1,vaQR.txt
+                                            }
+                                        }else
+                                        {
+                                            qrcode m0.x,m0.y,200,6371,65535,-1,vaQR.txt
                                         }
                                     }
                                     if(tInstruction.txt=="time")
