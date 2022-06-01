@@ -10,6 +10,10 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
+cardQR
+	32   Component(s)
+	374  Line(s) of event code
+	218  Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	204  Line(s) of event code
@@ -22,10 +26,6 @@ popupShutter
 	20   Component(s)
 	248  Line(s) of event code
 	141  Unique line(s) of event code
-cardQR
-	32   Component(s)
-	374  Line(s) of event code
-	218  Unique line(s) of event code
 cardMedia
 	33   Component(s)
 	349  Line(s) of event code
