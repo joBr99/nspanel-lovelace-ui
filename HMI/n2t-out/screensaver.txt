@@ -501,6 +501,14 @@ Timer tmSerial
                                         spstr strCommand.txt,tIcon2.txt,"~",19
                                         spstr strCommand.txt,tTmp.txt,"~",20
                                         covx tTmp.txt,tIcon2.pco,0,0
+                                        if(tNotifyHead.txt!="")
+                                        {
+                                            ref tNotifyHead
+                                        }
+                                        if(tNotifyText.txt!="")
+                                        {
+                                            ref tNotifyText
+                                        }
                                     }
                                     if(tInstruction.txt=="color")
                                     {
