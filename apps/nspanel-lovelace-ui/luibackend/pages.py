@@ -329,7 +329,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}"
         self._send_mqtt_msg(command)
 
-    def generate_media_page(self, navigation, title, entity):
+    def generate_media_page(self, navigation, title, entity, mediaBtn):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
@@ -360,7 +360,7 @@ class LuiPagesGen(object):
                     onoffbutton = 1374
                 else:
                     onoffbutton = rgb_dec565([255,152,0])
-            command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~{title}~{author}~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}"
+            command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~{title}~{author}~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}~{mediaBtn}"
         self._send_mqtt_msg(command)
         
     def generate_alarm_page(self, navigation, entity):
@@ -458,7 +458,8 @@ class LuiPagesGen(object):
             temp_unit = card.raw_config.get("temperatureUnit", "celsius")
             self.generate_thermo_page(navigation, card.title, card.entity, temp_unit)
         if card.cardType == "cardMedia":
-            self.generate_media_page(navigation, card.title, card.entity)
+            mediaBtn = card.raw_config.get("mediaControl", "")
+            self.generate_media_page(navigation, card.title, card.entity, mediaBtn)
         if card.cardType == "cardAlarm":
             self.generate_alarm_page(navigation, card.entity)
         if card.cardType == "screensaver":

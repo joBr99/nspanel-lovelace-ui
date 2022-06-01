@@ -447,6 +447,7 @@ key | optional | type | default | description
 `title` | True | string | `None` | Title of the Page 
 `entity` | False | string | `None` | contains the entity of the current card, valid for cardThermo, cardAlarm and cardMedia
 `key` | True | string | `None` | Used by navigate items
+`mediaControl` | True | string | `None` | Only valid on cardMedia, contains the action executed on pressing the top left media icon. (useful to navigate to a hidden card or start a script)
 
 
 #### Possible configuration values for screensaver config
