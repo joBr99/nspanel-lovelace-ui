@@ -453,6 +453,7 @@ key | optional | type | default | description
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
+`entity` | False | string | `None` | name of ha entity
 `name` | True | string | `None` | Used to override names
 `icon` | True | string | `None` | Used to override icons
 `state` | True | string | `None` | Only displayed if Entity state is equal to this value
