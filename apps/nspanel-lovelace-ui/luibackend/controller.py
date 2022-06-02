@@ -86,6 +86,7 @@ class LuiController(object):
         bst = self._config.get("sleepTracking")
         sleepOverride = self._config.get("sleepOverride")
         sOEntity = None
+        sOBrightness = None
         if sleepOverride is not None and type(sleepOverride) is dict:
             sOEntity = sleepOverride["entity"]
             sOBrightness = sleepOverride["brightness"]
