@@ -369,7 +369,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~{title}~{author}~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}~{mediaBtn}"
         self._send_mqtt_msg(command)
         
-    def generate_alarm_page(self, navigation, entity):
+    def generate_alarm_page(self, navigation, entity, alarmBtn):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~{item}~{navigation}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
@@ -423,7 +423,11 @@ class LuiPagesGen(object):
             add_btn = ""
             if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
                 add_btn=f"{get_icon_id('progress-alert')}~{rgb_dec565([243,179,0])}~opnSensorNotify"
-
+            if alarmBtn is not None and type(alarmBtn) is dict:
+                entity = alarmBtn.get("entity")
+                icon   = alarmBtn.get("icon", "progress-alert")
+                add_btn=f"{get_icon_id(icon)}~{rgb_dec565([243,179,0])}~{entity}"
+                
             # add padding to arm buttons
             arm_buttons = ""
             for b in supported_modes:
@@ -467,7 +471,8 @@ class LuiPagesGen(object):
             mediaBtn = card.raw_config.get("mediaControl", "")
             self.generate_media_page(navigation, card.title, card.entity, mediaBtn)
         if card.cardType == "cardAlarm":
-            self.generate_alarm_page(navigation, card.entity)
+            alarmBtn = card.raw_config.get("alarmControl")
+            self.generate_alarm_page(navigation, card.entity, alarmBtn)
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")
             self.update_screensaver_weather(theme)
