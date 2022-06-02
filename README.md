@@ -448,6 +448,7 @@ key | optional | type | default | description
 `entity` | False | string | `None` | contains the entity of the current card, valid for cardThermo, cardAlarm and cardMedia
 `key` | True | string | `None` | Used by navigate items
 `mediaControl` | True | string | `None` | Only valid on cardMedia, contains the action executed on pressing the top left media icon. (useful to navigate to a hidden card or start a script)
+`alarmControl` | True | string | `None` | Only valid on cardAlarm, contains the action executed on pressing the left bottom icon, by default this button is used to show a list of open sensors on a failed attempt to arm.
 
 #### Possible configuration values for entities key
 
