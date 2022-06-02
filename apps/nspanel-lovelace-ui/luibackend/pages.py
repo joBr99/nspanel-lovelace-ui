@@ -425,8 +425,8 @@ class LuiPagesGen(object):
                 add_btn=f"{get_icon_id('progress-alert')}~{rgb_dec565([243,179,0])}~opnSensorNotify"
             if alarmBtn is not None and type(alarmBtn) is dict:
                 entity = alarmBtn.get("entity")
-                icon   = alarmBtn.get("icon", "progress-alert")
-                add_btn=f"{get_icon_id(icon)}~{rgb_dec565([243,179,0])}~{entity}"
+                iconnav   = alarmBtn.get("icon", "progress-alert")
+                add_btn=f"{get_icon_id(iconnav)}~{rgb_dec565([243,179,0])}~{entity}"
                 
             # add padding to arm buttons
             arm_buttons = ""
