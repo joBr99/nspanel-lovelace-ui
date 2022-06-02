@@ -443,11 +443,41 @@ key | optional | type | default | description
 key | optional | type | default | description
 -- | -- | -- | -- | --
 `type` | False | string | `None` | Used by navigate items
-`entities` | False | complex | `None` | contains entities of the card, applys only to cardEntities and cardGrid
+`entities` | False | complex | `None` | contains entities of the card, only valid on cardEntities and cardGrid and cardQR
 `title` | True | string | `None` | Title of the Page 
 `entity` | False | string | `None` | contains the entity of the current card, valid for cardThermo, cardAlarm and cardMedia
 `key` | True | string | `None` | Used by navigate items
 `mediaControl` | True | string | `None` | Only valid on cardMedia, contains the action executed on pressing the top left media icon. (useful to navigate to a hidden card or start a script)
+
+#### Possible configuration values for entities key
+
+key | optional | type | default | description
+-- | -- | -- | -- | --
+`name` | True | string | `None` | Used to override names
+`icon` | True | string | `None` | Used to override icons
+`state` | True | string | `None` | Only displayed if Entity state is equal to this value
+`state_not` | True | string | `None` | Only displayed if Entity state is unequal to this value
+
+##### Override Icons or Names
+
+To overwrite Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
+Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?https://github.com/joBr99/nspanel-lovelace-ui/blob/main/HMI/icon-cheatsheet.html) are useable.
+
+```yaml
+        entities:
+          - entity: light.test_item
+            name: NameOverride
+            icon: mdi:lightbulb
+```
+
+It is also possible to configure different icon overwrites per state:
+
+```yaml
+            icon:
+                "on": mdi:lightbulb
+                "off": mdi:lightbulb
+
+```
 
 
 #### Possible configuration values for screensaver config
@@ -556,26 +586,6 @@ The following example configuration does nothing during the day but at night, if
       brightness: 20
 ```
 
-#### Override Icons or Names
-
-To overwrite Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
-Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?https://github.com/joBr99/nspanel-lovelace-ui/blob/main/HMI/icon-cheatsheet.html) are useable.
-
-```yaml
-        entities:
-          - entity: light.test_item
-            name: NameOverride
-            icon: mdi:lightbulb
-```
-
-It is also possible to configure different icon overwrites per state:
-
-```yaml
-            icon:
-                "on": mdi:lightbulb
-                "off": mdi:lightbulb
-
-```
 
 Also it is possible to configure a text or a character by using "text:" as a prefix instead of an icon. `icon: text:X`
 
