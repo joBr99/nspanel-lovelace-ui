@@ -3,12 +3,13 @@ class Entity(object):
         if type(entity_input_config) is not dict:
             #self._ha_api.log("Config error, not a dict check your entity configs")
             self.entityId = "error"
-            self.nameOverride = None
-            self.iconOverride = None
         else:
-            self.entityId = entity_input_config.get("entity", "unknown")
-            self.nameOverride = entity_input_config.get("name")
-            self.iconOverride = entity_input_config.get("icon")
+            self.entityId  = entity_input_config.get("entity", "unknown")
+        self.nameOverride  = entity_input_config.get("name")
+        self.iconOverride  = entity_input_config.get("icon")
+        self.colorOverride = entity_input_config.get("color")
+        self.condState     = entity_input_config.get("state")
+        self.condStateNot  = entity_input_config.get("state_not")
 
 class Card(object):
     def __init__(self, card_input_config, pos=None):

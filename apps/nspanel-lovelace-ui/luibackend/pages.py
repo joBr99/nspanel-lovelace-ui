@@ -146,10 +146,10 @@ class LuiPagesGen(object):
                 state = None
             self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state))
 
-    def generate_entities_item(self, entity, cardType):
-        entityId = entity.entityId
-        icon = entity.iconOverride
-        name = entity.nameOverride
+    def generate_entities_item(self, item, cardType):
+        entityId = item.entityId
+        icon = item.iconOverride
+        name = item.nameOverride
         # type of the item is the string before the "." in the entityId
         entityType = entityId.split(".")[0]
         
@@ -176,6 +176,12 @@ class LuiPagesGen(object):
         
         # HA Entities
         entity = self._ha_api.get_entity(entityId)
+        # check state for if a condition is defined
+        if item.condState is not None and item.condState == entity.state:
+            return ""
+        if item.condStateNot is not None and item.condState != entity.state:
+            return ""
+        
         name = name if name is not None else entity.attributes.friendly_name
         if entityType == "cover":
 
