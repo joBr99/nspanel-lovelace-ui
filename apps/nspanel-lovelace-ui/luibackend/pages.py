@@ -386,15 +386,15 @@ class LuiPagesGen(object):
                     numpad = "disable"
                 bits = entity.attributes.supported_features
                 if bits & 0b000001:
-                    supported_modes.append("arm_home")
+                    supported_modes.append("frontend.ui.card.alarm_control_panel.arm_home")
                 if bits & 0b000010:
-                    supported_modes.append("arm_away")
+                    supported_modes.append("frontend.ui.card.alarm_control_panel.arm_away")
                 if bits & 0b000100:
-                    supported_modes.append("arm_night")
+                    supported_modes.append("frontend.ui.card.alarm_control_panel.arm_night")
                 if bits & 0b100000:
-                    supported_modes.append("arm_vacation")
+                    supported_modes.append("frontend.ui.card.alarm_control_panel.arm_vacation")
             else:
-                supported_modes.append("disarm")
+                supported_modes.append("frontend.ui.card.alarm_control_panel.disarm")
 
             if entity.state == "armed_home":
                 color = rgb_dec565([223,76,30])
