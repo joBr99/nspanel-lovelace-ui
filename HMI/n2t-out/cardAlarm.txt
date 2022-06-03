@@ -84,7 +84,7 @@ Variable (string) vaAddBtn
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 20
+        Max. Text Size: 80
     
 Text tTmp
     Attributes
