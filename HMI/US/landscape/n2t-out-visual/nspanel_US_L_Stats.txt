@@ -52,11 +52,11 @@ screensaver
 	244  Unique line(s) of event code
 cardAlarm
 	40   Component(s)
-	387  Line(s) of event code
-	237  Unique line(s) of event code
+	392  Line(s) of event code
+	239  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	408  Component(s)
-	4495 Line(s) of event code
-	1192 Unique line(s) of event code
+	4500 Line(s) of event code
+	1194 Unique line(s) of event code

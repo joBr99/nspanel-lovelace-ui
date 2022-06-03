@@ -340,8 +340,13 @@ Button b9
         Touch Press Event
             // event,buttonPress2,entn,arm1,tCode
             tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+=vaAddBtn.txt
+            if(vaAddBtn.txt!="")
+            {
+                tSend.txt+=vaAddBtn.txt+",button"
+            }else
+            {
+                tSend.txt+=entn.txt+",opnSensorNotify"
+            }
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
