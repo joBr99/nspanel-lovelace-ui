@@ -148,6 +148,7 @@ export const config: Config = {
     fourthScreensaverEntity: { ScreensaverEntity: "alias.0.Pv.ACTUAL", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "PV", ScreensaverEntityUnitText: "W" },
     timeoutScreensaver: 15,
     dimmode: 8,
+    active: 100,
     screenSaverDoubleClick: false,
     locale: "de_DE",
     timeFormat: "%H:%M",
@@ -299,7 +300,7 @@ function HandleStartupProcess(): void {
     SendDate();
     SendTime();
     SendToPanel({ payload: "timeout~" + config.timeoutScreensaver });
-    SendToPanel({ payload: "dimmode~" + config.dimmode });
+    SendToPanel({ payload: "dimmode~" + config.dimmode + "~" + config.active });
 }
 
 function SendDate(): void {
