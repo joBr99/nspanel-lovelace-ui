@@ -290,9 +290,9 @@ class LuiPagesGen(object):
             hvac_action       = get_attr_safe(entity, "hvac_action", "")
             state_value  = ""
             if hvac_action != "":
-                state_value = get_translation(self._locale, f"state_attributes.climate.hvac_action.{hvac_action}")
+                state_value = get_translation(self._locale, f"frontend.state_attributes.climate.hvac_action.{hvac_action}")
                 state_value += "\r\n("
-            state_value += get_translation(self._locale, f"state_attributes.climate.hvac_action.{entity.state}")
+            state_value += get_translation(self._locale, f"backend.component.climate.state._.{entity.state}")
             if hvac_action != "":
                 state_value += ")"
             
