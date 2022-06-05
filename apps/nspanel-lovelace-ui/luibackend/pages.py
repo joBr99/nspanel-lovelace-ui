@@ -161,7 +161,7 @@ class LuiPagesGen(object):
             page_search_res = self._config.searchCard(entityId)
             if page_search_res is not None:
                 name = name if name is not None else page_search_res.title
-                text = get_translation(self._locale,"PRESS")
+                text = get_translation(self._locale, "frontend.ui.card.button.press")
                 icon_id = get_icon_id(icon) if icon is not None else get_icon_id("gesture-tap-button")
                 return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
             else:
@@ -231,20 +231,20 @@ class LuiPagesGen(object):
             return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{value}"
         if entityType in ["button", "input_button"]:
             icon_id = get_icon_id_ha("button", overwrite=icon)
-            text = get_translation(self._locale,"PRESS")
+            text = get_translation(self._locale, "frontend.ui.card.button.press")
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         if entityType == "scene":
             icon_id = get_icon_id_ha("scene", overwrite=icon)
-            text = get_translation(self._locale,"ACTIVATE")
+            text = get_translation(self._locale, "frontend.ui.card.scene.activate")
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         if entityType == "script":
             icon_id = get_icon_id_ha("script", overwrite=icon)
-            text = get_translation(self._locale,"run")
+            text = get_translation(self._locale, "frontend.ui.card.script.run")
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         if entityType == "lock":
             icon_id = get_icon_id_ha("lock", state=entity.state, overwrite=icon)
             icon_color = self.get_entity_color(entity)
-            text = get_translation(self._locale,"lock") if entity.state == "unlocked" else get_translation(self._locale,"unlock")
+            text = get_translation(self._locale, "frontend.ui.card.lock.lock") if entity.state == "unlocked" else get_translation(self._locale, "frontend.ui.card.lock.unlock")
             return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
         if entityType == "number":
             icon_id = get_icon_id_ha("number", overwrite=icon)
@@ -286,13 +286,16 @@ class LuiPagesGen(object):
             heading      = title if title != "unknown" else entity.attributes.friendly_name
             current_temp = get_attr_safe(entity, "current_temperature", "")
             dest_temp    = int(get_attr_safe(entity, "temperature", 0)*10)
-            status       = get_attr_safe(entity, "hvac_action", "")
+            
+            hvac_action  = get_attr_safe(entity, "hvac_action", "")
             state_value  = ""
-            if status != "":
-                state_value += f"{get_translation(self._locale, status)}\r\n("
-            state_value += f"{get_translation(self._locale, entity.state)}"
-            if status != "":
+            if hvac_action != "":
+                state_value = get_translation(self._locale, f"frontend.state_attributes.climate.hvac_action.{hvac_action}")
+                state_value += "\r\n("
+            state_value += get_translation(self._locale, f"backend.component.climate.state._.{entity.state}")
+            if hvac_action != "":
                 state_value += ")"
+            
             min_temp     = int(get_attr_safe(entity, "min_temp", 0)*10)
             max_temp     = int(get_attr_safe(entity, "max_temp", 0)*10)
             step_temp    = int(get_attr_safe(entity, "target_temp_step", 0.5)*10) 
@@ -328,9 +331,9 @@ class LuiPagesGen(object):
             padding_len = 8-len_hvac_modes
             icon_res = icon_res + "~"*4*padding_len
             
-            currently_translation = get_translation(self._locale, "currently")
-            state_translation = get_translation(self._locale, "state")
-            action_translation = get_translation(self._locale, "operation")
+            currently_translation = get_translation(self._locale, "frontend.ui.card.climate.currently")
+            state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
+            action_translation = get_translation(self._locale, "frontend.ui.card.climate.operation")
 
             command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}"
         self._send_mqtt_msg(command)
@@ -386,15 +389,15 @@ class LuiPagesGen(object):
                     numpad = "disable"
                 bits = entity.attributes.supported_features
                 if bits & 0b000001:
-                    supported_modes.append("arm_home")
+                    supported_modes.append("frontend.ui.card.alarm_control_panel.arm_home")
                 if bits & 0b000010:
-                    supported_modes.append("arm_away")
+                    supported_modes.append("frontend.ui.card.alarm_control_panel.arm_away")
                 if bits & 0b000100:
-                    supported_modes.append("arm_night")
+                    supported_modes.append("frontend.ui.card.alarm_control_panel.arm_night")
                 if bits & 0b100000:
-                    supported_modes.append("arm_vacation")
+                    supported_modes.append("frontend.ui.card.alarm_control_panel.arm_vacation")
             else:
-                supported_modes.append("disarm")
+                supported_modes.append("frontend.ui.card.alarm_control_panel.disarm")
 
             if entity.state == "armed_home":
                 color = rgb_dec565([223,76,30])
@@ -509,8 +512,8 @@ class LuiPagesGen(object):
             else:
                 color = "disable"
         color_translation      = "Color"
-        brightness_translation = get_translation(self._locale, "brightness")
-        color_temp_translation = get_translation(self._locale, "color_temperature")
+        brightness_translation = get_translation(self._locale, "frontend.ui.card.light.brightness")
+        color_temp_translation = get_translation(self._locale, "frontend.ui.card.light.color_temperature")
         self._send_mqtt_msg(f"entityUpdateDetail~{get_icon_id('lightbulb')}~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}")
     
     def generate_shutter_detail_page(self, entity):
@@ -544,7 +547,7 @@ class LuiPagesGen(object):
             elif pos_status == "closed":
                 icon_down_status = "disable"
 
-        pos_translation = get_translation(self._locale, "position")
+        pos_translation = get_translation(self._locale, "frontend.ui.card.light.position")
         self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
