@@ -389,7 +389,7 @@ class LuiPagesGen(object):
                     numpad = "disable"
                 bits = entity.attributes.supported_features
                 if bits & 0b000001:
-                    supported_modes.append("rm_home")
+                    supported_modes.append("arm_home")
                 if bits & 0b000010:
                     supported_modes.append("arm_away")
                 if bits & 0b000100:
