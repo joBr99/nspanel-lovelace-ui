@@ -14,13 +14,14 @@ def build_locale_filestring(locale):
         locale = locale.split("_")[0]
 
     filename = f"{locale}.json"
-    path_frontend_file = os.path.join(os.getcwd(), "translations", "frontend", filename)
-    path_backend_file  = os.path.join(os.getcwd(), "translations", "backend" , filename)
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    path_frontend_file = os.path.join(dir_path, "translations", "frontend", filename)
+    path_backend_file  = os.path.join(dir_path, "translations", "backend" , filename)
     return path_frontend_file, path_backend_file
 
 def lookup(path_frontend_file, path_backend_file, lookupstr):
     if not (os.path.exists(path_frontend_file) and os.path.exists(path_backend_file)):
-        return "error"
+        return "error_fnf"
     with open(path_frontend_file, 'r') as f, open(path_backend_file, 'r') as b:
         translations = { "frontend": json.load(f), "backend": json.load(b)}
         res = translations
@@ -28,15 +29,15 @@ def lookup(path_frontend_file, path_backend_file, lookupstr):
             if k in res:
                 res = res[k]
         if type(res) is not str:
-            res = "error"
+            res = "error_tnf"
         return res
 
 def get_translation(locale, lookupstr):
     path_frontend_file, path_backend_file = build_locale_filestring(locale)
     res = lookup(path_frontend_file, path_backend_file, lookupstr)
-    if res == "error":
+    if res.startswith("error"):
         path_frontend_file, path_backend_file = build_locale_filestring("en_US")
         res = lookup(path_frontend_file, path_backend_file, lookupstr)
     return res
 
-#print(get_translation("en_US", "frontend.state_attributes.climate.hvac_action.idle"))
+#print(get_translation("en_US", "frontend.state_attributes.climate.hvac_action.idle"))  

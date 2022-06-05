@@ -287,7 +287,7 @@ class LuiPagesGen(object):
             current_temp = get_attr_safe(entity, "current_temperature", "")
             dest_temp    = int(get_attr_safe(entity, "temperature", 0)*10)
             
-            hvac_action       = get_attr_safe(entity, "hvac_action", "")
+            hvac_action  = get_attr_safe(entity, "hvac_action", "")
             state_value  = ""
             if hvac_action != "":
                 state_value = get_translation(self._locale, f"frontend.state_attributes.climate.hvac_action.{hvac_action}")
