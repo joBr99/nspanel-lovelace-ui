@@ -30,14 +30,15 @@ class LuiController(object):
         # register callbacks
         self.register_callbacks()
 
-        # register callbacks for each time
-        if type(self._config.get("sleepBrightness")) == list:
-            for index, timeset in enumerate(self._config.get("sleepBrightness")):
-                self._ha_api.run_daily(self.update_screensaver_brightness, timeset["time"], value=timeset["value"])
-        
         # calculate current brightness
         self.current_screensaver_brightness = self.calc_current_brightness(self._config.get("sleepBrightness"))
         self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))
+
+        # register callbacks for each time
+        if type(self._config.get("sleepBrightness")) == list:
+            for index, timeset in enumerate(self._config.get("sleepBrightness")):
+                self._ha_api.run_daily(self.update_screensaver_brightness, timeset["time"], ssbr=timeset["value"], sbr=self.current_screen_brightness)
+        
 
         # call update_screensaver_brightness on changes of entity configured in sleepTracking
         bst = self._config.get("sleepTracking")
@@ -92,6 +93,7 @@ class LuiController(object):
             sOBrightness = sleepOverride["brightness"]
 
         sleepBrightness = 0
+        brightness = self.calc_current_brightness(self._config.get("screenBrightness"))
 
         if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state in ["not_home", "off"]:
             self._ha_api.log(f"sleepTracking setting brightness to 0")
@@ -106,9 +108,9 @@ class LuiController(object):
             sleepBrightness                     = self.current_screensaver_brightness
             self.current_screen_brightness      = kwargs['sbr']
             brightness                          = self.current_screen_brightness
-            # same value for both values will break sleep timer of the firmware
-            if sleepBrightness==brightness:
-                sleepBrightness = sleepBrightness-1
+        # same value for both values will break sleep timer of the firmware
+        if sleepBrightness==brightness:
+            sleepBrightness = sleepBrightness-1
         self._send_mqtt_msg(f"dimmode~{sleepBrightness}~{brightness}")
         
     def calc_current_brightness(self, sleep_brightness_config):
