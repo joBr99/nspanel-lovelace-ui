@@ -93,7 +93,7 @@ class LuiController(object):
             sOBrightness = sleepOverride["brightness"]
 
         sleepBrightness = 0
-        brightness = 100
+        brightness = self.calc_current_brightness(self._config.get("screenBrightness"))
 
         if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state in ["not_home", "off"]:
             self._ha_api.log(f"sleepTracking setting brightness to 0")
@@ -108,9 +108,9 @@ class LuiController(object):
             sleepBrightness                     = self.current_screensaver_brightness
             self.current_screen_brightness      = kwargs['sbr']
             brightness                          = self.current_screen_brightness
-            # same value for both values will break sleep timer of the firmware
-            if sleepBrightness==brightness:
-                sleepBrightness = sleepBrightness-1
+        # same value for both values will break sleep timer of the firmware
+        if sleepBrightness==brightness:
+            sleepBrightness = sleepBrightness-1
         self._send_mqtt_msg(f"dimmode~{sleepBrightness}~{brightness}")
         
     def calc_current_brightness(self, sleep_brightness_config):
