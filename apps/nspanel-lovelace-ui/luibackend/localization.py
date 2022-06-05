@@ -39,4 +39,4 @@ def get_translation(locale, lookupstr):
         res = lookup(path_frontend_file, path_backend_file, lookupstr)
     return res
 
-#print(get_translation("en_US", "frontend.ui.card.button.press"))
+#print(get_translation("en_US", "frontend.state_attributes.climate.hvac_action.idle"))
