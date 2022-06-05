@@ -286,13 +286,16 @@ class LuiPagesGen(object):
             heading      = title if title != "unknown" else entity.attributes.friendly_name
             current_temp = get_attr_safe(entity, "current_temperature", "")
             dest_temp    = int(get_attr_safe(entity, "temperature", 0)*10)
-            status       = get_attr_safe(entity, "hvac_action", "")
+            
+            hvac_action       = get_attr_safe(entity, "hvac_action", "")
             state_value  = ""
-            if status != "":
+            if hvac_action != "":
+                state_value = get_translation(self._locale, f"state_attributes.climate.hvac_action.{hvac_action}")
                 state_value += f"{get_translation(self._locale, status)}\r\n("
             state_value += f"{get_translation(self._locale, entity.state)}"
-            if status != "":
+            if hvac_action != "":
                 state_value += ")"
+            
             min_temp     = int(get_attr_safe(entity, "min_temp", 0)*10)
             max_temp     = int(get_attr_safe(entity, "max_temp", 0)*10)
             step_temp    = int(get_attr_safe(entity, "target_temp_step", 0.5)*10) 
