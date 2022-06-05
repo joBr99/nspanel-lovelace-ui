@@ -163,7 +163,11 @@ class LuiPagesGen(object):
                 name = name if name is not None else page_search_res.title
                 text = get_translation(self._locale, "frontend.ui.card.button.press")
                 icon_id = get_icon_id(icon) if icon is not None else get_icon_id("gesture-tap-button")
-                return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+                if item.status is not None and self._ha_api.entity_exists(item.status):
+                    icon_color = self.get_entity_color(self._ha_api.get_entity(item.status))
+                else:
+                    icon_color = 17299
+                return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
         if entityType == "iText":
@@ -427,9 +431,14 @@ class LuiPagesGen(object):
             if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
                 add_btn=f"{get_icon_id('progress-alert')}~{rgb_dec565([243,179,0])}~opnSensorNotify"
             if alarmBtn is not None and type(alarmBtn) is dict:
-                entity = alarmBtn.get("entity")
-                iconnav   = alarmBtn.get("icon", "progress-alert")
-                add_btn=f"{get_icon_id(iconnav)}~{rgb_dec565([243,179,0])}~{entity}"
+                entity  = alarmBtn.get("entity")
+                iconnav = get_icon_id_ha("alarm-arm-fail", overwrite=alarmBtn.get("icon"))
+                status  = alarmBtn.get("status")
+                if status is not None and self._ha_api.entity_exists(status):
+                    icon_color = self.get_entity_color(self._ha_api.get_entity(status))
+                else:
+                    icon_color = rgb_dec565([243,179,0])
+                add_btn=f"{iconnav}~{icon_color}~{entity}"
                 
             # add padding to arm buttons
             arm_buttons = ""
