@@ -22,7 +22,9 @@ class LuiPagesGen(object):
         self._locale  = config.get("locale")
         self._send_mqtt_msg = send_mqtt_msg
     
-    def get_entity_color(self, entity):
+    def get_entity_color(self, entity, overwrite=None):
+        if overwrite is not None:
+            return rgb_dec565(overwrite)
         attr = entity.attributes
         default_color_on  = rgb_dec565([253, 216, 53])
         default_color_off = rgb_dec565([68, 115, 158])
@@ -149,6 +151,7 @@ class LuiPagesGen(object):
     def generate_entities_item(self, item, cardType):
         entityId = item.entityId
         icon = item.iconOverride
+        colorOverride = item.colorOverride
         name = item.nameOverride
         # type of the item is the string before the "." in the entityId
         entityType = entityId.split(".")[0]
@@ -216,12 +219,12 @@ class LuiPagesGen(object):
             return f"~shutter~{entityId}~{icon_id}~17299~{name}~{icon_up}|{icon_stop}|{icon_down}|{status}"
         if entityType in "light":
             switch_val = 1 if entity.state == "on" else 0
-            icon_color = self.get_entity_color(entity)
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha("light", overwrite=icon)
             return f"~{entityType}~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
         if entityType in ["switch", "input_boolean", "automation"]:
             switch_val = 1 if entity.state == "on" else 0
-            icon_color = self.get_entity_color(entity)
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
             return f"~switch~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
         if entityType in ["sensor", "binary_sensor"]:
@@ -234,7 +237,7 @@ class LuiPagesGen(object):
                     icon_id = icon_id[:-1]
             else:
                 icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
-            icon_color = self.get_entity_color(entity)
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{value}"
         if entityType in ["button", "input_button"]:
             icon_id = get_icon_id_ha("button", overwrite=icon)
@@ -250,7 +253,7 @@ class LuiPagesGen(object):
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         if entityType == "lock":
             icon_id = get_icon_id_ha("lock", state=entity.state, overwrite=icon)
-            icon_color = self.get_entity_color(entity)
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             text = get_translation(self._locale, "frontend.ui.card.lock.lock") if entity.state == "unlocked" else get_translation(self._locale, "frontend.ui.card.lock.unlock")
             return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
         if entityType == "number":
@@ -260,7 +263,7 @@ class LuiPagesGen(object):
             return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
         if entityType == "fan":
             icon_id = get_icon_id_ha("fan", overwrite=icon)
-            icon_color = self.get_entity_color(entity)
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             return f"~number~{entityId}~{icon_id}~{icon_color}~{name}~{entity.attributes.percentage}|0|100"
         if entityType == "input_text":
             icon_id = get_icon_id_ha("input_text", overwrite=icon)
