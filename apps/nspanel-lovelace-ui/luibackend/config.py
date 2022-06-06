@@ -81,6 +81,7 @@ class LuiBackendConfig(object):
             'timeFormat': "%H:%M",
             'dateFormatBabel': "full",
             'dateAdditonalTemplate': "",
+            'timeAdditonalTemplate': "",
             'dateFormat': "%A, %d. %B %Y",
             'cards': [{
                 'type': 'cardEntities',
