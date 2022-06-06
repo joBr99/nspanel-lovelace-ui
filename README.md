@@ -457,9 +457,10 @@ key | optional | type | default | description
 `entity` | False | string | `None` | name of ha entity
 `name` | True | string | `None` | Used to override names
 `icon` | True | string | `None` | Used to override icons
+`color` | True | array | `None` | Overwrite color of entity `color: [255, 0, 0]`
 `state` | True | string | `None` | Only displayed if Entity state is equal to this value
 `state_not` | True | string | `None` | Only displayed if Entity state is unequal to this value
-`status` | True | string | `None` | Only valid for navigate items, adds a entity to track state for the color of the icon
+`status` | True | string | `None` | Only valid for navigate items, adds a entity to track state for the icon
 
 ##### Override Icons or Names
 
