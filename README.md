@@ -448,7 +448,7 @@ key | optional | type | default | description
 `entity` | False | string | `None` | contains the entity of the current card, valid for cardThermo, cardAlarm and cardMedia
 `key` | True | string | `None` | Used by navigate items
 `mediaControl` | True | string | `None` | Only valid on cardMedia, contains the action executed on pressing the top left media icon. (useful to navigate to a hidden card or start a script)
-`alarmControl` | True | string | `None` | Only valid on cardAlarm, contains the action executed on pressing the left bottom icon, by default this button is used to show a list of open sensors on a failed attempt to arm.
+`alarmControl` | True | complex | `None` | Only valid on cardAlarm, contains the action executed on pressing the left bottom icon, by default this button is used to show a list of open sensors on a failed attempt to arm.
 
 #### Possible configuration values for entities key
 
@@ -459,6 +459,7 @@ key | optional | type | default | description
 `icon` | True | string | `None` | Used to override icons
 `state` | True | string | `None` | Only displayed if Entity state is equal to this value
 `state_not` | True | string | `None` | Only displayed if Entity state is unequal to this value
+`status` | True | string | `None` | Only valid for navigate items, adds a entity to track state for the color of the icon
 
 ##### Override Icons or Names
 
