@@ -42,7 +42,9 @@ class LuiPagesGen(object):
 
     def update_time(self, kwargs):
         time = datetime.datetime.now().strftime(self._config.get("timeFormat"))
-        self._send_mqtt_msg(f"time~{time}")
+        addTemplate = self._config.get("timeAdditonalTemplate")
+        addTimeText = self._ha_api.render_template(addTemplate)
+        self._send_mqtt_msg(f"time~{time}~{addTimeText}")
 
     def update_date(self, kwargs):
         global babel_spec
