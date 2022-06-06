@@ -2,6 +2,10 @@ Program.s
 	0    Component(s)
 	10   Line(s) of event code
 	10   Unique line(s) of event code
+popupShutter
+	25   Component(s)
+	330  Line(s) of event code
+	162  Unique line(s) of event code
 pageIcons
 	6    Component(s)
 	0    Line(s) of event code
@@ -18,10 +22,6 @@ cardQR
 	32   Component(s)
 	374  Line(s) of event code
 	218  Unique line(s) of event code
-popupShutter
-	20   Component(s)
-	248  Line(s) of event code
-	141  Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	204  Line(s) of event code
@@ -57,6 +57,6 @@ pageStartup
 
 Total
 	13   Page(s)
-	418  Component(s)
-	4776 Line(s) of event code
-	1270 Unique line(s) of event code
+	423  Component(s)
+	4858 Line(s) of event code
+	1292 Unique line(s) of event code

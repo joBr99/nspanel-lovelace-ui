@@ -35,9 +35,9 @@ cardGrid
 	436  Line(s) of event code
 	257  Unique line(s) of event code
 popupShutter
-	20   Component(s)
-	245  Line(s) of event code
-	139  Unique line(s) of event code
+	25   Component(s)
+	330  Line(s) of event code
+	162  Unique line(s) of event code
 cardThermo
 	53   Component(s)
 	552  Line(s) of event code
@@ -57,6 +57,6 @@ cardAlarm
 
 Total
 	13   Page(s)
-	406  Component(s)
-	4523 Line(s) of event code
-	1198 Unique line(s) of event code
+	411  Component(s)
+	4608 Line(s) of event code
+	1220 Unique line(s) of event code
