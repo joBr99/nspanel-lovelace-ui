@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-06 20:32:17.386969613 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-06 20:32:16.934946602 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-06 20:32:17.370968799 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-06-06 20:32:16.934946602 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-06 20:32:17.374969002 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-06 20:37:23.814292644 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-06 20:37:23.366287644 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-06 20:37:23.798292465 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-06-06 20:37:23.366287644 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-06 20:37:23.802292510 +0000
 +@@ -63,6 +63,16 @@
 +@@ -120,6 +130,18 @@
 +@@ -156,6 +178,15 @@
@@ -13,8 +13,8 @@
 +@@ -1075,6 +1281,28 @@
 +@@ -1850,6 +2078,169 @@
 +diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-06-06 20:32:16.934946602 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-06-06 20:32:17.374969002 +0000
++--- HMI/n2t-out/cardMedia.txt	2022-06-06 20:37:23.366287644 +0000
+++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-06-06 20:37:23.802292510 +0000
 +@@ -45,12 +45,6 @@
 +         Scope: local
 +         Value: 0
@@ -59,5 +59,5 @@
 +                                     }
 +                                     if(tInstruction.txt=="time")
 +                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-06-06 20:32:16.934946602 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-06 20:32:17.374969002 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-06-06 20:37:23.366287644 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-06 20:37:23.802292510 +0000
