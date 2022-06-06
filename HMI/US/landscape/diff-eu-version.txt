@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-06-06 17:53:02.496648542 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-06-06 17:53:03.360649001 +0000
+--- HMI/n2t-out/Program.s.txt	2022-06-06 20:32:16.934946602 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-06-06 20:32:17.830992218 +0000
 @@ -11,6 +11,4 @@
      // dim value
      int dimValue=40
@@ -9,8 +9,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-06-06 17:53:02.496648542 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-06-06 17:53:03.360649001 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-06-06 20:32:16.934946602 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-06-06 20:32:17.834992421 +0000
 @@ -1925,10 +1925,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -23,8 +23,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-06-06 17:53:02.496648542 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-06-06 17:53:03.360649001 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-06-06 20:32:16.934946602 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-06-06 20:32:17.834992421 +0000
 @@ -846,10 +846,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -37,8 +37,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-06-06 17:53:02.496648542 +0000
-+++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-06-06 17:53:03.360649001 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-06-06 20:32:16.934946602 +0000
++++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-06-06 20:32:17.830992218 +0000
 @@ -45,12 +45,6 @@
          Scope: local
          Value: 0
@@ -99,8 +99,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-06-06 17:53:02.496648542 +0000
-+++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-06-06 17:53:03.360649001 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-06-06 20:32:16.934946602 +0000
++++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-06-06 20:32:17.834992421 +0000
 @@ -1152,10 +1152,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -113,8 +113,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-06-06 17:53:02.496648542 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-06-06 17:53:03.360649001 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-06-06 20:32:16.934946602 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-06-06 20:32:17.830992218 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -136,8 +136,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-06-06 17:53:02.496648542 +0000
-+++ HMI/US/landscape/n2t-out/popupLight.txt	2022-06-06 17:53:03.360649001 +0000
+--- HMI/n2t-out/popupLight.txt	2022-06-06 20:32:16.934946602 +0000
++++ HMI/US/landscape/n2t-out/popupLight.txt	2022-06-06 20:32:17.830992218 +0000
 @@ -561,10 +561,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -150,8 +150,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-06-06 17:53:02.496648542 +0000
-+++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-06-06 17:53:03.360649001 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-06-06 20:32:16.934946602 +0000
++++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-06-06 20:32:17.830992218 +0000
 @@ -311,10 +311,6 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
@@ -162,245 +162,4 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
 -                                        dim=dimValueNormal
                                      }
                                      if(tInstruction.txt=="timeout")
-                                     {
-diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-06-06 17:53:02.496648542 +0000
-+++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-06-06 17:53:03.360649001 +0000
-@@ -19,12 +19,9 @@
-             entn.txt=pageIcons.tTmp2.txt
-             vis p0,0
-             vis tSend,0
--            vis tPosHeading,0
--            vis hPosition,0
--            vis hTilt,0
--            vis bTLeft,0
--            vis bTStop,0
--            vis bTRight,0
-+            vis tTmp,0
-+            vis tInstruction,0
-+            vis tId,0
-             //page open event
-             // event,pageOpenDetail,typeOfPage,tEntityName
-             // craft command
-@@ -53,24 +50,6 @@
-         Text          : 
-         Max. Text Size: 80
-     
--Variable (string) tInstruction
--    Attributes
--        Scope         : local
--        Text          : 
--        Max. Text Size: 20
--    
--Variable (string) tId
--    Attributes
--        Scope         : local
--        Text          : 
--        Max. Text Size: 20
--    
--Variable (string) tTmp
--    Attributes
--        Scope         : local
--        Text          : 
--        Max. Text Size: 10
--    
- Text tEntity
-     Attributes
-         Scope                               : local
-@@ -101,17 +80,17 @@
-         Text                                : newtxt
-         Max. Text Size                      : 100
-     
--Text tPosHeading
-+Text tTmp
-     Attributes
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : Position
--        Max. Text Size                      : 15
-+        Text                                : 
-+        Max. Text Size                      : 10
-     
--Text tInfo1
-+Text tInstruction
-     Attributes
-         Scope                               : local
-         Dragging                            : 0
-@@ -119,9 +98,9 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : 
--        Max. Text Size                      : 40
-+        Max. Text Size                      : 20
-     
--Text tTiltHeading
-+Text tId
-     Attributes
-         Scope                               : local
-         Dragging                            : 0
-@@ -129,45 +108,36 @@
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
-         Text                                : 
--        Max. Text Size                      : 15
-+        Max. Text Size                      : 20
-     
--Picture p0
-+Text tPosHeading
-     Attributes
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-+        Associated Keyboard                 : none
-+        Text                                : Position
-+        Max. Text Size                      : 15
-     
--Slider hPosition
-+Text tInfo1
-     Attributes
-         Scope                               : local
-         Dragging                            : 0
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
--        Position                            : 50
--        Upper range limit                   : 100
--        Lower range limit                   : 0
-+        Associated Keyboard                 : none
-+        Text                                : 
-+        Max. Text Size                      : 40
-     
--    Events
--        Touch Release Event
--            // event,buttonPress2,internalNameEntity,positionSlider,50
--            //craft command
--            tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
--            covx hPosition.val,tTmp.txt,0,0
--            tSend.txt+=tTmp.txt
--            //send calc crc
--            btlen tSend.txt,sys0
--            crcrest 1,0xffff // reset CRC
--            crcputh 55 bb
--            crcputs sys0,2
--            crcputs tSend.txt,0
--            //send cmd
--            printh 55 bb
--            prints sys0,2
--            prints tSend.txt,0
--            prints crcval,2
-+Picture p0
-+    Attributes
-+        Scope                               : local
-+        Dragging                            : 0
-+        Disable release event after dragging: 0
-+        Send Component ID                   : disabled
-         
--Slider hTilt
-+Slider hPosition
-     Attributes
-         Scope                               : local
-         Dragging                            : 0
-@@ -296,81 +266,6 @@
-             prints tSend.txt,0
-             prints crcval,2
-         
--Button bTLeft
--    Attributes
--        Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        State                               : unpressed
--        Text                                : î
--        Max. Text Size                      : 10
--    
--    Events
--        Touch Press Event
--            tSend.txt="event,buttonPress2,"+entn.txt+",up"
--            //send calc crc
--            btlen tSend.txt,sys0
--            crcrest 1,0xffff // reset CRC
--            crcputh 55 bb
--            crcputs sys0,2
--            crcputs tSend.txt,0
--            //send cmd
--            printh 55 bb
--            prints sys0,2
--            prints tSend.txt,0
--            prints crcval,2
--        
--Button bTStop
--    Attributes
--        Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        State                               : unpressed
--        Text                                : î
--        Max. Text Size                      : 10
--    
--    Events
--        Touch Press Event
--            tSend.txt="event,buttonPress2,"+entn.txt+",stop"
--            //send calc crc
--            btlen tSend.txt,sys0
--            crcrest 1,0xffff // reset CRC
--            crcputh 55 bb
--            crcputs sys0,2
--            crcputs tSend.txt,0
--            //send cmd
--            printh 55 bb
--            prints sys0,2
--            prints tSend.txt,0
--            prints crcval,2
--        
--Button bTRight
--    Attributes
--        Scope                               : local
--        Dragging                            : 0
--        Disable release event after dragging: 0
--        Send Component ID                   : disabled
--        State                               : unpressed
--        Text                                : î
--        Max. Text Size                      : 10
--    
--    Events
--        Touch Press Event
--            tSend.txt="event,buttonPress2,"+entn.txt+",down"
--            //send calc crc
--            btlen tSend.txt,sys0
--            crcrest 1,0xffff // reset CRC
--            crcputh 55 bb
--            crcputs sys0,2
--            crcputs tSend.txt,0
--            //send cmd
--            printh 55 bb
--            prints sys0,2
--            prints tSend.txt,0
--            prints crcval,2
--        
- Timer tmSleep
-     Attributes
-         Scope      : local
-@@ -505,18 +400,12 @@
-                                             tsw bDown1,1
-                                             bDown1.pco=65535
-                                         }
--                                        // set tTiltHeading (localization)
--                                        spstr strCommand.txt,tTiltHeading.txt,"~",11
-                                     }
-                                     if(tInstruction.txt=="dimmode")
-                                     {
-                                         // get value
-                                         spstr strCommand.txt,tTmp.txt,"~",1
-                                         covx tTmp.txt,dimValue,0,0
--                                        // get value normal
--                                        spstr strCommand.txt,tTmp.txt,"~",2
--                                        covx tTmp.txt,dimValueNormal,0,0
--                                        dim=dimValueNormal
-                                     }
-                                     if(tInstruction.txt=="time")
                                      {
