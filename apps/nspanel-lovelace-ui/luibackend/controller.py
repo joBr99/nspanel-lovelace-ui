@@ -299,6 +299,11 @@ class LuiController(object):
         if button_type == "tempUpd":
             temp = int(value)/10
             self._ha_api.get_entity(entity_id).call_service("set_temperature", temperature=temp)
+        if button_type == "tempUpdHighLow":
+            value = value.split("|")
+            temp_high = int(value[0])/10
+            temp_low  = int(value[1])/10
+            self._ha_api.get_entity(entity_id).call_service("set_temperature", target_temp_high=temp_high, target_temp_low=temp_low)
         if button_type == "hvac_action":
             self._ha_api.get_entity(entity_id).call_service("set_hvac_mode", hvac_mode=value)
             
