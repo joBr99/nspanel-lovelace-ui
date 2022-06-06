@@ -507,6 +507,45 @@ Timer tmSerial
                                         }
                                         // set tTiltHeading (localization)
                                         spstr strCommand.txt,tTiltHeading.txt,"~",11
+                                        // set icon bUp
+                                        spstr strCommand.txt,tTmp.txt,"~",15
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            tsw bTLeft,0
+                                            spstr strCommand.txt,bTLeft.txt,"~",12
+                                            bTLeft.pco=27501
+                                        }else if(tTmp.txt=="enable")
+                                        {
+                                            spstr strCommand.txt,bTLeft.txt,"~",12
+                                            tsw bTLeft,1
+                                            bTLeft.pco=65535
+                                        }
+                                        // set icon bStop
+                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            tsw bTStop,0
+                                            spstr strCommand.txt,bTStop.txt,"~",13
+                                            bTStop.pco=27501
+                                        }else if(tTmp.txt=="enable")
+                                        {
+                                            spstr strCommand.txt,bTStop.txt,"~",13
+                                            tsw bTStop,1
+                                            bTStop.pco=65535
+                                        }
+                                        // set icon bDown
+                                        spstr strCommand.txt,tTmp.txt,"~",9
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            spstr strCommand.txt,bTRight.txt,"~",14
+                                            tsw bTRight,0
+                                            bTRight.pco=27501
+                                        }else if(tTmp.txt=="enable")
+                                        {
+                                            spstr strCommand.txt,bTRight.txt,"~",14
+                                            tsw bTRight,1
+                                            bTRight.pco=65535
+                                        }
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
