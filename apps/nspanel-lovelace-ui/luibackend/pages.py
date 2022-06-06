@@ -557,7 +557,7 @@ class LuiPagesGen(object):
             elif pos_status == "closed":
                 icon_down_status = "disable"
 
-        pos_translation = get_translation(self._locale, "frontend.ui.card.light.position")
+        pos_translation = get_translation(self._locale, "frontend.ui.card.cover.position")
         self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
