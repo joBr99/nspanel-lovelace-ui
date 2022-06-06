@@ -862,7 +862,7 @@ Text tIcon2
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tDateAdd
+Text tTimeAdd
     Attributes
         ID                                  : 37
         Scope                               : local
@@ -986,6 +986,7 @@ Timer tmSerial
                                         {
                                             vis tAMPM,0
                                         }
+                                        spstr strCommand.txt,tTimeAdd.txt,"~",2
                                     }
                                     if(tInstruction.txt=="date")
                                     {
@@ -1076,7 +1077,6 @@ Timer tmSerial
                                         spstr strCommand.txt,tIcon2.txt,"~",19
                                         spstr strCommand.txt,tTmp.txt,"~",20
                                         covx tTmp.txt,tIcon2.pco,0,0
-                                        spstr strCommand.txt,tDateAdd.txt,"~",21
                                         if(tNotifyHead.txt!="")
                                         {
                                             ref tNotifyHead
@@ -1114,7 +1114,7 @@ Timer tmSerial
                                         tForecast4.bco=tTime.bco
                                         tForecast4Val.bco=tTime.bco
                                         tF4Icon.bco=tTime.bco
-                                        tDateAdd.bco=tTime.bco
+                                        tTimeAdd.bco=tTime.bco
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,tTime.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",3
@@ -1158,7 +1158,7 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,tMR.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",22
-                                        covx tTmp.txt,tDateAdd.pco,0,0
+                                        covx tTmp.txt,tTimeAdd.pco,0,0
                                     }
                                     if(tInstruction.txt=="notify")
                                     {

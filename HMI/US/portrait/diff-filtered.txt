@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-06 17:10:42.181527903 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-06 17:10:41.745533696 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-06 17:10:42.165528115 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-06-06 17:10:41.749533643 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-06 17:10:42.169528062 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-06 17:53:02.932648774 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-06 17:53:02.496648542 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-06 17:53:02.920648767 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-06-06 17:53:02.496648542 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-06 17:53:02.920648767 +0000
 +@@ -63,6 +63,16 @@
 +@@ -120,6 +130,18 @@
 +@@ -156,6 +178,15 @@
@@ -13,8 +13,8 @@
 +@@ -1075,6 +1281,28 @@
 +@@ -1850,6 +2078,169 @@
 +diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-06-06 17:10:41.745533696 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-06-06 17:10:42.169528062 +0000
++--- HMI/n2t-out/cardMedia.txt	2022-06-06 17:53:02.496648542 +0000
+++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-06-06 17:53:02.920648767 +0000
 +@@ -45,12 +45,6 @@
 +         Scope: local
 +         Value: 0
@@ -59,11 +59,11 @@
 +                                     }
 +                                     if(tInstruction.txt=="time")
 +                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-06-06 17:10:41.745533696 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-06 17:10:42.169528062 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-06-06 17:53:02.496648542 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-06 17:53:02.920648767 +0000
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-06-06 17:10:41.745533696 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-06 17:10:42.169528062 +0000
++--- HMI/n2t-out/popupShutter.txt	2022-06-06 17:53:02.496648542 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-06 17:53:02.920648767 +0000
 +@@ -19,12 +19,9 @@
 +             entn.txt=pageIcons.tTmp2.txt
 +             vis p0,0
