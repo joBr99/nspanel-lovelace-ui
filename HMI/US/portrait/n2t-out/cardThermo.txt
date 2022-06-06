@@ -21,9 +21,6 @@ Page cardThermo
             vis xTempMin1,0
             vis xTempMax1,0
             vis xTempStep1,0
-            vis xTempMin2,0
-            vis xTempMax2,0
-            vis xTempStep2,0
             //tEntity.txt=tHeading.txt
             // disable all buttons
             vis bt0,0
@@ -166,33 +163,6 @@ XFloat xTempStep1
         Value                               : 0
     
 XFloat xTempDest2
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
-    
-XFloat xTempMin2
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
-    
-XFloat xTempMax2
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
-    
-XFloat xTempStep2
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -600,9 +570,12 @@ Dual-state Button btUp1
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHigh,"
+            tSend.txt+="tempUpdHighLow,"
             //convert temperature
             covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
+            covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
@@ -636,9 +609,12 @@ Dual-state Button btDown1
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHigh,"
+            tSend.txt+="tempUpdHighLow,"
             //convert temperature
             covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
+            covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
@@ -664,16 +640,19 @@ Dual-state Button bUp2
     
     Events
         Touch Press Event
-            if(xTempDest2.val<xTempMax2.val)
+            if(xTempDest2.val<xTempMax1.val)
             {
-                xTempDest2.val=xTempDest2.val+xTempStep2.val
+                xTempDest2.val=xTempDest2.val+xTempStep1.val
             }
             // event,buttonPress2,entn,tempUpd,X
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdLow,"
+            tSend.txt+="tempUpdHighLow,"
             //convert temperature
+            covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
             covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -700,16 +679,19 @@ Dual-state Button bDown2
     
     Events
         Touch Press Event
-            if(xTempDest2.val>xTempMin2.val)
+            if(xTempDest2.val>xTempMin1.val)
             {
-                xTempDest2.val=xTempDest2.val-xTempStep2.val
+                xTempDest2.val=xTempDest2.val-xTempStep1.val
             }
             // event,buttonPress2,entn,tempUpd,X
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdLow,"
+            tSend.txt+="tempUpdHighLow,"
             //convert temperature
+            covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
             covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
