@@ -289,8 +289,12 @@ class LuiPagesGen(object):
             entity       = self._ha_api.get_entity(item)
             heading      = title if title != "unknown" else entity.attributes.friendly_name
             current_temp = get_attr_safe(entity, "current_temperature", "")
-            dest_temp    = int(get_attr_safe(entity, "temperature", 0)*10)
-            
+            dest_temp    = get_attr_safe(entity, "temperature", None)
+            if dest_temp is None:
+                dest_temp    = get_attr_safe(entity, "target_temp_high", 0)
+                dest_temp2   = int(get_attr_safe(entity, "target_temp_low", 0)*10)
+            dest_temp    = int(dest_temp*10)
+
             hvac_action  = get_attr_safe(entity, "hvac_action", "")
             state_value  = ""
             if hvac_action != "":
@@ -339,7 +343,7 @@ class LuiPagesGen(object):
             state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
             action_translation = get_translation(self._locale, "frontend.ui.card.climate.operation")
 
-            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}"
+            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}"
         self._send_mqtt_msg(command)
 
     def generate_media_page(self, navigation, title, entity, mediaBtn):
@@ -557,7 +561,7 @@ class LuiPagesGen(object):
             elif pos_status == "closed":
                 icon_down_status = "disable"
 
-        pos_translation = get_translation(self._locale, "frontend.ui.card.light.position")
+        pos_translation = get_translation(self._locale, "frontend.ui.card.cover.position")
         self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
