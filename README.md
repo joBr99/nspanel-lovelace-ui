@@ -384,7 +384,7 @@ key | optional | type | default | description
 `locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
 `dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
 `timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  <pre>`"%I:%M   ?%p"`</pre>
-`dateAdditonalTemplate` | True | string | `" - {{ states('sun.sun') }}"` | Addional Text dispayed after Date, can contain Homeassistant Templates
+`dateAdditonalTemplate` | True | string | `" - {{ states('sun.sun') }}"` | Addional Text dispayed after Date, can contain a Homeassistant Template, text after `~` will be moved to an addional line between time and date
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
 `cards` | False | complex | | configuration for cards that are displayed on panel
 `screensaver` | True | complex | | configuration for screensaver

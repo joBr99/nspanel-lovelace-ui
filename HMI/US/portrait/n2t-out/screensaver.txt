@@ -75,7 +75,7 @@ Text tTime
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 21:32   
+        Text                                : 21:32
         Max. Text Size                      : 15
     
 Text tDate
@@ -86,7 +86,7 @@ Text tDate
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : Tuesday, 08. March 2022
-        Max. Text Size                      : 35
+        Max. Text Size                      : 40
     
 Text tMainIcon
     Attributes
@@ -328,6 +328,16 @@ Text tIcon2
         Text                                : 
         Max. Text Size                      : 5
     
+Text tDateAdd
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 40
+    
 Picture p0
     Attributes
         Scope                               : local
@@ -474,6 +484,22 @@ Timer tmSerial
                                             vis tMainIconAlt,1
                                             vis tMRIcon,1
                                             vis tMR,1
+                                            vis tForecast1,0
+                                            vis tF1Icon,0
+                                            vis tForecast1Val,0
+                                            //move forecast values to the right
+                                            tForecast4.txt=tForecast3.txt
+                                            tForecast3.txt=tForecast2.txt
+                                            tForecast2.txt=tForecast1.txt
+                                            tForecast4Val.txt=tForecast3Val.txt
+                                            tForecast3Val.txt=tForecast2Val.txt
+                                            tForecast2Val.txt=tForecast1Val.txt
+                                            tF4Icon.txt=tF3Icon.txt
+                                            tF3Icon.txt=tF2Icon.txt
+                                            tF2Icon.txt=tF1Icon.txt
+                                            tF4Icon.pco=tF3Icon.pco
+                                            tF3Icon.pco=tF2Icon.pco
+                                            tF2Icon.pco=tF1Icon.pco
                                         }
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
@@ -485,6 +511,15 @@ Timer tmSerial
                                         spstr strCommand.txt,tIcon2.txt,"~",19
                                         spstr strCommand.txt,tTmp.txt,"~",20
                                         covx tTmp.txt,tIcon2.pco,0,0
+                                        spstr strCommand.txt,tDateAdd.txt,"~",21
+                                        if(tNotifyHead.txt!="")
+                                        {
+                                            ref tNotifyHead
+                                        }
+                                        if(tNotifyText.txt!="")
+                                        {
+                                            ref tNotifyText
+                                        }
                                     }
                                     if(tInstruction.txt=="color")
                                     {
@@ -514,6 +549,7 @@ Timer tmSerial
                                         tForecast4.bco=tTime.bco
                                         tForecast4Val.bco=tTime.bco
                                         tF4Icon.bco=tTime.bco
+                                        tDateAdd.bco=tTime.bco
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,tTime.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",3
@@ -556,6 +592,8 @@ Timer tmSerial
                                         covx tTmp.txt,tMRIcon.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,tMR.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        covx tTmp.txt,tDateAdd.pco,0,0
                                     }
                                     if(tInstruction.txt=="notify")
                                     {
