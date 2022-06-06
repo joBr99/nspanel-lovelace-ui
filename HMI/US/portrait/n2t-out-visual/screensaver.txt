@@ -93,7 +93,7 @@ Text tTime
         x coordinate                        : 0
         y coordinate                        : 0
         Width                               : 320
-        Height                              : 150
+        Height                              : 129
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -106,7 +106,7 @@ Text tTime
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 21:32   
+        Text                                : 21:32
         Max. Text Size                      : 15
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -121,9 +121,9 @@ Text tDate
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 180
+        y coordinate                        : 195
         Width                               : 320
-        Height                              : 36
+        Height                              : 32
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -137,7 +137,7 @@ Text tDate
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : Tuesday, 08. March 2022
-        Max. Text Size                      : 35
+        Max. Text Size                      : 40
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -151,7 +151,7 @@ Text tMainIcon
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 125
-        y coordinate                        : 254
+        y coordinate                        : 261
         Width                               : 70
         Height                              : 65
         Effect                              : load
@@ -181,7 +181,7 @@ Text tMainText
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 111
-        y coordinate                        : 318
+        y coordinate                        : 325
         Width                               : 110
         Height                              : 42
         Effect                              : load
@@ -211,7 +211,7 @@ Text tForecast1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 5
-        y coordinate                        : 377
+        y coordinate                        : 384
         Width                               : 71
         Height                              : 25
         Effect                              : load
@@ -241,7 +241,7 @@ Text tForecast1Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 2
-        y coordinate                        : 443
+        y coordinate                        : 450
         Width                               : 70
         Height                              : 24
         Effect                              : load
@@ -271,7 +271,7 @@ Text tF1Icon
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 23
-        y coordinate                        : 406
+        y coordinate                        : 413
         Width                               : 40
         Height                              : 34
         Effect                              : load
@@ -301,7 +301,7 @@ Text tForecast2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 86
-        y coordinate                        : 378
+        y coordinate                        : 385
         Width                               : 71
         Height                              : 24
         Effect                              : load
@@ -331,7 +331,7 @@ Text tF2Icon
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 103
-        y coordinate                        : 406
+        y coordinate                        : 413
         Width                               : 40
         Height                              : 34
         Effect                              : load
@@ -361,7 +361,7 @@ Text tForecast2Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 83
-        y coordinate                        : 443
+        y coordinate                        : 450
         Width                               : 71
         Height                              : 24
         Effect                              : load
@@ -391,7 +391,7 @@ Text t10
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 49
-        y coordinate                        : 233
+        y coordinate                        : 240
         Width                               : 225
         Height                              : 2
         Effect                              : load
@@ -421,7 +421,7 @@ Text tAMPM
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 105
-        y coordinate                        : 122
+        y coordinate                        : 108
         Width                               : 103
         Height                              : 57
         Effect                              : load
@@ -451,7 +451,7 @@ Text tForecast3Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 444
+        y coordinate                        : 451
         Width                               : 70
         Height                              : 23
         Effect                              : load
@@ -481,7 +481,7 @@ Text tF3Icon
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 183
-        y coordinate                        : 407
+        y coordinate                        : 414
         Width                               : 40
         Height                              : 33
         Effect                              : load
@@ -511,7 +511,7 @@ Text tForecast3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 167
-        y coordinate                        : 379
+        y coordinate                        : 386
         Width                               : 70
         Height                              : 23
         Effect                              : load
@@ -541,7 +541,7 @@ Text tForecast4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 247
-        y coordinate                        : 379
+        y coordinate                        : 386
         Width                               : 70
         Height                              : 23
         Effect                              : load
@@ -571,7 +571,7 @@ Text tF4Icon
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 263
-        y coordinate                        : 407
+        y coordinate                        : 414
         Width                               : 40
         Height                              : 33
         Effect                              : load
@@ -601,7 +601,7 @@ Text tForecast4Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 246
-        y coordinate                        : 444
+        y coordinate                        : 451
         Width                               : 70
         Height                              : 23
         Effect                              : load
@@ -631,7 +631,7 @@ Text tMainTextAlt
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 184
-        y coordinate                        : 262
+        y coordinate                        : 269
         Width                               : 105
         Height                              : 41
         Effect                              : load
@@ -661,7 +661,7 @@ Text tMainIconAlt
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 44
-        y coordinate                        : 273
+        y coordinate                        : 280
         Width                               : 100
         Height                              : 65
         Effect                              : load
@@ -691,7 +691,7 @@ Text tMRIcon
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 182
-        y coordinate                        : 317
+        y coordinate                        : 324
         Width                               : 40
         Height                              : 34
         Effect                              : load
@@ -721,7 +721,7 @@ Text tMR
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 224
-        y coordinate                        : 322
+        y coordinate                        : 329
         Width                               : 61
         Height                              : 20
         Effect                              : load
@@ -751,7 +751,7 @@ Text tNotifyHead
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 253
+        y coordinate                        : 257
         Width                               : 320
         Height                              : 58
         Effect                              : load
@@ -781,7 +781,7 @@ Text tNotifyText
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 311
+        y coordinate                        : 315
         Width                               : 320
         Height                              : 58
         Effect                              : load
@@ -811,7 +811,7 @@ Text tIcon1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 8
-        y coordinate                        : 220
+        y coordinate                        : 227
         Width                               : 33
         Height                              : 30
         Effect                              : load
@@ -841,7 +841,7 @@ Text tIcon2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 282
-        y coordinate                        : 220
+        y coordinate                        : 227
         Width                               : 33
         Height                              : 30
         Effect                              : load
@@ -858,6 +858,36 @@ Text tIcon2
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tDateAdd
+    Attributes
+        ID                                  : 37
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 163
+        Width                               : 320
+        Height                              : 32
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 0
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 40
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1019,6 +1049,22 @@ Timer tmSerial
                                             vis tMainIconAlt,1
                                             vis tMRIcon,1
                                             vis tMR,1
+                                            vis tForecast1,0
+                                            vis tF1Icon,0
+                                            vis tForecast1Val,0
+                                            //move forecast values to the right
+                                            tForecast4.txt=tForecast3.txt
+                                            tForecast3.txt=tForecast2.txt
+                                            tForecast2.txt=tForecast1.txt
+                                            tForecast4Val.txt=tForecast3Val.txt
+                                            tForecast3Val.txt=tForecast2Val.txt
+                                            tForecast2Val.txt=tForecast1Val.txt
+                                            tF4Icon.txt=tF3Icon.txt
+                                            tF3Icon.txt=tF2Icon.txt
+                                            tF2Icon.txt=tF1Icon.txt
+                                            tF4Icon.pco=tF3Icon.pco
+                                            tF3Icon.pco=tF2Icon.pco
+                                            tF2Icon.pco=tF1Icon.pco
                                         }
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
@@ -1030,6 +1076,15 @@ Timer tmSerial
                                         spstr strCommand.txt,tIcon2.txt,"~",19
                                         spstr strCommand.txt,tTmp.txt,"~",20
                                         covx tTmp.txt,tIcon2.pco,0,0
+                                        spstr strCommand.txt,tDateAdd.txt,"~",21
+                                        if(tNotifyHead.txt!="")
+                                        {
+                                            ref tNotifyHead
+                                        }
+                                        if(tNotifyText.txt!="")
+                                        {
+                                            ref tNotifyText
+                                        }
                                     }
                                     if(tInstruction.txt=="color")
                                     {
@@ -1059,6 +1114,7 @@ Timer tmSerial
                                         tForecast4.bco=tTime.bco
                                         tForecast4Val.bco=tTime.bco
                                         tF4Icon.bco=tTime.bco
+                                        tDateAdd.bco=tTime.bco
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,tTime.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",3
@@ -1101,6 +1157,8 @@ Timer tmSerial
                                         covx tTmp.txt,tMRIcon.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,tMR.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        covx tTmp.txt,tDateAdd.pco,0,0
                                     }
                                     if(tInstruction.txt=="notify")
                                     {
