@@ -91,9 +91,9 @@ Text tTime
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 52
-        y coordinate                        : 0
+        y coordinate                        : 18
         Width                               : 376
-        Height                              : 154
+        Height                              : 112
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -121,23 +121,23 @@ Text tDate
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 15
-        y coordinate                        : 154
+        y coordinate                        : 162
         Width                               : 450
-        Height                              : 38
+        Height                              : 32
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center
-        Vertical Alignment                  : center
+        Vertical Alignment                  : bottom
         Input Type                          : character
         Text                                : Tuesday, 08. March 2022
-        Max. Text Size                      : 35
+        Max. Text Size                      : 40
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -810,7 +810,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 8
+        x coordinate                        : 15
         y coordinate                        : 0
         Width                               : 38
         Height                              : 38
@@ -840,7 +840,7 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 434
+        x coordinate                        : 428
         y coordinate                        : 0
         Width                               : 38
         Height                              : 38
@@ -858,6 +858,36 @@ Text tIcon2
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tDateAdd
+    Attributes
+        ID                                  : 37
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 15
+        y coordinate                        : 130
+        Width                               : 450
+        Height                              : 32
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 0
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : bottom
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 40
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -942,6 +972,9 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
                                         dim=dimValue
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -1043,6 +1076,15 @@ Timer tmSerial
                                         spstr strCommand.txt,tIcon2.txt,"~",19
                                         spstr strCommand.txt,tTmp.txt,"~",20
                                         covx tTmp.txt,tIcon2.pco,0,0
+                                        spstr strCommand.txt,tDateAdd.txt,"~",21
+                                        if(tNotifyHead.txt!="")
+                                        {
+                                            ref tNotifyHead
+                                        }
+                                        if(tNotifyText.txt!="")
+                                        {
+                                            ref tNotifyText
+                                        }
                                     }
                                     if(tInstruction.txt=="color")
                                     {
@@ -1072,6 +1114,7 @@ Timer tmSerial
                                         tForecast4.bco=tTime.bco
                                         tForecast4Val.bco=tTime.bco
                                         tF4Icon.bco=tTime.bco
+                                        tDateAdd.bco=tTime.bco
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,tTime.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",3
@@ -1114,6 +1157,8 @@ Timer tmSerial
                                         covx tTmp.txt,tMRIcon.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,tMR.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        covx tTmp.txt,tDateAdd.pco,0,0
                                     }
                                     if(tInstruction.txt=="notify")
                                     {
