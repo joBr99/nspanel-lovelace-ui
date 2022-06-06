@@ -164,7 +164,10 @@ class LuiPagesGen(object):
                 text = get_translation(self._locale, "frontend.ui.card.button.press")
                 icon_id = get_icon_id(icon) if icon is not None else get_icon_id("gesture-tap-button")
                 if item.status is not None and self._ha_api.entity_exists(item.status):
-                    icon_color = self.get_entity_color(self._ha_api.get_entity(item.status))
+                    status_entity = self._ha_api.get_entity(item.status)
+                    icon_color = self.get_entity_color(status_entity)
+                    if item.status.startswith("sensor") and cardType == "cardGrid":
+                        icon_id = status_entity.state
                 else:
                     icon_color = 17299
                 return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
