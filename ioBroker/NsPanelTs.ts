@@ -12,9 +12,9 @@ ReleaseNotes:
         - cardThermo (Neues Design für Alias Thermostat und zusätzlich für Alias Klimaanlage)
         - 08.05.2022 - Menüpfeile bei HardwareButtons (button1Page; button2Page) mit Navigation auf Page 0
         - 08.05.2022 - Standard-Brightness über neuen Parameter active einstellbar (Test mit 2.9.3)
+        - 08.05.2022 - Schalter (Licht, Dimmer, Hue, etc) in cardGrid lassen sich wieder schalten
 
     Known-Bugs --> Bugfix folgt:
-        - cardGrid - Schalter funktionieren nicht
         - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu
         - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc)
     
@@ -144,7 +144,7 @@ var weatherForecast = true; //true = WheatherForecast 5 Days --- false = Config 
 
 //Alexa-Instanz
 var alexaInstanz = "alexa2.0"
-var alexaDevice = "G0XXXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
+var alexaDevice = "G070RR1075220388"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
@@ -251,7 +251,6 @@ var Subpages_1: PageEntities =
     "items": [
         <PageItem>{ navigate: true, id: "Abfall", onColor: White, name: "Abfallkalender"},
         <PageItem>{ navigate: true, id: "WLAN", onColor: White, name: "Gäste WLAN"},
-        <PageItem>{ navigate: true, id: "Buero_Seite_2", onColor: White, name: "Büro Card Grid"}
     ]
 };
 
@@ -270,20 +269,19 @@ var Abfall: PageEntities =
     ]
 };
 
-//Subpage 2 von Subpages_1
 var Buero_Seite_2: PageGrid =
 {
     "type": "cardGrid",
     "heading": "Büro 2",
     "useColor": true,
-    "subPage": true,
+    "subPage": false,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe", name: "Schreibtisch"},
         <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", name: "Deckenlampe"},
         <PageItem>{ id: "alias.0.NSPanel_1.TestFenster", offColor: MSRed, onColor: MSGreen, name: "Büro Fenster"},
         <PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "power", offColor: MSRed, onColor: MSGreen},
         <PageItem>{ id: "alias.0.NSPanel_1.TestBlind", icon: "projector-screen", onColor: White, name: "Beamer"},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.TuneIn", icon: "play", onColor: White}
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "play", onColor: White, name: "TuneIn"}
     ]
 };
 
@@ -314,6 +312,7 @@ var Buero_Klimaanlage: PageThermo =
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.TestKlimaanlage", minValue: 170, maxValue: 250}]
 };
 
+//Subpage 2 von Subpages_1
 var WLAN: PageQR = 
 {
     "type": "cardQR",
@@ -438,6 +437,7 @@ export const config: Config = {
     defaultColor: Off,
     temperatureUnit: "°C",
     pages: [
+            Buero_Seite_2,
             Buero_Seite_1,
             Buero_Klimaanlage, 
             //WLAN,
@@ -1839,7 +1839,7 @@ function setIfExists(id: string, value: any, type: string | null = null): boolea
 function toggleState(id: string): boolean {
     let obj = getObject(id);
     if (existsState(id) && obj.common.type !== undefined && obj.common.type === "boolean") {
-        setState(id, !getState(id).val);
+        setIfExists(id, !getState(id).val);
         return true;
     }
     return false;
@@ -1941,14 +1941,34 @@ function HandleButtonEvent(words): void {
             setIfExists(id + ".CLOSE", true)
             break;
         case "button":
-            let obj = getObject(id);
-            switch (obj.common.role) {
-                case "lock":
-                case "button": 
-                    toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET");
-                    break;
-                case "buttonSensor":
-                    toggleState(id + ".ACTUAL");
+            if (existsObject(id)) {
+                var action = false
+                if (words[4] == "1")
+                    action = true;
+                let o = getObject(id)
+                switch (o.common.role) {
+                    case "lock":
+                    case "button": 
+                        toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET");
+                        break;
+                    case "buttonSensor":
+                        toggleState(id + ".ACTUAL");
+                        break;
+                    case "socket":
+                    case "light":
+                        toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET");
+                        break;
+                    case "dimmer":
+                        toggleState(id + ".ON_SET") ? true : toggleState(id + ".ON_ACTUAL");
+                        break;
+                    case "ct":
+                        toggleState(id + ".ON");
+                        break;
+                    case "rgb":
+                    case "rgbSingle":
+                    case "hue": // Armilar
+                        toggleState(id + ".ON_ACTUAL");
+                }
             }
             break;
         case "positionSlider":
