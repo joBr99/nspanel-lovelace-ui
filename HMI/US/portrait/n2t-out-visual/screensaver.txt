@@ -901,9 +901,9 @@ Picture p0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 1
-        Width                               : 319
-        Height                              : 479
+        y coordinate                        : 0
+        Width                               : 320
+        Height                              : 480
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -1041,7 +1041,7 @@ Timer tmSerial
                                         //alternative layout
                                         //tMRIcon
                                         spstr strCommand.txt,tMRIcon.txt,"~",15
-                                        if(tMRIcon.txt!="")
+                                        if(tMRIcon.txt!=""&&p0.w!=320)
                                         {
                                             //value for tMRIcon, activate alternative layout
                                             vis tMainIcon,0
