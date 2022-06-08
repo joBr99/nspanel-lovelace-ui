@@ -938,7 +938,7 @@ function ScreensaverDimmode() {
             SendToPanel({ payload: "dimmode~" + timeDimMode.brightnessNight}); 
         }         
     } else {
-        SendToPanel({ payload: "dimmode~" + config.dimmode });
+        SendToPanel({ payload: "dimmode~" + config.dimmode + "~" + config.active });
     }
 }
 
