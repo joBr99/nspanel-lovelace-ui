@@ -5,11 +5,18 @@ joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
+
 ReleaseNotes:
-Bugfixes und Erweiterungen seit letzter Verion:
-    - cardQR (für Gäste WLAN)
-    - cardThermo (Neues Design für Alias Thermostat und zusätzlich für Alias Klimaanlage)
-    - Bugfixes
+    Bugfixes und Erweiterungen seit letzter Verion:
+        - cardQR (für Gäste WLAN)
+        - cardThermo (Neues Design für Alias Thermostat und zusätzlich für Alias Klimaanlage)
+        - 08.05.2022 - Menüpfeile bei HardwareButtons (button1Page; button2Page) mit Navigation auf Page 0
+        - 08.05.2022 - Standard-Brightness über neuen Parameter active einstellbar (Test mit 2.9.3)
+
+    Known-Bugs --> Bugfix folgt:
+        - cardGrid - Schalter funktionieren nicht
+        - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu
+        - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc)
     
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -137,12 +144,12 @@ var weatherForecast = true; //true = WheatherForecast 5 Days --- false = Config 
 
 //Alexa-Instanz
 var alexaInstanz = "alexa2.0"
-var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
+var alexaDevice = "G0XXXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
-const alexaSpeakerList = []; //Beispiel ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino"];
-//const alexaSpeakerList = ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino","Echo Dot Küche"];
+//const alexaSpeakerList = []; //Beispiel ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino"];
+const alexaSpeakerList = ["Echo Spot Buero","Überall","Gartenhaus","Esszimmer","Heimkino","Echo Dot Küche"];
 
 //Datenpunkte für Nachricht an Screensaver 
 var screensaverNotifyHeading = NSPanel_Path + "ScreensaverInfo.popupNotifyHeading";
@@ -243,6 +250,7 @@ var Subpages_1: PageEntities =
     "subPage": false,
     "items": [
         <PageItem>{ navigate: true, id: "Abfall", onColor: White, name: "Abfallkalender"},
+        <PageItem>{ navigate: true, id: "WLAN", onColor: White, name: "Gäste WLAN"},
         <PageItem>{ navigate: true, id: "Buero_Seite_2", onColor: White, name: "Büro Card Grid"}
     ]
 };
@@ -311,7 +319,7 @@ var WLAN: PageQR =
     "type": "cardQR",
     "heading": "Gäste WLAN",
     "useColor": true,
-    "subPage": false,
+    "subPage": true,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Guest_Wifi" }]
 };
 
@@ -419,6 +427,7 @@ export const config: Config = {
     fourthScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.UVIndex", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "UV", ScreensaverEntityUnitText: "" },
     timeoutScreensaver: 15,
     dimmode: 8,
+    active: 100, //Standard-Brightness TFT
     screenSaverDoubleClick: false,
     locale: "de_DE",
     timeFormat: "%H:%M",
@@ -430,8 +439,8 @@ export const config: Config = {
     temperatureUnit: "°C",
     pages: [
             Buero_Seite_1,
-            Buero_Klimaanlage,
-            WLAN, 
+            Buero_Klimaanlage, 
+            //WLAN,
             Button_1,
             Test_Licht,
             Test_Funktionen,
@@ -894,7 +903,7 @@ function HandleStartupProcess(): void {
     SendDate();
     SendTime();
     SendToPanel({ payload: "timeout~" + config.timeoutScreensaver });
-    SendToPanel({ payload: "dimmode~" + config.dimmode });
+    SendToPanel({ payload: "dimmode~" + config.dimmode + "~" + config.active});
 }
 
 function SendDate(): void {
@@ -1850,6 +1859,15 @@ function HandleButtonEvent(words): void {
     }
 
     switch (buttonAction) {
+        case "bUp":
+            if (pageId < 0) { //Prüfen, ob button1page oder button2page 
+                pageId = 0;
+            } else {
+                pageId = Math.abs(pageNum);
+            }
+            UnsubscribeWatcher();
+            GeneratePage(config.pages[pageId]);
+    	    break;
         case "bNext":
             var pageNum = ((pageId + 1) % config.pages.length);
             pageId = Math.abs(pageNum);
@@ -2142,13 +2160,18 @@ function HandleButtonEvent(words): void {
 }
 
 function GetNavigationString(pageId: number): string {
+    if (Debug) console.log(pageId);
+    if (Debug) console.log(subPage_open);
+
     switch (pageId) {
         case 0:
             return "0|1";
         case config.pages.length - 1:
             return "1|0";
         case -1:
-            return "0|0";
+            return "2|0";
+        case -2:
+            return "2|0";
         default:
             return "1|1";
     }
@@ -2845,7 +2868,7 @@ type Config = {
     panelSendTopic: string,
     timeoutScreensaver: number,
     dimmode: number,
-    //brightnessScreensaver:
+    active: number,
     locale: string,
     timeFormat: string,
     dateFormat: string,
