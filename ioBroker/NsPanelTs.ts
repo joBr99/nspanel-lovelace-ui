@@ -924,9 +924,9 @@ function SendTime(): void {
 function ScreensaverDimmode() {
     if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
         if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : "23:00", timeDimMode.timeDay != undefined ? timeDimMode.timeDay : "06:00", "not between", null)) {
-            SendToPanel({ payload: "dimmode~" + timeDimMode.brightnessDay});
+            SendToPanel({ payload: "dimmode~" + timeDimMode.brightnessDay + "~" + config.active });
         } else {
-            SendToPanel({ payload: "dimmode~" + timeDimMode.brightnessNight}); 
+            SendToPanel({ payload: "dimmode~" + timeDimMode.brightnessNight + "~" + config.active }); 
         }         
     } else {
         SendToPanel({ payload: "dimmode~" + config.dimmode + "~" + config.active });
