@@ -74,9 +74,6 @@ Interne Sonoff-Sensoren (über Tasmota):
 Tasmota-Status0 - (zyklische Ausführung) 
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
 
-Tasmota-Status0 - (zyklische Ausführung) 
-    liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
-
 Erforderliche Adapter:
     Accu-Wheater:       - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
