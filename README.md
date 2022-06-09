@@ -354,9 +354,11 @@ nspanel-1:
         title: Guest Wifi
         qrCode: "WIFI:S:test_ssid;T:WPA;P:test_pw;;"
         entities:
-          - entity: iText.Name.test_ssid
+          - entity: iText.test_ssid
+            name: Name
             icon: mdi:wifi
-          - entity: iText.Password.test_pw
+          - entity: iText.test_pw
+            name: Password
             icon: mdi:key
 ```
 
