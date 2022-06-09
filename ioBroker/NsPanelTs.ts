@@ -5,7 +5,7 @@ joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
-
+ 
 ReleaseNotes:
     Bugfixes und Erweiterungen seit letzter Verion:
         - cardQR (für Gäste WLAN)
@@ -13,7 +13,7 @@ ReleaseNotes:
         - 08.05.2022 - Menüpfeile bei HardwareButtons (button1Page; button2Page) mit Navigation auf Page 0
         - 08.05.2022 - Standard-Brightness über neuen Parameter active einstellbar (Test mit 2.9.3)
         - 08.05.2022 - Schalter (Licht, Dimmer, Hue, etc) in cardGrid lassen sich wieder schalten
-
+ 
     Known-Bugs --> Bugfix folgt:
         - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu
         - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc)
@@ -23,7 +23,7 @@ Tasmota Konsole:
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
     Rule2 0 (Rule deaktivieren) 
-
+ 
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höschsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)   
@@ -32,13 +32,13 @@ Mögliche Seiten-Ansichten:
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnes Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
-
+ 
 Popup-Pages:
     popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farb-Temperatur" und "Farbauswahl" bereitgestellt
     popupShutter Page   - die Shutter-Potition (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
-
+ 
 Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)    
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
@@ -63,13 +63,16 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, ananlog Info 
     Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles Accu-Wheather-Icon (Icon) für Screensaver
-
+ 
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden
     Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden 
                           (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!! 
                           ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
+
+Tasmota-Status0 - (zyklische Ausführung) 
+    liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
 
 Tasmota-Status0 - (zyklische Ausführung) 
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt

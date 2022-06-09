@@ -109,6 +109,8 @@ def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
             return sensor_mapping_off[device_class] if device_class in sensor_mapping_off else "alert-circle-outline"
         else:
             return sensor_mapping[device_class] if device_class in sensor_mapping else "alert-circle-outline"
+    elif ha_type == "alarm-arm-fail":
+        return "progress-alert"
     else:
         return "alert-circle-outline"
 

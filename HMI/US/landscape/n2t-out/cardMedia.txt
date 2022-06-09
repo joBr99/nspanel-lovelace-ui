@@ -12,6 +12,7 @@ Page cardMedia
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             vis p0,0
             vis tSend,0
             vis tInstruction,0
@@ -43,6 +44,12 @@ Variable (int32) vaSpeakerPos
     Attributes
         Scope: local
         Value: 0
+    
+Variable (string) vaMenu
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
     
 Text tSend
     Attributes
@@ -211,6 +218,24 @@ Text tIcon
         Text                                : 
         Max. Text Size                      : 10
     
+    Events
+        Touch Release Event
+            if(vaMenu.txt!="")
+            {
+                tSend.txt="event,buttonPress2,"+vaMenu.txt+",button"
+                //send calc crc
+                btlen tSend.txt,sys0
+                crcrest 1,0xffff // reset CRC
+                crcputh 55 bb
+                crcputs sys0,2
+                crcputs tSend.txt,0
+                //send cmd
+                printh 55 bb
+                prints sys0,2
+                prints tSend.txt,0
+                prints crcval,2
+            }
+        
 Text t1
     Attributes
         Scope                               : local
@@ -619,6 +644,8 @@ Timer tmSerial
                                             vis t5,1
                                             covx tTmp.txt,t5.pco,0,0
                                         }
+                                        //tIconBtnEntityName
+                                        spstr strCommand.txt,vaMenu.txt,"~",12
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -635,7 +662,10 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
-                                        dim=dimValue
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
+                                        dim=dimValueNormal
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

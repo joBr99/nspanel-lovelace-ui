@@ -20,6 +20,7 @@ Page cardAlarm
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             vis p0,0
             vis tSend,0
             vis tInstruction,0
@@ -40,6 +41,7 @@ Page cardAlarm
             vis b8,0
             vis b9,0
             vis b10,0
+            vis b11,0
             vis tCode,0
             vis bPrev,0
             vis bNext,0
@@ -92,6 +94,13 @@ Variable (string) va4
         Scope         : local
         Text          : 
         Max. Text Size: 20
+    
+Variable (string) vaAddBtn
+    Attributes
+        ID            : 39
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
     
 Text tTmp
     Attributes
@@ -711,7 +720,65 @@ Button b9
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 116
+        x coordinate                        : 24
+        y coordinate                        : 424
+        Width                               : 75
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
+        Border Color                        : 6371
+        Border Width                        : 2
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 1374
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,arm1,tCode
+            tSend.txt="event,buttonPress2,"
+            if(vaAddBtn.txt!="")
+            {
+                tSend.txt+=vaAddBtn.txt+",button"
+            }else
+            {
+                tSend.txt+=entn.txt+",opnSensorNotify"
+            }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            tCode.txt=""
+        
+Button b10
+    Attributes
+        ID                                  : 22
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 117
         y coordinate                        : 424
         Width                               : 75
         Height                              : 50
@@ -740,44 +807,6 @@ Button b9
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"0"
-        
-Button b10
-    Attributes
-        ID                                  : 22
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 209
-        y coordinate                        : 424
-        Width                               : 75
-        Height                              : 50
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : border
-        Border Color                        : 6371
-        Border Width                        : 2
-        Font ID                             : 0
-        Back. Color                         : 6371
-        Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 14823
-        Font Color (Unpressed)              : 1374
-        Font Color (Pressed)                : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        State                               : unpressed
-        Text                                : CLR
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-    Events
-        Touch Press Event
-            tCode.txt=""
         
 Button arm1
     Attributes
@@ -995,6 +1024,44 @@ Button arm4
             prints crcval,2
             tCode.txt=""
         
+Button b11
+    Attributes
+        ID                                  : 38
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 209
+        y coordinate                        : 424
+        Width                               : 75
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
+        Border Color                        : 6371
+        Border Width                        : 2
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 1374
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : CLR
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            tCode.txt=""
+        
 Hotspot mSwipeNext
     Attributes
         ID                                  : 35
@@ -1199,6 +1266,7 @@ Timer tmSerial
                                             vis b8,1
                                             vis b9,1
                                             vis b10,1
+                                            vis b11,1
                                             vis tCode,1
                                         }else
                                         {
@@ -1213,6 +1281,7 @@ Timer tmSerial
                                             vis b8,0
                                             vis b9,0
                                             vis b10,0
+                                            vis b11,0
                                             vis tCode,0
                                         }
                                         //flashing status
@@ -1223,6 +1292,15 @@ Timer tmSerial
                                         }else
                                         {
                                             tmFlash.en=0
+                                        }
+                                        // extra button
+                                        spstr strCommand.txt,b9.txt,"~",15
+                                        if(b9.txt!="")
+                                        {
+                                            vis b9,1
+                                            spstr strCommand.txt,tTmp.txt,"~",16
+                                            covx tTmp.txt,b9.pco,0,0
+                                            spstr strCommand.txt,vaAddBtn.txt,"~",17
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -1240,7 +1318,10 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
-                                        dim=dimValue
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
+                                        dim=dimValueNormal
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

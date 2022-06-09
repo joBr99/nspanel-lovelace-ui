@@ -20,6 +20,7 @@ Page popupLight
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             //get entitiy name
             tEntity.txt=pageIcons.tTmp1.txt
             //get entity id
@@ -906,6 +907,10 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
+                                        dim=dimValueNormal
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

@@ -3,12 +3,14 @@ class Entity(object):
         if type(entity_input_config) is not dict:
             #self._ha_api.log("Config error, not a dict check your entity configs")
             self.entityId = "error"
-            self.nameOverride = None
-            self.iconOverride = None
         else:
-            self.entityId = entity_input_config.get("entity", "unknown")
-            self.nameOverride = entity_input_config.get("name")
-            self.iconOverride = entity_input_config.get("icon")
+            self.entityId  = entity_input_config.get("entity", "unknown")
+        self.nameOverride  = entity_input_config.get("name")
+        self.iconOverride  = entity_input_config.get("icon")
+        self.colorOverride = entity_input_config.get("color")
+        self.status        = entity_input_config.get("status")
+        self.condState     = entity_input_config.get("state")
+        self.condStateNot  = entity_input_config.get("state_not")
 
 class Card(object):
     def __init__(self, card_input_config, pos=None):
@@ -32,11 +34,16 @@ class Card(object):
         entityIds = []
         if self.entity is not None:
             entityIds.append(self.entity.entityId)
+            if self.entity.status is not None:
+                entityIds.append(self.entity.status)
         else:
             for e in self.entities:
                 entityIds.append(e.entityId)
+                if e.status is not None:
+                    entityIds.append(e.status)
+
         # additional keys to check
-        add_ent_keys = ['weatherOverrideForecast1', 'weatherOverrideForecast2', 'weatherOverrideForecast3', 'weatherOverrideForecast4', 'statusIcon1', 'statusIcon2']
+        add_ent_keys = ['weatherOverrideForecast1', 'weatherOverrideForecast2', 'weatherOverrideForecast3', 'weatherOverrideForecast4', 'statusIcon1', 'statusIcon2', 'alarmControl']
         for ent_key in add_ent_keys:
             val = self.raw_config.get(ent_key)
             if val is not None:
@@ -67,11 +74,14 @@ class LuiBackendConfig(object):
             'model': "eu",
             'sleepTimeout': 20,
             'sleepBrightness': 20,
+            'screenBrightness': 100,
             'sleepTracking': None,
+            'sleepOverride': None,
             'locale': "en_US",
             'timeFormat': "%H:%M",
             'dateFormatBabel': "full",
             'dateAdditonalTemplate': "",
+            'timeAdditonalTemplate': "",
             'dateFormat': "%A, %d. %B %Y",
             'cards': [{
                 'type': 'cardEntities',

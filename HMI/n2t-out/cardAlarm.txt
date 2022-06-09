@@ -12,6 +12,7 @@ Page cardAlarm
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             vis p0,0
             vis tSend,0
             vis tInstruction,0
@@ -32,6 +33,7 @@ Page cardAlarm
             vis b8,0
             vis b9,0
             vis b10,0
+            vis b11,0
             vis tCode,0
             vis bPrev,0
             vis bNext,0
@@ -77,6 +79,12 @@ Variable (string) va4
         Scope         : local
         Text          : 
         Max. Text Size: 20
+    
+Variable (string) vaAddBtn
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
     
 Text tTmp
     Attributes
@@ -325,12 +333,32 @@ Button b9
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : 0
+        Text                                : 
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            tCode.txt=tCode.txt+"0"
+            // event,buttonPress2,entn,arm1,tCode
+            tSend.txt="event,buttonPress2,"
+            if(vaAddBtn.txt!="")
+            {
+                tSend.txt+=vaAddBtn.txt+",button"
+            }else
+            {
+                tSend.txt+=entn.txt+",opnSensorNotify"
+            }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            tCode.txt=""
         
 Button b10
     Attributes
@@ -339,12 +367,12 @@ Button b10
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : CLR
+        Text                                : 0
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            tCode.txt=""
+            tCode.txt=tCode.txt+"0"
         
 Button arm1
     Attributes
@@ -464,6 +492,20 @@ Button arm4
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tCode.txt=""
+        
+Button b11
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : CLR
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
             tCode.txt=""
         
 Hotspot mSwipeNext
@@ -642,6 +684,7 @@ Timer tmSerial
                                             vis b8,1
                                             vis b9,1
                                             vis b10,1
+                                            vis b11,1
                                             vis tCode,1
                                         }else
                                         {
@@ -656,6 +699,7 @@ Timer tmSerial
                                             vis b8,0
                                             vis b9,0
                                             vis b10,0
+                                            vis b11,0
                                             vis tCode,0
                                         }
                                         //flashing status
@@ -666,6 +710,15 @@ Timer tmSerial
                                         }else
                                         {
                                             tmFlash.en=0
+                                        }
+                                        // extra button
+                                        spstr strCommand.txt,b9.txt,"~",15
+                                        if(b9.txt!="")
+                                        {
+                                            vis b9,1
+                                            spstr strCommand.txt,tTmp.txt,"~",16
+                                            covx tTmp.txt,b9.pco,0,0
+                                            spstr strCommand.txt,vaAddBtn.txt,"~",17
                                         }
                                     }
                                     if(tInstruction.txt=="time")
