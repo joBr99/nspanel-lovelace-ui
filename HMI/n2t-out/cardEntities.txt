@@ -12,6 +12,7 @@ Page cardEntities
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             //wup=cardEntities
             //remove background & activate reparse mode
             vis p0,0

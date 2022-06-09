@@ -37,11 +37,11 @@ wake screen:
 
 `wake`
 
-set brightness of screensaver:
+set brightness of screensaver and active-brightness:
 
-`dimmode~0 - (screen off)`
+`dimmode~0~100 - (screen off)`
 
-`dimmode~100 - (screen on with full brightness)`
+`dimmode~100~100 - (screen on with full brightness)`
 
 set current time:
 
@@ -111,7 +111,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupShutter Page
 
-`entityUpdateDetail~*ignored*~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown~iconUpStatus~iconStopStatus~iconDownStatus
+`entityUpdateDetail~*ignored*~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown~iconUpStatus~iconStopStatus~iconDownStatus~textTilt~iconTiltLeft~iconTiltStop~iconTiltRight~iconTiltLeftStatus~iconTiltStopStatus~iconTiltLeftStatus`
 
 `entityUpdateDetail~1~77`
 
@@ -129,7 +129,10 @@ The following message can be used to update the content on the cardEntities Page
 
 ### cardMedia Page
 
-`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*icon*~*title*~*author*~*volume*~*playpauseicon*~currentSpeaker~speakerList-seperated-by-?`
+onoffbtn has to be`disable` to disable the on off btn
+tIconBtnEntityName is the entiy name used in the button event for pressing the upper left icon
+
+`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*icon*~*title*~*author*~*volume*~*playpauseicon*~currentSpeaker~speakerList-seperated-by-?~onoffbtn~tIconBtnEntityName`
 
 ### cardAlarm Page
 

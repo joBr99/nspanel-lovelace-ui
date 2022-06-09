@@ -20,6 +20,7 @@ Page cardThermo
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             vis p0,0
             vis tSend,0
             vis tInstruction,0
@@ -28,9 +29,6 @@ Page cardThermo
             vis xTempMin1,0
             vis xTempMax1,0
             vis xTempStep1,0
-            vis xTempMin2,0
-            vis xTempMax2,0
-            vis xTempStep2,0
             //tEntity.txt=tHeading.txt
             // disable all buttons
             vis bt0,0
@@ -124,28 +122,28 @@ Variable (string) va7
     
 Variable (string) tInstruction
     Attributes
-        ID            : 46
+        ID            : 43
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tId
     Attributes
-        ID            : 47
+        ID            : 44
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tTmp
     Attributes
-        ID            : 48
+        ID            : 45
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) tSend
     Attributes
-        ID            : 49
+        ID            : 46
         Scope         : local
         Text          : 
         Max. Text Size: 100
@@ -300,99 +298,9 @@ XFloat xTempDest2
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-XFloat xTempMin2
-    Attributes
-        ID                                  : 43
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 246
-        y coordinate                        : 69
-        Width                               : 50
-        Height                              : 21
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Value                               : 0
-        Significant digits left             : 0
-        Significant digits right            : 1
-        Word wrap                           : enabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-XFloat xTempMax2
-    Attributes
-        ID                                  : 44
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 246
-        y coordinate                        : 91
-        Width                               : 45
-        Height                              : 20
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Value                               : 0
-        Significant digits left             : 0
-        Significant digits right            : 1
-        Word wrap                           : enabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-XFloat xTempStep2
-    Attributes
-        ID                                  : 45
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 247
-        y coordinate                        : 179
-        Width                               : 45
-        Height                              : 20
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Value                               : 0
-        Significant digits left             : 0
-        Significant digits right            : 1
-        Word wrap                           : enabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 XFloat xTempDest
     Attributes
-        ID                                  : 52
+        ID                                  : 49
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -602,7 +510,7 @@ Text tCF2
     
 Text tALbl
     Attributes
-        ID                                  : 50
+        ID                                  : 47
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -632,7 +540,7 @@ Text tALbl
     
 Text tCF
     Attributes
-        ID                                  : 54
+        ID                                  : 51
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -662,7 +570,7 @@ Text tCF
     
 Text tCurTemp
     Attributes
-        ID                                  : 55
+        ID                                  : 52
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1242,9 +1150,12 @@ Dual-state Button btUp1
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHigh,"
+            tSend.txt+="tempUpdHighLow,"
             //convert temperature
             covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
+            covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
@@ -1300,9 +1211,12 @@ Dual-state Button btDown1
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHigh,"
+            tSend.txt+="tempUpdHighLow,"
             //convert temperature
             covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
+            covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
@@ -1338,7 +1252,7 @@ Dual-state Button bUp2
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
         Font Color (Unpressed)              : 50712
-        Font Color (Pressed)                : 64512
+        Font Color (Pressed)                : 50712
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         State                               : unpressed
@@ -1350,16 +1264,19 @@ Dual-state Button bUp2
     
     Events
         Touch Press Event
-            if(xTempDest2.val<xTempMax2.val)
+            if(xTempDest2.val<xTempMax1.val)
             {
-                xTempDest2.val=xTempDest2.val+xTempStep2.val
+                xTempDest2.val=xTempDest2.val+xTempStep1.val
             }
             // event,buttonPress2,entn,tempUpd,X
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdLow,"
+            tSend.txt+="tempUpdHighLow,"
             //convert temperature
+            covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
             covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -1408,16 +1325,19 @@ Dual-state Button bDown2
     
     Events
         Touch Press Event
-            if(xTempDest2.val>xTempMin2.val)
+            if(xTempDest2.val>xTempMin1.val)
             {
-                xTempDest2.val=xTempDest2.val-xTempStep2.val
+                xTempDest2.val=xTempDest2.val-xTempStep1.val
             }
             // event,buttonPress2,entn,tempUpd,X
             //craft command
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdLow,"
+            tSend.txt+="tempUpdHighLow,"
             //convert temperature
+            covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
             covx xTempDest2.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -1434,7 +1354,7 @@ Dual-state Button bDown2
         
 Dual-state Button btUp
     Attributes
-        ID                                  : 51
+        ID                                  : 48
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1492,7 +1412,7 @@ Dual-state Button btUp
         
 Dual-state Button btDown
     Attributes
-        ID                                  : 53
+        ID                                  : 50
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1950,6 +1870,10 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
+                                        dim=dimValueNormal
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

@@ -20,6 +20,7 @@ Page cardAlarm
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
             vis p0,0
             vis tSend,0
             vis tInstruction,0
@@ -40,6 +41,7 @@ Page cardAlarm
             vis b8,0
             vis b9,0
             vis b10,0
+            vis b11,0
             vis tCode,0
             vis bPrev,0
             vis bNext,0
@@ -93,6 +95,13 @@ Variable (string) va4
         Text          : 
         Max. Text Size: 20
     
+Variable (string) vaAddBtn
+    Attributes
+        ID            : 39
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
 Text tTmp
     Attributes
         ID                                  : 2
@@ -111,7 +120,7 @@ Text tTmp
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 0
+        Font ID                             : 6
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -141,7 +150,7 @@ Text tInstruction
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 0
+        Font ID                             : 6
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -171,7 +180,7 @@ Text tId
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 0
+        Font ID                             : 6
         Back. Color                         : 65535
         Font Color                          : 0
         Horizontal Alignment                : center
@@ -191,7 +200,7 @@ Text tCode
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 107
+        x coordinate                        : 108
         y coordinate                        : 16
         Width                               : 192
         Height                              : 49
@@ -201,7 +210,7 @@ Text tCode
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 10565
         Font Color                          : 40179
         Horizontal Alignment                : center
@@ -221,7 +230,7 @@ Text tIcon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 315
+        x coordinate                        : 316
         y coordinate                        : 16
         Width                               : 64
         Height                              : 49
@@ -253,8 +262,8 @@ Picture p0
         Opacity                             : 127
         x coordinate                        : 0
         y coordinate                        : 0
-        Width                               : 480
-        Height                              : 320
+        Width                               : 479
+        Height                              : 319
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -268,7 +277,7 @@ Button bNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 406
+        x coordinate                        : 407
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -315,7 +324,7 @@ Button bPrev
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 24
+        x coordinate                        : 25
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -369,7 +378,7 @@ Button b0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 40
+        x coordinate                        : 41
         y coordinate                        : 94
         Width                               : 75
         Height                              : 50
@@ -380,7 +389,7 @@ Button b0
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -407,7 +416,7 @@ Button b1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 132
+        x coordinate                        : 133
         y coordinate                        : 94
         Width                               : 75
         Height                              : 50
@@ -418,7 +427,7 @@ Button b1
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -445,7 +454,7 @@ Button b2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 224
+        x coordinate                        : 225
         y coordinate                        : 93
         Width                               : 75
         Height                              : 50
@@ -456,7 +465,7 @@ Button b2
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -483,7 +492,7 @@ Button b3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 40
+        x coordinate                        : 41
         y coordinate                        : 152
         Width                               : 75
         Height                              : 50
@@ -494,7 +503,7 @@ Button b3
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -521,7 +530,7 @@ Button b4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 132
+        x coordinate                        : 133
         y coordinate                        : 152
         Width                               : 75
         Height                              : 50
@@ -532,7 +541,7 @@ Button b4
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -559,7 +568,7 @@ Button b5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 224
+        x coordinate                        : 225
         y coordinate                        : 152
         Width                               : 75
         Height                              : 50
@@ -570,7 +579,7 @@ Button b5
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -597,7 +606,7 @@ Button b6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 40
+        x coordinate                        : 41
         y coordinate                        : 210
         Width                               : 75
         Height                              : 50
@@ -608,7 +617,7 @@ Button b6
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -635,7 +644,7 @@ Button b7
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 132
+        x coordinate                        : 133
         y coordinate                        : 210
         Width                               : 75
         Height                              : 50
@@ -646,7 +655,7 @@ Button b7
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -673,7 +682,7 @@ Button b8
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 224
+        x coordinate                        : 225
         y coordinate                        : 210
         Width                               : 75
         Height                              : 50
@@ -684,7 +693,7 @@ Button b8
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -711,7 +720,7 @@ Button b9
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 131
+        x coordinate                        : 41
         y coordinate                        : 266
         Width                               : 75
         Height                              : 50
@@ -722,7 +731,65 @@ Button b9
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 2
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 1374
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,arm1,tCode
+            tSend.txt="event,buttonPress2,"
+            if(vaAddBtn.txt!="")
+            {
+                tSend.txt+=vaAddBtn.txt+",button"
+            }else
+            {
+                tSend.txt+=entn.txt+",opnSensorNotify"
+            }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            tCode.txt=""
+        
+Button b10
+    Attributes
+        ID                                  : 22
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 134
+        y coordinate                        : 266
+        Width                               : 75
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
+        Border Color                        : 6371
+        Border Width                        : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -741,44 +808,6 @@ Button b9
         Touch Press Event
             tCode.txt=tCode.txt+"0"
         
-Button b10
-    Attributes
-        ID                                  : 22
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 224
-        y coordinate                        : 266
-        Width                               : 75
-        Height                              : 50
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : border
-        Border Color                        : 6371
-        Border Width                        : 2
-        Font ID                             : 2
-        Back. Color                         : 6371
-        Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 14823
-        Font Color (Unpressed)              : 1374
-        Font Color (Pressed)                : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        State                               : unpressed
-        Text                                : CLR
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-    Events
-        Touch Press Event
-            tCode.txt=""
-        
 Button arm1
     Attributes
         ID                                  : 24
@@ -787,7 +816,7 @@ Button arm1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 315
+        x coordinate                        : 316
         y coordinate                        : 91
         Width                               : 141
         Height                              : 50
@@ -798,7 +827,7 @@ Button arm1
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 0
+        Font ID                             : 6
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -841,7 +870,7 @@ Button arm3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 315
+        x coordinate                        : 316
         y coordinate                        : 210
         Width                               : 140
         Height                              : 50
@@ -852,7 +881,7 @@ Button arm3
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 0
+        Font ID                             : 6
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -895,7 +924,7 @@ Button arm2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 315
+        x coordinate                        : 316
         y coordinate                        : 152
         Width                               : 141
         Height                              : 50
@@ -906,7 +935,7 @@ Button arm2
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 0
+        Font ID                             : 6
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -949,7 +978,7 @@ Button arm4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 315
+        x coordinate                        : 316
         y coordinate                        : 266
         Width                               : 141
         Height                              : 50
@@ -960,7 +989,7 @@ Button arm4
         Style                               : border
         Border Color                        : 6371
         Border Width                        : 2
-        Font ID                             : 0
+        Font ID                             : 6
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -995,6 +1024,44 @@ Button arm4
             prints crcval,2
             tCode.txt=""
         
+Button b11
+    Attributes
+        ID                                  : 38
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 225
+        y coordinate                        : 266
+        Width                               : 75
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
+        Border Color                        : 6371
+        Border Width                        : 2
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 1374
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : CLR
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            tCode.txt=""
+        
 Hotspot mSwipeNext
     Attributes
         ID                                  : 35
@@ -1025,7 +1092,7 @@ Hotspot mSwipeUp
         Opacity                             : 127
         x coordinate                        : 12
         y coordinate                        : 0
-        Width                               : 450
+        Width                               : 426
         Height                              : 9
         Effect                              : load
         Effect Priority                     : 0
@@ -1199,6 +1266,7 @@ Timer tmSerial
                                             vis b8,1
                                             vis b9,1
                                             vis b10,1
+                                            vis b11,1
                                             vis tCode,1
                                         }else
                                         {
@@ -1213,6 +1281,7 @@ Timer tmSerial
                                             vis b8,0
                                             vis b9,0
                                             vis b10,0
+                                            vis b11,0
                                             vis tCode,0
                                         }
                                         //flashing status
@@ -1223,6 +1292,15 @@ Timer tmSerial
                                         }else
                                         {
                                             tmFlash.en=0
+                                        }
+                                        // extra button
+                                        spstr strCommand.txt,b9.txt,"~",15
+                                        if(b9.txt!="")
+                                        {
+                                            vis b9,1
+                                            spstr strCommand.txt,tTmp.txt,"~",16
+                                            covx tTmp.txt,b9.pco,0,0
+                                            spstr strCommand.txt,vaAddBtn.txt,"~",17
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -1240,7 +1318,10 @@ Timer tmSerial
                                         // get value
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,dimValue,0,0
-                                        dim=dimValue
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
+                                        dim=dimValueNormal
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

@@ -377,12 +377,15 @@ key | optional | type | default | description
 `updateMode` | True | string | `auto-notify` | Update Mode; Possible values: "auto", "auto-notify", "manual"
 `model` | True | string | `eu` | Model; Possible values: "eu", "us-l" and "us-p"
 `sleepTimeout` | True | integer | `20` | Timeout for the screen to enter screensaver, to disable screensaver use 0
-`sleepBrightness` | True | integer/complex | `20` | Brightness for the screen to enter screensaver, see example below for complex/scheduled config.
+`sleepBrightness` | True | integer/complex | `20` | Brightness for the screen on the screensaver, see example below for complex/scheduled config.
+`screenBrightness` | True | integer/complex | `100` | Brightness for the screen during usage, config format is the same as sleepBrightness.
 `sleepTracking` | True | string | None | Forces screensaver brightness to 0 in case entity state is not_home or off, can be a group, person or device_tracker entity.
+`sleepOverride` | True | complex | None | Allows overriding of the sleepBrightness if entity state is on, true or home. Overrides sleepBrightness but sleepTracking takes precedence.
 `locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
 `dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
 `timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  <pre>`"%I:%M   ?%p"`</pre>
-`dateAdditonalTemplate` | True | string | `" - {{ states('sun.sun') }}"` | Addional Text dispayed after Date, can contain Homeassistant Templates
+`dateAdditonalTemplate` | True | string | `""` | Addional Text dispayed after Date, can contain a Homeassistant Template Example `" - {{ states('sun.sun') }}"`
+`timeAdditonalTemplate` | True | string | `""` | Addional Text dispayed below Time, can contain a Homeassistant Template
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
 `cards` | False | complex | | configuration for cards that are displayed on panel
 `screensaver` | True | complex | | configuration for screensaver
@@ -441,10 +444,45 @@ key | optional | type | default | description
 key | optional | type | default | description
 -- | -- | -- | -- | --
 `type` | False | string | `None` | Used by navigate items
-`entities` | False | complex | `None` | contains entities of the card, applys only to cardEntities and cardGrid
+`entities` | False | complex | `None` | contains entities of the card, only valid on cardEntities and cardGrid and cardQR
 `title` | True | string | `None` | Title of the Page 
 `entity` | False | string | `None` | contains the entity of the current card, valid for cardThermo, cardAlarm and cardMedia
 `key` | True | string | `None` | Used by navigate items
+`mediaControl` | True | string | `None` | Only valid on cardMedia, contains the action executed on pressing the top left media icon. (useful to navigate to a hidden card or start a script)
+`alarmControl` | True | complex | `None` | Only valid on cardAlarm, contains the action executed on pressing the left bottom icon, by default this button is used to show a list of open sensors on a failed attempt to arm.
+
+#### Possible configuration values for entities key
+
+key | optional | type | default | description
+-- | -- | -- | -- | --
+`entity` | False | string | `None` | name of ha entity
+`name` | True | string | `None` | Used to override names
+`icon` | True | string | `None` | Used to override icons
+`color` | True | array | `None` | Overwrite color of entity `color: [255, 0, 0]`
+`state` | True | string | `None` | Only displayed if Entity state is equal to this value
+`state_not` | True | string | `None` | Only displayed if Entity state is unequal to this value
+`status` | True | string | `None` | Only valid for navigate items, adds a entity to track state for the icon
+
+##### Override Icons or Names
+
+To overwrite Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
+Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?https://github.com/joBr99/nspanel-lovelace-ui/blob/main/HMI/icon-cheatsheet.html) are useable.
+
+```yaml
+        entities:
+          - entity: light.test_item
+            name: NameOverride
+            icon: mdi:lightbulb
+```
+
+It is also possible to configure different icon overwrites per state:
+
+```yaml
+            icon:
+                "on": mdi:lightbulb
+                "off": mdi:lightbulb
+
+```
 
 
 #### Possible configuration values for screensaver config
@@ -536,27 +574,23 @@ It is possible to schedule a brightness change for the screen at specific times.
         value: 0
 ```
 
+`sleepTracking` overrides this setting and sets the brightness to 0 if the state of the configured Home Assistant entity is `off` or `not_home`. You may also use a [Home Assistant group](https://www.home-assistant.io/integrations/group) to track multiple entities.
 
-#### Override Icons or Names
+`sleepOverride` overrides sleepBrightness but does not take precedence over sleepTracking. This is useful if, for example, you want your NSPanel to be brighter than usual if your light is on or if you want to override a panel dimming if you are in the room.
 
-To overwrite Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
-Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?https://github.com/joBr99/nspanel-lovelace-ui/blob/main/HMI/icon-cheatsheet.html) are useable.
-
-```yaml
-        entities:
-          - entity: light.test_item
-            name: NameOverride
-            icon: mdi:lightbulb
-```
-
-It is also possible to configure different icon overwrites per state:
+The following example configuration does nothing during the day but at night, if the bedroom light is on the NSPanel brightness will be 20 instead of 0.
 
 ```yaml
-            icon:
-                "on": mdi:lightbulb
-                "off": mdi:lightbulb
-
+    sleepBrightness:
+      - time: "sunrise"
+        value: 20
+      - time: "sunset"
+        value: 0
+    sleepOverride:
+      entity: light.bedroomlight
+      brightness: 20
 ```
+
 
 Also it is possible to configure a text or a character by using "text:" as a prefix instead of an icon. `icon: text:X`
 
@@ -761,12 +795,12 @@ Click download.
 
 2. Restart AppDaemon
 
-3. Flash current Development Firmware in Tasmota Console.
+3. Flash current Development Firmware in Tasmota Console. DO NOT USE THIS URL (only if you are on main/dev)
 
-`FlashNextion http://nspanel.pky.eu/lui.tft`
+`FlashNextion http://nspanel.pky.eu/lui.tft`  DO NOT USE THIS URL (only if you are on main/dev)
 
 Development happens in the EU version, so it is possible that the US Version isn't up to date with the current development version of the EU firmware, the lastet US versions are still downloadable with the following links:
 
-`FlashNextion http://nspanel.pky.eu/lui-us-l.tft`
+`FlashNextion http://nspanel.pky.eu/lui-us-l.tft`  DO NOT USE THIS URL (only if you are on main/dev)
 
-`FlashNextion http://nspanel.pky.eu/lui-us-p.tft`
+`FlashNextion http://nspanel.pky.eu/lui-us-p.tft`  DO NOT USE THIS URL (only if you are on main/dev)
