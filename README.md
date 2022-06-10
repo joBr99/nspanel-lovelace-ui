@@ -246,6 +246,10 @@ Support for ESPHome is WIP, see this third-party [ESPHome component](https://git
 
 ## Configuration
 
+Note this is the documentation of the current development version and might have changed since latest release, so see the documentation of the current release visit:
+
+https://github.com/joBr99/nspanel-lovelace-ui/tree/v2.9.3
+
 ### Configuring the MQTT integration in AppDaemon
 
 For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml`
