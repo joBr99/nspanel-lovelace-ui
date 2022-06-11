@@ -60,16 +60,27 @@ plugins:
 
 nav:
     - "Overview": index.md
-    - "Getting started":
+    - "Getting started (HA)":
         - "First steps":
             - "Prepare NsPanel": prepare_nspanel.md
             - "Prepare Home Assistant": prepare_ha.md
             - "Configure MQTT": configure_mqtt.md
         - "FAQ": faq.md
-    - "Configuration - apps.yaml":
+    - "Configuration - apps.yaml (HA)":
         - "Overview": config-overview.md
         - "Screensaver": config-screensaver.md
         - "Cards":
             - "Entities Card": card-entities.md
             - "Grid Card": card-grid.md
             - "Climate/Thermo Card": card-climate.md
+            - "Media Card": card-media.md
+            - "Alarm Card": card-alarm.md
+            - "Wifi/QR Card": card-qr.md
+        - "Special Settings for Entities": entities.md
+        - "Physical Buttons": phys-btn.md
+
+
+
+    - "Getting started (ioBroker)":
+        - "Prepare NsPanel": prepare_nspanel.md
+        - "Prepare ioBroker": iobroker-install.md
