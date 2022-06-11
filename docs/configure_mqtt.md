@@ -59,6 +59,10 @@ nspanel-1:
 
 Please adjust `tasmota_your_mqtt_topic` to the topic used in Tasmota MQTT Configuration.
 
+If your configuration is correct you should get the following screens on your panel:
+
+![hacs-main](img/mqtt-config-sucess.png)
+
 <details>
 <summary>Note: You can add multiple panels to this configuration:</summary>
 <br>
