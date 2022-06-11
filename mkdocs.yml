@@ -68,3 +68,7 @@ nav:
         - "FAQ": faq.md
     - "Configuration - apps.yaml":
         - "Overview": config-overview.md
+        - "Screensaver": config-screensaver.md
+        - "Cards":
+            - "Entities / Grid Card": card-entities.md
+            - "Climate/Thermo Card": card-climate.md
