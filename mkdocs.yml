@@ -1,0 +1,64 @@
+# https://squidfunk.github.io/mkdocs-material/getting-started
+# https://squidfunk.github.io/mkdocs-material/reference/admonitions
+# https://github.com/squidfunk/mkdocs-material/blob/master/mkdocs.yml
+
+
+site_name: NsPanel Lovelace UI Docs
+site_description: Custom Firmware for NsPanel with the design of HomeAssistant's lovelace UI in mind, works with Tasmota.
+site_author: Johannes Braun
+site_url: https://jobr99.github.io/nspanel-lovelace-ui
+
+repo_name: pikvm/pikvm
+repo_url: https://github.com/jobr99/nspanel-lovelace-ui
+edit_uri: ""
+
+copyright: "Copyright &copy; 2022 Johannes Braun"
+
+docs_dir: docs
+
+theme:
+    #logo: _assets/logo.png
+    #favicon: _assets/favicon.ico
+    name: material
+    palette:
+        accent: blue
+    font:
+        text: "arial, sans-serif"
+        code: monospace
+    features:
+        - navigation.indexes
+        - navigation.sections
+        - navigation.top
+        - navigation.tracking
+        - navigation.expand
+        - search.highlight
+        - search.share
+        - search.suggest
+
+extra_css:
+    - _assets/user.css
+
+markdown_extensions:
+    - admonition
+    - def_list
+    - attr_list
+    - pymdownx.tilde
+    - pymdownx.details
+    - pymdownx.superfences
+    - pymdownx.magiclink
+    - toc:
+        permalink: true
+    - codehilite:
+        guess_lang: false
+    - markdown_include.include:
+        base_path: docs
+
+plugins:
+    - search:
+        lang: en
+    - mkdocs-video
+
+nav:
+    - "Getting started":
+        - "First steps": first_steps.md
+        - "FAQ": faq.md
