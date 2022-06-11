@@ -61,4 +61,8 @@ plugins:
 nav:
     - "Getting started":
         - "First steps": first_steps.md
+            - "Prepare NsPanel": prepare_nspanel.md
+            - "Setup Home Assistant": setup_ha.md
         - "FAQ": faq.md
+    - "Configuration - apps.yaml":
+        - "Cards": cards.md
