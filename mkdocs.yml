@@ -59,6 +59,7 @@ plugins:
     - mkdocs-video
 
 nav:
+    - "Overview": overview.md
     - "Getting started":
         - "First steps":
             - "Prepare NsPanel": prepare_nspanel.md
