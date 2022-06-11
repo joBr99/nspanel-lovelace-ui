@@ -86,27 +86,24 @@ class LuiBackendConfig(object):
             'cards': [{
                 'type': 'cardEntities',
                 'entities': [{
-                    'entity': 'switch.test_item',
-                    'name': 'Test Item'
-                    }, {
-                    'entity': 'switch.test_item'
-                }],
-                'title': 'Example Entities Page'
-            }, {
-                'type': 'cardGrid',
-                'entities': [{
-                    'entity': 'switch.test_item'
-                    }, {
-                    'entity': 'switch.test_item'
-                    }, {
-                    'entity': 'switch.test_item'
-                    }
-                ],
-                'title': 'Example Grid Page'
-            }, {
-                'type': 'climate',
-                'entity': 'climate.test_item',
-                'temperatureUnit': 'celsius'
+                    'entity': 'iText.',
+                    'name': 'MQTT Config successful',
+                    'icon': 'mdi:check',
+                    'color:': [0, 255, 0],
+                    },{
+                    'entity': 'iText.',
+                    'name': 'Continue adding',
+                    'icon': 'mdi:arrow-right-bold',
+                    },{
+                    'entity': 'iText.',
+                    'name': 'cards to your',
+                    'icon': 'mdi:card',
+                    },{
+                    'entity': 'iText.',
+                    'name': 'apps.yaml',
+                    'icon': 'mdi:cog',
+                    }],
+                'title': 'Setup successful'
             }],
             'screensaver': {
                 'type': 'screensaver',
