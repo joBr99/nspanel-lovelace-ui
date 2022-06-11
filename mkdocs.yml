@@ -60,7 +60,7 @@ plugins:
 
 nav:
     - "Getting started":
-        - "First steps": first_steps.md
+        - "First steps":
             - "Prepare NsPanel": prepare_nspanel.md
             - "Setup Home Assistant": setup_ha.md
         - "FAQ": faq.md
