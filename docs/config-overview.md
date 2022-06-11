@@ -46,7 +46,7 @@ nspanel-1:
         title: Example 2
 ```
 
-This is he full list of configuration options supported for the config key:
+This is the full list of configuration options supported for the config key:
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
@@ -65,9 +65,9 @@ key | optional | type | default | description
 `dateAdditonalTemplate` | True | string | `""` | Addional Text dispayed after Date, can contain a Homeassistant Template Example `" - {{ states('sun.sun') }}"`
 `timeAdditonalTemplate` | True | string | `""` | Addional Text dispayed below Time, can contain a Homeassistant Template
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
-`cards` | False | complex | | configuration for cards that are displayed on panel
-`screensaver` | True | complex | | configuration for screensaver
-`hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items
+`cards` | False | complex | | configuration for cards that are displayed on panel; see docs for cards
+`screensaver` | True | complex | | configuration for screensaver; see docs for screensaver
+`hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items; see docs for cards
 
 <details>
 <summary>Details on sleepBrightness/screenBrightness and other configs related to screen brightness</summary>
