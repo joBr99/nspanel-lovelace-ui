@@ -179,10 +179,10 @@ class LuiPagesGen(object):
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
         if entityType == "iText":
-                key   = entityId.split(".")[1]
-                value = entityId.split(".")[2]
+                value   = entityId.split(".", 2)[1]
+                name = name if name is not None else "conf name missing"
                 icon_id = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
-                return f"~text~{entityId}~{icon_id}~17299~{key}~{value}"
+                return f"~text~{entityId}~{icon_id}~17299~{name}~{value}"
         if not self._ha_api.entity_exists(entityId):
             return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
         
