@@ -5,21 +5,21 @@ https://forum.iobroker.net/topic/50888/sonoff-nspanel/612?_=1654980976439
 
 **Step für Step - Anleitung zur Einrichtung eines Sonoff NSPanel mit Lovelace UI unter ioBroker**
 
-![219c8bad-2af0-42e6-a041-b4ba319ca96d-image.png](/assets/uploads/files/1653910838009-219c8bad-2af0-42e6-a041-b4ba319ca96d-image.png) 
+![219c8bad-2af0-42e6-a041-b4ba319ca96d-image.png](img/ioBroker/1653910838009-219c8bad-2af0-42e6-a041-b4ba319ca96d-image.png) 
 **1. Voraussetzungen für den ioBroker**
 
 Für den Betrieb benötigst du „keinen“ ioBroker-lovelace-Adapter. Die komplette lovelace-Integration erfolgt über die TFT-Firmware und die nachfolgenden ioBroker-Adapter.
 
 * **%(#666)[MQTT-Adapter]**
-![3ccd8404-afe3-4182-953c-2172ca1f0a09-image.png](/assets/uploads/files/1653911602309-3ccd8404-afe3-4182-953c-2172ca1f0a09-image.png) 
+![3ccd8404-afe3-4182-953c-2172ca1f0a09-image.png](img/ioBroker/1653911602309-3ccd8404-afe3-4182-953c-2172ca1f0a09-image.png) 
 Die Kommunikation zwischen dem NSPanel und ioBroker erfolgt mittels MQTT über Tasmota. Da der Datenpunkt „CustomSend“ erforderlich ist und dieser nicht im Sonoff-Adapter vorhanden ist und auch nicht durch das Skript angelegt werden kann, erfolgt die Kommunikation „nicht“ über den Sonoff-Adapter --> später mehr …
 * **%(#666)[Javascript-Adapter]**
 Es werden zwei Type-Skripte (TS = das etwas mächtigere Javascript) benötigt. Zum Einen ein Icon-Skript, da alle verwendeten Icons nicht als „echte Grafiken“ im Panel hinterlegt sind, sondern als Schriftzeichen-Symbole. Des Weiteren ein TS-Skript mit dem eigentlichen Laufzeit-Code, welches für jedes eingesetzte NSPanel vorhanden und konfiguriert sein sollte --> später mehr …
 * **%(#666)[Geräte verwalten“-Adapter]**
-![bae0913f-fb3f-4856-90d1-eebb70b5a89a-image.png](/assets/uploads/files/1653911536657-bae0913f-fb3f-4856-90d1-eebb70b5a89a-image.png) 
+![bae0913f-fb3f-4856-90d1-eebb70b5a89a-image.png](img/ioBroker/1653911536657-bae0913f-fb3f-4856-90d1-eebb70b5a89a-image.png) 
 Über diesen Adapter sollten die Aliase später (mit Ausnahme des Media-Alias für Alexa & Co.) erstellt werden --> später mehr … 
 * **%(#666)[Accu-Weather-Adapter]**
-![1f0dbb8b-a057-4237-a5c7-df7728a255c6-image.png](/assets/uploads/files/1653911665919-1f0dbb8b-a057-4237-a5c7-df7728a255c6-image.png) 
+![1f0dbb8b-a057-4237-a5c7-df7728a255c6-image.png](img/ioBroker/1653911665919-1f0dbb8b-a057-4237-a5c7-df7728a255c6-image.png) 
 Spielt in erster Linie eine Rolle beim Screensaver-Wetter, da zum Ersten die Icons und die Temperatur-Informationen für den Forecast ausgelesen werden (falls genutzt) und zum Zweiten das aktuelle Wettericon für den Screensaver benötigt wird. Wer keine Wetterstation oder Außentemperatursensor hat, kann auch die Temperatur aus Accu-Weather importieren --> später mehr …
 * **%(#666)[Alexa2-Adapter]**
 Zur Visualisierung des Media-Player‘s sollte der Alexa2-Adapter installiert sein. Wenn du statt Alexa-Devices andere Hersteller wie z.B. Google-Home-Geräte oder in erster Linie der Spotify-Premium-Adapter im Einsatz hast, so ist es auch möglich mit einem entsprechend, alternativen Media-Adapter den Media-Player zu betreiben --> später mehr …
@@ -39,7 +39,7 @@ a)	Unter „Sonstige Einstellungen“ trägst du im Feld Vorlage
 {"NAME":"NSPanel","GPIO":[0,0,0,0,3872,0,0,0,0,0,32,0,0,0,0,225,0,480,224,1,0,0,0,33,0,0,0,0,0,0,0,0,0,0,4736,0],"FLAG":0,"BASE":1}
 ``` 
 ein, hakst Aktivieren "an" und klickst auf Speichern. Du kannst natürlich auch noch Device und Friendly Name vergeben
-![3ca891dc-0892-4ed4-8c44-384899cbb460-image.png](/assets/uploads/files/1653916806795-3ca891dc-0892-4ed4-8c44-384899cbb460-image.png) 
+![3ca891dc-0892-4ed4-8c44-384899cbb460-image.png](img/ioBroker/1653916806795-3ca891dc-0892-4ed4-8c44-384899cbb460-image.png) 
 b)	Unter Logging fügst du die IP von deinem ioBroker unter Sys-Log Host () ein und klickst auf Speichern.
 c)	Unter Konsolen/Konsole kannst du natürlich auch noch weitere Einstellungen vornehmen (ipaddress1 192.168.X.X für statische IP’s, setOption’s, etc.)
   
@@ -49,11 +49,11 @@ Im Tasmota findest du unter „Konsolen“ den Button „Verwalte Dateisystem“
 
 **https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be**
 
-![bbf8f99d-8f37-4903-9aa8-3b7decab2577-image.png](/assets/uploads/files/1653912758425-bbf8f99d-8f37-4903-9aa8-3b7decab2577-image.png) 
+![bbf8f99d-8f37-4903-9aa8-3b7decab2577-image.png](img/ioBroker/1653912758425-bbf8f99d-8f37-4903-9aa8-3b7decab2577-image.png) 
 Danach klickst du auf „Speichern“ und dann solltest du Tasmota rebooten.
 
 Wenn das Panel bereits unter einer anderen Variante (z.B. haus-automatisierung.com) installiert war, dann bitte alle Dateien (insbesondere autoexec.be und autoexec.bec) vorher über das Flammensymbol hinter dem Dateinamen löschen. Und von vorne mit dem Punkt 3 beginnen
-![e0c99373-2e72-4f18-827d-5050f8d41962-image.png](/assets/uploads/files/1653912663013-e0c99373-2e72-4f18-827d-5050f8d41962-image.png) 
+![e0c99373-2e72-4f18-827d-5050f8d41962-image.png](img/ioBroker/1653912663013-e0c99373-2e72-4f18-827d-5050f8d41962-image.png) 
 
 **4. MQTT im Tasmota konfigurieren**
 
@@ -65,7 +65,7 @@ d)	Bei Client und topic trage ich in der Regel „NSPanel_X“ ein. (X = 1, 2, 3
 e)	Für den full topic verwende ich in der Regel „SmartHome/%topic%/%prefix%/“.
 f)	Speichern klicken und Einstellungen verlassen
 
-![76749e7d-c630-406c-9d2b-a2424521fa96-image.png](/assets/uploads/files/1653909770906-76749e7d-c630-406c-9d2b-a2424521fa96-image.png) 
+![76749e7d-c630-406c-9d2b-a2424521fa96-image.png](img/ioBroker/1653909770906-76749e7d-c630-406c-9d2b-a2424521fa96-image.png) 
 
 
 **5.	TFT-Firmware auf das Panel flashen**
@@ -76,7 +76,7 @@ FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.9.0.tft
 ```
 
 eingeben, mit Enter bestätigen. Das Panel installiert jetzt die TFT-Firmware (Kann beim ersten Mal ein paar Minuten dauern – Fortschritt beobachten – am Ende erfolgt ein Reboot und das Panel wechselt in einen Screen – „Waiting for Content“ 
-![4f4f6005-7cfd-444d-9b9a-14703194781d-image.png](/assets/uploads/files/1653913546138-4f4f6005-7cfd-444d-9b9a-14703194781d-image.png) 
+![4f4f6005-7cfd-444d-9b9a-14703194781d-image.png](img/ioBroker/1653913546138-4f4f6005-7cfd-444d-9b9a-14703194781d-image.png) 
 
 Das Panel wartet jetzt auf den Input von deinem ioBroker-Skript (Installierst du in einem der nächsten Punkte …) 
 
@@ -92,7 +92,7 @@ d)	Port 1886 (analog Port aus Tasmota/MQTT)
 e)	Benutzer (analog Benutzer aus Tasmota/MQTT)
 f)	Kennwort + Kennwort wiederholen (analog Passwort aus Tasmota/MQTT)
 
-![8182d534-bbe0-42a3-89b6-864bc30f9a17-image.png](/assets/uploads/files/1653909648857-8182d534-bbe0-42a3-89b6-864bc30f9a17-image.png) 
+![8182d534-bbe0-42a3-89b6-864bc30f9a17-image.png](img/ioBroker/1653909648857-8182d534-bbe0-42a3-89b6-864bc30f9a17-image.png) 
 
 Meine Einstellungen im Reiter MQTT-Einstellungen sind:
 a)	Maske zum Bekanntgeben eigener States: mqtt.0.* (Bei zusätzlicher Instanz entsprechend höher (mqtt.1.* etc.)
@@ -100,7 +100,7 @@ b)	Eigene States beim Verbinden publizieren (angehakt)
 c)	States bei subscribe publizieren (angehakt)
 d)	Leere Session erzwingen: Client-Einstellungen verwenden
 
-![f184fc26-229d-4a75-84cc-74fda631c527-image.png](/assets/uploads/files/1653909565560-f184fc26-229d-4a75-84cc-74fda631c527-image.png) 
+![f184fc26-229d-4a75-84cc-74fda631c527-image.png](img/ioBroker/1653909565560-f184fc26-229d-4a75-84cc-74fda631c527-image.png) 
 
 **7. CustomSend anlegen**
 Der MQTT Datenpunkt wird benötigt und muss vom MQTT-Adapter angelegt werden. Ein manuelles Anlegen unter „Objekte“ oder „createState“ ist im ioBroker „nicht mehr“ möglich. Um den Datenpunkt zu erzeugen, öffnest du im Tasmota die Konsole und gibst ohne die Anführungszeichen 
@@ -135,13 +135,13 @@ Für jedes einzelne NSPanel das du konfigurieren möchtest, musst du dieses Skri
 Die aktuelle Änderung von 2.8.0 auf 2.9.0 ist z.B.: 
 
 * Steuerung von Klimageräten/Klimaanlagen
-![0735190e-11c3-4bc2-bfd1-5899b8ee0eed-image.png](/assets/uploads/files/1653910414137-0735190e-11c3-4bc2-bfd1-5899b8ee0eed-image.png) 
+![0735190e-11c3-4bc2-bfd1-5899b8ee0eed-image.png](img/ioBroker/1653910414137-0735190e-11c3-4bc2-bfd1-5899b8ee0eed-image.png) 
 
 * QR-Code für z.B. Gäste WLAN
-![a43e9656-891a-42ef-90cc-f9ed61850d4b-image.png](/assets/uploads/files/1653910476255-a43e9656-891a-42ef-90cc-f9ed61850d4b-image.png) 
+![a43e9656-891a-42ef-90cc-f9ed61850d4b-image.png](img/ioBroker/1653910476255-a43e9656-891a-42ef-90cc-f9ed61850d4b-image.png) 
 
 * Neues Design für Thermostate
-![abd817a4-db10-45dc-9d5c-9adf6151dac5-image.png](/assets/uploads/files/1653910570137-abd817a4-db10-45dc-9d5c-9adf6151dac5-image.png) 
+![abd817a4-db10-45dc-9d5c-9adf6151dac5-image.png](img/ioBroker/1653910570137-abd817a4-db10-45dc-9d5c-9adf6151dac5-image.png) 
 
 * etc.
 
@@ -213,43 +213,43 @@ Am Besten benutzt ihr die Beispiele im Skript und legt entsprechende Aliase hier
 Und noch ein paar Bilderchen:
 
 cardEntities mit Alias Lampe/Dimmer/Switch
-![d8fcfee4-3137-4bae-85ba-6b70106c77c1-image.png](/assets/uploads/files/1653912863870-d8fcfee4-3137-4bae-85ba-6b70106c77c1-image.png) 
+![d8fcfee4-3137-4bae-85ba-6b70106c77c1-image.png](img/ioBroker/1653912863870-d8fcfee4-3137-4bae-85ba-6b70106c77c1-image.png) 
 
 cardEntities mit RGB und HUE Aliasen (Color)
-![7f1f6db2-1d67-4b59-86c6-c06d4e8f4c2a-image.png](/assets/uploads/files/1653912902052-7f1f6db2-1d67-4b59-86c6-c06d4e8f4c2a-image.png) 
+![7f1f6db2-1d67-4b59-86c6-c06d4e8f4c2a-image.png](img/ioBroker/1653912902052-7f1f6db2-1d67-4b59-86c6-c06d4e8f4c2a-image.png) 
 
 popupLight mit Farbtemperatur und Brightness
-![da3057b5-db2c-4b61-8716-8b2114e09aee-image.png](/assets/uploads/files/1653912933681-da3057b5-db2c-4b61-8716-8b2114e09aee-image.png) 
+![da3057b5-db2c-4b61-8716-8b2114e09aee-image.png](img/ioBroker/1653912933681-da3057b5-db2c-4b61-8716-8b2114e09aee-image.png) 
 
 popupLight mit ColorWheel
-![1ba6c1ff-d682-4368-b36a-4952aed4bcbe-image.png](/assets/uploads/files/1653912960049-1ba6c1ff-d682-4368-b36a-4952aed4bcbe-image.png) 
+![1ba6c1ff-d682-4368-b36a-4952aed4bcbe-image.png](img/ioBroker/1653912960049-1ba6c1ff-d682-4368-b36a-4952aed4bcbe-image.png) 
 
 cardGrid mit Radiosendern/Playlists (Alias Taste)
-![6b8c8b7a-331e-4fc1-867b-4ce69705fd0a-image.png](/assets/uploads/files/1653929221491-6b8c8b7a-331e-4fc1-867b-4ce69705fd0a-image.png) 
+![6b8c8b7a-331e-4fc1-867b-4ce69705fd0a-image.png](img/ioBroker/1653929221491-6b8c8b7a-331e-4fc1-867b-4ce69705fd0a-image.png) 
 
 cardEntities mit Aliasen Lautstärke und Info
-![9c36cfd7-b586-41db-8b4a-d68734dbbaae-image.png](/assets/uploads/files/1653912981365-9c36cfd7-b586-41db-8b4a-d68734dbbaae-image.png) 
+![9c36cfd7-b586-41db-8b4a-d68734dbbaae-image.png](img/ioBroker/1653912981365-9c36cfd7-b586-41db-8b4a-d68734dbbaae-image.png) 
 
 cardEntities mit Fenster, Tür, Jalousie und Verschluss
-![d874876a-a190-4fab-b2a2-5a0f0bb0f62a-image.png](/assets/uploads/files/1653913018089-d874876a-a190-4fab-b2a2-5a0f0bb0f62a-image.png) 
+![d874876a-a190-4fab-b2a2-5a0f0bb0f62a-image.png](img/ioBroker/1653913018089-d874876a-a190-4fab-b2a2-5a0f0bb0f62a-image.png) 
 
 cardEntities mit Abfallkalender
-![098059be-4996-403b-a7a7-653915f10204-image.png](/assets/uploads/files/1653936380574-098059be-4996-403b-a7a7-653915f10204-image.png) 
+![098059be-4996-403b-a7a7-653915f10204-image.png](img/ioBroker/1653936380574-098059be-4996-403b-a7a7-653915f10204-image.png) 
 
 cardMedia
-![9e702c46-e5d1-452b-a60b-e5068cb64750-image.png](/assets/uploads/files/1653913181184-9e702c46-e5d1-452b-a60b-e5068cb64750-image.png) 
+![9e702c46-e5d1-452b-a60b-e5068cb64750-image.png](img/ioBroker/1653913181184-9e702c46-e5d1-452b-a60b-e5068cb64750-image.png) 
 
 cardAlarm
-![8f8e9ecc-a4b2-48f1-b9b1-4fe68b4b2574-image.png](/assets/uploads/files/1653913221457-8f8e9ecc-a4b2-48f1-b9b1-4fe68b4b2574-image.png) 
+![8f8e9ecc-a4b2-48f1-b9b1-4fe68b4b2574-image.png](img/ioBroker/1653913221457-8f8e9ecc-a4b2-48f1-b9b1-4fe68b4b2574-image.png) 
 
 cardGrid
-![8a0ce26c-c49c-4bc3-b2ca-bc4897febd09-image.png](/assets/uploads/files/1653929268828-8a0ce26c-c49c-4bc3-b2ca-bc4897febd09-image.png) 
+![8a0ce26c-c49c-4bc3-b2ca-bc4897febd09-image.png](img/ioBroker/1653929268828-8a0ce26c-c49c-4bc3-b2ca-bc4897febd09-image.png) 
 
 cardEntities
-![7b7c21e6-02aa-4a3e-bb25-c8127689d801-image.png](/assets/uploads/files/1653913242372-7b7c21e6-02aa-4a3e-bb25-c8127689d801-image.png) 
+![7b7c21e6-02aa-4a3e-bb25-c8127689d801-image.png](img/ioBroker/1653913242372-7b7c21e6-02aa-4a3e-bb25-c8127689d801-image.png) 
 
 cardEntities als Subpage unter cardEntities (verschachtelt)
-![bd7783f7-9365-4333-b5bc-872ca92fd4b7-image.png](/assets/uploads/files/1653913274663-bd7783f7-9365-4333-b5bc-872ca92fd4b7-image.png)
+![bd7783f7-9365-4333-b5bc-872ca92fd4b7-image.png](img/ioBroker/1653913274663-bd7783f7-9365-4333-b5bc-872ca92fd4b7-image.png)
 
 cardNotify
-![2dca9c22-df47-4c29-8e16-bc0323101cb1-image.png](/assets/uploads/files/1653914178326-2dca9c22-df47-4c29-8e16-bc0323101cb1-image.png)
+![2dca9c22-df47-4c29-8e16-bc0323101cb1-image.png](img/ioBroker/1653914178326-2dca9c22-df47-4c29-8e16-bc0323101cb1-image.png)
