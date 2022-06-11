@@ -1,5 +1,7 @@
 # Entities Page
 
+![card-entities](img/card-entities.png)
+
 ```
     cards:
       - type: cardEntities
