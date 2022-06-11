@@ -70,5 +70,6 @@ nav:
         - "Overview": config-overview.md
         - "Screensaver": config-screensaver.md
         - "Cards":
-            - "Entities / Grid Card": card-entities.md
+            - "Entities Card": card-entities.md
+            - "Grid Card": card-grid.md
             - "Climate/Thermo Card": card-climate.md
