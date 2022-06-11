@@ -16,34 +16,19 @@ For localisation (date in your local language) you need to add the python packag
 ![appdaemon-babel](img/appdaemon-babel.png)
 
 
-## Installing Studio Code Server (optional, recommended)
+## Installing Studio Code Server
 
 You will need a way to edit the `apps.yaml` config file in the Appdaemon folder. 
 Install Studio Code Server from Home Assistant's Supervisor Add-on Store to easily edit configuration Files on your HomeAssistant Instance.
 
-</p>
-</details>
 
-<details><summary>2. Installing HomeAssistant Community Store</summary>
-<p>
-
-## Installing HACS
+## Installing HomeAssistant Community Store
 
 HACS is the Home Assistant Community Store and allows for community integrations and
-automations to be updated cleanly and easily from the Home Assistant web user interface.
-It's simple to install the AppDaemon app without HACS, but keeping up to date requires
-manual steps that HACS will handle for you: you will be notified of updates, and they
-can be installed by a click on a button.
+automations to be updated easily from the Home Assistant web user interface.
+You will be notified of updates, and they can be installed by a click on a button.
 
-If you want to use HACS, you will have to follow [their documentation on how to install HACS](https://hacs.xyz/docs/setup/download).
-
-</p>
-</details>
-
-<details><summary>3. Installing Lovelace AppDaemon Backend Application </summary>
-<p>
-
-## Installing AppDaemon Backend Application 
+## Installing Lovelace AppDaemon Backend Application
 
 To install Lovelace UI Backend App with HACS, you will need to make sure that you enabled
 AppDaemon automations in HACS, as these are not enabled by default:
