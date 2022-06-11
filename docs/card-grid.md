@@ -25,7 +25,7 @@ List of supported config keys of this card:
 key | optional | type | default | description
 -- | -- | -- | -- | --
 `type` | False | string | `None` | Type of the card
-`entities` | False | complex | `None` | contains entities of the card, only valid on cardEntities and cardGrid and cardQR
+`entities` | False | complex | `None` | contains a list of entities of this card
 `title` | True | string | `None` | Title of the Page 
 `key` | True | string | `None` | Used by navigate items in combination with the type (cardEntities_key)
 

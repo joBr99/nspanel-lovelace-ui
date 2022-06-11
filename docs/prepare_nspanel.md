@@ -10,7 +10,7 @@ Checkout Blakadders Template Repo for more information on flashing, do not use t
 
 Configure the NSPanel template for Tasmota. (Go to Configuration and Configure Other and paste the template there, make sure to tick the activate checkbox)
 
-![tasmota-template-config](doc-pics/tasmota-template-config.png)
+![tasmota-template-config](img/tasmota-template-config.png)
 
 You can use the following template or copy the one on the [Tasmota Template Repo Site](https://templates.blakadder.com/sonoff_NSPanel.html).
 
