@@ -14,7 +14,7 @@ Select main version.
 
 **!!! Wait for it to load, dropdown needs to be selectable again, otherwise it will download the latest release !!!**
 
-![hacs-main](doc-pics/hacs-main.png)
+![hacs-main](img/hacs-main.png)
 
 **!!! Wait for it to load, dropdown needs to be selectable again, otherwise it will download the latest release !!!**
 
