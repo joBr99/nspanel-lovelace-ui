@@ -1,5 +1,8 @@
 # Grid Page
 
+![card-grid](img/card-grid.png)
+
+
 ```
     cards:
       - type: cardGrid
