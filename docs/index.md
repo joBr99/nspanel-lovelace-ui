@@ -42,3 +42,13 @@ See the following picture to get an idea of the look of this firmware for NSPane
 Some (not all) screenshots from the US Portrait Version:
 
 ![screens-us-p](img/screens-us-p.png)
+
+## Requirements
+
+ - NSPanel
+ - USB to Serial TTL Adapter
+ - Running Instance of the Home Automation Platform of your Choise
+   - Running [Home Assistant Instance](https://www.home-assistant.io/installation/)
+     - with installed [MQTT Broker](https://www.home-assistant.io/docs/mqtt/broker)
+   - Running [ioBroker Instance](https://www.iobroker.net/#en/documentation)
+     - with installed MQTT Broker
