@@ -176,7 +176,7 @@ You only need to do one **Tasmota** OR **ESPHome**
 
 ### Flash Tasmota to your NSPanel
 
-You need to connect to your nspanel via serial and flash the [tasmota32-nspanel.bin](https://github.com/tasmota/install/raw/main/firmware/unofficial/tasmota32-nspanel.bin) to your NSPanel.
+You need to connect to your nspanel via serial and flash tasmtoa [tasmota32-nspanel.factory.bin](https://tasmota.github.io/install/firmware/development/tasmota32-nspanel.factory.bin) to your NSPanel. You can use the Tasmota Web Installer to do so. [Tasmota Web Installer](https://tasmota.github.io/install/)
 Make sure to come back to this guide, before uploading the nspanel.be/autoexec.be files.
 For more deatils see the [NSPanel Page of the Tasmota Template Repository](https://templates.blakadder.com/sonoff_NSPanel.html).
 
@@ -773,11 +773,6 @@ Since release 1.1 you can update the berry driver directly from the Tasmota Cons
 
 
 ## FAQ - Frequently Asked Questions
-
-### Flashing of the Display Firmware with FlashNextion doesn't work
-
-1. Make sure to use the [tasmota32-nspanel.bin](https://github.com/tasmota/install/raw/main/firmware/unofficial/tasmota32-nspanel.bin) Tasmota build.
-2. Make sure to use HTTP and **not HTTPS**
 
 ### Waiting for content - This is taking longer than usual on the screen
 
