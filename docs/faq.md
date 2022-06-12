@@ -4,6 +4,31 @@
 
 Please check your MQTT Topics in your apps.yaml and your mqtt configuration on tasmota.
 
+## How to update
+
+### Update AppDaemon Script
+
+HACS will show you that there is an update avalible and ask you to update. It is important to restart the AppDaemon Container afterwards.
+
+### Update Display Firmware
+
+You should get an notification on the screen, asking you to update the firmware. In case you want to update manually you can use the following commands.
+
+EU Version: `FlashNextion http://nspanel.pky.eu/lui-release.tft`
+
+US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
+
+US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
+
+### Update Tasmota Berry Driver
+
+You should get an notification on the screen, asking you to update the driver, if an update is needed.
+
+You can update the berry driver directly from the Tasmota Console with the following command.
+
+`UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be`
+
+
 ## How to upgrade from a release to the current development version
 
 1. Update App in HACS to main

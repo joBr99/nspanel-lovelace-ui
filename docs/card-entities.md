@@ -2,7 +2,7 @@
 
 ![card-entities](img/card-entities.png)
 
-```
+```yaml
     cards:
       - type: cardEntities
         title: Test Entities Card
@@ -39,3 +39,4 @@ List of supported entitiy types for this page:
 - lock
 - fan
 - automation
+- iText

@@ -2,8 +2,7 @@
 
 ![card-grid](img/card-grid.png)
 
-
-```
+```yaml
     cards:
       - type: cardGrid
         title: Test Grid Card
@@ -45,3 +44,4 @@ List of supported entitiy types for this page:
 - input_text (read-only)
 - lock
 - automation
+- iText
