@@ -298,6 +298,7 @@ class LuiPagesGen(object):
             heading      = title if title != "unknown" else entity.attributes.friendly_name
             current_temp = get_attr_safe(entity, "current_temperature", "")
             dest_temp    = get_attr_safe(entity, "temperature", None)
+            dest_temp2   = ""
             if dest_temp is None:
                 dest_temp    = get_attr_safe(entity, "target_temp_high", 0)
                 dest_temp2   = int(get_attr_safe(entity, "target_temp_low", 0)*10)

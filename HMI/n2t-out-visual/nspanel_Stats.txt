@@ -22,14 +22,14 @@ popupLight
 	27   Component(s)
 	352  Line(s) of event code
 	191  Unique line(s) of event code
-cardMedia
-	34   Component(s)
-	363  Line(s) of event code
-	195  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	157  Line(s) of event code
 	117  Unique line(s) of event code
+cardMedia
+	34   Component(s)
+	363  Line(s) of event code
+	195  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	330  Line(s) of event code
