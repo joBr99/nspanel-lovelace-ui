@@ -82,5 +82,5 @@ nav:
 
 
     - "Getting started (ioBroker)":
-        - "Prepare NsPanel": prepare_nspanel.md
+        - "Prepare NsPanel": prepare_nspanel2.md
         - "Prepare ioBroker": iobroker-install.md
