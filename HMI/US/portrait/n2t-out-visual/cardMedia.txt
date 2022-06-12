@@ -57,6 +57,13 @@ Variable (int32) vaSpeakerPos
         Scope: local
         Value: 0
     
+Variable (string) vaMenu
+    Attributes
+        ID            : 33
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
+    
 Text tSend
     Attributes
         ID                                  : 2
@@ -444,6 +451,24 @@ Text tIcon
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Release Event
+            if(vaMenu.txt!="")
+            {
+                tSend.txt="event,buttonPress2,"+vaMenu.txt+",button"
+                //send calc crc
+                btlen tSend.txt,sys0
+                crcrest 1,0xffff // reset CRC
+                crcputh 55 bb
+                crcputs sys0,2
+                crcputs tSend.txt,0
+                //send cmd
+                printh 55 bb
+                prints sys0,2
+                prints tSend.txt,0
+                prints crcval,2
+            }
+        
 Text t1
     Attributes
         ID                                  : 21
@@ -1069,6 +1094,8 @@ Timer tmSerial
                                             vis t5,1
                                             covx tTmp.txt,t5.pco,0,0
                                         }
+                                        //tIconBtnEntityName
+                                        spstr strCommand.txt,vaMenu.txt,"~",12
                                     }
                                     if(tInstruction.txt=="time")
                                     {
