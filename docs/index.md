@@ -28,7 +28,7 @@ NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 - Alarm Control Card
 - Screensaver Page with Time, Date and Weather Information
 - Card with QrCode to display WiFi Information
-- Localization possible (currently 38 languages)
+- Localization (currently 40 languages)
 
 - **Everything is dynamically configurable by a yaml config, no need to code or touch Nextion Editor**
 

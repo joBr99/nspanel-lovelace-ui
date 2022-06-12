@@ -164,6 +164,8 @@ The following example configuration is turning off the screen after sunset, but 
   - `tr_xx` - Turkish
   - `uk_xx` - Ukrainian
   - `vi_xx` - Vietnamese
+  - `zh_CN` - Simplified Chinese
+  - `zh_TW` - Traditional Chinese
 
 </p>
 </details>
