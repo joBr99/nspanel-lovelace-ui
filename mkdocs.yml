@@ -77,6 +77,8 @@ nav:
             - "Alarm Card": card-alarm.md
             - "Wifi/QR Card": card-qr.md
         - "Special Settings for Entities": entities.md
+        - "Subpages": subpages.md
+        - "Notifications": notifications.md
         - "Physical Buttons": phys-btn.md
 
 
