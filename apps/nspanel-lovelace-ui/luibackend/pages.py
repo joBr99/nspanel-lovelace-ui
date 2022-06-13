@@ -222,7 +222,7 @@ class LuiPagesGen(object):
         if entityType in "light":
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
-            icon_id = get_icon_id_ha("light", overwrite=icon)
+            icon_id = get_icon_id_ha("light", state=entity.state, overwrite=icon)
             return f"~{entityType}~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
         if entityType in ["switch", "input_boolean", "automation"]:
             switch_val = 1 if entity.state == "on" else 0
