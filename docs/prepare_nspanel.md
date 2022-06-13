@@ -6,6 +6,10 @@ You can use the Tasmota Web Installer to do so. [Tasmota Web Installer](https://
 Checkout Blakadders Template Repo for more information on flashing, do not use the autoexec.be from this page.
 [NSPanel Page of the Tasmota Template Repository](https://templates.blakadder.com/sonoff_NSPanel.html)
 
+If you prefer EspHome over Tasmota, you can use this thrid party esphome component, which is replacing tasmota and the berry driver of this project.
+[ESPHome component](https://github.com/sairon/esphome-nspanel-lovelace-ui)
+
+
 ## Configure Tasmota Template for NSPanel
 
 Configure the NSPanel template for Tasmota. (Go to Configuration and Configure Other and paste the template there, make sure to tick the activate checkbox)
