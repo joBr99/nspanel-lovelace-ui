@@ -16,4 +16,4 @@ key | optional | type | default | description
 `title` | True | string | `None` | Title of the Page 
 `entity` | False | string | `None` | contains the entity of the current card
 `key` | True | string | `None` | Used by navigate items
-`alarmControl` | True | complex | `None` | overwrites the action executed on pressing the left bottom icon, by default this button is used to show a list of open sensors on a failed attempt to arm.
+`alarmControl` | True | complex | `None` | overwrites the action executed on pressing the left upper icon (red circle), by default this button is used to show a list of open sensors on a failed attempt to arm.
