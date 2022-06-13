@@ -42,7 +42,7 @@ class LuiPagesGen(object):
 
     def update_time(self, kwargs):
         time = datetime.datetime.now().strftime(self._config.get("timeFormat"))
-        addTemplate = self._config.get("timeAdditonalTemplate")
+        addTemplate = self._config.get("timeAdditionalTemplate")
         addTimeText = self._ha_api.render_template(addTemplate)
         self._send_mqtt_msg(f"time~{time}~{addTimeText}")
 
@@ -55,7 +55,7 @@ class LuiPagesGen(object):
             dateformat = self._config.get("dateFormat")
             date = datetime.datetime.now().strftime(dateformat)
             
-        addTemplate = self._config.get("dateAdditonalTemplate")
+        addTemplate = self._config.get("dateAdditionalTemplate")
         addDateText = self._ha_api.render_template(addTemplate)
         self._send_mqtt_msg(f"date~{date}{addDateText}")
 
