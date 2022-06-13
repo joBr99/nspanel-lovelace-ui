@@ -7,12 +7,13 @@ icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroke
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
  
 ReleaseNotes:
-    Bugfixes und Erweiterungen seit letzter Verion:
+    Bugfixes und Erweiterungen seit letzter Version:
         - cardQR (für Gäste WLAN)
         - cardThermo (Neues Design für Alias Thermostat und zusätzlich für Alias Klimaanlage)
         - 08.05.2022 - Menüpfeile bei HardwareButtons (button1Page; button2Page) mit Navigation auf Page 0
         - 08.05.2022 - Standard-Brightness über neuen Parameter active einstellbar (Test mit 2.9.3)
         - 08.05.2022 - Schalter (Licht, Dimmer, Hue, etc) in cardGrid lassen sich wieder schalten
+        - 13.06.2022 - GitHub Issue #277 - HandleMessage -> pageOpenDetail does not work for Sub-Page
  
     Known-Bugs --> Bugfix folgt:
         - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu
@@ -144,7 +145,7 @@ var weatherForecast = true; //true = WheatherForecast 5 Days --- false = Config 
 
 //Alexa-Instanz
 var alexaInstanz = "alexa2.0"
-var alexaDevice = "G0XXXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
+var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
@@ -440,7 +441,6 @@ export const config: Config = {
             Buero_Seite_2,
             Buero_Seite_1,
             Buero_Klimaanlage, 
-            //WLAN,
             Button_1,
             Test_Licht,
             Test_Funktionen,
@@ -450,6 +450,13 @@ export const config: Config = {
             Buero_Themostat,
             Buero_Alarm,
             Service
+    ],
+    subPages: [
+                Abfall,
+                WLAN,
+                NSPanel_Infos,
+                NSPanel_Einstellungen,
+                NSPanel_Firmware_Updates
     ],
     button1Page: button1Page,
     button2Page: button2Page
@@ -845,6 +852,18 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                 let pageItem = config.pages[pageId].items.find(e => e.id === words[3]);
                 if (pageItem !== undefined)
                     SendToPanel(GenerateDetailPage(words[2], pageItem));
+                else {
+                    config.subPages.every (sp => {
+                        let pageItem =  sp.items.find(e => e.id === words[3]);
+                        if (pageItem !== undefined) {
+                            SendToPanel(GenerateDetailPage(words[2], pageItem));
+                            console.log(words[2] + " - " + pageItem);
+                            return false;
+                        }
+                        return true;
+                        }
+                    )
+                }  
             case "buttonPress2":
                 screensaverEnabled = false;
                 HandleButtonEvent(words);
@@ -1983,6 +2002,17 @@ function HandleButtonEvent(words): void {
                 if (existsObject(id)) {
                     let o = getObject(id);
                     let pageItem = config.pages[pageId].items.find(e => e.id === id);
+                    if (pageItem == undefined) {
+                        config.subPages.every (sp => {
+                            pageItem =  sp.items.find(e => e.id === id);
+                            if (pageItem !== undefined) {
+                           
+                                return false;
+                            }
+                            return true;
+                            }
+                        )
+                    } 
                     switch (o.common.role) {
                         case "dimmer":
                             if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {  
@@ -2011,6 +2041,16 @@ function HandleButtonEvent(words): void {
             (function () {if (timeoutSlider) {clearTimeout(timeoutSlider); timeoutSlider = null;}})();
             timeoutSlider = setTimeout(async function () {
                 let pageItem = config.pages[pageId].items.find(e => e.id === id);
+                if (pageItem == undefined) {
+                    config.subPages.every (sp => {
+                        pageItem =  sp.items.find(e => e.id === id);
+                        if (pageItem !== undefined) {                        
+                            return false;
+                        }
+                        return true;
+                        }
+                    )
+                }
                 if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
                     let colorTempK = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
                     setIfExists(id + ".TEMPERATURE", (colorTempK));
@@ -2903,6 +2943,7 @@ type Config = {
     defaultOnColor: RGB,
     defaultOffColor: RGB,
     pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid)[],
+    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid)[],
     button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | null),
     button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | null),
 };
