@@ -13,11 +13,8 @@ ReleaseNotes:
         - 08.05.2022 - Menüpfeile bei HardwareButtons (button1Page; button2Page) mit Navigation auf Page 0
         - 08.05.2022 - Standard-Brightness über neuen Parameter active einstellbar (Test mit 2.9.3)
         - 08.05.2022 - Schalter (Licht, Dimmer, Hue, etc) in cardGrid lassen sich wieder schalten
-        - 13.06.2022 - GitHub Issue #277 - HandleMessage -> pageOpenDetail does not work for Sub-Page
- 
-    Known-Bugs --> Bugfix folgt:
-        - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu
-        - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc)
+        - 14.06.2022 - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu (Many thanks to Grrzzz)
+        - 14.06.2022 - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc) (Many thanks to Grrzzz)
     
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -180,6 +177,7 @@ var Test_Licht: PageEntities =
     "heading": "Color Aliase",
     "useColor": true,
     "subPage": false,
+    "parent": Test_Licht,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLichteinzeln", name: "RGB-Licht Hex-Color", interpolateColor: true},
         //<PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", name: "Farbtemperatur", interpolateColor: true},
@@ -195,6 +193,7 @@ var Test_Funktionen: PageEntities =
     "heading": "Sonstige Aliase",
     "useColor": true,
     "subPage": false,
+    "parent": Test_Funktionen,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.TestLautstärke", offColor: MSRed /*if mute=true*/, onColor: MSGreen ,name: "Echo Spot Büro", minValue: 0, maxValue: 100},
         <PageItem>{ id: "alias.0.NSPanel_1.TestTemperatur",name: "Temperatur außen", icon: "thermometer", onColor: White},
@@ -209,6 +208,7 @@ var Buero_Seite_1: PageEntities =
     "heading": "Büro",
     "useColor": true,
     "subPage": false,
+    "parent": Buero_Seite_1,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe", interpolateColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", interpolateColor: true},
@@ -223,6 +223,7 @@ var Fenster_1: PageEntities =
     "heading": "Fenster und Türen",
     "useColor": true,
     "subPage": false,
+    "parent": Fenster_1,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.TestFenster", offColor: MSRed, onColor: MSGreen, name: "Büro Fenster"},
         <PageItem>{ id: "alias.0.NSPanel_1.Haustuer", offColor: MSRed, onColor: MSGreen, name: "Haustür"},
@@ -237,6 +238,7 @@ var Button_1: PageEntities =
     "heading": "Button Aliase",
     "useColor": true,
     "subPage": false,
+    "parent": Button_1,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.TestTastensensor", name: "Tastensensor (FFN)"},
         <PageItem>{ id: "alias.0.NSPanel_1.Radio.NDR2", icon: "radio", name: "Taste (NDR2)", onColor: colorRadio},
@@ -249,6 +251,7 @@ var Subpages_1: PageEntities =
     "heading": "Test Subpages",
     "useColor": true,
     "subPage": false,
+    "parent": Subpages_1,
     "items": [
         <PageItem>{ navigate: true, id: "Abfall", onColor: White, name: "Abfallkalender"},
         <PageItem>{ navigate: true, id: "WLAN", onColor: White, name: "Gäste WLAN"},
@@ -262,6 +265,7 @@ var Abfall: PageEntities =
     "heading": "Abfallkalender",
     "useColor": true,
     "subPage": true,
+    "parent": Subpages_1,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event1",icon: "trash-can"},
         <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event2",icon: "trash-can"},
@@ -276,6 +280,7 @@ var Buero_Seite_2: PageGrid =
     "heading": "Büro 2",
     "useColor": true,
     "subPage": false,
+    "parent": Buero_Seite_2,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe", name: "Schreibtisch"},
         <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", name: "Deckenlampe"},
@@ -292,6 +297,7 @@ var Alexa: PageMedia =
     "heading": "Alexa",
     "useColor": true,
     "subPage": false,
+    "parent": Alexa,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Alexa.PlayerBuero" }]
 };
 
@@ -301,6 +307,7 @@ var Buero_Themostat: PageThermo =
     "heading": "Test Thermostat",
     "useColor": true,
     "subPage": false,
+    "parent": Buero_Themostat,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Thermostat_Büro", minValue: 50, maxValue: 300 }]
 };
 
@@ -310,6 +317,7 @@ var Buero_Klimaanlage: PageThermo =
     "heading": "Test Klimaanlage",
     "useColor": true,
     "subPage": false,
+    "parent": Buero_Klimaanlage,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.TestKlimaanlage", minValue: 170, maxValue: 250}]
 };
 
@@ -320,6 +328,7 @@ var WLAN: PageQR =
     "heading": "Gäste WLAN",
     "useColor": true,
     "subPage": true,
+    "parent": WLAN,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Guest_Wifi" }]
 };
 
@@ -329,6 +338,7 @@ var Buero_Alarm: PageAlarm =
     "heading": "Alarm",
     "useColor": true,
     "subPage": false,
+    "parent": Buero_Alarm,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Alarm" }]
 };
 
@@ -338,6 +348,7 @@ var button1Page: PageGrid =
     "heading": "Radio",
     "useColor": true,
     "subPage": false,
+    "parent": button1Page,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Radio.FFN", icon: "radio", name: "FFN", onColor: colorRadio},
         <PageItem>{ id: "alias.0.NSPanel_1.Radio.Antenne" , icon: "radio", name: "Antenne Nds.", onColor: colorRadio},
@@ -354,6 +365,7 @@ var button2Page: PageEntities =
     "heading": "Büro",
     "useColor": true,
     "subPage": false,
+    "parent": button2Page,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe"},
         <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung"}
@@ -367,6 +379,7 @@ var Service: PageEntities =
     "heading": "NSPanel Service",
     "useColor": true,
     "subPage": false,
+    "parent": Service,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_AutoUpdate", name: "Auto-Updates" ,icon: "update", offColor: MSRed, onColor: MSGreen},
         <PageItem>{ navigate: true, id: "NSPanel_Infos", icon: "information-outline", onColor: White, name: "NSPanel Infos"},
@@ -382,6 +395,7 @@ var NSPanel_Infos: PageEntities =
     "heading": "NSPanel Infos",
     "useColor": true,
     "subPage": true,
+    "parent": Service,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_Hardware", name: "Hardware", icon: "memory", offColor: MSYellow, onColor: MSYellow, useColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_ESP_Temp", name: "ESP Temperatur", icon: "thermometer", unit: "°C", offColor: MSYellow, onColor: MSYellow, useColor: true},
@@ -397,6 +411,7 @@ var NSPanel_Einstellungen: PageEntities =
     "heading": "Screensaver",
     "useColor": true,
     "subPage": true,
+    "parent": Service,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_BrightnessDay", name: "Brightness Tag", icon: "brightness-5", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 5, maxValue: 10},
         <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_BrightnessNight", name: "Brightness Nacht", icon: "brightness-4", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 4},
@@ -412,6 +427,7 @@ var NSPanel_Firmware_Updates: PageEntities =
     "heading": "Firmware-Updates",
     "useColor": true,
     "subPage": true,
+    "parent": Service,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Tasmota_Version", name: "Tasmota Firmware", useColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.TFT_Firmware", name: "TFT-Firmware", useColor: true},
@@ -494,7 +510,7 @@ var screensaverEnabled : boolean = false;
 var pageId = 0;
 
 //Neu für Subpages
-var subPage_open = false;
+var activePage = undefined;
 
 schedule("* * * * *", function () {
     SendTime();
@@ -665,7 +681,7 @@ function get_panel_update_data() {
     check_version_tft_firmware();
     check_online_display_firmware();
 }
-
+ 
 function get_current_tasmota_ip_address() {
     let mqttInfo2 =  config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 6) + "INFO2";
     let Tasmota_Info2 = JSON.parse(getState(mqttInfo2).val);
@@ -750,7 +766,7 @@ function check_online_display_firmware() {
 }
 
 on({ id: config.panelRecvTopic }, function (obj) {
-    if (obj.state.val.startsWith('\{"CustomRecv":')) {
+    if (obj.state.val.startsWith('\{"CustomRecv":')) {      
         var json = JSON.parse(obj.state.val);
         var split = json.CustomRecv.split(",");
         if (split[0] == "event" && split[1] == "startup") {
@@ -849,21 +865,9 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
             case "pageOpenDetail":
                 screensaverEnabled = false;
                 UnsubscribeWatcher();
-                let pageItem = config.pages[pageId].items.find(e => e.id === words[3]);
+                let pageItem = findPageItem(words[3]);  
                 if (pageItem !== undefined)
-                    SendToPanel(GenerateDetailPage(words[2], pageItem));
-                else {
-                    config.subPages.every (sp => {
-                        let pageItem =  sp.items.find(e => e.id === words[3]);
-                        if (pageItem !== undefined) {
-                            SendToPanel(GenerateDetailPage(words[2], pageItem));
-                            console.log(words[2] + " - " + pageItem);
-                            return false;
-                        }
-                        return true;
-                        }
-                    )
-                }  
+                    SendToPanel(GenerateDetailPage(words[2], pageItem));                                         
             case "buttonPress2":
                 screensaverEnabled = false;
                 HandleButtonEvent(words);
@@ -877,6 +881,23 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                 break;
         }
     }
+}
+
+function findPageItem(searching: String) : PageItem {
+    let pageItem = config.pages[pageId].items.find(e => e.id === searching);
+    
+    if (pageItem !== undefined) {
+        return pageItem;
+    }
+    config.subPages.every (sp => {
+        pageItem =  sp.items.find(e => e.id === searching);
+        if (pageItem !== undefined) {           
+            return false;
+        }
+        return true;
+    });   
+    
+    return pageItem;
 }
 
 function GeneratePage(page: Page): void {
@@ -976,6 +997,7 @@ function GenerateGridPage(page: PageGrid): Payload[] {
 }
 
 function GeneratePageElements(page: Page): string {
+    activePage = page;
     let maxItems = 0;
     switch (page.type) {
         case "cardThermo":
@@ -1000,22 +1022,10 @@ function GeneratePageElements(page: Page): string {
 
     let pageData = "entityUpd~" + page.heading + "~" + GetNavigationString(pageId);
 
-//--------------------------------------Subpage----------------
-    if (page.subPage) {
-        subPage_open = true;
-        pageData = "entityUpd~" + page.heading + "~" + "1|0";
-    } 
-//---------------------------------------------------------    
     for (let index = 0; index < maxItems; index++) {
         if (page.items[index] !== undefined) {
             pageData += CreateEntity(page.items[index], index + 1, page.useColor);
         }
-/*
-        else {
-            pageData += CreateEntity(<PageItem>{ id: "delete" }, index + 1); 
-            //muss das wirklich? Wo erforderlich wird es mitgegeben!
-        }
-*/
     }
     return pageData;
 }
@@ -1036,7 +1046,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
             type = "button";
             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("gesture-tap-button");
             iconColor = GetIconColor(pageItem, true, useColors);
-            let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : "PRESS";
+            let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : "PRESS";        
             return "~" + type + "~" + "navigate." + pageItem.id + "~" + iconId + "~" + iconColor + "~" + pageItem.name + "~" + buttonText;
         }
 
@@ -1188,7 +1198,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 if (val === true || val === "true") {
                     optVal = "1"
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + ".ACTUAL") ? 100 - getState(pageItem.id + ".ACTUAL").val : true, useColors);
-                }
+                }  
 
                 return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
                 
@@ -1278,6 +1288,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconColor = GetIconColor(pageItem, false, useColors);
                         var lockState = "LOCK"
                     }
+                    lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
                     RegisterEntityWatcher(pageItem.id + ".ACTUAL");
                 }
 
@@ -1369,12 +1380,12 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
 }
 
 function RegisterEntityWatcher(id: string): void {
-    if (subscriptions.hasOwnProperty(id)) {
+    if (subscriptions.hasOwnProperty(id) || activePage.subPage ) {
         return;
     }
     subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {
         if(pageId >= 0)
-            SendToPanel({ payload: GeneratePageElements(config.pages[pageId]) });
+            SendToPanel({ payload: GeneratePageElements(config.pages[pageId]) });            
         if(pageId == -1 && config.button1Page != undefined)
             SendToPanel({ payload: GeneratePageElements(config.button1Page) });
         if(pageId == -2 && config.button2Page != undefined)
@@ -1639,7 +1650,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
     out_msgs.push({ payload: "pageType~cardMedia" });
     if (existsObject(id)) {
 
-        let name = getState(id + ".ALBUM").val;     
+        let name = getState(id + ".ALBUM").val;             
         let media_icon = Icons.GetIcon("playlist-music");
         let title = getState(id + ".TITLE").val;
         let author = getState(id + ".ARTIST").val;
@@ -1693,7 +1704,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
     }
     if (Debug) console.log(out_msgs);
     return out_msgs
-}
+} 
 
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
     var id = page.items[0].id
@@ -1788,6 +1799,8 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
 }
 
 function GenerateQRPage(page: PageQR): Payload[] {
+    activePage = page;
+    
     var id = page.items[0].id
     var out_msgs: Array<Payload> = [];
     out_msgs.push({ payload: "pageType~cardQR" });
@@ -1876,8 +1889,8 @@ function HandleButtonEvent(words): void {
         GeneratePage(eval((words[2]).substring(9, (words[2]).length)));
         return;
     }
-
-    switch (buttonAction) {
+         
+    switch (buttonAction) {        
         case "bUp":
             if (pageId < 0) { //Prüfen, ob button1page oder button2page 
                 pageId = 0;
@@ -1895,16 +1908,21 @@ function HandleButtonEvent(words): void {
             break;
         case "bPrev":
             var pageNum = ((pageId - 1) % config.pages.length);
-            pageId = Math.abs(pageNum);
-            UnsubscribeWatcher();
-            GeneratePage(config.pages[pageId]);
-
-//-------------Subpage
-            if (subPage_open) {
-                subPage_open = false;
-                HandleButtonEvent(['event','buttonPress2','cardEntities','bNext'])
-            } 
-//--------------------------------
+            pageId = Math.abs(pageNum);          
+            UnsubscribeWatcher();            
+            if(activePage!=undefined && activePage.parent!=undefined) {                                    
+                //update pageID
+                for (let i=0; i<config.pages.length; i++) {
+                    if(config.pages[i] == activePage.parent) {
+                        pageId = i;
+                        break;
+                    }
+                }                
+                GeneratePage(activePage.parent);                                
+            }
+            else {
+                GeneratePage(config.pages[pageId]);                               
+            }                      
             break;
         case "bExit":
             if (config.screenSaverDoubleClick) {
@@ -1926,7 +1944,7 @@ function HandleButtonEvent(words): void {
             }
             setIfExists(config.panelSendTopic, "exitPopup")
             break;
-        case "OnOff":
+        case "OnOff":            
             if (existsObject(id)) {
                 var action = false
                 if (words[4] == "1")
@@ -1959,7 +1977,7 @@ function HandleButtonEvent(words): void {
         case "down":
             setIfExists(id + ".CLOSE", true)
             break;
-        case "button":
+        case "button":            
             if (existsObject(id)) {
                 var action = false
                 if (words[4] == "1")
@@ -1996,25 +2014,15 @@ function HandleButtonEvent(words): void {
                 setIfExists(id + ".SET", parseInt(words[4])) ? true : setIfExists(id + ".ACTUAL", parseInt(words[4]));
             }, 250);    
             break;
-        case "brightnessSlider":
+        case "brightnessSlider":            
             (function () {if (timeoutSlider) {clearTimeout(timeoutSlider); timeoutSlider = null;}})();
             timeoutSlider = setTimeout(async function () {
-                if (existsObject(id)) {
+                if (existsObject(id)) { 
                     let o = getObject(id);
-                    let pageItem = config.pages[pageId].items.find(e => e.id === id);
-                    if (pageItem == undefined) {
-                        config.subPages.every (sp => {
-                            pageItem =  sp.items.find(e => e.id === id);
-                            if (pageItem !== undefined) {
-                           
-                                return false;
-                            }
-                            return true;
-                            }
-                        )
-                    } 
+                    let pageItem = findPageItem(id);
+                                                                     
                     switch (o.common.role) {
-                        case "dimmer":
+                        case "dimmer":                            
                             if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {  
                                 let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness))
                                 setIfExists(id + ".SET", sliderPos) ? true : setIfExists(id + ".ACTUAL", sliderPos);
@@ -2040,17 +2048,7 @@ function HandleButtonEvent(words): void {
         case "colorTempSlider": // Armilar - Slider tickt verkehrt - Hell = 0 / Dunkel = 100 -> Korrektur
             (function () {if (timeoutSlider) {clearTimeout(timeoutSlider); timeoutSlider = null;}})();
             timeoutSlider = setTimeout(async function () {
-                let pageItem = config.pages[pageId].items.find(e => e.id === id);
-                if (pageItem == undefined) {
-                    config.subPages.every (sp => {
-                        pageItem =  sp.items.find(e => e.id === id);
-                        if (pageItem !== undefined) {                        
-                            return false;
-                        }
-                        return true;
-                        }
-                    )
-                }
+                let pageItem = findPageItem(id);                
                 if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
                     let colorTempK = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
                     setIfExists(id + ".TEMPERATURE", (colorTempK));
@@ -2221,7 +2219,9 @@ function HandleButtonEvent(words): void {
 
 function GetNavigationString(pageId: number): string {
     if (Debug) console.log(pageId);
-    if (Debug) console.log(subPage_open);
+   
+    if(activePage.subPage)
+        return "1|0";
 
     switch (pageId) {
         case 0:
@@ -2281,7 +2281,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                                          + "Brightness" })                     //Brightness-Bezeichnung
             }
 
-            //Dimmer
+            //Dimmer          
             if (o.common.role == "dimmer") {
                 if (existsState(id + ".ON_ACTUAL")) {
                     val = getState(id + ".ON_ACTUAL").val;
@@ -2296,8 +2296,8 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     var iconColor = GetIconColor(pageItem, val, false);
                     switchVal = "1"
                 }
-
-                if (existsState(id + ".ACTUAL")) {
+                
+                if (existsState(id + ".ACTUAL")) {                     
                     if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
                         brightness = Math.trunc(scale(getState(id + ".ACTUAL").val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
                     } else {
@@ -2864,6 +2864,7 @@ type Page = {
     items: PageItem[],
     useColor: boolean,
     subPage: boolean,
+    parent: Page,
 };
 
 interface PageEntities extends Page {
