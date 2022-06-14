@@ -328,7 +328,7 @@ var WLAN: PageQR =
     "heading": "Gäste WLAN",
     "useColor": true,
     "subPage": true,
-    "parent": WLAN,
+    "parent": Subpages_1,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Guest_Wifi" }]
 };
 
