@@ -42,7 +42,7 @@ class LuiPagesGen(object):
 
     def update_time(self, kwargs):
         time = datetime.datetime.now().strftime(self._config.get("timeFormat"))
-        addTemplate = self._config.get("timeAdditonalTemplate")
+        addTemplate = self._config.get("timeAdditionalTemplate")
         addTimeText = self._ha_api.render_template(addTemplate)
         self._send_mqtt_msg(f"time~{time}~{addTimeText}")
 
@@ -55,7 +55,7 @@ class LuiPagesGen(object):
             dateformat = self._config.get("dateFormat")
             date = datetime.datetime.now().strftime(dateformat)
             
-        addTemplate = self._config.get("dateAdditonalTemplate")
+        addTemplate = self._config.get("dateAdditionalTemplate")
         addDateText = self._ha_api.render_template(addTemplate)
         self._send_mqtt_msg(f"date~{date}{addDateText}")
 
@@ -234,7 +234,7 @@ class LuiPagesGen(object):
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
             if cardType == "cardGrid" and entityType == "sensor":
-                icon_id = entity.state[:4]
+                icon_id = entity.state[:3]
                 if icon_id[-1] == ".":
                     icon_id = icon_id[:-1]
             else:
@@ -251,8 +251,9 @@ class LuiPagesGen(object):
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         if entityType == "script":
             icon_id = get_icon_id_ha("script", overwrite=icon)
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             text = get_translation(self._locale, "frontend.ui.card.script.run")
-            return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+            return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
         if entityType == "lock":
             icon_id = get_icon_id_ha("lock", state=entity.state, overwrite=icon)
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
