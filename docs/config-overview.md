@@ -62,8 +62,8 @@ key | optional | type | default | description
 `locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
 `dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
 `timeFormat` | True | string | `%H:%M` | Time Format on screensaver. Substring after `?` is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  <pre>`"%I:%M   ?%p"`</pre>
-`dateAdditonalTemplate` | True | string | `""` | Addional Text dispayed after Date, can contain a Homeassistant Template Example `" - {{ states('sun.sun') }}"`
-`timeAdditonalTemplate` | True | string | `""` | Addional Text dispayed below Time, can contain a Homeassistant Template
+`dateAdditionalTemplate` | True | string | `""` | Addional Text dispayed after Date, can contain a Homeassistant Template Example `" - {{ states('sun.sun') }}"`
+`timeAdditionalTemplate` | True | string | `""` | Addional Text dispayed below Time, can contain a Homeassistant Template
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
 `cards` | False | complex | | configuration for cards that are displayed on panel; see docs for cards
 `screensaver` | True | complex | | configuration for screensaver; see docs for screensaver

@@ -16,7 +16,7 @@ Or an TypeScript on your ioBroker Instance in case you are an ioBroker User.
 
 NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 
-![nspanel-rl](doc-pics/nspanel-rl.png)
+![nspanel-rl](docs/img/nspanel-rl.png)
 
 ## Features
 
