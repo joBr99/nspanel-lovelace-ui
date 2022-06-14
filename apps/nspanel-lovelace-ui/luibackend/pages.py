@@ -234,7 +234,7 @@ class LuiPagesGen(object):
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
             if cardType == "cardGrid" and entityType == "sensor":
-                icon_id = entity.state[:4]
+                icon_id = entity.state[:3]
                 if icon_id[-1] == ".":
                     icon_id = icon_id[:-1]
             else:
