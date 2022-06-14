@@ -1,4 +1,4 @@
-# Alarm Card
+# Media Card
 
 ![card-media](img/card-media.png)
 
