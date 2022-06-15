@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker
-- abgestimmt auf TFT 36 / v2.9.0 / BerryDriver 4 / Tasmota 11.1.0
+- abgestimmt auf TFT 37 / v3.0.0 / BerryDriver 4 / Tasmota 11.1.0
 joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -82,7 +82,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v2.9.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.0.0.tft
 ---------------------------------------------------------------------------------------
 */ 
 var Icons = new IconsSelector();
@@ -328,7 +328,7 @@ var WLAN: PageQR =
     "heading": "Gäste WLAN",
     "useColor": true,
     "subPage": true,
-    "parent": WLAN,
+    "parent": Subpages_1,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Guest_Wifi" }]
 };
 
@@ -550,7 +550,7 @@ check_updates();
 //------------------Begin Update Functions
 function check_updates() {
     
-    const desired_display_firmware_version = 36;
+    const desired_display_firmware_version = 37;
     const berry_driver_version = 4;
 
     if (Debug) console.log("Check-Updates");
@@ -784,7 +784,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version : string = "v2.9.0";
+    const tft_version : string = "v3.0.0";
     var desired_display_firmware_url = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-" + tft_version + ".tft"
     require("request")((['http://',get_current_tasmota_ip_address(),'/cm?cmnd=FlashNextion ', desired_display_firmware_url].join('')), async function (error, response, result) {
         createState(NSPanel_Path + "TFT_Firmware.onlineVersion");

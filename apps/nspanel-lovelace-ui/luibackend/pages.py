@@ -139,7 +139,7 @@ class LuiPagesGen(object):
                 entity = self._ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
                 icon = get_icon_id_ha(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
-                color = self.get_entity_color(entity)
+                color = self.get_entity_color(entity, overwrite=statusIcon.get("color", None))
                 status_res += f"~{icon}~{color}"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}{status_res}")
@@ -172,7 +172,9 @@ class LuiPagesGen(object):
                     status_entity = self._ha_api.get_entity(item.status)
                     icon_color = self.get_entity_color(status_entity)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
-                        icon_id = status_entity.state
+                        icon_id = status_entity.state[:3]
+                        if icon_id[-1] == ".":
+                            icon_id = icon_id[:-1]
                 else:
                     icon_color = 17299
                 return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
