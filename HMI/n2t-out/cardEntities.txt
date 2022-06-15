@@ -769,8 +769,8 @@ Button bText1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : newtxt
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 15
     
     Events
         Touch Press Event
@@ -794,8 +794,8 @@ Button bText2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : newtxt
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 15
     
     Events
         Touch Press Event
@@ -819,8 +819,8 @@ Button bText3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : newtxt
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 15
     
     Events
         Touch Press Event
@@ -844,8 +844,8 @@ Button bText4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : newtxt
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 15
     
     Events
         Touch Press Event
