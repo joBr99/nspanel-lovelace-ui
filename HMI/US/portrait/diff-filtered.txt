@@ -1,16 +1,60 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-12 12:21:18.904762528 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-12 12:21:18.432756347 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-12 12:21:18.872762109 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-06-12 12:21:18.436756399 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-12 12:21:18.876762161 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-15 18:19:09.468836328 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-15 18:19:09.032808526 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-15 18:19:09.456835563 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-06-15 18:19:09.032808526 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-15 18:19:09.456835563 +0000
 +@@ -63,6 +63,16 @@
 +@@ -120,6 +130,18 @@
 +@@ -156,6 +178,15 @@
 +@@ -286,6 +317,26 @@
 +@@ -405,6 +456,34 @@
++@@ -769,8 +848,8 @@
++         Disable release event after dragging: 0
++         Send Component ID                   : disabled
++         State                               : unpressed
++-        Text                                : 
++-        Max. Text Size                      : 15
+++        Text                                : newtxt
+++        Max. Text Size                      : 10
++     
++     Events
++         Touch Press Event
++@@ -794,8 +873,8 @@
++         Disable release event after dragging: 0
++         Send Component ID                   : disabled
++         State                               : unpressed
++-        Text                                : 
++-        Max. Text Size                      : 15
+++        Text                                : newtxt
+++        Max. Text Size                      : 10
++     
++     Events
++         Touch Press Event
++@@ -819,8 +898,8 @@
++         Disable release event after dragging: 0
++         Send Component ID                   : disabled
++         State                               : unpressed
++-        Text                                : 
++-        Max. Text Size                      : 15
+++        Text                                : newtxt
+++        Max. Text Size                      : 10
++     
++     Events
++         Touch Press Event
++@@ -844,8 +923,8 @@
++         Disable release event after dragging: 0
++         Send Component ID                   : disabled
++         State                               : unpressed
++-        Text                                : 
++-        Max. Text Size                      : 15
+++        Text                                : newtxt
+++        Max. Text Size                      : 10
++     
++     Events
++         Touch Press Event
 +@@ -862,6 +941,106 @@
 +@@ -970,6 +1149,33 @@
 +@@ -1075,6 +1281,28 @@
 +@@ -1850,6 +2078,169 @@
-+--- HMI/n2t-out/pageStartup.txt	2022-06-12 12:21:18.432756347 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-12 12:21:18.872762109 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-06-15 18:19:09.032808526 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-15 18:19:09.456835563 +0000
