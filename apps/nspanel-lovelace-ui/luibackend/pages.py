@@ -139,7 +139,7 @@ class LuiPagesGen(object):
                 entity = self._ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
                 icon = get_icon_id_ha(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
-                color = self.get_entity_color(entity)
+                color = self.get_entity_color(entity, overwrite=statusIcon.get("color", None))
                 status_res += f"~{icon}~{color}"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}{status_res}")
