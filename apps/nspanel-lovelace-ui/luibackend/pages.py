@@ -172,7 +172,9 @@ class LuiPagesGen(object):
                     status_entity = self._ha_api.get_entity(item.status)
                     icon_color = self.get_entity_color(status_entity)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
-                        icon_id = status_entity.state
+                        icon_id = status_entity.state[:3]
+                        if icon_id[-1] == ".":
+                            icon_id = icon_id[:-1]
                 else:
                     icon_color = 17299
                 return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
