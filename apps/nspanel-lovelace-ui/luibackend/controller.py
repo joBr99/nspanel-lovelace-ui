@@ -241,9 +241,13 @@ class LuiController(object):
         if button_type == "button":
             if entity_id.startswith('navigate'):
                 # internal for navigation to nested pages
-                self._previous_cards.append(self._current_card)
-                self._current_card = self._config.searchCard(entity_id)
-                self._pages_gen.render_card(self._current_card)
+                dstCard = self._config.searchCard(entity_id)
+                if dstCard is not None:
+                    self._previous_cards.append(self._current_card)
+                    self._current_card = dstCard
+                    self._pages_gen.render_card(self._current_card)
+                else:
+                    self._ha_api.log(f"No page with key {entity_id} found")
             elif entity_id.startswith('scene'):
                 self._ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('script'):
