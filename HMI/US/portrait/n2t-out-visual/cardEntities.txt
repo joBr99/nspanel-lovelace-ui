@@ -1684,8 +1684,8 @@ Button bText1
         Horizontal Alignment                : right
         Vertical Alignment                  : center
         State                               : unpressed
-        Text                                : newtxt
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 20
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1731,8 +1731,8 @@ Button bText2
         Horizontal Alignment                : right
         Vertical Alignment                  : center
         State                               : unpressed
-        Text                                : newtxt
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 20
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1778,8 +1778,8 @@ Button bText3
         Horizontal Alignment                : right
         Vertical Alignment                  : center
         State                               : unpressed
-        Text                                : newtxt
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 20
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1825,8 +1825,8 @@ Button bText4
         Horizontal Alignment                : right
         Vertical Alignment                  : center
         State                               : unpressed
-        Text                                : newtxt
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 20
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -2013,8 +2013,8 @@ Button bText5
         Horizontal Alignment                : right
         Vertical Alignment                  : center
         State                               : unpressed
-        Text                                : newtxt
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 20
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
