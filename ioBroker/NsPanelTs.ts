@@ -143,7 +143,7 @@ var weatherForecast = true; //true = WheatherForecast 5 Days --- false = Config 
 
 //Alexa-Instanz
 var alexaInstanz = "alexa2.0"
-var alexaDevice = "G070RR1075220388"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
+var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
