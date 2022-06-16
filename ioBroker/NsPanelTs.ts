@@ -15,6 +15,8 @@ ReleaseNotes:
         - 08.05.2022 - Schalter (Licht, Dimmer, Hue, etc) in cardGrid lassen sich wieder schalten
         - 14.06.2022 - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu (Many thanks to Grrzzz)
         - 14.06.2022 - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc) (Many thanks to Grrzzz)
+        - 15.06.2022 - Date/Time im Screensaver auf Basis localString (de-DE/en-EN/nl-NL/etc.)
+        - 16.06.2022 - Multilingual - config.locale (en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU)
     
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -68,10 +70,8 @@ Interne Sonoff-Sensoren (über Tasmota):
                           (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!! 
                           ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
-
 Tasmota-Status0 - (zyklische Ausführung) 
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
-
 Erforderliche Adapter:
     Accu-Wheater:       - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
@@ -79,7 +79,6 @@ Erforderliche Adapter:
     Alias-Manager       - !!! ausschießlich für MEDIA-Alias
     MQTT-Adapter        - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
-
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.0.0.tft
@@ -91,8 +90,9 @@ const NSPanel_Path = "0_userdata.0.NSPanel.1."
 const Debug = false;
 var manually_Update = true;
 
-const Months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-const Days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+//const Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+//const Days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
 //const Off: RGB = { red: 68, green: 115, blue: 158 };  //Blau-Off
 const Off: RGB = { red: 253, green: 128, blue: 0 };     //Orange-Off - schönere Farbübergänge
 const On: RGB = { red: 253, green: 216, blue: 53 };
@@ -379,7 +379,7 @@ var Service: PageEntities =
     "heading": "NSPanel Service",
     "useColor": true,
     "subPage": false,
-    "parent": Service,
+    "parent": Service, 
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_AutoUpdate", name: "Auto-Updates" ,icon: "update", offColor: MSRed, onColor: MSGreen},
         <PageItem>{ navigate: true, id: "NSPanel_Infos", icon: "information-outline", onColor: White, name: "NSPanel Infos"},
@@ -445,9 +445,9 @@ export const config: Config = {
     dimmode: 8,
     active: 100, //Standard-Brightness TFT
     screenSaverDoubleClick: false,
-    locale: "de_DE",
-    timeFormat: "%H:%M",
-    dateFormat: "%A, %d. %B %Y",
+    locale: "en-EN",                    //en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU
+    timeFormat: "%H:%M",                //currently not used 
+    dateFormat: "%A, %d. %B %Y",        //currently not used 
     weatherEntity: "alias.0.Wetter",
     defaultOffColor: Off,
     defaultOnColor: On,
@@ -542,12 +542,26 @@ schedule("*/30 * * * *", function () {
 });
 
 //Mit Start auf Updates checken
+get_locales();
 setState(config.panelSendTopic, 'pageType~pageStartup');
-get_tasmota_status0()
+get_tasmota_status0();
 get_panel_update_data();
 check_updates();
 
 //------------------Begin Update Functions
+
+function get_locales() { 
+    exec('curl https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/ioBroker/ioBroker_NSPanel_locales.json', function (error, result, stderr){
+        if (result) {
+            let BerryDriverVersionOnline = result.substring((result.indexOf("version_of_this_script = ") + 24), result.indexOf("version_of_this_script = ") + 27).replace(/\s+/g, '');
+            createState(NSPanel_Path + "NSPanel_locales_json");
+            var timer = setTimeout(function() {
+                setIfExists(NSPanel_Path + 'NSPanel_locales_json', result);
+            }, 2000); 
+        }
+    });
+}
+
 function check_updates() {
     
     const desired_display_firmware_version = 37;
@@ -947,27 +961,32 @@ function HandleStartupProcess(): void {
 }
 
 function SendDate(): void {
+
     var d = new Date();
-    var day = Days[d.getDay()];
-    var date = d.getDate();
-    var month = Months[d.getMonth()];
     var year = d.getFullYear();
-    var _sendDate = "date~" + day + " " + date + " " + month + " " + year;
-    SendToPanel(<Payload>{ payload: _sendDate });
+    var month = d.getMonth();
+    var day = d.getDate();
+    const date = new Date(year,month,day,1,1,1);
+    const options : any  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var _SendDate = date.toLocaleDateString(config.locale, options); 
+
+    SendToPanel(<Payload>{ payload: "date~" + _SendDate });
+
 }
 
 function SendTime(): void {
-    var d = new Date();
-    var hr = d.getHours().toString();
-    var min = d.getMinutes().toString();
 
-    if (d.getHours() < 10) {
-        hr = "0" + d.getHours().toString();
-    }
-    if (d.getMinutes() < 10) {
-        min = "0" + d.getMinutes().toString();
-    }
-    SendToPanel(<Payload>{ payload: "time~" + hr + ":" + min });
+    var d = new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth();
+    var day = d.getDate();
+    var hr = d.getHours();
+    var min = d.getMinutes();
+    const date = new Date(year, month, day, hr, min, 1);
+
+    var _SendTime = date.toLocaleTimeString(config.locale, { hour: '2-digit', minute: '2-digit', hour12: false});
+
+    SendToPanel(<Payload>{ payload: "time~" + _SendTime });
 }
 
 function ScreensaverDimmode() {
@@ -1216,12 +1235,12 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (getState(pageItem.id + ".ACTUAL").val) {
                         iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == "door"  ? Icons.GetIcon("door-open") : Icons.GetIcon("window-open-variant");
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        var windowState = "opened"
+                        var windowState = findLocale("window","opened");
                     } else {
                         iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == "door"  ? Icons.GetIcon("door-closed") : Icons.GetIcon("window-closed-variant");
                         //iconId = Icons.GetIcon("window-closed-variant");
                         iconColor = GetIconColor(pageItem, true, useColors);
-                        var windowState = "closed"
+                        var windowState = findLocale("window","closed");
                     }
                     RegisterEntityWatcher(pageItem.id + ".ACTUAL");
                 }
@@ -1282,11 +1301,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (getState(pageItem.id + ".ACTUAL").val) {
                         iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lock");
                         iconColor = GetIconColor(pageItem, true, useColors);
-                        var lockState = "UNLOCK"
+                        var lockState = findLocale("lock","UNLOCK")
                     } else {
                         iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon("lock-open-variant");
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        var lockState = "LOCK"
+                        var lockState = findLocale("lock","LOCK")
                     }
                     lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
                     RegisterEntityWatcher(pageItem.id + ".ACTUAL");
@@ -1354,6 +1373,20 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
     }
     return "~delete~~~~~"
 }
+
+function findLocale(controlsObject: string, controlsState: string) : string {
+    var locale = config.locale;
+    var strJson = getState(NSPanel_Path + 'NSPanel_locales_json').val;
+    var obj = JSON.parse(strJson);
+    var strLocale = obj[controlsObject][controlsState][locale];
+
+    if (strLocale != undefined) {
+        return strLocale;
+    } else {
+        return controlsState;
+    }
+}
+
 
 function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: boolean): number {
     // dimmer
@@ -1621,25 +1654,45 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
 
         out_msgs.push({ payload: "entityUpd~" 
-                                 + name                         + "~"   //Heading
-                                 + GetNavigationString(pageId)  + "~"   //Page Navigation
-                                 + id                           + "~"   //internalNameEntiy
-                                 + currentTemp + "°C"           + "~"   //Ist-Temperatur (String)
-                                 + destTemp                     + "~"   //Soll-Temperatur (numerisch ohne Komma)
-                                 + statusStr                    + "~"   //Mode
-                                 + minTemp                      + "~"   //Thermostat Min-Temperatur
-                                 + maxTemp                      + "~"   //Thermostat Max-Temperatur
-                                 + stepTemp                     + "~"   //Schritte für Soll (5°C)
-                                 + icon_res                             //Icons Status
-                                 + "Aktuell"                    + "~"   //Bezeicher vor Aktueller Raumtemperatur
-                                 + "Status"                     + "~"   //Bezeicner vor 
-                                 + "HVAC"                       + "~"   //Bezeichner vor HVAC
-                                 +  "°C"})                              //Bezeichner Hinter Solltemp
+                                 + name                                 + "~"   //Heading
+                                 + GetNavigationString(pageId)          + "~"   //Page Navigation
+                                 + id                                   + "~"   //internalNameEntiy
+                                 + currentTemp + config.temperatureUnit + "~"   //Ist-Temperatur (String)
+                                 + destTemp                             + "~"   //Soll-Temperatur (numerisch ohne Komma)
+                                 + statusStr                            + "~"   //Mode
+                                 + minTemp                              + "~"   //Thermostat Min-Temperatur
+                                 + maxTemp                              + "~"   //Thermostat Max-Temperatur
+                                 + stepTemp                             + "~"   //Schritte für Soll (5°C)
+                                 + icon_res                                     //Icons Status
+                                 + findLocale("thermostat","Currently") + "~"   //Bezeicher vor Aktueller Raumtemperatur
+                                 + findLocale("thermostat","State")     + "~"   //Bezeicner vor 
+                                 + findLocale("thermostat","Action")    + "~"   //Bezeichner vor HVAC
+                                 + config.temperatureUnit               + "~"   //Bezeichner hinter Solltemp
+                                 + ""                                   + "~"
+                                 + ""
+                                 });                    
     
     }
+/*thermometer
+entityUpd~
+heading~
+navigation~
+internalNameEntiy
+currentTempcdestTemp
+status
+minTemp
+maxTemp
+stepTemp
+[[~*iconId*~*activeColor*~*state*~*hvac_action*]]
+tCurTempLbl
+tStateLbl
+tALbl
+iconTemperature
+dstTempTwoTempMode
+*/
 
-
-    if (Debug) console.log(out_msgs);
+    //if (Debug) 
+    console.log(out_msgs);
     return out_msgs
 }
 
@@ -2276,9 +2329,9 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                                          + "disable"          + "~"            //sliderBrightnessPos
                                          + "disable"          + "~"            //sliderColorTempPos
                                          + "disable"          + "~"            //colorMode
-                                         + "Color"            + "~"            //Color-Bezeichnung
-                                         + "Temperature"      + "~"            //Temperature-Bezeichnung
-                                         + "Brightness" })                     //Brightness-Bezeichnung
+                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
+                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
             }
 
             //Dimmer          
@@ -2323,9 +2376,9 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                                          + brightness           + "~"   //sliderBrightnessPos
                                          + "disable"            + "~"   //sliderColorTempPos
                                          + "disable"            + "~"   //colorMod
-                                         + "Color"              + "~"   //Color-Bezeichnung
-                                         + "Temperature"        + "~"   //Temperature-Bezeichnung
-                                         + "Brightness" })              //Brightness-Bezeichnung
+                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
+                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
 
             }
             
@@ -2387,9 +2440,9 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                                          + brightness         + "~"   //sliderBrightnessPos
                                          + colorTemp          + "~"   //sliderColorTempPos
                                          + colorMode          + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                                         + "Color"            + "~"   //Color-Bezeichnung
-                                         + "Temperature"      + "~"   //Temperature-Bezeichnung
-                                         + "Brightness" })            //Brightness-Bezeichnung
+                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
+                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
             }
 
             //RGB-Licht
@@ -2449,9 +2502,9 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                                          + brightness         + "~"   //sliderBrightnessPos
                                          + colorTemp          + "~"   //sliderColorTempPos
                                          + colorMode          + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                                         + "Color"            + "~"   //Color-Bezeichnung
-                                         + "Temperature"      + "~"   //Temperature-Bezeichnung
-                                         + "Brightness" })            //Brightness-Bezeichnung
+                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
+                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
             }
 
             //RGB-Licht-einzeln (HEX)
@@ -2515,9 +2568,9 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                                          + brightness         + "~"   //sliderBrightnessPos
                                          + colorTemp          + "~"   //sliderColorTempPos
                                          + colorMode          + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                                         + "Color"            + "~"   //Color-Bezeichnung
-                                         + "Temperature"      + "~"   //Temperature-Bezeichnung
-                                         + "Brightness" })            //Brightness-Bezeichnung)
+                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
+                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
             }
 
             //Farbtemperatur
@@ -2562,16 +2615,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail" + "~"   //entityUpdateDetail
-                                         + icon               + "~"   //iconId
-                                         + iconColor          + "~"   //iconColor
-                                         + switchVal          + "~"   //buttonState
-                                         + brightness         + "~"   //sliderBrightnessPos
-                                         + colorTemp          + "~"   //sliderColorTempPos
-                                         + colorMode          + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                                         + "Color"            + "~"   //Color-Bezeichnung
-                                         + "Temperature"      + "~"   //Temperature-Bezeichnung
-                                         + "Brightness" })            //Brightness-Bezeichnung
+                out_msgs.push({ payload: "entityUpdateDetail" + "~"                   //entityUpdateDetail
+                                         + icon               + "~"                   //iconId
+                                         + iconColor          + "~"                   //iconColor
+                                         + switchVal          + "~"                   //buttonState
+                                         + brightness         + "~"                   //sliderBrightnessPos
+                                         + colorTemp          + "~"                   //sliderColorTempPos
+                                         + colorMode          + "~"                   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
+                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
             }
 
         }
@@ -2585,10 +2638,10 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 val = getState(id + ".SET").val;
                 RegisterDetailEntityWatcher(id + ".SET", pageItem, type);
             }
-            out_msgs.push({ payload: "entityUpdateDetail" + "~"   //entityUpdateDetail
-                                     + val                + "~"   //Shutterposition
+            out_msgs.push({ payload: "entityUpdateDetail" + "~"           //entityUpdateDetail
+                                     + val                + "~"           //Shutterposition
                                      + ""                 + "~"   
-                                     + "Position"})              //Position-Bezeichnung                                     
+                                     + findLocale("blinds","Position")}); //Position-Bezeichnung                                     
         }
     }
     return out_msgs
@@ -2630,7 +2683,7 @@ function HandleScreensaverUpdate(): void {
                 let TempMax = getState("accuweather.0.Summary.TempMax_d" + i).val;
                 let DayOfWeek = getState("accuweather.0.Summary.DayOfWeek_d" + i).val;
                 let WeatherIcon = GetAccuWeatherIcon(getState("accuweather.0.Summary.WeatherIcon_d" + i).val);
-                payloadString += DayOfWeek + "~" + Icons.GetIcon(WeatherIcon) + "~" + TempMax + " °C~";
+                payloadString += DayOfWeek + "~" + Icons.GetIcon(WeatherIcon) + "~" + TempMax + " " + config.temperatureUnit + "~";
             }
         } 
         else {
