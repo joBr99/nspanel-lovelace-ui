@@ -83,63 +83,63 @@ Variable (string) strCommand
     
 Variable (string) type1
     Attributes
-        ID            : 45
+        ID            : 41
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type2
     Attributes
-        ID            : 46
+        ID            : 42
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type3
     Attributes
-        ID            : 47
+        ID            : 43
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type4
     Attributes
-        ID            : 48
+        ID            : 44
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) entn1
     Attributes
-        ID            : 49
+        ID            : 45
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) entn2
     Attributes
-        ID            : 50
+        ID            : 46
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) entn3
     Attributes
-        ID            : 51
+        ID            : 47
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) entn4
     Attributes
-        ID            : 52
+        ID            : 48
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Number nNum1
     Attributes
-        ID                                  : 58
+        ID                                  : 54
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -169,7 +169,7 @@ Number nNum1
     
 Number nNum2
     Attributes
-        ID                                  : 59
+        ID                                  : 55
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -199,7 +199,7 @@ Number nNum2
     
 Number nNum3
     Attributes
-        ID                                  : 60
+        ID                                  : 56
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -229,7 +229,7 @@ Number nNum3
     
 Number nNum4
     Attributes
-        ID                                  : 61
+        ID                                  : 57
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -666,7 +666,7 @@ Picture p0
     
 Slider hSlider1
     Attributes
-        ID                                  : 54
+        ID                                  : 50
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -709,7 +709,7 @@ Slider hSlider1
         
 Slider hSlider2
     Attributes
-        ID                                  : 55
+        ID                                  : 51
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -752,7 +752,7 @@ Slider hSlider2
         
 Slider hSlider3
     Attributes
-        ID                                  : 56
+        ID                                  : 52
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -795,7 +795,7 @@ Slider hSlider3
         
 Slider hSlider4
     Attributes
-        ID                                  : 57
+        ID                                  : 53
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1503,15 +1503,15 @@ Button bNext
         
 Button bText1
     Attributes
-        ID                                  : 37
+        ID                                  : 61
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 277
+        x coordinate                        : 261
         y coordinate                        : 84
-        Width                               : 145
+        Width                               : 166
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -1528,7 +1528,7 @@ Button bText1
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 20
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1550,15 +1550,15 @@ Button bText1
         
 Button bText2
     Attributes
-        ID                                  : 38
+        ID                                  : 62
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 276
+        x coordinate                        : 261
         y coordinate                        : 140
-        Width                               : 145
+        Width                               : 166
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -1575,7 +1575,7 @@ Button bText2
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 20
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1597,15 +1597,15 @@ Button bText2
         
 Button bText3
     Attributes
-        ID                                  : 39
+        ID                                  : 63
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 277
+        x coordinate                        : 262
         y coordinate                        : 197
-        Width                               : 145
+        Width                               : 166
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -1622,7 +1622,7 @@ Button bText3
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 20
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1644,15 +1644,15 @@ Button bText3
         
 Button bText4
     Attributes
-        ID                                  : 40
+        ID                                  : 64
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 277
+        x coordinate                        : 262
         y coordinate                        : 254
-        Width                               : 145
+        Width                               : 166
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -1669,7 +1669,7 @@ Button bText4
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 20
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1897,7 +1897,7 @@ Hotspot mSpecial
         
 Hotspot m2
     Attributes
-        ID                                  : 41
+        ID                                  : 37
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1905,7 +1905,7 @@ Hotspot m2
         Opacity                             : 127
         x coordinate                        : 25
         y coordinate                        : 184
-        Width                               : 250
+        Width                               : 235
         Height                              : 60
         Effect                              : load
         Effect Priority                     : 0
@@ -1928,7 +1928,7 @@ Hotspot m2
         
 Hotspot m1
     Attributes
-        ID                                  : 42
+        ID                                  : 38
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1936,7 +1936,7 @@ Hotspot m1
         Opacity                             : 127
         x coordinate                        : 24
         y coordinate                        : 127
-        Width                               : 247
+        Width                               : 236
         Height                              : 60
         Effect                              : load
         Effect Priority                     : 0
@@ -1959,7 +1959,7 @@ Hotspot m1
         
 Hotspot m0
     Attributes
-        ID                                  : 43
+        ID                                  : 39
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1967,7 +1967,7 @@ Hotspot m0
         Opacity                             : 127
         x coordinate                        : 22
         y coordinate                        : 70
-        Width                               : 244
+        Width                               : 237
         Height                              : 56
         Effect                              : load
         Effect Priority                     : 0
@@ -1990,7 +1990,7 @@ Hotspot m0
         
 Hotspot m3
     Attributes
-        ID                                  : 44
+        ID                                  : 40
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1998,7 +1998,7 @@ Hotspot m3
         Opacity                             : 127
         x coordinate                        : 23
         y coordinate                        : 237
-        Width                               : 244
+        Width                               : 236
         Height                              : 60
         Effect                              : load
         Effect Priority                     : 0
@@ -2021,7 +2021,7 @@ Hotspot m3
         
 Hotspot mSwipeNext
     Attributes
-        ID                                  : 62
+        ID                                  : 58
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2041,7 +2041,7 @@ Hotspot mSwipeNext
         
 Hotspot mSwipeUp
     Attributes
-        ID                                  : 63
+        ID                                  : 59
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2061,7 +2061,7 @@ Hotspot mSwipeUp
         
 Hotspot mSwipePrev
     Attributes
-        ID                                  : 64
+        ID                                  : 60
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2953,7 +2953,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 53
+        ID   : 49
         Scope: local
         Value: 0
     
