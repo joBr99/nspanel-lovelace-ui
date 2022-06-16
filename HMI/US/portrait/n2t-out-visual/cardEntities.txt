@@ -1685,7 +1685,7 @@ Button bText1
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : newtxt
-        Max. Text Size                      : 10
+        Max. Text Size                      : 15
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1732,7 +1732,7 @@ Button bText2
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : newtxt
-        Max. Text Size                      : 10
+        Max. Text Size                      : 15
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1779,7 +1779,7 @@ Button bText3
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : newtxt
-        Max. Text Size                      : 10
+        Max. Text Size                      : 15
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1826,7 +1826,7 @@ Button bText4
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : newtxt
-        Max. Text Size                      : 10
+        Max. Text Size                      : 15
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -2014,7 +2014,7 @@ Button bText5
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : newtxt
-        Max. Text Size                      : 10
+        Max. Text Size                      : 15
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
