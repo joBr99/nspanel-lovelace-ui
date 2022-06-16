@@ -17,6 +17,7 @@ ReleaseNotes:
         - 14.06.2022 - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc) (Many thanks to Grrzzz)
         - 15.06.2022 - Date/Time im Screensaver auf Basis localString (de-DE/en-EN/nl-NL/etc.)
         - 16.06.2022 - Multilingual - config.locale (en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU)
+        - 16.06.2022 - Bugfix by Grrzzz - Subpages
     
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -142,7 +143,7 @@ var weatherForecast = true; //true = WheatherForecast 5 Days --- false = Config 
 
 //Alexa-Instanz
 var alexaInstanz = "alexa2.0"
-var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
+var alexaDevice = "G070RR1075220388"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
@@ -898,7 +899,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
 }
 
 function findPageItem(searching: String) : PageItem {
-    let pageItem = config.pages[pageId].items.find(e => e.id === searching);
+    let pageItem = activePage.items.find(e => e.id === searching);
     
     if (pageItem !== undefined) {
         return pageItem;
@@ -1413,16 +1414,16 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
 }
 
 function RegisterEntityWatcher(id: string): void {
-    if (subscriptions.hasOwnProperty(id) || activePage.subPage ) {
+    if (subscriptions.hasOwnProperty(id)) {
         return;
     }
-    subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {
-        if(pageId >= 0)
-            SendToPanel({ payload: GeneratePageElements(config.pages[pageId]) });            
+    subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {          
         if(pageId == -1 && config.button1Page != undefined)
             SendToPanel({ payload: GeneratePageElements(config.button1Page) });
         if(pageId == -2 && config.button2Page != undefined)
             SendToPanel({ payload: GeneratePageElements(config.button2Page) });
+        if(activePage!=undefined)
+            SendToPanel({ payload: GeneratePageElements(activePage) });
     }))
 }
 
@@ -1668,31 +1669,13 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                                  + findLocale("thermostat","State")     + "~"   //Bezeicner vor 
                                  + findLocale("thermostat","Action")    + "~"   //Bezeichner vor HVAC
                                  + config.temperatureUnit               + "~"   //Bezeichner hinter Solltemp
-                                 + ""                                   + "~"
-                                 + ""
+                                 + ""                                   + "~"   //iconTemperature
+                                 + ""                                           //dstTempTwoTempMode
                                  });                    
     
     }
-/*thermometer
-entityUpd~
-heading~
-navigation~
-internalNameEntiy
-currentTempcdestTemp
-status
-minTemp
-maxTemp
-stepTemp
-[[~*iconId*~*activeColor*~*state*~*hvac_action*]]
-tCurTempLbl
-tStateLbl
-tALbl
-iconTemperature
-dstTempTwoTempMode
-*/
 
-    //if (Debug) 
-    console.log(out_msgs);
+    if (Debug) console.log(out_msgs);
     return out_msgs
 }
 
@@ -1984,7 +1967,7 @@ function HandleButtonEvent(words): void {
                 }
             } else {
                 if (Debug) console.log("bExit: " + words[4] + " - "+ pageId)
-                GeneratePage(config.pages[pageId]);
+                GeneratePage(activePage);
             }
             break;
         case "notifyAction":
