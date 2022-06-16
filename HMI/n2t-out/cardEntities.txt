@@ -770,7 +770,7 @@ Button bText1
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 20
     
     Events
         Touch Press Event
@@ -795,7 +795,7 @@ Button bText2
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 20
     
     Events
         Touch Press Event
@@ -820,7 +820,7 @@ Button bText3
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 20
     
     Events
         Touch Press Event
@@ -845,7 +845,7 @@ Button bText4
         Send Component ID                   : disabled
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 20
     
     Events
         Touch Press Event
