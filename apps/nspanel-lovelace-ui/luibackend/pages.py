@@ -172,7 +172,7 @@ class LuiPagesGen(object):
                     status_entity = self._ha_api.get_entity(item.status)
                     icon_color = self.get_entity_color(status_entity)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
-                        icon_id = status_entity.state[:3]
+                        icon_id = status_entity.state[:4]
                         if icon_id[-1] == ".":
                             icon_id = icon_id[:-1]
                 else:
@@ -236,7 +236,7 @@ class LuiPagesGen(object):
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
             if cardType == "cardGrid" and entityType == "sensor":
-                icon_id = entity.state[:3]
+                icon_id = entity.state[:4]
                 if icon_id[-1] == ".":
                     icon_id = icon_id[:-1]
             else:
@@ -274,7 +274,7 @@ class LuiPagesGen(object):
             icon_id = get_icon_id_ha("input_text", overwrite=icon)
             value = entity.state
             return f"~text~{entityId}~{icon_id}~17299~{name}~{value}"
-        return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~error~"
+        return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~unsupported~"
 
     def generate_entities_page(self, navigation, heading, items, cardType):
         command = f"entityUpd~{heading}~{navigation}"
