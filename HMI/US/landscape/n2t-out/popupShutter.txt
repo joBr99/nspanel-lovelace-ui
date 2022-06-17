@@ -69,7 +69,7 @@ Variable (string) tTmp
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 10
+        Max. Text Size: 80
     
 Text tEntity
     Attributes
@@ -441,10 +441,11 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
-                                    if(tInstruction.txt=="entityUpdateDetail")
+                                    spstr strCommand.txt,tTmp.txt,"~",1
+                                    if(tInstruction.txt=="entityUpdateDetail"&&tTmp.txt==entn.txt)
                                     {
                                         // get Position value
-                                        spstr strCommand.txt,tTmp.txt,"~",1
+                                        spstr strCommand.txt,tTmp.txt,"~",2
                                         if(tTmp.txt=="disable")
                                         {
                                             vis tPosHeading,0
@@ -457,92 +458,92 @@ Timer tmSerial
                                             vis hPosition,1
                                         }
                                         // set tinfo1 text
-                                        spstr strCommand.txt,tInfo1.txt,"~",2
+                                        spstr strCommand.txt,tInfo1.txt,"~",3
                                         // set tPosHeading (localization)
-                                        spstr strCommand.txt,tPosHeading.txt,"~",3
+                                        spstr strCommand.txt,tPosHeading.txt,"~",4
                                         // set tIcon1
-                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        spstr strCommand.txt,tTmp.txt,"~",5
                                         if(tTmp.txt!="")
                                         {
                                             tIcon1.txt=tTmp.txt
                                         }
                                         // set icon bUp
-                                        spstr strCommand.txt,tTmp.txt,"~",8
+                                        spstr strCommand.txt,tTmp.txt,"~",9
                                         if(tTmp.txt=="disable")
                                         {
                                             tsw bUp1,0
-                                            spstr strCommand.txt,bUp1.txt,"~",5
+                                            spstr strCommand.txt,bUp1.txt,"~",6
                                             bUp1.pco=27501
                                         }else if(tTmp.txt=="enable")
                                         {
-                                            spstr strCommand.txt,bUp1.txt,"~",5
+                                            spstr strCommand.txt,bUp1.txt,"~",6
                                             tsw bUp1,1
                                             bUp1.pco=65535
                                         }
                                         // set icon bStop
-                                        spstr strCommand.txt,tTmp.txt,"~",9
+                                        spstr strCommand.txt,tTmp.txt,"~",10
                                         if(tTmp.txt=="disable")
                                         {
                                             tsw bStop1,0
-                                            spstr strCommand.txt,bStop1.txt,"~",6
+                                            spstr strCommand.txt,bStop1.txt,"~",7
                                             bStop1.pco=27501
                                         }else if(tTmp.txt=="enable")
                                         {
-                                            spstr strCommand.txt,bStop1.txt,"~",6
+                                            spstr strCommand.txt,bStop1.txt,"~",7
                                             tsw bStop1,1
                                             bStop1.pco=65535
+                                        }
+                                        // set icon bDown
+                                        spstr strCommand.txt,tTmp.txt,"~",11
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            spstr strCommand.txt,bDown1.txt,"~",8
+                                            tsw bDown1,0
+                                            bDown1.pco=27501
+                                        }else if(tTmp.txt=="enable")
+                                        {
+                                            spstr strCommand.txt,bDown1.txt,"~",8
+                                            tsw bDown1,1
+                                            bDown1.pco=65535
+                                        }
+                                        // set tTiltHeading (localization)
+                                        spstr strCommand.txt,tTiltHeading.txt,"~",12
+                                        // set icon bUp
+                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            tsw bTLeft,0
+                                            spstr strCommand.txt,bTLeft.txt,"~",13
+                                            bTLeft.pco=27501
+                                        }else if(tTmp.txt=="enable")
+                                        {
+                                            spstr strCommand.txt,bTLeft.txt,"~",13
+                                            tsw bTLeft,1
+                                            bTLeft.pco=65535
+                                        }
+                                        // set icon bStop
+                                        spstr strCommand.txt,tTmp.txt,"~",17
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            tsw bTStop,0
+                                            spstr strCommand.txt,bTStop.txt,"~",14
+                                            bTStop.pco=27501
+                                        }else if(tTmp.txt=="enable")
+                                        {
+                                            spstr strCommand.txt,bTStop.txt,"~",14
+                                            tsw bTStop,1
+                                            bTStop.pco=65535
                                         }
                                         // set icon bDown
                                         spstr strCommand.txt,tTmp.txt,"~",10
                                         if(tTmp.txt=="disable")
                                         {
-                                            spstr strCommand.txt,bDown1.txt,"~",7
-                                            tsw bDown1,0
-                                            bDown1.pco=27501
-                                        }else if(tTmp.txt=="enable")
-                                        {
-                                            spstr strCommand.txt,bDown1.txt,"~",7
-                                            tsw bDown1,1
-                                            bDown1.pco=65535
-                                        }
-                                        // set tTiltHeading (localization)
-                                        spstr strCommand.txt,tTiltHeading.txt,"~",11
-                                        // set icon bUp
-                                        spstr strCommand.txt,tTmp.txt,"~",15
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            tsw bTLeft,0
-                                            spstr strCommand.txt,bTLeft.txt,"~",12
-                                            bTLeft.pco=27501
-                                        }else if(tTmp.txt=="enable")
-                                        {
-                                            spstr strCommand.txt,bTLeft.txt,"~",12
-                                            tsw bTLeft,1
-                                            bTLeft.pco=65535
-                                        }
-                                        // set icon bStop
-                                        spstr strCommand.txt,tTmp.txt,"~",16
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            tsw bTStop,0
-                                            spstr strCommand.txt,bTStop.txt,"~",13
-                                            bTStop.pco=27501
-                                        }else if(tTmp.txt=="enable")
-                                        {
-                                            spstr strCommand.txt,bTStop.txt,"~",13
-                                            tsw bTStop,1
-                                            bTStop.pco=65535
-                                        }
-                                        // set icon bDown
-                                        spstr strCommand.txt,tTmp.txt,"~",9
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            spstr strCommand.txt,bTRight.txt,"~",14
+                                            spstr strCommand.txt,bTRight.txt,"~",15
                                             tsw bTRight,0
                                             bTRight.pco=27501
                                         }else if(tTmp.txt=="enable")
                                         {
-                                            spstr strCommand.txt,bTRight.txt,"~",14
+                                            spstr strCommand.txt,bTRight.txt,"~",15
                                             tsw bTRight,1
                                             bTRight.pco=65535
                                         }
