@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-17 15:47:22.265557843 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-17 15:47:21.865539949 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-17 15:47:22.253557306 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-06-17 15:47:21.869540128 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-17 15:47:22.253557306 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-17 16:00:08.780781264 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-17 16:00:08.432785049 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-17 16:00:08.736781742 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-06-17 16:00:08.432785049 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-17 16:00:08.740781699 +0000
 +@@ -63,6 +63,16 @@
 +@@ -120,6 +130,18 @@
 +@@ -156,6 +178,15 @@
@@ -14,11 +14,11 @@
 +@@ -970,6 +1149,33 @@
 +@@ -1075,6 +1281,28 @@
 +@@ -1850,6 +2078,169 @@
-+--- HMI/n2t-out/pageStartup.txt	2022-06-17 15:47:21.869540128 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-17 15:47:22.253557306 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-06-17 16:00:08.432785049 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-17 16:00:08.740781699 +0000
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-06-17 15:47:21.869540128 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-17 15:47:22.253557306 +0000
++--- HMI/n2t-out/popupLight.txt	2022-06-17 16:00:08.432785049 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-17 16:00:08.736781742 +0000
 +@@ -151,7 +151,7 @@
 +         Send Component ID                   : disabled
 +         Associated Keyboard                 : none
@@ -28,70 +28,9 @@
 +     
 + Text tInstruction
 +     Attributes
-+@@ -443,22 +443,21 @@
-+                                     ucopy strCommand.txt,4,payloadLength-5,0
-+                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-+                                     spstr strCommand.txt,tInstruction.txt,"~",0
-+-                                    spstr strCommand.txt,tTmp.txt,"~",1
-+-                                    if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
-++                                    if(tInstruction.txt=="entityUpdateDetail")
-+                                     {
-+                                         // change icon
-+-                                        spstr strCommand.txt,tIcon1.txt,"~",2
-++                                        spstr strCommand.txt,tIcon1.txt,"~",1
-+                                         vis tIcon1,1
-+                                         // change icon color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-++                                        spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,sys0,0,0
-+                                         tIcon1.pco=sys0
-+                                         // get Button State
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-++                                        spstr strCommand.txt,tTmp.txt,"~",3
-+                                         covx tTmp.txt,sys0,0,0
-+                                         btOnOff1.val=sys0
-+                                         // get Brightness value
-+-                                        spstr strCommand.txt,tTmp.txt,"~",5
-++                                        spstr strCommand.txt,tTmp.txt,"~",4
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+                                             vis t1,0
-+@@ -476,7 +475,7 @@
-+                                             }
-+                                         }
-+                                         // get ColorTemp value
-+-                                        spstr strCommand.txt,tTmp.txt,"~",6
-++                                        spstr strCommand.txt,tTmp.txt,"~",5
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+                                             vis hTempSlider,0
-+@@ -520,7 +519,7 @@
-+                                             }
-+                                         }
-+                                         // get Color value
-+-                                        spstr strCommand.txt,tTmp.txt,"~",7
-++                                        spstr strCommand.txt,tTmp.txt,"~",6
-+                                         // disable -> isn't supported
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+@@ -541,11 +540,11 @@
-+                                             }
-+                                         }
-+                                         // set t0 Color (Localization)
-+-                                        spstr strCommand.txt,t0.txt,"~",8
-++                                        spstr strCommand.txt,t0.txt,"~",7
-+                                         // set t4 Temperature (Localization)
-+-                                        spstr strCommand.txt,t4.txt,"~",9
-++                                        spstr strCommand.txt,t4.txt,"~",8
-+                                         // set t1 Brightness (Localization)
-+-                                        spstr strCommand.txt,t1.txt,"~",10
-++                                        spstr strCommand.txt,t1.txt,"~",9
-+                                     }
-+                                     if(tInstruction.txt=="time")
-+                                     {
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-06-17 15:47:21.869540128 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-17 15:47:22.253557306 +0000
++--- HMI/n2t-out/popupShutter.txt	2022-06-17 16:00:08.432785049 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-17 16:00:08.740781699 +0000
 +@@ -69,7 +69,7 @@
 +     Attributes
 +         Scope         : local
@@ -101,131 +40,3 @@
 +     
 + Text tEntity
 +     Attributes
-+@@ -441,11 +441,10 @@
-+                                     ucopy strCommand.txt,4,payloadLength-5,0
-+                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-+                                     spstr strCommand.txt,tInstruction.txt,"~",0
-+-                                    spstr strCommand.txt,tTmp.txt,"~",1
-+-                                    if(tInstruction.txt=="entityUpdateDetail"&&tTmp.txt==entn.txt)
-++                                    if(tInstruction.txt=="entityUpdateDetail")
-+                                     {
-+                                         // get Position value
-+-                                        spstr strCommand.txt,tTmp.txt,"~",2
-++                                        spstr strCommand.txt,tTmp.txt,"~",1
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+                                             vis tPosHeading,0
-+@@ -458,92 +457,92 @@
-+                                             vis hPosition,1
-+                                         }
-+                                         // set tinfo1 text
-+-                                        spstr strCommand.txt,tInfo1.txt,"~",3
-++                                        spstr strCommand.txt,tInfo1.txt,"~",2
-+                                         // set tPosHeading (localization)
-+-                                        spstr strCommand.txt,tPosHeading.txt,"~",4
-++                                        spstr strCommand.txt,tPosHeading.txt,"~",3
-+                                         // set tIcon1
-+-                                        spstr strCommand.txt,tTmp.txt,"~",5
-++                                        spstr strCommand.txt,tTmp.txt,"~",4
-+                                         if(tTmp.txt!="")
-+                                         {
-+                                             tIcon1.txt=tTmp.txt
-+                                         }
-+                                         // set icon bUp
-+-                                        spstr strCommand.txt,tTmp.txt,"~",9
-++                                        spstr strCommand.txt,tTmp.txt,"~",8
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+                                             tsw bUp1,0
-+-                                            spstr strCommand.txt,bUp1.txt,"~",6
-++                                            spstr strCommand.txt,bUp1.txt,"~",5
-+                                             bUp1.pco=27501
-+                                         }else if(tTmp.txt=="enable")
-+                                         {
-+-                                            spstr strCommand.txt,bUp1.txt,"~",6
-++                                            spstr strCommand.txt,bUp1.txt,"~",5
-+                                             tsw bUp1,1
-+                                             bUp1.pco=65535
-+                                         }
-+                                         // set icon bStop
-+-                                        spstr strCommand.txt,tTmp.txt,"~",10
-++                                        spstr strCommand.txt,tTmp.txt,"~",9
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+                                             tsw bStop1,0
-+-                                            spstr strCommand.txt,bStop1.txt,"~",7
-++                                            spstr strCommand.txt,bStop1.txt,"~",6
-+                                             bStop1.pco=27501
-+                                         }else if(tTmp.txt=="enable")
-+                                         {
-+-                                            spstr strCommand.txt,bStop1.txt,"~",7
-++                                            spstr strCommand.txt,bStop1.txt,"~",6
-+                                             tsw bStop1,1
-+                                             bStop1.pco=65535
-+                                         }
-+                                         // set icon bDown
-+-                                        spstr strCommand.txt,tTmp.txt,"~",11
-++                                        spstr strCommand.txt,tTmp.txt,"~",10
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+-                                            spstr strCommand.txt,bDown1.txt,"~",8
-++                                            spstr strCommand.txt,bDown1.txt,"~",7
-+                                             tsw bDown1,0
-+                                             bDown1.pco=27501
-+                                         }else if(tTmp.txt=="enable")
-+                                         {
-+-                                            spstr strCommand.txt,bDown1.txt,"~",8
-++                                            spstr strCommand.txt,bDown1.txt,"~",7
-+                                             tsw bDown1,1
-+                                             bDown1.pco=65535
-+                                         }
-+                                         // set tTiltHeading (localization)
-+-                                        spstr strCommand.txt,tTiltHeading.txt,"~",12
-++                                        spstr strCommand.txt,tTiltHeading.txt,"~",11
-+                                         // set icon bUp
-+-                                        spstr strCommand.txt,tTmp.txt,"~",16
-++                                        spstr strCommand.txt,tTmp.txt,"~",15
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+                                             tsw bTLeft,0
-+-                                            spstr strCommand.txt,bTLeft.txt,"~",13
-++                                            spstr strCommand.txt,bTLeft.txt,"~",12
-+                                             bTLeft.pco=27501
-+                                         }else if(tTmp.txt=="enable")
-+                                         {
-+-                                            spstr strCommand.txt,bTLeft.txt,"~",13
-++                                            spstr strCommand.txt,bTLeft.txt,"~",12
-+                                             tsw bTLeft,1
-+                                             bTLeft.pco=65535
-+                                         }
-+                                         // set icon bStop
-+-                                        spstr strCommand.txt,tTmp.txt,"~",17
-++                                        spstr strCommand.txt,tTmp.txt,"~",16
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+                                             tsw bTStop,0
-+-                                            spstr strCommand.txt,bTStop.txt,"~",14
-++                                            spstr strCommand.txt,bTStop.txt,"~",13
-+                                             bTStop.pco=27501
-+                                         }else if(tTmp.txt=="enable")
-+                                         {
-+-                                            spstr strCommand.txt,bTStop.txt,"~",14
-++                                            spstr strCommand.txt,bTStop.txt,"~",13
-+                                             tsw bTStop,1
-+                                             bTStop.pco=65535
-+                                         }
-+                                         // set icon bDown
-+-                                        spstr strCommand.txt,tTmp.txt,"~",10
-++                                        spstr strCommand.txt,tTmp.txt,"~",9
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+-                                            spstr strCommand.txt,bTRight.txt,"~",15
-++                                            spstr strCommand.txt,bTRight.txt,"~",14
-+                                             tsw bTRight,0
-+                                             bTRight.pco=27501
-+                                         }else if(tTmp.txt=="enable")
-+                                         {
-+-                                            spstr strCommand.txt,bTRight.txt,"~",15
-++                                            spstr strCommand.txt,bTRight.txt,"~",14
-+                                             tsw bTRight,1
-+                                             bTRight.pco=65535
