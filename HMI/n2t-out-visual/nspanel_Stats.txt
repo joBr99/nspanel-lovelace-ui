@@ -22,10 +22,6 @@ popupLight
 	27   Component(s)
 	353  Line(s) of event code
 	193  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	157  Line(s) of event code
-	117  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	331  Line(s) of event code
@@ -34,6 +30,10 @@ cardMedia
 	34   Component(s)
 	363  Line(s) of event code
 	195  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	157  Line(s) of event code
+	117  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	439  Line(s) of event code

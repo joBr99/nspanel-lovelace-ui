@@ -789,21 +789,22 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
-                                    if(tInstruction.txt=="entityUpdateDetail")
+                                    spstr strCommand.txt,tTmp.txt,"~",1
+                                    if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
                                     {
                                         // change icon
-                                        spstr strCommand.txt,tIcon1.txt,"~",1
+                                        spstr strCommand.txt,tIcon1.txt,"~",2
                                         vis tIcon1,1
                                         // change icon color
-                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        spstr strCommand.txt,tTmp.txt,"~",3
                                         covx tTmp.txt,sys0,0,0
                                         tIcon1.pco=sys0
                                         // get Button State
-                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        spstr strCommand.txt,tTmp.txt,"~",4
                                         covx tTmp.txt,sys0,0,0
                                         btOnOff1.val=sys0
                                         // get Brightness value
-                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        spstr strCommand.txt,tTmp.txt,"~",5
                                         if(tTmp.txt=="disable")
                                         {
                                             vis t1,0
@@ -821,7 +822,7 @@ Timer tmSerial
                                             }
                                         }
                                         // get ColorTemp value
-                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        spstr strCommand.txt,tTmp.txt,"~",6
                                         if(tTmp.txt=="disable")
                                         {
                                             vis hTempSlider,0
@@ -865,7 +866,7 @@ Timer tmSerial
                                             }
                                         }
                                         // get Color value
-                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        spstr strCommand.txt,tTmp.txt,"~",7
                                         // disable -> isn't supported
                                         if(tTmp.txt=="disable")
                                         {
@@ -886,11 +887,11 @@ Timer tmSerial
                                             }
                                         }
                                         // set t0 Color (Localization)
-                                        spstr strCommand.txt,t0.txt,"~",7
+                                        spstr strCommand.txt,t0.txt,"~",8
                                         // set t4 Temperature (Localization)
-                                        spstr strCommand.txt,t4.txt,"~",8
+                                        spstr strCommand.txt,t4.txt,"~",9
                                         // set t1 Brightness (Localization)
-                                        spstr strCommand.txt,t1.txt,"~",9
+                                        spstr strCommand.txt,t1.txt,"~",10
                                     }
                                     if(tInstruction.txt=="time")
                                     {
