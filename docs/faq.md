@@ -7,8 +7,9 @@ You have most likely an error in your MQTT configuration somewhere. To find the 
 1. Check your appdaemon log. (Settings > Add-ons > AppDaemon > Log)
 You should see something like this:
 `INFO MQTT: MQTT Plugin initialization complete`
-If you are seeing Messages like this, your appdaemon mqtt config is wrong, check your appdaemon.yaml. 
+If you are seeing Messages like this:
 `CRITICAL MQTT: Could not complete MQTT Plugin initialization, for Connection was refused due to Not Authorised`
+Your appdaemon mqtt config is wrong, check your appdaemon.yaml. 
 The log of your mqtt broker might give you additional information.
 
 2. Check MQTT Configuration of Tasmota. 
