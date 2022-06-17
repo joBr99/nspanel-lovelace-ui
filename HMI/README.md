@@ -103,7 +103,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupLight Page
 
-`entityUpdateDetail~*iconId*~*iconColor*~*buttonState*~*sliderBrightnessPos*~*sliderColorTempPos*~*colorMode*~*color_translation*~*color_temp_translation*~*brightness_translation*`
+`entityUpdateDetail~entityName~*iconId*~*iconColor*~*buttonState*~*sliderBrightnessPos*~*sliderColorTempPos*~*colorMode*~*color_translation*~*color_temp_translation*~*brightness_translation*`
 
 `entityUpdateDetail~1~17299~1~100~78~enable`
 
@@ -111,7 +111,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupShutter Page
 
-`entityUpdateDetail~*ignored*~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown~iconUpStatus~iconStopStatus~iconDownStatus~textTilt~iconTiltLeft~iconTiltStop~iconTiltRight~iconTiltLeftStatus~iconTiltStopStatus~iconTiltLeftStatus`
+`entityUpdateDetail~entityName~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown~iconUpStatus~iconStopStatus~iconDownStatus~textTilt~iconTiltLeft~iconTiltStop~iconTiltRight~iconTiltLeftStatus~iconTiltStopStatus~iconTiltLeftStatus`
 
 `entityUpdateDetail~1~77`
 

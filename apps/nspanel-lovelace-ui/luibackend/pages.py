@@ -511,8 +511,8 @@ class LuiPagesGen(object):
 
 
 
-    def generate_light_detail_page(self, entity):
-        entity = self._ha_api.get_entity(entity)
+    def generate_light_detail_page(self, entity_id):
+        entity = self._ha_api.get_entity(entity_id)
         switch_val = 1 if entity.state == "on" else 0
         icon_color = self.get_entity_color(entity)
         brightness = "disable"
@@ -540,10 +540,10 @@ class LuiPagesGen(object):
         color_translation      = "Color"
         brightness_translation = get_translation(self._locale, "frontend.ui.card.light.brightness")
         color_temp_translation = get_translation(self._locale, "frontend.ui.card.light.color_temperature")
-        self._send_mqtt_msg(f"entityUpdateDetail~{get_icon_id('lightbulb')}~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{get_icon_id('lightbulb')}~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}")
     
-    def generate_shutter_detail_page(self, entity):
-        entity = self._ha_api.get_entity(entity)
+    def generate_shutter_detail_page(self, entity_id):
+        entity = self._ha_api.get_entity(entity_id)
         entityType="cover"
         device_class = entity.attributes.get("device_class", "window")
         icon_id   = get_icon_id_ha(entityType, state=entity.state, device_class=device_class)
@@ -574,7 +574,7 @@ class LuiPagesGen(object):
                 icon_down_status = "disable"
 
         pos_translation = get_translation(self._locale, "frontend.ui.card.cover.position")
-        self._send_mqtt_msg(f"entityUpdateDetail~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
