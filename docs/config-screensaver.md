@@ -138,6 +138,7 @@ Example for the theme config:
         #bar:              [220, 0, 255]
         #tMRIcon:          [220, 0, 255]
         #tMR:              [220, 0, 255]
+		#tTimeAdd:         [220, 0, 255]
 
         #autoWeather automatically colors the screensaver weather icons based upon weather. Uncomment the following line to enable.
         #autoWeather: true

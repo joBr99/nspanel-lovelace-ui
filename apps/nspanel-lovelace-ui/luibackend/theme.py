@@ -23,7 +23,8 @@ default_screensaver_color_mapping = {
     "tForecast4Val":    "65535",
     "bar":              "65535",
     "tMRIcon":          "65535",
-    "tMR":              "65535"
+    "tMR":              "65535",
+    "tTimeAdd":         "65535"
 }
 
 default_weather_icon_color_mapping = {
