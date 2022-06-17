@@ -1,23 +1,28 @@
 /*-----------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker
-- abgestimmt auf TFT 37 / v3.0.0 / BerryDriver 4 / Tasmota 11.1.0
+- abgestimmt auf TFT 38 / v3.1.0 / BerryDriver 4 / Tasmota 12.0.0
 joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
  
 ReleaseNotes:
-    Bugfixes und Erweiterungen seit letzter Version:
+    Bugfixes und Erweiterungen:
         - cardQR (für Gäste WLAN)
         - cardThermo (Neues Design für Alias Thermostat und zusätzlich für Alias Klimaanlage)
-        - 08.05.2022 - Menüpfeile bei HardwareButtons (button1Page; button2Page) mit Navigation auf Page 0
-        - 08.05.2022 - Standard-Brightness über neuen Parameter active einstellbar (Test mit 2.9.3)
-        - 08.05.2022 - Schalter (Licht, Dimmer, Hue, etc) in cardGrid lassen sich wieder schalten
-        - 14.06.2022 - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu (Many thanks to Grrzzz)
-        - 14.06.2022 - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc) (Many thanks to Grrzzz)
-        - 15.06.2022 - Date/Time im Screensaver auf Basis localString (de-DE/en-EN/nl-NL/etc.)
-        - 16.06.2022 - Multilingual - config.locale (en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU)
-        - 16.06.2022 - Bugfix by Grrzzz - Subpages
+        - 08.05.2022 - V2.9.0 - Menüpfeile bei HardwareButtons (button1Page; button2Page) mit Navigation auf Page 0
+        - 08.05.2022 - V2.9.0 - Standard-Brightness über neuen Parameter active einstellbar (Test mit 2.9.3)
+        - 08.05.2022 - V2.9.0 - Schalter (Licht, Dimmer, Hue, etc) in cardGrid lassen sich wieder schalten
+        - 14.06.2022 - V2.9.0 - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu (Many thanks to Grrzzz)
+        - 14.06.2022 - V2.9.0 - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc) (Many thanks to Grrzzz)
+        - 15.06.2022 - V3.0.0 - Date/Time im Screensaver auf Basis localString (de-DE/en-EN/nl-NL/etc.)
+        - 16.06.2022 - V3.0.0 - Multilingual - config.locale (en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU)
+        - 16.06.2022 - V3.0.0 - Bugfix by Grrzzz - Subpages
+        - 18.06.2022 - V3.1.0 - Längere Textfelder in cardEntities
+        - 18.06.2022 - V3.1.0 - Detail-Page Lights/Shutter hat neuen Parameter "id"
+
+    Known Bug
+        - Github Issue #286
     
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -82,7 +87,7 @@ Erforderliche Adapter:
     JavaScript-Adapter
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.0.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.1.0.tft
 ---------------------------------------------------------------------------------------
 */ 
 var Icons = new IconsSelector();
@@ -446,7 +451,7 @@ export const config: Config = {
     dimmode: 8,
     active: 100, //Standard-Brightness TFT
     screenSaverDoubleClick: false,
-    locale: "en-EN",                    //en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU
+    locale: "de-DE",                    //en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU
     timeFormat: "%H:%M",                //currently not used 
     dateFormat: "%A, %d. %B %Y",        //currently not used 
     weatherEntity: "alias.0.Wetter",
@@ -565,7 +570,7 @@ function get_locales() {
 
 function check_updates() {
     
-    const desired_display_firmware_version = 37;
+    const desired_display_firmware_version = 38;
     const berry_driver_version = 4;
 
     if (Debug) console.log("Check-Updates");
@@ -799,7 +804,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version : string = "v3.0.0";
+    const tft_version : string = "v3.1.0";
     var desired_display_firmware_url = "http://nspanel.pky.eu/lovelace-ui/github/nspanel-" + tft_version + ".tft"
     require("request")((['http://',get_current_tasmota_ip_address(),'/cm?cmnd=FlashNextion ', desired_display_firmware_url].join('')), async function (error, response, result) {
         createState(NSPanel_Path + "TFT_Firmware.onlineVersion");
@@ -982,11 +987,12 @@ function SendTime(): void {
     var month = d.getMonth();
     var day = d.getDate();
     var hr = d.getHours();
+
     var min = d.getMinutes();
     const date = new Date(year, month, day, hr, min, 1);
 
     var _SendTime = date.toLocaleTimeString(config.locale, { hour: '2-digit', minute: '2-digit', hour12: false});
-
+    
     SendToPanel(<Payload>{ payload: "time~" + _SendTime });
 }
 
@@ -1414,10 +1420,12 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
 }
 
 function RegisterEntityWatcher(id: string): void {
+
     if (subscriptions.hasOwnProperty(id)) {
         return;
     }
-    subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {          
+
+    subscriptions[id] = (on({ id: id, change: 'any' }, function (data) {        
         if(pageId == -1 && config.button1Page != undefined)
             SendToPanel({ payload: GeneratePageElements(config.button1Page) });
         if(pageId == -2 && config.button2Page != undefined)
@@ -1682,6 +1690,8 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
 function GenerateMediaPage(page: PageMedia): Payload[] {
     var id = page.items[0].id
+
+    //RegisterEntityWatcher(id + ".TITLE");
     var out_msgs: Array<Payload> = [];
     out_msgs.push({ payload: "pageType~cardMedia" });
     if (existsObject(id)) {
@@ -1844,7 +1854,6 @@ function GenerateQRPage(page: PageQR): Payload[] {
     let o = getObject(id)
 
     var heading = page.heading !== undefined ? page.heading : o.common.name.de
-    let minTemp = page.items[0].minValue !== undefined ? page.items[0].minValue : 50;
     var textQR = page.items[0].id + ".ACTUAL" !== undefined ? getState(page.items[0].id + ".ACTUAL").val : "WIFI:T:undefined;S:undefined;P:undefined;H:undefined;"
 
     const tempstr = textQR.split(";");
@@ -1967,7 +1976,9 @@ function HandleButtonEvent(words): void {
                 }
             } else {
                 if (Debug) console.log("bExit: " + words[4] + " - "+ pageId)
-                GeneratePage(activePage);
+                //Known Bug GitHub Issue #286
+                //GeneratePage(activePage); 
+                GeneratePage(config.pages[pageId]); 
             }
             break;
         case "notifyAction":
@@ -2305,16 +2316,17 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     iconColor = GetIconColor(pageItem, false, true);
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail" + "~"            //entityUpdateDetail
-                                         + icon               + "~"            //iconId
-                                         + iconColor          + "~"            //iconColor
-                                         + switchVal          + "~"            //buttonState
-                                         + "disable"          + "~"            //sliderBrightnessPos
-                                         + "disable"          + "~"            //sliderColorTempPos
-                                         + "disable"          + "~"            //colorMode
-                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
-                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
-                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
+                out_msgs.push({ payload: "entityUpdateDetail"                   + "~"   //entityUpdateDetail
+                                         + id                                   + "~"
+                                         + icon                                 + "~"   //iconId
+                                         + iconColor                            + "~"   //iconColor
+                                         + switchVal                            + "~"   //buttonState
+                                         + "disable"                            + "~"   //sliderBrightnessPos
+                                         + "disable"                            + "~"   //sliderColorTempPos
+                                         + "disable"                            + "~"   //colorMode
+                                         + findLocale("lights","Color")         + "~"   //Color-Bezeichnung
+                                         + findLocale("lights","Temperature")   + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});         //Brightness-Bezeichnung
             }
 
             //Dimmer          
@@ -2352,16 +2364,19 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                 RegisterDetailEntityWatcher(id + ".ACTUAL", pageItem, type);
 
-                out_msgs.push({ payload: "entityUpdateDetail"   + "~"   //entityUpdateDetail
-                                         + icon                 + "~"   //iconId
-                                         + iconColor            + "~"   //iconColor
-                                         + switchVal            + "~"   //buttonState
-                                         + brightness           + "~"   //sliderBrightnessPos
-                                         + "disable"            + "~"   //sliderColorTempPos
-                                         + "disable"            + "~"   //colorMod
-                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
-                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
-                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
+                out_msgs.push({ payload: "entityUpdateDetail"                   + "~"   //entityUpdateDetail
+                                         + id                                   + "~"
+                                         + icon                                 + "~"   //iconId
+                                         + iconColor                            + "~"   //iconColor
+                                         + switchVal                            + "~"   //buttonState
+                                         + brightness                           + "~"   //sliderBrightnessPos
+                                         + "disable"                            + "~"   //sliderColorTempPos
+                                         + "disable"                            + "~"   //colorMod
+                                         + findLocale("lights","Color")         + "~"   //Color-Bezeichnung
+                                         + findLocale("lights","Temperature")   + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});         //Brightness-Bezeichnung
+
+                console.log("light." + id)
 
             }
             
@@ -2416,16 +2431,17 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail" + "~"   //entityUpdateDetail
-                                         + icon               + "~"   //iconId
-                                         + iconColor          + "~"   //iconColor
-                                         + switchVal          + "~"   //buttonState
-                                         + brightness         + "~"   //sliderBrightnessPos
-                                         + colorTemp          + "~"   //sliderColorTempPos
-                                         + colorMode          + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
-                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
-                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
+                out_msgs.push({ payload: "entityUpdateDetail"                   + "~"   //entityUpdateDetail
+                                         + id                                   + "~"
+                                         + icon                                 + "~"   //iconId
+                                         + iconColor                            + "~"   //iconColor
+                                         + switchVal                            + "~"   //buttonState
+                                         + brightness                           + "~"   //sliderBrightnessPos
+                                         + colorTemp                            + "~"   //sliderColorTempPos
+                                         + colorMode                            + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                                         + findLocale("lights","Color")         + "~"   //Color-Bezeichnung
+                                         + findLocale("lights","Temperature")   + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});         //Brightness-Bezeichnung
             }
 
             //RGB-Licht
@@ -2478,16 +2494,17 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail" + "~"   //entityUpdateDetail
-                                         + icon               + "~"   //iconId
-                                         + iconColor          + "~"   //iconColor
-                                         + switchVal          + "~"   //buttonState
-                                         + brightness         + "~"   //sliderBrightnessPos
-                                         + colorTemp          + "~"   //sliderColorTempPos
-                                         + colorMode          + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
-                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
-                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
+                out_msgs.push({ payload: "entityUpdateDetail"                   + "~"   //entityUpdateDetail
+                                         + id                                   + "~"
+                                         + icon                                 + "~"   //iconId
+                                         + iconColor                            + "~"   //iconColor
+                                         + switchVal                            + "~"   //buttonState
+                                         + brightness                           + "~"   //sliderBrightnessPos
+                                         + colorTemp                            + "~"   //sliderColorTempPos
+                                         + colorMode                            + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                                         + findLocale("lights","Color")         + "~"   //Color-Bezeichnung
+                                         + findLocale("lights","Temperature")   + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});         //Brightness-Bezeichnung
             }
 
             //RGB-Licht-einzeln (HEX)
@@ -2544,16 +2561,17 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     console.warn("Alias-Datenpunkt: " + id + ".TEMPERATURE could not be read");
                 }
 
-                out_msgs.push({ payload: "entityUpdateDetail" + "~"   //entityUpdateDetail
-                                         + icon               + "~"   //iconId
-                                         + iconColor          + "~"   //iconColor
-                                         + switchVal          + "~"   //buttonState
-                                         + brightness         + "~"   //sliderBrightnessPos
-                                         + colorTemp          + "~"   //sliderColorTempPos
-                                         + colorMode          + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                                         + findLocale("lights","Color") + "~"         //Color-Bezeichnung
-                                         + findLocale("lights","Temperature") + "~"   //Temperature-Bezeichnung
-                                         + findLocale("lights","Brightness")});       //Brightness-Bezeichnung
+                out_msgs.push({ payload: "entityUpdateDetail"                   + "~"   //entityUpdateDetail
+                                         + id                                   + "~"
+                                         + icon                                 + "~"   //iconId
+                                         + iconColor                            + "~"   //iconColor
+                                         + switchVal                            + "~"   //buttonState
+                                         + brightness                           + "~"   //sliderBrightnessPos
+                                         + colorTemp                            + "~"   //sliderColorTempPos
+                                         + colorMode                            + "~"   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                                         + findLocale("lights","Color")         + "~"   //Color-Bezeichnung
+                                         + findLocale("lights","Temperature")   + "~"   //Temperature-Bezeichnung
+                                         + findLocale("lights","Brightness")});         //Brightness-Bezeichnung
             }
 
             //Farbtemperatur
@@ -2622,6 +2640,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 RegisterDetailEntityWatcher(id + ".SET", pageItem, type);
             }
             out_msgs.push({ payload: "entityUpdateDetail" + "~"           //entityUpdateDetail
+                                     + id                 + "~"
                                      + val                + "~"           //Shutterposition
                                      + ""                 + "~"   
                                      + findLocale("blinds","Position")}); //Position-Bezeichnung                                     
