@@ -18,8 +18,8 @@ Your Tasmota device needs to connect sucessfully to your MQTT Broker, if you are
 The example values are an working example. Please don't modify the Full Topic. [MQTT Config](https://docs.nspanel.pky.eu/configure_mqtt/)
 
 4. If you are still in the waiting for content screen please share the following items:
-    - a screenshot of your tasmota mqtt configration
-    - your appdaemon.yaml
+    - a screenshot of your tasmota mqtt configration (please censor your mqtt password)
+    - your appdaemon.yaml (please censor your mqtt password)
     - your apps.yaml
     - the appdaemon log, after restarting the container
 
