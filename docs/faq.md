@@ -2,7 +2,28 @@
 
 ## Waiting for content - This is taking longer than usual on the screen
 
-Please check your MQTT Topics in your apps.yaml and your mqtt configuration on tasmota.
+You have most likely an error in your MQTT configuration somewhere. To find the error follow theese steps:
+
+1. Check your appdaemon log. (Settings > Add-ons > AppDaemon > Log)
+
+You should see something like this:
+`INFO MQTT: MQTT Plugin initialization complete`
+
+If you are seeing Messages like this, your appdaemon mqtt config is wrong, check appdaemon.yaml. The log of your mqtt broker might give you additional information.
+
+`CRITICAL MQTT: Could not complete MQTT Plugin initialization, for Connection was refused due to Not Authorised`
+
+2. Check MQTT Configuration of Tasmota. 
+Your Tasmota device needs to connect sucessfully to your MQTT Broker, if you are in the waiting for content screen, the panel will send periodic messages to it's mqtt topic.
+
+3. Make sure that you are using the same topic in apps.yaml and in your tasmota configuration. 
+The example values are an working example. Please don't modify the Full Topic. [MQTT Config](https://docs.nspanel.pky.eu/configure_mqtt/)
+
+4. If you are still in the waiting for content screen please share the following items:
+ - a screenshot of your tasmota mqtt configration
+ - your appdaemon.yaml
+ - your apps.yaml
+ - the appdaemon log, after restarting the container
 
 ## How to update
 
