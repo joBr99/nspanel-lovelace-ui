@@ -9,7 +9,8 @@ You have most likely an error in your MQTT configuration somewhere. To find the 
 You should see something like this:
 `INFO MQTT: MQTT Plugin initialization complete`
 
-If you are seeing Messages like this, your appdaemon mqtt config is wrong, check appdaemon.yaml.
+If you are seeing Messages like this, your appdaemon mqtt config is wrong, check your appdaemon.yaml.
+
 `CRITICAL MQTT: Could not complete MQTT Plugin initialization, for Connection was refused due to Not Authorised`
 
 The log of your mqtt broker might give you additional information.
