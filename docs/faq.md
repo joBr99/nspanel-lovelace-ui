@@ -9,9 +9,10 @@ You have most likely an error in your MQTT configuration somewhere. To find the 
 You should see something like this:
 `INFO MQTT: MQTT Plugin initialization complete`
 
-If you are seeing Messages like this, your appdaemon mqtt config is wrong, check appdaemon.yaml. The log of your mqtt broker might give you additional information.
-
+If you are seeing Messages like this, your appdaemon mqtt config is wrong, check appdaemon.yaml.
 `CRITICAL MQTT: Could not complete MQTT Plugin initialization, for Connection was refused due to Not Authorised`
+
+The log of your mqtt broker might give you additional information.
 
 2. Check MQTT Configuration of Tasmota. 
 Your Tasmota device needs to connect sucessfully to your MQTT Broker, if you are in the waiting for content screen, the panel will send periodic messages to it's mqtt topic.
