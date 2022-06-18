@@ -38,6 +38,8 @@ def get_translation(locale, lookupstr):
     if res.startswith("error"):
         path_frontend_file, path_backend_file = build_locale_filestring("en_US")
         res = lookup(path_frontend_file, path_backend_file, lookupstr)
+    if locale == "he_IL":
+        res = res[::-1]
     return res
 
 #print(get_translation("en_US", "frontend.state_attributes.climate.hvac_action.idle"))  
