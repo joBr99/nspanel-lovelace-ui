@@ -165,32 +165,28 @@ class LuiPagesGen(object):
         if entityType == "navigate":
             page_search_res = self._config.searchCard(entityId)
             if page_search_res is not None:
-                icon_id = get_icon_id("gesture-tap-button")
+                icon_res = get_icon_id(icon) if icon is not None else get_icon_id("gesture-tap-button")
                 status_entity = None
                 name = name if name is not None else page_search_res.title
                 text = get_translation(self._locale, "frontend.ui.card.button.press")
                 if item.status is not None and self._ha_api.entity_exists(item.status):
                     status_entity = self._ha_api.get_entity(item.status)
+                    icon_res = get_icon_id_ha("sensor", state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
                     icon_color = self.get_entity_color(status_entity)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
-                        icon_id = status_entity.state[:4]
-                        if icon_id[-1] == ".":
-                            icon_id = icon_id[:-1]
+                        icon_res = status_entity.state[:4]
+                        if icon_res[-1] == ".":
+                            icon_res = icon_res[:-1]
                 else:
                     icon_color = 17299
-                if icon is not None:
-                    if status_entity is not None:
-                        icon_id = get_icon_id_ha("sensor", state=status_entity.state, overwrite=icon)
-                    else:
-                        icon_id = get_icon_id(icon)
-                return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
+                return f"~button~{entityId}~{icon_res}~{icon_color}~{name}~{text}"
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
         if entityType == "iText":
                 value   = entityId.split(".", 2)[1]
                 name = name if name is not None else "conf name missing"
                 icon_id = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
-                return f"~text~{entityId}~{icon_id}~17299~{name}~{value}"
+                return f"~text~{entityId}~{icon_res}~17299~{name}~{value}"
         if not self._ha_api.entity_exists(entityId):
             return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
         
