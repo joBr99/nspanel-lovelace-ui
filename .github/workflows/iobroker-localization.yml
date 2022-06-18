@@ -1,0 +1,35 @@
+name: nextion2text
+
+on:
+  pull_request:
+    paths:
+      - HMI/code_gen/localization/iobroker.py
+      - apps/nspanel-lovelace-ui/luibackend/translations/*
+      - .github/workflows/iobroker-localization.yml
+  push:
+    branches:
+      - main
+    paths:
+      - HMI/code_gen/localization/iobroker.py
+      - apps/nspanel-lovelace-ui/luibackend/translations/*
+      - .github/workflows/iobroker-localization.yml
+
+jobs:
+  gen-nextion-to-text:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
+
+    - name: Gen ioBroker localization file
+      continue-on-error: false
+      run: |
+        cd apps/nspanel-lovelace-ui/luibackend
+        python ../../HMI/code_gen/localization/iobroker.py
+        mv ioBroker_NSPanel_locales.json ../../ioBroker/ioBroker_NSPanel_locales.json
+        
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update iobroker localization file
+        #file_pattern: "**.txt"
