@@ -179,7 +179,10 @@ class LuiPagesGen(object):
                 else:
                     icon_color = 17299
                 if icon is not None:
-                    icon_id = get_icon_id_ha("sensor", state=status_entity.state, overwrite=icon)
+                    if status_entity is not None:
+                        icon_id = get_icon_id_ha("sensor", state=status_entity.state, overwrite=icon)
+                    else:
+                        icon_id = get_icon_id(icon)
                 return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
