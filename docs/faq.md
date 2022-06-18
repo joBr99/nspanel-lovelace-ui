@@ -16,7 +16,8 @@ The log of your mqtt broker might give you additional information.
 Your Tasmota device needs to connect sucessfully to your MQTT Broker, if you are in the waiting for content screen, the panel will send periodic messages to it's mqtt topic.
 
 3. Make sure that you are using the same topic in apps.yaml and in your tasmota configuration. 
-The example values are an working example. Please don't modify the Full Topic. [MQTT Config](https://docs.nspanel.pky.eu/configure_mqtt/)
+The examples in the docs ([MQTT Config](https://docs.nspanel.pky.eu/configure_mqtt/)) are an valid (tasmota<>apps.yaml).
+Please don't modify the Full Topic in your Tasmota Config, unless you know the implications, changeing the Full Topic will result in diffent Send and Receive Channels, that have to be correct in apps.yaml.
 
 4. If you are still in the waiting for content screen please share the following items:
     - a screenshot of your tasmota mqtt configration (please censor your mqtt password)
