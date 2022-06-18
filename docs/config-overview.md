@@ -129,40 +129,40 @@ The following example configuration is turning off the screen after sunset, but 
   - `af_xx` - Afrikaans
   - `ar_xx` - Arabic
   - `bg_xx` - Bulgarian
-  - `ca_xx` - Catalan
-  - `cs_xx` - Czech
-  - `da_xx` - Danish
-  - `de_xx` - German
-  - `el_xx` - Greek
-  - `en_xx` - English
-  - `es_xx` - Spanish
-  - `et_xx` - Estonian
-  - `fa_xx` - Persian
-  - `fi_xx` - Finnish
-  - `fr_xx` - French
-  - `he_xx` - Hebrew
+  - `ca_ES` - Catalan
+  - `cs_CZ` - Czech
+  - `da_DK` - Danish
+  - `de_DE` - German
+  - `el_GR` - Greek
+  - `en_US` - English
+  - `es_ES` - Spanish
+  - `et_EE` - Estonian
+  - `fa_IR` - Persian
+  - `fi_FI` - Finnish
+  - `fr_FR` - French
+  - `he_IL` - Hebrew
   - `hr_xx` - Croatian
-  - `hu_xx` - Hungarian
+  - `hu_HU` - Hungarian
   - `hy_xx` - Armenian
-  - `id_xx` - Indonesian
-  - `is_xx` - Icelandic
-  - `it_xx` - Italian
+  - `id_ID` - Indonesian
+  - `is_IS` - Icelandic
+  - `it_IT` - Italian
   - `lb_xx` - Luxembourgish
-  - `lt_xx` - Lithuanian
-  - `lv_xx` - Latvian
+  - `lt_LT` - Lithuanian
+  - `lv_LV` - Latvian
   - `nb_xx` - Norwegian
-  - `nl_xx` - Dutch
-  - `nn_xx` - Norwegian
-  - `pl_xx` - Polish
-  - `pt_xx` - Portuguese
-  - `ro_xx` - Romanian
-  - `ru_xx` - Russian
-  - `sk_xx` - Slovak
-  - `sl_xx` - Slovenian
-  - `sv_xx` - Swedish
-  - `th_xx` - Thai
-  - `tr_xx` - Turkish
-  - `uk_xx` - Ukrainian
+  - `nl_NL` - Dutch
+  - `nn_NO` - Norwegian
+  - `pl_PL` - Polish
+  - `pt_PT` - Portuguese
+  - `ro_RO` - Romanian
+  - `ru_RU` - Russian
+  - `sk_SK` - Slovak
+  - `sl_SI` - Slovenian
+  - `sv_SE` - Swedish
+  - `th_TH` - Thai
+  - `tr_TR` - Turkish
+  - `uk_UA` - Ukrainian
   - `vi_xx` - Vietnamese
   - `zh_CN` - Simplified Chinese
   - `zh_TW` - Traditional Chinese
