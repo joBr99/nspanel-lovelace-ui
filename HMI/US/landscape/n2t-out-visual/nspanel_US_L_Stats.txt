@@ -26,6 +26,10 @@ cardQR
 	32   Component(s)
 	374  Line(s) of event code
 	218  Unique line(s) of event code
+popupLight
+	27   Component(s)
+	353  Line(s) of event code
+	193  Unique line(s) of event code
 popupNotify
 	17   Component(s)
 	204  Line(s) of event code
@@ -42,10 +46,6 @@ cardEntities
 	65   Component(s)
 	1133 Line(s) of event code
 	496  Unique line(s) of event code
-popupLight
-	27   Component(s)
-	353  Line(s) of event code
-	193  Unique line(s) of event code
 cardThermo
 	53   Component(s)
 	555  Line(s) of event code
