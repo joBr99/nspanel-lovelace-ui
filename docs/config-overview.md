@@ -126,46 +126,46 @@ The following example configuration is turning off the screen after sunset, but 
 <summary>Supported keys for locale config</summary>
 <p>
 
-  - `af_xx` - Afrikaans
-  - `ar_xx` - Arabic
-  - `bg_xx` - Bulgarian
-  - `ca_ES` - Catalan
-  - `cs_CZ` - Czech
-  - `da_DK` - Danish
-  - `de_DE` - German
-  - `el_GR` - Greek
-  - `en_US` - English
-  - `es_ES` - Spanish
-  - `et_EE` - Estonian
-  - `fa_IR` - Persian
-  - `fi_FI` - Finnish
-  - `fr_FR` - French
-  - `he_IL` - Hebrew
-  - `hr_xx` - Croatian
-  - `hu_HU` - Hungarian
-  - `hy_xx` - Armenian
-  - `id_ID` - Indonesian
-  - `is_IS` - Icelandic
-  - `it_IT` - Italian
-  - `lb_xx` - Luxembourgish
-  - `lt_LT` - Lithuanian
-  - `lv_LV` - Latvian
-  - `nb_xx` - Norwegian
-  - `nl_NL` - Dutch
-  - `nn_NO` - Norwegian
-  - `pl_PL` - Polish
-  - `pt_PT` - Portuguese
-  - `ro_RO` - Romanian
-  - `ru_RU` - Russian
-  - `sk_SK` - Slovak
-  - `sl_SI` - Slovenian
-  - `sv_SE` - Swedish
-  - `th_TH` - Thai
-  - `tr_TR` - Turkish
-  - `uk_UA` - Ukrainian
-  - `vi_xx` - Vietnamese
-  - `zh_CN` - Simplified Chinese
-  - `zh_TW` - Traditional Chinese
+- `af_xx` - Afrikaans
+- `ar_xx` - Arabic
+- `bg_xx` - Bulgarian
+- `ca_ES` - Catalan
+- `cs_CZ` - Czech
+- `da_DK` - Danish
+- `de_DE` - German
+- `el_GR` - Greek
+- `en_US` - English
+- `es_ES` - Spanish
+- `et_EE` - Estonian
+- `fa_IR` - Persian
+- `fi_FI` - Finnish
+- `fr_FR` - French
+- `he_IL` - Hebrew
+- `hr_xx` - Croatian
+- `hu_HU` - Hungarian
+- `hy_xx` - Armenian
+- `id_ID` - Indonesian
+- `is_IS` - Icelandic
+- `it_IT` - Italian
+- `lb_xx` - Luxembourgish
+- `lt_LT` - Lithuanian
+- `lv_LV` - Latvian
+- `nb_xx` - Norwegian
+- `nl_NL` - Dutch
+- `nn_NO` - Norwegian
+- `pl_PL` - Polish
+- `pt_PT` - Portuguese
+- `ro_RO` - Romanian
+- `ru_RU` - Russian
+- `sk_SK` - Slovak
+- `sl_SI` - Slovenian
+- `sv_SE` - Swedish
+- `th_TH` - Thai
+- `tr_TR` - Turkish
+- `uk_UA` - Ukrainian
+- `vi_xx` - Vietnamese
+- `zh_CN` - Simplified Chinese
+- `zh_TW` - Traditional Chinese
 
 </p>
 </details>
