@@ -122,9 +122,7 @@ The following example configuration is turning off the screen after sunset, but 
 
 </details>
 
-<details>
-<summary>Supported keys for locale config</summary>
-<p>
+## Supported keys for locale config
 
 | Language Code | Language            |
 |---------------|---------------------|
@@ -168,6 +166,3 @@ The following example configuration is turning off the screen after sunset, but 
 | `vi_VN`       | Vietnamese          |
 | `zh_CN`       | Simplified Chinese  |
 | `zh_TW`       | Traditional Chinese |
-
-</p>
-</details>
