@@ -74,7 +74,7 @@ cover_mapping = {
     "window":        ("window-open",           "window-closed",  "arrow-up",                "stop",            "arrow-down"),
 }
 
-def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
+def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
     if ha_type == "weather":
         return weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
     elif ha_type == "button":
@@ -96,6 +96,8 @@ def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
     elif ha_type == "input_boolean":
         return "check-circle-outline" if state == "on" else "close-circle-outline"
     elif ha_type == "cover":
+        if device_class is None:
+            device_class = "window"
         if state == "closed":
             return cover_mapping[device_class][1] if device_class in cover_mapping else "alert-circle-outline"
         else:
@@ -103,10 +105,10 @@ def map_to_mdi_name(ha_type, state=None, device_class=None, cardType=None):
     elif ha_type == "lock":
         return "lock-open" if state == "unlocked" else "lock"
     elif ha_type == "sensor":
-        if state == "on":
-            return sensor_mapping_on[device_class] if device_class in sensor_mapping_on else "alert-circle-outline"
-        elif state == "off":
-            return sensor_mapping_off[device_class] if device_class in sensor_mapping_off else "alert-circle-outline"
+        if state == "on" and device_class in sensor_mapping_on:
+            return sensor_mapping_on[device_class]
+        elif state == "off" and device_class in sensor_mapping_off:
+            return sensor_mapping_off[device_class]
         else:
             return sensor_mapping[device_class] if device_class in sensor_mapping else "alert-circle-outline"
     elif ha_type == "alarm-arm-fail":
