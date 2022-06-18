@@ -15,7 +15,7 @@ on:
       - .github/workflows/iobroker-localization.yml
 
 jobs:
-  gen-nextion-to-text:
+  gen-ioBroker-localization:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
