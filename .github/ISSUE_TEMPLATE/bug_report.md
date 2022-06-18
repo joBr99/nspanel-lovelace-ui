@@ -11,7 +11,7 @@ assignees: ''
 This issue template is meant to REPORT BUGS/PROBLEMS ONLY
 
 Please take a few minutes to complete the requested information below.
-Our ability to provide assistance is greatly hampered without it. 
+The ability to provide assistance is greatly hampered without it. 
 
 DO NOT DELETE ANY TEXT from this template! Otherwise the issue will be auto-closed.
 -->
