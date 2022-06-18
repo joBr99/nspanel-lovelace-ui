@@ -17,7 +17,7 @@ Your Tasmota device needs to connect sucessfully to your MQTT Broker, if you are
 
 3. Make sure that you are using the same topic in apps.yaml and in your tasmota configuration. 
 The examples in the docs ([MQTT Config](https://docs.nspanel.pky.eu/configure_mqtt/)) are an valid (tasmota<>apps.yaml).
-Please don't modify the Full Topic in your Tasmota Config, unless you know the implications, changeing the Full Topic will result in diffent Send and Receive Channels, that have to be correct in apps.yaml.
+Please don't modify the Full Topic in your Tasmota Config, unless you know the implications, changing the Full Topic will result in diffent Send and Receive Channels, that have to be correct in your apps.yaml.
 
 4. If you are still in the waiting for content screen please share the following items:
     - a screenshot of your tasmota mqtt configration (please censor your mqtt password)
