@@ -52,7 +52,7 @@ key | optional | type | default | description
 -- | -- | -- | -- | --
 `panelRecvTopic` | False | string | `tele/tasmota_your_mqtt_topic/RESULT` | The mqtt topic used to receive messages. 
 `panelSendTopic` | False | string | `cmnd/tasmota_your_mqtt_topic/CustomSend` | The mqtt topic used to send messages. 
-`updateMode` | True | string | `auto-notify` | Update Mode for flashing of the nextion display firmware, by default it is showing a message asking for the update after updating the app in HACS; Possible values: "auto", "auto-notify", "manual"
+`updateMode` | True | string | `auto-notify` | Update Mode for flashing of the nextion display firmware, by default it is showing a message asking for the update after updating the backend app in HACS; Possible values: "auto", "auto-notify", "manual"
 `model` | True | string | `eu` | Model; Possible values: "eu", "us-l" and "us-p"
 `sleepTimeout` | True | integer | `20` | Timeout for the screen to enter screensaver, to disable screensaver use 0
 `sleepBrightness` | True | integer/complex | `20` | Brightness for the screen on the screensaver, see example below for complex/scheduled config.
