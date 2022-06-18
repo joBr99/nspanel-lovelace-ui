@@ -35,9 +35,9 @@ def build_locale_filestring(locale):
         locale = locale.split("_")[0]
 
     filename = f"{locale}.json"
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    path_frontend_file = os.path.join(dir_path, "translations", "frontend", filename)
-    path_backend_file  = os.path.join(dir_path, "translations", "backend" , filename)
+    dir_path = os.getcwd()
+    path_frontend_file = os.path.join(dir_path, "apps", "nspanel-lovelace-ui", "luibackend", "translations", "frontend", filename)
+    path_backend_file  = os.path.join(dir_path, "apps", "nspanel-lovelace-ui", "luibackend", "translations", "backend" , filename)
     return path_frontend_file, path_backend_file
 
 def lookup(path_frontend_file, path_backend_file, lookupstr):
