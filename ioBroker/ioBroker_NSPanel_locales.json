@@ -1,143 +1,143 @@
 {
-    "lights": {
-        "Brightness": {
-            "en-US": "Brightness",
-            "de-DE": "Helligkeit",
-            "nl-NL": "Helderheid",
-            "da-DK": "Lysstyrke",
-            "es-ES": "Brillo",
-            "fr-FR": "Luminosité",
-            "it-IT": "Luminosità",
-            "ru-RU": "Яркость"
-        },
-        "Color":{
-            "en-EN":"Color",
-            "de-DE":"Farbe",
-            "nl-NL":"Kleur",
-            "da-DK":"Farve",
-            "es-ES":"Colore",
-            "fr-FR":"Couleur",
-            "ru-RU":"цвет"
-        },
-        "Temperature": {
-            "en-US": "Color temperature",
-            "de-DE": "Farbtemperatur",
-            "nl-NL": "Kleurtemperatuur",
-            "da-DK": "Farvetemperatur",
-            "es-ES": "Temperatura del color",
-            "fr-FR": "Température de couleur",
-            "it-IT": "Temperatura colore",
-            "ru-RU": "Цветовая температура"
-        }
-    },
-    "window": {
-        "closed": {
-            "en-US": "Closed",
-            "de-DE": "Geschlossen",
-            "nl-NL": "Dicht",
-            "da-DK": "Lukket",
-            "es-ES": "Cerrada",
-            "fr-FR": "Fermée",
-            "it-IT": "Chiusa",
-            "ru-RU": "Закрыто"
-        },
-        "opened": {
-            "en-US": "Open",
-            "de-DE": "Offen",
-            "nl-NL": "Open",
-            "da-DK": "Åben",
-            "es-ES": "Abierta",
-            "fr-FR": "Ouverte",
-            "it-IT": "Aperta",
-            "ru-RU": "Открыто"
-        }
-    },
-    "door": {
-        "closed": {
-            "en-US": "Closed",
-            "de-DE": "Geschlossen",
-            "nl-NL": "Dicht",
-            "da-DK": "Lukket",
-            "es-ES": "Cerrada",
-            "fr-FR": "Fermée",
-            "it-IT": "Chiusa",
-            "ru-RU": "Закрыта"
-        },
-        "opened": {
-            "en-US": "Open",
-            "de-DE": "Offen",
-            "nl-NL": "Open",
-            "da-DK": "Åben",
-            "es-ES": "Abierta",
-            "fr-FR": "Ouverte",
-            "it-IT": "Aperta",
-            "ru-RU": "Открыта"
-        }
-    },
-    "lock": {
-        "LOCK": {
-            "en-US": "Lock",
-            "de-DE": "Verriegeln",
-            "nl-NL": "Vergrendelen",
-            "da-DK": "Lås",
-            "es-ES": "Bloquear",
-            "fr-FR": "Verrouiller",
-            "it-IT": "Blocca",
-            "ru-RU": "Закрыть"
-        },
-        "UNLOCK": {
-            "en-US": "Unlock",
-            "de-DE": "Entriegeln",
-            "nl-NL": "Ontgrendelen",
-            "da-DK": "Lås op",
-            "es-ES": "Desbloquear",
-            "fr-FR": "Déverrouiller",
-            "it-IT": "Sblocca",
-            "ru-RU": "Открыть"
-        }
-    },
-    "blinds": {
-        "Position": {
-            "en-US": "Position",
-            "de-DE": "Position",
-            "nl-NL": "Positie",
-            "da-DK": "Position",
-            "es-ES": "Posición",
-            "fr-FR": "Position",
-            "it-IT": "Apertura",
-            "ru-RU": "Положение"
-        }
-    },
-    "thermostat": {
-        "Currently": {
-            "en-US": "Currently",
-            "de-DE": "Aktuell",
-            "nl-NL": "Momenteel",
-            "da-DK": "Aktuelt",
-            "es-ES": "Actualmente",
-            "fr-FR": "Actuellement",
-            "it-IT": "Attualmente",
-            "ru-RU": "Сейчас"
-        },
-        "State": {
-            "en-US": "State",
-            "de-DE": "Zustand",
-            "nl-NL": "Toestand",
-            "da-DK": "Tilstand",
-            "es-ES": "Estado",
-            "fr-FR": "État",
-            "it-IT": "Stato",
-            "ru-RU": "Состояние"
-        },
-        "Action": {
-            "en-US": "Operation",
-            "de-DE": "Aktion",
-            "nl-NL": "Werking",
-            "da-DK": "Drifttype",
-            "es-ES": "Modo",
-            "fr-FR": "Opération",
-            "it-IT": "Operazione",
-            "ru-RU": "Режим работы"
-        }
-    }
+   "lights":{
+      "Brightness":{
+         "en-EN":"Brightness",
+         "de-DE":"Helligkeit",
+         "nl-NL":"Helderheid",
+         "da-DK":"Lysstyrke",
+         "es-ES":"Brillo",
+         "fr-FR":"Luminosité",
+         "it-IT":"Luminosità",
+         "ru-RU":"Яркость"
+      },
+      "Color":{
+         "en-EN":"Color",
+         "de-DE":"Farbe",
+         "nl-NL":"Kleur",
+         "da-DK":"Farve",
+         "es-ES":"Colore",
+         "fr-FR":"Couleur",
+         "ru-RU":"цвет"
+      },
+      "Temperature":{
+         "en-EN":"Temperature",
+         "de-DE":"Temperatur",
+         "nl-NL":"Temperatuur",
+         "da-DK":"Temperatur",
+         "es-ES":"temperatura",
+         "fr-FR":"Température",
+         "it-IT":"Temperatura",
+         "ru-RU":"температура"
+      }
+   },
+   "window":{
+      "closed":{
+         "en-EN":"closed",
+         "de-DE":"geschlossen",
+         "nl-NL":"gesloten",
+         "da-DK":"lukket",
+         "es-ES":"cerrada",
+         "fr-FR":"fermée ",
+         "it-IT":"chiusa",
+         "ru-RU":"закрыто"
+      },
+      "opened":{
+         "en-EN":"opened",
+         "de-DE":"offen",
+         "nl-NL":"geopend",
+         "da-DK":"åbnede",
+         "es-ES":"abierta",
+         "fr-FR":"ouverte ",
+         "it-IT":"aperta",
+         "ru-RU":"открыто"
+      }
+   },
+   "door":{
+      "closed":{
+         "en-EN":"closed",
+         "de-DE":"geschlossen",
+         "nl-NL":"gesloten",
+         "da-DK":"lukket",
+         "es-ES":"cerrada",
+         "fr-FR":"fermée ",
+         "it-IT":"chiusa",
+         "ru-RU":"закрыто"
+      },
+      "opened":{
+         "en-EN":"opened",
+         "de-DE":"offen",
+         "nl-NL":"geopend",
+         "da-DK":"åbnede",
+         "es-ES":"abierta",
+         "fr-FR":"ouverte ",
+         "it-IT":"aperta",
+         "ru-RU":"открыто"
+      }
+   },
+   "lock":{
+      "LOCK":{
+         "en-EN":"lock",
+         "de-DE":"schließen",
+         "nl-NL":"stilgelegd",
+         "da-DK":"låse",
+         "es-ES":"cerrar",
+         "fr-FR":"bloquer ",
+         "it-IT":"serratura",
+         "ru-RU":"замок"
+      },
+      "UNLOCK":{
+         "en-EN":"unlock",
+         "de-DE":"öffnen",
+         "nl-NL":"openen",
+         "da-DK":"at åbne",
+         "es-ES":"abrir",
+         "fr-FR":"ouvrir ",
+         "it-IT":"aprire",
+         "ru-RU":"открыть"
+      }
+   },
+   "blinds":{
+      "Position":{
+         "en-EN":"Position",
+         "de-DE":"Position",
+         "nl-NL":"Positie",
+         "da-DK":"Blindstilling",
+         "es-ES":"Posición",
+         "fr-FR":"Position ",
+         "it-IT":"Posizione",
+         "ru-RU":"Слепая"
+      }
+   },
+   "thermostat":{
+      "Currently":{
+         "en-EN":"Currently",
+         "de-DE":"Aktuell",
+         "nl-NL":"momenteel",
+         "da-DK":"i øjeblikket",
+         "es-ES":"corrientemente",
+         "fr-FR":"actuellement ",
+         "it-IT":"attualmente",
+         "ru-RU":"актуальный"
+      },
+      "State":{
+         "en-EN":"State",
+         "de-DE":"Status",
+         "nl-NL":"toestand",
+         "da-DK":"stat",
+         "es-ES":"estado",
+         "fr-FR":"statut ",
+         "it-IT":"stato",
+         "ru-RU":"статус"
+      },
+      "Action":{
+         "en-EN":"Action",
+         "de-DE":"Aktion",
+         "nl-NL":"actie",
+         "da-DK":"handling",
+         "es-ES":"acción",
+         "fr-FR":"action ",
+         "it-IT":"azione",
+         "ru-RU":"действие"
+      }
+   }
 }
