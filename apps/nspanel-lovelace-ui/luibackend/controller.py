@@ -237,6 +237,16 @@ class LuiController(object):
         if button_type == "positionSlider":
             pos = int(value)
             self._ha_api.get_entity(entity_id).call_service("set_cover_position", position=pos)
+        if button_type == "tiltOpen":
+            self._ha_api.get_entity(entity_id).call_service("open_cover_tilt")
+        if button_type == "tiltStop":
+            self._ha_api.get_entity(entity_id).call_service("stop_cover_tilt")
+        if button_type == "tiltClose":
+            self._ha_api.get_entity(entity_id).call_service("close_cover_tilt")
+        if button_type == "tiltSlider":
+            pos = int(value)
+            self._ha_api.get_entity(entity_id).call_service("set_cover_tilt_position", position=pos)
+
 
         if button_type == "button":
             if entity_id.startswith('navigate'):

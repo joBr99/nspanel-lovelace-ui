@@ -547,34 +547,53 @@ class LuiPagesGen(object):
         entityType="cover"
         device_class = entity.attributes.get("device_class", "window")
         icon_id   = get_icon_id_ha(entityType, state=entity.state, device_class=device_class)
-
+        
+        pos_translation = get_translation(self._locale, "frontend.ui.card.cover.position")
         pos = entity.attributes.get("current_position")
         if pos is None:
             pos_status = entity.state
             pos = "disable"
         else:
             pos_status = pos
-
         
-        icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
-        icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
-        icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
-        icon_up_status = "enable"
-        icon_stop_status = "enable"
-        icon_down_status = "enable"
-        
-        if pos == 100:
-            icon_up_status = "disable"
-        elif pos == 0:
-            icon_down_status = "disable"
-        elif pos == "disable":
-            if pos_status == "open":
-                icon_up_status = "disable"
-            elif pos_status == "closed":
-                icon_down_status = "disable"
+        icon_up   = ""
+        icon_stop = ""
+        icon_down = ""
+        icon_up_status = "disable"
+        icon_stop_status = "disable"
+        icon_down_status = "disable"
+        textTilt = "Y"
+        iconTiltLeft = "X"
+        iconTiltStop = "X"
+        iconTiltRight = "X"
+        iconTiltLeftStatus = "disable"
+        iconTiltStopStatus = "disable"
+        iconTiltRightStatus = "disable"
+        tilt_pos = "disable"
 
-        pos_translation = get_translation(self._locale, "frontend.ui.card.cover.position")
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}")
+        bits = entity.attributes.supported_features
+        if bits & 0b00000001: # SUPPORT_OPEN
+            icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
+            if pos != 100 and not (pos_status == "open" and pos == "disable"):
+                icon_up_status = "enable"
+        if bits & 0b00000010: # SUPPORT_CLOSE
+            icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
+            if pos != 0 and not (pos_status == "closed" and pos == "disable"):
+                icon_down_status = "enable"
+        #if bits & 0b000000100: # SUPPORT_SET_POSITION
+        if bits & 0b00001000: # SUPPORT_STOP
+            icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
+            icon_stop_status = "enable"
+        if bits & 0b00010000: # SUPPORT_OPEN_TILT
+            iconTiltLeftStatus = "enable"
+        if bits & 0b00100000: # SUPPORT_CLOSE_TILT
+            iconTiltRightStatus = "enable"
+        if bits & 0b01000000: # SUPPORT_STOP_TILT
+            iconTiltStopStatus = "enable"
+        if bits & 0b10000000: # SUPPORT_SET_TILT_POSITION
+            tilt_pos = get_attr_safe(entity, "current_tilt_position", 0)
+
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}~{textTilt}~{iconTiltLeft}~{iconTiltStop}~{iconTiltRight}~{iconTiltLeftStatus}~{iconTiltStopStatus}~{iconTiltRightStatus}~{tilt_pos}")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
