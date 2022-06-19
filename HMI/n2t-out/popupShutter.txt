@@ -181,7 +181,7 @@ Slider hTilt
         Touch Release Event
             // event,buttonPress2,internalNameEntity,positionSlider,50
             //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltSlider,"
             covx hPosition.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -308,7 +308,7 @@ Button bTLeft
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",up"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltOpen"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -333,7 +333,7 @@ Button bTStop
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",stop"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltStop"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -358,7 +358,7 @@ Button bTRight
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",down"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltClose"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -520,6 +520,7 @@ Timer tmSerial
                                             spstr strCommand.txt,bTLeft.txt,"~",13
                                             tsw bTLeft,1
                                             bTLeft.pco=65535
+                                            vis bTLeft,1
                                         }
                                         // set icon bStop
                                         spstr strCommand.txt,tTmp.txt,"~",17
@@ -533,9 +534,10 @@ Timer tmSerial
                                             spstr strCommand.txt,bTStop.txt,"~",14
                                             tsw bTStop,1
                                             bTStop.pco=65535
+                                            vis bTStop,1
                                         }
                                         // set icon bDown
-                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        spstr strCommand.txt,tTmp.txt,"~",18
                                         if(tTmp.txt=="disable")
                                         {
                                             spstr strCommand.txt,bTRight.txt,"~",15
@@ -546,6 +548,15 @@ Timer tmSerial
                                             spstr strCommand.txt,bTRight.txt,"~",15
                                             tsw bTRight,1
                                             bTRight.pco=65535
+                                            vis bTRight,1
+                                        }
+                                        // set tilt slider
+                                        spstr strCommand.txt,tTmp.txt,"~",19
+                                        if(tTmp.txt!="disable")
+                                        {
+                                            vis hTilt,1
+                                            covx tTmp.txt,sys0,0,0
+                                            hTilt.val=sys0
                                         }
                                     }
                                     if(tInstruction.txt=="dimmode")
