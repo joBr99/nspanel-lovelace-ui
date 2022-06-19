@@ -10,8 +10,27 @@
             "it-IT": "Luminosità",
             "ru-RU": "Яркость",
             "nb-NO": "Lysstyrke",
+            "nn-NO": "Lysstyrke",
             "pl-PL": "Jasność",
-            "pt-PT": "Brilho"
+            "pt-PT": "Brilho",
+            "af-ZA": "Helderheid",
+            "ar-SY": "السطوع",
+            "bg-BG": "Яркост",
+            "ca-ES": "Brillantor",
+            "cs-CZ": "Jas",
+            "el-GR": "Φωτεινότητα",
+            "et-EE": "Heledus",
+            "fa-IR": "روشنایی",
+            "fi-FI": "Kirkkaus",
+            "he-IL": "בהירות",
+            "hr-xx": "Svjetlina",
+            "hu-HU": "Fényerő",
+            "hy-AM": "Պայծառություն",
+            "id-ID": "Kecerahan",
+            "is-IS": "Birtustig",
+            "lb-xx": "Hellegkeet",
+            "lt-LT": "Ryškumas",
+            "ro-RO": "Luminozitate"
         },
         "Temperature": {
             "en-US": "Color temperature",
@@ -23,8 +42,27 @@
             "it-IT": "Temperatura colore",
             "ru-RU": "Цветовая температура",
             "nb-NO": "Fargetemperatur",
+            "nn-NO": "Fargetemperatur",
             "pl-PL": "Temperatura barwy",
-            "pt-PT": "Temperatura de cor"
+            "pt-PT": "Temperatura de cor",
+            "af-ZA": "Kleur temperatuur",
+            "ar-SY": "درجة حرارة اللون",
+            "bg-BG": "Цветова температура",
+            "ca-ES": "Temperatura de color",
+            "cs-CZ": "Teplota barvy",
+            "el-GR": "Θερμοκρασία χρώματος",
+            "et-EE": "Värvustemperatuur",
+            "fa-IR": "دمای رنگ",
+            "fi-FI": "Värilämpötila",
+            "he-IL": "טמפרטורת הצבע",
+            "hr-xx": "Temperatura boje",
+            "hu-HU": "Színhőmérséklet",
+            "hy-AM": "Գունային ջերմաստիճան",
+            "id-ID": "Temperatur warna",
+            "is-IS": "Litastig",
+            "lb-xx": "Faarf Temperatur",
+            "lt-LT": "Spalvos temperatūra",
+            "ro-RO": "Temperatură de culoare"
         }
     },
     "window": {
@@ -38,8 +76,27 @@
             "it-IT": "Chiusa",
             "ru-RU": "Закрыто",
             "nb-NO": "Lukket",
+            "nn-NO": "Lukka",
             "pl-PL": "zamknięte",
-            "pt-PT": "Fechada"
+            "pt-PT": "Fechada",
+            "af-ZA": "Toe",
+            "ar-SY": "مغلق",
+            "bg-BG": "Затворен",
+            "ca-ES": "Tancada",
+            "cs-CZ": "Zavřeno",
+            "el-GR": "Κλειστό",
+            "et-EE": "Suletud",
+            "fa-IR": "بسته",
+            "fi-FI": "Suljettu",
+            "he-IL": "סגור",
+            "hr-xx": "Zatvoreno",
+            "hu-HU": "Zárva",
+            "hy-AM": "Փակված է",
+            "id-ID": "Tertutup",
+            "is-IS": "Loka",
+            "lb-xx": "Zou",
+            "lt-LT": "Uždaryta",
+            "ro-RO": "Închis"
         },
         "opened": {
             "en-US": "Open",
@@ -51,8 +108,27 @@
             "it-IT": "Aperta",
             "ru-RU": "Открыто",
             "nb-NO": "Åpent",
+            "nn-NO": "Open",
             "pl-PL": "otwarte",
-            "pt-PT": "Aberta"
+            "pt-PT": "Aberta",
+            "af-ZA": "Oop",
+            "ar-SY": "مفتوح",
+            "bg-BG": "Отворен",
+            "ca-ES": "Oberta",
+            "cs-CZ": "Otevřeno",
+            "el-GR": "Ανοιχτό",
+            "et-EE": "Avatud",
+            "fa-IR": "باز",
+            "fi-FI": "Auki",
+            "he-IL": "פתוח",
+            "hr-xx": "Otvoreno",
+            "hu-HU": "Nyitva",
+            "hy-AM": "Բացել",
+            "id-ID": "Terbuka",
+            "is-IS": "Opna",
+            "lb-xx": "Op",
+            "lt-LT": "Atidaryta",
+            "ro-RO": "Deschis"
         }
     },
     "door": {
@@ -66,8 +142,27 @@
             "it-IT": "Chiusa",
             "ru-RU": "Закрыта",
             "nb-NO": "Lukket",
+            "nn-NO": "Lukka",
             "pl-PL": "zamknięte",
-            "pt-PT": "Fechada"
+            "pt-PT": "Fechada",
+            "af-ZA": "Toe",
+            "ar-SY": "مغلق",
+            "bg-BG": "Затворена",
+            "ca-ES": "Tancada",
+            "cs-CZ": "Zavřeno",
+            "el-GR": "Κλειστή",
+            "et-EE": "Suletud",
+            "fa-IR": "بسته",
+            "fi-FI": "Suljettu",
+            "he-IL": "סגורה",
+            "hr-xx": "Zatvoreno",
+            "hu-HU": "Zárva",
+            "hy-AM": "Փակված է",
+            "id-ID": "Tertutup",
+            "is-IS": "Lokuð",
+            "lb-xx": "Zou",
+            "lt-LT": "Uždaryta",
+            "ro-RO": "Închis"
         },
         "opened": {
             "en-US": "Open",
@@ -79,8 +174,27 @@
             "it-IT": "Aperta",
             "ru-RU": "Открыта",
             "nb-NO": "Åpen",
+            "nn-NO": "Open",
             "pl-PL": "otwarte",
-            "pt-PT": "Aberta"
+            "pt-PT": "Aberta",
+            "af-ZA": "Oop",
+            "ar-SY": "مفتوح",
+            "bg-BG": "Отворена",
+            "ca-ES": "Oberta",
+            "cs-CZ": "Otevřeno",
+            "el-GR": "Ανοιχτή",
+            "et-EE": "Avatud",
+            "fa-IR": "باز",
+            "fi-FI": "Auki",
+            "he-IL": "פתוחה",
+            "hr-xx": "Otvori",
+            "hu-HU": "Nyitva",
+            "hy-AM": "Բացել",
+            "id-ID": "Terbuka",
+            "is-IS": "Opin",
+            "lb-xx": "Op",
+            "lt-LT": "Atidaryta",
+            "ro-RO": "Deschis"
         }
     },
     "lock": {
@@ -94,8 +208,27 @@
             "it-IT": "Blocca",
             "ru-RU": "Закрыть",
             "nb-NO": "Lås",
+            "nn-NO": "Lås",
             "pl-PL": "Zablokuj",
-            "pt-PT": "Bloquear"
+            "pt-PT": "Bloquear",
+            "af-ZA": "Sluit toe",
+            "ar-SY": "قفل",
+            "bg-BG": "Заключване",
+            "ca-ES": "Bloquejar",
+            "cs-CZ": "Zamknout",
+            "el-GR": "Κλείδωμα",
+            "et-EE": "Lukusta",
+            "fa-IR": "قفل",
+            "fi-FI": "Lukitse",
+            "he-IL": "נעילה",
+            "hr-xx": "zaključati",
+            "hu-HU": "Bezár",
+            "hy-AM": "Կողպեք",
+            "id-ID": "Kunci",
+            "is-IS": "Læsa",
+            "lb-xx": "Spären",
+            "lt-LT": "Užrakinti",
+            "ro-RO": "Blocat"
         },
         "UNLOCK": {
             "en-US": "Unlock",
@@ -107,8 +240,27 @@
             "it-IT": "Sblocca",
             "ru-RU": "Открыть",
             "nb-NO": "Lås opp",
+            "nn-NO": "Lås opp",
             "pl-PL": "Odblokuj",
-            "pt-PT": "Desbloquear"
+            "pt-PT": "Desbloquear",
+            "af-ZA": "Sluit oop",
+            "ar-SY": "فتح",
+            "bg-BG": "Отключване",
+            "ca-ES": "Desbloquejar",
+            "cs-CZ": "Odemknout",
+            "el-GR": "Ξεκλείδωμα",
+            "et-EE": "Ava",
+            "fa-IR": "باز کردن",
+            "fi-FI": "Avaa lukitus",
+            "he-IL": "ביטול נעילה",
+            "hr-xx": "Otključati",
+            "hu-HU": "Kinyit",
+            "hy-AM": "Բացել",
+            "id-ID": "Buka",
+            "is-IS": "Aflæsa",
+            "lb-xx": "Entspären",
+            "lt-LT": "Atrakinti",
+            "ro-RO": "Deblocare"
         }
     },
     "blinds": {
@@ -122,8 +274,27 @@
             "it-IT": "Apertura",
             "ru-RU": "Положение",
             "nb-NO": "Posisjon",
+            "nn-NO": "Posisjon",
             "pl-PL": "Pozycja",
-            "pt-PT": "Posição"
+            "pt-PT": "Posição",
+            "af-ZA": "Posisie",
+            "ar-SY": "موضع",
+            "bg-BG": "Позиция",
+            "ca-ES": "Posició",
+            "cs-CZ": "Pozice",
+            "el-GR": "Θέση",
+            "et-EE": "Asend",
+            "fa-IR": "موقعیت",
+            "fi-FI": "Sijainti",
+            "he-IL": "מיקום",
+            "hr-xx": "Pozicija",
+            "hu-HU": "Pozíció",
+            "hy-AM": "Դիրք",
+            "id-ID": "Posisi",
+            "is-IS": "Staðsetning",
+            "lb-xx": "Positioun",
+            "lt-LT": "Padėtis",
+            "ro-RO": "Poziţie"
         }
     },
     "thermostat": {
@@ -137,8 +308,27 @@
             "it-IT": "Attualmente",
             "ru-RU": "Сейчас",
             "nb-NO": "Er nå",
+            "nn-NO": "Akkurat no",
             "pl-PL": "Obecnie",
-            "pt-PT": "Atualmente"
+            "pt-PT": "Atualmente",
+            "af-ZA": "Tans",
+            "ar-SY": "حاليا",
+            "bg-BG": "В момента",
+            "ca-ES": "Actual",
+            "cs-CZ": "Aktuálně",
+            "el-GR": "Αυτή τη στιγμή",
+            "et-EE": "Hetkel",
+            "fa-IR": "در حال حاضر",
+            "fi-FI": "Tällä hetkellä",
+            "he-IL": "כעת",
+            "hr-xx": "Trenutno",
+            "hu-HU": "Jelenleg",
+            "hy-AM": "Ներկայումս",
+            "id-ID": "Saat ini",
+            "is-IS": "Er núna",
+            "lb-xx": "Momentan",
+            "lt-LT": "Šiuo metu",
+            "ro-RO": "În prezent"
         },
         "State": {
             "en-US": "State",
@@ -150,8 +340,142 @@
             "it-IT": "Stato",
             "ru-RU": "Состояние",
             "nb-NO": "Tilstand",
+            "nn-NO": "Tilstand",
             "pl-PL": "Stan",
-            "pt-PT": "Estado"
+            "pt-PT": "Estado",
+            "af-ZA": {
+                "add_entities_lovelace": "Voeg by Lovelace",
+                "entities": "Entiteite",
+                "none": "Hierdie toestel het geen entiteite nie"
+            },
+            "ar-SY": {
+                "add_entities_lovelace": "أضف إلى Lovelace",
+                "disabled_entities": "{count} {count, plural,\n  one {كيان}\n  other {كيانات}\n}",
+                "entities": "الكيانات",
+                "hide_disabled": "إخفاء معطل",
+                "none": "هذا الجهاز ليس له كيانات"
+            },
+            "bg-BG": {
+                "add_entities_lovelace": "Добавете към Lovelace",
+                "config": "Конфиг.",
+                "control": "Контроли",
+                "diagnostic": "Диагностика",
+                "disabled_entities": "+{count} {count, plural,\n  one {деактивиран обект}\n  other {деактивирани обекта}\n}",
+                "entities": "Обекти",
+                "hide_disabled": "Скриване на деактивираните",
+                "none": "Това устройство няма обекти",
+                "sensor": "Сензори"
+            },
+            "ca-ES": "Estat",
+            "cs-CZ": "Stav",
+            "el-GR": "Κατάσταση",
+            "et-EE": "Olek",
+            "fa-IR": {
+                "add_entities_lovelace": "Adauga la Lovelace",
+                "entities": "Entitati",
+                "none": "Acest dispozitiv nu are nicio entitate"
+            },
+            "fi-FI": "Tila",
+            "he-IL": "מצב",
+            "hr-xx": {
+                "automation": {
+                    "actions": {
+                        "caption": "Kada se nešto pokrene…"
+                    },
+                    "automations": "Automatizacije",
+                    "conditions": {
+                        "caption": "Učini nešto samo ako…"
+                    },
+                    "create": "Stvorite automatizaciju s uređajem",
+                    "no_automations": "Nema automatizacije",
+                    "no_device_automations": "Nema dostupnih automatizacija za ovaj uređaj.",
+                    "triggers": {
+                        "caption": "Učini nešto kad..."
+                    }
+                },
+                "cant_edit": "Možete uređivati samo stavke stvorene u korisničkom sučelju (UI).",
+                "caption": "Uređaji",
+                "confirm_rename_entity_ids": "Želite li također preimenovati ID entiteta svojih entiteta?",
+                "data_table": {
+                    "area": "Područje",
+                    "battery": "Baterija",
+                    "device": "Uređaj",
+                    "integration": "Integracija",
+                    "manufacturer": "Proizvođač",
+                    "model": "Model"
+                },
+                "description": "Upravljanje povezanim uređajima",
+                "device_not_found": "Uređaj nije pronađen.",
+                "name": "Naziv",
+                "scene": {
+                    "create": "Stvorite scenu s uređajem",
+                    "no_scenes": "Nema scena",
+                    "scenes": "Scene"
+                },
+                "scenes": "Scene",
+                "script": {
+                    "create": "Stvorite skriptu s uređajem",
+                    "no_scripts": "Nema skripte",
+                    "scripts": "Skripte"
+                },
+                "scripts": "Skripte",
+                "unknown_error": "Nepoznata pogreška",
+                "unnamed_device": "Neimenovani uređaj",
+                "update": "Ažuriraj"
+            },
+            "hu-HU": "Állapot",
+            "hy-AM": {
+                "automation": {
+                    "create_disable": "Հնարավոր չէ ստեղծել ավտոմատացում անջատված սարքով"
+                },
+                "disabled": "Անջատված",
+                "disabled_by": {
+                    "config_entry": "Կարգավորման կետ",
+                    "integration": "Ինտեգրում",
+                    "user": "Օգտատեր"
+                },
+                "enabled_cause": "Անջատված է {cause}-ի կողմից",
+                "enabled_label": "Միացնել սարքը",
+                "picker": {
+                    "filter": {
+                        "filter": "Ֆիլտր",
+                        "show_all": "Ցույց տալ ամբողջը",
+                        "show_disabled": "Ցուցադրել ապաակտիվացված սարքերը"
+                    },
+                    "search": "Որոնել սարքեր"
+                },
+                "scene": {
+                    "create_disable": "Հնարավոր չէ սցենար ստեղծել անջատված սարքով"
+                },
+                "script": {
+                    "create_disable": "Անջատված սարքով հնարավոր չէ ստեղծել սկրիպտ"
+                }
+            },
+            "id-ID": "Status",
+            "is-IS": "Staða",
+            "lb-xx": {
+                "add_entities_lovelace": "Zu Lovelace bäisetzen",
+                "disabled_entities": "+{count} {count, plural,\n  one {Déaktivéiert Entitéit}\n  other {Déaktivéiert Entitéiten}\n}",
+                "entities": "Entitéiten",
+                "hide_disabled": "Deaktivéiert net uweisen",
+                "none": "Dësen Appart huet keng Entitéiten."
+            },
+            "lt-LT": {
+                "add_entities_lovelace": "Pridėti į Lovelace",
+                "config": "Konfigūracija",
+                "control": "Valdikliai",
+                "diagnostic": "Diagnostika",
+                "entities": "Subjektai",
+                "sensor": "Jutikliai"
+            },
+            "ro-RO": {
+                "add_entities_lovelace": "Adăugați la Lovelace",
+                "disabled_entities": "+{count} {count, plural,\n  one {entitate dezactivată}\n  other {entități dezactivate}\n}",
+                "entities": "Entități",
+                "hide_disabled": "Ascundeți dezactivate",
+                "none": "Acest dispozitiv nu are entități",
+                "sensor": "Senzori"
+            }
         },
         "Action": {
             "en-US": "Operation",
@@ -163,8 +487,27 @@
             "it-IT": "Operazione",
             "ru-RU": "Режим работы",
             "nb-NO": "Operasjon",
+            "nn-NO": "Operasjon",
             "pl-PL": "Tryb pracy",
-            "pt-PT": "Operação"
+            "pt-PT": "Operação",
+            "af-ZA": "Operasie",
+            "ar-SY": "الوضع",
+            "bg-BG": "Режим",
+            "ca-ES": "Funcionament",
+            "cs-CZ": "Provoz",
+            "el-GR": "Λειτουργία",
+            "et-EE": "Töörežiim",
+            "fa-IR": "عملیات",
+            "fi-FI": "Toiminto",
+            "he-IL": "פעולה",
+            "hr-xx": "operacija",
+            "hu-HU": "Működés",
+            "hy-AM": "Գործողություն",
+            "id-ID": "Operasi",
+            "is-IS": "Aðgerð",
+            "lb-xx": "Aktioun",
+            "lt-LT": "Operacija",
+            "ro-RO": "Operație"
         }
     }
 }
