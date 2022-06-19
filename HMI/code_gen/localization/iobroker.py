@@ -57,6 +57,8 @@ def lookup(path_frontend_file, path_backend_file, lookupstr):
 def get_translation(locale, lookupstr):
     path_frontend_file, path_backend_file = build_locale_filestring(locale)
     res = lookup(path_frontend_file, path_backend_file, lookupstr)
+    if locale == "he_IL":
+        res = res[::-1]
     return res
     
 out = defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))
