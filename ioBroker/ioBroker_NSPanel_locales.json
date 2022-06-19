@@ -30,7 +30,16 @@
             "is-IS": "Birtustig",
             "lb-xx": "Hellegkeet",
             "lt-LT": "Ryškumas",
-            "ro-RO": "Luminozitate"
+            "ro-RO": "Luminozitate",
+            "sk-SK": "Jas",
+            "sl-SI": "Svetlost",
+            "sv-SE": "Ljusstyrka",
+            "th-TH": "ความสว่าง",
+            "tr-TR": "Parlaklık",
+            "uk-UA": "Яскравість",
+            "vi-VN": "Độ sáng",
+            "zh-CN": "亮度",
+            "zh-TW": "亮度"
         },
         "Temperature": {
             "en-US": "Color temperature",
@@ -62,7 +71,16 @@
             "is-IS": "Litastig",
             "lb-xx": "Faarf Temperatur",
             "lt-LT": "Spalvos temperatūra",
-            "ro-RO": "Temperatură de culoare"
+            "ro-RO": "Temperatură de culoare",
+            "sk-SK": "Teplota farby",
+            "sl-SI": "Temperatura barve",
+            "sv-SE": "Färgtemperatur",
+            "th-TH": "อุณหภูมิสี",
+            "tr-TR": "Renk sıcaklığı",
+            "uk-UA": "Кольорова температура",
+            "vi-VN": "Nhiệt độ màu",
+            "zh-CN": "色温",
+            "zh-TW": "色溫"
         }
     },
     "window": {
@@ -96,7 +114,16 @@
             "is-IS": "Loka",
             "lb-xx": "Zou",
             "lt-LT": "Uždaryta",
-            "ro-RO": "Închis"
+            "ro-RO": "Închis",
+            "sk-SK": "Zatvorené",
+            "sl-SI": "Zaprto",
+            "sv-SE": "Stängt",
+            "th-TH": "ปิดแล้ว",
+            "tr-TR": "Kapalı",
+            "uk-UA": "Зачинене",
+            "vi-VN": "Đóng",
+            "zh-CN": "关闭",
+            "zh-TW": "關閉"
         },
         "opened": {
             "en-US": "Open",
@@ -128,7 +155,16 @@
             "is-IS": "Opna",
             "lb-xx": "Op",
             "lt-LT": "Atidaryta",
-            "ro-RO": "Deschis"
+            "ro-RO": "Deschis",
+            "sk-SK": "Otvorené",
+            "sl-SI": "Odprto",
+            "sv-SE": "Öppet",
+            "th-TH": "เปิด",
+            "tr-TR": "Açık",
+            "uk-UA": "Відчинене",
+            "vi-VN": "Mở",
+            "zh-CN": "开启",
+            "zh-TW": "開啟"
         }
     },
     "door": {
@@ -162,7 +198,16 @@
             "is-IS": "Lokuð",
             "lb-xx": "Zou",
             "lt-LT": "Uždaryta",
-            "ro-RO": "Închis"
+            "ro-RO": "Închis",
+            "sk-SK": "Zatvorené",
+            "sl-SI": "Zaprto",
+            "sv-SE": "Stängd",
+            "th-TH": "ปิดแล้ว",
+            "tr-TR": "Kapalı",
+            "uk-UA": "Зачинені",
+            "vi-VN": "Đóng",
+            "zh-CN": "关闭",
+            "zh-TW": "已關閉"
         },
         "opened": {
             "en-US": "Open",
@@ -194,7 +239,16 @@
             "is-IS": "Opin",
             "lb-xx": "Op",
             "lt-LT": "Atidaryta",
-            "ro-RO": "Deschis"
+            "ro-RO": "Deschis",
+            "sk-SK": "Otvorené",
+            "sl-SI": "Odprto",
+            "sv-SE": "Öppen",
+            "th-TH": "เปิด",
+            "tr-TR": "Açık",
+            "uk-UA": "Відчинені",
+            "vi-VN": "Mở",
+            "zh-CN": "开启",
+            "zh-TW": "已開啟"
         }
     },
     "lock": {
@@ -228,7 +282,16 @@
             "is-IS": "Læsa",
             "lb-xx": "Spären",
             "lt-LT": "Užrakinti",
-            "ro-RO": "Blocat"
+            "ro-RO": "Blocat",
+            "sk-SK": "Zamknúť",
+            "sl-SI": "Zakleni",
+            "sv-SE": "Lås",
+            "th-TH": "ล็อค",
+            "tr-TR": "Kilitle",
+            "uk-UA": "Блокувати",
+            "vi-VN": "Khóa",
+            "zh-CN": "锁定",
+            "zh-TW": "上鎖"
         },
         "UNLOCK": {
             "en-US": "Unlock",
@@ -260,7 +323,16 @@
             "is-IS": "Aflæsa",
             "lb-xx": "Entspären",
             "lt-LT": "Atrakinti",
-            "ro-RO": "Deblocare"
+            "ro-RO": "Deblocare",
+            "sk-SK": "Odomknúť",
+            "sl-SI": "Odkleni",
+            "sv-SE": "Lås upp",
+            "th-TH": "ปลดล็อค",
+            "tr-TR": "Kilidi aç",
+            "uk-UA": "Розблокувати",
+            "vi-VN": "Mở khóa",
+            "zh-CN": "解锁",
+            "zh-TW": "解鎖"
         }
     },
     "blinds": {
@@ -294,7 +366,16 @@
             "is-IS": "Staðsetning",
             "lb-xx": "Positioun",
             "lt-LT": "Padėtis",
-            "ro-RO": "Poziţie"
+            "ro-RO": "Poziţie",
+            "sk-SK": "Poloha",
+            "sl-SI": "Položaj",
+            "sv-SE": "Position",
+            "th-TH": "ตำแหน่ง",
+            "tr-TR": "Pozisyon",
+            "uk-UA": "Положення",
+            "vi-VN": "Vị trí",
+            "zh-CN": "位置",
+            "zh-TW": "位置"
         }
     },
     "thermostat": {
@@ -328,7 +409,16 @@
             "is-IS": "Er núna",
             "lb-xx": "Momentan",
             "lt-LT": "Šiuo metu",
-            "ro-RO": "În prezent"
+            "ro-RO": "În prezent",
+            "sk-SK": "Aktuálne",
+            "sl-SI": "Trenutno",
+            "sv-SE": "Nuvarande",
+            "th-TH": "ในขณะนี้",
+            "tr-TR": "Şu an",
+            "uk-UA": "В даний час",
+            "vi-VN": "Hiện tại",
+            "zh-CN": "当前",
+            "zh-TW": "目前狀態"
         },
         "State": {
             "en-US": "State",
@@ -475,7 +565,22 @@
                 "hide_disabled": "Ascundeți dezactivate",
                 "none": "Acest dispozitiv nu are entități",
                 "sensor": "Senzori"
-            }
+            },
+            "sk-SK": "Stav",
+            "sl-SI": "Stanje",
+            "sv-SE": "Tillstånd",
+            "th-TH": "สถานะ",
+            "tr-TR": "Durum",
+            "uk-UA": "Стан",
+            "vi-VN": {
+                "add_entities_lovelace": "Thêm vào Lovelace",
+                "disabled_entities": "+{count} {count, plural,\n  one {thực thể bị vô hiệu hoá}\n  other {các thực thể bị vô hiệu hoá}\n}",
+                "entities": "Các thực thể",
+                "hide_disabled": "Ẩn các thiết bị bị vô hiệu hoá",
+                "none": "Thiết bị này không có thực thể nào"
+            },
+            "zh-CN": "状态",
+            "zh-TW": "狀態"
         },
         "Action": {
             "en-US": "Operation",
@@ -507,7 +612,16 @@
             "is-IS": "Aðgerð",
             "lb-xx": "Aktioun",
             "lt-LT": "Operacija",
-            "ro-RO": "Operație"
+            "ro-RO": "Operație",
+            "sk-SK": "Prevádzka",
+            "sl-SI": "Delovanje",
+            "sv-SE": "Driftläge",
+            "th-TH": "การทำงาน",
+            "tr-TR": "İşlem",
+            "uk-UA": "Режим",
+            "vi-VN": "Chế độ hoạt động",
+            "zh-CN": "运行模式",
+            "zh-TW": "運轉模式"
         }
     }
 }
