@@ -19,20 +19,23 @@ keys = {
 }
 
 
-langs = ["en_US", "de_DE", "nl_NL", "da_DK", "es_ES", "fr_FR", "it_IT", "ru_RU"]
+langs = ["en-US", "de-DE", "nl-NL", "da-DK", "es-ES", "fr-FR", "it-IT", "ru-RU", "nb-NO", "nn-NO", "pl-PL", "pt-PT", 
+         "af-ZA", "ar-SY", "bg-BG", "ca-ES", "cs-CZ", "el-GR", "et-EE", "fa-IR", "fi-FI", "he-IL", "hr-xx", "hu-HU", 
+         "hy-AM", "id-ID", "is-IS", "lb-xx", "lt-LT", "ro-RO", "sk-SK", "sl-SI", "sv-SE", "th-TH", "tr-TR", "uk-UA",
+         "vi-VN", "zh-CN", "zh-TW"]
 
 
 def build_locale_filestring(locale):
-    if locale in ["zh_CN", "zh_Hans_CN", "zh_Hans"]:
+    if locale in ["zh-CN", "zh-Hans-CN", "zh-Hans"]:
         locale = "zh-Hans"
-    elif locale in ["zh_TW", "zh_Hant_TW", "zh_Hant"]:
+    elif locale in ["zh-TW", "zh-Hant-TW", "zh-Hant"]:
         locale = "zh-Hant"
     elif locale == "en_GB":
         locale = "en-GB"
     elif locale == "pt_BR":
         locale = "pt-BR"
     else:
-        locale = locale.split("_")[0]
+        locale = locale.split("-")[0]
 
     filename = f"{locale}.json"
     dir_path = os.getcwd()
