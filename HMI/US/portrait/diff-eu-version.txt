@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-06-17 21:31:52.834043346 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-17 21:31:53.382043060 +0000
+--- HMI/n2t-out/Program.s.txt	2022-06-19 14:20:59.947205019 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-19 14:21:00.515209751 +0000
 @@ -11,6 +11,6 @@
      // dim value
      int dimValue=40
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-06-17 21:31:52.838043344 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-17 21:31:53.382043060 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-06-19 14:20:59.951205050 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-19 14:21:00.515209751 +0000
 @@ -63,6 +63,16 @@
              vis bText4,0
              vis hSlider4,0
@@ -468,8 +468,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-06-17 21:31:52.834043346 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-17 21:31:53.382043060 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-06-19 14:20:59.947205019 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-19 14:21:00.515209751 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -489,8 +489,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-06-17 21:31:52.834043346 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-17 21:31:53.382043060 +0000
+--- HMI/n2t-out/popupLight.txt	2022-06-19 14:20:59.951205050 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-19 14:21:00.515209751 +0000
 @@ -151,7 +151,7 @@
          Send Component ID                   : disabled
          Associated Keyboard                 : none
@@ -501,8 +501,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
  Text tInstruction
      Attributes
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-06-17 21:31:52.834043346 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-17 21:31:53.382043060 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-06-19 14:20:59.947205019 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-19 14:21:00.515209751 +0000
 @@ -69,7 +69,7 @@
      Attributes
          Scope         : local
@@ -512,3 +512,75 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
      
  Text tEntity
      Attributes
+@@ -181,7 +181,7 @@
+         Touch Release Event
+             // event,buttonPress2,internalNameEntity,positionSlider,50
+             //craft command
+-            tSend.txt="event,buttonPress2,"+entn.txt+",tiltSlider,"
++            tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
+             covx hPosition.val,tTmp.txt,0,0
+             tSend.txt+=tTmp.txt
+             //send calc crc
+@@ -308,7 +308,7 @@
+     
+     Events
+         Touch Press Event
+-            tSend.txt="event,buttonPress2,"+entn.txt+",tiltOpen"
++            tSend.txt="event,buttonPress2,"+entn.txt+",up"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC
+@@ -333,7 +333,7 @@
+     
+     Events
+         Touch Press Event
+-            tSend.txt="event,buttonPress2,"+entn.txt+",tiltStop"
++            tSend.txt="event,buttonPress2,"+entn.txt+",stop"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC
+@@ -358,7 +358,7 @@
+     
+     Events
+         Touch Press Event
+-            tSend.txt="event,buttonPress2,"+entn.txt+",tiltClose"
++            tSend.txt="event,buttonPress2,"+entn.txt+",down"
+             //send calc crc
+             btlen tSend.txt,sys0
+             crcrest 1,0xffff // reset CRC
+@@ -520,7 +520,6 @@
+                                             spstr strCommand.txt,bTLeft.txt,"~",13
+                                             tsw bTLeft,1
+                                             bTLeft.pco=65535
+-                                            vis bTLeft,1
+                                         }
+                                         // set icon bStop
+                                         spstr strCommand.txt,tTmp.txt,"~",17
+@@ -534,10 +533,9 @@
+                                             spstr strCommand.txt,bTStop.txt,"~",14
+                                             tsw bTStop,1
+                                             bTStop.pco=65535
+-                                            vis bTStop,1
+                                         }
+                                         // set icon bDown
+-                                        spstr strCommand.txt,tTmp.txt,"~",18
++                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                         if(tTmp.txt=="disable")
+                                         {
+                                             spstr strCommand.txt,bTRight.txt,"~",15
+@@ -548,15 +546,6 @@
+                                             spstr strCommand.txt,bTRight.txt,"~",15
+                                             tsw bTRight,1
+                                             bTRight.pco=65535
+-                                            vis bTRight,1
+-                                        }
+-                                        // set tilt slider
+-                                        spstr strCommand.txt,tTmp.txt,"~",19
+-                                        if(tTmp.txt!="disable")
+-                                        {
+-                                            vis hTilt,1
+-                                            covx tTmp.txt,sys0,0,0
+-                                            hTilt.val=sys0
+                                         }
+                                     }
+                                     if(tInstruction.txt=="dimmode")
