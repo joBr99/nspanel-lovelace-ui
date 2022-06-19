@@ -844,6 +844,7 @@ Timer tmSerial
                                             tsw bTLeft,0
                                             spstr strCommand.txt,bTLeft.txt,"~",13
                                             bTLeft.pco=27501
+                                            vis bTRight,1
                                         }else if(tTmp.txt=="enable")
                                         {
                                             spstr strCommand.txt,bTLeft.txt,"~",13
@@ -858,6 +859,7 @@ Timer tmSerial
                                             tsw bTStop,0
                                             spstr strCommand.txt,bTStop.txt,"~",14
                                             bTStop.pco=27501
+                                            vis bTRight,1
                                         }else if(tTmp.txt=="enable")
                                         {
                                             spstr strCommand.txt,bTStop.txt,"~",14
@@ -872,6 +874,7 @@ Timer tmSerial
                                             spstr strCommand.txt,bTRight.txt,"~",15
                                             tsw bTRight,0
                                             bTRight.pco=27501
+                                            vis bTRight,1
                                         }else if(tTmp.txt=="enable")
                                         {
                                             spstr strCommand.txt,bTRight.txt,"~",15

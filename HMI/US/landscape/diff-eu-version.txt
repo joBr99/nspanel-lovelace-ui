@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-06-19 14:20:59.947205019 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-06-19 14:21:01.123214844 +0000
+--- HMI/n2t-out/Program.s.txt	2022-06-19 15:03:27.316416932 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-06-19 15:03:28.220436240 +0000
 @@ -11,6 +11,4 @@
      // dim value
      int dimValue=40
@@ -9,8 +9,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-06-19 14:20:59.947205019 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-06-19 14:21:01.123214844 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-06-19 15:03:27.316416932 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-06-19 15:03:28.220436240 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -21,8 +21,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-06-19 14:20:59.947205019 +0000
-+++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-06-19 14:21:01.123214844 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-06-19 15:03:27.316416932 +0000
++++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-06-19 15:03:28.220436240 +0000
 @@ -181,7 +181,7 @@
          Touch Release Event
              // event,buttonPress2,internalNameEntity,positionSlider,50
@@ -59,7 +59,13 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-@@ -520,7 +520,6 @@
+@@ -515,13 +515,11 @@
+                                             tsw bTLeft,0
+                                             spstr strCommand.txt,bTLeft.txt,"~",13
+                                             bTLeft.pco=27501
+-                                            vis bTRight,1
+                                         }else if(tTmp.txt=="enable")
+                                         {
                                              spstr strCommand.txt,bTLeft.txt,"~",13
                                              tsw bTLeft,1
                                              bTLeft.pco=65535
@@ -67,7 +73,13 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
                                          }
                                          // set icon bStop
                                          spstr strCommand.txt,tTmp.txt,"~",17
-@@ -534,10 +533,9 @@
+@@ -530,36 +528,24 @@
+                                             tsw bTStop,0
+                                             spstr strCommand.txt,bTStop.txt,"~",14
+                                             bTStop.pco=27501
+-                                            vis bTRight,1
+                                         }else if(tTmp.txt=="enable")
+                                         {
                                              spstr strCommand.txt,bTStop.txt,"~",14
                                              tsw bTStop,1
                                              bTStop.pco=65535
@@ -79,7 +91,11 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
                                          if(tTmp.txt=="disable")
                                          {
                                              spstr strCommand.txt,bTRight.txt,"~",15
-@@ -548,15 +546,6 @@
+                                             tsw bTRight,0
+                                             bTRight.pco=27501
+-                                            vis bTRight,1
+                                         }else if(tTmp.txt=="enable")
+                                         {
                                              spstr strCommand.txt,bTRight.txt,"~",15
                                              tsw bTRight,1
                                              bTRight.pco=65535
