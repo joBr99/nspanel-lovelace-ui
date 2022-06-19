@@ -149,7 +149,7 @@ var weatherForecast = true; //true = WheatherForecast 5 Days --- false = Config 
 
 //Alexa-Instanz
 var alexaInstanz = "alexa2.0"
-var alexaDevice = "G0XXXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
+var alexaDevice = "G0XXXXXXXXXXXXXX"; //Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
@@ -221,7 +221,7 @@ var Buero_Seite_1: PageEntities =
         <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", interpolateColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.Testlampe2", name: "Filamentlampe", minValueBrightness: 0, maxValueBrightness: 70, interpolateColor: true},
         //<PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "power", icon2: "",offColor: MSRed, onColor: MSGreen}
-        <PageItem>{ id: "alias.0.NSPanel_1.TestVentil1", icon: "valve-open", icon2: "valve-closed",offColor: MSRed, onColor: MSGreen} //based on socket
+        <PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "valve-open", icon2: "valve-closed",offColor: MSRed, onColor: MSGreen, name: "Test-Ventil 1"}
     ]
 };
 
@@ -1097,7 +1097,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
             case "light":
                 type = "light"
                 iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == "socket"  ? Icons.GetIcon("power-socket-de") : Icons.GetIcon("lightbulb");
-                var iconId2 = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == "socket"  ? Icons.GetIcon("power-socket-de") : Icons.GetIcon("lightbulb");
+                var iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == "socket"  ? Icons.GetIcon("power-socket-de") : Icons.GetIcon("lightbulb");
                 var optVal = "0"
 
                 if (val === true || val === "true") {
@@ -1105,7 +1105,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
                 } else {
                     iconColor = GetIconColor(pageItem, false, useColors);
-                    iconId = iconId2;
+                    if (pageItem.icon !== undefined) {
+                        if (pageItem.icon2 !== undefined) {
+                            iconId = iconId2;
+                        } 
+                    }
                 }
 
                 return "~" + type + "~" + pageItem.id + "~" + iconId + "~" + iconColor + "~" + name + "~" + optVal;
