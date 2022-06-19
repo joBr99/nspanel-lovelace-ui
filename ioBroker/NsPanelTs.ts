@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker
-- abgestimmt auf TFT 38 / v3.1.0 / BerryDriver 4 / Tasmota 12.0.0
+- abgestimmt auf TFT 38 / v3.1.0.1 / BerryDriver 4 / Tasmota 12.0.1
 joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -16,10 +16,13 @@ ReleaseNotes:
         - 14.06.2022 - V2.9.0 - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu (Many thanks to Grrzzz)
         - 14.06.2022 - V2.9.0 - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc) (Many thanks to Grrzzz)
         - 15.06.2022 - V3.0.0 - Date/Time im Screensaver auf Basis localString (de-DE/en-EN/nl-NL/etc.)
-        - 16.06.2022 - V3.0.0 - Multilingual - config.locale (en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU)
+        - 16.06.2022 - V3.0.0 - Multilingual - config.locale (en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.)
         - 16.06.2022 - V3.0.0 - Bugfix by Grrzzz - Subpages
         - 18.06.2022 - V3.1.0 - Längere Textfelder in cardEntities
         - 18.06.2022 - V3.1.0 - Detail-Page Lights/Shutter hat neuen Parameter "id"
+        - 19.06.2022 - V3.1.0 - Bugfix toLocalTimeString in en-EN/en-US
+        - 19.06.2022 - V3.1.0 - Fehler in findLocale abgefangen
+        - 19.06.2022 - V3.1.0 - Umstellung auf "Home Assistant" Sprachfile
 
     Known Bug
         - Github Issue #286
@@ -95,9 +98,6 @@ var timeoutSlider: any;
 const NSPanel_Path = "0_userdata.0.NSPanel.1."
 const Debug = false;
 var manually_Update = true;
-
-//const Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-//const Days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 //const Off: RGB = { red: 68, green: 115, blue: 158 };  //Blau-Off
 const Off: RGB = { red: 253, green: 128, blue: 0 };     //Orange-Off - schönere Farbübergänge
@@ -451,7 +451,7 @@ export const config: Config = {
     dimmode: 8,
     active: 100, //Standard-Brightness TFT
     screenSaverDoubleClick: false,
-    locale: "de-DE",                    //en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU
+    locale: "en-US",                    //en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
     timeFormat: "%H:%M",                //currently not used 
     dateFormat: "%A, %d. %B %Y",        //currently not used 
     weatherEntity: "alias.0.Wetter",
@@ -983,17 +983,16 @@ function SendDate(): void {
 function SendTime(): void {
 
     var d = new Date();
-    var year = d.getFullYear();
-    var month = d.getMonth();
-    var day = d.getDate();
-    var hr = d.getHours();
+    var hr = d.getHours().toString();
+    var min = d.getMinutes().toString();
 
-    var min = d.getMinutes();
-    const date = new Date(year, month, day, hr, min, 1);
-
-    var _SendTime = date.toLocaleTimeString(config.locale, { hour: '2-digit', minute: '2-digit', hour12: false});
-    
-    SendToPanel(<Payload>{ payload: "time~" + _SendTime });
+    if (d.getHours() < 10) {
+        hr = "0" + d.getHours().toString();
+    }
+    if (d.getMinutes() < 10) {
+        min = "0" + d.getMinutes().toString();
+    }
+    SendToPanel(<Payload>{ payload: "time~" + hr + ":" + min });
 }
 
 function ScreensaverDimmode() {
@@ -1385,12 +1384,18 @@ function findLocale(controlsObject: string, controlsState: string) : string {
     var locale = config.locale;
     var strJson = getState(NSPanel_Path + 'NSPanel_locales_json').val;
     var obj = JSON.parse(strJson);
-    var strLocale = obj[controlsObject][controlsState][locale];
 
-    if (strLocale != undefined) {
-        return strLocale;
-    } else {
-        return controlsState;
+    try {
+        var strLocale = obj[controlsObject][controlsState][locale];
+
+        if (strLocale != undefined) {
+            return strLocale;
+        } else {
+            return controlsState;
+        }
+    } catch (e) {
+        console.log(e);            
+        return controlsState 
     }
 }
 
