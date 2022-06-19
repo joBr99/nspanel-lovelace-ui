@@ -21,7 +21,8 @@ keys = {
 
 langs = ["en-US", "de-DE", "nl-NL", "da-DK", "es-ES", "fr-FR", "it-IT", "ru-RU", "nb-NO", "nn-NO", "pl-PL", "pt-PT", 
          "af-ZA", "ar-SY", "bg-BG", "ca-ES", "cs-CZ", "el-GR", "et-EE", "fa-IR", "fi-FI", "he-IL", "hr-xx", "hu-HU", 
-         "hy-AM", "id-ID", "is-IS", "lb-xx", "lt-LT", "ro-RO"]
+         "hy-AM", "id-ID", "is-IS", "lb-xx", "lt-LT", "ro-RO", "sk-SK", "sl-SI", "sv-SE", "th-TH", "tr-TR", "uk-UA",
+         "vi-VN", "zh-CN", "zh-TW"]
 
 
 def build_locale_filestring(locale):
