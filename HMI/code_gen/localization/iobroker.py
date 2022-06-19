@@ -19,7 +19,7 @@ keys = {
 }
 
 
-langs = ["en-US", "de-DE", "nl-NL", "da-DK", "es-ES", "fr-FR", "it-IT", "ru-RU", "nb-NO", "pl-PL", "pt-PT"]
+langs = ["en-US", "de-DE", "nl-NL", "da-DK", "es-ES", "fr-FR", "it-IT", "ru-RU", "nb-NO", "nn-NO", "pl-PL", "pt-PT", "af-ZA", "ar-SY", "bg-BG", "ca-ES", "cs-CZ", "el-GR", "et-EE", "fa-IR", "fi-FI", "he-IL", "hr-xx", "hu_HU", "hy-AM", "id-ID", "is-IS", "lb-xx", "lt-LT", "ro-RO"]
 
 
 def build_locale_filestring(locale):
