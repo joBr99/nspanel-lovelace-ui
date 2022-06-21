@@ -184,7 +184,7 @@ var Test_Licht: PageEntities =
     "heading": "Color Aliase",
     "useColor": true,
     "subPage": false,
-    "parent": Test_Licht,
+    "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLichteinzeln", name: "RGB-Licht Hex-Color", interpolateColor: true},
         //<PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", name: "Farbtemperatur", interpolateColor: true},
@@ -200,7 +200,7 @@ var Test_Funktionen: PageEntities =
     "heading": "Sonstige Aliase",
     "useColor": true,
     "subPage": false,
-    "parent": Test_Funktionen,
+    "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.TestLautstärke", offColor: MSRed /*if mute=true*/, onColor: MSGreen ,name: "Echo Spot Büro", minValue: 0, maxValue: 100},
         <PageItem>{ id: "alias.0.NSPanel_1.TestTemperatur",name: "Temperatur außen", icon: "thermometer", onColor: White},
@@ -215,13 +215,13 @@ var Buero_Seite_1: PageEntities =
     "heading": "Büro",
     "useColor": true,
     "subPage": false,
-    "parent": Buero_Seite_1,
+    "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe", interpolateColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", interpolateColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.Testlampe2", name: "Filamentlampe", minValueBrightness: 0, maxValueBrightness: 70, interpolateColor: true},
-        //<PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "power", icon2: "",offColor: MSRed, onColor: MSGreen}
-        <PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "valve-open", icon2: "valve-closed",offColor: MSRed, onColor: MSGreen, name: "Test-Ventil 1"}
+        <PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "power", icon2: "",offColor: MSRed, onColor: MSGreen}
+        //<PageItem>{ id: "alias.0.NSPanel_1.TestVentil1", icon: "valve-open", icon2: "valve-closed",offColor: MSRed, onColor: MSGreen, name: "Test-Ventil 1"}
     ]
 };
 
@@ -231,7 +231,7 @@ var Fenster_1: PageEntities =
     "heading": "Fenster und Türen",
     "useColor": true,
     "subPage": false,
-    "parent": Fenster_1,
+    "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.TestFenster", offColor: MSRed, onColor: MSGreen, name: "Büro Fenster"},
         <PageItem>{ id: "alias.0.NSPanel_1.Haustuer", offColor: MSRed, onColor: MSGreen, name: "Haustür"},
@@ -246,7 +246,7 @@ var Button_1: PageEntities =
     "heading": "Button Aliase",
     "useColor": true,
     "subPage": false,
-    "parent": Button_1,
+    "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.TestTastensensor", name: "Tastensensor (FFN)"},
         <PageItem>{ id: "alias.0.NSPanel_1.Radio.NDR2", icon: "radio", name: "Taste (NDR2)", onColor: colorRadio},
@@ -259,7 +259,7 @@ var Subpages_1: PageEntities =
     "heading": "Test Subpages",
     "useColor": true,
     "subPage": false,
-    "parent": Subpages_1,
+    "parent": undefined,
     "items": [
         <PageItem>{ navigate: true, id: "Abfall", onColor: White, name: "Abfallkalender"},
         <PageItem>{ navigate: true, id: "WLAN", onColor: White, name: "Gäste WLAN"},
@@ -288,7 +288,7 @@ var Buero_Seite_2: PageGrid =
     "heading": "Büro 2",
     "useColor": true,
     "subPage": false,
-    "parent": Buero_Seite_2,
+    "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe", name: "Schreibtisch"},
         <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", name: "Deckenlampe"},
@@ -305,7 +305,7 @@ var Alexa: PageMedia =
     "heading": "Alexa",
     "useColor": true,
     "subPage": false,
-    "parent": Alexa,
+    "parent": undefined,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Alexa.PlayerBuero" }]
 };
 
@@ -315,7 +315,7 @@ var Buero_Themostat: PageThermo =
     "heading": "Test Thermostat",
     "useColor": true,
     "subPage": false,
-    "parent": Buero_Themostat,
+    "parent": undefined,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Thermostat_Büro", minValue: 50, maxValue: 300 }]
 };
 
@@ -325,7 +325,7 @@ var Buero_Klimaanlage: PageThermo =
     "heading": "Test Klimaanlage",
     "useColor": true,
     "subPage": false,
-    "parent": Buero_Klimaanlage,
+    "parent": undefined,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.TestKlimaanlage", minValue: 170, maxValue: 250}]
 };
 
@@ -346,7 +346,7 @@ var Buero_Alarm: PageAlarm =
     "heading": "Alarm",
     "useColor": true,
     "subPage": false,
-    "parent": Buero_Alarm,
+    "parent": undefined,
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Alarm" }]
 };
 
@@ -356,7 +356,7 @@ var button1Page: PageGrid =
     "heading": "Radio",
     "useColor": true,
     "subPage": false,
-    "parent": button1Page,
+    "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Radio.FFN", icon: "radio", name: "FFN", onColor: colorRadio},
         <PageItem>{ id: "alias.0.NSPanel_1.Radio.Antenne" , icon: "radio", name: "Antenne Nds.", onColor: colorRadio},
@@ -373,7 +373,7 @@ var button2Page: PageEntities =
     "heading": "Büro",
     "useColor": true,
     "subPage": false,
-    "parent": button2Page,
+    "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe"},
         <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung"}
@@ -387,7 +387,7 @@ var Service: PageEntities =
     "heading": "NSPanel Service",
     "useColor": true,
     "subPage": false,
-    "parent": Service, 
+    "parent": undefined, 
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_AutoUpdate", name: "Auto-Updates" ,icon: "update", offColor: MSRed, onColor: MSGreen},
         <PageItem>{ navigate: true, id: "NSPanel_Infos", icon: "information-outline", onColor: White, name: "NSPanel Infos"},
@@ -561,7 +561,6 @@ check_updates();
 function get_locales() { 
     exec('curl https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/ioBroker/ioBroker_NSPanel_locales.json', function (error, result, stderr){
         if (result) {
-            let BerryDriverVersionOnline = result.substring((result.indexOf("version_of_this_script = ") + 24), result.indexOf("version_of_this_script = ") + 27).replace(/\s+/g, '');
             createState(NSPanel_Path + "NSPanel_locales_json");
             var timer = setTimeout(function() {
                 setIfExists(NSPanel_Path + 'NSPanel_locales_json', result);
@@ -1989,9 +1988,7 @@ function HandleButtonEvent(words): void {
                 }
             } else {
                 if (Debug) console.log("bExit: " + words[4] + " - "+ pageId)
-                //Known Bug GitHub Issue #286
-                //GeneratePage(activePage); 
-                GeneratePage(config.pages[pageId]); 
+                GeneratePage(activePage); 
             }
             break;
         case "notifyAction":
