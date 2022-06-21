@@ -43,3 +43,6 @@ caseInsensitive: true
 label: "template missing/incomplete"
 # The issue is judged to be legal if it includes all keywords from any of these two configs.
 # Or it will be closed by the app.
+exception:
+  - "joBr99"
+  - "Armilar"
