@@ -165,7 +165,7 @@ class LuiPagesGen(object):
         if entityType == "navigate":
             page_search_res = self._config.searchCard(entityId)
             if page_search_res is not None:
-                icon_res = get_icon_id(icon) if icon is not None else get_icon_id("gesture-tap-button")
+                icon_res = get_icon_id_ha("navigate", overwrite=icon)
                 status_entity = None
                 name = name if name is not None else page_search_res.title
                 text = get_translation(self._locale, "frontend.ui.card.button.press")
