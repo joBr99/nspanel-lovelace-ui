@@ -172,13 +172,13 @@ class LuiPagesGen(object):
                 if item.status is not None and self._ha_api.entity_exists(item.status):
                     status_entity = self._ha_api.get_entity(item.status)
                     icon_res = get_icon_id_ha(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
-                    icon_color = self.get_entity_color(status_entity)
+                    icon_color = self.get_entity_color(entity, overwrite=colorOverride)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
                         icon_res = status_entity.state[:4]
                         if icon_res[-1] == ".":
                             icon_res = icon_res[:-1]
                 else:
-                    icon_color = 17299
+                    icon_color = rgb_dec565(colorOverride) if colorOverride is not None and type(colorOverride) is list else 17299
                 return f"~button~{entityId}~{icon_res}~{icon_color}~{name}~{text}"
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
