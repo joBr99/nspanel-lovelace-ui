@@ -20,6 +20,21 @@ Page cardAlarm
     
     Events
         Preinitialize Event
+            for(sys0=0;sys0<40;sys0++)
+            {
+                b[sys0].bco=defaultBcoColor
+                b[sys0].pco=defaultFontColor
+            }
+            if(defaultBcoColor==0)
+            {
+                tCode.bco=6371
+                tCode.pco=40179
+            }
+            if(defaultBcoColor==6371)
+            {
+                tCode.bco=10565
+                tCode.pco=40179
+            }
             dim=dimValueNormal
             vis p0,0
             vis tSend,0
@@ -216,7 +231,7 @@ Text tCode
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : password
-        Text                                : 
+        Text                                : xxxxxxx
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -388,7 +403,7 @@ Button b0
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -426,7 +441,7 @@ Button b1
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -464,7 +479,7 @@ Button b2
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -502,7 +517,7 @@ Button b3
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -540,7 +555,7 @@ Button b4
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -578,7 +593,7 @@ Button b5
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -616,7 +631,7 @@ Button b6
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -654,7 +669,7 @@ Button b7
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -692,7 +707,7 @@ Button b8
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -730,7 +745,7 @@ Button b9
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -788,7 +803,7 @@ Button b10
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -826,7 +841,7 @@ Button arm1
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -880,7 +895,7 @@ Button arm3
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -934,7 +949,7 @@ Button arm2
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -988,7 +1003,7 @@ Button arm4
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -1042,7 +1057,7 @@ Button b11
         Fill                                : solid color
         Style                               : border
         Border Color                        : 6371
-        Border Width                        : 2
+        Border Width                        : 0
         Font ID                             : 2
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
@@ -1322,6 +1337,18 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
                                         dim=dimValueNormal
+                                        // get background color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultBcoColor,0,0
+                                        }
+                                        // get font color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultFontColor,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
