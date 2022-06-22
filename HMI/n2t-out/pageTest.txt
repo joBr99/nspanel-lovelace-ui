@@ -13,7 +13,47 @@ Page pageTest
     Events
         Preinitialize Event
             vis p0,0
+            n0.val=defaultBcoColor
+            n1.val=defaultFontColor
         
+Number n0
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Number n1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
+Text t0
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : bco
+        Max. Text Size                      : 10
+    
+Text t1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : font
+        Max. Text Size                      : 10
+    
 Picture p0
     Attributes
         Scope                               : local
