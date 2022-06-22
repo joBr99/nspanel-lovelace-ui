@@ -77,7 +77,7 @@ cover_mapping = {
 def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
     if ha_type == "weather":
         return weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
-    elif ha_type == "button":
+    elif ha_type in ["button", "navigate"]:
         return "gesture-tap-button"
     elif ha_type == "scene":
         return "palette"

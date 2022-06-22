@@ -1,8 +1,8 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-19 14:21:00.535209919 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-19 14:20:59.947205019 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-19 14:21:00.515209751 +0000
-+--- HMI/n2t-out/cardEntities.txt	2022-06-19 14:20:59.951205050 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-19 14:21:00.515209751 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-19 15:03:27.772426671 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-19 15:03:27.316416932 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-19 15:03:27.756426330 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-06-19 15:03:27.316416932 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-19 15:03:27.756426330 +0000
 +@@ -63,6 +63,16 @@
 +@@ -120,6 +130,18 @@
 +@@ -156,6 +178,15 @@
@@ -14,32 +14,11 @@
 +@@ -970,6 +1149,33 @@
 +@@ -1075,6 +1281,28 @@
 +@@ -1850,6 +2078,169 @@
-+--- HMI/n2t-out/pageStartup.txt	2022-06-19 14:20:59.947205019 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-19 14:21:00.515209751 +0000
-+diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-06-19 14:20:59.951205050 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-19 14:21:00.515209751 +0000
-+@@ -151,7 +151,7 @@
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+         Text                                : 
-+-        Max. Text Size                      : 80
-++        Max. Text Size                      : 10
-+     
-+ Text tInstruction
-+     Attributes
++--- HMI/n2t-out/pageStartup.txt	2022-06-19 15:03:27.316416932 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-19 15:03:27.756426330 +0000
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-06-19 14:20:59.947205019 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-19 14:21:00.515209751 +0000
-+@@ -69,7 +69,7 @@
-+     Attributes
-+         Scope         : local
-+         Text          : 
-+-        Max. Text Size: 80
-++        Max. Text Size: 10
-+     
-+ Text tEntity
-+     Attributes
++--- HMI/n2t-out/popupShutter.txt	2022-06-19 15:03:27.316416932 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-19 15:03:27.756426330 +0000
 +@@ -181,7 +181,7 @@
 +         Touch Release Event
 +             // event,buttonPress2,internalNameEntity,positionSlider,50
@@ -76,7 +55,13 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -520,7 +520,6 @@
++@@ -515,13 +515,11 @@
++                                             tsw bTLeft,0
++                                             spstr strCommand.txt,bTLeft.txt,"~",13
++                                             bTLeft.pco=27501
++-                                            vis bTRight,1
++                                         }else if(tTmp.txt=="enable")
++                                         {
 +                                             spstr strCommand.txt,bTLeft.txt,"~",13
 +                                             tsw bTLeft,1
 +                                             bTLeft.pco=65535
@@ -84,7 +69,13 @@
 +                                         }
 +                                         // set icon bStop
 +                                         spstr strCommand.txt,tTmp.txt,"~",17
-+@@ -534,10 +533,9 @@
++@@ -530,36 +528,24 @@
++                                             tsw bTStop,0
++                                             spstr strCommand.txt,bTStop.txt,"~",14
++                                             bTStop.pco=27501
++-                                            vis bTRight,1
++                                         }else if(tTmp.txt=="enable")
++                                         {
 +                                             spstr strCommand.txt,bTStop.txt,"~",14
 +                                             tsw bTStop,1
 +                                             bTStop.pco=65535
@@ -95,7 +86,11 @@
 +                                         if(tTmp.txt=="disable")
 +                                         {
 +                                             spstr strCommand.txt,bTRight.txt,"~",15
-+@@ -548,15 +546,6 @@
++                                             tsw bTRight,0
++                                             bTRight.pco=27501
++-                                            vis bTRight,1
++                                         }else if(tTmp.txt=="enable")
++                                         {
 +                                             spstr strCommand.txt,bTRight.txt,"~",15
 +                                             tsw bTRight,1
 +                                             bTRight.pco=65535
