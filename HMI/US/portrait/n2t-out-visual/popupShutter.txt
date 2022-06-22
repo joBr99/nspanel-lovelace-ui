@@ -82,7 +82,7 @@ Variable (string) tTmp
         ID            : 19
         Scope         : local
         Text          : 
-        Max. Text Size: 10
+        Max. Text Size: 80
     
 Text tEntity
     Attributes

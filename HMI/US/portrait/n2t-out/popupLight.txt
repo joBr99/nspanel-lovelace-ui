@@ -151,7 +151,7 @@ Text tTmp
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 80
     
 Text tInstruction
     Attributes
