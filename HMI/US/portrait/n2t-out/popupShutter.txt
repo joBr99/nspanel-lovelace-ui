@@ -215,7 +215,7 @@ Slider hTilt
         Touch Release Event
             // event,buttonPress2,internalNameEntity,positionSlider,50
             //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltSlider,"
             covx hPosition.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -342,7 +342,7 @@ Button bTLeft
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",up"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltOpen"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -367,7 +367,7 @@ Button bTStop
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",stop"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltStop"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -392,7 +392,7 @@ Button bTRight
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",down"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltClose"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
