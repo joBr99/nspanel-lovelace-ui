@@ -1,36 +1,14 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-23 20:32:23.923044969 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-23 20:32:23.467040958 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-23 20:32:23.907044828 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-23 20:36:04.017166066 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-23 20:36:04.001164408 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-06-23 20:32:23.471040993 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-23 20:32:23.907044828 +0000
-+@@ -12,21 +12,6 @@
-+     
-+     Events
-+         Preinitialize Event
-+-            for(sys0=0;sys0<40;sys0++)
-+-            {
-+-                b[sys0].bco=defaultBcoColor
-+-                b[sys0].pco=defaultFontColor
-+-            }
-+-            if(defaultBcoColor==0)
-+-            {
-+-                tCode.bco=6371
-+-                tCode.pco=40179
-+-            }
-+-            if(defaultBcoColor==6371)
-+-            {
-+-                tCode.bco=10565
-+-                tCode.pco=40179
-+-            }
-+             dim=dimValueNormal
-+             vis p0,0
-+             vis tSend,0
-+@@ -138,7 +123,7 @@
++--- HMI/n2t-out/cardAlarm.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-23 20:36:04.001164408 +0000
++@@ -138,7 +138,7 @@
 +         Disable release event after dragging: 0
 +         Send Component ID                   : disabled
 +         Associated Keyboard                 : none
@@ -39,64 +17,19 @@
 +         Max. Text Size                      : 10
 +     
 + Text tIcon
-+--- HMI/n2t-out/cardEntities.txt	2022-06-23 20:32:23.471040993 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-23 20:32:23.911044863 +0000
-+@@ -12,22 +12,6 @@
-+     
-+     Events
-+         Preinitialize Event
-+-            for(sys0=0;sys0<40;sys0++)
-+-            {
-+-                b[sys0].bco=defaultBcoColor
-+-                b[sys0].pco=defaultFontColor
-+-                if(b[sys0].type==53&&defaultBcoColor==0)
-+-                {
-+-                    b[sys0].pic=10
-+-                    b[sys0].pic2=11
-+-                }
-+-                if(b[sys0].type==1&&defaultBcoColor==0)
-+-                {
-+-                    b[sys0].pic=14
-+-                    b[sys0].pic1=13
-+-                    b[sys0].pic2=15
-+-                }
-+-            }
-+             dim=dimValueNormal
-+             //wup=cardEntities
-+             //remove background & activate reparse mode
-+@@ -79,6 +63,16 @@
-+@@ -136,6 +130,18 @@
-+@@ -172,6 +178,15 @@
-+@@ -302,6 +317,26 @@
-+@@ -421,6 +456,34 @@
-+@@ -878,6 +941,106 @@
++--- HMI/n2t-out/cardEntities.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-23 20:36:04.005164823 +0000
++@@ -136,6 +136,18 @@
++@@ -172,6 +184,15 @@
++@@ -302,6 +323,26 @@
++@@ -421,6 +462,34 @@
++@@ -878,6 +947,106 @@
 ++        Text                                : 
 ++        Max. Text Size                      : 20
-+@@ -986,6 +1149,33 @@
-+@@ -1091,6 +1281,28 @@
-+diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-06-23 20:32:23.471040993 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-06-23 20:32:23.907044828 +0000
-+@@ -12,17 +12,6 @@
-+     
-+     Events
-+         Preinitialize Event
-+-            for(sys0=0;sys0<40;sys0++)
-+-            {
-+-                b[sys0].bco=defaultBcoColor
-+-                b[sys0].pco=defaultFontColor
-+-            }
-+-            if(defaultBcoColor==0)
-+-            {
-+-                hVolume.pic=14
-+-                hVolume.pic1=13
-+-                hVolume.pic2=15
-+-            }
-+             dim=dimValueNormal
-+             vis p0,0
-+             vis tSend,0
-+--- HMI/n2t-out/cardQR.txt	2022-06-23 20:32:23.467040958 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-23 20:32:23.907044828 +0000
++@@ -986,6 +1155,33 @@
++@@ -1091,6 +1287,28 @@
++--- HMI/n2t-out/cardQR.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-23 20:36:04.001164408 +0000
 +@@ -12,21 +12,6 @@
 +     Events
 +         Preinitialize Event
@@ -119,8 +52,8 @@
 +             vis p0,0
 +             vis tSend,0
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-06-23 20:32:23.471040993 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-23 20:32:23.907044828 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-23 20:36:04.005164823 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
@@ -133,11 +66,11 @@
 +             dim=dimValueNormal
 +             vis p0,0
 +             vis tSend,0
-+--- HMI/n2t-out/pageStartup.txt	2022-06-23 20:32:23.467040958 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-23 20:32:23.907044828 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-23 20:36:04.001164408 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-06-23 20:32:23.467040958 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-23 20:32:23.907044828 +0000
++--- HMI/n2t-out/pageTest.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-23 20:36:04.001164408 +0000
 +@@ -13,46 +13,6 @@
 +     Events
 +         Preinitialize Event
@@ -186,8 +119,8 @@
 + Picture p0
 +     Attributes
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-06-23 20:32:23.467040958 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-23 20:32:23.907044828 +0000
++--- HMI/n2t-out/popupLight.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-23 20:36:04.001164408 +0000
 +@@ -12,25 +12,6 @@
 +     
 +     Events
@@ -215,8 +148,8 @@
 +             //get entitiy name
 +             tEntity.txt=pageIcons.tTmp1.txt
 +diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
-+--- HMI/n2t-out/popupNotify.txt	2022-06-23 20:32:23.467040958 +0000
-++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-23 20:32:23.907044828 +0000
++--- HMI/n2t-out/popupNotify.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-23 20:36:04.001164408 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
@@ -230,8 +163,8 @@
 +             vis p0,0
 +             vis tSend,0
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-06-23 20:32:23.471040993 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-23 20:32:23.907044828 +0000
++--- HMI/n2t-out/popupShutter.txt	2022-06-23 20:36:03.525115067 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-23 20:36:04.001164408 +0000
 +@@ -215,7 +215,7 @@
 +         Touch Release Event
 +             // event,buttonPress2,internalNameEntity,positionSlider,50
