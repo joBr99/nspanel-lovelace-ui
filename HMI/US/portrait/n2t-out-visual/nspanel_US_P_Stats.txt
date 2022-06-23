@@ -38,14 +38,14 @@ pageStartup
 	19   Component(s)
 	167  Line(s) of event code
 	122  Unique line(s) of event code
-screensaver
-	38   Component(s)
-	332  Line(s) of event code
-	257  Unique line(s) of event code
 cardThermo
 	53   Component(s)
 	565  Line(s) of event code
 	296  Unique line(s) of event code
+screensaver
+	38   Component(s)
+	332  Line(s) of event code
+	257  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	454  Line(s) of event code
