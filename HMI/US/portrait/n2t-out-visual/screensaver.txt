@@ -821,7 +821,7 @@ Text tIcon1
         Style                               : flat
         Associated Keyboard                 : none
         Font ID                             : 1
-        Back. Color                         : 6371
+        Back. Color                         : 0
         Font Color                          : 17299
         Horizontal Alignment                : center
         Vertical Alignment                  : center
@@ -851,7 +851,7 @@ Text tIcon2
         Style                               : flat
         Associated Keyboard                 : none
         Font ID                             : 1
-        Back. Color                         : 6371
+        Back. Color                         : 0
         Font Color                          : 17299
         Horizontal Alignment                : center
         Vertical Alignment                  : center
