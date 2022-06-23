@@ -54,3 +54,6 @@ _If applicable, add screenshots/pictures to help explain your problem._
 
 ### ADDITIONAL CONTEXT
 _Add any other context about the problem here._
+
+### PANEL / FIRMWARE VERION
+_Please add the Panel/Firmware Version you are using (EU, US-L or US-P)_
