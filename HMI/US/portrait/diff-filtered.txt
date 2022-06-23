@@ -1,13 +1,13 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-23 20:12:05.164927814 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-23 20:12:05.148927555 +0000
-+@@ -11,9 +11,6 @@
-+-    //color vars
-+-    int defaultFontColor=65535
-+-    int defaultBcoColor=6371
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-23 20:32:23.923044969 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-23 20:32:23.467040958 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-23 20:32:23.907044828 +0000
++@@ -14,6 +14,6 @@
++     //color vars
++     int defaultFontColor=65535
++     int defaultBcoColor=6371
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-23 20:12:05.152927620 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-06-23 20:32:23.471040993 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-23 20:32:23.907044828 +0000
 +@@ -12,21 +12,6 @@
 +     
 +     Events
@@ -39,27 +39,8 @@
 +         Max. Text Size                      : 10
 +     
 + Text tIcon
-+@@ -755,18 +740,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
-+--- HMI/n2t-out/cardEntities.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-23 20:12:05.152927620 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-06-23 20:32:23.471040993 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-23 20:32:23.911044863 +0000
 +@@ -12,22 +12,6 @@
 +     
 +     Events
@@ -93,63 +74,9 @@
 ++        Max. Text Size                      : 20
 +@@ -986,6 +1149,33 @@
 +@@ -1091,6 +1281,28 @@
-+@@ -1866,6 +2078,169 @@
-+@@ -1945,18 +2320,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
-+diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-06-23 20:12:05.152927620 +0000
-+@@ -12,11 +12,6 @@
-+     
-+     Events
-+         Preinitialize Event
-+-            for(sys0=0;sys0<40;sys0++)
-+-            {
-+-                b[sys0].bco=defaultBcoColor
-+-                b[sys0].pco=defaultFontColor
-+-            }
-+             dim=dimValueNormal
-+             //remove background & activate reparse mode
-+             vis p0,0
-+@@ -855,18 +850,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
 +diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-06-23 20:12:05.148927555 +0000
++--- HMI/n2t-out/cardMedia.txt	2022-06-23 20:32:23.471040993 +0000
+++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-06-23 20:32:23.907044828 +0000
 +@@ -12,17 +12,6 @@
 +     
 +     Events
@@ -168,27 +95,8 @@
 +             dim=dimValueNormal
 +             vis p0,0
 +             vis tSend,0
-+@@ -677,18 +666,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
-+--- HMI/n2t-out/cardQR.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-23 20:12:05.148927555 +0000
++--- HMI/n2t-out/cardQR.txt	2022-06-23 20:32:23.467040958 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-23 20:32:23.907044828 +0000
 +@@ -12,21 +12,6 @@
 +     Events
 +         Preinitialize Event
@@ -210,28 +118,9 @@
 +             dim=dimValueNormal
 +             vis p0,0
 +             vis tSend,0
-+@@ -624,18 +609,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-23 20:12:05.148927555 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-06-23 20:32:23.471040993 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-23 20:32:23.907044828 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
@@ -244,49 +133,11 @@
 +             dim=dimValueNormal
 +             vis p0,0
 +             vis tSend,0
-+@@ -1161,18 +1156,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-23 20:12:05.148927555 +0000
-+@@ -277,18 +277,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
++--- HMI/n2t-out/pageStartup.txt	2022-06-23 20:32:23.467040958 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-23 20:32:23.907044828 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-23 20:12:05.148927555 +0000
++--- HMI/n2t-out/pageTest.txt	2022-06-23 20:32:23.467040958 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-23 20:32:23.907044828 +0000
 +@@ -13,46 +13,6 @@
 +     Events
 +         Preinitialize Event
@@ -335,8 +186,8 @@
 + Picture p0
 +     Attributes
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-23 20:12:05.148927555 +0000
++--- HMI/n2t-out/popupLight.txt	2022-06-23 20:32:23.467040958 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-23 20:32:23.907044828 +0000
 +@@ -12,25 +12,6 @@
 +     
 +     Events
@@ -363,28 +214,9 @@
 +             dim=dimValueNormal
 +             //get entitiy name
 +             tEntity.txt=pageIcons.tTmp1.txt
-+@@ -585,18 +566,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
 +diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
-+--- HMI/n2t-out/popupNotify.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-23 20:12:05.148927555 +0000
++--- HMI/n2t-out/popupNotify.txt	2022-06-23 20:32:23.467040958 +0000
+++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-23 20:32:23.907044828 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
@@ -397,70 +229,10 @@
 +             dim=dimValueNormal
 +             vis p0,0
 +             vis tSend,0
-+@@ -320,18 +315,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="timeout")
-+                                     {
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-23 20:12:05.148927555 +0000
-+@@ -12,40 +12,6 @@
-+     
-+     Events
-+         Preinitialize Event
-+-            popupShutter.bco=defaultBcoColor
-+-            b0.bco=defaultBcoColor
-+-            tIcon1.bco=defaultBcoColor
-+-            tEntity.bco=defaultBcoColor
-+-            tInfo1.bco=defaultBcoColor
-+-            tPosHeading.bco=defaultBcoColor
-+-            tTiltHeading.bco=defaultBcoColor
-+-            bUp1.bco=defaultBcoColor
-+-            bStop1.bco=defaultBcoColor
-+-            bDown1.bco=defaultBcoColor
-+-            bTLeft.bco=defaultBcoColor
-+-            bTStop.bco=defaultBcoColor
-+-            bTRight.bco=defaultBcoColor
-+-            b0.pco=defaultFontColor
-+-            tIcon1.pco=defaultFontColor
-+-            tEntity.pco=defaultFontColor
-+-            tInfo1.pco=defaultFontColor
-+-            tPosHeading.pco=defaultFontColor
-+-            tTiltHeading.pco=defaultFontColor
-+-            bUp1.pco=defaultFontColor
-+-            bStop1.pco=defaultFontColor
-+-            bDown1.pco=defaultFontColor
-+-            bTLeft.pco=defaultFontColor
-+-            bTStop.pco=defaultFontColor
-+-            bTRight.pco=defaultFontColor
-+-            if(defaultBcoColor==0)
-+-            {
-+-                hTilt.pic=14
-+-                hTilt.pic1=13
-+-                hTilt.pic2=15
-+-                hPosition.pic=14
-+-                hPosition.pic1=13
-+-                hPosition.pic2=15
-+-            }
-+             dim=dimValueNormal
-+             //get entitiy name
-+             tEntity.txt=pageIcons.tTmp1.txt
-+@@ -215,7 +181,7 @@
++--- HMI/n2t-out/popupShutter.txt	2022-06-23 20:32:23.471040993 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-23 20:32:23.907044828 +0000
++@@ -215,7 +215,7 @@
 +         Touch Release Event
 +             // event,buttonPress2,internalNameEntity,positionSlider,50
 +             //craft command
@@ -469,7 +241,7 @@
 +             covx hPosition.val,tTmp.txt,0,0
 +             tSend.txt+=tTmp.txt
 +             //send calc crc
-+@@ -342,7 +308,7 @@
++@@ -342,7 +342,7 @@
 +     
 +     Events
 +         Touch Press Event
@@ -478,7 +250,7 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -367,7 +333,7 @@
++@@ -367,7 +367,7 @@
 +     
 +     Events
 +         Touch Press Event
@@ -487,7 +259,7 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -392,7 +358,7 @@
++@@ -392,7 +392,7 @@
 +     
 +     Events
 +         Touch Press Event
@@ -496,100 +268,3 @@
 +             //send calc crc
 +             btlen tSend.txt,sys0
 +             crcrest 1,0xffff // reset CRC
-+@@ -549,13 +515,11 @@
-+                                             tsw bTLeft,0
-+                                             spstr strCommand.txt,bTLeft.txt,"~",13
-+                                             bTLeft.pco=27501
-+-                                            vis bTLeft,1
-+                                         }else if(tTmp.txt=="enable")
-+                                         {
-+                                             spstr strCommand.txt,bTLeft.txt,"~",13
-+                                             tsw bTLeft,1
-+                                             bTLeft.pco=65535
-+-                                            vis bTLeft,1
-+                                         }
-+                                         // set icon bStop
-+                                         spstr strCommand.txt,tTmp.txt,"~",17
-+@@ -564,36 +528,24 @@
-+                                             tsw bTStop,0
-+                                             spstr strCommand.txt,bTStop.txt,"~",14
-+                                             bTStop.pco=27501
-+-                                            vis bTStop,1
-+                                         }else if(tTmp.txt=="enable")
-+                                         {
-+                                             spstr strCommand.txt,bTStop.txt,"~",14
-+                                             tsw bTStop,1
-+                                             bTStop.pco=65535
-+-                                            vis bTStop,1
-+                                         // set icon bDown
-+-                                        spstr strCommand.txt,tTmp.txt,"~",18
-++                                        spstr strCommand.txt,tTmp.txt,"~",10
-+                                         if(tTmp.txt=="disable")
-+                                         {
-+                                             spstr strCommand.txt,bTRight.txt,"~",15
-+                                             tsw bTRight,0
-+                                             bTRight.pco=27501
-+-                                            vis bTRight,1
-+                                         }else if(tTmp.txt=="enable")
-+                                         {
-+                                             spstr strCommand.txt,bTRight.txt,"~",15
-+                                             tsw bTRight,1
-+                                             bTRight.pco=65535
-+-                                            vis bTRight,1
-+-                                        }
-+-                                        // set tilt slider
-+-                                        spstr strCommand.txt,tTmp.txt,"~",19
-+-                                        if(tTmp.txt!="disable")
-+-                                        {
-+-                                            vis hTilt,1
-+-                                            covx tTmp.txt,sys0,0,0
-+-                                            hTilt.val=sys0
-+                                         }
-+                                     }
-+                                     if(tInstruction.txt=="dimmode")
-+@@ -605,18 +557,6 @@
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+                                         dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="time")
-+                                     {
-+diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
-+--- HMI/n2t-out/screensaver.txt	2022-06-23 20:12:04.708920422 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-06-23 20:12:05.148927555 +0000
-+@@ -406,22 +406,10 @@
-+                                         // get value
-+                                         spstr strCommand.txt,tTmp.txt,"~",1
-+                                         covx tTmp.txt,dimValue,0,0
-++                                        dim=dimValue
-+                                         // get value normal
-+                                         spstr strCommand.txt,tTmp.txt,"~",2
-+                                         covx tTmp.txt,dimValueNormal,0,0
-+-                                        dim=dimValueNormal
-+-                                        // get background color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",3
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultBcoColor,0,0
-+-                                        }
-+-                                        // get font color
-+-                                        spstr strCommand.txt,tTmp.txt,"~",4
-+-                                        if(tTmp.txt!="")
-+-                                        {
-+-                                            covx tTmp.txt,defaultFontColor,0,0
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="time")
-+                                     {
