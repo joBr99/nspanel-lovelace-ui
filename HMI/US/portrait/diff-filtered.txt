@@ -1,13 +1,13 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-22 21:38:52.819080036 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-22 21:38:52.403072023 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-22 21:38:52.775079189 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-23 20:12:05.164927814 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -11,9 +11,6 @@
 +-    //color vars
 +-    int defaultFontColor=65535
 +-    int defaultBcoColor=6371
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-06-22 21:38:52.407072100 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-23 20:12:05.152927620 +0000
 +@@ -12,21 +12,6 @@
 +     
 +     Events
@@ -58,8 +58,8 @@
 +                                     }
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
-+--- HMI/n2t-out/cardEntities.txt	2022-06-22 21:38:52.407072100 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-23 20:12:05.152927620 +0000
 +@@ -12,22 +12,6 @@
 +     
 +     Events
@@ -114,8 +114,8 @@
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-06-22 21:38:52.403072023 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-06-23 20:12:05.152927620 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
@@ -148,8 +148,8 @@
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
 +diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-06-22 21:38:52.403072023 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/cardMedia.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -12,17 +12,6 @@
 +     
 +     Events
@@ -187,8 +187,8 @@
 +                                     }
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
-+--- HMI/n2t-out/cardQR.txt	2022-06-22 21:38:52.403072023 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/cardQR.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -12,21 +12,6 @@
 +     Events
 +         Preinitialize Event
@@ -230,8 +230,8 @@
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-06-22 21:38:52.407072100 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
@@ -263,8 +263,8 @@
 +                                     }
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
-+--- HMI/n2t-out/pageStartup.txt	2022-06-22 21:38:52.403072023 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -277,18 +277,6 @@
 +                                         spstr strCommand.txt,tTmp.txt,"~",2
 +                                         covx tTmp.txt,dimValueNormal,0,0
@@ -285,8 +285,8 @@
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-06-22 21:38:52.403072023 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/pageTest.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -13,46 +13,6 @@
 +     Events
 +         Preinitialize Event
@@ -335,8 +335,8 @@
 + Picture p0
 +     Attributes
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-06-22 21:38:52.403072023 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/popupLight.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -12,25 +12,6 @@
 +     
 +     Events
@@ -383,8 +383,8 @@
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
 +diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
-+--- HMI/n2t-out/popupNotify.txt	2022-06-22 21:38:52.403072023 +0000
-++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/popupNotify.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
@@ -417,8 +417,8 @@
 +                                     if(tInstruction.txt=="timeout")
 +                                     {
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-06-22 21:38:52.407072100 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/popupShutter.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -12,40 +12,6 @@
 +     
 +     Events
@@ -567,8 +567,8 @@
 +                                     if(tInstruction.txt=="time")
 +                                     {
 +diff -bur HMI/n2t-out/screensaver.txt HMI/US/portrait/n2t-out/screensaver.txt
-+--- HMI/n2t-out/screensaver.txt	2022-06-22 21:38:52.403072023 +0000
-++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-06-22 21:38:52.775079189 +0000
++--- HMI/n2t-out/screensaver.txt	2022-06-23 20:12:04.708920422 +0000
+++++ HMI/US/portrait/n2t-out/screensaver.txt	2022-06-23 20:12:05.148927555 +0000
 +@@ -406,22 +406,10 @@
 +                                         // get value
 +                                         spstr strCommand.txt,tTmp.txt,"~",1
