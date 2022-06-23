@@ -12,6 +12,40 @@ Page popupShutter
     
     Events
         Preinitialize Event
+            popupShutter.bco=defaultBcoColor
+            b0.bco=defaultBcoColor
+            tIcon1.bco=defaultBcoColor
+            tEntity.bco=defaultBcoColor
+            tInfo1.bco=defaultBcoColor
+            tPosHeading.bco=defaultBcoColor
+            tTiltHeading.bco=defaultBcoColor
+            bUp1.bco=defaultBcoColor
+            bStop1.bco=defaultBcoColor
+            bDown1.bco=defaultBcoColor
+            bTLeft.bco=defaultBcoColor
+            bTStop.bco=defaultBcoColor
+            bTRight.bco=defaultBcoColor
+            b0.pco=defaultFontColor
+            tIcon1.pco=defaultFontColor
+            tEntity.pco=defaultFontColor
+            tInfo1.pco=defaultFontColor
+            tPosHeading.pco=defaultFontColor
+            tTiltHeading.pco=defaultFontColor
+            bUp1.pco=defaultFontColor
+            bStop1.pco=defaultFontColor
+            bDown1.pco=defaultFontColor
+            bTLeft.pco=defaultFontColor
+            bTStop.pco=defaultFontColor
+            bTRight.pco=defaultFontColor
+            if(defaultBcoColor==0)
+            {
+                hTilt.pic=14
+                hTilt.pic1=13
+                hTilt.pic2=15
+                hPosition.pic=14
+                hPosition.pic1=13
+                hPosition.pic2=15
+            }
             dim=dimValueNormal
             //get entitiy name
             tEntity.txt=pageIcons.tTmp1.txt
@@ -515,7 +549,7 @@ Timer tmSerial
                                             tsw bTLeft,0
                                             spstr strCommand.txt,bTLeft.txt,"~",13
                                             bTLeft.pco=27501
-                                            vis bTRight,1
+                                            vis bTLeft,1
                                         }else if(tTmp.txt=="enable")
                                         {
                                             spstr strCommand.txt,bTLeft.txt,"~",13
@@ -530,7 +564,7 @@ Timer tmSerial
                                             tsw bTStop,0
                                             spstr strCommand.txt,bTStop.txt,"~",14
                                             bTStop.pco=27501
-                                            vis bTRight,1
+                                            vis bTStop,1
                                         }else if(tTmp.txt=="enable")
                                         {
                                             spstr strCommand.txt,bTStop.txt,"~",14
@@ -571,6 +605,18 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
                                         dim=dimValueNormal
+                                        // get background color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultBcoColor,0,0
+                                        }
+                                        // get font color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultFontColor,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {

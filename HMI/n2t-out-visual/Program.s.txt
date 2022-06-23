@@ -11,6 +11,9 @@ Program.s
     // dim value
     int dimValue=40
     int dimValueNormal=100
+    //color vars
+    int defaultFontColor=65535
+    int defaultBcoColor=6371
     // fix touch offset
     lcd_dev fffb 0002 0000 0020
     page pageStartup
