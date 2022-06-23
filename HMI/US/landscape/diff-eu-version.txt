@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-06-23 20:32:23.467040958 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/Program.s.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -11,9 +11,4 @@
      // dim value
      int dimValue=40
@@ -12,8 +12,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-06-23 20:32:23.471040993 +0000
-+++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/cardAlarm.txt	2022-06-23 20:36:04.517214717 +0000
 @@ -12,21 +12,6 @@
      
      Events
@@ -65,8 +65,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/landscape/n2t-out/cardAlarm.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-06-23 20:32:23.471040993 +0000
-+++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/cardEntities.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -12,22 +12,6 @@
      
      Events
@@ -110,8 +110,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/landscape/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-06-23 20:32:23.471040993 +0000
-+++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/cardGrid.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -12,11 +12,6 @@
      
      Events
@@ -144,8 +144,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/landscape/n2t-out/cardGrid.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-06-23 20:32:23.471040993 +0000
-+++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/cardMedia.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -12,17 +12,6 @@
      
      Events
@@ -184,8 +184,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/landscape/n2t-out/cardMedia.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/landscape/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-06-23 20:32:23.467040958 +0000
-+++ HMI/US/landscape/n2t-out/cardQR.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/cardQR.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/cardQR.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -12,21 +12,6 @@
      
      Events
@@ -228,8 +228,8 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/landscape/n2t-out/cardQR.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-06-23 20:32:23.471040993 +0000
-+++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/cardThermo.txt	2022-06-23 20:36:04.517214717 +0000
 @@ -12,11 +12,6 @@
      
      Events
@@ -262,8 +262,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/landscape/n2t-out/cardThermo.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-06-23 20:32:23.467040958 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -293,8 +293,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/landscape/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-06-23 20:32:23.467040958 +0000
-+++ HMI/US/landscape/n2t-out/pageTest.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/pageTest.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/pageTest.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -13,46 +13,6 @@
      Events
          Preinitialize Event
@@ -343,8 +343,8 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/landscape/n2t-out/pageTest.txt
  Picture p0
      Attributes
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-06-23 20:32:23.467040958 +0000
-+++ HMI/US/landscape/n2t-out/popupLight.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/popupLight.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/popupLight.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -12,25 +12,6 @@
      
      Events
@@ -391,8 +391,8 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/landscape/n2t-out/popupLight.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-06-23 20:32:23.467040958 +0000
-+++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/popupNotify.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -12,11 +12,6 @@
      
      Events
@@ -425,8 +425,8 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/landscape/n2t-out/popupNotify.txt
                                      if(tInstruction.txt=="timeout")
                                      {
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-06-23 20:32:23.471040993 +0000
-+++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/popupShutter.txt	2022-06-23 20:36:04.513214585 +0000
 @@ -12,40 +12,6 @@
      
      Events
@@ -576,8 +576,8 @@ diff -bur HMI/n2t-out/popupShutter.txt HMI/US/landscape/n2t-out/popupShutter.txt
                                      if(tInstruction.txt=="time")
                                      {
 diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-06-23 20:32:23.467040958 +0000
-+++ HMI/US/landscape/n2t-out/screensaver.txt	2022-06-23 20:32:24.367053524 +0000
+--- HMI/n2t-out/screensaver.txt	2022-06-23 20:36:03.525115067 +0000
++++ HMI/US/landscape/n2t-out/screensaver.txt	2022-06-23 20:36:04.517214717 +0000
 @@ -406,22 +406,10 @@
                                          // get value
                                          spstr strCommand.txt,tTmp.txt,"~",1
