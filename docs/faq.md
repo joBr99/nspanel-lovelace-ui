@@ -77,3 +77,4 @@ Development happens in the EU version, so it is possible that the US Version isn
 US LANDSCAPE: `FlashNextion http://nspanel.pky.eu/lui-us-l.tft`
 
 US PORTRAIT: `FlashNextion http://nspanel.pky.eu/lui-us-p.tft`
+
