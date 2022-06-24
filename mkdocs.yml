@@ -38,6 +38,10 @@ theme:
 extra_css:
     - _assets/user.css
 
+extra:
+  analytics:
+    provider: custom
+
 markdown_extensions:
     - admonition
     - def_list
