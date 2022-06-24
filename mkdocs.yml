@@ -34,7 +34,7 @@ theme:
         - search.highlight
         - search.share
         - search.suggest
-    custom_dir: overrides
+    custom_dir: docs/overrides
 
 extra_css:
     - _assets/user.css
