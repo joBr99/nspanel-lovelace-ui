@@ -49,7 +49,6 @@ You can update the berry driver directly from the Tasmota Console with the follo
 
 `UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be`
 
-
 ## How to upgrade from a release to the current development version
 
 1. Update App in HACS to main
