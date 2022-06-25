@@ -81,6 +81,18 @@ Page cardEntities
             vis nNum4,0
             vis bPrev,0
             vis bNext,0
+            //ui e5
+            vis btOnOff5,0
+            vis bUp5,0
+            vis bStop5,0
+            vis bDown5,0
+            vis tIcon5,0
+            vis tEntity5,0
+            vis bText5,0
+            vis hSlider5,0
+            vis nNum5,0
+            vis bPrev,0
+            vis bNext,0
         
 Variable (string) strCommand
     Attributes
