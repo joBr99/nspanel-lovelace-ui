@@ -52,11 +52,11 @@ cardGrid
 	267  Unique line(s) of event code
 cardEntities
 	77   Component(s)
-	1234 Line(s) of event code
-	524  Unique line(s) of event code
+	1245 Line(s) of event code
+	533  Unique line(s) of event code
 
 Total
 	13   Page(s)
 	424  Component(s)
-	4947 Line(s) of event code
-	1312 Unique line(s) of event code
+	4958 Line(s) of event code
+	1320 Unique line(s) of event code

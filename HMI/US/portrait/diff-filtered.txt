@@ -1,13 +1,13 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-23 21:11:31.014513697 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-23 21:11:30.566513919 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-23 21:11:31.002513703 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-25 19:33:02.641728991 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-25 19:33:02.213732211 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-25 19:33:02.625729111 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-06-23 21:11:30.570513917 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-23 21:11:31.002513703 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-06-25 19:33:02.213732211 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-25 19:33:02.625729111 +0000
 +@@ -138,7 +138,7 @@
 +         Disable release event after dragging: 0
 +         Send Component ID                   : disabled
@@ -17,19 +17,26 @@
 +         Max. Text Size                      : 10
 +     
 + Text tIcon
-+--- HMI/n2t-out/cardEntities.txt	2022-06-23 21:11:30.570513917 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-23 21:11:31.002513703 +0000
-+@@ -136,6 +136,18 @@
-+@@ -172,6 +184,15 @@
-+@@ -302,6 +323,26 @@
-+@@ -421,6 +462,34 @@
-+@@ -878,6 +947,106 @@
++--- HMI/n2t-out/cardEntities.txt	2022-06-25 19:33:02.217732181 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-25 19:33:02.629729081 +0000
++@@ -81,6 +81,18 @@
++             vis bPrev,0
++             vis bNext,0
+++            vis bPrev,0
+++            vis bNext,0
++ Variable (string) strCommand
++     Attributes
++@@ -136,6 +148,18 @@
++@@ -172,6 +196,15 @@
++@@ -302,6 +335,26 @@
++@@ -421,6 +474,34 @@
++@@ -878,6 +959,106 @@
 ++        Text                                : 
 ++        Max. Text Size                      : 20
-+@@ -986,6 +1155,33 @@
-+@@ -1091,6 +1287,28 @@
-+--- HMI/n2t-out/cardQR.txt	2022-06-23 21:11:30.566513919 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-23 21:11:31.002513703 +0000
++@@ -986,6 +1167,33 @@
++@@ -1091,6 +1299,28 @@
++--- HMI/n2t-out/cardQR.txt	2022-06-25 19:33:02.213732211 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-25 19:33:02.625729111 +0000
 +@@ -12,21 +12,6 @@
 +     Events
 +         Preinitialize Event
@@ -52,8 +59,8 @@
 +             vis p0,0
 +             vis tSend,0
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-06-23 21:11:30.570513917 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-23 21:11:31.002513703 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-06-25 19:33:02.213732211 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-25 19:33:02.625729111 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
@@ -66,11 +73,11 @@
 +             dim=dimValueNormal
 +             vis p0,0
 +             vis tSend,0
-+--- HMI/n2t-out/pageStartup.txt	2022-06-23 21:11:30.566513919 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-23 21:11:31.002513703 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-06-25 19:33:02.213732211 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-25 19:33:02.625729111 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-06-23 21:11:30.566513919 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-23 21:11:31.002513703 +0000
++--- HMI/n2t-out/pageTest.txt	2022-06-25 19:33:02.213732211 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-25 19:33:02.625729111 +0000
 +@@ -13,46 +13,6 @@
 +     Events
 +         Preinitialize Event
@@ -119,8 +126,8 @@
 + Picture p0
 +     Attributes
 +diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
-+--- HMI/n2t-out/popupNotify.txt	2022-06-23 21:11:30.566513919 +0000
-++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-23 21:11:31.002513703 +0000
++--- HMI/n2t-out/popupNotify.txt	2022-06-25 19:33:02.213732211 +0000
+++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-25 19:33:02.625729111 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
