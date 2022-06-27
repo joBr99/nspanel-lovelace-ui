@@ -30,7 +30,6 @@ issueConfigs:
 - content:
 # template 2: feature request
   - "FEATURE DESCRIPTION"
-  - "ADDITIONAL CONTEXT"
   - "PANEL / FIRMWARE VERION"
   
 # Optional configuration:
