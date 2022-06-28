@@ -1024,6 +1024,10 @@ Hotspot m2
                 //popupLight.tEntity.txt=tEntity3.txt
                 page popupLight
             }
+            if(type3.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot m1
     Attributes
@@ -1045,6 +1049,10 @@ Hotspot m1
             {
                 //popupLight.tEntity.txt=tEntity2.txt
                 page popupLight
+            }
+            if(type2.txt=="fan")
+            {
+                page popupFan
             }
         
 Hotspot m0
@@ -1068,6 +1076,10 @@ Hotspot m0
                 //popupLight.tEntity.txt=tEntity1.txt
                 page popupLight
             }
+            if(type1.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot m3
     Attributes
@@ -1089,6 +1101,10 @@ Hotspot m3
             {
                 //popupLight.tEntity.txt=tEntity4.txt
                 page popupLight
+            }
+            if(type4.txt=="fan")
+            {
+                page popupFan
             }
         
 Hotspot mSwipeNext

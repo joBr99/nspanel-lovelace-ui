@@ -1394,6 +1394,10 @@ Timer tmLP
             {
                 page popupLight
             }
+            if(tTmp.txt=="fan")
+            {
+                page popupFan
+            }
         
 TouchCap tc0
     Attributes

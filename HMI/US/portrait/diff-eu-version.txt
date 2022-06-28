@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-06-25 19:33:02.213732211 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-25 19:33:02.625729111 +0000
+--- HMI/n2t-out/Program.s.txt	2022-06-28 19:11:03.434183841 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-28 19:11:03.922190212 +0000
 @@ -14,6 +14,6 @@
      //color vars
      int defaultFontColor=65535
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-06-25 19:33:02.213732211 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-25 19:33:02.625729111 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-06-28 19:11:03.434183841 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-28 19:11:03.922190212 +0000
 @@ -138,7 +138,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -23,8 +23,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
      
  Text tIcon
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-06-25 19:33:02.217732181 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-25 19:33:02.629729081 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-06-28 19:11:03.438183894 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-28 19:11:03.926190265 +0000
 @@ -81,6 +81,18 @@
              vis nNum4,0
              vis bPrev,0
@@ -282,10 +282,45 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          Scope                               : local
-@@ -1091,6 +1299,28 @@
+@@ -1024,10 +1232,6 @@
+                 //popupLight.tEntity.txt=tEntity3.txt
                  page popupLight
              }
+-            if(type3.txt=="fan")
+-            {
+-                page popupFan
+-            }
          
+ Hotspot m1
+     Attributes
+@@ -1050,10 +1254,6 @@
+                 //popupLight.tEntity.txt=tEntity2.txt
+                 page popupLight
+             }
+-            if(type2.txt=="fan")
+-            {
+-                page popupFan
+-            }
+         
+ Hotspot m0
+     Attributes
+@@ -1076,10 +1276,6 @@
+                 //popupLight.tEntity.txt=tEntity1.txt
+                 page popupLight
+             }
+-            if(type1.txt=="fan")
+-            {
+-                page popupFan
+-            }
+         
+ Hotspot m3
+     Attributes
+@@ -1102,9 +1298,27 @@
+                 //popupLight.tEntity.txt=tEntity4.txt
+                 page popupLight
+             }
+-            if(type4.txt=="fan")
++        
 +Hotspot m4
 +    Attributes
 +        Scope                               : local
@@ -303,17 +338,30 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                page popupShutter
 +            }
 +            if(type5.txt=="light")
-+            {
+             {
+-                page popupFan
 +                //popupLight.tEntity.txt=tEntity5.txt
 +                page popupLight
-+            }
-+        
+             }
+         
  Hotspot mSwipeNext
+diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
+--- HMI/n2t-out/cardGrid.txt	2022-06-28 19:11:03.438183894 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-06-28 19:11:03.922190212 +0000
+@@ -928,10 +928,6 @@
+             {
+                 page popupLight
+             }
+-            if(tTmp.txt=="fan")
+-            {
+-                page popupFan
+-            }
+         
+ TouchCap tc0
      Attributes
-         Scope                               : local
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-06-25 19:33:02.213732211 +0000
-+++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-25 19:33:02.625729111 +0000
+--- HMI/n2t-out/cardQR.txt	2022-06-28 19:11:03.434183841 +0000
++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-28 19:11:03.922190212 +0000
 @@ -12,21 +12,6 @@
      
      Events
@@ -337,8 +385,8 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
              vis p0,0
              vis tSend,0
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-06-25 19:33:02.213732211 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-25 19:33:02.625729111 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-06-28 19:11:03.438183894 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-28 19:11:03.922190212 +0000
 @@ -12,11 +12,6 @@
      
      Events
@@ -352,8 +400,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              vis p0,0
              vis tSend,0
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-06-25 19:33:02.213732211 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-25 19:33:02.625729111 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-06-28 19:11:03.434183841 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-28 19:11:03.922190212 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -373,8 +421,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-06-25 19:33:02.213732211 +0000
-+++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-25 19:33:02.625729111 +0000
+--- HMI/n2t-out/pageTest.txt	2022-06-28 19:11:03.434183841 +0000
++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-28 19:11:03.922190212 +0000
 @@ -13,46 +13,6 @@
      Events
          Preinitialize Event
@@ -422,18 +470,25 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
      
  Picture p0
      Attributes
+Only in HMI/n2t-out: popupFan.txt
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-06-25 19:33:02.213732211 +0000
-+++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-25 19:33:02.625729111 +0000
-@@ -12,11 +12,6 @@
-     
-     Events
-         Preinitialize Event
--            for(sys0=0;sys0<40;sys0++)
--            {
--                b[sys0].bco=defaultBcoColor
--                b[sys0].pco=defaultFontColor
--            }
-             dim=dimValueNormal
-             vis p0,0
-             vis tSend,0
+--- HMI/n2t-out/popupNotify.txt	2022-06-28 19:11:03.434183841 +0000
++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-28 19:11:03.922190212 +0000
+@@ -18,17 +18,6 @@
+             vis tTmp,0
+             vis tInstruction,0
+             vis tId,0
+-            popupNotify.bco=defaultBcoColor
+-            tHeading.bco=defaultBcoColor
+-            b0.bco=defaultBcoColor
+-            tText.bco=defaultBcoColor
+-            b1.bco=defaultBcoColor
+-            b2.bco=defaultBcoColor
+-            tHeading.pco=defaultFontColor
+-            b0.pco=defaultFontColor
+-            tText.pco=defaultFontColor
+-            b1.pco=defaultFontColor
+-            b2.pco=defaultFontColor
+         
+ Variable (string) strCommand
+     Attributes

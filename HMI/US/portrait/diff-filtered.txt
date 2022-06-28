@@ -1,13 +1,13 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-06-25 19:33:02.641728991 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-06-25 19:33:02.213732211 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-25 19:33:02.625729111 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-06-28 19:11:03.938190421 +0000
++--- HMI/n2t-out/Program.s.txt	2022-06-28 19:11:03.434183841 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-06-28 19:11:03.922190212 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-06-25 19:33:02.213732211 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-25 19:33:02.625729111 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-06-28 19:11:03.434183841 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-06-28 19:11:03.922190212 +0000
 +@@ -138,7 +138,7 @@
 +         Disable release event after dragging: 0
 +         Send Component ID                   : disabled
@@ -17,8 +17,8 @@
 +         Max. Text Size                      : 10
 +     
 + Text tIcon
-+--- HMI/n2t-out/cardEntities.txt	2022-06-25 19:33:02.217732181 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-25 19:33:02.629729081 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-06-28 19:11:03.438183894 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-06-28 19:11:03.926190265 +0000
 +@@ -81,6 +81,18 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -34,9 +34,61 @@
 ++        Text                                : 
 ++        Max. Text Size                      : 20
 +@@ -986,6 +1167,33 @@
-+@@ -1091,6 +1299,28 @@
-+--- HMI/n2t-out/cardQR.txt	2022-06-25 19:33:02.213732211 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-25 19:33:02.625729111 +0000
++@@ -1024,10 +1232,6 @@
++                 //popupLight.tEntity.txt=tEntity3.txt
++                 page popupLight
++             }
++-            if(type3.txt=="fan")
++-            {
++-                page popupFan
++-            }
++         
++ Hotspot m1
++     Attributes
++@@ -1050,10 +1254,6 @@
++                 //popupLight.tEntity.txt=tEntity2.txt
++-            if(type2.txt=="fan")
++-            {
++-                page popupFan
++-            }
++ Hotspot m0
++     Attributes
++@@ -1076,10 +1276,6 @@
++                 //popupLight.tEntity.txt=tEntity1.txt
++                 page popupLight
++             }
++-            if(type1.txt=="fan")
++-            {
++-                page popupFan
++-            }
++         
++ Hotspot m3
++     Attributes
++@@ -1102,9 +1298,27 @@
++                 //popupLight.tEntity.txt=tEntity4.txt
++                 page popupLight
++             }
++-            if(type4.txt=="fan")
+++        
++             {
++-                page popupFan
++             }
++         
++diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
++--- HMI/n2t-out/cardGrid.txt	2022-06-28 19:11:03.438183894 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-06-28 19:11:03.922190212 +0000
++@@ -928,10 +928,6 @@
++             {
++                 page popupLight
++             }
++-            if(tTmp.txt=="fan")
++-            {
++-                page popupFan
++-            }
++         
++ TouchCap tc0
++--- HMI/n2t-out/cardQR.txt	2022-06-28 19:11:03.434183841 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-06-28 19:11:03.922190212 +0000
 +@@ -12,21 +12,6 @@
 +     Events
 +         Preinitialize Event
@@ -59,8 +111,8 @@
 +             vis p0,0
 +             vis tSend,0
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-06-25 19:33:02.213732211 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-25 19:33:02.625729111 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-06-28 19:11:03.438183894 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-06-28 19:11:03.922190212 +0000
 +@@ -12,11 +12,6 @@
 +     
 +     Events
@@ -73,11 +125,11 @@
 +             dim=dimValueNormal
 +             vis p0,0
 +             vis tSend,0
-+--- HMI/n2t-out/pageStartup.txt	2022-06-25 19:33:02.213732211 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-25 19:33:02.625729111 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-06-28 19:11:03.434183841 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-06-28 19:11:03.922190212 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-06-25 19:33:02.213732211 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-25 19:33:02.625729111 +0000
++--- HMI/n2t-out/pageTest.txt	2022-06-28 19:11:03.434183841 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-06-28 19:11:03.922190212 +0000
 +@@ -13,46 +13,6 @@
 +     Events
 +         Preinitialize Event
@@ -125,18 +177,25 @@
 +     
 + Picture p0
 +     Attributes
++Only in HMI/n2t-out: popupFan.txt
 +diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
-+--- HMI/n2t-out/popupNotify.txt	2022-06-25 19:33:02.213732211 +0000
-++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-25 19:33:02.625729111 +0000
-+@@ -12,11 +12,6 @@
-+     
-+     Events
-+         Preinitialize Event
-+-            for(sys0=0;sys0<40;sys0++)
-+-            {
-+-                b[sys0].bco=defaultBcoColor
-+-                b[sys0].pco=defaultFontColor
-+-            }
-+             dim=dimValueNormal
-+             vis p0,0
-+             vis tSend,0
++--- HMI/n2t-out/popupNotify.txt	2022-06-28 19:11:03.434183841 +0000
+++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-06-28 19:11:03.922190212 +0000
++@@ -18,17 +18,6 @@
++             vis tTmp,0
++             vis tInstruction,0
++             vis tId,0
++-            popupNotify.bco=defaultBcoColor
++-            tHeading.bco=defaultBcoColor
++-            b0.bco=defaultBcoColor
++-            tText.bco=defaultBcoColor
++-            b1.bco=defaultBcoColor
++-            b2.bco=defaultBcoColor
++-            tHeading.pco=defaultFontColor
++-            b0.pco=defaultFontColor
++-            tText.pco=defaultFontColor
++-            b1.pco=defaultFontColor
++-            b2.pco=defaultFontColor
++         
++ Variable (string) strCommand
++     Attributes
