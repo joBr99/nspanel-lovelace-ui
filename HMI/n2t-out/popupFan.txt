@@ -1,4 +1,4 @@
-Page popupNotify
+Page popupFan
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -12,40 +12,100 @@ Page popupNotify
     
     Events
         Preinitialize Event
+            for(sys0=0;sys0<40;sys0++)
+            {
+                b[sys0].bco=defaultBcoColor
+                b[sys0].pco=defaultFontColor
+                if(b[sys0].type==53&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=10
+                    b[sys0].pic2=11
+                }
+            }
+            if(defaultBcoColor==0)
+            {
+                hSpeed.pic=14
+                hSpeed.pic1=13
+                hSpeed.pic2=15
+            }
             dim=dimValueNormal
+            //get entitiy name
+            tEntity.txt=pageIcons.tTmp1.txt
+            //get entity id
+            entn.txt=pageIcons.tTmp2.txt
             vis p0,0
             vis tSend,0
             vis tTmp,0
             vis tInstruction,0
             vis tId,0
-            popupNotify.bco=defaultBcoColor
-            tHeading.bco=defaultBcoColor
-            b0.bco=defaultBcoColor
-            tText.bco=defaultBcoColor
-            b1.bco=defaultBcoColor
-            b2.bco=defaultBcoColor
-            tHeading.pco=defaultFontColor
-            b0.pco=defaultFontColor
-            tText.pco=defaultFontColor
-            b1.pco=defaultFontColor
-            b2.pco=defaultFontColor
+            //page open event
+            // event,pageOpenDetail,typeOfPage,tEntityName
+            // craft command
+            tSend.txt="event,pageOpenDetail,popupLight,"+entn.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            vis hSpeed,0
         
 Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 1000
+        Max. Text Size: 500
     
 Variable (string) entn
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 30
+        Max. Text Size: 80
     
-Variable (int32) vaOldSleepT
+Variable (int32) mode
+    Attributes
+        Scope: local
+        Value: 1
+    
+Variable (int32) mode_temp
     Attributes
         Scope: local
         Value: 0
+    
+Text tEntity
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : tEntity1
+        Max. Text Size                      : 25
+    
+Text tIcon1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î´
+        Max. Text Size                      : 10
+    
+Text t1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Speed
+        Max. Text Size                      : 50
     
 Text tSend
     Attributes
@@ -65,7 +125,7 @@ Text tTmp
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 80
     
 Text tInstruction
     Attributes
@@ -87,26 +147,6 @@ Text tId
         Text                                : 
         Max. Text Size                      : 20
     
-Text tHeading
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 40
-    
-Text tText
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 500
-    
 Picture p0
     Attributes
         Scope                               : local
@@ -114,6 +154,36 @@ Picture p0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
     
+Slider hSpeed
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
+    
+    Events
+        Touch Release Event
+            tmCooldown.en=1
+            tmCooldown.tim=2500
+            //craft command
+            tSend.txt="event,buttonPress2,"+entn.txt+",number-set,"
+            covx hSpeed.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Button b0
     Attributes
         Scope                               : local
@@ -126,8 +196,7 @@ Button b0
     
     Events
         Touch Press Event
-            sleepTimeout=vaOldSleepT.val
-            tSend.txt="event,buttonPress2,popupNotify,bExit"
+            tSend.txt="event,buttonPress2,popupLight,bExit"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -140,7 +209,7 @@ Button b0
             prints tSend.txt,0
             prints crcval,2
         
-Button b2
+Dual-state Button btOnOff1
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -152,36 +221,10 @@ Button b2
     
     Events
         Touch Press Event
-            sleepTimeout=vaOldSleepT.val
             //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",notifyAction,yes"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button b1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            sleepTimeout=vaOldSleepT.val
-            //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",notifyAction,no"
+            tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
+            covx btOnOff1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -264,48 +307,38 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
-                                    if(tInstruction.txt=="entityUpdateDetail")
+                                    spstr strCommand.txt,tTmp.txt,"~",1
+                                    if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
                                     {
-                                        // get entn
-                                        spstr strCommand.txt,entn.txt,"~",1
-                                        // get Heading
-                                        spstr strCommand.txt,tHeading.txt,"~",2
-                                        // heading color
+                                        // change icon
+                                        spstr strCommand.txt,tIcon1.txt,"~",2
+                                        vis tIcon1,1
+                                        // change icon color
                                         spstr strCommand.txt,tTmp.txt,"~",3
                                         covx tTmp.txt,sys0,0,0
-                                        tHeading.pco=sys0
-                                        // get b1
-                                        spstr strCommand.txt,b1.txt,"~",4
-                                        if(b1.txt!="")
-                                        {
-                                            vis b1,1
-                                        }
-                                        // b1 color
+                                        tIcon1.pco=sys0
+                                        // get Button State
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        covx tTmp.txt,sys0,0,0
+                                        btOnOff1.val=sys0
+                                        // get Brightness value
                                         spstr strCommand.txt,tTmp.txt,"~",5
-                                        covx tTmp.txt,sys0,0,0
-                                        b1.pco=sys0
-                                        // get b2
-                                        spstr strCommand.txt,b2.txt,"~",6
-                                        if(b2.txt!="")
+                                        if(tTmp.txt=="disable")
                                         {
-                                            vis b2,1
+                                            vis t1,0
+                                            vis hSpeed,0
+                                        }else
+                                        {
+                                            vis t1,1
+                                            vis hSpeed,1
+                                            covx tTmp.txt,sys0,0,0
+                                            if(tmCooldown.en==0)
+                                            {
+                                                hSpeed.val=sys0
+                                            }
                                         }
-                                        // b2 color
-                                        spstr strCommand.txt,tTmp.txt,"~",7
-                                        covx tTmp.txt,sys0,0,0
-                                        b2.pco=sys0
-                                        // get tText
-                                        spstr strCommand.txt,tText.txt,"~",8
-                                        // tText color
-                                        spstr strCommand.txt,tTmp.txt,"~",9
-                                        covx tTmp.txt,sys0,0,0
-                                        tText.pco=sys0
-                                        //preserve old sleepTimeout
-                                        vaOldSleepT.val=sleepTimeout
-                                        // sleep timeout
-                                        spstr strCommand.txt,tTmp.txt,"~",10
-                                        covx tTmp.txt,sys0,0,0
-                                        sleepTimeout=sys0
+                                        // set t1 Speed (Localization)
+                                        spstr strCommand.txt,t1.txt,"~",6
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -345,13 +378,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sleepTimeout,0,0
                                     }
-                                    if(tInstruction.txt=="exitPopup")
-                                    {
-                                        click b0,1
-                                    }
                                     if(tInstruction.txt=="pageType")
                                     {
-                                        sleepTimeout=vaOldSleepT.val
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,"~",1
@@ -362,11 +390,6 @@ Timer tmSerial
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
                                         udelete payloadLength-1
                                         bufferPos=0
-                                        if(tId.txt=="popupLight")
-                                        {
-                                            pageIcons.tTmp1.txt=tTmp.txt
-                                            page popupLight
-                                        }
                                         if(tId.txt=="pageStartup")
                                         {
                                             page pageStartup
@@ -424,16 +447,17 @@ Timer tmSerial
                     // next character
                     bufferPos++
                 }
-                if(bufferPos==usize)
-                {
-                    // copy whole buffer to t1.txt, for debugging
-                    //ucopy t2.txt,0,usize,0
-                    // ucopy n2.val,0,usize,0
-                    // clear whole buffer
-                    //code_c
-                    //bufferPos=0
-                }
             }
+        
+Timer tmCooldown
+    Attributes
+        Scope      : local
+        Period (ms): 100
+        Enabled    : no
+    
+    Events
+        Timer Event
+            tmCooldown.en=0
         
 TouchCap tc0
     Attributes
