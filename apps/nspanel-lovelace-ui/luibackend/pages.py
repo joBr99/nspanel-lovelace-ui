@@ -228,7 +228,7 @@ class LuiPagesGen(object):
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha("light", state=entity.state, overwrite=icon)
             return f"~{entityType}~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
-        if entityType in ["switch", "input_boolean", "automation"]:
+        if entityType in ["switch", "input_boolean", "automation", "fan"]:
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
@@ -268,10 +268,6 @@ class LuiPagesGen(object):
             min_v = entity.attributes.get("min", 0)
             max_v = entity.attributes.get("max", 100)
             return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
-        if entityType == "fan":
-            icon_id = get_icon_id_ha("fan", overwrite=icon)
-            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
-            return f"~number~{entityId}~{icon_id}~{icon_color}~{name}~{entity.attributes.percentage}|0|100"
         if entityType == "input_text":
             icon_id = get_icon_id_ha("input_text", overwrite=icon)
             value = entity.state
