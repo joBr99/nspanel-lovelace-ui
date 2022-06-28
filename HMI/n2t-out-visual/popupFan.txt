@@ -49,7 +49,7 @@ Page popupFan
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
-            tSend.txt="event,pageOpenDetail,popupLight,"+entn.txt
+            tSend.txt="event,pageOpenDetail,popupFan,"+entn.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
