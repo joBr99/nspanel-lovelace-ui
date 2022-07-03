@@ -4,13 +4,13 @@ unicode_ranges+="0100-017F,"	 #Latin Extended-A
 unicode_ranges+="0180-024F,"	 #Latin Extended-B
 #unicode_ranges+="0250-02AF,"	 #IPA Extensions
 #unicode_ranges+="02B0-02FF,"	 #Spacing Modifier Letters
-#unicode_ranges+="0300-036F,"	 #Combining Diacritical Marks
+unicode_ranges+="0300-036F,"	 #Combining Diacritical Marks
 unicode_ranges+="0370-03FF,"	 #Greek/Coptic
 unicode_ranges+="0400-04FF,"	 #Cyrillic
 #unicode_ranges+="0500-052F,"	 #Cyrillic Supplement
-#unicode_ranges+="0530-058F,"	 #Armenian
-unicode_ranges+="0590-05FF,"	 #Hebrew
-unicode_ranges+="0600-06FF,"	 #Arabic
+unicode_ranges+="0530-058F,"	 #Armenian -> broken in powershell
+unicode_ranges+="0590-05FF,"	 #Hebrew -> broken in powershell
+unicode_ranges+="0600-06FF,"	 #Arabic -> broken in powershell
 #unicode_ranges+="0700-074F,"	 #Syriac
 #unicode_ranges+="0750-077F,"	 #Undefined
 #unicode_ranges+="0780-07BF,"	 #Thaana
@@ -25,7 +25,7 @@ unicode_ranges+="0600-06FF,"	 #Arabic
 #unicode_ranges+="0C80-0CFF,"	 #Kannada
 #unicode_ranges+="0D00-0DFF,"	 #Malayalam
 #unicode_ranges+="0D80-0DFF,"	 #Sinhala
-#unicode_ranges+="0E00-0E7F,"	 #Thai
+unicode_ranges+="0E00-0E7F,"	 #Thai
 #unicode_ranges+="0E80-0EFF,"	 #Lao
 #unicode_ranges+="0F00-0FFF,"	 #Tibetan
 #unicode_ranges+="1000-109F,"	 #Myanmar
@@ -51,7 +51,7 @@ unicode_ranges+="10A0-10FF,"	 #Georgian
 #unicode_ranges+="1A00-1CFF,"	 #Undefined
 #unicode_ranges+="1D00-1D7F,"	 #Phonetic Extensions
 #unicode_ranges+="1D80-1DFF,"	 #Undefined
-#unicode_ranges+="1E00-1EFF,"	 #Latin Extended Additional
+unicode_ranges+="1E00-1EFF,"	 #Latin Extended Additional
 #unicode_ranges+="1F00-1FFF,"	 #Greek Extended
 #unicode_ranges+="2000-206F,"	 #General Punctuation
 #unicode_ranges+="2070-209F,"	 #Superscripts and Subscripts
@@ -148,6 +148,7 @@ unicode_ranges+="10A0-10FF,"	 #Georgian
 #unicode_ranges+="FFFFE-FFFFF,"	 #Unused
 #unicode_ranges+="100000-10FFFD,"  #Supplementary Private Use Area-B
 
+
 char_res_string = ""
 
 for r in unicode_ranges[:-1].split(","):
@@ -156,4 +157,34 @@ for r in unicode_ranges[:-1].split(","):
     print(start, end)
     char_res_string += ''.join(chr(i) for i in range(start, end))
 
-print(char_res_string)
+# picked chars from chinese
+
+# simple
+char_res_string += "卧房室客厅洗手间阳台厨灯壁镜前后左右东南西北中空调风扇橱柜控温湿度网关串夜落地阅读水泵一二三四五六七八九十百年月日周星期播放窗帘门开高低家在电暖气器摄像头扫人机组群冷热模式时分秒大小上下多少主书层制浴"
+# trad
+char_res_string += "臥廳間陽廚燈鏡後東調風櫥櫃溫濕網關閱讀簾門開電氣攝頭掃機組熱時書層"
+
+# chars that were missing simple
+char_res_string += "略闲定戒当色置辅离亮激义自位清行状过送按活条态警速码假除密锁解件运"
+
+# chars mising trad
+char_res_string += "鎖離狀出目外斷態輔用運判閉碼助啟執轉閒"
+
+print("Out: ")
+#print(char_res_string)
+
+import json
+
+# check if translations.py is covered
+with open("test", 'r') as f: # open in readonly mode
+    unique_chars = set(f.read())
+    #unique_chars = json.dumps(json.load(f))
+    len(unique_chars)
+    print(len(unique_chars))
+    #print(''.join(sorted(unique_chars)))
+    for char in unique_chars:
+        if char not in char_res_string:
+            print(f"char {char} missing")
+
+with open("charout.txt", "wb") as text_file:
+    text_file.write(char_res_string.encode('utf8'))
