@@ -560,10 +560,10 @@ class LuiPagesGen(object):
         icon_up_status = "disable"
         icon_stop_status = "disable"
         icon_down_status = "disable"
-        textTilt = "Y"
-        iconTiltLeft = "X"
-        iconTiltStop = "X"
-        iconTiltRight = "X"
+        textTilt = ""
+        iconTiltLeft = ""
+        iconTiltStop = ""
+        iconTiltRight = ""
         iconTiltLeftStatus = "disable"
         iconTiltStopStatus = "disable"
         iconTiltRightStatus = "disable"
@@ -582,14 +582,25 @@ class LuiPagesGen(object):
         if bits & 0b00001000: # SUPPORT_STOP
             icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
             icon_stop_status = "enable"
+
+        # tilt supported
+        if bits & 0b11110000:
+            textTilt = get_translation(self._locale, "frontend.ui.card.cover.tilt_position")
         if bits & 0b00010000: # SUPPORT_OPEN_TILT
+            iconTiltLeft = get_icon_id('arrow-top-right')
             iconTiltLeftStatus = "enable"
         if bits & 0b00100000: # SUPPORT_CLOSE_TILT
+            iconTiltRight = get_icon_id('arrow-bottom-left')
             iconTiltRightStatus = "enable"
         if bits & 0b01000000: # SUPPORT_STOP_TILT
+            iconTiltStop = get_icon_id('stop')
             iconTiltStopStatus = "enable"
         if bits & 0b10000000: # SUPPORT_SET_TILT_POSITION
             tilt_pos = get_attr_safe(entity, "current_tilt_position", 0)
+            if(tilt_pos == 0):
+                iconTiltRightStatus = "disable"
+            if(tilt_pos == 100):
+                iconTiltLeftStatus  = "disable"
 
         self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}~{textTilt}~{iconTiltLeft}~{iconTiltStop}~{iconTiltRight}~{iconTiltLeftStatus}~{iconTiltStopStatus}~{iconTiltRightStatus}~{tilt_pos}")
 
