@@ -218,7 +218,7 @@ Text tPosHeading
         Opacity                             : 127
         x coordinate                        : 64
         y coordinate                        : 122
-        Width                               : 100
+        Width                               : 188
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -233,7 +233,7 @@ Text tPosHeading
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : Position
-        Max. Text Size                      : 15
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -278,7 +278,7 @@ Text tTiltHeading
         Opacity                             : 127
         x coordinate                        : 64
         y coordinate                        : 231
-        Width                               : 100
+        Width                               : 191
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -293,7 +293,7 @@ Text tTiltHeading
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
