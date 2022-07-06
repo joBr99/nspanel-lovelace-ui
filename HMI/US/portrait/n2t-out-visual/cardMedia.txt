@@ -489,7 +489,7 @@ Text t1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 12
-        y coordinate                        : 301
+        y coordinate                        : 300
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -538,8 +538,8 @@ Text t3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 263
-        y coordinate                        : 299
+        x coordinate                        : 259
+        y coordinate                        : 300
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -775,7 +775,7 @@ Slider hVolume
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 67
+        x coordinate                        : 65
         y coordinate                        : 304
         Width                               : 190
         Height                              : 43
@@ -923,8 +923,8 @@ Hotspot mSwipeNext
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 311
-        y coordinate                        : 5
-        Width                               : 9
+        y coordinate                        : 0
+        Width                               : 8
         Height                              : 470
         Effect                              : load
         Effect Priority                     : 0
@@ -963,8 +963,8 @@ Hotspot mSwipePrev
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 5
-        Width                               : 9
+        y coordinate                        : 0
+        Width                               : 8
         Height                              : 470
         Effect                              : load
         Effect Priority                     : 0
