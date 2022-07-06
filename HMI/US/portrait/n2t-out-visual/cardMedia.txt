@@ -294,7 +294,7 @@ Text t2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 238
-        y coordinate                        : 197
+        y coordinate                        : 163
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -343,7 +343,7 @@ Text tPlayPause
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 135
-        y coordinate                        : 197
+        y coordinate                        : 163
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -392,7 +392,7 @@ Text t0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 28
-        y coordinate                        : 197
+        y coordinate                        : 163
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -488,7 +488,7 @@ Text t1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 12
+        x coordinate                        : 79
         y coordinate                        : 300
         Width                               : 50
         Height                              : 50
@@ -538,7 +538,7 @@ Text t3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 259
+        x coordinate                        : 189
         y coordinate                        : 300
         Width                               : 50
         Height                              : 50
@@ -775,9 +775,9 @@ Slider hVolume
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 65
-        y coordinate                        : 304
-        Width                               : 190
+        x coordinate                        : 24
+        y coordinate                        : 238
+        Width                               : 270
         Height                              : 43
         Effect                              : load
         Effect Priority                     : 0
