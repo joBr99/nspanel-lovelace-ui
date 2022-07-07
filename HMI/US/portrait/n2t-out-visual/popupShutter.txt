@@ -325,8 +325,8 @@ Slider hPosition
         Opacity                             : 127
         x coordinate                        : 12
         y coordinate                        : 213
-        Width                               : 300
-        Height                              : 43
+        Width                               : 250
+        Height                              : 44
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -369,8 +369,8 @@ Slider hTilt
         Opacity                             : 127
         x coordinate                        : 12
         y coordinate                        : 365
-        Width                               : 300
-        Height                              : 43
+        Width                               : 250
+        Height                              : 44
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300

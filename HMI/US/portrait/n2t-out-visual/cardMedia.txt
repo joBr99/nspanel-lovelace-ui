@@ -775,10 +775,10 @@ Slider hVolume
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 24
+        x coordinate                        : 36
         y coordinate                        : 238
-        Width                               : 270
-        Height                              : 43
+        Width                               : 250
+        Height                              : 44
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
