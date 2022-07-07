@@ -22,8 +22,11 @@ Page cardAlarm
         Preinitialize Event
             for(sys0=0;sys0<40;sys0++)
             {
-                b[sys0].bco=defaultBcoColor
-                b[sys0].pco=defaultFontColor
+                if(b[sys0].type==98||b[sys0].type==116)
+                {
+                    b[sys0].bco=defaultBcoColor
+                    b[sys0].pco=defaultFontColor
+                }
             }
             if(defaultBcoColor==0)
             {
