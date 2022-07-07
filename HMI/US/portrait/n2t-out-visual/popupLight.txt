@@ -507,7 +507,7 @@ Slider hBrightness
         x coordinate                        : 61
         y coordinate                        : 376
         Width                               : 250
-        Height                              : 43
+        Height                              : 44
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
