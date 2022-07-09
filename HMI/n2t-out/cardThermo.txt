@@ -12,6 +12,7 @@ Page cardThermo
     
     Events
         Preinitialize Event
+            cardThermo.bco=defaultBcoColor
             for(sys0=0;sys0<53;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==59)
