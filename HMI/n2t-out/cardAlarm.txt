@@ -12,6 +12,7 @@ Page cardAlarm
     
     Events
         Preinitialize Event
+            cardAlarm.bco=defaultBcoColor
             for(sys0=0;sys0<40;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)

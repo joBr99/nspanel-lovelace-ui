@@ -12,6 +12,7 @@ Page cardQR
     
     Events
         Preinitialize Event
+            cardQR.bco=defaultBcoColor
             for(sys0=0;sys0<32;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)

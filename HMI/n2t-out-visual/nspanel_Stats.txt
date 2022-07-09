@@ -14,53 +14,53 @@ pageStartup
 	19   Component(s)
 	167  Line(s) of event code
 	122  Unique line(s) of event code
-popupNotify
-	17   Component(s)
-	225  Line(s) of event code
-	143  Unique line(s) of event code
-cardGrid
-	42   Component(s)
-	461  Line(s) of event code
-	270  Unique line(s) of event code
+popupLight
+	27   Component(s)
+	386  Line(s) of event code
+	211  Unique line(s) of event code
 screensaver
 	38   Component(s)
 	332  Line(s) of event code
 	257  Unique line(s) of event code
-cardQR
-	32   Component(s)
-	402  Line(s) of event code
-	233  Unique line(s) of event code
+popupNotify
+	17   Component(s)
+	226  Line(s) of event code
+	143  Unique line(s) of event code
 popupFan
 	20   Component(s)
-	233  Line(s) of event code
-	147  Unique line(s) of event code
-popupLight
-	27   Component(s)
-	385  Line(s) of event code
-	210  Unique line(s) of event code
+	234  Line(s) of event code
+	148  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	388  Line(s) of event code
 	211  Unique line(s) of event code
-cardAlarm
-	40   Component(s)
-	420  Line(s) of event code
-	253  Unique line(s) of event code
+cardQR
+	32   Component(s)
+	403  Line(s) of event code
+	234  Unique line(s) of event code
 cardMedia
 	34   Component(s)
-	387  Line(s) of event code
-	208  Unique line(s) of event code
+	388  Line(s) of event code
+	209  Unique line(s) of event code
+cardGrid
+	42   Component(s)
+	462  Line(s) of event code
+	271  Unique line(s) of event code
 cardThermo
 	53   Component(s)
-	579  Line(s) of event code
-	302  Unique line(s) of event code
+	580  Line(s) of event code
+	303  Unique line(s) of event code
+cardAlarm
+	40   Component(s)
+	421  Line(s) of event code
+	254  Unique line(s) of event code
 cardEntities
 	65   Component(s)
-	1178 Line(s) of event code
-	517  Unique line(s) of event code
+	1179 Line(s) of event code
+	518  Unique line(s) of event code
 
 Total
 	14   Page(s)
 	436  Component(s)
-	5186 Line(s) of event code
-	1346 Unique line(s) of event code
+	5195 Line(s) of event code
+	1354 Unique line(s) of event code

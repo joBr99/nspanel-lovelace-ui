@@ -20,6 +20,7 @@ Page popupNotify
     
     Events
         Preinitialize Event
+            popupNotify.bco=defaultBcoColor
             dim=dimValueNormal
             vis p0,0
             vis tSend,0
