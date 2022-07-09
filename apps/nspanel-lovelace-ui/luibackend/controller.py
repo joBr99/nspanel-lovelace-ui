@@ -146,7 +146,7 @@ class LuiController(object):
                     found_current_dim_value = True
             # still no dim value
             if not found_current_dim_value:
-                current_screensaver_brightness = sorted_timesets[-1]["value"]
+                current_screensaver_brightness = sorted_timesets[0]["value"]
         return current_screensaver_brightness
 
     def register_callbacks(self):
