@@ -1,5 +1,5 @@
 import datetime
-from helper import scale, pos_to_color
+from helper import scale, pos_to_color, rgb_dec565
 
 from pages import LuiPagesGen
 
@@ -111,7 +111,19 @@ class LuiController(object):
         # same value for both values will break sleep timer of the firmware
         if sleepBrightness==brightness:
             sleepBrightness = sleepBrightness-1
-        self._send_mqtt_msg(f"dimmode~{sleepBrightness}~{brightness}")
+
+        # background color
+        dbc = 0
+        defaultBackgroundColor = self._config.get("defaultBackgroundColor")
+        if type(defaultBackgroundColor) is str:
+            if defaultBackgroundColor == "ha-dark":
+                dbc = 6371
+            elif defaultBackgroundColor == "black":
+                dbc = 0
+        elif type(defaultBackgroundColor) is list:
+            dbc = rgb_dec565(defaultBackgroundColor)
+
+        self._send_mqtt_msg(f"dimmode~{sleepBrightness}~{brightness}~{dbc}")
         
     def calc_current_brightness(self, sleep_brightness_config):
         current_screensaver_brightness = 20
