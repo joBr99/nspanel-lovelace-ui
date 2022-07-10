@@ -24,6 +24,7 @@ Please don't modify the Full Topic in your Tasmota Config, unless you know the i
     - your appdaemon.yaml (please censor your mqtt password)
     - your apps.yaml
     - the appdaemon log, after restarting the container
+  
   With the Waiting for Content Issue type on the [Github Issues Page](https://github.com/joBr99/nspanel-lovelace-ui/issues/new/choose)
 
 ## How to update
