@@ -1472,6 +1472,7 @@ function GetUnitOfMeasurement(id: string): string {
 }
 
 function GenerateThermoPage(page: PageThermo): Payload[] {
+    activePage = page;
     var id = page.items[0].id
     var out_msgs: Array<Payload> = [];
     out_msgs.push({ payload: "pageType~cardThermo" });
