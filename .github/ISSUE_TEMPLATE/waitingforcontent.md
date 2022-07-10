@@ -33,7 +33,7 @@ _Make sure your have performed every step and checked the applicable boxes befor
 
 
 
-- [ ] Provide your appdaemon.yaml:
+- [ ] Provide your appdaemon.yaml: <!-- Please do not publish your mqtt password and mask it -->
 ```
   appdaemon.yaml here:
 
