@@ -31,6 +31,12 @@ issueConfigs:
 # template 2: feature request
   - "FEATURE DESCRIPTION"
   - "PANEL / FIRMWARE VERION"
+- content:
+# template 3: fwaiting for content
+  - "Provide a screenshot of your tasmota mqtt configuration"
+  - "Provide your appdaemon.yaml"
+  - "Provide your apps.yaml"
+  - "put of the log after restarting the appdaemon container"
   
 # Optional configuration:
 #
