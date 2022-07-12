@@ -922,6 +922,7 @@ function findPageItem(searching: String) : PageItem {
 }
 
 function GeneratePage(page: Page): void {
+    activePage = page;
     switch (page.type) {
         case "cardEntities":
             SendToPanel(GenerateEntitiesPage(<PageEntities>page));
@@ -1472,7 +1473,6 @@ function GetUnitOfMeasurement(id: string): string {
 }
 
 function GenerateThermoPage(page: PageThermo): Payload[] {
-    activePage = page;
     var id = page.items[0].id
     var out_msgs: Array<Payload> = [];
     out_msgs.push({ payload: "pageType~cardThermo" });
