@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-07-09 09:14:32.604055011 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/Program.s.txt	2022-07-12 19:48:18.749451287 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-12 19:48:19.285452072 +0000
 @@ -14,6 +14,6 @@
      //color vars
      int defaultFontColor=65535
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-07-12 19:48:18.753451293 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-07-12 19:48:19.285452072 +0000
 @@ -12,15 +12,11 @@
      
      Events
@@ -39,8 +39,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
      
  Text tIcon
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-07-12 19:48:18.753451293 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-12 19:48:19.289452078 +0000
 @@ -12,14 +12,10 @@
      
      Events
@@ -378,8 +378,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
          
  Hotspot mSwipeNext
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-07-12 19:48:18.753451293 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-12 19:48:19.289452078 +0000
 @@ -12,15 +12,11 @@
      
      Events
@@ -409,8 +409,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
  TouchCap tc0
      Attributes
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-07-12 19:48:18.753451293 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-07-12 19:48:19.289452078 +0000
 @@ -12,15 +12,11 @@
      
      Events
@@ -429,8 +429,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
              {
                  hVolume.pic=14
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/cardQR.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/cardQR.txt	2022-07-12 19:48:18.753451293 +0000
++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-07-12 19:48:19.285452072 +0000
 @@ -12,25 +12,6 @@
      
      Events
@@ -458,8 +458,8 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
              vis p0,0
              vis tSend,0
 diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/cardThermo.txt	2022-07-12 19:48:18.753451293 +0000
++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-07-12 19:48:19.289452078 +0000
 @@ -12,21 +12,6 @@
      
      Events
@@ -483,8 +483,8 @@ diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
              vis p0,0
              vis tSend,0
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-07-12 19:48:18.749451287 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-12 19:48:19.289452078 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -504,8 +504,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/pageTest.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/pageTest.txt	2022-07-12 19:48:18.749451287 +0000
++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-07-12 19:48:19.285452072 +0000
 @@ -13,46 +13,6 @@
      Events
          Preinitialize Event
@@ -555,9 +555,9 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
      Attributes
 Only in HMI/n2t-out: popupFan.txt
 diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-07-09 09:14:33.040049343 +0000
-@@ -12,14 +12,10 @@
+--- HMI/n2t-out/popupLight.txt	2022-07-12 19:48:18.753451293 +0000
++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-07-12 19:48:19.285452072 +0000
+@@ -12,29 +12,6 @@
      
      Events
          Preinitialize Event
@@ -565,17 +565,57 @@ diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
 -            for(sys0=0;sys0<27;sys0++)
 -            {
 -                if(b[sys0].type==98||b[sys0].type==116)
-+            for(sys0=0;sys0<40;sys0++)
-                 {
-                     b[sys0].bco=defaultBcoColor
-                     b[sys0].pco=defaultFontColor
+-                {
+-                    b[sys0].bco=defaultBcoColor
+-                    b[sys0].pco=defaultFontColor
 -                }
-                 if(b[sys0].type==53&&defaultBcoColor==0)
-                 {
-                     b[sys0].pic=10
+-                if(b[sys0].type==53&&defaultBcoColor==0)
+-                {
+-                    b[sys0].pic=10
+-                    b[sys0].pic2=11
+-                }
+-            }
+-            if(defaultBcoColor==0)
+-            {
+-                hBrightness.pic=14
+-                hBrightness.pic1=13
+-                hBrightness.pic2=15
+-                hTempSlider.pic=16
+-                hTempSlider.pic1=17
+-                hTempSlider.pic2=15
+-            }
+             dim=dimValueNormal
+             //get entitiy name
+             tEntity.txt=pageIcons.tTmp1.txt
+@@ -73,6 +50,25 @@
+             vis t0,0
+             vis pColorWheel,0
+             //vis t0,0
++            for(sys0=0;sys0<40;sys0++)
++            {
++                b[sys0].bco=defaultBcoColor
++                b[sys0].pco=defaultFontColor
++                if(b[sys0].type==53&&defaultBcoColor==0)
++                {
++                    b[sys0].pic=10
++                    b[sys0].pic2=11
++                }
++            }
++            if(defaultBcoColor==0)
++            {
++                hBrightness.pic=14
++                hBrightness.pic1=13
++                hBrightness.pic2=15
++                hTempSlider.pic=16
++                hTempSlider.pic1=17
++                hTempSlider.pic2=15
++            }
+         
+ Variable (string) strCommand
+     Attributes
 diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
---- HMI/n2t-out/popupNotify.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/popupNotify.txt	2022-07-12 19:48:18.753451293 +0000
++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-07-12 19:48:19.285452072 +0000
 @@ -12,24 +12,12 @@
      
      Events
@@ -602,8 +642,8 @@ diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
  Variable (string) strCommand
      Attributes
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-07-09 09:14:32.608054957 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-07-09 09:14:33.040049343 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-07-12 19:48:18.753451293 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-07-12 19:48:19.285452072 +0000
 @@ -143,7 +143,7 @@
          Send Component ID                   : disabled
          Associated Keyboard                 : none
