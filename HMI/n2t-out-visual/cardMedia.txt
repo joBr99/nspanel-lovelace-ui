@@ -20,6 +20,15 @@ Page cardMedia
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
+            vis p0,0
+            vis tSend,0
+            vis tInstruction,0
+            vis tTmp,0
+            vis tId,0
+            vis t5,0
+            vis bPrev,0
+            vis bNext,0
             cardMedia.bco=defaultBcoColor
             for(sys0=0;sys0<34;sys0++)
             {
@@ -35,15 +44,6 @@ Page cardMedia
                 hVolume.pic1=13
                 hVolume.pic2=15
             }
-            dim=dimValueNormal
-            vis p0,0
-            vis tSend,0
-            vis tInstruction,0
-            vis tTmp,0
-            vis tId,0
-            vis t5,0
-            vis bPrev,0
-            vis bNext,0
         
 Variable (string) strCommand
     Attributes
