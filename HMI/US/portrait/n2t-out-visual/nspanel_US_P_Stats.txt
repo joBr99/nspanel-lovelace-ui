@@ -18,6 +18,10 @@ popupShutter
 	25   Component(s)
 	388  Line(s) of event code
 	211  Unique line(s) of event code
+popupLight
+	27   Component(s)
+	382  Line(s) of event code
+	209  Unique line(s) of event code
 cardQR
 	32   Component(s)
 	384  Line(s) of event code
@@ -30,10 +34,6 @@ pageStartup
 	19   Component(s)
 	167  Line(s) of event code
 	122  Unique line(s) of event code
-popupLight
-	27   Component(s)
-	382  Line(s) of event code
-	209  Unique line(s) of event code
 cardMedia
 	34   Component(s)
 	384  Line(s) of event code
