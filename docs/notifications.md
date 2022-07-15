@@ -2,9 +2,7 @@
 
 There are two notification types, that can be triggered by sending a command over mqtt to the panel here are examples for homeassistant scripts:
 
-<details>
-<summary>Seperate Page</summary>
-<br>
+## Seperate Page
 
   This is the notification used by the backend for updates, opening it requires to the following commands to the CustomSend Topic:
    
@@ -46,11 +44,9 @@ nspanel_popup_notification:
 </details>
 
 
-<details>
-<summary>Notification on screensaver</summary>
-<br>
+## Notification on screensaver
 
-   The screensaver can display Notifications by sending this command to the CustomSend topic: `notify~heading~text`
+The screensaver can display Notifications by sending this command to the CustomSend topic: `notify~heading~text`
    
 
 Send Message to the Screensaver combined with a buzzer sound:
@@ -80,6 +76,3 @@ nspanel_screensaver_notification:
   mode: single
   icon: mdi:message-badge
  ```
-   
-</details>
-
