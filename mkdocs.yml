@@ -44,8 +44,15 @@ extra:
     provider: custom
 
 markdown_extensions:
-#    - toc:
-#        permalink: true
+    - admonition
+    - def_list
+    - attr_list
+    - pymdownx.tilde
+    - pymdownx.details
+    - pymdownx.superfences
+    - pymdownx.magiclink
+    - toc:
+        permalink: true
     - codehilite:
         guess_lang: false
 #    - markdown_include.include:
