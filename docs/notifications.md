@@ -75,3 +75,4 @@ nspanel_screensaver_notification:
   mode: single
   icon: mdi:message-badge
  ```
+
