@@ -4,13 +4,13 @@ There are two notification types, that can be triggered by sending a command ove
 
 ## Seperate Page
 
-  This is the notification used by the backend for updates, opening it requires to the following commands to the CustomSend Topic:
+This is the notification used by the backend for updates, opening it requires to the following commands to the CustomSend Topic:
    
-  `pageType popupNotify`
+`pageType popupNotify`
    
-  `entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout`
+`entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout`
 
-  It is possible to exit from the page by sending `exitPopup`
+It is possible to exit from the page by sending `exitPopup`
   
 Send Message to the Panel combined with a buzzer sound:
    
