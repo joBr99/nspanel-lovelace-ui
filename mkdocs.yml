@@ -43,11 +43,11 @@ extra:
   analytics:
     provider: custom
 
-#markdown_extensions:
+markdown_extensions:
 #    - toc:
 #        permalink: true
-#    - codehilite:
-#        guess_lang: false
+    - codehilite:
+        guess_lang: false
 #    - markdown_include.include:
 #        base_path: docs
 
