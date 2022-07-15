@@ -41,7 +41,6 @@ nspanel_popup_notification:
   mode: single
   icon: mdi:message-badge
  ```
-</details>
 
 
 ## Notification on screensaver
