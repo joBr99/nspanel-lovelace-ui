@@ -14,7 +14,7 @@ It is possible to exit from the page by sending `exitPopup`
   
 Send Message to the Panel combined with a buzzer sound:
    
- ```yaml
+ ```
 nspanel_popup_notification:
   alias: Popup Notification
   sequence:
@@ -29,7 +29,7 @@ nspanel_popup_notification:
 
 Send Message to the Panel:
    
- ```yaml
+ ```
 nspanel_popup_notification:
   alias: Popup Notification
   sequence:
@@ -50,7 +50,7 @@ The screensaver can display Notifications by sending this command to the CustomS
 
 Send Message to the Screensaver combined with a buzzer sound:
    
- ```yaml
+ ```
 nspanel_screensaver_notification:
   alias: Screensaver Notification
   sequence:
@@ -64,7 +64,7 @@ nspanel_screensaver_notification:
 
 Send Message to the Screensaver:
    
- ```yaml
+ ```
 nspanel_screensaver_notification:
   alias: Screensaver Notification
   sequence:
