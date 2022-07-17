@@ -55,8 +55,8 @@ markdown_extensions:
         permalink: true
     - codehilite:
         guess_lang: false
-    - markdown_include.include:
-        base_path: docs
+#    - markdown_include.include:
+#        base_path: docs
 
 plugins:
     - search:
@@ -85,8 +85,6 @@ nav:
         - "Subpages": subpages.md
         - "Notifications": notifications.md
         - "Physical Buttons": phys-btn.md
-
-
 
     - "Getting started (ioBroker)":
         - "Prepare NsPanel": prepare_nspanel2.md
