@@ -203,26 +203,33 @@ class LuiPagesGen(object):
 
             device_class = entity.attributes.get("device_class", "window")
             icon_id = get_icon_id_ha(ha_type=entityType, state=entity.state, device_class=device_class, overwrite=icon)
-            icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
-            icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
-            icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
             
+            icon_up   = ""
+            icon_stop = ""
+            icon_down = ""
+            icon_up_status = "disable"
+            icon_stop_status = "disable"
+            icon_down_status = "disable"
+            bits = entity.attributes.supported_features
             pos = entity.attributes.get("current_position")
-            if pos == 100:
-                status = f"disable|enable|enable"
-            elif pos == 0:
-                status = f"enable|enable|disable"
-            elif pos is None:
+            if pos is None:
                 pos_status = entity.state
-                if pos_status == "open":
-                    status = f"disable|enable|enable"
-                elif pos_status == "closed":
-                    status = f"enable|enable|disable"
-                else:
-                    status = f"enable|enable|enable"
+                pos = "disable"
             else:
-                status = f"enable|enable|enable"
-            return f"~shutter~{entityId}~{icon_id}~17299~{name}~{icon_up}|{icon_stop}|{icon_down}|{status}"
+                pos_status = pos
+            if bits & 0b00000001: # SUPPORT_OPEN
+                if pos != 100 and not (entity.state == "open" and pos == "disable"):
+                    icon_up_status = "enable"
+                icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
+            if bits & 0b00000010: # SUPPORT_CLOSE
+                if pos != 0 and not (entity.state == "closed" and pos == "disable"):
+                    icon_down_status = "enable"
+                icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
+            if bits & 0b00001000: # SUPPORT_STOP
+                icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
+                icon_stop_status = "enable"
+
+            return f"~shutter~{entityId}~{icon_id}~17299~{name}~{icon_up}|{icon_stop}|{icon_down}|{icon_up_status}|{icon_stop_status}|{icon_down_status}"
         if entityType in "light":
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
