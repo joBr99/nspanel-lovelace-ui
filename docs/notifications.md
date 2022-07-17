@@ -2,21 +2,19 @@
 
 There are two notification types, that can be triggered by sending a command over mqtt to the panel here are examples for homeassistant scripts:
 
-<details>
-<summary>Seperate Page</summary>
-<br>
+## Seperate Page
 
-  This is the notification used by the backend for updates, opening it requires to the following commands to the CustomSend Topic:
+This is the notification used by the backend for updates, opening it requires to the following commands to the CustomSend Topic:
    
-  `pageType popupNotify`
+`pageType popupNotify`
    
-  `entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout`
+`entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout`
 
-  It is possible to exit from the page by sending `exitPopup`
+It is possible to exit from the page by sending `exitPopup`
   
 Send Message to the Panel combined with a buzzer sound:
    
- ```yaml
+ ```
 nspanel_popup_notification:
   alias: Popup Notification
   sequence:
@@ -31,7 +29,7 @@ nspanel_popup_notification:
 
 Send Message to the Panel:
    
- ```yaml
+ ```
 nspanel_popup_notification:
   alias: Popup Notification
   sequence:
@@ -43,19 +41,16 @@ nspanel_popup_notification:
   mode: single
   icon: mdi:message-badge
  ```
-</details>
 
 
-<details>
-<summary>Notification on screensaver</summary>
-<br>
+## Notification on screensaver
 
-   The screensaver can display Notifications by sending this command to the CustomSend topic: `notify~heading~text`
+The screensaver can display Notifications by sending this command to the CustomSend topic: `notify~heading~text`
    
 
 Send Message to the Screensaver combined with a buzzer sound:
    
- ```yaml
+ ```
 nspanel_screensaver_notification:
   alias: Screensaver Notification
   sequence:
@@ -69,7 +64,7 @@ nspanel_screensaver_notification:
 
 Send Message to the Screensaver:
    
- ```yaml
+ ```
 nspanel_screensaver_notification:
   alias: Screensaver Notification
   sequence:
@@ -80,6 +75,4 @@ nspanel_screensaver_notification:
   mode: single
   icon: mdi:message-badge
  ```
-   
-</details>
 

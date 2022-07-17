@@ -1,12 +1,14 @@
 name: docs-ci 
 
 on:
+  workflow_dispatch:
   push:
     branches: 
       - main
     paths:
       - docs/*
       - .github/workflows/docs.yml
+      - mkdocs.yml
 
 jobs:
   deploy:
