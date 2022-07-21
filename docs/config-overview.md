@@ -167,3 +167,21 @@ The following example configuration is turning off the screen after sunset, but 
 | `vi_VN`       | Vietnamese          |
 | `zh_CN`       | Simplified Chinese  |
 | `zh_TW`       | Traditional Chinese |
+
+### Configuring AppDaemon loging
+By default the nspanel application will write to the "main" log of AppDaemon. The application generates quite many logs by default and can make the main log hard to read. It is also easier to collect logs for debugging purposes if they are outside of the main log. 
+In order to separate the nspanel Appdaemon logs: 
+1. Create top level entry in your _appdaemon.yaml_ : 
+```yaml
+logs:
+  nspanel:
+    name: nspanel
+    filename: nspanel.log
+```
+2. In your apps.yaml insert: 
+```yaml
+nspanel-1:
+  .....
+  log: nspanel
+  config:
+```
