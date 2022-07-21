@@ -36,6 +36,9 @@ It is also possible to configure different icon overwrites per state:
                 "off": mdi:lightbulb
 ```
 
+It is also possible to use text instead of icons with `text:X`
+
+
 ## Hide item based on state
 
 This sensor will only be shown on the card if it's state is equal to `off`
