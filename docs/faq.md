@@ -6,17 +6,17 @@ You have most likely an error in your MQTT configuration somewhere. To find the 
 
 1. Check your appdaemon log. (Settings > Add-ons > AppDaemon > Log)
 You should see something like this:
-`INFO MQTT: MQTT Plugin initialization complete`
-If you are seeing Messages like this:
-`CRITICAL MQTT: Could not complete MQTT Plugin initialization, for Connection was refused due to Not Authorised`
-Your appdaemon mqtt config is wrong, check your appdaemon.yaml. 
-The log of your mqtt broker might give you additional information.
+`INFO MQTT: MQTT Plugin initialization complete`  
+If you are seeing Messages like this:  
+`CRITICAL MQTT: Could not complete MQTT Plugin initialization, for Connection was refused due to Not Authorised`  
+Your appdaemon mqtt config is wrong, check your appdaemon.yaml.  
+The log of your mqtt broker might give you additional information.  
 
-2. Check MQTT Configuration of Tasmota. 
+2. Check MQTT Configuration of Tasmota.
 Your Tasmota device needs to connect sucessfully to your MQTT Broker, if you are in the waiting for content screen, the panel will send periodic messages to it's mqtt topic.
 
 3. Make sure that you are using the same topic in apps.yaml and in your tasmota configuration. 
-The examples in the docs ([MQTT Config](https://docs.nspanel.pky.eu/configure_mqtt/)) are an valid (tasmota<>apps.yaml).
+The examples in the docs ([MQTT Config](https://docs.nspanel.pky.eu/configure_mqtt/)) are an valid example (tasmota<>apps.yaml).  
 Please don't modify the Full Topic in your Tasmota Config, unless you know the implications, changing the Full Topic will result in diffent Send and Receive Channels, that have to be correct in your apps.yaml.
 
 4. If you are still in the waiting for content screen please share the following items, with the Waiting for Content Issue type on the [Github Issues Page](https://github.com/joBr99/nspanel-lovelace-ui/issues/new/choose)
