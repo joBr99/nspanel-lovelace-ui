@@ -544,7 +544,7 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",4
                                         covx tTmp.txt,sys0,0,0
                                         btOnOff1.val=sys0
-                                        // get Brightness value
+                                        // get Speed value
                                         spstr strCommand.txt,tTmp.txt,"~",5
                                         if(tTmp.txt=="disable")
                                         {
@@ -560,8 +560,11 @@ Timer tmSerial
                                                 hSpeed.val=sys0
                                             }
                                         }
+                                        // set hSpeed maxValue
+                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        covx tTmp.txt,hSpeed.maxval,0,0
                                         // set t1 Speed (Localization)
-                                        spstr strCommand.txt,t1.txt,"~",6
+                                        spstr strCommand.txt,t1.txt,"~",7
                                     }
                                     if(tInstruction.txt=="time")
                                     {
