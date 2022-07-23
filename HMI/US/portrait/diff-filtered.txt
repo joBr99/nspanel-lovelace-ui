@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-07-23 09:31:08.682975050 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-07-23 09:31:08.214976414 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 09:31:08.670975085 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-07-23 09:50:28.829935664 +0000
++--- HMI/n2t-out/Program.s.txt	2022-07-23 09:50:28.361934134 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 09:50:28.817935625 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+--- HMI/n2t-out/cardEntities.txt	2022-07-23 09:31:08.214976414 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 09:31:08.674975073 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-07-23 09:50:28.361934134 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 09:50:28.817935625 +0000
 +@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -18,17 +18,11 @@
 +@@ -306,6 +337,26 @@
 +@@ -425,6 +476,34 @@
 +@@ -882,6 +961,106 @@
-++        Text                                : 
-++        Max. Text Size                      : 20
 +@@ -990,6 +1169,33 @@
 +@@ -1110,6 +1316,32 @@
 +             {
 +                 page popupFan
 ++        
-++            if(type5.txt=="fan")
-++            {
-++                page popupFan
-++            }
 +         
-+--- HMI/n2t-out/pageStartup.txt	2022-07-23 09:31:08.214976414 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 09:31:08.670975085 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-07-23 09:50:28.361934134 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 09:50:28.817935625 +0000

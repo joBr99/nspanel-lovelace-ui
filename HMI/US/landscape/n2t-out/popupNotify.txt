@@ -12,12 +12,24 @@ Page popupNotify
     
     Events
         Preinitialize Event
+            popupNotify.bco=defaultBcoColor
             dim=dimValueNormal
             vis p0,0
             vis tSend,0
             vis tTmp,0
             vis tInstruction,0
             vis tId,0
+            popupNotify.bco=defaultBcoColor
+            tHeading.bco=defaultBcoColor
+            b0.bco=defaultBcoColor
+            tText.bco=defaultBcoColor
+            b1.bco=defaultBcoColor
+            b2.bco=defaultBcoColor
+            tHeading.pco=defaultFontColor
+            b0.pco=defaultFontColor
+            tText.pco=defaultFontColor
+            b1.pco=defaultFontColor
+            b2.pco=defaultFontColor
         
 Variable (string) strCommand
     Attributes
@@ -315,6 +327,18 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
                                         dim=dimValueNormal
+                                        // get background color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultBcoColor,0,0
+                                        }
+                                        // get font color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultFontColor,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

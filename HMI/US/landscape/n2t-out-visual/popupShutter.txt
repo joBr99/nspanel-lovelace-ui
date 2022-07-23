@@ -48,6 +48,40 @@ Page popupShutter
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            popupShutter.bco=defaultBcoColor
+            b0.bco=defaultBcoColor
+            tIcon1.bco=defaultBcoColor
+            tEntity.bco=defaultBcoColor
+            tInfo1.bco=defaultBcoColor
+            tPosHeading.bco=defaultBcoColor
+            tTiltHeading.bco=defaultBcoColor
+            bUp1.bco=defaultBcoColor
+            bStop1.bco=defaultBcoColor
+            bDown1.bco=defaultBcoColor
+            bTLeft.bco=defaultBcoColor
+            bTStop.bco=defaultBcoColor
+            bTRight.bco=defaultBcoColor
+            b0.pco=defaultFontColor
+            tIcon1.pco=defaultFontColor
+            tEntity.pco=defaultFontColor
+            tInfo1.pco=defaultFontColor
+            tPosHeading.pco=defaultFontColor
+            tTiltHeading.pco=defaultFontColor
+            bUp1.pco=defaultFontColor
+            bStop1.pco=defaultFontColor
+            bDown1.pco=defaultFontColor
+            bTLeft.pco=defaultFontColor
+            bTStop.pco=defaultFontColor
+            bTRight.pco=defaultFontColor
+            if(defaultBcoColor==0)
+            {
+                hTilt.pic=14
+                hTilt.pic1=13
+                hTilt.pic2=15
+                hPosition.pic=14
+                hPosition.pic1=13
+                hPosition.pic2=15
+            }
         
 Variable (string) strCommand
     Attributes
@@ -92,7 +126,7 @@ Text tEntity
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 80
+        x coordinate                        : 81
         y coordinate                        : 48
         Width                               : 195
         Height                              : 30
@@ -122,7 +156,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 27
+        x coordinate                        : 28
         y coordinate                        : 63
         Width                               : 45
         Height                              : 30
@@ -152,7 +186,7 @@ Text tSend
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 15
+        x coordinate                        : 16
         y coordinate                        : 0
         Width                               : 348
         Height                              : 22
@@ -182,9 +216,9 @@ Text tPosHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 79
+        x coordinate                        : 80
         y coordinate                        : 122
-        Width                               : 100
+        Width                               : 188
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -199,7 +233,7 @@ Text tPosHeading
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : Position
-        Max. Text Size                      : 15
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -212,7 +246,7 @@ Text tInfo1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 80
+        x coordinate                        : 81
         y coordinate                        : 76
         Width                               : 195
         Height                              : 30
@@ -242,9 +276,9 @@ Text tTiltHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 79
+        x coordinate                        : 80
         y coordinate                        : 231
-        Width                               : 100
+        Width                               : 191
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -259,7 +293,7 @@ Text tTiltHeading
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -274,8 +308,8 @@ Picture p0
         Opacity                             : 127
         x coordinate                        : 0
         y coordinate                        : 0
-        Width                               : 479
-        Height                              : 319
+        Width                               : 480
+        Height                              : 320
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -289,7 +323,7 @@ Slider hPosition
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 79
+        x coordinate                        : 80
         y coordinate                        : 152
         Width                               : 335
         Height                              : 43
@@ -333,7 +367,7 @@ Slider hTilt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 79
+        x coordinate                        : 80
         y coordinate                        : 261
         Width                               : 335
         Height                              : 43
@@ -354,7 +388,7 @@ Slider hTilt
         Touch Release Event
             // event,buttonPress2,internalNameEntity,positionSlider,50
             //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltSlider,"
             covx hPosition.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -377,7 +411,7 @@ Button b0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 412
+        x coordinate                        : 413
         y coordinate                        : 8
         Width                               : 50
         Height                              : 50
@@ -424,7 +458,7 @@ Button bDown1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 401
+        x coordinate                        : 402
         y coordinate                        : 95
         Width                               : 50
         Height                              : 50
@@ -471,7 +505,7 @@ Button bStop1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 349
+        x coordinate                        : 350
         y coordinate                        : 95
         Width                               : 50
         Height                              : 50
@@ -518,7 +552,7 @@ Button bUp1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 297
+        x coordinate                        : 298
         y coordinate                        : 95
         Width                               : 50
         Height                              : 50
@@ -565,7 +599,7 @@ Button bTLeft
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 297
+        x coordinate                        : 298
         y coordinate                        : 205
         Width                               : 50
         Height                              : 50
@@ -591,7 +625,7 @@ Button bTLeft
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",up"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltOpen"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -612,7 +646,7 @@ Button bTStop
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 349
+        x coordinate                        : 350
         y coordinate                        : 205
         Width                               : 50
         Height                              : 50
@@ -638,7 +672,7 @@ Button bTStop
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",stop"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltStop"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -659,7 +693,7 @@ Button bTRight
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 401
+        x coordinate                        : 402
         y coordinate                        : 205
         Width                               : 50
         Height                              : 50
@@ -685,7 +719,7 @@ Button bTRight
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",down"
+            tSend.txt="event,buttonPress2,"+entn.txt+",tiltClose"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -844,11 +878,13 @@ Timer tmSerial
                                             tsw bTLeft,0
                                             spstr strCommand.txt,bTLeft.txt,"~",13
                                             bTLeft.pco=27501
+                                            vis bTLeft,1
                                         }else if(tTmp.txt=="enable")
                                         {
                                             spstr strCommand.txt,bTLeft.txt,"~",13
                                             tsw bTLeft,1
                                             bTLeft.pco=65535
+                                            vis bTLeft,1
                                         }
                                         // set icon bStop
                                         spstr strCommand.txt,tTmp.txt,"~",17
@@ -857,24 +893,36 @@ Timer tmSerial
                                             tsw bTStop,0
                                             spstr strCommand.txt,bTStop.txt,"~",14
                                             bTStop.pco=27501
+                                            vis bTStop,1
                                         }else if(tTmp.txt=="enable")
                                         {
                                             spstr strCommand.txt,bTStop.txt,"~",14
                                             tsw bTStop,1
                                             bTStop.pco=65535
+                                            vis bTStop,1
                                         }
                                         // set icon bDown
-                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        spstr strCommand.txt,tTmp.txt,"~",18
                                         if(tTmp.txt=="disable")
                                         {
                                             spstr strCommand.txt,bTRight.txt,"~",15
                                             tsw bTRight,0
                                             bTRight.pco=27501
+                                            vis bTRight,1
                                         }else if(tTmp.txt=="enable")
                                         {
                                             spstr strCommand.txt,bTRight.txt,"~",15
                                             tsw bTRight,1
                                             bTRight.pco=65535
+                                            vis bTRight,1
+                                        }
+                                        // set tilt slider
+                                        spstr strCommand.txt,tTmp.txt,"~",19
+                                        if(tTmp.txt!="disable")
+                                        {
+                                            vis hTilt,1
+                                            covx tTmp.txt,sys0,0,0
+                                            hTilt.val=sys0
                                         }
                                     }
                                     if(tInstruction.txt=="dimmode")
@@ -886,6 +934,18 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
                                         dim=dimValueNormal
+                                        // get background color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultBcoColor,0,0
+                                        }
+                                        // get font color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultFontColor,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
