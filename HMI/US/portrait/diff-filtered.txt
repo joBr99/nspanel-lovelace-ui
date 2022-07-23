@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-07-23 09:17:39.415938818 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-07-23 09:17:38.939933095 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 09:17:39.403938674 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-07-23 09:22:24.315452723 +0000
++--- HMI/n2t-out/Program.s.txt	2022-07-23 09:22:23.835446505 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 09:22:24.299452515 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+--- HMI/n2t-out/cardEntities.txt	2022-07-23 09:17:38.939933095 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 09:17:39.403938674 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-07-23 09:22:23.839446557 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 09:22:24.299452515 +0000
 +@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -31,8 +31,8 @@
 ++            }
 +         
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-07-23 09:17:38.939933095 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-23 09:17:39.403938674 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-07-23 09:22:23.835446505 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-23 09:22:24.299452515 +0000
 +@@ -932,10 +932,6 @@
 +             {
 +                 page popupLight
@@ -43,33 +43,5 @@
 +-            }
 +         
 + TouchCap tc0
-+diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-07-23 09:17:38.939933095 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-07-23 09:17:39.403938674 +0000
-+@@ -32,25 +32,6 @@
-+             vis bText2,0
-+             tsw m0,0
-+             tsw m1,0
-+-            cardQR.bco=defaultBcoColor
-+-            for(sys0=0;sys0<32;sys0++)
-+-            {
-+-                if(b[sys0].type==98||b[sys0].type==116)
-+-                {
-+-                    b[sys0].bco=defaultBcoColor
-+-                    b[sys0].pco=defaultFontColor
-+-                }
-+-                if(b[sys0].type==53&&defaultBcoColor==6371)
-+-                {
-+-                    b[sys0].pic=1
-+-                    b[sys0].pic2=2
-+-                }
-+-                if(b[sys0].type==53&&defaultBcoColor==0)
-+-                {
-+-                    b[sys0].pic=10
-+-                    b[sys0].pic2=11
-+-                }
-+-            }
-+         
-+ Variable (string) strCommand
-+--- HMI/n2t-out/pageStartup.txt	2022-07-23 09:17:38.939933095 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 09:17:39.403938674 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-07-23 09:22:23.835446505 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 09:22:24.299452515 +0000
