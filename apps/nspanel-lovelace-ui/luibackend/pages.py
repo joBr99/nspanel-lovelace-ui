@@ -235,11 +235,16 @@ class LuiPagesGen(object):
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha("light", state=entity.state, overwrite=icon)
             return f"~{entityType}~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
-        if entityType in ["switch", "input_boolean", "automation", "fan"]:
+        if entityType in ["switch", "input_boolean", "automation"]:
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
             return f"~switch~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
+        if entityType in "fan":
+            switch_val = 1 if entity.state == "on" else 0
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
+            icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+            return f"~fan~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
         if entityType in ["sensor", "binary_sensor"]:
             device_class = entity.attributes.get("device_class", "")
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
@@ -614,6 +619,21 @@ class LuiPagesGen(object):
                 iconTiltLeftStatus  = "disable"
 
         self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}~{textTilt}~{iconTiltLeft}~{iconTiltStop}~{iconTiltRight}~{iconTiltLeftStatus}~{iconTiltStopStatus}~{iconTiltRightStatus}~{tilt_pos}")
+
+    def generate_fan_detail_page(self, entity_id):
+        entity = self._ha_api.get_entity(entity_id)
+        switch_val = 1 if entity.state == "on" else 0
+        icon_color = self.get_entity_color(entity)
+        speed = entity.attributes.get("percentage")
+        speedMax = 100
+        if(speed == None):
+            speed = "disable"
+        else:
+            speed = round(entity.attributes.get("percentage")/entity.attributes.get("percentage_step"))
+            speedMax = int(100/entity.attributes.get("percentage_step"))
+
+        speed_translation = get_translation(self._locale, "frontend.ui.card.fan.speed")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{get_icon_id('lightbulb')}~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")

@@ -168,6 +168,8 @@ class LuiController(object):
                     self._pages_gen.generate_light_detail_page(entity)
                 if entity.startswith("cover"):
                     self._pages_gen.generate_shutter_detail_page(entity)
+                if entity.startswith("fan"):
+                    self._pages_gen.generate_fan_detail_page(entity)
 
 
     def detail_open(self, detail_type, entity_id):
@@ -175,6 +177,8 @@ class LuiController(object):
             self._pages_gen.generate_shutter_detail_page(entity_id)
         if detail_type == "popupLight":
             self._pages_gen.generate_light_detail_page(entity_id)
+        if detail_type == "popupFan":
+            self._pages_gen.generate_fan_detail_page(entity_id)
 
     def button_press(self, entity_id, button_type, value):
         self._ha_api.log(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
@@ -235,7 +239,9 @@ class LuiController(object):
 
         if button_type == "number-set":
             if entity_id.startswith('fan'):
-                self._ha_api.get_entity(entity_id).call_service("set_percentage", percentage=value)
+                entity = self._ha_api.get_entity(entity_id)
+                value = float(value)*float(entity.attributes.get("percentage_step", 0))
+                entity.call_service("set_percentage", percentage=value)
             else:
                 self._ha_api.get_entity(entity_id).call_service("set_value", value=value)
 
