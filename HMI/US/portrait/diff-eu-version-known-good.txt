@@ -213,8 +213,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +        Disable release event after dragging: 0
 +        Send Component ID                   : disabled
 +        State                               : unpressed
-+        Text                                : newtxt
-+        Max. Text Size                      : 10
++        Text                                : 
++        Max. Text Size                      : 20
 +    
 +    Events
 +        Touch Press Event
