@@ -1,13 +1,13 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-07-13 16:57:07.016403820 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-07-13 16:57:06.544404168 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-13 16:57:06.972403853 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-07-23 08:51:49.077350264 +0000
++--- HMI/n2t-out/Program.s.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 08:51:49.061349901 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
 +diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-07-13 16:57:06.548404165 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-07-13 16:57:06.972403853 +0000
++--- HMI/n2t-out/cardAlarm.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-07-23 08:51:49.065349991 +0000
 +@@ -12,6 +12,21 @@
 +     
 +     Events
@@ -56,8 +56,8 @@
 +         
 + Variable (string) strCommand
 +     Attributes
-+--- HMI/n2t-out/cardEntities.txt	2022-07-13 16:57:06.548404165 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-13 16:57:06.976403850 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 08:51:49.065349991 +0000
 +@@ -12,6 +12,22 @@
 +     
 +     Events
@@ -157,8 +157,8 @@
 +             }
 +         
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-07-13 16:57:06.548404165 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-13 16:57:06.972403853 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-23 08:51:49.065349991 +0000
 +@@ -12,6 +12,11 @@
 +     
 +     Events
@@ -197,8 +197,8 @@
 +         
 + TouchCap tc0
 +diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-07-13 16:57:06.548404165 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-07-13 16:57:06.972403853 +0000
++--- HMI/n2t-out/cardMedia.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-07-23 08:51:49.065349991 +0000
 +@@ -12,30 +12,26 @@
 +     Events
 +         Preinitialize Event
@@ -240,8 +240,8 @@
 + Variable (string) strCommand
 +     Attributes
 +diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-07-13 16:57:06.548404165 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-07-13 16:57:06.972403853 +0000
++--- HMI/n2t-out/cardQR.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-07-23 08:51:49.065349991 +0000
 +@@ -32,25 +32,6 @@
 +             vis bText2,0
 +             tsw m0,0
@@ -269,8 +269,8 @@
 + Variable (string) strCommand
 +     Attributes
 +diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
-+--- HMI/n2t-out/cardThermo.txt	2022-07-13 16:57:06.548404165 +0000
-++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-07-13 16:57:06.972403853 +0000
++--- HMI/n2t-out/cardThermo.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-07-23 08:51:49.065349991 +0000
 +@@ -41,21 +41,6 @@
 +             vis xTempDest1,0
 +             vis bPrev,0
@@ -292,62 +292,11 @@
 +-            }
 +         
 + Variable (string) strCommand
-+--- HMI/n2t-out/pageStartup.txt	2022-07-13 16:57:06.544404168 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-13 16:57:06.972403853 +0000
-+diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-07-13 16:57:06.544404168 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-07-13 16:57:06.972403853 +0000
-+@@ -13,46 +13,6 @@
-+     Events
-+         Preinitialize Event
-+             vis p0,0
-+-            n0.val=defaultBcoColor
-+-            n1.val=defaultFontColor
-+-        
-+-Number n0
-+-    Attributes
-+-        Scope                               : local
-+-        Dragging                            : 0
-+-        Disable release event after dragging: 0
-+-        Send Component ID                   : disabled
-+-        Associated Keyboard                 : none
-+-        Value                               : 0
-+-    
-+-Number n1
-+-    Attributes
-+-        Scope                               : local
-+-        Dragging                            : 0
-+-        Disable release event after dragging: 0
-+-        Send Component ID                   : disabled
-+-        Associated Keyboard                 : none
-+-        Value                               : 0
-+-    
-+-Text t0
-+-    Attributes
-+-        Scope                               : local
-+-        Dragging                            : 0
-+-        Disable release event after dragging: 0
-+-        Send Component ID                   : disabled
-+-        Associated Keyboard                 : none
-+-        Text                                : bco
-+-        Max. Text Size                      : 10
-+-    
-+-Text t1
-+-    Attributes
-+-        Scope                               : local
-+-        Dragging                            : 0
-+-        Disable release event after dragging: 0
-+-        Send Component ID                   : disabled
-+-        Associated Keyboard                 : none
-+-        Text                                : font
-+-        Max. Text Size                      : 10
-+     
-+ Picture p0
-+     Attributes
-+Only in HMI/n2t-out: popupFan.txt
++--- HMI/n2t-out/pageStartup.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 08:51:49.065349991 +0000
 +diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
-+--- HMI/n2t-out/popupLight.txt	2022-07-13 16:57:06.544404168 +0000
-++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-07-13 16:57:06.972403853 +0000
++--- HMI/n2t-out/popupLight.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/popupLight.txt	2022-07-23 08:51:49.065349991 +0000
 +@@ -50,14 +50,10 @@
 +             vis t0,0
 +             vis pColorWheel,0
@@ -364,107 +313,9 @@
 +                 if(b[sys0].type==53&&defaultBcoColor==0)
 +                 {
 +                     b[sys0].pic=10
-+diff -bur HMI/n2t-out/popupNotify.txt HMI/US/portrait/n2t-out/popupNotify.txt
-+--- HMI/n2t-out/popupNotify.txt	2022-07-13 16:57:06.544404168 +0000
-++++ HMI/US/portrait/n2t-out/popupNotify.txt	2022-07-13 16:57:06.972403853 +0000
-+@@ -12,24 +12,12 @@
-+     
-+     Events
-+         Preinitialize Event
-+-            popupNotify.bco=defaultBcoColor
-+             dim=dimValueNormal
-+             vis p0,0
-+             vis tSend,0
-+             vis tTmp,0
-+             vis tInstruction,0
-+             vis tId,0
-+-            popupNotify.bco=defaultBcoColor
-+-            tHeading.bco=defaultBcoColor
-+-            b0.bco=defaultBcoColor
-+-            tText.bco=defaultBcoColor
-+-            b1.bco=defaultBcoColor
-+-            b2.bco=defaultBcoColor
-+-            tHeading.pco=defaultFontColor
-+-            b0.pco=defaultFontColor
-+-            tText.pco=defaultFontColor
-+-            b1.pco=defaultFontColor
-+-            b2.pco=defaultFontColor
-+         
-+ Variable (string) strCommand
-+     Attributes
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-07-13 16:57:06.544404168 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-07-13 16:57:06.972403853 +0000
-+@@ -12,34 +12,6 @@
-+     
-+     Events
-+         Preinitialize Event
-+-            dim=dimValueNormal
-+-            //get entitiy name
-+-            tEntity.txt=pageIcons.tTmp1.txt
-+-            //get entity id
-+-            entn.txt=pageIcons.tTmp2.txt
-+-            vis p0,0
-+-            vis tSend,0
-+-            vis tPosHeading,0
-+-            vis hPosition,0
-+-            vis hTilt,0
-+-            vis bTLeft,0
-+-            vis bTStop,0
-+-            vis bTRight,0
-+-            //page open event
-+-            // event,pageOpenDetail,typeOfPage,tEntityName
-+-            // craft command
-+-            tSend.txt="event,pageOpenDetail,popupShutter,"+entn.txt
-+-            //send calc crc
-+-            btlen tSend.txt,sys0
-+-            crcrest 1,0xffff // reset CRC
-+-            crcputh 55 bb
-+-            crcputs sys0,2
-+-            crcputs tSend.txt,0
-+-            //send cmd
-+-            printh 55 bb
-+-            prints sys0,2
-+-            prints tSend.txt,0
-+-            prints crcval,2
-+             popupShutter.bco=defaultBcoColor
-+             b0.bco=defaultBcoColor
-+             tIcon1.bco=defaultBcoColor
-+@@ -74,6 +46,34 @@
-+                 hPosition.pic1=13
-+                 hPosition.pic2=15
-+             }
-++            dim=dimValueNormal
-++            //get entitiy name
-++            tEntity.txt=pageIcons.tTmp1.txt
-++            //get entity id
-++            entn.txt=pageIcons.tTmp2.txt
-++            vis p0,0
-++            vis tSend,0
-++            vis tPosHeading,0
-++            vis hPosition,0
-++            vis hTilt,0
-++            vis bTLeft,0
-++            vis bTStop,0
-++            vis bTRight,0
-++            //page open event
-++            // event,pageOpenDetail,typeOfPage,tEntityName
-++            // craft command
-++            tSend.txt="event,pageOpenDetail,popupShutter,"+entn.txt
-++            //send calc crc
-++            btlen tSend.txt,sys0
-++            crcrest 1,0xffff // reset CRC
-++            crcputh 55 bb
-++            crcputs sys0,2
-++            crcputs tSend.txt,0
-++            //send cmd
-++            printh 55 bb
-++            prints sys0,2
-++            prints tSend.txt,0
-++            prints crcval,2
-+         
-+ Variable (string) strCommand
-+     Attributes
++--- HMI/n2t-out/popupShutter.txt	2022-07-23 08:51:48.553338369 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-07-23 08:51:49.065349991 +0000
 +@@ -143,7 +143,7 @@
 +         Send Component ID                   : disabled
 +         Associated Keyboard                 : none

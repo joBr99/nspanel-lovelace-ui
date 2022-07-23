@@ -20,12 +20,24 @@ Page popupNotify
     
     Events
         Preinitialize Event
+            popupNotify.bco=defaultBcoColor
             dim=dimValueNormal
             vis p0,0
             vis tSend,0
             vis tTmp,0
             vis tInstruction,0
             vis tId,0
+            popupNotify.bco=defaultBcoColor
+            tHeading.bco=defaultBcoColor
+            b0.bco=defaultBcoColor
+            tText.bco=defaultBcoColor
+            b1.bco=defaultBcoColor
+            b2.bco=defaultBcoColor
+            tHeading.pco=defaultFontColor
+            b0.pco=defaultFontColor
+            tText.pco=defaultFontColor
+            b1.pco=defaultFontColor
+            b2.pco=defaultFontColor
         
 Variable (string) strCommand
     Attributes
