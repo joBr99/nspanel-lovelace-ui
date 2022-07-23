@@ -6,10 +6,6 @@ pageIcons
 	6    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
-pageTest
-	18   Component(s)
-	16   Line(s) of event code
-	16   Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	167  Line(s) of event code
@@ -42,6 +38,10 @@ cardGrid
 	42   Component(s)
 	462  Line(s) of event code
 	271  Unique line(s) of event code
+pageTest
+	14   Component(s)
+	14   Line(s) of event code
+	14   Unique line(s) of event code
 cardQR
 	32   Component(s)
 	403  Line(s) of event code
@@ -61,6 +61,6 @@ cardEntities
 
 Total
 	14   Page(s)
-	436  Component(s)
-	5195 Line(s) of event code
-	1354 Unique line(s) of event code
+	432  Component(s)
+	5193 Line(s) of event code
+	1352 Unique line(s) of event code
