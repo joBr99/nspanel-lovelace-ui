@@ -42,6 +42,11 @@ US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
 
 US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
+
+
+Note: For the US Version Users - keepin mind that you need to add the model config option to your apps.yaml later, more details on config overview page
+
+
 <details>
 <summary>Alternatively you can use your own webserver or the one build into HomeAssistant:</summary>
 <br>
