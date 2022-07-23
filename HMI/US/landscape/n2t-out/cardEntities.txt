@@ -65,6 +65,26 @@ Page cardEntities
             vis nNum4,0
             vis bPrev,0
             vis bNext,0
+            cardEntities.bco=defaultBcoColor
+            for(sys0=0;sys0<65;sys0++)
+            {
+                if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==54)
+                {
+                    b[sys0].bco=defaultBcoColor
+                    b[sys0].pco=defaultFontColor
+                }
+                if(b[sys0].type==53&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=10
+                    b[sys0].pic2=11
+                }
+                if(b[sys0].type==1&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=14
+                    b[sys0].pic1=13
+                    b[sys0].pic2=15
+                }
+            }
         
 Variable (string) strCommand
     Attributes
@@ -1008,6 +1028,10 @@ Hotspot m2
                 //popupLight.tEntity.txt=tEntity3.txt
                 page popupLight
             }
+            if(type3.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot m1
     Attributes
@@ -1029,6 +1053,10 @@ Hotspot m1
             {
                 //popupLight.tEntity.txt=tEntity2.txt
                 page popupLight
+            }
+            if(type2.txt=="fan")
+            {
+                page popupFan
             }
         
 Hotspot m0
@@ -1052,6 +1080,10 @@ Hotspot m0
                 //popupLight.tEntity.txt=tEntity1.txt
                 page popupLight
             }
+            if(type1.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot m3
     Attributes
@@ -1073,6 +1105,10 @@ Hotspot m3
             {
                 //popupLight.tEntity.txt=tEntity4.txt
                 page popupLight
+            }
+            if(type4.txt=="fan")
+            {
+                page popupFan
             }
         
 Hotspot mSwipeNext
@@ -1929,6 +1965,18 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
                                         dim=dimValueNormal
+                                        // get background color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultBcoColor,0,0
+                                        }
+                                        // get font color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultFontColor,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
