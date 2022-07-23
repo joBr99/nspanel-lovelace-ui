@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-07-23 11:57:25.607877939 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 11:57:26.123891121 +0000
+--- HMI/n2t-out/Program.s.txt	2022-07-23 14:02:48.223325770 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 14:02:48.731331848 +0000
 @@ -14,6 +14,6 @@
      //color vars
      int defaultFontColor=65535
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-07-23 11:57:25.611878041 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 11:57:26.123891121 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-07-23 14:02:48.227325818 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 14:02:48.731331848 +0000
 @@ -65,6 +65,16 @@
              vis nNum4,0
              vis bPrev,0
@@ -301,101 +301,165 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSwipeNext
      Attributes
          Scope                               : local
-@@ -1313,7 +1545,21 @@
-                                                 tsw bDown1,1
-                                             }
+@@ -1830,6 +2062,155 @@
+                                             covx tTmp.txt,sys0,0,0
+                                             hSlider4.maxval=sys0
                                          }
--                                        if(type1.txt=="light"||type1.txt=="switch"||type1.txt=="fan")
-+                                        if(type1.txt=="light")
++                                        // get Type
++                                        spstr strCommand.txt,type5.txt,"~",27
++                                        // get internal name
++                                        spstr strCommand.txt,entn5.txt,"~",28
++                                        if(type5.txt=="delete"||type5.txt=="")
 +                                        {
-+                                            vis bUp1,0
-+                                            vis bStop1,0
-+                                            vis bDown1,0
-+                                            vis btOnOff1,1
-+                                            vis bText1,0
-+                                            vis hSlider1,0
-+                                            vis nNum1,0
-+                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,"~",8
-+                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff1.val=sys0
-+                                        }
-+                                        if(type1.txt=="switch")
-                                         {
-                                             vis bUp1,0
-                                             vis bStop1,0
-@@ -1462,7 +1708,21 @@
-                                                 tsw bDown2,1
-                                             }
-                                         }
--                                        if(type2.txt=="light"||type2.txt=="switch"||type2.txt=="fan")
-+                                        if(type2.txt=="light")
++                                            vis bUp5,0
++                                            vis bStop5,0
++                                            vis bDown5,0
++                                            vis btOnOff5,0
++                                            vis tEntity5,0
++                                            vis tIcon5,0
++                                            vis bText5,0
++                                            vis hSlider5,0
++                                            vis nNum5,0
++                                        }else
 +                                        {
-+                                            vis bUp2,0
-+                                            vis bStop2,0
-+                                            vis bDown2,0
-+                                            vis btOnOff2,1
-+                                            vis bText2,0
-+                                            vis hSlider2,0
-+                                            vis nNum2,0
-+                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,"~",14
++                                            // change icon
++                                            spstr strCommand.txt,tIcon5.txt,"~",29
++                                            vis tIcon5,1
++                                            // change icon color
++                                            spstr strCommand.txt,tTmp.txt,"~",30
 +                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff2.val=sys0
++                                            tIcon5.pco=sys0
++                                            // set name
++                                            spstr strCommand.txt,tEntity5.txt,"~",31
++                                            vis tEntity5,1
 +                                        }
-+                                        if(type2.txt=="switch")
-                                         {
-                                             vis bUp2,0
-                                             vis bStop2,0
-@@ -1611,7 +1871,21 @@
-                                                 tsw bDown3,1
-                                             }
-                                         }
--                                        if(type3.txt=="light"||type3.txt=="switch"||type3.txt=="fan")
-+                                        if(type3.txt=="light")
++                                        if(type5.txt=="shutter")
 +                                        {
-+                                            vis bUp3,0
-+                                            vis bStop3,0
-+                                            vis bDown3,0
-+                                            vis btOnOff3,1
-+                                            vis bText3,0
-+                                            vis hSlider3,0
-+                                            vis nNum3,0
++                                            vis bUp5,1
++                                            vis bStop5,1
++                                            vis bDown5,1
++                                            vis btOnOff5,0
++                                            vis bText5,0
++                                            vis hSlider5,0
++                                            vis nNum5,0
 +                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,"~",20
-+                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff3.val=sys0
++                                            spstr strCommand.txt,tId.txt,"~",32
++                                            // up button
++                                            spstr tId.txt,tTmp.txt,"|",3
++                                            if(tTmp.txt=="disable")
++                                            {
++                                                bUp5.pco=27501
++                                                spstr tId.txt,bUp5.txt,"|",0
++                                                tsw bUp5,0
++                                            }else if(tTmp.txt=="enable")
++                                            {
++                                                bUp5.pco=65535
++                                                spstr tId.txt,bUp5.txt,"|",0
++                                                tsw bUp5,1
++                                            }
++                                            // stop button
++                                            spstr tId.txt,tTmp.txt,"|",4
++                                            if(tTmp.txt=="disable")
++                                            {
++                                                bStop5.pco=27501
++                                                spstr tId.txt,bStop5.txt,"|",1
++                                                tsw bStop5,0
++                                            }else if(tTmp.txt=="enable")
++                                            {
++                                                bStop5.pco=65535
++                                                spstr tId.txt,bStop5.txt,"|",1
++                                                tsw bStop5,1
++                                            }
++                                            // down button
++                                            spstr tId.txt,tTmp.txt,"|",5
++                                            if(tTmp.txt=="disable")
++                                            {
++                                                bDown5.pco=27501
++                                                spstr tId.txt,bDown5.txt,"|",2
++                                                tsw bDown5,0
++                                            }else if(tTmp.txt=="enable")
++                                            {
++                                                bDown5.pco=65535
++                                                spstr tId.txt,bDown5.txt,"|",2
++                                                tsw bDown5,1
++                                            }
 +                                        }
-+                                        if(type3.txt=="switch")
-                                         {
-                                             vis bUp3,0
-                                             vis bStop3,0
-@@ -1760,7 +2034,21 @@
-                                                 tsw bDown4,1
-                                             }
-                                         }
--                                        if(type4.txt=="light"||type4.txt=="switch"||type4.txt=="fan")
-+                                        if(type4.txt=="light")
++                                        if(type5.txt=="light"||type5.txt=="switch"||type5.txt=="fan")
 +                                        {
-+                                            vis bUp4,0
-+                                            vis bStop4,0
-+                                            vis bDown4,0
-+                                            vis btOnOff4,1
-+                                            vis bText4,0
-+                                            vis hSlider4,0
-+                                            vis nNum4,0
++                                            vis bUp5,0
++                                            vis bStop5,0
++                                            vis bDown5,0
++                                            vis btOnOff5,1
++                                            vis bText5,0
++                                            vis hSlider5,0
++                                            vis nNum5,0
 +                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,"~",26
++                                            spstr strCommand.txt,tTmp.txt,"~",32
 +                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff4.val=sys0
++                                            btOnOff5.val=sys0
 +                                        }
-+                                        if(type4.txt=="switch")
-                                         {
-                                             vis bUp4,0
-                                             vis bStop4,0
++                                        if(type5.txt=="text")
++                                        {
++                                            vis bUp5,0
++                                            vis bStop5,0
++                                            vis bDown5,0
++                                            vis btOnOff5,0
++                                            vis bText5,1
++                                            tsw bText5,0
++                                            vis hSlider5,0
++                                            vis nNum5,0
++                                            bText5.pco=65535
++                                            bText5.pco2=65535
++                                            // get Text (optional Value)
++                                            spstr strCommand.txt,bText5.txt,"~",32
++                                        }
++                                        if(type5.txt=="button")
++                                        {
++                                            vis bUp5,0
++                                            vis bStop5,0
++                                            vis bDown5,0
++                                            vis btOnOff5,0
++                                            vis bText5,1
++                                            tsw bText5,1
++                                            vis hSlider5,0
++                                            vis nNum5,0
++                                            bText5.pco=1374
++                                            bText5.pco2=1374
++                                            // get Text (optional Value)
++                                            spstr strCommand.txt,bText5.txt,"~",32
++                                        }
++                                        if(type5.txt=="number")
++                                        {
++                                            vis bUp5,0
++                                            vis bStop5,0
++                                            vis bDown5,0
++                                            vis btOnOff5,0
++                                            vis bText5,0
++                                            tsw bText5,0
++                                            vis hSlider5,1
++                                            vis nNum5,1
++                                            // get config (optional Value) (use bText as variable)
++                                            spstr strCommand.txt,bText5.txt,"~",32
++                                            //first value is current value
++                                            spstr bText5.txt,tTmp.txt,"|",0
++                                            covx tTmp.txt,sys0,0,0
++                                            hSlider5.val=sys0
++                                            nNum5.val=sys0
++                                            //second value is min value
++                                            spstr bText5.txt,tTmp.txt,"|",1
++                                            covx tTmp.txt,sys0,0,0
++                                            hSlider5.minval=sys0
++                                            //third value is max value
++                                            spstr bText5.txt,tTmp.txt,"|",2
++                                            covx tTmp.txt,sys0,0,0
++                                            hSlider5.maxval=sys0
++                                        }
+                                     }
+                                     if(tInstruction.txt=="pageType")
+                                     {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-07-23 11:57:25.607877939 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 11:57:26.123891121 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-07-23 14:02:48.223325770 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 14:02:48.731331848 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled

@@ -2285,21 +2285,7 @@ Timer tmSerial
                                                 tsw bDown1,1
                                             }
                                         }
-                                        if(type1.txt=="light")
-                                        {
-                                            vis bUp1,0
-                                            vis bStop1,0
-                                            vis bDown1,0
-                                            vis btOnOff1,1
-                                            vis bText1,0
-                                            vis hSlider1,0
-                                            vis nNum1,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",8
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff1.val=sys0
-                                        }
-                                        if(type1.txt=="switch")
+                                        if(type1.txt=="light"||type1.txt=="switch"||type1.txt=="fan")
                                         {
                                             vis bUp1,0
                                             vis bStop1,0
@@ -2448,21 +2434,7 @@ Timer tmSerial
                                                 tsw bDown2,1
                                             }
                                         }
-                                        if(type2.txt=="light")
-                                        {
-                                            vis bUp2,0
-                                            vis bStop2,0
-                                            vis bDown2,0
-                                            vis btOnOff2,1
-                                            vis bText2,0
-                                            vis hSlider2,0
-                                            vis nNum2,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",14
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff2.val=sys0
-                                        }
-                                        if(type2.txt=="switch")
+                                        if(type2.txt=="light"||type2.txt=="switch"||type2.txt=="fan")
                                         {
                                             vis bUp2,0
                                             vis bStop2,0
@@ -2611,21 +2583,7 @@ Timer tmSerial
                                                 tsw bDown3,1
                                             }
                                         }
-                                        if(type3.txt=="light")
-                                        {
-                                            vis bUp3,0
-                                            vis bStop3,0
-                                            vis bDown3,0
-                                            vis btOnOff3,1
-                                            vis bText3,0
-                                            vis hSlider3,0
-                                            vis nNum3,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",20
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff3.val=sys0
-                                        }
-                                        if(type3.txt=="switch")
+                                        if(type3.txt=="light"||type3.txt=="switch"||type3.txt=="fan")
                                         {
                                             vis bUp3,0
                                             vis bStop3,0
@@ -2774,21 +2732,7 @@ Timer tmSerial
                                                 tsw bDown4,1
                                             }
                                         }
-                                        if(type4.txt=="light")
-                                        {
-                                            vis bUp4,0
-                                            vis bStop4,0
-                                            vis bDown4,0
-                                            vis btOnOff4,1
-                                            vis bText4,0
-                                            vis hSlider4,0
-                                            vis nNum4,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",26
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff4.val=sys0
-                                        }
-                                        if(type4.txt=="switch")
+                                        if(type4.txt=="light"||type4.txt=="switch"||type4.txt=="fan")
                                         {
                                             vis bUp4,0
                                             vis bStop4,0
