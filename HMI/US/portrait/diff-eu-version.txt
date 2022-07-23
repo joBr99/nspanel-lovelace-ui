@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 08:51:49.061349901 +0000
+--- HMI/n2t-out/Program.s.txt	2022-07-23 08:57:50.363086553 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 08:57:50.911090274 +0000
 @@ -14,6 +14,6 @@
      //color vars
      int defaultFontColor=65535
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
---- HMI/n2t-out/cardAlarm.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-07-23 08:51:49.065349991 +0000
+--- HMI/n2t-out/cardAlarm.txt	2022-07-23 08:57:50.367086580 +0000
++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-07-23 08:57:50.915090301 +0000
 @@ -12,6 +12,21 @@
      
      Events
@@ -62,8 +62,8 @@ diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
  Variable (string) strCommand
      Attributes
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 08:51:49.065349991 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-07-23 08:57:50.367086580 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 08:57:50.915090301 +0000
 @@ -12,6 +12,22 @@
      
      Events
@@ -428,8 +428,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
          
  Hotspot mSwipeNext
 diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
---- HMI/n2t-out/cardGrid.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-23 08:51:49.065349991 +0000
+--- HMI/n2t-out/cardGrid.txt	2022-07-23 08:57:50.367086580 +0000
++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-23 08:57:50.915090301 +0000
 @@ -12,6 +12,11 @@
      
      Events
@@ -470,8 +470,8 @@ diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
  TouchCap tc0
      Attributes
 diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
---- HMI/n2t-out/cardMedia.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-07-23 08:51:49.065349991 +0000
+--- HMI/n2t-out/cardMedia.txt	2022-07-23 08:57:50.363086553 +0000
++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-07-23 08:57:50.915090301 +0000
 @@ -12,30 +12,26 @@
      
      Events
@@ -514,8 +514,8 @@ diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
  Variable (string) strCommand
      Attributes
 diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
---- HMI/n2t-out/cardQR.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/cardQR.txt	2022-07-23 08:51:49.065349991 +0000
+--- HMI/n2t-out/cardQR.txt	2022-07-23 08:57:50.367086580 +0000
++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-07-23 08:57:50.911090274 +0000
 @@ -32,25 +32,6 @@
              vis bText2,0
              tsw m0,0
@@ -542,34 +542,9 @@ diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
          
  Variable (string) strCommand
      Attributes
-diff -bur HMI/n2t-out/cardThermo.txt HMI/US/portrait/n2t-out/cardThermo.txt
---- HMI/n2t-out/cardThermo.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/cardThermo.txt	2022-07-23 08:51:49.065349991 +0000
-@@ -41,21 +41,6 @@
-             vis xTempDest1,0
-             vis bPrev,0
-             vis bNext,0
--            cardThermo.bco=defaultBcoColor
--            for(sys0=0;sys0<53;sys0++)
--            {
--                if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==59)
--                {
--                    b[sys0].bco=defaultBcoColor
--                    b[sys0].pco=defaultFontColor
--                }
--                if(b[sys0].type==53)
--                {
--                    b[sys0].bco=defaultBcoColor
--                    b[sys0].bco2=defaultBcoColor
--                    b[sys0].pco=defaultFontColor
--                }
--            }
-         
- Variable (string) strCommand
-     Attributes
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 08:51:49.065349991 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-07-23 08:57:50.363086553 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 08:57:50.915090301 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -588,28 +563,9 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              //send calc crc
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
-diff -bur HMI/n2t-out/popupLight.txt HMI/US/portrait/n2t-out/popupLight.txt
---- HMI/n2t-out/popupLight.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/popupLight.txt	2022-07-23 08:51:49.065349991 +0000
-@@ -50,14 +50,10 @@
-             vis t0,0
-             vis pColorWheel,0
-             //vis t0,0
--            popupLight.bco=defaultBcoColor
--            for(sys0=0;sys0<27;sys0++)
--            {
--                if(b[sys0].type==98||b[sys0].type==116)
-+            for(sys0=0;sys0<40;sys0++)
-                 {
-                     b[sys0].bco=defaultBcoColor
-                     b[sys0].pco=defaultFontColor
--                }
-                 if(b[sys0].type==53&&defaultBcoColor==0)
-                 {
-                     b[sys0].pic=10
 diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
---- HMI/n2t-out/popupShutter.txt	2022-07-23 08:51:48.553338369 +0000
-+++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-07-23 08:51:49.065349991 +0000
+--- HMI/n2t-out/popupShutter.txt	2022-07-23 08:57:50.363086553 +0000
++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-07-23 08:57:50.911090274 +0000
 @@ -143,7 +143,7 @@
          Send Component ID                   : disabled
          Associated Keyboard                 : none
