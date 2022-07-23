@@ -56,11 +56,11 @@ cardAlarm
 	254  Unique line(s) of event code
 cardEntities
 	65   Component(s)
-	1179 Line(s) of event code
-	518  Unique line(s) of event code
+	1127 Line(s) of event code
+	514  Unique line(s) of event code
 
 Total
 	14   Page(s)
 	432  Component(s)
-	5193 Line(s) of event code
+	5141 Line(s) of event code
 	1351 Unique line(s) of event code
