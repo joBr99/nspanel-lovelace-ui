@@ -36,6 +36,14 @@ It is also possible to configure different icon overwrites per state:
                 "off": mdi:lightbulb
 ```
 
+It is also possible to configure different color overwrites per state:
+
+```yaml
+            color:
+                "on": [255,0,0]
+                "off": [0,0,255]
+```
+
 It is also possible to use text instead of icons with `text:X`
 
 ```yaml
