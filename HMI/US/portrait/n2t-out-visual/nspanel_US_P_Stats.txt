@@ -18,14 +18,14 @@ popupLight
 	27   Component(s)
 	386  Line(s) of event code
 	211  Unique line(s) of event code
+popupFan
+	20   Component(s)
+	236  Line(s) of event code
+	150  Unique line(s) of event code
 cardMedia
 	34   Component(s)
 	388  Line(s) of event code
 	209  Unique line(s) of event code
-popupFan
-	20   Component(s)
-	234  Line(s) of event code
-	148  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	167  Line(s) of event code
@@ -62,5 +62,5 @@ cardThermo
 Total
 	14   Page(s)
 	444  Component(s)
-	5280 Line(s) of event code
-	1369 Unique line(s) of event code
+	5282 Line(s) of event code
+	1370 Unique line(s) of event code
