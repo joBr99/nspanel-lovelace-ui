@@ -10,9 +10,9 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 
 **EU Model and US Model supported (in portrait and landscape orientation)**
 
-Content of the screen is controlled by a AppDaemon Python Script installed on your HomeAssistant Instance.
+The content of the screen is controlled by an AppDaemon Python Script installed on your HomeAssistant Instance.
 
-Or an TypeScript on your ioBroker Instance in case you are an ioBroker User.
+Or a TypeScript on your ioBroker Instance in case you are an ioBroker User.
 
 NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 
@@ -22,7 +22,7 @@ NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 
 - Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light, input_text (read-only), lock, fan and automation
 - Grid Page with support for cover, switch, input_boolean, button, scenes, light, lock and automation
-- Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
+- Detail Pages for Lights (Brightness, Temperature and Color of the Light) and Covers (Position)
 - Thermostat Page 
 - Media Player Card
 - Alarm Control Card
@@ -32,7 +32,7 @@ NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 - **Everything is dynamically configurable by a yaml config, no need to code or touch Nextion Editor**
 
 It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
-To control the panel and update it with content from HomeAssistant there is an [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
+To control the panel and update it with content from HomeAssistant, use the [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
 
 See the following picture to get an idea of the look of this firmware for NSPanel.
 
