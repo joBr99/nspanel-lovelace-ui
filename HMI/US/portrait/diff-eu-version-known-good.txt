@@ -293,6 +293,10 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                //popupLight.tEntity.txt=tEntity5.txt
 +                page popupLight
 +            }
++            if(type5.txt=="fan")
++            {
++                page popupFan
++            }
 +        
  Hotspot mSwipeNext
      Attributes
