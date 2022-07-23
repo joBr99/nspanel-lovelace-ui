@@ -73,6 +73,26 @@ Page cardEntities
             vis nNum4,0
             vis bPrev,0
             vis bNext,0
+            cardEntities.bco=defaultBcoColor
+            for(sys0=0;sys0<65;sys0++)
+            {
+                if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==54)
+                {
+                    b[sys0].bco=defaultBcoColor
+                    b[sys0].pco=defaultFontColor
+                }
+                if(b[sys0].type==53&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=10
+                    b[sys0].pic2=11
+                }
+                if(b[sys0].type==1&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=14
+                    b[sys0].pic1=13
+                    b[sys0].pic2=15
+                }
+            }
         
 Variable (string) strCommand
     Attributes
@@ -275,7 +295,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 1
+        Font ID                             : 2
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -1925,6 +1945,10 @@ Hotspot m2
                 //popupLight.tEntity.txt=tEntity3.txt
                 page popupLight
             }
+            if(type3.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot m1
     Attributes
@@ -1955,6 +1979,10 @@ Hotspot m1
             {
                 //popupLight.tEntity.txt=tEntity2.txt
                 page popupLight
+            }
+            if(type2.txt=="fan")
+            {
+                page popupFan
             }
         
 Hotspot m0
@@ -1987,6 +2015,10 @@ Hotspot m0
                 //popupLight.tEntity.txt=tEntity1.txt
                 page popupLight
             }
+            if(type1.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot m3
     Attributes
@@ -2018,6 +2050,10 @@ Hotspot m3
                 //popupLight.tEntity.txt=tEntity4.txt
                 page popupLight
             }
+            if(type4.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot mSwipeNext
     Attributes
@@ -2027,9 +2063,9 @@ Hotspot mSwipeNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 471
+        x coordinate                        : 472
         y coordinate                        : 5
-        Width                               : 9
+        Width                               : 8
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
@@ -2047,10 +2083,10 @@ Hotspot mSwipeUp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 12
+        x coordinate                        : 25
         y coordinate                        : 0
-        Width                               : 453
-        Height                              : 9
+        Width                               : 425
+        Height                              : 7
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2069,7 +2105,7 @@ Hotspot mSwipePrev
         Opacity                             : 127
         x coordinate                        : 0
         y coordinate                        : 5
-        Width                               : 9
+        Width                               : 8
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
@@ -2901,6 +2937,18 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
                                         dim=dimValueNormal
+                                        // get background color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultBcoColor,0,0
+                                        }
+                                        // get font color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultFontColor,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

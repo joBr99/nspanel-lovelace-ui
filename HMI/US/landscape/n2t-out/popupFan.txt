@@ -1,4 +1,4 @@
-Page popupShutter
+Page popupFan
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -19,16 +19,13 @@ Page popupShutter
             entn.txt=pageIcons.tTmp2.txt
             vis p0,0
             vis tSend,0
-            vis tPosHeading,0
-            vis hPosition,0
-            vis hTilt,0
-            vis bTLeft,0
-            vis bTStop,0
-            vis bTRight,0
+            vis tTmp,0
+            vis tInstruction,0
+            vis tId,0
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
-            tSend.txt="event,pageOpenDetail,popupShutter,"+entn.txt
+            tSend.txt="event,pageOpenDetail,popupFan,"+entn.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -40,39 +37,26 @@ Page popupShutter
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            popupShutter.bco=defaultBcoColor
-            b0.bco=defaultBcoColor
-            tIcon1.bco=defaultBcoColor
-            tEntity.bco=defaultBcoColor
-            tInfo1.bco=defaultBcoColor
-            tPosHeading.bco=defaultBcoColor
-            tTiltHeading.bco=defaultBcoColor
-            bUp1.bco=defaultBcoColor
-            bStop1.bco=defaultBcoColor
-            bDown1.bco=defaultBcoColor
-            bTLeft.bco=defaultBcoColor
-            bTStop.bco=defaultBcoColor
-            bTRight.bco=defaultBcoColor
-            b0.pco=defaultFontColor
-            tIcon1.pco=defaultFontColor
-            tEntity.pco=defaultFontColor
-            tInfo1.pco=defaultFontColor
-            tPosHeading.pco=defaultFontColor
-            tTiltHeading.pco=defaultFontColor
-            bUp1.pco=defaultFontColor
-            bStop1.pco=defaultFontColor
-            bDown1.pco=defaultFontColor
-            bTLeft.pco=defaultFontColor
-            bTStop.pco=defaultFontColor
-            bTRight.pco=defaultFontColor
+            vis hSpeed,0
+            popupFan.bco=defaultBcoColor
+            for(sys0=0;sys0<40;sys0++)
+            {
+                if(b[sys0].type==98||b[sys0].type==116)
+                {
+                    b[sys0].bco=defaultBcoColor
+                    b[sys0].pco=defaultFontColor
+                }
+                if(b[sys0].type==53&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=10
+                    b[sys0].pic2=11
+                }
+            }
             if(defaultBcoColor==0)
             {
-                hTilt.pic=14
-                hTilt.pic1=13
-                hTilt.pic2=15
-                hPosition.pic=14
-                hPosition.pic1=13
-                hPosition.pic2=15
+                hSpeed.pic=14
+                hSpeed.pic1=13
+                hSpeed.pic2=15
             }
         
 Variable (string) strCommand
@@ -87,23 +71,15 @@ Variable (string) entn
         Text          : 
         Max. Text Size: 80
     
-Variable (string) tInstruction
+Variable (int32) mode
     Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 20
+        Scope: local
+        Value: 1
     
-Variable (string) tId
+Variable (int32) mode_temp
     Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 20
-    
-Variable (string) tTmp
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
+        Scope: local
+        Value: 0
     
 Text tEntity
     Attributes
@@ -122,8 +98,18 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î°
+        Text                                : î´
         Max. Text Size                      : 10
+    
+Text t1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Speed
+        Max. Text Size                      : 50
     
 Text tSend
     Attributes
@@ -135,17 +121,7 @@ Text tSend
         Text                                : newtxt
         Max. Text Size                      : 100
     
-Text tPosHeading
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : Position
-        Max. Text Size                      : 30
-    
-Text tInfo1
+Text tTmp
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -153,9 +129,9 @@ Text tInfo1
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 40
+        Max. Text Size                      : 80
     
-Text tTiltHeading
+Text tInstruction
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -163,7 +139,17 @@ Text tTiltHeading
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 30
+        Max. Text Size                      : 20
+    
+Text tId
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
     
 Picture p0
     Attributes
@@ -172,7 +158,7 @@ Picture p0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
     
-Slider hPosition
+Slider hSpeed
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -184,39 +170,11 @@ Slider hPosition
     
     Events
         Touch Release Event
-            // event,buttonPress2,internalNameEntity,positionSlider,50
+            tmCooldown.en=1
+            tmCooldown.tim=2500
             //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",positionSlider,"
-            covx hPosition.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Slider hTilt
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
-        Lower range limit                   : 0
-    
-    Events
-        Touch Release Event
-            // event,buttonPress2,internalNameEntity,positionSlider,50
-            //craft command
-            tSend.txt="event,buttonPress2,"+entn.txt+",tiltSlider,"
-            covx hPosition.val,tTmp.txt,0,0
+            tSend.txt="event,buttonPress2,"+entn.txt+",number-set,"
+            covx hSpeed.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
@@ -242,7 +200,7 @@ Button b0
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,popupShutter,bExit"
+            tSend.txt="event,buttonPress2,popupLight,bExit"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -255,144 +213,22 @@ Button b0
             prints tSend.txt,0
             prints crcval,2
         
-Button bDown1
+Dual-state Button btOnOff1
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : î
+        Text                                : 
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",down"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bStop1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",stop"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bUp1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",up"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bTLeft
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",tiltOpen"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bTStop
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",tiltStop"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bTRight
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn.txt+",tiltClose"
+            //craft command
+            tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
+            covx btOnOff1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -476,125 +312,47 @@ Timer tmSerial
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
                                     spstr strCommand.txt,tTmp.txt,"~",1
-                                    if(tInstruction.txt=="entityUpdateDetail"&&tTmp.txt==entn.txt)
+                                    if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
                                     {
-                                        // get Position value
-                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        // change icon
+                                        spstr strCommand.txt,tIcon1.txt,"~",2
+                                        vis tIcon1,1
+                                        // change icon color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        covx tTmp.txt,sys0,0,0
+                                        tIcon1.pco=sys0
+                                        // get Button State
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        covx tTmp.txt,sys0,0,0
+                                        btOnOff1.val=sys0
+                                        // get Brightness value
+                                        spstr strCommand.txt,tTmp.txt,"~",5
                                         if(tTmp.txt=="disable")
                                         {
-                                            vis tPosHeading,0
-                                            vis hPosition,0
+                                            vis t1,0
+                                            vis hSpeed,0
                                         }else
                                         {
+                                            vis t1,1
+                                            vis hSpeed,1
                                             covx tTmp.txt,sys0,0,0
-                                            hPosition.val=sys0
-                                            vis tPosHeading,1
-                                            vis hPosition,1
+                                            if(tmCooldown.en==0)
+                                            {
+                                                hSpeed.val=sys0
+                                            }
                                         }
-                                        // set tinfo1 text
-                                        spstr strCommand.txt,tInfo1.txt,"~",3
-                                        // set tPosHeading (localization)
-                                        spstr strCommand.txt,tPosHeading.txt,"~",4
-                                        // set tIcon1
-                                        spstr strCommand.txt,tTmp.txt,"~",5
-                                        if(tTmp.txt!="")
-                                        {
-                                            tIcon1.txt=tTmp.txt
-                                        }
-                                        // set icon bUp
-                                        spstr strCommand.txt,tTmp.txt,"~",9
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            tsw bUp1,0
-                                            spstr strCommand.txt,bUp1.txt,"~",6
-                                            bUp1.pco=27501
-                                        }else if(tTmp.txt=="enable")
-                                        {
-                                            spstr strCommand.txt,bUp1.txt,"~",6
-                                            tsw bUp1,1
-                                            bUp1.pco=65535
-                                        }
-                                        // set icon bStop
-                                        spstr strCommand.txt,tTmp.txt,"~",10
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            tsw bStop1,0
-                                            spstr strCommand.txt,bStop1.txt,"~",7
-                                            bStop1.pco=27501
-                                        }else if(tTmp.txt=="enable")
-                                        {
-                                            spstr strCommand.txt,bStop1.txt,"~",7
-                                            tsw bStop1,1
-                                            bStop1.pco=65535
-                                        }
-                                        // set icon bDown
-                                        spstr strCommand.txt,tTmp.txt,"~",11
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            spstr strCommand.txt,bDown1.txt,"~",8
-                                            tsw bDown1,0
-                                            bDown1.pco=27501
-                                        }else if(tTmp.txt=="enable")
-                                        {
-                                            spstr strCommand.txt,bDown1.txt,"~",8
-                                            tsw bDown1,1
-                                            bDown1.pco=65535
-                                        }
-                                        // set tTiltHeading (localization)
-                                        spstr strCommand.txt,tTiltHeading.txt,"~",12
-                                        // set icon bUp
-                                        spstr strCommand.txt,tTmp.txt,"~",16
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            tsw bTLeft,0
-                                            spstr strCommand.txt,bTLeft.txt,"~",13
-                                            bTLeft.pco=27501
-                                            vis bTLeft,1
-                                        }else if(tTmp.txt=="enable")
-                                        {
-                                            spstr strCommand.txt,bTLeft.txt,"~",13
-                                            tsw bTLeft,1
-                                            bTLeft.pco=65535
-                                            vis bTLeft,1
-                                        }
-                                        // set icon bStop
-                                        spstr strCommand.txt,tTmp.txt,"~",17
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            tsw bTStop,0
-                                            spstr strCommand.txt,bTStop.txt,"~",14
-                                            bTStop.pco=27501
-                                            vis bTStop,1
-                                        }else if(tTmp.txt=="enable")
-                                        {
-                                            spstr strCommand.txt,bTStop.txt,"~",14
-                                            tsw bTStop,1
-                                            bTStop.pco=65535
-                                            vis bTStop,1
-                                        }
-                                        // set icon bDown
-                                        spstr strCommand.txt,tTmp.txt,"~",18
-                                        if(tTmp.txt=="disable")
-                                        {
-                                            spstr strCommand.txt,bTRight.txt,"~",15
-                                            tsw bTRight,0
-                                            bTRight.pco=27501
-                                            vis bTRight,1
-                                        }else if(tTmp.txt=="enable")
-                                        {
-                                            spstr strCommand.txt,bTRight.txt,"~",15
-                                            tsw bTRight,1
-                                            bTRight.pco=65535
-                                            vis bTRight,1
-                                        }
-                                        // set tilt slider
-                                        spstr strCommand.txt,tTmp.txt,"~",19
-                                        if(tTmp.txt!="disable")
-                                        {
-                                            vis hTilt,1
-                                            covx tTmp.txt,sys0,0,0
-                                            hTilt.val=sys0
-                                        }
+                                        // set t1 Speed (Localization)
+                                        spstr strCommand.txt,t1.txt,"~",6
+                                    }
+                                    if(tInstruction.txt=="time")
+                                    {
+                                        // get set time to global variable
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+                                    }
+                                    if(tInstruction.txt=="date")
+                                    {
+                                        // get set date to global variable
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
                                     }
                                     if(tInstruction.txt=="dimmode")
                                     {
@@ -617,16 +375,6 @@ Timer tmSerial
                                         {
                                             covx tTmp.txt,defaultFontColor,0,0
                                         }
-                                    }
-                                    if(tInstruction.txt=="time")
-                                    {
-                                        // get set time to global variable
-                                        spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-                                    }
-                                    if(tInstruction.txt=="date")
-                                    {
-                                        // get set date to global variable
-                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {
@@ -704,6 +452,16 @@ Timer tmSerial
                     bufferPos++
                 }
             }
+        
+Timer tmCooldown
+    Attributes
+        Scope      : local
+        Period (ms): 100
+        Enabled    : no
+    
+    Events
+        Timer Event
+            tmCooldown.en=0
         
 TouchCap tc0
     Attributes
