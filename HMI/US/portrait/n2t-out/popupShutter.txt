@@ -143,7 +143,7 @@ Text tPosHeading
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : Position
-        Max. Text Size                      : 15
+        Max. Text Size                      : 30
     
 Text tInfo1
     Attributes
@@ -163,7 +163,7 @@ Text tTiltHeading
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 30
     
 Picture p0
     Attributes
