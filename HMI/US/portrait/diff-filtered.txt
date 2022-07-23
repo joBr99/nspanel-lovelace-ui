@@ -1,164 +1,38 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-07-23 08:57:50.931090410 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-07-23 08:57:50.363086553 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 08:57:50.911090274 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-07-23 09:07:59.252126692 +0000
++--- HMI/n2t-out/Program.s.txt	2022-07-23 09:07:58.768116691 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 09:07:59.236126361 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+diff -bur HMI/n2t-out/cardAlarm.txt HMI/US/portrait/n2t-out/cardAlarm.txt
-+--- HMI/n2t-out/cardAlarm.txt	2022-07-23 08:57:50.367086580 +0000
-++++ HMI/US/portrait/n2t-out/cardAlarm.txt	2022-07-23 08:57:50.915090301 +0000
-+@@ -12,6 +12,21 @@
-+     
-+     Events
-+         Preinitialize Event
-++            for(sys0=0;sys0<40;sys0++)
-++            {
-++                b[sys0].bco=defaultBcoColor
-++                b[sys0].pco=defaultFontColor
-++            }
-++            if(defaultBcoColor==0)
-++            {
-++                tCode.bco=6371
-++                tCode.pco=40179
-++            }
-++            if(defaultBcoColor==6371)
-++            {
-++                tCode.bco=10565
-++                tCode.pco=40179
-++            }
-+             dim=dimValueNormal
-+             vis p0,0
-+             vis tSend,0
-+@@ -37,25 +52,6 @@
-+             vis tCode,0
++--- HMI/n2t-out/cardEntities.txt	2022-07-23 09:07:58.768116691 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 09:07:59.236126361 +0000
++@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
-+-            cardAlarm.bco=defaultBcoColor
-+-            for(sys0=0;sys0<40;sys0++)
-+-            {
-+-                if(b[sys0].type==98||b[sys0].type==116)
-+-                {
-+-                    b[sys0].bco=defaultBcoColor
-+-                    b[sys0].pco=defaultFontColor
-+-                }
-+-            }
-+-            if(defaultBcoColor==0)
-+-            {
-+-                tCode.bco=6371
-+-                tCode.pco=40179
-+-            }
-+-            if(defaultBcoColor==6371)
-+-            {
-+-                tCode.bco=10565
-+-                tCode.pco=40179
-+-            }
-+         
-+ Variable (string) strCommand
-+     Attributes
-+--- HMI/n2t-out/cardEntities.txt	2022-07-23 08:57:50.367086580 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 08:57:50.915090301 +0000
-+@@ -12,6 +12,22 @@
-+     
-+     Events
-+         Preinitialize Event
-++            for(sys0=0;sys0<40;sys0++)
-++            {
-++                b[sys0].bco=defaultBcoColor
-++                b[sys0].pco=defaultFontColor
-++                if(b[sys0].type==53&&defaultBcoColor==0)
-++                {
-++                    b[sys0].pic=10
-++                    b[sys0].pic2=11
-++                }
-++                if(b[sys0].type==1&&defaultBcoColor==0)
-++                {
-++                    b[sys0].pic=14
-++                    b[sys0].pic1=13
-++                    b[sys0].pic2=15
-++                }
-++            }
-+             dim=dimValueNormal
-+             //wup=cardEntities
-+             //remove background & activate reparse mode
-+@@ -65,26 +81,18 @@
-+             vis bPrev,0
-+             vis bNext,0
-+-            cardEntities.bco=defaultBcoColor
-+-            for(sys0=0;sys0<65;sys0++)
-+-            {
-+-                if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==54)
-+-                {
-+-                    b[sys0].bco=defaultBcoColor
-+-                    b[sys0].pco=defaultFontColor
-+-                }
-+-                if(b[sys0].type==53&&defaultBcoColor==0)
-+-                {
-+-                    b[sys0].pic=10
-+-                    b[sys0].pic2=11
-+-                }
-+-                if(b[sys0].type==1&&defaultBcoColor==0)
-+-                {
-+-                    b[sys0].pic=14
-+-                    b[sys0].pic1=13
-+-                    b[sys0].pic2=15
-+-                }
-+-            }
-++            vis bPrev,0
-++            vis bNext,0
-+ Variable (string) strCommand
-+     Attributes
-+@@ -140,6 +148,18 @@
-+@@ -176,6 +196,15 @@
-+@@ -306,6 +335,26 @@
-+@@ -425,6 +474,34 @@
-+@@ -882,6 +959,106 @@
++             cardEntities.bco=defaultBcoColor
++             for(sys0=0;sys0<65;sys0++)
++             {
++@@ -140,6 +150,18 @@
++@@ -176,6 +198,15 @@
++@@ -306,6 +337,26 @@
++@@ -425,6 +476,34 @@
++@@ -882,6 +961,106 @@
 ++        Text                                : 
 ++        Max. Text Size                      : 20
-+@@ -990,6 +1167,33 @@
-+@@ -1028,10 +1232,6 @@
-+                 //popupLight.tEntity.txt=tEntity3.txt
-+                 page popupLight
-+             }
-+-            if(type3.txt=="fan")
-+-            {
-+-                page popupFan
-+-            }
-+         
-+ Hotspot m1
-+     Attributes
-+@@ -1054,10 +1254,6 @@
-+                 //popupLight.tEntity.txt=tEntity2.txt
-+-            if(type2.txt=="fan")
-+-            {
-+-                page popupFan
-+-            }
-+ Hotspot m0
-+     Attributes
-+@@ -1080,10 +1276,6 @@
-+                 //popupLight.tEntity.txt=tEntity1.txt
-+                 page popupLight
-+             }
-+-            if(type1.txt=="fan")
-+-            {
-+-                page popupFan
-+-            }
-+         
-+ Hotspot m3
-+     Attributes
-+@@ -1106,9 +1298,27 @@
-+                 //popupLight.tEntity.txt=tEntity4.txt
-+                 page popupLight
-+             }
-+-            if(type4.txt=="fan")
-++        
++@@ -990,6 +1169,33 @@
++@@ -1110,6 +1316,32 @@
 +             {
-+-                page popupFan
-+             }
++                 page popupFan
+++        
+++            if(type5.txt=="fan")
+++            {
+++                page popupFan
+++            }
 +         
 +diff -bur HMI/n2t-out/cardGrid.txt HMI/US/portrait/n2t-out/cardGrid.txt
-+--- HMI/n2t-out/cardGrid.txt	2022-07-23 08:57:50.367086580 +0000
-++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-23 08:57:50.915090301 +0000
++--- HMI/n2t-out/cardGrid.txt	2022-07-23 09:07:58.768116691 +0000
+++++ HMI/US/portrait/n2t-out/cardGrid.txt	2022-07-23 09:07:59.236126361 +0000
 +@@ -12,6 +12,11 @@
 +     
 +     Events
@@ -196,9 +70,10 @@
 +-            }
 +         
 + TouchCap tc0
++     Attributes
 +diff -bur HMI/n2t-out/cardMedia.txt HMI/US/portrait/n2t-out/cardMedia.txt
-+--- HMI/n2t-out/cardMedia.txt	2022-07-23 08:57:50.363086553 +0000
-++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-07-23 08:57:50.915090301 +0000
++--- HMI/n2t-out/cardMedia.txt	2022-07-23 09:07:58.768116691 +0000
+++++ HMI/US/portrait/n2t-out/cardMedia.txt	2022-07-23 09:07:59.236126361 +0000
 +@@ -12,30 +12,26 @@
 +     Events
 +         Preinitialize Event
@@ -240,8 +115,8 @@
 + Variable (string) strCommand
 +     Attributes
 +diff -bur HMI/n2t-out/cardQR.txt HMI/US/portrait/n2t-out/cardQR.txt
-+--- HMI/n2t-out/cardQR.txt	2022-07-23 08:57:50.367086580 +0000
-++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-07-23 08:57:50.911090274 +0000
++--- HMI/n2t-out/cardQR.txt	2022-07-23 09:07:58.768116691 +0000
+++++ HMI/US/portrait/n2t-out/cardQR.txt	2022-07-23 09:07:59.236126361 +0000
 +@@ -32,25 +32,6 @@
 +             vis bText2,0
 +             tsw m0,0
@@ -267,11 +142,11 @@
 +-            }
 +         
 + Variable (string) strCommand
-+--- HMI/n2t-out/pageStartup.txt	2022-07-23 08:57:50.363086553 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 08:57:50.915090301 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-07-23 09:07:58.768116691 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 09:07:59.236126361 +0000
 +diff -bur HMI/n2t-out/popupShutter.txt HMI/US/portrait/n2t-out/popupShutter.txt
-+--- HMI/n2t-out/popupShutter.txt	2022-07-23 08:57:50.363086553 +0000
-++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-07-23 08:57:50.911090274 +0000
++--- HMI/n2t-out/popupShutter.txt	2022-07-23 09:07:58.768116691 +0000
+++++ HMI/US/portrait/n2t-out/popupShutter.txt	2022-07-23 09:07:59.236126361 +0000
 +@@ -143,7 +143,7 @@
 +         Send Component ID                   : disabled
 +         Associated Keyboard                 : none
