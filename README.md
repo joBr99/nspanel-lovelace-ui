@@ -32,7 +32,7 @@ NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
 - **Everything is dynamically configurable by a yaml config, no need to code or touch Nextion Editor**
 
 It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
-To control the panel and update it with content from HomeAssistant, use the [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
+To control the panel and update it with content from HomeAssistant, Cancel the previous changesthere is an [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
 
 See the following picture to get an idea of the look of this firmware for NSPanel.
 
