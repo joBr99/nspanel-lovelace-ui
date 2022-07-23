@@ -384,33 +384,19 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +                                                tsw bDown5,1
 +                                            }
 +                                        }
-+                                        if(type5.txt=="light")
++                                        if(type5.txt=="light"||type5.txt=="switch"||type5.txt=="fan")
 +                                        {
-+                                            vis bUp5,0
-+                                            vis bStop5,0
-+                                            vis bDown5,0
-+                                            vis btOnOff5,1
-+                                            vis bText5,0
-+                                            vis hSlider5,0
-+                                            vis nNum5,0
-+                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,"~",32
-+                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff5.val=sys0
-+                                        }
-+                                        if(type5.txt=="switch")
-+                                        {
-+                                            vis bUp5,0
-+                                            vis bStop5,0
-+                                            vis bDown5,0
-+                                            vis btOnOff5,1
-+                                            vis bText5,0
-+                                            vis hSlider5,0
-+                                            vis nNum5,0
-+                                            // get Button State (optional Value)
-+                                            spstr strCommand.txt,tTmp.txt,"~",32
-+                                            covx tTmp.txt,sys0,0,0
-+                                            btOnOff5.val=sys0
++                                          vis bUp5,0
++                                          vis bStop5,0
++                                          vis bDown5,0
++                                          vis btOnOff5,1
++                                          vis bText5,0
++                                          vis hSlider5,0
++                                          vis nNum5,0
++                                          // get Button State (optional Value)
++                                          spstr strCommand.txt,tTmp.txt,"~",32
++                                          covx tTmp.txt,sys0,0,0
++                                          btOnOff5.val=sys0
 +                                        }
 +                                        if(type5.txt=="text")
 +                                        {
