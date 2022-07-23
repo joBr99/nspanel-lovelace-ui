@@ -11,4 +11,6 @@ Program.s
     // dim value
     int dimValue=40
     int dimValueNormal=100
-    page pageStartup
+    //color vars
+    int defaultFontColor=65535
+    int defaultBcoColor=6371
