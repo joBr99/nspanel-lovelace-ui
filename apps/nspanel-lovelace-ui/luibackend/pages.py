@@ -235,11 +235,16 @@ class LuiPagesGen(object):
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha("light", state=entity.state, overwrite=icon)
             return f"~{entityType}~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
-        if entityType in ["switch", "input_boolean", "automation", "fan"]:
+        if entityType in ["switch", "input_boolean", "automation"]:
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
             return f"~switch~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
+        if entityType in "fan":
+            switch_val = 1 if entity.state == "on" else 0
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
+            icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+            return f"~fan~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
         if entityType in ["sensor", "binary_sensor"]:
             device_class = entity.attributes.get("device_class", "")
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
