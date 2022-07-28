@@ -103,9 +103,9 @@ It is also possible to use a static value or an input_number/sensor with the ran
 ```
 
 
-`sleepTracking` overrides this setting and sets the brightness to 0 if the state of the configured Home Assistant entity is `off` or `not_home`. You may also use a [Home Assistant group](https://www.home-assistant.io/integrations/group) to track multiple entities.
-
-`sleepOverride` overrides sleepBrightness but does not take precedence over sleepTracking. This is useful if, for example, you want your NSPanel to be brighter than usual if your light is on or if you want to override a panel dimming if you are in the room.
+The config option `sleepTracking` overrides this setting and sets the brightness to 0 if the state of the configured Home Assistant entity is `off` or `not_home`. You may also use a [Home Assistant group](https://www.home-assistant.io/integrations/group) to track multiple entities.
+  
+The config option `sleepOverride` overrides sleepBrightness but does not take precedence over sleepTracking. This is useful if, for example, you want your NSPanel to be brighter than usual if your light is on or if you want to override a panel dimming if you are in the room.
 
 The following example configuration is turning off the screen after sunset, but in case the bedroom light is on the NSPanel brightness will be 20 instead of 0.
 
