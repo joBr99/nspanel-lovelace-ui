@@ -70,9 +70,7 @@ key | optional | type | default | description
 `screensaver` | True | complex | | configuration for screensaver; see docs for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items; see docs for cards
 
-<details>
-<summary>Details on sleepBrightness/screenBrightness and other configs related to screen brightness</summary>
-<br>
+## Details on sleepBrightness/screenBrightness and other configs related to screen brightness
 
 It is possible to schedule a brightness change for the screen at specific times.
 
@@ -119,9 +117,6 @@ The following example configuration is turning off the screen after sunset, but 
       entity: light.bedroomlight
       brightness: 20
 ```
-
-
-</details>
 
 ## Supported keys for locale config
 
