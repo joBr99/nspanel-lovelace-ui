@@ -37,11 +37,14 @@ List of supported entitiy types for this page:
 - sensor
 - button
 - number
+- input_number
 - scenes
 - script
 - input_button
 - light
 - input_text (read-only)
+- input_select
 - lock
+- fan
 - automation
 - iText
