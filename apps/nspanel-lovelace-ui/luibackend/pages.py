@@ -205,7 +205,7 @@ class LuiPagesGen(object):
         if item.condStateNot is not None and item.condState != entity.state:
             return ""
         
-        name = name if name is not None else entity.attributes.friendly_name
+        name = name if name is not None else entity.attributes.get("friendly_name","unknown")
         if entityType == "cover":
 
             device_class = entity.attributes.get("device_class", "window")
