@@ -288,7 +288,9 @@ class LuiController(object):
                 else:
                     self._ha_api.get_entity(entity_id).call_service("lock")
             elif entity_id.startswith('button') or entity_id.startswith('input_button'):
-                self._ha_api.get_entity(entity_id).call_service("press") 
+                self._ha_api.get_entity(entity_id).call_service("press")
+            elif entity_id.startswith('input_select'):
+                self._ha_api.get_entity(entity_id).call_service("select_next")
 
         # for media page
         if button_type == "media-next":
