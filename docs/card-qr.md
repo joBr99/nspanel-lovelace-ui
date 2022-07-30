@@ -36,6 +36,7 @@ List of supported entitiy types for this page:
 - scenes
 - script
 - input_button
+- input_select
 - light
 - input_text (read-only)
 - lock
