@@ -283,16 +283,16 @@ class LuiPagesGen(object):
             text = get_translation(self._locale, "frontend.ui.card.lock.lock") if entity.state == "unlocked" else get_translation(self._locale, "frontend.ui.card.lock.unlock")
             return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
         if entityType in ["number", "input_number"]:
-            icon_id = get_icon_id_ha("number", overwrite=icon)
+            icon_id = get_icon_id_ha("number", state=entity.state, overwrite=icon)
             min_v = entity.attributes.get("min", 0)
             max_v = entity.attributes.get("max", 100)
             return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
         if entityType == "input_text":
-            icon_id = get_icon_id_ha("input_text", overwrite=icon)
+            icon_id = get_icon_id_ha("input_text", state=entity.state, overwrite=icon)
             value = entity.state
             return f"~text~{entityId}~{icon_id}~17299~{name}~{value}"
         if entityType == "input_select":
-            icon_id = get_icon_id_ha("button", overwrite=icon)
+            icon_id = get_icon_id_ha("button", state=entity.state, overwrite=icon)
             text = entity.state
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~unsupported~"
