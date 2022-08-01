@@ -1,0 +1,1302 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Custom Firmware for NsPanel with the design of HomeAssistant's lovelace UI in mind, works with Tasmota.">
+      
+      
+        <meta name="author" content="Johannes Braun">
+      
+      
+        <link rel="canonical" href="https://jobr99.github.io/nspanel-lovelace-ui/config-overview/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Overview - NsPanel Lovelace UI Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=arial,+sans-serif:300,300i,400,400i,700,700i%7Cmonospace:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"arial, sans-serif";--md-code-font:"monospace"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../_assets/user.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//ua.pky.eu/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="" data-md-color-accent="blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="NsPanel Lovelace UI Docs" class="md-header__button md-logo" aria-label="NsPanel Lovelace UI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NsPanel Lovelace UI Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jobr99/nspanel-lovelace-ui" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jobr99/nspanel-lovelace-ui
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="NsPanel Lovelace UI Docs" class="md-nav__button md-logo" aria-label="NsPanel Lovelace UI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    NsPanel Lovelace UI Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jobr99/nspanel-lovelace-ui" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jobr99/nspanel-lovelace-ui
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Getting started (HA)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting started (HA)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting started (HA)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          First steps
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="First steps" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          First steps
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare_nspanel/" class="md-nav__link">
+        Prepare NsPanel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare_ha/" class="md-nav__link">
+        Prepare Home Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configure_mqtt/" class="md-nav__link">
+        Configure MQTT
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Configuration - apps.yaml (HA)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration - apps.yaml (HA)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration - apps.yaml (HA)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Overview
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#details-on-sleepbrightnessscreenbrightness-and-other-configs-related-to-screen-brightness" class="md-nav__link">
+    Details on sleepBrightness/screenBrightness and other configs related to screen brightness
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-keys-for-locale-config" class="md-nav__link">
+    Supported keys for locale config
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config-screensaver/" class="md-nav__link">
+        Screensaver
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Cards
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cards" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Cards
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-entities/" class="md-nav__link">
+        Entities Card
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-grid/" class="md-nav__link">
+        Grid Card
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-climate/" class="md-nav__link">
+        Climate/Thermo Card
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-media/" class="md-nav__link">
+        Media Card
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-alarm/" class="md-nav__link">
+        Alarm Card
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-qr/" class="md-nav__link">
+        Wifi/QR Card
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entities/" class="md-nav__link">
+        Special Settings for Entities
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../subpages/" class="md-nav__link">
+        Subpages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../notifications/" class="md-nav__link">
+        Notifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phys-btn/" class="md-nav__link">
+        Physical Buttons
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Getting started (ioBroker)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting started (ioBroker)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Getting started (ioBroker)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare_nspanel2/" class="md-nav__link">
+        Prepare NsPanel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iobroker-install/" class="md-nav__link">
+        Prepare ioBroker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#details-on-sleepbrightnessscreenbrightness-and-other-configs-related-to-screen-brightness" class="md-nav__link">
+    Details on sleepBrightness/screenBrightness and other configs related to screen brightness
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-keys-for-locale-config" class="md-nav__link">
+    Supported keys for locale config
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
+<p>To confiure your NSPanel to your needs, you need to edit the <code>apps.yaml</code> inside of your Appdaemon config folder and add card and entities you want to display on the screen.</p>
+<p>If you've sucessfully set up mqtt, you should already have a configuration looking like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span><span class="w"></span>
+<span class="nt">nspanel-1</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nspanel-lovelace-ui</span><span class="w"></span>
+<span class="w">  </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NsPanelLovelaceUIManager</span><span class="w"></span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">panelRecvTopic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tele/tasmota_your_mqtt_topic/RESULT&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">panelSendTopic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cmnd/tasmota_your_mqtt_topic/CustomSend&quot;</span><span class="w"></span>
+</code></pre></div>
+<p>You can continue from this point adding configuration for the weather forcecast on the screensaver, configuring a schedule for the brightness of the screensaver and your first cards.</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span><span class="w"></span>
+<span class="nt">nspanel-1</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nspanel-lovelace-ui</span><span class="w"></span>
+<span class="w">  </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NsPanelLovelaceUIManager</span><span class="w"></span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">panelRecvTopic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tele/tasmota_your_mqtt_topic/RESULT&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">panelSendTopic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cmnd/tasmota_your_mqtt_topic/CustomSend&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">sleepTimeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span><span class="w"></span>
+<span class="w">    </span><span class="nt">sleepBrightness</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;7:00:00&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;23:00:00&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">    </span><span class="nt">locale</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;de_DE&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">screensaver</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weather.k3ll3r</span><span class="w"></span>
+<span class="w">    </span><span class="nt">cards</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cardEntities</span><span class="w"></span>
+<span class="w">        </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">switch.example_item</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">light.example_item</span><span class="w"></span>
+<span class="w">        </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Example 1</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cardGrid</span><span class="w"></span>
+<span class="w">        </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">switch.example_item</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">light.example_item</span><span class="w"></span>
+<span class="w">        </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Example 2</span><span class="w"></span>
+</code></pre></div>
+<p>This is the full list of configuration options supported for the config key:</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>optional</th>
+<th>type</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>panelRecvTopic</code></td>
+<td>False</td>
+<td>string</td>
+<td><code>tele/tasmota_your_mqtt_topic/RESULT</code></td>
+<td>The mqtt topic used to receive messages.</td>
+</tr>
+<tr>
+<td><code>panelSendTopic</code></td>
+<td>False</td>
+<td>string</td>
+<td><code>cmnd/tasmota_your_mqtt_topic/CustomSend</code></td>
+<td>The mqtt topic used to send messages.</td>
+</tr>
+<tr>
+<td><code>updateMode</code></td>
+<td>True</td>
+<td>string</td>
+<td><code>auto-notify</code></td>
+<td>Update Mode for flashing of the nextion display firmware, by default it is showing a message asking for the update after updating the backend app in HACS; Possible values: "auto", "auto-notify", "manual"</td>
+</tr>
+<tr>
+<td><code>model</code></td>
+<td>True</td>
+<td>string</td>
+<td><code>eu</code></td>
+<td>Model; Possible values: "eu", "us-l" and "us-p"</td>
+</tr>
+<tr>
+<td><code>sleepTimeout</code></td>
+<td>True</td>
+<td>integer</td>
+<td><code>20</code></td>
+<td>Timeout for the screen to enter screensaver, to disable screensaver use 0</td>
+</tr>
+<tr>
+<td><code>sleepBrightness</code></td>
+<td>True</td>
+<td>integer/complex</td>
+<td><code>20</code></td>
+<td>Brightness for the screen on the screensaver, see example below for complex/scheduled config.</td>
+</tr>
+<tr>
+<td><code>screenBrightness</code></td>
+<td>True</td>
+<td>integer/complex</td>
+<td><code>100</code></td>
+<td>Brightness for the screen during usage, config format is the same as sleepBrightness.</td>
+</tr>
+<tr>
+<td><code>sleepTracking</code></td>
+<td>True</td>
+<td>string</td>
+<td>None</td>
+<td>Forces screensaver brightness to 0 in case entity state is not_home or off, can be a group, person or device_tracker entity.</td>
+</tr>
+<tr>
+<td><code>sleepTrackingZones</code></td>
+<td>True</td>
+<td>list</td>
+<td><code>["not_home", "off"]</code></td>
+<td>Allows you to set your own states for sleepTracking</td>
+</tr>
+<tr>
+<td><code>sleepOverride</code></td>
+<td>True</td>
+<td>complex</td>
+<td>None</td>
+<td>Allows overriding of the sleepBrightness if entity state is on, true or home. Overrides sleepBrightness but sleepTracking takes precedence.</td>
+</tr>
+<tr>
+<td><code>locale</code></td>
+<td>True</td>
+<td>string</td>
+<td><code>en_US</code></td>
+<td>Used by babel to determinante Date format on screensaver, also used for localization.</td>
+</tr>
+<tr>
+<td><code>dateFormatBabel</code></td>
+<td>True</td>
+<td>string</td>
+<td><code>full</code></td>
+<td>formatting options on <a href="https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields">https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields</a></td>
+</tr>
+<tr>
+<td><code>timeFormat</code></td>
+<td>True</td>
+<td>string</td>
+<td><code>%H:%M</code></td>
+<td>Time Format on screensaver. Substring after <code>?</code> is displayed in a seperate smaller textbox. Useful for 12h time format with AM/PM  <pre><code>"%I:%M   ?%p"</code></pre></td>
+</tr>
+<tr>
+<td><code>dateAdditionalTemplate</code></td>
+<td>True</td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Addional Text dispayed after Date, can contain a Homeassistant Template Example <code>" - {{ states('sun.sun') }}"</code></td>
+</tr>
+<tr>
+<td><code>timeAdditionalTemplate</code></td>
+<td>True</td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Addional Text dispayed below Time, can contain a Homeassistant Template</td>
+</tr>
+<tr>
+<td><code>dateFormat</code></td>
+<td>True</td>
+<td>string</td>
+<td><code>%A, %d. %B %Y</code></td>
+<td>date format used if babel is not installed</td>
+</tr>
+<tr>
+<td><code>defaultBackgroundColor</code></td>
+<td>True</td>
+<td>string</td>
+<td>ha-dark</td>
+<td>backgroud color of all cards, valid values: <code>black</code>, <code>ha-dark</code></td>
+</tr>
+<tr>
+<td><code>cards</code></td>
+<td>False</td>
+<td>complex</td>
+<td></td>
+<td>configuration for cards that are displayed on panel; see docs for cards</td>
+</tr>
+<tr>
+<td><code>screensaver</code></td>
+<td>True</td>
+<td>complex</td>
+<td></td>
+<td>configuration for screensaver; see docs for screensaver</td>
+</tr>
+<tr>
+<td><code>hiddenCards</code></td>
+<td>True</td>
+<td>complex</td>
+<td></td>
+<td>configuration for cards that can be accessed though navigate items; see docs for cards</td>
+</tr>
+</tbody>
+</table>
+<h2 id="details-on-sleepbrightnessscreenbrightness-and-other-configs-related-to-screen-brightness">Details on sleepBrightness/screenBrightness and other configs related to screen brightness<a class="headerlink" href="#details-on-sleepbrightnessscreenbrightness-and-other-configs-related-to-screen-brightness" title="Permanent link">&para;</a></h2>
+<p>It is possible to schedule a brightness change for the screen at specific times.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">sleepBrightness</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;7:00:00&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;23:00:00&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">sleepBrightness</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sunrise&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sunset</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">1:00:00&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+</code></pre></div>
+<p>It is also possible to use a static value or an input_number/sensor with the range between 0 and 100 as value for sleepBrightness/screenBrightness:</p>
+<div class="highlight"><pre><span></span><code>    sleepBrightness: input_number.brightness_nspanel
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>    sleepBrightness: 50
+</code></pre></div>
+<p>The config option <code>sleepTracking</code> overrides this setting and sets the brightness to 0 if the state of the configured Home Assistant entity is <code>off</code> or <code>not_home</code>. You may also use a <a href="https://www.home-assistant.io/integrations/group">Home Assistant group</a> to track multiple entities.</p>
+<p>The config option <code>sleepOverride</code> overrides sleepBrightness but does not take precedence over sleepTracking. This is useful if, for example, you want your NSPanel to be brighter than usual if your light is on or if you want to override a panel dimming if you are in the room.</p>
+<p>The following example configuration is turning off the screen after sunset, but in case the bedroom light is on the NSPanel brightness will be 20 instead of 0.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">sleepBrightness</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sunrise&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sunset&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">    </span><span class="nt">sleepOverride</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">entity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">light.bedroomlight</span><span class="w"></span>
+<span class="w">      </span><span class="nt">brightness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span><span class="w"></span>
+</code></pre></div>
+<h2 id="supported-keys-for-locale-config">Supported keys for locale config<a class="headerlink" href="#supported-keys-for-locale-config" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Language Code</th>
+<th>Language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>af_ZA</code></td>
+<td>Afrikaans</td>
+</tr>
+<tr>
+<td><code>ar_SY</code></td>
+<td>Arabic</td>
+</tr>
+<tr>
+<td><code>bg_BG</code></td>
+<td>Bulgarian</td>
+</tr>
+<tr>
+<td><code>ca_ES</code></td>
+<td>Catalan</td>
+</tr>
+<tr>
+<td><code>cs_CZ</code></td>
+<td>Czech</td>
+</tr>
+<tr>
+<td><code>da_DK</code></td>
+<td>Danish</td>
+</tr>
+<tr>
+<td><code>de_DE</code></td>
+<td>German</td>
+</tr>
+<tr>
+<td><code>el_GR</code></td>
+<td>Greek</td>
+</tr>
+<tr>
+<td><code>en_US</code></td>
+<td>English</td>
+</tr>
+<tr>
+<td><code>es_ES</code></td>
+<td>Spanish</td>
+</tr>
+<tr>
+<td><code>et_EE</code></td>
+<td>Estonian</td>
+</tr>
+<tr>
+<td><code>fa_IR</code></td>
+<td>Persian</td>
+</tr>
+<tr>
+<td><code>fi_FI</code></td>
+<td>Finnish</td>
+</tr>
+<tr>
+<td><code>fr_FR</code></td>
+<td>French</td>
+</tr>
+<tr>
+<td><code>he_IL</code></td>
+<td>Hebrew</td>
+</tr>
+<tr>
+<td><code>hr_xx</code></td>
+<td>Croatian</td>
+</tr>
+<tr>
+<td><code>hu_HU</code></td>
+<td>Hungarian</td>
+</tr>
+<tr>
+<td><code>hy_AM</code></td>
+<td>Armenian</td>
+</tr>
+<tr>
+<td><code>id_ID</code></td>
+<td>Indonesian</td>
+</tr>
+<tr>
+<td><code>is_IS</code></td>
+<td>Icelandic</td>
+</tr>
+<tr>
+<td><code>it_IT</code></td>
+<td>Italian</td>
+</tr>
+<tr>
+<td><code>lb_xx</code></td>
+<td>Luxembourgish</td>
+</tr>
+<tr>
+<td><code>lt_LT</code></td>
+<td>Lithuanian</td>
+</tr>
+<tr>
+<td><code>lv_LV</code></td>
+<td>Latvian</td>
+</tr>
+<tr>
+<td><code>nb_NO</code></td>
+<td>Norwegian</td>
+</tr>
+<tr>
+<td><code>nl_NL</code></td>
+<td>Dutch</td>
+</tr>
+<tr>
+<td><code>nn_NO</code></td>
+<td>Norwegian</td>
+</tr>
+<tr>
+<td><code>pl_PL</code></td>
+<td>Polish</td>
+</tr>
+<tr>
+<td><code>pt_PT</code></td>
+<td>Portuguese</td>
+</tr>
+<tr>
+<td><code>ro_RO</code></td>
+<td>Romanian</td>
+</tr>
+<tr>
+<td><code>ru_RU</code></td>
+<td>Russian</td>
+</tr>
+<tr>
+<td><code>sk_SK</code></td>
+<td>Slovak</td>
+</tr>
+<tr>
+<td><code>sl_SI</code></td>
+<td>Slovenian</td>
+</tr>
+<tr>
+<td><code>sv_SE</code></td>
+<td>Swedish</td>
+</tr>
+<tr>
+<td><code>th_TH</code></td>
+<td>Thai</td>
+</tr>
+<tr>
+<td><code>tr_TR</code></td>
+<td>Turkish</td>
+</tr>
+<tr>
+<td><code>uk_UA</code></td>
+<td>Ukrainian</td>
+</tr>
+<tr>
+<td><code>vi_VN</code></td>
+<td>Vietnamese</td>
+</tr>
+<tr>
+<td><code>zh_CN</code></td>
+<td>Simplified Chinese</td>
+</tr>
+<tr>
+<td><code>zh_TW</code></td>
+<td>Traditional Chinese</td>
+</tr>
+</tbody>
+</table>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../faq/" class="md-footer__link md-footer__link--prev" aria-label="Previous: FAQ" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              FAQ
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../config-screensaver/" class="md-footer__link md-footer__link--next" aria-label="Next: Screensaver" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Screensaver
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2022 Johannes Braun
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.expand", "search.highlight", "search.share", "search.suggest"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
