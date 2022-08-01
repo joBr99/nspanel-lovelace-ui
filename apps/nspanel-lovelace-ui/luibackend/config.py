@@ -76,6 +76,7 @@ class LuiBackendConfig(object):
             'sleepBrightness': 20,
             'screenBrightness': 100,
             'sleepTracking': None,
+            'sleepTrackingZones': ["not_home", "off"],
             'sleepOverride': None,
             'locale': "en_US",
             'timeFormat': "%H:%M",

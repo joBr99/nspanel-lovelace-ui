@@ -95,7 +95,7 @@ class LuiController(object):
         sleepBrightness = 0
         brightness = self.calc_current_brightness(self._config.get("screenBrightness"))
 
-        if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state in ["not_home", "off"]:
+        if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state in self._config.get("sleepTrackingZones"):
             self._ha_api.log(f"sleepTracking setting brightness to 0")
             sleepBrightness = 0
 
