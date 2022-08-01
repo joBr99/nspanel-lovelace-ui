@@ -137,18 +137,17 @@ class LuiController(object):
             sorted_timesets = sorted(sleep_brightness_config, key=lambda d: self._ha_api.parse_time(d['time']))
             # calc current screensaver brightness
             found_current_dim_value = False
-            for index, timeset in enumerate(sorted_timesets):
-                self._ha_api.log("Current time %s", self._ha_api.get_now().time())
-                if self._ha_api.parse_time(timeset["time"]) > self._ha_api.get_now().time() and not found_current_dim_value:
-                    # first time after current time, set dim value
-                    current_screensaver_brightness = sorted_timesets[index-1]["value"]
-                    self._ha_api.log("Setting dim value to %s", sorted_timesets[index-1])
+            for i in range(len(sorted_timesets)):
+                found = self._ha_api.now_is_between(sorted_timesets[i-1]['time'], sorted_timesets[i]['time'])
+                if found:
                     found_current_dim_value = True
+                    current_screensaver_brightness = sorted_timesets[i-1]['value']
             # still no dim value
             if not found_current_dim_value:
+                self._ha_api.log("Chooseing %s as fallback", sorted_timesets[0])
                 current_screensaver_brightness = sorted_timesets[0]["value"]
         return current_screensaver_brightness
-
+    
     def register_callbacks(self):
         items = self._config.get_all_entity_names()
         self._ha_api.log(f"Registering callbacks for the following items: {items}")
