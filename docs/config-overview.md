@@ -58,6 +58,7 @@ key | optional | type | default | description
 `sleepBrightness` | True | integer/complex | `20` | Brightness for the screen on the screensaver, see example below for complex/scheduled config.
 `screenBrightness` | True | integer/complex | `100` | Brightness for the screen during usage, config format is the same as sleepBrightness.
 `sleepTracking` | True | string | None | Forces screensaver brightness to 0 in case entity state is not_home or off, can be a group, person or device_tracker entity.
+`sleepTrackingZones` | True | list | `["not_home", "off"]` | Allows you to set your own stats for sleepTracking
 `sleepOverride` | True | complex | None | Allows overriding of the sleepBrightness if entity state is on, true or home. Overrides sleepBrightness but sleepTracking takes precedence.
 `locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
 `dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
