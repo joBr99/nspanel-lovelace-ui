@@ -637,7 +637,7 @@ class LuiPagesGen(object):
         icon_color = self.get_entity_color(entity)
         speed = entity.attributes.get("percentage")
         speedMax = 100
-        if(speed == None):
+        if(speed is None):
             speed = "disable"
         else:
             speed = round(entity.attributes.get("percentage")/entity.attributes.get("percentage_step"))
