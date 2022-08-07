@@ -52,3 +52,7 @@ _Make sure your have performed every step and checked the applicable boxes befor
 
 
 ```
+
+### ADDITIONAL INFORMATION
+
+_Add information about your setup here, if any. (For example docker version of AppDaemon instead of the HomeAssistant Add-on)_

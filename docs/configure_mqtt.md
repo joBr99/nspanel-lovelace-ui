@@ -11,9 +11,8 @@ Change the topic to something unique for your panel, you will need this topic la
 
 # Configure MQTT Connection on AppDaemon
 
-For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml`
+For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml` Restart your AppDaemon Container (not HomeAssistant) after adding the MQTT Configuration.
 
-NOTE: This are not the options of the AppDaemon Addon in Home Assistant. 
 You will find this file in the following location: `config/appdaemon/appdeamon.yaml`
 
 ```yaml
