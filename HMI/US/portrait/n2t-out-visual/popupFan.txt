@@ -117,7 +117,7 @@ Text tEntity
         Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : tEntity1
+        Text                                : 
         Max. Text Size                      : 25
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -147,7 +147,7 @@ Text tIcon1
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : î´
+        Text                                : 
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -177,7 +177,7 @@ Text t1
         Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : Speed
+        Text                                : 
         Max. Text Size                      : 50
         Word wrap                           : disabled
         Horizontal Spacing                  : 0

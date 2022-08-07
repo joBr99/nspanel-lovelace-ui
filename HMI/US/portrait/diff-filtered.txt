@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-07-23 14:02:48.743331992 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-07-23 14:02:48.223325770 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-07-23 14:02:48.731331848 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-08-07 21:12:09.012759781 +0000
++--- HMI/n2t-out/Program.s.txt	2022-08-07 21:12:08.440754014 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-07 21:12:08.996759619 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+--- HMI/n2t-out/cardEntities.txt	2022-07-23 14:02:48.227325818 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-07-23 14:02:48.731331848 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-08-07 21:12:08.440754014 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-07 21:12:08.996759619 +0000
 +@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -33,5 +33,5 @@
 ++                                            spstr strCommand.txt,tTmp.txt,"~",32
 ++                                            covx tTmp.txt,sys0,0,0
 ++                                            btOnOff5.val=sys0
-+--- HMI/n2t-out/pageStartup.txt	2022-07-23 14:02:48.223325770 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-07-23 14:02:48.731331848 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-08-07 21:12:08.440754014 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-07 21:12:08.996759619 +0000
