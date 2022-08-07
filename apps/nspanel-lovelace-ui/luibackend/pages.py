@@ -179,7 +179,7 @@ class LuiPagesGen(object):
                 if item.status is not None and self._ha_api.entity_exists(item.status):
                     status_entity = self._ha_api.get_entity(item.status)
                     icon_res = get_icon_id_ha(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
-                    icon_color = self.get_entity_color(entity, overwrite=colorOverride)
+                    icon_color = self.get_entity_color(status_entity, overwrite=colorOverride)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
                         icon_res = status_entity.state[:4]
                         if icon_res[-1] == ".":
@@ -637,14 +637,14 @@ class LuiPagesGen(object):
         icon_color = self.get_entity_color(entity)
         speed = entity.attributes.get("percentage")
         speedMax = 100
-        if(speed == None):
+        if(speed is None):
             speed = "disable"
         else:
             speed = round(entity.attributes.get("percentage")/entity.attributes.get("percentage_step"))
             speedMax = int(100/entity.attributes.get("percentage_step"))
 
         speed_translation = get_translation(self._locale, "frontend.ui.card.fan.speed")
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{get_icon_id('lightbulb')}~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{get_icon_id('fan')}~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
