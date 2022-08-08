@@ -162,6 +162,7 @@ class LuiPagesGen(object):
         icon = item.iconOverride
         colorOverride = item.colorOverride
         name = item.nameOverride
+        uuid = item.uuid
         # type of the item is the string before the "." in the entityId
         entityType = entityId.split(".")[0]
         
@@ -194,6 +195,10 @@ class LuiPagesGen(object):
                 name = name if name is not None else "conf name missing"
                 icon_res = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
                 return f"~text~{entityId}~{icon_res}~17299~{name}~{value}"
+        if entityType == "service":
+            icon_id = get_icon_id_ha("script", overwrite=icon)
+            text = get_translation(self._locale, "frontend.ui.card.script.run")
+            return f"~button~{uuid}~{icon_id}~17299~{name}~{text}"
         if not self._ha_api.entity_exists(entityId):
             return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
         

@@ -157,8 +157,8 @@ class LuiController(object):
 
     def state_change_callback(self, entity, attribute, old, new, kwargs):
         self._ha_api.log(f"Got callback for: {entity}", level="DEBUG")
-        self._ha_api.log(f"Current page has the following items: {self._current_card.get_entity_list()}", level="DEBUG")
-        if entity in self._current_card.get_entity_list():
+        self._ha_api.log(f"Current page has the following items: {self._current_card.get_entity_names()}", level="DEBUG")
+        if entity in self._current_card.get_entity_names():
             self._ha_api.log(f"Callback Entity is on current page: {entity}", level="DEBUG")
             self._pages_gen.render_card(self._current_card, send_page_type=False)
             # send detail page update, just in case
@@ -266,6 +266,10 @@ class LuiController(object):
 
 
         if button_type == "button":
+            if entity_id.startswith('uuid'):
+                le = self._config._config_entites_table.get(entity_id)
+                entity_id = le.entityId
+
             if entity_id.startswith('navigate'):
                 # internal for navigation to nested pages
                 dstCard = self._config.searchCard(entity_id)
@@ -290,6 +294,7 @@ class LuiController(object):
                 self._ha_api.get_entity(entity_id).call_service("press")
             elif entity_id.startswith('input_select'):
                 self._ha_api.get_entity(entity_id).call_service("select_next")
+
 
         # for media page
         if button_type == "media-next":

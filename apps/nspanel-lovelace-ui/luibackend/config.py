@@ -1,5 +1,8 @@
+import uuid
+
 class Entity(object):
     def __init__(self, entity_input_config):
+        self.uuid = f"uuid.{uuid.uuid4().hex}"
         if type(entity_input_config) is not dict:
             #self._ha_api.log("Config error, not a dict check your entity configs")
             self.entityId = "error"
@@ -30,7 +33,7 @@ class Card(object):
         self.id = f"{self.cardType}_{self.key}".replace(".","_").replace("~","_").replace(" ","_")
         #self._ha_api.log(f"Created Card {self.cardType} with pos {pos} and id {self.id}")
     
-    def get_entity_list(self):
+    def get_entity_names(self):
         entityIds = []
         if self.entity is not None:
             entityIds.append(self.entity.entityId)
@@ -49,6 +52,16 @@ class Card(object):
             if val is not None:
                 entityIds.append(val.get("entity"))
         return entityIds
+
+    def get_entity_list(self):
+        entitys = []
+        if self.entity is not None:
+            entitys.append(self.entity)
+        else:
+            for e in self.entities:
+                entitys.append(e)
+        return entitys
+
 
 class LuiBackendConfig(object):
 
@@ -138,9 +151,12 @@ class LuiBackendConfig(object):
         # parse screensaver
         self._config_screensaver = Card(self.get("screensaver"))
 
-        # parsed hidden pages that can be accessed through navigate
+        # parse hidden pages that can be accessed through navigate
         for card in self.get("hiddenCards"):
             self._config_hidden_cards.append(Card(card))
+
+        # all entites sorted by generated key, to be able to use short identifiers
+        self._config_entites_table = {x.uuid: x for x in self.get_all_entitys()}
 
     def get(self, name):
         path = name.split(".")
@@ -160,10 +176,18 @@ class LuiBackendConfig(object):
     def get_all_entity_names(self):
         entities = []
         for card in self._config_cards:
+            entities.extend(card.get_entity_names())
+        for card in self._config_hidden_cards:
+            entities.extend(card.get_entity_names())
+        entities.extend(self._config_screensaver.get_entity_names())
+        return entities
+
+    def get_all_entitys(self):
+        entities = []
+        for card in self._config_cards:
             entities.extend(card.get_entity_list())
         for card in self._config_hidden_cards:
             entities.extend(card.get_entity_list())
-        entities.extend(self._config_screensaver.get_entity_list())
         return entities
 
     def getCard(self, pos):
