@@ -38,10 +38,6 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-popupFan
-	20   Component(s)
-	236  Line(s) of event code
-	150  Unique line(s) of event code
 cardQR
 	32   Component(s)
 	403  Line(s) of event code
@@ -50,6 +46,10 @@ cardAlarm
 	40   Component(s)
 	421  Line(s) of event code
 	254  Unique line(s) of event code
+popupFan
+	20   Component(s)
+	236  Line(s) of event code
+	150  Unique line(s) of event code
 cardThermo
 	53   Component(s)
 	580  Line(s) of event code
