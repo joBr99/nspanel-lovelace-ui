@@ -301,7 +301,7 @@ class LuiPagesGen(object):
             text = entity.state
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         if entityType == "vacuum":
-            icon_id = get_icon_id_ha("robot-vacuum", state=entity.state, overwrite=icon)
+            icon_id = get_icon_id_ha("vacuum", state=entity.state, overwrite=icon)
             if entity.state == "docked":
                 text = "Start"
             else:

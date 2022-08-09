@@ -93,6 +93,8 @@ def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
         return "lightbulb"
     elif ha_type == "fan":
         return "fan"
+    elif ha_type == "vacuum":
+        return "robot-vacuum"
     elif ha_type == "input_boolean":
         return "check-circle-outline" if state == "on" else "close-circle-outline"
     elif ha_type == "cover":
