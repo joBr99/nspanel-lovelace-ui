@@ -300,6 +300,13 @@ class LuiPagesGen(object):
             icon_id = get_icon_id_ha("button", state=entity.state, overwrite=icon)
             text = entity.state
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+        if entityType == "vacuum":
+            icon_id = get_icon_id_ha("robot-vacuum", state=entity.state, overwrite=icon)
+            if entity.state == "docked":
+                text = "Start"
+            else:
+                text = "Return"
+            return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
         return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~unsupported~"
 
     def generate_entities_page(self, navigation, heading, items, cardType):

@@ -294,7 +294,11 @@ class LuiController(object):
                 self._ha_api.get_entity(entity_id).call_service("press")
             elif entity_id.startswith('input_select'):
                 self._ha_api.get_entity(entity_id).call_service("select_next")
-
+            elif entity_id.startswith('vacuum'):
+                if self._ha_api.get_entity(entity_id).state == "docked":
+                    self._ha_api.get_entity(entity_id).call_service("start")
+                else:
+                    self._ha_api.get_entity(entity_id).call_service("return_to_base")
 
         # for media page
         if button_type == "media-next":
