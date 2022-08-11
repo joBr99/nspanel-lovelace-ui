@@ -13,7 +13,7 @@ Your appdaemon mqtt config is wrong, check your appdaemon.yaml.
 The log of your mqtt broker might give you additional information.  
 
 2. Check MQTT Configuration of Tasmota.
-Your Tasmota device needs to connect sucessfully to your MQTT Broker, if you are in the waiting for content screen, the panel will send periodic messages to it's mqtt topic.
+Your Tasmota device needs to connect sucessfully to your MQTT Broker, if you are in the waiting for content screen, the panel will send periodic messages to it's mqtt topic. Note that there is a minimum password length of 5 chars for the MQTT Connection in Tasmota.
 
 3. Make sure that you are using the same topic in apps.yaml and in your tasmota configuration. 
 The examples in the docs ([MQTT Config](https://docs.nspanel.pky.eu/configure_mqtt/)) are an valid example (tasmota<>apps.yaml).  
