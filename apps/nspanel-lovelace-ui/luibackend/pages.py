@@ -307,6 +307,32 @@ class LuiPagesGen(object):
             else:
                 text = "Return"
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+        if entityType == "alarm_control_panel":
+            if entity.state == "disarmed":
+              icon_color = rgb_dec565([13,160,53])
+              icon_id = get_icon_id("shield-off")
+            if entity.state == "armed_home":
+              icon_color = rgb_dec565([223,76,30])
+              icon_id = get_icon_id("shield-home")
+            if entity.state == "armed_away":
+              icon_color = rgb_dec565([223,76,30])
+              icon_id = get_icon_id("shield-lock")
+            if entity.state == "armed_night":
+              icon_color = rgb_dec565([223,76,30])
+              icon_id = get_icon_id("weather-night")
+            if entity.state == "armed_vacation":
+              icon_color = rgb_dec565([223,76,30])
+              icon_id = get_icon_id("shield-airplane")
+            text = get_translation(self._locale, f"frontend.state_badge.alarm_control_panel.{entity.state}")
+            return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
+        if entityType == "sun":
+            icon_color = rgb_dec565([253, 216, 53])
+            if entity.state == "above_horizon":
+              icon_id = get_icon_id("weather-sunset-up")
+            if entity.state == "below_horizon":
+              icon_id = get_icon_id("weather-sunset-down")
+            text = get_translation(self._locale, f"backend.component.sun.state._.{entity.state}")
+            return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
         return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~unsupported~"
 
     def generate_entities_page(self, navigation, heading, items, cardType):
