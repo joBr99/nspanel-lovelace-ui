@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-08-17 14:27:17.259236721 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-08-17 14:27:16.783231605 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-17 14:27:17.243236549 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-08-17 14:53:11.211951111 +0000
++--- HMI/n2t-out/Program.s.txt	2022-08-17 14:53:10.719943618 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-17 14:53:11.195950867 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+--- HMI/n2t-out/cardEntities.txt	2022-08-17 14:27:16.787231648 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-17 14:27:17.243236549 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-08-17 14:53:10.723943679 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-17 14:53:11.195950867 +0000
 +@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -33,15 +33,18 @@
 ++                                            spstr strCommand.txt,tTmp.txt,"~",32
 ++                                            covx tTmp.txt,sys0,0,0
 ++                                            btOnOff5.val=sys0
-+--- HMI/n2t-out/pageStartup.txt	2022-08-17 14:27:16.787231648 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-17 14:27:17.243236549 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-08-17 14:53:10.719943618 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-17 14:53:11.195950867 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-08-17 14:27:16.783231605 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-17 14:27:17.243236549 +0000
-+@@ -14,34 +14,6 @@
++--- HMI/n2t-out/pageTest.txt	2022-08-17 14:53:10.719943618 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-17 14:53:11.195950867 +0000
++@@ -13,36 +13,6 @@
++     Events
 +         Preinitialize Event
 +             vis p0,0
-+         
++-            recmod=1
++-            bauds=115200
++-        
 +-Variable (string) tInstruction
 +-    Attributes
 +-        Scope         : local
@@ -69,11 +72,10 @@
 +-        Associated Keyboard                 : none
 +-        Text                                : 
 +-        Max. Text Size                      : 20
-+-    
++     
 + Picture p0
 +     Attributes
-+         Scope                               : local
-+@@ -218,82 +190,3 @@
++@@ -220,82 +190,3 @@
 +         Touch Press Event
 +             page cardQR
 +         

@@ -8,8 +8,8 @@ pageIcons
 	0    Unique line(s) of event code
 pageTest
 	19   Component(s)
-	62   Line(s) of event code
-	60   Unique line(s) of event code
+	64   Line(s) of event code
+	61   Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	388  Line(s) of event code
@@ -62,5 +62,5 @@ cardEntities
 Total
 	14   Page(s)
 	437  Component(s)
-	5191 Line(s) of event code
+	5193 Line(s) of event code
 	1365 Unique line(s) of event code
