@@ -22,7 +22,7 @@ class LuiPagesGen(object):
         self._locale  = config.get("locale")
         self._send_mqtt_msg = send_mqtt_msg
     
-    def get_entity_color(self, entity, overwrite=None):
+    def get_entity_color(self, entity, ha_type=None, overwrite=None):
         if overwrite is not None:
             if type(overwrite) is list:
                 return rgb_dec565(overwrite)
@@ -31,11 +31,23 @@ class LuiPagesGen(object):
                 for overwrite_state, overwrite_val in overwrite.items():
                     if overwrite_state == state:
                         return rgb_dec565(overwrite_val)
-                    
+
         attr = entity.attributes
         default_color_on  = rgb_dec565([253, 216, 53])
         default_color_off = rgb_dec565([68, 115, 158])
-        icon_color = default_color_on if entity.state in ["on", "unlocked"] else default_color_off
+        icon_color = default_color_on if entity.state in ["on", "unlocked", "above_horizon"] else default_color_off
+
+        if ha_type == "alarm_control_panel":
+            if entity.state == "disarmed":
+                icon_color = rgb_dec565([13,160,53])
+            if entity.state == "armed_home":
+                icon_color = rgb_dec565([223,76,30])
+            if entity.state == "armed_away":
+                icon_color = rgb_dec565([223,76,30])
+            if entity.state == "armed_night":
+                icon_color = rgb_dec565([223,76,30])
+            if entity.state == "armed_vacation":
+                icon_color = rgb_dec565([223,76,30])
 
         if "rgb_color" in attr:
             color = attr.rgb_color
@@ -307,6 +319,16 @@ class LuiPagesGen(object):
             else:
                 text = "Return"
             return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+        if entityType == "alarm_control_panel":
+            icon_color = self.get_entity_color(entity, ha_type=entityType, overwrite=colorOverride)
+            icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+            text = get_translation(self._locale, f"frontend.state_badge.alarm_control_panel.{entity.state}")
+            return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
+        if entityType == "sun":
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
+            icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+            text = get_translation(self._locale, f"backend.component.sun.state._.{entity.state}")
+            return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
         return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~unsupported~"
 
     def generate_entities_page(self, navigation, heading, items, cardType):
