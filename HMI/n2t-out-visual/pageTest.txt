@@ -579,7 +579,7 @@ Timer tmSerial
                                     spstr strCommand.txt,tInstruction.txt,"~",0
                                     if(tInstruction.txt=="ping")
                                     {
-                                        spstr strCommand.txt,tBench.txt,"~",0
+                                        spstr strCommand.txt,tBench.txt,"~",1
                                         tSend.txt="pong,"+tBench.txt
                                         //send calc crc
                                         btlen tSend.txt,sys0
