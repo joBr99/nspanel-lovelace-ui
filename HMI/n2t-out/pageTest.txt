@@ -13,6 +13,8 @@ Page pageTest
     Events
         Preinitialize Event
             vis p0,0
+            recmod=1
+            bauds=115200
         
 Variable (string) tInstruction
     Attributes

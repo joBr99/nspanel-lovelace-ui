@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-08-17 14:27:16.783231605 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-08-17 14:27:17.727241750 +0000
+--- HMI/n2t-out/Program.s.txt	2022-08-17 14:53:10.719943618 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-08-17 14:53:11.691958420 +0000
 @@ -14,6 +14,3 @@
      //color vars
      int defaultFontColor=65535
@@ -9,8 +9,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    lcd_dev fffb 0002 0000 0020
 -    page pageStartup
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-08-17 14:27:16.787231648 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-08-17 14:27:17.727241750 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-08-17 14:53:10.719943618 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-08-17 14:53:11.691958420 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -21,12 +21,15 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/landscape/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-08-17 14:27:16.783231605 +0000
-+++ HMI/US/landscape/n2t-out/pageTest.txt	2022-08-17 14:27:17.727241750 +0000
-@@ -14,34 +14,6 @@
+--- HMI/n2t-out/pageTest.txt	2022-08-17 14:53:10.719943618 +0000
++++ HMI/US/landscape/n2t-out/pageTest.txt	2022-08-17 14:53:11.691958420 +0000
+@@ -13,36 +13,6 @@
+     Events
          Preinitialize Event
              vis p0,0
-         
+-            recmod=1
+-            bauds=115200
+-        
 -Variable (string) tInstruction
 -    Attributes
 -        Scope         : local
@@ -54,11 +57,10 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/landscape/n2t-out/pageTest.txt
 -        Associated Keyboard                 : none
 -        Text                                : 
 -        Max. Text Size                      : 20
--    
+     
  Picture p0
      Attributes
-         Scope                               : local
-@@ -218,82 +190,3 @@
+@@ -220,82 +190,3 @@
          Touch Press Event
              page cardQR
          
