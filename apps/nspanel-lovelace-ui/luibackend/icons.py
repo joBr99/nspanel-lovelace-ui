@@ -115,6 +115,22 @@ def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
             return sensor_mapping[device_class] if device_class in sensor_mapping else "alert-circle-outline"
     elif ha_type == "alarm-arm-fail":
         return "progress-alert"
+    elif ha_type == "alarm_control_panel":
+        if state == "disarmed":
+            return "shield-off"
+        if state == "armed_home":
+            return "shield-home"
+        if state == "armed_away":
+            return "shield-lock"
+        if state == "armed_night":
+            return "weather-night"
+        if state == "armed_vacation":
+            return "shield-airplane"
+    elif ha_type == "sun":
+        if state == "above_horizon":
+            return "weather-sunset-up"
+        if state == "below_horizon":
+            return "weather-sunset-down"
     else:
         return "alert-circle-outline"
 

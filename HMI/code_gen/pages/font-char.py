@@ -173,8 +173,6 @@ char_res_string += "鎖離狀出目外斷態輔用運判閉碼助啟執轉閒"
 print("Out: ")
 #print(char_res_string)
 
-import json
-
 # check if translations.py is covered
 with open("test", 'r') as f: # open in readonly mode
     unique_chars = set(f.read())

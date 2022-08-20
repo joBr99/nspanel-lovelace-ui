@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-08-17 14:53:10.719943618 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-17 14:53:11.195950867 +0000
+--- HMI/n2t-out/Program.s.txt	2022-08-17 15:05:03.933958595 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-17 15:05:04.569667901 +0000
 @@ -14,6 +14,6 @@
      //color vars
      int defaultFontColor=65535
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-08-17 14:53:10.723943679 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-17 14:53:11.195950867 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-08-17 15:05:03.937956767 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-17 15:05:04.573666073 +0000
 @@ -65,6 +65,16 @@
              vis nNum4,0
              vis bPrev,0
@@ -458,8 +458,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-08-17 14:53:10.719943618 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-17 14:53:11.195950867 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-08-17 15:05:03.933958595 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-17 15:05:04.573666073 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -479,8 +479,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-08-17 14:53:10.719943618 +0000
-+++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-17 14:53:11.195950867 +0000
+--- HMI/n2t-out/pageTest.txt	2022-08-17 15:05:03.933958595 +0000
++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-17 15:05:04.569667901 +0000
 @@ -13,36 +13,6 @@
      Events
          Preinitialize Event
@@ -575,7 +575,7 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
 -                                    spstr strCommand.txt,tInstruction.txt,"~",0
 -                                    if(tInstruction.txt=="ping")
 -                                    {
--                                        spstr strCommand.txt,tBench.txt,"~",0
+-                                        spstr strCommand.txt,tBench.txt,"~",1
 -                                        tSend.txt="pong,"+tBench.txt
 -                                        //send calc crc
 -                                        btlen tSend.txt,sys0
