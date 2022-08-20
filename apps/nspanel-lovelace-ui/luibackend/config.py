@@ -14,6 +14,7 @@ class Entity(object):
         self.status        = entity_input_config.get("status")
         self.condState     = entity_input_config.get("state")
         self.condStateNot  = entity_input_config.get("state_not")
+        self.assumedState  = entity-input_config.get("assumed_state", False)
 
 class Card(object):
     def __init__(self, card_input_config, pos=None):
