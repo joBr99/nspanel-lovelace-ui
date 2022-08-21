@@ -14,7 +14,7 @@ It is possible to exit from the page by sending `exitPopup`
   
 Send Message to the Panel combined with a buzzer sound:
    
- ```
+```
 nspanel_popup_notification:
   alias: Popup Notification
   sequence:
@@ -25,11 +25,11 @@ nspanel_popup_notification:
         title }}~65535~~~~~{{ message }}~65535~{{ timeout }}; Buzzer 2,2,2
   mode: single
   icon: mdi:message-badge
- ```
+```
 
 Send Message to the Panel:
    
- ```
+```
 nspanel_popup_notification:
   alias: Popup Notification
   sequence:
@@ -40,7 +40,7 @@ nspanel_popup_notification:
         title }}~65535~~~~~{{ message }}~65535~{{ timeout }}
   mode: single
   icon: mdi:message-badge
- ```
+```
 
 
 ## Notification on screensaver
@@ -50,7 +50,7 @@ The screensaver can display Notifications by sending this command to the CustomS
 
 Send Message to the Screensaver combined with a buzzer sound:
    
- ```
+```
 nspanel_screensaver_notification:
   alias: Screensaver Notification
   sequence:
@@ -60,11 +60,11 @@ nspanel_screensaver_notification:
       payload: CustomSend notify~{{ heading }}~{{ message }}; Buzzer 2,2,2
   mode: single
   icon: mdi:message-badge
- ```
+```
 
 Send Message to the Screensaver:
    
- ```
+```
 nspanel_screensaver_notification:
   alias: Screensaver Notification
   sequence:
@@ -74,5 +74,4 @@ nspanel_screensaver_notification:
       payload: CustomSend notify~{{ heading }}~{{ message }}
   mode: single
   icon: mdi:message-badge
- ```
-
+```
