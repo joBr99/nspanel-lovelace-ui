@@ -226,28 +226,28 @@ used_items = [
     "frontend.ui.card.light.color_temperature",
     "frontend.ui.card.light.position",
 
-    "frontend.state_attributes.climate.hvac_action.cooling"
-    "frontend.state_attributes.climate.hvac_action.drying"
-    "frontend.state_attributes.climate.hvac_action.fan"
-    "frontend.state_attributes.climate.hvac_action.heating"
-    "frontend.state_attributes.climate.hvac_action.idle"
-    "frontend.state_attributes.climate.hvac_action.off"
+    "frontend.state_attributes.climate.hvac_action.cooling",
+    "frontend.state_attributes.climate.hvac_action.drying",
+    "frontend.state_attributes.climate.hvac_action.fan",
+    "frontend.state_attributes.climate.hvac_action.heating",
+    "frontend.state_attributes.climate.hvac_action.idle",
+    "frontend.state_attributes.climate.hvac_action.off",
 
-    "backend.component.climate.state._.off"
-    "backend.component.climate.state._.heat"
-    "backend.component.climate.state._.cool"
-    "backend.component.climate.state._.heat_cool"
-    "backend.component.climate.state._.auto"
-    "backend.component.climate.state._.dry"
-    "backend.component.climate.state._.fan_only"
+    "backend.component.climate.state._.off",
+    "backend.component.climate.state._.heat",
+    "backend.component.climate.state._.cool",
+    "backend.component.climate.state._.heat_cool",
+    "backend.component.climate.state._.auto",
+    "backend.component.climate.state._.dry",
+    "backend.component.climate.state._.fan_only",
 
-    "backend.component.climate.state._.heat"
+    "backend.component.climate.state._.heat",
 
-    "frontend.ui.card.alarm_control_panel.arm_home"
-    "frontend.ui.card.alarm_control_panel.arm_away"
-    "frontend.ui.card.alarm_control_panel.arm_night"
-    "frontend.ui.card.alarm_control_panel.arm_vacation"
-    "frontend.ui.card.alarm_control_panel.disarm"
+    "frontend.ui.card.alarm_control_panel.arm_home",
+    "frontend.ui.card.alarm_control_panel.arm_away",
+    "frontend.ui.card.alarm_control_panel.arm_night",
+    "frontend.ui.card.alarm_control_panel.arm_vacation",
+    "frontend.ui.card.alarm_control_panel.disarm",
 
     "backend.component.binary_sensor.state._.off",
     "backend.component.binary_sensor.state.battery.off",

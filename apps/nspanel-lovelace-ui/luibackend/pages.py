@@ -22,13 +22,32 @@ class LuiPagesGen(object):
         self._locale  = config.get("locale")
         self._send_mqtt_msg = send_mqtt_msg
     
-    def get_entity_color(self, entity, overwrite=None):
+    def get_entity_color(self, entity, ha_type=None, overwrite=None):
         if overwrite is not None:
-            return rgb_dec565(overwrite)
+            if type(overwrite) is list:
+                return rgb_dec565(overwrite)
+            if type(overwrite) is dict:
+                state = entity.state
+                for overwrite_state, overwrite_val in overwrite.items():
+                    if overwrite_state == state:
+                        return rgb_dec565(overwrite_val)
+
         attr = entity.attributes
         default_color_on  = rgb_dec565([253, 216, 53])
         default_color_off = rgb_dec565([68, 115, 158])
-        icon_color = default_color_on if entity.state in ["on", "unlocked"] else default_color_off
+        icon_color = default_color_on if entity.state in ["on", "unlocked", "above_horizon"] else default_color_off
+
+        if ha_type == "alarm_control_panel":
+            if entity.state == "disarmed":
+                icon_color = rgb_dec565([13,160,53])
+            if entity.state == "armed_home":
+                icon_color = rgb_dec565([223,76,30])
+            if entity.state == "armed_away":
+                icon_color = rgb_dec565([223,76,30])
+            if entity.state == "armed_night":
+                icon_color = rgb_dec565([223,76,30])
+            if entity.state == "armed_vacation":
+                icon_color = rgb_dec565([223,76,30])
 
         if "rgb_color" in attr:
             color = attr.rgb_color
@@ -155,6 +174,7 @@ class LuiPagesGen(object):
         icon = item.iconOverride
         colorOverride = item.colorOverride
         name = item.nameOverride
+        uuid = item.uuid
         # type of the item is the string before the "." in the entityId
         entityType = entityId.split(".")[0]
         
@@ -172,7 +192,7 @@ class LuiPagesGen(object):
                 if item.status is not None and self._ha_api.entity_exists(item.status):
                     status_entity = self._ha_api.get_entity(item.status)
                     icon_res = get_icon_id_ha(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
-                    icon_color = self.get_entity_color(entity, overwrite=colorOverride)
+                    icon_color = self.get_entity_color(status_entity, overwrite=colorOverride)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
                         icon_res = status_entity.state[:4]
                         if icon_res[-1] == ".":
@@ -187,6 +207,10 @@ class LuiPagesGen(object):
                 name = name if name is not None else "conf name missing"
                 icon_res = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
                 return f"~text~{entityId}~{icon_res}~17299~{name}~{value}"
+        if entityType == "service":
+            icon_id = get_icon_id_ha("script", overwrite=icon)
+            text = get_translation(self._locale, "frontend.ui.card.script.run")
+            return f"~button~{uuid}~{icon_id}~17299~{name}~{text}"
         if not self._ha_api.entity_exists(entityId):
             return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
         
@@ -198,7 +222,7 @@ class LuiPagesGen(object):
         if item.condStateNot is not None and item.condState != entity.state:
             return ""
         
-        name = name if name is not None else entity.attributes.friendly_name
+        name = name if name is not None else entity.attributes.get("friendly_name","unknown")
         if entityType == "cover":
 
             device_class = entity.attributes.get("device_class", "window")
@@ -218,11 +242,11 @@ class LuiPagesGen(object):
             else:
                 pos_status = pos
             if bits & 0b00000001: # SUPPORT_OPEN
-                if pos != 100 and not (entity.state == "open" and pos == "disable"):
+                if ( pos != 100 and not (entity.state == "open" and pos == "disable") ) or item.assumedState:
                     icon_up_status = "enable"
                 icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
             if bits & 0b00000010: # SUPPORT_CLOSE
-                if pos != 0 and not (entity.state == "closed" and pos == "disable"):
+                if ( pos != 0 and not (entity.state == "closed" and pos == "disable") ) or item.assumedState:
                     icon_down_status = "enable"
                 icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
             if bits & 0b00001000: # SUPPORT_STOP
@@ -235,11 +259,16 @@ class LuiPagesGen(object):
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha("light", state=entity.state, overwrite=icon)
             return f"~{entityType}~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
-        if entityType in ["switch", "input_boolean", "automation", "fan"]:
+        if entityType in ["switch", "input_boolean", "automation"]:
             switch_val = 1 if entity.state == "on" else 0
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
             return f"~switch~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
+        if entityType in "fan":
+            switch_val = 1 if entity.state == "on" else 0
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
+            icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+            return f"~fan~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
         if entityType in ["sensor", "binary_sensor"]:
             device_class = entity.attributes.get("device_class", "")
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
@@ -270,15 +299,36 @@ class LuiPagesGen(object):
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             text = get_translation(self._locale, "frontend.ui.card.lock.lock") if entity.state == "unlocked" else get_translation(self._locale, "frontend.ui.card.lock.unlock")
             return f"~button~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
-        if entityType == "number":
-            icon_id = get_icon_id_ha("number", overwrite=icon)
+        if entityType in ["number", "input_number"]:
+            icon_id = get_icon_id_ha("number", state=entity.state, overwrite=icon)
             min_v = entity.attributes.get("min", 0)
             max_v = entity.attributes.get("max", 100)
             return f"~number~{entityId}~{icon_id}~17299~{name}~{entity.state}|{min_v}|{max_v}"
         if entityType == "input_text":
-            icon_id = get_icon_id_ha("input_text", overwrite=icon)
+            icon_id = get_icon_id_ha("input_text", state=entity.state, overwrite=icon)
             value = entity.state
             return f"~text~{entityId}~{icon_id}~17299~{name}~{value}"
+        if entityType == "input_select":
+            icon_id = get_icon_id_ha("button", state=entity.state, overwrite=icon)
+            text = entity.state
+            return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+        if entityType == "vacuum":
+            icon_id = get_icon_id_ha("vacuum", state=entity.state, overwrite=icon)
+            if entity.state == "docked":
+                text = "Start"
+            else:
+                text = "Return"
+            return f"~button~{entityId}~{icon_id}~17299~{name}~{text}"
+        if entityType == "alarm_control_panel":
+            icon_color = self.get_entity_color(entity, ha_type=entityType, overwrite=colorOverride)
+            icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+            text = get_translation(self._locale, f"frontend.state_badge.alarm_control_panel.{entity.state}")
+            return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
+        if entityType == "sun":
+            icon_color = self.get_entity_color(entity, overwrite=colorOverride)
+            icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+            text = get_translation(self._locale, f"backend.component.sun.state._.{entity.state}")
+            return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
         return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~unsupported~"
 
     def generate_entities_page(self, navigation, heading, items, cardType):
@@ -582,11 +632,11 @@ class LuiPagesGen(object):
         if bits & 0b00001111:
             pos_translation = get_translation(self._locale, "frontend.ui.card.cover.position")
         if bits & 0b00000001: # SUPPORT_OPEN
-            if pos != 100 and not (entity.state == "open" and pos == "disable"):
+            if ( pos != 100 and not (entity.state == "open" and pos == "disable") ) or entity.assumedState:
                 icon_up_status = "enable"
             icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
         if bits & 0b00000010: # SUPPORT_CLOSE
-            if pos != 0 and not (entity.state == "closed" and pos == "disable"):
+            if ( pos != 0 and not (entity.state == "closed" and pos == "disable") ) or entity.assumedState:
                 icon_down_status = "enable"
             icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
         #if bits & 0b00000100: # SUPPORT_SET_POSITION
@@ -614,6 +664,21 @@ class LuiPagesGen(object):
                 iconTiltLeftStatus  = "disable"
 
         self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}~{textTilt}~{iconTiltLeft}~{iconTiltStop}~{iconTiltRight}~{iconTiltLeftStatus}~{iconTiltStopStatus}~{iconTiltRightStatus}~{tilt_pos}")
+
+    def generate_fan_detail_page(self, entity_id):
+        entity = self._ha_api.get_entity(entity_id)
+        switch_val = 1 if entity.state == "on" else 0
+        icon_color = self.get_entity_color(entity)
+        speed = entity.attributes.get("percentage")
+        speedMax = 100
+        if(speed is None):
+            speed = "disable"
+        else:
+            speed = round(entity.attributes.get("percentage")/entity.attributes.get("percentage_step"))
+            speedMax = int(100/entity.attributes.get("percentage_step"))
+
+        speed_translation = get_translation(self._locale, "frontend.ui.card.fan.speed")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{get_icon_id('fan')}~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")

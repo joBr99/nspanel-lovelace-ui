@@ -88,7 +88,7 @@ Text tEntity
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : tEntity1
+        Text                                : 
         Max. Text Size                      : 25
     
 Text tIcon1
@@ -98,7 +98,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : î´
+        Text                                : 
         Max. Text Size                      : 10
     
 Text t1
@@ -108,7 +108,7 @@ Text t1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : Speed
+        Text                                : 
         Max. Text Size                      : 50
     
 Text tSend
@@ -325,7 +325,7 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",4
                                         covx tTmp.txt,sys0,0,0
                                         btOnOff1.val=sys0
-                                        // get Brightness value
+                                        // get Speed value
                                         spstr strCommand.txt,tTmp.txt,"~",5
                                         if(tTmp.txt=="disable")
                                         {
@@ -341,8 +341,11 @@ Timer tmSerial
                                                 hSpeed.val=sys0
                                             }
                                         }
+                                        // set hSpeed maxValue
+                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        covx tTmp.txt,hSpeed.maxval,0,0
                                         // set t1 Speed (Localization)
-                                        spstr strCommand.txt,t1.txt,"~",6
+                                        spstr strCommand.txt,t1.txt,"~",7
                                     }
                                     if(tInstruction.txt=="time")
                                     {

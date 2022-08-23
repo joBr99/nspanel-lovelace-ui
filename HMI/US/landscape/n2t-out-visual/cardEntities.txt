@@ -73,6 +73,26 @@ Page cardEntities
             vis nNum4,0
             vis bPrev,0
             vis bNext,0
+            cardEntities.bco=defaultBcoColor
+            for(sys0=0;sys0<65;sys0++)
+            {
+                if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==54)
+                {
+                    b[sys0].bco=defaultBcoColor
+                    b[sys0].pco=defaultFontColor
+                }
+                if(b[sys0].type==53&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=10
+                    b[sys0].pic2=11
+                }
+                if(b[sys0].type==1&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=14
+                    b[sys0].pic1=13
+                    b[sys0].pic2=15
+                }
+            }
         
 Variable (string) strCommand
     Attributes
@@ -275,7 +295,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 1
+        Font ID                             : 2
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -1925,6 +1945,10 @@ Hotspot m2
                 //popupLight.tEntity.txt=tEntity3.txt
                 page popupLight
             }
+            if(type3.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot m1
     Attributes
@@ -1955,6 +1979,10 @@ Hotspot m1
             {
                 //popupLight.tEntity.txt=tEntity2.txt
                 page popupLight
+            }
+            if(type2.txt=="fan")
+            {
+                page popupFan
             }
         
 Hotspot m0
@@ -1987,6 +2015,10 @@ Hotspot m0
                 //popupLight.tEntity.txt=tEntity1.txt
                 page popupLight
             }
+            if(type1.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot m3
     Attributes
@@ -2018,6 +2050,10 @@ Hotspot m3
                 //popupLight.tEntity.txt=tEntity4.txt
                 page popupLight
             }
+            if(type4.txt=="fan")
+            {
+                page popupFan
+            }
         
 Hotspot mSwipeNext
     Attributes
@@ -2027,9 +2063,9 @@ Hotspot mSwipeNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 471
+        x coordinate                        : 472
         y coordinate                        : 5
-        Width                               : 9
+        Width                               : 8
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
@@ -2047,10 +2083,10 @@ Hotspot mSwipeUp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 12
+        x coordinate                        : 25
         y coordinate                        : 0
-        Width                               : 453
-        Height                              : 9
+        Width                               : 425
+        Height                              : 7
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2069,7 +2105,7 @@ Hotspot mSwipePrev
         Opacity                             : 127
         x coordinate                        : 0
         y coordinate                        : 5
-        Width                               : 9
+        Width                               : 8
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
@@ -2249,21 +2285,7 @@ Timer tmSerial
                                                 tsw bDown1,1
                                             }
                                         }
-                                        if(type1.txt=="light")
-                                        {
-                                            vis bUp1,0
-                                            vis bStop1,0
-                                            vis bDown1,0
-                                            vis btOnOff1,1
-                                            vis bText1,0
-                                            vis hSlider1,0
-                                            vis nNum1,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",8
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff1.val=sys0
-                                        }
-                                        if(type1.txt=="switch")
+                                        if(type1.txt=="light"||type1.txt=="switch"||type1.txt=="fan")
                                         {
                                             vis bUp1,0
                                             vis bStop1,0
@@ -2412,21 +2434,7 @@ Timer tmSerial
                                                 tsw bDown2,1
                                             }
                                         }
-                                        if(type2.txt=="light")
-                                        {
-                                            vis bUp2,0
-                                            vis bStop2,0
-                                            vis bDown2,0
-                                            vis btOnOff2,1
-                                            vis bText2,0
-                                            vis hSlider2,0
-                                            vis nNum2,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",14
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff2.val=sys0
-                                        }
-                                        if(type2.txt=="switch")
+                                        if(type2.txt=="light"||type2.txt=="switch"||type2.txt=="fan")
                                         {
                                             vis bUp2,0
                                             vis bStop2,0
@@ -2575,21 +2583,7 @@ Timer tmSerial
                                                 tsw bDown3,1
                                             }
                                         }
-                                        if(type3.txt=="light")
-                                        {
-                                            vis bUp3,0
-                                            vis bStop3,0
-                                            vis bDown3,0
-                                            vis btOnOff3,1
-                                            vis bText3,0
-                                            vis hSlider3,0
-                                            vis nNum3,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",20
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff3.val=sys0
-                                        }
-                                        if(type3.txt=="switch")
+                                        if(type3.txt=="light"||type3.txt=="switch"||type3.txt=="fan")
                                         {
                                             vis bUp3,0
                                             vis bStop3,0
@@ -2738,21 +2732,7 @@ Timer tmSerial
                                                 tsw bDown4,1
                                             }
                                         }
-                                        if(type4.txt=="light")
-                                        {
-                                            vis bUp4,0
-                                            vis bStop4,0
-                                            vis bDown4,0
-                                            vis btOnOff4,1
-                                            vis bText4,0
-                                            vis hSlider4,0
-                                            vis nNum4,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",26
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff4.val=sys0
-                                        }
-                                        if(type4.txt=="switch")
+                                        if(type4.txt=="light"||type4.txt=="switch"||type4.txt=="fan")
                                         {
                                             vis bUp4,0
                                             vis bStop4,0
@@ -2901,6 +2881,18 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
                                         dim=dimValueNormal
+                                        // get background color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultBcoColor,0,0
+                                        }
+                                        // get font color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultFontColor,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

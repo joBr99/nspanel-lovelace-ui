@@ -7,7 +7,7 @@ If you are changeing the page the nextion display will send and event to the esp
 
 HomeAssistant / NodeRed -- MQTT -- Tasmota -- Nextion Screen
 
-See the following picture to get an Idea for the messages send and recived from the screen during cycling though pages.
+See the following picture to get an Idea for the messages send and recived from the screen during cycling though pages. Please note that the messages in the picutre are outdated, but it is still useful to understand the concept.
 
 ![message_flow](../doc-pics/message-flow.png)
 

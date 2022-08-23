@@ -95,7 +95,7 @@ class LuiController(object):
         sleepBrightness = 0
         brightness = self.calc_current_brightness(self._config.get("screenBrightness"))
 
-        if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state in ["not_home", "off"]:
+        if bst is not None and self._ha_api.entity_exists(bst) and self._ha_api.get_entity(bst).state in self._config.get("sleepTrackingZones"):
             self._ha_api.log(f"sleepTracking setting brightness to 0")
             sleepBrightness = 0
 
@@ -137,18 +137,17 @@ class LuiController(object):
             sorted_timesets = sorted(sleep_brightness_config, key=lambda d: self._ha_api.parse_time(d['time']))
             # calc current screensaver brightness
             found_current_dim_value = False
-            for index, timeset in enumerate(sorted_timesets):
-                self._ha_api.log("Current time %s", self._ha_api.get_now().time())
-                if self._ha_api.parse_time(timeset["time"]) > self._ha_api.get_now().time() and not found_current_dim_value:
-                    # first time after current time, set dim value
-                    current_screensaver_brightness = sorted_timesets[index-1]["value"]
-                    self._ha_api.log("Setting dim value to %s", sorted_timesets[index-1])
+            for i in range(len(sorted_timesets)):
+                found = self._ha_api.now_is_between(sorted_timesets[i-1]['time'], sorted_timesets[i]['time'])
+                if found:
                     found_current_dim_value = True
+                    current_screensaver_brightness = sorted_timesets[i-1]['value']
             # still no dim value
             if not found_current_dim_value:
+                self._ha_api.log("Chooseing %s as fallback", sorted_timesets[0])
                 current_screensaver_brightness = sorted_timesets[0]["value"]
         return current_screensaver_brightness
-
+    
     def register_callbacks(self):
         items = self._config.get_all_entity_names()
         self._ha_api.log(f"Registering callbacks for the following items: {items}")
@@ -158,8 +157,8 @@ class LuiController(object):
 
     def state_change_callback(self, entity, attribute, old, new, kwargs):
         self._ha_api.log(f"Got callback for: {entity}", level="DEBUG")
-        self._ha_api.log(f"Current page has the following items: {self._current_card.get_entity_list()}", level="DEBUG")
-        if entity in self._current_card.get_entity_list():
+        self._ha_api.log(f"Current page has the following items: {self._current_card.get_entity_names()}", level="DEBUG")
+        if entity in self._current_card.get_entity_names():
             self._ha_api.log(f"Callback Entity is on current page: {entity}", level="DEBUG")
             self._pages_gen.render_card(self._current_card, send_page_type=False)
             # send detail page update, just in case
@@ -168,6 +167,8 @@ class LuiController(object):
                     self._pages_gen.generate_light_detail_page(entity)
                 if entity.startswith("cover"):
                     self._pages_gen.generate_shutter_detail_page(entity)
+                if entity.startswith("fan"):
+                    self._pages_gen.generate_fan_detail_page(entity)
 
 
     def detail_open(self, detail_type, entity_id):
@@ -175,6 +176,8 @@ class LuiController(object):
             self._pages_gen.generate_shutter_detail_page(entity_id)
         if detail_type == "popupLight":
             self._pages_gen.generate_light_detail_page(entity_id)
+        if detail_type == "popupFan":
+            self._pages_gen.generate_fan_detail_page(entity_id)
 
     def button_press(self, entity_id, button_type, value):
         self._ha_api.log(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
@@ -235,7 +238,9 @@ class LuiController(object):
 
         if button_type == "number-set":
             if entity_id.startswith('fan'):
-                self._ha_api.get_entity(entity_id).call_service("set_percentage", percentage=value)
+                entity = self._ha_api.get_entity(entity_id)
+                value = float(value)*float(entity.attributes.get("percentage_step", 0))
+                entity.call_service("set_percentage", percentage=value)
             else:
                 self._ha_api.get_entity(entity_id).call_service("set_value", value=value)
 
@@ -261,6 +266,10 @@ class LuiController(object):
 
 
         if button_type == "button":
+            if entity_id.startswith('uuid'):
+                le = self._config._config_entites_table.get(entity_id)
+                entity_id = le.entityId
+
             if entity_id.startswith('navigate'):
                 # internal for navigation to nested pages
                 dstCard = self._config.searchCard(entity_id)
@@ -282,7 +291,14 @@ class LuiController(object):
                 else:
                     self._ha_api.get_entity(entity_id).call_service("lock")
             elif entity_id.startswith('button') or entity_id.startswith('input_button'):
-                self._ha_api.get_entity(entity_id).call_service("press") 
+                self._ha_api.get_entity(entity_id).call_service("press")
+            elif entity_id.startswith('input_select'):
+                self._ha_api.get_entity(entity_id).call_service("select_next")
+            elif entity_id.startswith('vacuum'):
+                if self._ha_api.get_entity(entity_id).state == "docked":
+                    self._ha_api.get_entity(entity_id).call_service("start")
+                else:
+                    self._ha_api.get_entity(entity_id).call_service("return_to_base")
 
         # for media page
         if button_type == "media-next":

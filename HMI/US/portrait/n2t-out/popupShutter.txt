@@ -12,6 +12,34 @@ Page popupShutter
     
     Events
         Preinitialize Event
+            dim=dimValueNormal
+            //get entitiy name
+            tEntity.txt=pageIcons.tTmp1.txt
+            //get entity id
+            entn.txt=pageIcons.tTmp2.txt
+            vis p0,0
+            vis tSend,0
+            vis tPosHeading,0
+            vis hPosition,0
+            vis hTilt,0
+            vis bTLeft,0
+            vis bTStop,0
+            vis bTRight,0
+            //page open event
+            // event,pageOpenDetail,typeOfPage,tEntityName
+            // craft command
+            tSend.txt="event,pageOpenDetail,popupShutter,"+entn.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
             popupShutter.bco=defaultBcoColor
             b0.bco=defaultBcoColor
             tIcon1.bco=defaultBcoColor
@@ -46,34 +74,6 @@ Page popupShutter
                 hPosition.pic1=13
                 hPosition.pic2=15
             }
-            dim=dimValueNormal
-            //get entitiy name
-            tEntity.txt=pageIcons.tTmp1.txt
-            //get entity id
-            entn.txt=pageIcons.tTmp2.txt
-            vis p0,0
-            vis tSend,0
-            vis tPosHeading,0
-            vis hPosition,0
-            vis hTilt,0
-            vis bTLeft,0
-            vis bTStop,0
-            vis bTRight,0
-            //page open event
-            // event,pageOpenDetail,typeOfPage,tEntityName
-            // craft command
-            tSend.txt="event,pageOpenDetail,popupShutter,"+entn.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
         
 Variable (string) strCommand
     Attributes
@@ -143,7 +143,7 @@ Text tPosHeading
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : Position
-        Max. Text Size                      : 15
+        Max. Text Size                      : 30
     
 Text tInfo1
     Attributes
@@ -163,7 +163,7 @@ Text tTiltHeading
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 15
+        Max. Text Size                      : 30
     
 Picture p0
     Attributes

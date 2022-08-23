@@ -14,7 +14,7 @@ Content of the screen is controlled by a AppDaemon Python Script installed on yo
 
 Or an TypeScript on your ioBroker Instance in case you are an ioBroker User.
 
-NsPanel needs to be flashed with Tasmota (or upcoming with ESPHome)
+NsPanel needs to be flashed with Tasmota (or with the 3rd Party ESPHome Component from [@sairon](https://github.com/sairon/esphome-nspanel-lovelace-ui))
 
 ![nspanel-rl](img/nspanel-rl.png)
 

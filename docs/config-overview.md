@@ -58,6 +58,7 @@ key | optional | type | default | description
 `sleepBrightness` | True | integer/complex | `20` | Brightness for the screen on the screensaver, see example below for complex/scheduled config.
 `screenBrightness` | True | integer/complex | `100` | Brightness for the screen during usage, config format is the same as sleepBrightness.
 `sleepTracking` | True | string | None | Forces screensaver brightness to 0 in case entity state is not_home or off, can be a group, person or device_tracker entity.
+`sleepTrackingZones` | True | list | `["not_home", "off"]` | Allows you to set your own states for sleepTracking
 `sleepOverride` | True | complex | None | Allows overriding of the sleepBrightness if entity state is on, true or home. Overrides sleepBrightness but sleepTracking takes precedence.
 `locale` | True | string | `en_US` | Used by babel to determinante Date format on screensaver, also used for localization.
 `dateFormatBabel` | True | string | `full` | formatting options on https://babel.pocoo.org/en/latest/dates.html?highlight=name%20of%20day#date-fields
@@ -70,9 +71,7 @@ key | optional | type | default | description
 `screensaver` | True | complex | | configuration for screensaver; see docs for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items; see docs for cards
 
-<details>
-<summary>Details on sleepBrightness/screenBrightness and other configs related to screen brightness</summary>
-<br>
+## Details on sleepBrightness/screenBrightness and other configs related to screen brightness
 
 It is possible to schedule a brightness change for the screen at specific times.
 
@@ -103,9 +102,9 @@ It is also possible to use a static value or an input_number/sensor with the ran
 ```
 
 
-`sleepTracking` overrides this setting and sets the brightness to 0 if the state of the configured Home Assistant entity is `off` or `not_home`. You may also use a [Home Assistant group](https://www.home-assistant.io/integrations/group) to track multiple entities.
-
-`sleepOverride` overrides sleepBrightness but does not take precedence over sleepTracking. This is useful if, for example, you want your NSPanel to be brighter than usual if your light is on or if you want to override a panel dimming if you are in the room.
+The config option `sleepTracking` overrides this setting and sets the brightness to 0 if the state of the configured Home Assistant entity is `off` or `not_home`. You may also use a [Home Assistant group](https://www.home-assistant.io/integrations/group) to track multiple entities.
+  
+The config option `sleepOverride` overrides sleepBrightness but does not take precedence over sleepTracking. This is useful if, for example, you want your NSPanel to be brighter than usual if your light is on or if you want to override a panel dimming if you are in the room.
 
 The following example configuration is turning off the screen after sunset, but in case the bedroom light is on the NSPanel brightness will be 20 instead of 0.
 
@@ -119,9 +118,6 @@ The following example configuration is turning off the screen after sunset, but 
       entity: light.bedroomlight
       brightness: 20
 ```
-
-
-</details>
 
 ## Supported keys for locale config
 

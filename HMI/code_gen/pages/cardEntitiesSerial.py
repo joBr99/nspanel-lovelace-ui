@@ -96,21 +96,7 @@ for i in range(1,5):
                   tsw bDown{i},1
                 }}
               }}
-              if(type{i}.txt=="light")
-              {{
-                vis bUp{i},0
-                vis bStop{i},0
-                vis bDown{i},0
-                vis btOnOff{i},1
-                vis bText{i},0
-                vis hSlider{i},0
-                vis nNum{i},0
-                // get Button State (optional Value)
-                spstr strCommand.txt,tTmp.txt,"~",{idxstart+5}
-                covx tTmp.txt,sys0,0,0
-                btOnOff{i}.val=sys0
-              }}
-              if(type{i}.txt=="switch")
+              if(type{i}.txt=="light"||type{i}.txt=="switch"||type{i}.txt=="fan")
               {{
                 vis bUp{i},0
                 vis bStop{i},0

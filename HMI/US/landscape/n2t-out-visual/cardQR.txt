@@ -40,6 +40,25 @@ Page cardQR
             vis bText2,0
             tsw m0,0
             tsw m1,0
+            cardQR.bco=defaultBcoColor
+            for(sys0=0;sys0<32;sys0++)
+            {
+                if(b[sys0].type==98||b[sys0].type==116)
+                {
+                    b[sys0].bco=defaultBcoColor
+                    b[sys0].pco=defaultFontColor
+                }
+                if(b[sys0].type==53&&defaultBcoColor==6371)
+                {
+                    b[sys0].pic=1
+                    b[sys0].pic2=2
+                }
+                if(b[sys0].type==53&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=10
+                    b[sys0].pic2=11
+                }
+            }
         
 Variable (string) strCommand
     Attributes
@@ -136,7 +155,7 @@ Text tEntity1
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 6
+        Font ID                             : 0
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : left
@@ -196,7 +215,7 @@ Text tEntity2
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 6
+        Font ID                             : 0
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : left
@@ -256,7 +275,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 1
+        Font ID                             : 2
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -278,8 +297,8 @@ Picture p0
         Opacity                             : 127
         x coordinate                        : 0
         y coordinate                        : 0
-        Width                               : 479
-        Height                              : 319
+        Width                               : 480
+        Height                              : 320
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -403,7 +422,7 @@ Button bText1
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 6
+        Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -450,7 +469,7 @@ Button bText2
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 6
+        Font ID                             : 0
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 14823
@@ -496,7 +515,7 @@ Dual-state Button btOnOff1
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : image
-        Font ID                             : 6
+        Font ID                             : 0
         Background Picture ID (Unpressed)   : 1
         Back. Picture ID (Pressed)          : 2
         Horizontal Alignment                : center
@@ -541,7 +560,7 @@ Dual-state Button btOnOff2
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : image
-        Font ID                             : 6
+        Font ID                             : 0
         Background Picture ID (Unpressed)   : 1
         Back. Picture ID (Pressed)          : 2
         Horizontal Alignment                : center
@@ -578,9 +597,9 @@ Hotspot mSwipeNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 471
+        x coordinate                        : 472
         y coordinate                        : 5
-        Width                               : 9
+        Width                               : 8
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
@@ -598,9 +617,9 @@ Hotspot mSwipeUp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 12
+        x coordinate                        : 27
         y coordinate                        : 0
-        Width                               : 450
+        Width                               : 426
         Height                              : 9
         Effect                              : load
         Effect Priority                     : 0
@@ -908,6 +927,18 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",2
                                         covx tTmp.txt,dimValueNormal,0,0
                                         dim=dimValueNormal
+                                        // get background color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultBcoColor,0,0
+                                        }
+                                        // get font color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultFontColor,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

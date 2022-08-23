@@ -15,6 +15,7 @@ key | optional | type | default | description
 `state` | True | string | `None` | Only displayed if Entity state is equal to this value
 `state_not` | True | string | `None` | Only displayed if Entity state is unequal to this value
 `status` | True | string | `None` | Only valid for navigate items, adds a entity to track state for the icon
+`assumed_state` | True | string | `None` | Only for cover items, up, down and stop buttons are always shown
 
 ## Override Icons or Names
 
@@ -34,6 +35,22 @@ It is also possible to configure different icon overwrites per state:
             icon:
                 "on": mdi:lightbulb
                 "off": mdi:lightbulb
+```
+
+It is also possible to configure different color overwrites per state:
+
+```yaml
+            color:
+                "on": [255,0,0]
+                "off": [0,0,255]
+```
+
+It is also possible to use text instead of icons with `text:X`
+
+```yaml
+            icon:
+                "on": mdi:lightbulb
+                "off": "text:"
 ```
 
 ## Hide item based on state
