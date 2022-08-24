@@ -447,7 +447,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~{title}~{author}~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}~{mediaBtn}"
         self._send_mqtt_msg(command)
         
-    def generate_alarm_page(self, navigation, entity, alarmBtn):
+    def generate_alarm_page(self, navigation, entity, supported_features, alarmBtn):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~{item}~{navigation}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
@@ -462,7 +462,10 @@ class LuiPagesGen(object):
                 icon = get_icon_id("shield-off")
                 if not entity.attributes.get("code_arm_required", False):
                     numpad = "disable"
-                bits = entity.attributes.supported_features
+                if supported_features is not None:
+                    bits = supported_features
+                else:
+                    bits = entity.attributes.supported_features
                 if bits & 0b000001:
                     supported_modes.append("arm_home")
                 if bits & 0b000010:
@@ -556,6 +559,7 @@ class LuiPagesGen(object):
             self.generate_media_page(navigation, card.title, card.entity, mediaBtn)
         if card.cardType == "cardAlarm":
             alarmBtn = card.raw_config.get("alarmControl")
+            supported_features = card.raw_config.get("supportedFeatures")
             self.generate_alarm_page(navigation, card.entity, alarmBtn)
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")
