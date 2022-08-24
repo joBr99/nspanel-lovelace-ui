@@ -560,7 +560,7 @@ class LuiPagesGen(object):
         if card.cardType == "cardAlarm":
             alarmBtn = card.raw_config.get("alarmControl")
             supported_features = card.raw_config.get("supportedFeatures")
-            self.generate_alarm_page(navigation, card.entity, alarmBtn)
+            self.generate_alarm_page(navigation, card.entity, supported_features, alarmBtn)
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")
             self.update_screensaver_weather(theme)
