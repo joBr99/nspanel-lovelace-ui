@@ -192,7 +192,7 @@ class LuiPagesGen(object):
                 if item.status is not None and self._ha_api.entity_exists(item.status):
                     status_entity = self._ha_api.get_entity(item.status)
                     icon_res = get_icon_id_ha(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
-                    icon_color = self.get_entity_color(status_entity, overwrite=colorOverride)
+                    icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
                         icon_res = status_entity.state[:4]
                         if icon_res[-1] == ".":
@@ -447,7 +447,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~{title}~{author}~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}~{mediaBtn}"
         self._send_mqtt_msg(command)
         
-    def generate_alarm_page(self, navigation, entity, alarmBtn):
+    def generate_alarm_page(self, navigation, entity, overwrite_supported_modes, alarmBtn):
         item = entity.entityId
         if not self._ha_api.entity_exists(item):
             command = f"entityUpd~{item}~{navigation}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
@@ -462,15 +462,18 @@ class LuiPagesGen(object):
                 icon = get_icon_id("shield-off")
                 if not entity.attributes.get("code_arm_required", False):
                     numpad = "disable"
-                bits = entity.attributes.supported_features
-                if bits & 0b000001:
-                    supported_modes.append("arm_home")
-                if bits & 0b000010:
-                    supported_modes.append("arm_away")
-                if bits & 0b000100:
-                    supported_modes.append("arm_night")
-                if bits & 0b100000:
-                    supported_modes.append("arm_vacation")
+                if overwrite_supported_modes is None:
+                    bits = entity.attributes.supported_features
+                    if bits & 0b000001:
+                        supported_modes.append("arm_home")
+                    if bits & 0b000010:
+                        supported_modes.append("arm_away")
+                    if bits & 0b000100:
+                        supported_modes.append("arm_night")
+                    if bits & 0b100000:
+                        supported_modes.append("arm_vacation")
+                else:
+                    supported_modes = overwrite_supported_modes
             else:
                 supported_modes.append("disarm")
 
@@ -556,7 +559,8 @@ class LuiPagesGen(object):
             self.generate_media_page(navigation, card.title, card.entity, mediaBtn)
         if card.cardType == "cardAlarm":
             alarmBtn = card.raw_config.get("alarmControl")
-            self.generate_alarm_page(navigation, card.entity, alarmBtn)
+            overwrite_supported_modes = card.raw_config.get("supportedModes")
+            self.generate_alarm_page(navigation, card.entity, overwrite_supported_modes, alarmBtn)
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")
             self.update_screensaver_weather(theme)
