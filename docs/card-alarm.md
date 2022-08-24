@@ -18,3 +18,4 @@ key | optional | type | default | description
 `entity` | False | string | `None` | contains the entity of the current card
 `key` | True | string | `None` | Used by navigate items
 `alarmControl` | True | complex | `None` | overwrites the action executed on pressing the left bottom icon, by default this button is used to show a list of open sensors on a failed attempt to arm.
+`supportedModes` | True | list | `None` | Supply list of arm modes if you want to limit the modes on the card. Example `['arm_away', 'arm_night']`
