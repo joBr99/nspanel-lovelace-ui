@@ -636,11 +636,11 @@ class LuiPagesGen(object):
         if bits & 0b00001111:
             pos_translation = get_translation(self._locale, "frontend.ui.card.cover.position")
         if bits & 0b00000001: # SUPPORT_OPEN
-            if ( pos != 100 and not (entity.state == "open" and pos == "disable") ) or entity.assumedState:
+            if ( pos != 100 and not (entity.state == "open" and pos == "disable") ):
                 icon_up_status = "enable"
             icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
         if bits & 0b00000010: # SUPPORT_CLOSE
-            if ( pos != 0 and not (entity.state == "closed" and pos == "disable") ) or entity.assumedState:
+            if ( pos != 0 and not (entity.state == "closed" and pos == "disable") ):
                 icon_down_status = "enable"
             icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
         #if bits & 0b00000100: # SUPPORT_SET_POSITION
