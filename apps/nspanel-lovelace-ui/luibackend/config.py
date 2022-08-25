@@ -89,6 +89,7 @@ class LuiBackendConfig(object):
             'sleepTimeout': 20,
             'sleepBrightness': 20,
             'screenBrightness': 100,
+            'defaultBackgroundColor': "ha-dark",
             'sleepTracking': None,
             'sleepTrackingZones': ["not_home", "off"],
             'sleepOverride': None,
