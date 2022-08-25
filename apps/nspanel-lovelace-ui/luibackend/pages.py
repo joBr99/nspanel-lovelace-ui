@@ -503,7 +503,7 @@ class LuiPagesGen(object):
             #add button to show sensor state
             add_btn = ""
             if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
-                add_btn=f"{get_icon_id('progress-alert')}~{rgb_dec565([243,179,0])}~opnSensorNotify"
+                add_btn=f"{get_icon_id('progress-alert')}~{rgb_dec565([243,179,0])}~"
             if alarmBtn is not None and type(alarmBtn) is dict:
                 entity  = alarmBtn.get("entity")
                 iconnav = get_icon_id_ha("alarm-arm-fail", overwrite=alarmBtn.get("icon"))
