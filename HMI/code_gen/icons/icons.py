@@ -48,15 +48,27 @@ export class IconsSelector {
 
 """);
 
-# write documentation file
-#with open(os.path.join(__location__, "../..","icons.md"), 'w') as f:
-#    f.write("""
-## Icons IDs
-#This file contains the Icons IDs included in the display firmware, addressable via serial.
-#
-#MD Icon Name | Icon
-#------------ | ----
-#""")
-#    for icon in icon_metadata:
-#        val = icon["name"]
-#        f.write(f"mdi:{val} | ![{val}](https://raw.githubusercontent.com/Templarian/MaterialDesign-SVG/0aeb4d612644d80d9d1fe242f705f362985de5dc/svg/{val}.svg)\n")
+# write mapping lib for python
+with open(os.path.join(__location__, "../../../ip-symcon", "icon_mapping.php"), 'w') as f:
+    f.write("$icons = [\n")
+    for icon in icon_metadata:
+        iconchar = chr(int(icon['hex'], 16))
+        name = icon["name"]
+        f.write(f"    \"{name}\" => \"{iconchar}\",\n")
+    f.write("];\n")
+    f.write("""
+
+function get_icon($name) {
+  global $icons;
+  if (str_contains('text:', $name)) {
+      return str_replace('text:', "", $name);
+  }
+  $ma_name = str_replace('mdi:', "", $name);
+  if (array_key_exists($ma_name, $icons)) {
+    return $icons[$ma_name];
+  }else{
+    return $icons["alert-circle-outline"];
+  }
+}
+
+    """)
