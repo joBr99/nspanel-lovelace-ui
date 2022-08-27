@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-08-17 15:05:04.589658760 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-08-17 15:05:03.933958595 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-17 15:05:04.569667901 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-08-27 15:10:40.121579209 +0000
++--- HMI/n2t-out/Program.s.txt	2022-08-27 15:10:39.613563222 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-27 15:10:40.101578579 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+--- HMI/n2t-out/cardEntities.txt	2022-08-17 15:05:03.937956767 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-17 15:05:04.573666073 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-08-27 15:10:39.617563347 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-27 15:10:40.101578579 +0000
 +@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -33,11 +33,11 @@
 ++                                            spstr strCommand.txt,tTmp.txt,"~",32
 ++                                            covx tTmp.txt,sys0,0,0
 ++                                            btOnOff5.val=sys0
-+--- HMI/n2t-out/pageStartup.txt	2022-08-17 15:05:03.933958595 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-17 15:05:04.573666073 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-08-27 15:10:39.613563222 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-27 15:10:40.101578579 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-08-17 15:05:03.933958595 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-17 15:05:04.569667901 +0000
++--- HMI/n2t-out/pageTest.txt	2022-08-27 15:10:39.613563222 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-27 15:10:40.101578579 +0000
 +@@ -13,36 +13,6 @@
 +     Events
 +         Preinitialize Event
@@ -158,3 +158,15 @@
 +-                }
 +-            }
 +-        
++diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
++--- HMI/n2t-out/popupFan.txt	2022-08-27 15:10:39.617563347 +0000
+++++ HMI/US/portrait/n2t-out/popupFan.txt	2022-08-27 15:10:40.101578579 +0000
++@@ -39,7 +39,7 @@
++             prints crcval,2
++             vis hSpeed,0
++             popupFan.bco=defaultBcoColor
++-            for(sys0=0;sys0<20;sys0++)
+++            for(sys0=0;sys0<40;sys0++)
++             {
++                 if(b[sys0].type==98||b[sys0].type==116)
++                 {
