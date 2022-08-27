@@ -10,35 +10,35 @@
 - Screensaver Page with Time, Date and Weather Information.
 
 ## Requirements
-- ioBroker
-  - MQTT Broker/Client
-  - Javascript
-  - devices (default)
-  - all devices needs to be defined in the devices panel
-  - supported device roles are light, dimmer, blind, thermostat
+
+- [ioBroker](https://github.com/ioBroker/ioBroker)
+  - [MQTT adapter](https://github.com/ioBroker/ioBroker.mqtt) in server mode or configured as client with Mosquitto (or another MQTT broker)
+  - [JavaScript adapter](https://github.com/ioBroker/ioBroker.javascript)
+  - [Devices adapter](https://github.com/ioBroker/ioBroker.devices)
+  - [Accuweather adapter](https://github.com/iobroker-community-adapters/ioBroker.accuweather) for screensaver information
+- all devices needs to be defined in the devices panel
 
 ## Note
-Currently the names are pulled from the objects data field common.name.de.
-If you use a different language please search and replace the "common.name.de" with your language. 
-You can find this in the device raw settings.
 
+Currently the names are pulled from the objects data field ``common.name.de``.
+If you use a different language please search and replace the ``common.name.de`` with your language.
+You can find this in the device raw settings.
   
 ## Installation
-- Import this script into the ioBroker javascript instance and choose Typescript.
-- Make sure the version of the adapter is not to old.
-- Find the config variable and update to your needs.
-- The format strings are not used right now.
-- Make sure your device is connected with the mqtt instance. I didn't get it working with the sonoff adapter, but I didn't tried it too long.
-- Create a state with a mqtt client or create one per hand. The mqtt adapter will not create the state CustomSend
-    - you only need to send a dummy message to cmnd/<yourPanel>/CustomSend 
-    - then the state will be created 
-- Put the file icon_mapping.ts in the global folder
 
+- Import this script into the ioBroker javascript instance and choose TypeScript. *Make sure the version of the adapter is not to old.*
+- Find the config variable and update to your needs.
+- Make sure your device is connected with the mqtt instance.
+- Create the ``CustomSend`` state by
+    - sending a dummy message to ``cmnd/<yourPanel>/CustomSend`` (the mqtt adapter will create the object automatically)
+    - or create the object manually within ioBroker (expert mode required)
+- Place the file ``icon_mapping.ts`` in a new script in the ``global`` folder (expert mode required)
 
 ## Hardware buttons
+
 If you like you can add special pages for the buttons.
 
-First you need to add this rule to Tasmota:
+Add this rule to Tasmota:
 
 ```
 Rule2 on Button1#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,button2"} endon
@@ -46,47 +46,57 @@ Rule2
 ```
 
 ## Colors
+
 You can define colors this way and use them later in the PageItem element
-```
+
+```js
 const BatteryFull: RGB = { red: 96, green: 176, blue: 62 }
 const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 }
 ```
+
 ## The config element in the script which needs to be configured
-```
+
+```ts
 var config: Config = {
-    panelRecvTopic: "mqtt.0.tele.WzDisplay.RESULT",       // This is the object where the panel send the data to.
-    panelSendTopic: "mqtt.0.cmnd.WzDisplay.CustomSend",   // This is the object where data is send to the panel.
-    firstScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.HUMIDITY", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%" },
-                                                        // Items which should be presented on the screensaver page
-    secondScreensaverEntity: { ScreensaverEntity: "alias.0.Wetter.PRECIPITATION_CHANCE", ScreensaverEntityIcon: "weather-pouring", ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%" },
-    thirdScreensaverEntity: { ScreensaverEntity: "alias.0.Batterie.ACTUAL", ScreensaverEntityIcon: "battery-medium", ScreensaverEntityText: "Batterie", ScreensaverEntityUnitText: "%" },
-    fourthScreensaverEntity: { ScreensaverEntity: "alias.0.Pv.ACTUAL", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "PV", ScreensaverEntityUnitText: "W" },
-    screenSaverDoubleClick: false,                        // Doubletouch needed for leaving screensaver.                                                           
-    timeoutScreensaver: 15,                               // Timeout for screensaver
-    dimmode: 8,                                           // Display dim
-    locale: "de_DE",                                      // not used right now
-    timeFormat: "%H:%M",                                  // not used right now
-    dateFormat: "%A, %d. %B %Y",                          // not used right now
-    weatherEntity: "alias.0.Wetter",
-    defaultColor: Off,                                    // Default color of all elements
-    defaultOnColor: RGB,                                  // Default on state color for items
-    defaultOffColor: RGB,                                 // Default off state color for page
-    temperatureUnit: "°C",                                // Unit to append on temperature sensors
-    pages: [Wohnen, Strom,
+    panelRecvTopic: 'mqtt.0.tele.WzDisplay.RESULT',     // Object to receive data from the panel
+    panelSendTopic: 'mqtt.0.cmnd.WzDisplay.CustomSend', // Object to send data to the panel
+
+    // Items which should be presented on the screensaver page
+    firstScreensaverEntity: { ScreensaverEntity: 'alias.0.Wetter.HUMIDITY', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%' },
+    secondScreensaverEntity: { ScreensaverEntity: 'alias.0.Wetter.PRECIPITATION_CHANCE', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%' },
+    thirdScreensaverEntity: { ScreensaverEntity: 'alias.0.Batterie.ACTUAL', ScreensaverEntityIcon: 'battery-medium', ScreensaverEntityText: 'Batterie', ScreensaverEntityUnitText: '%' },
+    fourthScreensaverEntity: { ScreensaverEntity: 'alias.0.Pv.ACTUAL', ScreensaverEntityIcon: 'solar-power', ScreensaverEntityText: 'PV', ScreensaverEntityUnitText: 'W' },
+    screenSaverDoubleClick: false,                      // Double touch needed to leave screensaver
+    timeoutScreensaver: 15,                             // Timeout for screensaver
+    dimmode: 8,                                         // Display dim
+    locale: 'de_DE',                                    // not used right now
+    timeFormat: '%H:%M',                                // not used right now
+    dateFormat: '%A, %d. %B %Y',                        // not used right now
+    weatherEntity: 'alias.0.Wetter',
+    defaultColor: Off,                                  // Default color of all elements
+    defaultOnColor: RGB,                                // Default on state color for items
+    defaultOffColor: RGB,                               // Default off state color for page
+    temperatureUnit: '°C',                              // Unit to append on temperature sensors
+    pages: [
+        Wohnen,
+        Strom,
         {
-            "type": "cardThermo",
-            "heading": "Thermostat",
-            "useColor": true,
-            "items": [<PageItem>{ id: "alias.0.WzNsPanel" }]
+            type: 'cardThermo',
+            heading: 'Thermostat',
+            useColor: true,
+            items: 
+                [<PageItem>{ id: 'alias.0.WzNsPanel' }
+            ]
         }
     ],
-    button1Page: button1Page,                             // A cardEntities, cardThermo or nothing. This will be opened when pressing button1 
-    button2Page: button2Page                              // you guess it 
+    button1Page: button1Page, // A cardEntities, cardThermo or nothing. This will be opened when pressing button1 
+    button2Page: button2Page  // you guess it 
 };
 ```
 
 The pageItem element:
-```
+
+```ts
 type PageItem = {
     id: string,                             // the element in ioBroker devices 
     icon: (string | undefined),             // the icon which should be displayed instead of the default detected. (not implemented)
@@ -101,37 +111,37 @@ type PageItem = {
 }
 ```
 
-
 If you want you can create dedicated objects, so you don't need to declare them again. Then you can use tehm in the pages array and button pages.
 
-```
-var button1Page: PageGrid =
+```ts
+const button1Page: PageGrid =
 {
-    "type": "cardGrid",
-    "heading": "Radio",
-    "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
-    "items": [
-        <PageItem>{ id: "alias.0.Radio.NJoy" },
-        <PageItem>{ id: "alias.0.Radio.Delta_Radio" },
-        <PageItem>{ id: "alias.0.Radio.NDR2" },
+    type: 'cardGrid',
+    heading: 'Radio',
+    useColor: true, // should colors be enabled on this page, can be overridden in PageItem
+    items: [
+        <PageItem>{ id: 'alias.0.Radio.NJoy' },
+        <PageItem>{ id: 'alias.0.Radio.Delta_Radio' },
+        <PageItem>{ id: 'alias.0.Radio.NDR2' },
     ]
 };
 ```
 
 Pages array can look like this, so you can add the pages as object or define them in the array itself. This is up to you.
 
-```
+```ts
 pages: [
-        button1Page,
-        {
-            "type": "cardEntities",
-            "heading": "Strom",
-            "useColor": true,                             // should colors be enabled on this page, can be overridden in PageItem
-            "items": [
-        <PageItem>{ id: "alias.0.Netz", icon: "flash", interpolateColor: true, offColor: BatteryFull, onColor: Red, minValue: -1000, maxValue: 1000 },
-        <PageItem>{ id: "alias.0.Hausverbrauch", icon: "flash", interpolateColor: true, offColor: BatteryFull, onColor: Red, maxValue: 1000 },
-        <PageItem>{ id: "alias.0.Pv", name: "Solar" ,icon: "solar-power", interpolateColor: true, offColor: Off, onColor: BatteryFull, maxValue: 1000 },
-        <PageItem>{ id: "alias.0.Batterie", icon: "battery-medium", interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
-            ]
-        }]
+    button1Page,
+    {
+        type: 'cardEntities',
+        heading: 'Strom',
+        useColor: true, // should colors be enabled on this page, can be overridden in PageItem
+        items: [
+            <PageItem>{ id: 'alias.0.Netz', icon: 'flash', interpolateColor: true, offColor: BatteryFull, onColor: Red, minValue: -1000, maxValue: 1000 },
+            <PageItem>{ id: 'alias.0.Hausverbrauch', icon: 'flash', interpolateColor: true, offColor: BatteryFull, onColor: Red, maxValue: 1000 },
+            <PageItem>{ id: 'alias.0.Pv', name: 'Solar', icon: 'solar-power', interpolateColor: true, offColor: Off, onColor: BatteryFull, maxValue: 1000 },
+            <PageItem>{ id: 'alias.0.Batterie', icon: 'battery-medium', interpolateColor: true, offColor: BatteryEmpty, onColor: BatteryFull }
+        ]
+    }
+];
 ```
