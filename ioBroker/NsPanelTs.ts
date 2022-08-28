@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker
-- abgestimmt auf TFT 38 / v3.1.0.1 / BerryDriver 4 / Tasmota 12.1.0
+- abgestimmt auf TFT 39 / v3.2.0 / BerryDriver 4 / Tasmota 12.1.1
 joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -24,21 +24,22 @@ ReleaseNotes:
         - 19.06.2022 - V3.1.0 - Fehler in findLocale abgefangen
         - 19.06.2022 - V3.1.0 - Umstellung auf "Home Assistant" Sprachfile
         - 19.06.2022 - V3.1.0 - Alias "light" und "socket" haben optionalen Parameter icon2 für negative Zustände
-        - 27.08.2022 - V3.1.0 - Code-Refactoring (klein0r)
-
-    Known Bug
-        - Github Issue #286
+        - 29.06.2022 - V3.1.1 - Bugfix Github #286 (Active Page) + Bugfix pageThermo, pageMedia, pageAlarm as first Page
+        - 25.08.2022 - V3.1.0 - Code-Verbesserungen (klein0r)
+        - 26.08.2022 - V3.2.0 - pageItem mit CIE (XY) Parameter für ColorWheel (Steuerung für z.B Deconz-Farben bei denen Hue nicht greift)
+        - 28.08.2022 - V3.2.0 - Wechsel zwischen Weather-Forecast und eigenen Datenpunkten im Screensaver (minütlich)
+        - 28.08.2022 - V3.2.0 - Bugfix für 3.2.0 in GenerateDetailPage: Color-Language nicht über findLocales, da nicht in Sprachfile enthalten
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
-Tasmota Konsole:
+Tasmota Konsole: 
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
-    Rule2 0 (Rule deaktivieren)
+    Rule2 0 (Rule deaktivieren) 
 
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
-                          (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höschsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
-    cardEtities Page    - 4 vertikale angeordnete Steuerelemente - auch als Subpage
+                          (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höschsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)   
+    cardEntities Page   - 4 vertikale angeordnete Steuerelemente - auch als Subpage
     cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnes Player angelegt werden
@@ -50,38 +51,38 @@ Popup-Pages:
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
 
-Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
+Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)    
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
-    Lautstärke          - Volume (SET/ACTUAL) und MUTE
-    Lautstärke-Gruppe   - analog Lautstärke
+    Lautstärke          - Volume (SET/ACTUAL) und MUTE 
+    Lautstärke-Gruppe   - analog Lautstärke 
     Licht               - An/Aus (Schalter)
     Steckdose           - An/Aus (Schalter)
     Dimmer              - An/Aus, Brightness
-    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness
-    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (ON_ACTUAL/DIMMER/HUE/TEMPERATURE)
-    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
-    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
-    Jalousien           - Up, Stop, Down, Position
-    Fenster             - Sensor open
-    Tür                 - Sensor open
-    Verschluss          - Türschloss (SET/ACTUAL/OPEN)
+    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness 
+    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (HUE kann auch fehlen) 
+    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
+    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
+    Jalousien           - Up, Stop, Down, Position 
+    Fenster             - Sensor open 
+    Tür                 - Sensor open 
+    Verschluss          - Türschloss SET/ACTUAL/OPEN
     Taste               - Für Szenen oder Radiosender, etc. --> Nur Funktionsaufruf - Kein Taster wie MonoButton - True/False
     Tastensensor        - analog Taste
-    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc.
+    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc. 
     Klimaanlage         - Buttons zur Steuerung der Klimaanlage im unteren Bereich
     Temperatur          - Anzeige von Temperture - Datenpunkten, ananlog Info
-    Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, ananlog Info
-    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
-    Wettervorhersage    - Aktuelle Außen-Temperatur und aktuelles Accu-Wheather-Icon für Screensaver (ICON/ACTUAL/TEMP)
+    Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, ananlog Info 
+    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
+    Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles Accu-Wheather-Icon (Icon) für Screensaver
 
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden
-    Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden
-                          (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!!
+    Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden 
+                          (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!! 
                           ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
-Tasmota-Status0 - (zyklische Ausführung)
+Tasmota-Status0 - (zyklische Ausführung) 
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
 Erforderliche Adapter:
     Accu-Wheater:       - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
@@ -92,7 +93,7 @@ Erforderliche Adapter:
     JavaScript-Adapter
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.1.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.2.0.tft
 ---------------------------------------------------------------------------------------
 */
 var Icons = new IconsSelector();
@@ -120,10 +121,10 @@ const colorRadio: RGB = { red: 255, green: 127, blue: 0 };
 const BatteryFull: RGB = { red: 96, green: 176, blue: 62 };
 const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 };
 
-// Möglichkeit, im Screensaver zwischen Accu-Weather Forecast oder selbstdefinierten Werten zu wählen
-// true  = WeatherForecast 5 Days
-// false = Config --> firstScreensaverEntity - fourthScreensaverEntity ...
-const weatherForecast = false;
+// Variablen zur Steuerung der Wettericons auf dem Screensaver (Steuerung in 0_userdata.0.XPANELX.ScreensaverInfo)
+// Wenn weatherForecastTimer auf true, dann Wechsel zwischen Datenpunkten und Wettervorhersage (30 Sekunden nach Minute (Zeit))
+// Wenn weatherForecastTimer auf false, dann Möglichkeit über weatherForecast, ob Datenpunkte oder Wettervorhersage (true = WeatherForecast/false = Datenpunkte)
+var weatherForecast = getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val
 
 // Alexa-Instanz
 var alexaInstanz = 'alexa2.0';
@@ -466,7 +467,16 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
     }
 }
 
+async function InitWeatherForecast() {
+    //----Möglichkeit, im Screensaver zwischen Accu-Weather Forecast oder selbstdefinierten Werten zu wählen---------------------------------
+    if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false || existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false) {
+        await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean' });
+        await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
+    };
+}
+
 async function InitDimmode() {
+
     // Screensaver nachts auf dunkel ("brightnessNight: z.B. 2") oder aus ("brightnessNight:0")
     if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay')) {
         await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.StateCommon>{ type: 'number' });
@@ -510,6 +520,7 @@ async function InitDimmode() {
     });
 }
 
+InitWeatherForecast();
 InitDimmode();
 
 //--------------------End Dimmode
@@ -588,6 +599,18 @@ let activePage = undefined;
 
 schedule('* * * * *', () => {
     SendTime();
+    //WeatherForcast true/false Umschaltung halbe Minute verzögert
+    if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
+        setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, 30000, false); 
+    } else {
+        setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, 30000, false);
+    }
+});
+
+//Wechsel zwischen Datenpunkten und Weather-Forecast im Screensaver
+on({id: [].concat([NSPanel_Path + "ScreensaverInfo.weatherForecast"]), change: "ne"}, async function (obj) {
+    weatherForecast = obj.state.val;
+    HandleScreensaverUpdate();
 });
 
 schedule('0 * * * *', () => {
@@ -631,7 +654,7 @@ function get_locales() {
 }
 
 async function check_updates() {
-    const desired_display_firmware_version = 38;
+    const desired_display_firmware_version = 39;
     const berry_driver_version = 4;
 
     if (Debug) console.log('Check-Updates');
@@ -951,7 +974,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.1.0';
+    const tft_version: string = 'v3.2.0';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
 
     request({
@@ -1052,7 +1075,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                 UnsubscribeWatcher();
                 let pageItem = findPageItem(words[3]);
                 if (pageItem !== undefined)
-                    SendToPanel(GenerateDetailPage(words[2], pageItem));
+                    SendToPanel(GenerateDetailPage(words[2], pageItem));  
             case 'buttonPress2':
                 screensaverEnabled = false;
                 HandleButtonEvent(words);
@@ -2154,7 +2177,7 @@ function HandleButtonEvent(words): void {
                 setState(popupNotifyInternalName, <iobJS.State>{ val: words[2], ack: true });
                 setState(popupNotifyAction, <iobJS.State>{ val: true, ack: true });
             } else if (words[4] == 'no') {
-                setState(popupNotifyInternalName, <iobJS.State>{ val: words[2], ack: true });
+                setState(popupNotifyInternalName, <iobJS.State>{ val: words[2], ack: true });
                 setState(popupNotifyAction, <iobJS.State>{ val: false, ack: true });
             }
 
@@ -2290,7 +2313,17 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.BLUE', rgb.blue);
                     break;
                 case 'rgbSingle':
-                    setIfExists(id + '.RGB', ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue));
+                    let pageItem = findPageItem(id); 
+                    if (pageItem.colormode == "xy") {
+                        //Für z.B. Deconz XY
+                        setIfExists(id + ".RGB", rgb_to_cie(rgb.red, rgb.green, rgb.blue));
+                        if (Debug) console.log(rgb_to_cie(rgb.red, rgb.green, rgb.blue));
+                    }
+                    else {
+                        //Für RGB
+                        setIfExists(id + ".RGB", ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue));  
+                    }
+                    break;      
             }
             break;
         case 'tempUpd':
@@ -2494,7 +2527,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         + 'disable' + '~'   // sliderBrightnessPos
                         + 'disable' + '~'   // sliderColorTempPos
                         + 'disable' + '~'   // colorMode
-                        + findLocale('lights', 'Color') + '~'   // Color-Bezeichnung
+                        + ''        + '~'   // Color-Bezeichnung
                         + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
                         + findLocale('lights', 'Brightness')
                 });         // Brightness-Bezeichnung
@@ -2537,13 +2570,13 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 out_msgs.push({
                     payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
                         + id + '~'
-                        + icon + '~'   //iconId
+                        + icon + '~'        //iconId
                         + iconColor + '~'   //iconColor
                         + switchVal + '~'   //buttonState
-                        + brightness + '~'   //sliderBrightnessPos
+                        + brightness + '~'  //sliderBrightnessPos
                         + 'disable' + '~'   //sliderColorTempPos
                         + 'disable' + '~'   //colorMod
-                        + findLocale('lights', 'Color') + '~'   //Color-Bezeichnung
+                        + ''        + '~'   //Color-Bezeichnung
                         + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
                         + findLocale('lights', 'Brightness')
                 });         //Brightness-Bezeichnung
@@ -2612,7 +2645,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         + brightness + '~'   //sliderBrightnessPos
                         + colorTemp + '~'   //sliderColorTempPos
                         + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                        + findLocale('lights', 'Color') + '~'   //Color-Bezeichnung
+                        + 'Color'   + '~'   //Color-Bezeichnung
                         + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
                         + findLocale('lights', 'Brightness')
                 });         //Brightness-Bezeichnung
@@ -2677,7 +2710,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         + brightness + '~'   //sliderBrightnessPos
                         + colorTemp + '~'   //sliderColorTempPos
                         + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                        + findLocale('lights', 'Color') + '~'   //Color-Bezeichnung
+                        + 'Color' + '~'   //Color-Bezeichnung
                         + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
                         + findLocale('lights', 'Brightness')
                 });         //Brightness-Bezeichnung
@@ -2746,7 +2779,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         + brightness + '~'   //sliderBrightnessPos
                         + colorTemp + '~'   //sliderColorTempPos
                         + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                        + findLocale('lights', 'Color') + '~'   //Color-Bezeichnung
+                        + 'Color' + '~'   //Color-Bezeichnung
                         + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
                         + findLocale('lights', 'Brightness')
                 });         //Brightness-Bezeichnung
@@ -2802,7 +2835,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         + brightness + '~'                   //sliderBrightnessPos
                         + colorTemp + '~'                   //sliderColorTempPos
                         + colorMode + '~'                   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                        + findLocale('lights', 'Color') + '~'         //Color-Bezeichnung
+                        + 'Color' + '~'         //Color-Bezeichnung
                         + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
                         + findLocale('lights', 'Brightness')
                 });       //Brightness-Bezeichnung
@@ -3090,6 +3123,26 @@ function pos_to_color(x: number, y: number): RGB {
     return <RGB>{ red: Math.round(rgb[0]), green: Math.round(rgb[1]), blue: Math.round(rgb[2]) };
 }
 
+function rgb_to_cie(red, green, blue)
+{
+	//Apply a gamma correction to the RGB values, which makes the color more vivid and more the like the color displayed on the screen of your device
+	var vred 	= (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92);
+	var vgreen 	= (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92);
+	var vblue 	= (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92); 
+
+	//RGB values to XYZ using the Wide RGB D65 conversion formula
+	var X 		= vred * 0.664511 + vgreen * 0.154324 + vblue * 0.162028;
+	var Y 		= vred * 0.283881 + vgreen * 0.668433 + vblue * 0.047685;
+	var Z 		= vred * 0.000088 + vgreen * 0.072310 + vblue * 0.986039;
+
+	//Calculate the xy values from the XYZ values
+	var ciex 		= (X / (X + Y + Z)).toFixed(4);
+	var ciey 		= (Y / (X + Y + Z)).toFixed(4);
+    var cie         = "[" + ciex + "," + ciey + "]"
+
+	return cie;
+}
+
 type RGB = {
     red: number,
     green: number,
@@ -3157,6 +3210,7 @@ type PageItem = {
     buttonText: (string | undefined),
     unit: (string | undefined),
     navigate: (boolean | undefined),
+    colormode: (string | undefined)
 }
 
 type DimMode = {
