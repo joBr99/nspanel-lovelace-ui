@@ -42,6 +42,7 @@ US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
 
 US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
+
 <details>
 <summary>Alternatively you can use your own webserver:</summary>
 <br>
