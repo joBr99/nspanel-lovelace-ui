@@ -44,7 +44,7 @@ US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
 
 
-Note: For the US Version Users - keepin mind that you need to add the model config option to your apps.yaml later, more details on config overview page
+Note: For the US Version Users - keep in mind that you need to add the model config option to your apps.yaml later, more details on config overview page
 
 
 <details>
