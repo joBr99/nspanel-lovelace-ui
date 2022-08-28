@@ -87,5 +87,5 @@ nav:
         - "Physical Buttons": phys-btn.md
 
     - "Getting started (ioBroker)":
-        - "Prepare NsPanel": prepare_nspanel2.md
+        - "Prepare NsPanel": prepare_nspanel_ioBroker.md
         - "Prepare ioBroker": iobroker-install.md
