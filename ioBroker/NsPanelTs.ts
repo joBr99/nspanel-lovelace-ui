@@ -51,30 +51,30 @@ Popup-Pages:
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
 
-Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)    
+Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
-    Lautstärke          - Volume (SET/ACTUAL) und MUTE 
-    Lautstärke-Gruppe   - analog Lautstärke 
+    Lautstärke          - Volume (SET/ACTUAL) und MUTE
+    Lautstärke-Gruppe   - analog Lautstärke
     Licht               - An/Aus (Schalter)
     Steckdose           - An/Aus (Schalter)
     Dimmer              - An/Aus, Brightness
-    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness 
-    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (HUE kann auch fehlen) 
-    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
-    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
-    Jalousien           - Up, Stop, Down, Position 
-    Fenster             - Sensor open 
-    Tür                 - Sensor open 
-    Verschluss          - Türschloss SET/ACTUAL/OPEN
+    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness
+    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (ON_ACTUAL/DIMMER/HUE/TEMPERATURE)
+    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
+    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
+    Jalousien           - Up, Stop, Down, Position
+    Fenster             - Sensor open
+    Tür                 - Sensor open
+    Verschluss          - Türschloss (SET/ACTUAL/OPEN)
     Taste               - Für Szenen oder Radiosender, etc. --> Nur Funktionsaufruf - Kein Taster wie MonoButton - True/False
     Tastensensor        - analog Taste
-    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc. 
+    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc.
     Klimaanlage         - Buttons zur Steuerung der Klimaanlage im unteren Bereich
     Temperatur          - Anzeige von Temperture - Datenpunkten, ananlog Info
-    Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, ananlog Info 
-    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
-    Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles Accu-Wheather-Icon (Icon) für Screensaver
+    Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, ananlog Info
+    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
+    Wettervorhersage    - Aktuelle Außen-Temperatur und aktuelles Accu-Wheather-Icon für Screensaver (ICON/ACTUAL/TEMP)
 
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden
