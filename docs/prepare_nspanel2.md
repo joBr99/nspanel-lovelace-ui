@@ -41,11 +41,11 @@ US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 <details>
 <summary>Alternatively you can use your own webserver or the one build into HomeAssistant:</summary>
 <br>
-Upload the nspanel.tft from the lastest release to a Webserver (for example www folder of Home Assistant) and execute the following command in Tasmota Console. (Development Version: [tft file from HMI folder](HMI/nspanel.tft))
+Upload the nspanel.tft from the lastest release to a Webserver and execute the following command in Tasmota Console.
 
 **Webserver must be HTTP, HTTPS is not supported, due to limitations of berry lang on tasmota**
 
-`FlashNextion http://ip-address-of-your-homeassistant:8123/local/nspanel.tft`
+`FlashNextion http://ip-address-of-your-webserver:8123/local/nspanel.tft`
 </details>
 
 
