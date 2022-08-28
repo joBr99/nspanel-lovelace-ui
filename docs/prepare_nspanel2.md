@@ -43,7 +43,7 @@ US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
 US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
 <details>
-<summary>Alternatively you can use your own webserver or the one build into HomeAssistant:</summary>
+<summary>Alternatively you can use your own webserver:</summary>
 <br>
 Upload the nspanel.tft from the lastest release to a Webserver and execute the following command in Tasmota Console.
 
