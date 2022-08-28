@@ -65,13 +65,13 @@ plugins:
 
 nav:
     - "Overview": index.md
-    - "Getting started (HA)":
+    - "Getting started (Home Assistant)":
         - "First steps":
             - "Prepare NsPanel": prepare_nspanel.md
             - "Prepare Home Assistant": prepare_ha.md
             - "Configure MQTT": configure_mqtt.md
         - "FAQ": faq.md
-    - "Configuration - apps.yaml (HA)":
+    - "Configuration - apps.yaml (Home Assistant)":
         - "Overview": config-overview.md
         - "Screensaver": config-screensaver.md
         - "Cards":
