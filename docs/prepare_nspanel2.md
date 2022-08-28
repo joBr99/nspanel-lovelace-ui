@@ -1,10 +1,14 @@
 # Flash Tasmota to your NSPanel
 
-You need to connect to your nspanel via serial and flash tasmtoa [tasmota32-nspanel.bin](http://ota.tasmota.com/tasmota32/release/tasmota32-nspanel.bin) to your NSPanel. 
+You need to connect to your nspanel via serial and flash tasmota [tasmota32-nspanel.bin](http://ota.tasmota.com/tasmota32/release/tasmota32-nspanel.bin) to your NSPanel. 
 You can use the Tasmota Web Installer to do so. [Tasmota Web Installer](https://tasmota.github.io/install/)
 
 Checkout Blakadders Template Repo for more information on flashing, do not use the autoexec.be from this page.
 [NSPanel Page of the Tasmota Template Repository](https://templates.blakadder.com/sonoff_NSPanel.html)
+
+If you prefer EspHome over Tasmota, you can use this thrid party esphome component, which is replacing tasmota and the berry driver of this project.
+[ESPHome component](https://github.com/sairon/esphome-nspanel-lovelace-ui)
+
 
 ## Configure Tasmota Template for NSPanel
 
