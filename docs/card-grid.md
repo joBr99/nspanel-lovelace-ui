@@ -47,4 +47,6 @@ List of supported entitiy types for this page:
 - lock
 - fan
 - automation
+- alarm
+- sun
 - iText
