@@ -10,6 +10,14 @@ popupNotify
 	17   Component(s)
 	226  Line(s) of event code
 	143  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	167  Line(s) of event code
+	122  Unique line(s) of event code
+popupFan
+	20   Component(s)
+	236  Line(s) of event code
+	150  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	386  Line(s) of event code
@@ -34,14 +42,6 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	167  Line(s) of event code
-	122  Unique line(s) of event code
-popupFan
-	20   Component(s)
-	236  Line(s) of event code
-	150  Unique line(s) of event code
 screensaver
 	38   Component(s)
 	332  Line(s) of event code
@@ -63,4 +63,4 @@ Total
 	14   Page(s)
 	432  Component(s)
 	5141 Line(s) of event code
-	1351 Unique line(s) of event code
+	1352 Unique line(s) of event code

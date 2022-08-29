@@ -47,7 +47,7 @@ Page popupFan
             prints crcval,2
             vis hSpeed,0
             popupFan.bco=defaultBcoColor
-            for(sys0=0;sys0<40;sys0++)
+            for(sys0=0;sys0<20;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {

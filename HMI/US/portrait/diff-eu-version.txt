@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-08-27 15:10:39.613563222 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-27 15:10:40.101578579 +0000
+--- HMI/n2t-out/Program.s.txt	2022-08-29 16:07:16.137625205 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-29 16:07:16.677613901 +0000
 @@ -14,6 +14,6 @@
      //color vars
      int defaultFontColor=65535
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-08-27 15:10:39.617563347 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-27 15:10:40.101578579 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-08-29 16:07:16.141624865 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-29 16:07:16.677613901 +0000
 @@ -65,6 +65,16 @@
              vis nNum4,0
              vis bPrev,0
@@ -458,8 +458,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      if(tInstruction.txt=="pageType")
                                      {
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-08-27 15:10:39.613563222 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-27 15:10:40.101578579 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-08-29 16:07:16.137625205 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-29 16:07:16.677613901 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -479,8 +479,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-08-27 15:10:39.613563222 +0000
-+++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-27 15:10:40.101578579 +0000
+--- HMI/n2t-out/pageTest.txt	2022-08-29 16:07:16.137625205 +0000
++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-29 16:07:16.677613901 +0000
 @@ -13,36 +13,6 @@
      Events
          Preinitialize Event
@@ -601,15 +601,3 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
 -                }
 -            }
 -        
-diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
---- HMI/n2t-out/popupFan.txt	2022-08-27 15:10:39.617563347 +0000
-+++ HMI/US/portrait/n2t-out/popupFan.txt	2022-08-27 15:10:40.101578579 +0000
-@@ -39,7 +39,7 @@
-             prints crcval,2
-             vis hSpeed,0
-             popupFan.bco=defaultBcoColor
--            for(sys0=0;sys0<20;sys0++)
-+            for(sys0=0;sys0<40;sys0++)
-             {
-                 if(b[sys0].type==98||b[sys0].type==116)
-                 {
