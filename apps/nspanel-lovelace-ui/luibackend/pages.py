@@ -144,14 +144,22 @@ class LuiPagesGen(object):
                 if "color" in wOF:
                     theme = {}
                     shift = int(self._config._config_screensaver.raw_config.get("alternativeLayout", False))
+                    overwrite = wOF.get("color")
+                    if type(overwrite) is list:
+                        color = overwrite
+                    if type(overwrite) is dict:
+                        state = entity.state
+                        for overwrite_state, overwrite_val in overwrite.items():
+                            if overwrite_state == state:
+                                color = overwrite_val
                     if i+shift == 1:
-                        theme["tF1Icon"] = wOF.get("color")
+                        theme["tF1Icon"] = color
                     elif i+shift == 2:
-                        theme["tF2Icon"] = wOF.get("color")
+                        theme["tF2Icon"] = color
                     elif i+shift == 3:
-                        theme["tF3Icon"] = wOF.get("color")
+                        theme["tF3Icon"] = color
                     elif i+shift == 4:
-                        theme["tF4Icon"] = wOF.get("color")
+                        theme["tF4Icon"] = color
                 unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
                 down = f"{entity.state} {unit_of_measurement}"
             weather_res+=f"~{up}~{icon}~{down}"
