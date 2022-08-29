@@ -141,6 +141,17 @@ class LuiPagesGen(object):
                 entity = self._ha_api.get_entity(wOF.get("entity"))
                 up = name if name is not None else entity.attributes.friendly_name
                 icon = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+                if "color" in wOF:
+                    theme = {}
+                    shift = int(self._config._config_screensaver.raw_config.get("alternativeLayout", False))
+                    if i+shift == 1:
+                        theme["tF1Icon"] = wOF.get("color")
+                    elif i+shift == 2:
+                        theme["tF2Icon"] = wOF.get("color")
+                    elif i+shift == 3:
+                        theme["tF3Icon"] = wOF.get("color")
+                    elif i+shift == 4:
+                        theme["tF4Icon"] = wOF.get("color")
                 unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
                 down = f"{entity.state} {unit_of_measurement}"
             weather_res+=f"~{up}~{icon}~{down}"
