@@ -510,9 +510,6 @@ Timer tmSerial
                                             tF4Icon.txt=tF3Icon.txt
                                             tF3Icon.txt=tF2Icon.txt
                                             tF2Icon.txt=tF1Icon.txt
-                                            tF4Icon.pco=tF3Icon.pco
-                                            tF3Icon.pco=tF2Icon.pco
-                                            tF2Icon.pco=tF1Icon.pco
                                         }
                                         //tMR
                                         spstr strCommand.txt,tMR.txt,"~",16
@@ -609,6 +606,18 @@ Timer tmSerial
                                         covx tTmp.txt,tMR.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",22
                                         covx tTmp.txt,tTimeAdd.pco,0,0
+                                        if(tMRIcon.txt!=""&&p0.w!=320)
+                                        {
+                                            tF4Icon.pco=tF3Icon.pco
+                                            tF3Icon.pco=tF2Icon.pco
+                                            tF2Icon.pco=tF1Icon.pco
+                                            tForecast4Val.pco=tForecast3Val.pco
+                                            tForecast3Val.pco=tForecast2Val.pco
+                                            tForecast2Val.pco=tForecast1Val.pco
+                                            tForecast4.pco=tForecast3.pco
+                                            tForecast3.pco=tForecast2.pco
+                                            tForecast2.pco=tForecast1.pco
+                                        }
                                     }
                                     if(tInstruction.txt=="notify")
                                     {
