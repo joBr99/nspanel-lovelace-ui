@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-08-29 18:53:57.199525609 +0000
-+++ HMI/US/landscape/n2t-out/Program.s.txt	2022-08-29 18:53:58.331528997 +0000
+--- HMI/n2t-out/Program.s.txt	2022-08-29 19:17:29.747914361 +0000
++++ HMI/US/landscape/n2t-out/Program.s.txt	2022-08-29 19:17:30.983925693 +0000
 @@ -14,6 +14,3 @@
      //color vars
      int defaultFontColor=65535
@@ -9,8 +9,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/landscape/n2t-out/Program.s.txt
 -    lcd_dev fffb 0002 0000 0020
 -    page pageStartup
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-08-29 18:53:57.199525609 +0000
-+++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-08-29 18:53:58.331528997 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-08-29 19:17:29.751914398 +0000
++++ HMI/US/landscape/n2t-out/pageStartup.txt	2022-08-29 19:17:30.983925693 +0000
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -21,8 +21,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/landscape/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/landscape/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-08-29 18:53:57.199525609 +0000
-+++ HMI/US/landscape/n2t-out/pageTest.txt	2022-08-29 18:53:58.331528997 +0000
+--- HMI/n2t-out/pageTest.txt	2022-08-29 19:17:29.747914361 +0000
++++ HMI/US/landscape/n2t-out/pageTest.txt	2022-08-29 19:17:30.983925693 +0000
 @@ -13,36 +13,6 @@
      Events
          Preinitialize Event
@@ -143,35 +143,3 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/landscape/n2t-out/pageTest.txt
 -                }
 -            }
 -        
-diff -bur HMI/n2t-out/screensaver.txt HMI/US/landscape/n2t-out/screensaver.txt
---- HMI/n2t-out/screensaver.txt	2022-08-29 18:53:57.199525609 +0000
-+++ HMI/US/landscape/n2t-out/screensaver.txt	2022-08-29 18:53:58.335529009 +0000
-@@ -510,6 +510,9 @@
-                                             tF4Icon.txt=tF3Icon.txt
-                                             tF3Icon.txt=tF2Icon.txt
-                                             tF2Icon.txt=tF1Icon.txt
-+                                            tF4Icon.pco=tF3Icon.pco
-+                                            tF3Icon.pco=tF2Icon.pco
-+                                            tF2Icon.pco=tF1Icon.pco
-                                         }
-                                         //tMR
-                                         spstr strCommand.txt,tMR.txt,"~",16
-@@ -606,18 +609,6 @@
-                                         covx tTmp.txt,tMR.pco,0,0
-                                         spstr strCommand.txt,tTmp.txt,"~",22
-                                         covx tTmp.txt,tTimeAdd.pco,0,0
--                                        if(tMRIcon.txt!=""&&p0.w!=320)
--                                        {
--                                            tF4Icon.pco=tF3Icon.pco
--                                            tF3Icon.pco=tF2Icon.pco
--                                            tF2Icon.pco=tF1Icon.pco
--                                            tForecast4Val.pco=tForecast3Val.pco
--                                            tForecast3Val.pco=tForecast2Val.pco
--                                            tForecast2Val.pco=tForecast1Val.pco
--                                            tForecast4.pco=tForecast3.pco
--                                            tForecast3.pco=tForecast2.pco
--                                            tForecast2.pco=tForecast1.pco
--                                        }
-                                     }
-                                     if(tInstruction.txt=="notify")
-                                     {
