@@ -3,3 +3,7 @@ contact_links:
   - name: NsPanel Lovelace UI Docs
     url: https://docs.nspanel.pky.eu
     about: All the information related to flashing and configuration.
+  - name: IoBroker Forum
+    url: https://forum.iobroker.net/topic/50888/sonoff-nspanel
+    about: for questions related to the ioBroker Script, ask in the ioBroker Forum Thread
+ 
