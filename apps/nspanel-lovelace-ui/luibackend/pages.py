@@ -142,24 +142,22 @@ class LuiPagesGen(object):
                 up = name if name is not None else entity.attributes.friendly_name
                 icon = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
                 if "color" in wOF:
-                    theme = {}
-                    shift = int(self._config._config_screensaver.raw_config.get("alternativeLayout", False))
-                    overwrite = wOF.get("color")
-                    if type(overwrite) is list:
-                        color = overwrite
-                    if type(overwrite) is dict:
-                        state = entity.state
-                        for overwrite_state, overwrite_val in overwrite.items():
-                            if overwrite_state == state:
+                    if theme is None:
+                        theme = {}
+                    color = wOF.get("color")
+                    if type(color) is dict:
+                        for overwrite_state, overwrite_val in color.items():
+                            if overwrite_state == entity.state:
                                 color = overwrite_val
-                    if i+shift == 1:
+                    if i == 1:
                         theme["tF1Icon"] = color
-                    elif i+shift == 2:
+                    elif i == 2:
                         theme["tF2Icon"] = color
-                    elif i+shift == 3:
+                    elif i == 3:
                         theme["tF3Icon"] = color
-                    elif i+shift == 4:
+                    elif i == 4:
                         theme["tF4Icon"] = color
+
                 unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
                 down = f"{entity.state} {unit_of_measurement}"
             weather_res+=f"~{up}~{icon}~{down}"
