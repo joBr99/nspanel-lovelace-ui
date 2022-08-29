@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker
-- abgestimmt auf TFT 39 / v3.2.0 / BerryDriver 4 / Tasmota 12.1.1
+- abgestimmt auf TFT 40 / v3.3.0 / BerryDriver 4 / Tasmota 12.1.1 by Armilar
 joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -29,6 +29,7 @@ ReleaseNotes:
         - 26.08.2022 - V3.2.0 - pageItem mit CIE (XY) Parameter für ColorWheel (Steuerung für z.B Deconz-Farben bei denen Hue nicht greift)
         - 28.08.2022 - V3.2.0 - Wechsel zwischen Weather-Forecast und eigenen Datenpunkten im Screensaver (minütlich)
         - 28.08.2022 - V3.2.0 - Bugfix für 3.2.0 in GenerateDetailPage: Color-Language nicht über findLocales, da nicht in Sprachfile enthalten
+        - 29.08.2022 - V3.3.0 - Upgrade TFT 40
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -51,30 +52,30 @@ Popup-Pages:
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
 
-Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
+Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)    
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
-    Lautstärke          - Volume (SET/ACTUAL) und MUTE
-    Lautstärke-Gruppe   - analog Lautstärke
+    Lautstärke          - Volume (SET/ACTUAL) und MUTE 
+    Lautstärke-Gruppe   - analog Lautstärke 
     Licht               - An/Aus (Schalter)
     Steckdose           - An/Aus (Schalter)
     Dimmer              - An/Aus, Brightness
-    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness
-    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (ON_ACTUAL/DIMMER/HUE/TEMPERATURE)
-    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
-    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
-    Jalousien           - Up, Stop, Down, Position
-    Fenster             - Sensor open
-    Tür                 - Sensor open
-    Verschluss          - Türschloss (SET/ACTUAL/OPEN)
+    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness 
+    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (HUE kann auch fehlen) 
+    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
+    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
+    Jalousien           - Up, Stop, Down, Position 
+    Fenster             - Sensor open 
+    Tür                 - Sensor open 
+    Verschluss          - Türschloss SET/ACTUAL/OPEN
     Taste               - Für Szenen oder Radiosender, etc. --> Nur Funktionsaufruf - Kein Taster wie MonoButton - True/False
     Tastensensor        - analog Taste
-    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc.
+    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc. 
     Klimaanlage         - Buttons zur Steuerung der Klimaanlage im unteren Bereich
     Temperatur          - Anzeige von Temperture - Datenpunkten, ananlog Info
-    Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, ananlog Info
-    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
-    Wettervorhersage    - Aktuelle Außen-Temperatur und aktuelles Accu-Wheather-Icon für Screensaver (ICON/ACTUAL/TEMP)
+    Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, ananlog Info 
+    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
+    Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles Accu-Wheather-Icon (Icon) für Screensaver
 
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden
@@ -93,9 +94,9 @@ Erforderliche Adapter:
     JavaScript-Adapter
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.2.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.3.0.tft
 ---------------------------------------------------------------------------------------
-*/
+*/ 
 var Icons = new IconsSelector();
 var timeoutSlider: any;
 const NSPanel_Path = '0_userdata.0.NSPanel.1.';
@@ -128,7 +129,7 @@ var weatherForecast = getState(NSPanel_Path + "ScreensaverInfo.weatherForecast")
 
 // Alexa-Instanz
 var alexaInstanz = 'alexa2.0';
-var alexaDevice = 'G0XXXXXXXXXXXXXX'; // Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
+var alexaDevice = 'G070RR1075220388'; // Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
@@ -141,309 +142,310 @@ const alexaSpeakerList = [
     'Echo Dot Küche'
 ];
 
-const Test_Licht: PageEntities =
+var Test_Licht: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Color Aliase',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestRGBLichteinzeln', name: 'RGB-Licht Hex-Color', interpolateColor: true},
-        //<PageItem>{ id: 'alias.0.NSPanel_1.TestFarbtemperatur', name: 'Farbtemperatur', interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestRGBLicht', name: 'RGB-Licht', minValueBrightness: 0, maxValueBrightness: 100, interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestCTmitHUE', name: 'HUE-Licht-CT', minValueBrightness: 0, maxValueBrightness: 70, minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestHUELicht', name: 'HUE-Licht-Color', minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true}
+    "type": "cardEntities",
+    "heading": "Color Aliase",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLichteinzeln", name: "RGB-Licht Hex-Color", interpolateColor: true},
+        //<PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", name: "Farbtemperatur", interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLicht", name: "RGB-Licht", minValueBrightness: 0, maxValueBrightness: 100, interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_2.WZ_E14_Fenster_rechts", name: "Fensterbank rechts", minValueBrightness: 0, maxValueBrightness: 100, minValueColorTemp: 500, maxValueColorTemp: 150, interpolateColor: false, colormode: "xy"},
+        //<PageItem>{ id: "alias.0.NSPanel_1.TestCTmitHUE", name: "HUE-Licht-CT", minValueBrightness: 0, maxValueBrightness: 70, minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestHUELicht", name: "HUE-Licht-Color", minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true}
     ]
 };
 
-const Test_Funktionen: PageEntities =
+var Test_Funktionen: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Sonstige Aliase',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestLautstärke', offColor: MSRed /*if mute=true*/, onColor: MSGreen ,name: 'Echo Spot Büro', minValue: 0, maxValue: 100},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestTemperatur',name: 'Temperatur außen', icon: 'thermometer', onColor: White},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestFeuchtigkeit', name: 'Luftfeuchte außen', icon: 'water-percent', unit: '%H', onColor: White},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestInfo', name: 'Windstärke', icon: 'wind-power-outline', offColor: MSRed, onColor: MSGreen, unit: 'bft', minValue: 0, maxValue: 12, interpolateColor: true, useColor: true}
+    "type": "cardEntities",
+    "heading": "Sonstige Aliase",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.TestLautstärke", offColor: MSRed /*if mute=true*/, onColor: MSGreen, name: "Echo Spot Büro", minValue: 0, maxValue: 100 },
+        <PageItem>{ id: "alias.0.NSPanel_1.TestTemperatur",name: "Temperatur außen", icon: "thermometer", onColor: White },
+        <PageItem>{ id: "alias.0.NSPanel_1.TestFeuchtigkeit", name: "Luftfeuchte außen", icon: "water-percent", unit: "%H", onColor: White },
+        <PageItem>{ id: "alias.0.NSPanel_1.TestInfo", name: "Windstärke", icon: "wind-power-outline", offColor: MSRed, onColor: MSGreen, unit: "bft", minValue: 0, maxValue: 12, interpolateColor: true, useColor: true }
     ]
 };
 
-const Buero_Seite_1: PageEntities =
+var Buero_Seite_1: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Büro',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe', interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung', interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Testlampe2', name: 'Filamentlampe', minValueBrightness: 0, maxValueBrightness: 70, interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Luftreiniger', icon: 'power', icon2: '',offColor: MSRed, onColor: MSGreen}
-        //<PageItem>{ id: 'alias.0.NSPanel_1.TestVentil1', icon: 'valve-open', icon2: 'valve-closed',offColor: MSRed, onColor: MSGreen, name: 'Test-Ventil 1'}
+    "type": "cardEntities",
+    "heading": "Büro",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe", interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.Testlampe2", name: "Filamentlampe", minValueBrightness: 0, maxValueBrightness: 70, interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "power", icon2: "",offColor: MSRed, onColor: MSGreen}
+        //<PageItem>{ id: "alias.0.NSPanel_1.TestVentil1", icon: "valve-open", icon2: "valve-closed",offColor: MSRed, onColor: MSGreen, name: "Test-Ventil 1"}
     ]
 };
 
-const Fenster_1: PageEntities =
+var Fenster_1: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Fenster und Türen',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestFenster', offColor: MSRed, onColor: MSGreen, name: 'Büro Fenster'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Haustuer', offColor: MSRed, onColor: MSGreen, name: 'Haustür'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestBlind', onColor: White, name: 'IKEA Fyrtur'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestDoorlock', offColor: MSRed, onColor: MSGreen, name: 'Türschloss'},
+    "type": "cardEntities",
+    "heading": "Fenster und Türen",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.TestFenster", offColor: MSRed, onColor: MSGreen, name: "Büro Fenster"},
+        <PageItem>{ id: "alias.0.NSPanel_1.Haustuer", offColor: MSRed, onColor: MSGreen, name: "Haustür"},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestBlind", onColor: White, name: "IKEA Fyrtur"},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestDoorlock", offColor: MSRed, onColor: MSGreen, name: "Türschloss"},
     ]
 };
 
-const Button_1: PageEntities =
+var Button_1: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Button Aliase',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestTastensensor', name: 'Tastensensor (FFN)'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.NDR2', icon: 'radio', name: 'Taste (NDR2)', onColor: colorRadio},
+    "type": "cardEntities",
+    "heading": "Button Aliase",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.TestTastensensor", name: "Tastensensor (FFN)"},
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.NDR2", icon: "radio", name: "Taste (NDR2)", onColor: colorRadio},
     ]
 };
 
-const Subpages_1: PageEntities =
+var Subpages_1: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Test Subpages',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [
-        <PageItem>{ navigate: true, id: 'Abfall', onColor: White, name: 'Abfallkalender'},
-        <PageItem>{ navigate: true, id: 'WLAN', onColor: White, name: 'Gäste WLAN'},
+    "type": "cardEntities",
+    "heading": "Test Subpages",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ navigate: true, id: "Abfall", onColor: White, name: "Abfallkalender"},
+        <PageItem>{ navigate: true, id: "WLAN", onColor: White, name: "Gäste WLAN"},
     ]
 };
 
-// Subpage 1 von Subpages_1
-const Abfall: PageEntities =
+//Subpage 1 von Subpages_1
+var Abfall: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Abfallkalender',
-    useColor: true,
-    subPage: true,
-    parent: Subpages_1,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event1',icon: 'trash-can'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event2',icon: 'trash-can'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event3',icon: 'trash-can'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event4',icon: 'trash-can'}
+    "type": "cardEntities",
+    "heading": "Abfallkalender",
+    "useColor": true,
+    "subPage": true,
+    "parent": Subpages_1,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event1",icon: "trash-can"},
+        <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event2",icon: "trash-can"},
+        <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event3",icon: "trash-can"},
+        <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event4",icon: "trash-can"}
     ]
 };
 
-const Buero_Seite_2: PageGrid =
+var Buero_Seite_2: PageGrid =
 {
-    type: 'cardGrid',
-    heading: 'Büro 2',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe', name: 'Schreibtisch'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung', name: 'Deckenlampe'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestFenster', offColor: MSRed, onColor: MSGreen, name: 'Büro Fenster'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Luftreiniger', icon: 'power', offColor: MSRed, onColor: MSGreen},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestBlind', icon: 'projector-screen', onColor: White, name: 'Beamer'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Bob', icon: 'play', onColor: White, name: 'TuneIn'}
+    "type": "cardGrid",
+    "heading": "Büro 2",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe", name: "Schreibtisch"},
+        <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", name: "Deckenlampe"},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestFenster", offColor: MSRed, onColor: MSGreen, name: "Büro Fenster"},
+        <PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "power", offColor: MSRed, onColor: MSGreen},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestBlind", icon: "projector-screen", onColor: White, name: "Beamer"},
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "play", onColor: White, name: "TuneIn"}
     ]
 };
 
-const Alexa: PageMedia = 
+var Alexa: PageMedia = 
 {
-    type: 'cardMedia',
-    heading: 'Alexa',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [<PageItem>{ id: 'alias.0.NSPanel_1.Alexa.PlayerBuero' }]
+    "type": "cardMedia",
+    "heading": "Alexa",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Alexa.PlayerBuero" }]
 };
 
-const Buero_Themostat: PageThermo = 
+var Buero_Themostat: PageThermo = 
 {
-    type: 'cardThermo',
-    heading: 'Test Thermostat',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [<PageItem>{ id: 'alias.0.NSPanel_1.Thermostat_Büro', minValue: 50, maxValue: 300 }]
+    "type": "cardThermo",
+    "heading": "Test Thermostat",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Thermostat_Büro", minValue: 50, maxValue: 300 }]
 };
 
-const Buero_Klimaanlage: PageThermo = 
+var Buero_Klimaanlage: PageThermo = 
 {
-    type: 'cardThermo',
-    heading: 'Test Klimaanlage',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [<PageItem>{ id: 'alias.0.NSPanel_1.TestKlimaanlage', minValue: 170, maxValue: 250}]
+    "type": "cardThermo",
+    "heading": "Test Klimaanlage",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.TestKlimaanlage", minValue: 170, maxValue: 250}]
 };
 
-// Subpage 2 von Subpages_1
-const WLAN: PageQR = 
+//Subpage 2 von Subpages_1
+var WLAN: PageQR = 
 {
-    type: 'cardQR',
-    heading: 'Gäste WLAN',
-    useColor: true,
-    subPage: true,
-    parent: Subpages_1,
-    items: [<PageItem>{ id: 'alias.0.NSPanel_1.Guest_Wifi' }]
+    "type": "cardQR",
+    "heading": "Gäste WLAN",
+    "useColor": true,
+    "subPage": true,
+    "parent": Subpages_1,
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Guest_Wifi" }]
 };
 
-const Buero_Alarm: PageAlarm = 
+var Buero_Alarm: PageAlarm = 
 {
-    type: 'cardAlarm',
-    heading: 'Alarm',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [<PageItem>{ id: 'alias.0.NSPanel_1.Alarm' }]
+    "type": "cardAlarm",
+    "heading": "Alarm",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Alarm" }]
 };
 
-const button1Page: PageGrid =
+var button1Page: PageGrid =
 {
-    type: 'cardGrid',
-    heading: 'Radio',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.FFN', icon: 'radio', name: 'FFN', onColor: colorRadio},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Antenne' , icon: 'radio', name: 'Antenne Nds.', onColor: colorRadio},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.NDR2', icon: 'radio', name: 'NDR2', onColor: colorRadio},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Bob', icon: 'radio', name: 'Radio BOB', onColor: colorRadio},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Spotify', icon: 'spotify', name: 'Party Playlist', onColor: colorSpotify},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Alexa', icon: 'playlist-music', name: 'Playlist 2021', onColor: colorAlexa}
+    "type": "cardGrid",
+    "heading": "Radio",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.FFN", icon: "radio", name: "FFN", onColor: colorRadio},
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Antenne" , icon: "radio", name: "Antenne Nds.", onColor: colorRadio},
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.NDR2", icon: "radio", name: "NDR2", onColor: colorRadio},
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "radio", name: "Radio BOB", onColor: colorRadio},
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Spotify", icon: "spotify", name: "Party Playlist", onColor: colorSpotify},
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Alexa", icon: "playlist-music", name: "Playlist 2021", onColor: colorAlexa}
     ]
 };
 
-const button2Page: PageEntities =
+var button2Page: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Büro',
-    useColor: true,
-    subPage: false,
-    parent: undefined,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung'}
+    "type": "cardEntities",
+    "heading": "Büro",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe"},
+        <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung"}
     ]
 };
 
-// Subpages 2 (+ Info)
-const Service: PageEntities =
+//Subpages 2 (+ Info)
+var Service: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'NSPanel Service',
-    useColor: true,
-    subPage: false,
-    parent: undefined, 
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.NSPanel_AutoUpdate', name: 'Auto-Updates' ,icon: 'update', offColor: MSRed, onColor: MSGreen},
-        <PageItem>{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', onColor: White, name: 'NSPanel Infos'},
-        <PageItem>{ navigate: true, id: 'NSPanel_Firmware_Updates', icon: 'update', onColor: White, name: 'Manuelle-Updates'},
-        <PageItem>{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'wrench-outline', onColor: White, name: 'Einstellungen'}
+    "type": "cardEntities",
+    "heading": "NSPanel Service",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined, 
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_AutoUpdate", name: "Auto-Updates" ,icon: "update", offColor: MSRed, onColor: MSGreen},
+        <PageItem>{ navigate: true, id: "NSPanel_Infos", icon: "information-outline", onColor: White, name: "NSPanel Infos"},
+        <PageItem>{ navigate: true, id: "NSPanel_Firmware_Updates", icon: "update", onColor: White, name: "Manuelle-Updates"},
+        <PageItem>{ navigate: true, id: "NSPanel_Einstellungen", icon: "wrench-outline", onColor: White, name: "Einstellungen"}
     ]
 };
 
-// Subpage 1 von Subpages_2
-const NSPanel_Infos: PageEntities =
+//Subpage 1 von Subpages_2
+var NSPanel_Infos: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'NSPanel Infos',
-    useColor: true,
-    subPage: true,
-    parent: Service,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.NSPanel_Hardware', name: 'Hardware', icon: 'memory', offColor: MSYellow, onColor: MSYellow, useColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.NSPanel_ESP_Temp', name: 'ESP Temperatur', icon: 'thermometer', unit: '°C', offColor: MSYellow, onColor: MSYellow, useColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.NSPanel_UpTime', name: 'Uptime', icon: 'timeline-clock-outline', offColor: MSYellow, onColor: MSYellow, useColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.NSPanel_RSSI', name: 'Wifi-Signal', icon: 'signal-distance-variant', unit: 'dBm', offColor: MSYellow, onColor: MSYellow, useColor: true}
+    "type": "cardEntities",
+    "heading": "NSPanel Infos",
+    "useColor": true,
+    "subPage": true,
+    "parent": Service,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_Hardware", name: "Hardware", icon: "memory", offColor: MSYellow, onColor: MSYellow, useColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_ESP_Temp", name: "ESP Temperatur", icon: "thermometer", unit: "°C", offColor: MSYellow, onColor: MSYellow, useColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_UpTime", name: "Uptime", icon: "timeline-clock-outline", offColor: MSYellow, onColor: MSYellow, useColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_RSSI", name: "Wifi-Signal", icon: "signal-distance-variant", unit: "dBm", offColor: MSYellow, onColor: MSYellow, useColor: true}
     ]
 };
 
-// Subpage 2 von Subpages_2
-const NSPanel_Einstellungen: PageEntities =
+//Subpage 2 von Subpages_2
+var NSPanel_Einstellungen: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Screensaver',
-    useColor: true,
-    subPage: true,
-    parent: Service,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Dimmode_BrightnessDay', name: 'Brightness Tag', icon: 'brightness-5', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 5, maxValue: 10},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Dimmode_BrightnessNight', name: 'Brightness Nacht', icon: 'brightness-4', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 4},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Dimmode_HourDay', name: 'Stunde Tag', icon: 'sun-clock', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Dimmode_HourNight', name: 'Stunde Nacht', icon: 'sun-clock-outline', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23}
+    "type": "cardEntities",
+    "heading": "Screensaver",
+    "useColor": true,
+    "subPage": true,
+    "parent": Service,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_BrightnessDay", name: "Brightness Tag", icon: "brightness-5", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 5, maxValue: 10},
+        <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_BrightnessNight", name: "Brightness Nacht", icon: "brightness-4", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 4},
+        <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_HourDay", name: "Stunde Tag", icon: "sun-clock", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23},
+        <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_HourNight", name: "Stunde Nacht", icon: "sun-clock-outline", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23}
     ]
 };
 
-// Subpage 3 von Subpages_2
-const NSPanel_Firmware_Updates: PageEntities =
+//Subpage 3 von Subpages_2
+var NSPanel_Firmware_Updates: PageEntities =
 {
-    type: 'cardEntities',
-    heading: 'Firmware-Updates',
-    useColor: true,
-    subPage: true,
-    parent: Service,
-    items: [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Tasmota_Version', name: 'Tasmota Firmware', useColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TFT_Firmware', name: 'TFT-Firmware', useColor: true},
+    "type": "cardEntities",
+    "heading": "Firmware-Updates",
+    "useColor": true,
+    "subPage": true,
+    "parent": Service,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.Tasmota_Version", name: "Tasmota Firmware", useColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.TFT_Firmware", name: "TFT-Firmware", useColor: true},
     ]
 };
 
 export const config: Config = {
-    panelRecvTopic: 'mqtt.0.SmartHome.nspanel_C79304.tele.RESULT',       // anpassen
-    panelSendTopic: 'mqtt.0.SmartHome.nspanel_C79304.cmnd.CustomSend',   // anpassen
-    firstScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%' },
-    secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Daily.Day1.Day.PrecipitationProbability', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%' },
-    thirdScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: 'Wind', ScreensaverEntityUnitText: 'km/h' },
-    fourthScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.UVIndex', ScreensaverEntityIcon: 'solar-power', ScreensaverEntityText: 'UV', ScreensaverEntityUnitText: '' },
-    timeoutScreensaver: 10,
+    panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // anpassen
+    panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
+    firstScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.RelativeHumidity", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%" },
+    secondScreensaverEntity: { ScreensaverEntity: "accuweather.0.Daily.Day1.Day.PrecipitationProbability", ScreensaverEntityIcon: "weather-pouring", ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%" },
+    thirdScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.WindSpeed", ScreensaverEntityIcon: "weather-windy", ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: "km/h" },
+    fourthScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.UVIndex", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "UV", ScreensaverEntityUnitText: "" },
+    timeoutScreensaver: 15,
     dimmode: 8,
     active: 100, //Standard-Brightness TFT
     screenSaverDoubleClick: false,
     locale: 'de-DE',                    // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
-    timeFormat: '%H:%M',                // currently not used
-    dateFormat: '%A, %d. %B %Y',        // currently not used
-    weatherEntity: 'alias.0.Wetter.Paderborn',
+    timeFormat: '%H:%M',                // currently not used 
+    dateFormat: '%A, %d. %B %Y',        // currently not used 
+    weatherEntity: 'alias.0.Wetter',
     defaultOffColor: Off,
     defaultOnColor: On,
     defaultColor: Off,
     temperatureUnit: '°C',
     pages: [
-        Buero_Seite_2,
-        Buero_Seite_1,
-        Buero_Klimaanlage, 
-        Button_1,
-        Test_Licht,
-        Test_Funktionen,
-        Fenster_1,
-        Subpages_1,
-        Alexa,
-        Buero_Themostat,
-        Buero_Alarm,
-        Service
+            Buero_Seite_2,
+            Buero_Seite_1,
+            Buero_Klimaanlage, 
+            Button_1,
+            Test_Licht,
+            Test_Funktionen,
+            Fenster_1,
+            Subpages_1,
+            Alexa,
+            Buero_Themostat,
+            Buero_Alarm,
+            Service
     ],
     subPages: [
-        Abfall,
-        WLAN,
-        NSPanel_Infos,
-        NSPanel_Einstellungen,
-        NSPanel_Firmware_Updates
+                Abfall,
+                WLAN,
+                NSPanel_Infos,
+                NSPanel_Einstellungen,
+                NSPanel_Firmware_Updates
     ],
     button1Page: button1Page,
     button2Page: button2Page
@@ -474,6 +476,8 @@ async function InitWeatherForecast() {
         await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
     };
 }
+
+InitWeatherForecast();
 
 async function InitDimmode() {
 
@@ -520,7 +524,6 @@ async function InitDimmode() {
     });
 }
 
-InitWeatherForecast();
 InitDimmode();
 
 //--------------------End Dimmode
@@ -654,7 +657,7 @@ function get_locales() {
 }
 
 async function check_updates() {
-    const desired_display_firmware_version = 39;
+    const desired_display_firmware_version = 40;
     const berry_driver_version = 4;
 
     if (Debug) console.log('Check-Updates');
@@ -974,7 +977,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.2.0';
+    const tft_version: string = 'v3.3.0';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
 
     request({
@@ -1941,6 +1944,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
     var id = page.items[0].id
+    console.log(id)
     var out_msgs: Array<Payload> = [];
     out_msgs.push({ payload: 'pageType~cardAlarm' });
     var nsPath = NSPanel_Path + 'Alarm.';
