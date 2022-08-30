@@ -49,4 +49,5 @@ List of supported entitiy types for this page:
 - automation
 - alarm
 - sun
+- person
 - iText
