@@ -6901,7 +6901,7 @@ $icons = [
 function get_icon($name) {
   global $icons;
   if (strpos('text:', $name) !== false) {
-      return str_replace('text:', "", $name);
+    return str_replace('text:', "", $name);
   }
   $ma_name = str_replace('mdi:', "", $name);
   if (array_key_exists($ma_name, $icons)) {
