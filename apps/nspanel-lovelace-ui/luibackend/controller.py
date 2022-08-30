@@ -78,9 +78,8 @@ class LuiController(object):
 
 
     def update_screensaver_brightness_state_callback(self, entity, attribute, old, new, kwargs):
-        if type(self._config.get("sleepBrightness")) == str:
-            self.current_screensaver_brightness = self.calc_current_brightness(self._config.get("sleepBrightness"))
-            self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))
+        self.current_screensaver_brightness = self.calc_current_brightness(self._config.get("sleepBrightness"))
+        self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))
         self.update_screensaver_brightness(kwargs={"ssbr": self.current_screensaver_brightness, "sbr": self.current_screen_brightness})
         
     def update_screensaver_brightness(self, kwargs):
