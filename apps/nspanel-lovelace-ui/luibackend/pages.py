@@ -287,15 +287,19 @@ class LuiPagesGen(object):
             icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
             return f"~fan~{entityId}~{icon_id}~{icon_color}~{name}~{switch_val}"
         if entityType in ["sensor", "binary_sensor"]:
-            device_class = entity.attributes.get("device_class", "")
-            unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
-            value = entity.state + " " + unit_of_measurement
+            device_class = entity.attributes.get("device_class", "_")
+            if entityType == "sensor":
+                unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
+                value = entity.state + " " + unit_of_measurement
+            if entityType == "binary_sensor":
+                value = get_translation(self._locale, f"backend.component.binary_sensor.state.{device_class}.{entity.state}")
             if cardType == "cardGrid" and entityType == "sensor":
                 icon_id = entity.state[:4]
                 if icon_id[-1] == ".":
                     icon_id = icon_id[:-1]
             else:
                 icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
+                
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{value}"
         if entityType in ["button", "input_button"]:
