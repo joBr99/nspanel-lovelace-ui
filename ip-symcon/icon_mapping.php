@@ -6900,7 +6900,7 @@ $icons = [
 
 function get_icon($name) {
   global $icons;
-  if (str_contains('text:', $name)) {
+  if (strpos('text:', $name) !== false) {
       return str_replace('text:', "", $name);
   }
   $ma_name = str_replace('mdi:', "", $name);
