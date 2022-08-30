@@ -35,7 +35,7 @@ class LuiPagesGen(object):
         attr = entity.attributes
         default_color_on  = rgb_dec565([253, 216, 53])
         default_color_off = rgb_dec565([68, 115, 158])
-        icon_color = default_color_on if entity.state in ["on", "unlocked", "above_horizon"] else default_color_off
+        icon_color = default_color_on if entity.state in ["on", "unlocked", "above_horizon", "home"] else default_color_off
 
         if ha_type == "alarm_control_panel":
             if entity.state == "disarmed":
@@ -345,6 +345,11 @@ class LuiPagesGen(object):
             icon_color = self.get_entity_color(entity, overwrite=colorOverride)
             icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
             text = get_translation(self._locale, f"backend.component.sun.state._.{entity.state}")
+            return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
+        if entityType == "person":
+            icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+            icon_color = self.get_entity_color(entity, ha_type=entityType, overwrite=colorOverride)
+            text = get_translation(self._locale, f"backend.component.person.state._.{entity.state}")
             return f"~text~{entityId}~{icon_id}~{icon_color}~{name}~{text}"
         return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~unsupported~"
 
