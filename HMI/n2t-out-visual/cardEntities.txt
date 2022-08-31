@@ -317,7 +317,7 @@ Text tEntity1
         Opacity                             : 127
         x coordinate                        : 77
         y coordinate                        : 85
-        Width                               : 180
+        Width                               : 184
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -347,7 +347,7 @@ Text tEntity2
         Opacity                             : 127
         x coordinate                        : 78
         y coordinate                        : 142
-        Width                               : 180
+        Width                               : 184
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -377,7 +377,7 @@ Text tEntity3
         Opacity                             : 127
         x coordinate                        : 78
         y coordinate                        : 198
-        Width                               : 180
+        Width                               : 184
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -407,7 +407,7 @@ Text tEntity4
         Opacity                             : 127
         x coordinate                        : 78
         y coordinate                        : 254
-        Width                               : 180
+        Width                               : 184
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
