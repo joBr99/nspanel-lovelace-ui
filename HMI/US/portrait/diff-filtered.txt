@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-08-30 17:57:12.663938607 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-08-30 17:57:12.079887165 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-30 17:57:12.635936141 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-08-31 18:53:57.354850715 +0000
++--- HMI/n2t-out/Program.s.txt	2022-08-31 18:53:56.794842960 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-31 18:53:57.290849828 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+--- HMI/n2t-out/cardEntities.txt	2022-08-30 17:57:12.079887165 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-30 17:57:12.635936141 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-08-31 18:53:56.798843016 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-31 18:53:57.290849828 +0000
 +@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -33,8 +33,8 @@
 ++                                            spstr strCommand.txt,tTmp.txt,"~",32
 ++                                            covx tTmp.txt,sys0,0,0
 ++                                            btOnOff5.val=sys0
-+--- HMI/n2t-out/pageStartup.txt	2022-08-30 17:57:12.079887165 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-30 17:57:12.635936141 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-08-31 18:53:56.794842960 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-31 18:53:57.290849828 +0000
 +@@ -152,7 +152,7 @@
 +         Disable release event after dragging: 0
 +         Send Component ID                   : disabled
@@ -45,8 +45,8 @@
 +     
 + Picture p0
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-08-30 17:57:12.079887165 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-30 17:57:12.635936141 +0000
++--- HMI/n2t-out/pageTest.txt	2022-08-31 18:53:56.794842960 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-31 18:53:57.290849828 +0000
 +@@ -13,36 +13,6 @@
 +     Events
 +         Preinitialize Event
