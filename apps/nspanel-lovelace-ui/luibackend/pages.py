@@ -289,6 +289,8 @@ class LuiPagesGen(object):
             device_class = entity.attributes.get("device_class", "")
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state + " " + unit_of_measurement
+            if entityType == "binary_sensor":
+                value = get_translation(self._locale, f"backend.component.binary_sensor.state.{device_class}.{entity.state}")
             if cardType == "cardGrid" and entityType == "sensor":
                 icon_id = entity.state[:4]
                 if icon_id[-1] == ".":
