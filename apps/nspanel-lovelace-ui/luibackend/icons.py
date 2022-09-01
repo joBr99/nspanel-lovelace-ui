@@ -18,12 +18,64 @@ weather_mapping = {
     'windy-variant': 'weather-windy-variant'
 }
 
-sensor_mapping_on = {
-    "door": "door-open",
+sensor_mapping_off = {
+    "battery": "battery",
+    "battery_charging": "battery",
+    "carbon_monoxide": "smoke-detector",
+    "cold": "thermometer",
+    "connectivity": "close-network-outline",
+    "door": "door-closed",
+    "garage_door": "garage",
+    "power": "power-plug-off",
+    "gas": "checkbox-marked-circle",
+    "problem": "checkbox-marked-circle",
+    "safety": "checkbox-marked-circle",
+    "tamper": "check-circle",
+    "smoke": "smoke-detector-variant",
+    "heat": "thermometer",
+    "light": "brightness-5",
+    "lock": "lock",
+    "moisture": "water-off",
+    "motion": "motion-sensor-off",
+    "occupancy": "home-outline",
+    "opening": "square",
+    "plug": "power-plug-off",
+    "presence": "home-outline",
+    "running": "stop",
+    "sound": "music-note-off",
+    "update": "package",
+    "vibration": "crop-portrait",
+    "window": "window-closed",
 }
 
-sensor_mapping_off = {
-    "door": "door-closed",
+sensor_mapping_on = {
+    "battery": "battery-outline",
+    "battery_charging": "battery-charging",
+    "carbon_monoxide": "smoke-detector-alert",
+    "cold": "snowflake",
+    "connectivity": "check-network-outline",
+    "door": "door-open",
+    "garage_door": "garage-open",
+    "power": "power-plug",
+    "gas": "alert-circle",
+    "problem": "alert-circle",
+    "safety": "alert-circle",
+    "tamper": "alert-circle",
+    "smoke": "smoke-detector-variant-alert",
+    "heat": "fire",
+    "light": "brightness-7",
+    "lock": "lock-open",
+    "moisture": "water",
+    "motion": "motion-sensor",
+    "occupancy": "home",
+    "opening": "square-outline",
+    "plug": "power-plug",
+    "presence": "home",
+    "running": "play",
+    "sound": "music-note",
+    "update": "package-up",
+    "vibration": "vibrate",
+    "window": "window-open",
 }
 
 sensor_mapping = {
@@ -109,12 +161,19 @@ def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
     elif ha_type == "lock":
         return "lock-open" if state == "unlocked" else "lock"
     elif ha_type == "sensor":
-        if state == "on" and device_class in sensor_mapping_on:
-            return sensor_mapping_on[device_class]
-        elif state == "off" and device_class in sensor_mapping_off:
-            return sensor_mapping_off[device_class]
+        return sensor_mapping[device_class] if device_class in sensor_mapping else "alert-circle-outline"
+    elif ha_type == "binary_sensor":
+        if state == "on":
+            if device_class in sensor_mapping_on:
+                return sensor_mapping_on[device_class]
+            else:
+                return "checkbox-marked-circle"
         else:
-            return sensor_mapping[device_class] if device_class in sensor_mapping else "alert-circle-outline"
+            if device_class in sensor_mapping_off:
+                return sensor_mapping_off[device_class]
+            else:
+                return "radiobox-blank"
+            
     elif ha_type == "alarm-arm-fail":
         return "progress-alert"
     elif ha_type == "alarm_control_panel":

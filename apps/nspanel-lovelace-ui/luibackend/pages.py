@@ -296,7 +296,7 @@ class LuiPagesGen(object):
                 if icon_id[-1] == ".":
                     icon_id = icon_id[:-1]
             else:
-                icon_id = get_icon_id_ha("sensor", state=entity.state, device_class=device_class, overwrite=icon)
+                icon_id = get_icon_id_ha(entityType, state=entity.state, device_class=device_class, overwrite=icon)
         elif entityType in ["button", "input_button"]:
             entityTypePanel = "button"
             value = get_translation(self._locale, "frontend.ui.card.button.press")
