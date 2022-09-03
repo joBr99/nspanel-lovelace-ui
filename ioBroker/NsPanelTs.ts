@@ -1055,7 +1055,7 @@ function SendToPanel(val: Payload | Payload[]): void {
 
 on({ id: NSPanel_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) => {
     if ((obj.state ? obj.state.val : '') == 'armed' || (obj.state ? obj.state.val : '') == 'disarmed' || (obj.state ? obj.state.val : '') == 'triggered') {
-        GeneratePage(config.pages[8]);   //----------- muss noch dynamisch gefunden werden -------------------------------------------
+        GeneratePage(activePage);
     }
 });
 
