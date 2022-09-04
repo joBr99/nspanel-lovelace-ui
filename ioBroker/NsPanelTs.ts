@@ -1059,7 +1059,9 @@ function SendToPanel(val: Payload | Payload[]): void {
 on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) => {
     if ((obj.state ? obj.state.val : '') == 'armed' || (obj.state ? obj.state.val : '') == 'disarmed' || (obj.state ? obj.state.val : '') == 'triggered') {
         if (Debug) console.log(activePage);
-        GeneratePage(activePage);
+        if (NSPanel_Path == getState(NSPanel_Alarm_Path + 'Alarm.PANEL').val) {
+            GeneratePage(activePage);
+        }
     }
 });
 
@@ -1956,11 +1958,12 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
     out_msgs.push({ payload: 'pageType~cardAlarm' });
     var nsPath = NSPanel_Alarm_Path + 'Alarm.';
 
-    if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false) {
+    if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
         createState(nsPath + 'AlarmPin', '0000', { type: 'string' }, function () { setState(nsPath + 'AlarmPin', '0000') });
         createState(nsPath + 'AlarmState', 'disarmed', { type: 'string' }, function () { setState(nsPath + 'AlarmState', 'disarmed') });
-        createState(nsPath + 'AlarmType', '0', { type: 'string' }, function () { setState(nsPath + 'AlarmType', '0') });
+        createState(nsPath + 'AlarmType', 'D1', { type: 'string' }, function () { setState(nsPath + 'AlarmType', 'D1') });
         createState(nsPath + 'PIN_Failed', 0, { type: 'number' }, function () { setState(nsPath + 'PIN_Failed', 0) });
+        createState(nsPath + 'PANEL', NSPanel_Path, { type: 'string' }, function () { setState(nsPath + 'PANEL', NSPanel_Path) });
     }
 
     if (existsState(nsPath + 'AlarmPin') && existsState(nsPath + 'AlarmState') && existsState(nsPath + 'AlarmType')) {
@@ -2427,6 +2430,7 @@ function HandleButtonEvent(words): void {
                 setIfExists(id + '.TYPE', 'A1');
                 setIfExists(id + '.PIN', words[4]);
                 setIfExists(id + '.ACTUAL', 'arming');
+                setIfExists(id + '.PANEL', NSPanel_Path);
             }
             setTimeout(function(){
                 GeneratePage(activePage);  
@@ -2437,6 +2441,7 @@ function HandleButtonEvent(words): void {
                 setIfExists(id + '.TYPE', 'A2');
                 setIfExists(id + '.PIN', words[4]);
                 setIfExists(id + '.ACTUAL', 'arming');
+                setIfExists(id + '.PANEL', NSPanel_Path);
             }
             setTimeout(function(){
                 GeneratePage(activePage);  
@@ -2447,6 +2452,7 @@ function HandleButtonEvent(words): void {
                 setIfExists(id + '.TYPE', 'A3');
                 setIfExists(id + '.PIN', words[4]);
                 setIfExists(id + '.ACTUAL', 'arming');
+                setIfExists(id + '.PANEL', NSPanel_Path);
             }
             setTimeout(function(){
                 GeneratePage(activePage);  
@@ -2457,6 +2463,7 @@ function HandleButtonEvent(words): void {
                 setIfExists(id + '.TYPE', 'A4');
                 setIfExists(id + '.PIN', words[4]);
                 setIfExists(id + '.ACTUAL', 'arming');
+                setIfExists(id + '.PANEL', NSPanel_Path);
             }
             setTimeout(function(){
                 GeneratePage(activePage);  
@@ -2472,12 +2479,11 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.TYPE', 'D1');
                     setIfExists(id + '.ACTUAL', 'pending');
                     setIfExists(id + '.PIN_Failed', 0);
-                    console.log("Zweig 1");
                 } else {
                     setIfExists(id + '.PIN_Failed', getState(id + '.PIN_Failed').val + 1);
                     setIfExists(id + '.ACTUAL', 'triggered');
-                    console.log("Zweig 2");
                 }
+                setIfExists(id + '.PANEL', NSPanel_Path);
                 setTimeout(function(){
                     GeneratePage(activePage);  
                 },500)
