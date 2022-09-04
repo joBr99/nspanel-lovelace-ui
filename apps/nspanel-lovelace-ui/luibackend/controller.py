@@ -299,7 +299,7 @@ class LuiController(object):
                 else:
                     self._ha_api.get_entity(entity_id).call_service("return_to_base")
             elif entity_id.startswith('service'):
-                self._ha_api.call_service(entity_id.replace('service.', '', 1), **le.data)
+                self._ha_api.call_service(entity_id.replace('service.', '', 1).replace('.','/', 1), **le.data)
 
         # for media page
         if button_type == "media-next":
