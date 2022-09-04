@@ -1,6 +1,6 @@
 # Entities
 
-Entities are mainly used on cardEntities, cardGrid and cardGrid.
+Entities are mainly used on cardEntities and cardGrid.
 
 It is possible to overwrite and configure varrious things on Entities.
 
@@ -69,3 +69,13 @@ This sensor will only be shown on the card if it's state is not equal to `on`
         state_not: "on"
 ```
 
+## Calling service directly as button
+
+The following example shows how to call services directly, this enables you to call services on entities not (yet) supported by the backend and also to pass data to services.
+
+```yaml
+    - entity: service.light.turn_on
+      data:
+        entity_id: light.schreibtischlampe
+        color_name: "green"
+```
