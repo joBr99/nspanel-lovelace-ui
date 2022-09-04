@@ -29,7 +29,9 @@ ReleaseNotes:
         - 26.08.2022 - V3.2.0 - pageItem mit CIE (XY) Parameter für ColorWheel (Steuerung für z.B Deconz-Farben bei denen Hue nicht greift)
         - 28.08.2022 - V3.2.0 - Wechsel zwischen Weather-Forecast und eigenen Datenpunkten im Screensaver (minütlich)
         - 28.08.2022 - V3.2.0 - Bugfix für 3.2.0 in GenerateDetailPage: Color-Language nicht über findLocales, da nicht in Sprachfile enthalten
-        - 29.08.2022 - V3.3.0 - Upgrade TFT 40; Upgrade TFT 41
+        - 29.08.2022 - V3.3.0 - Upgrade TFT 40
+        - 29.08.2022 - V3.3.1 - Upgrade TFT 41
+        - 04.09.2022 - V3.3.1 - Überarbeitung und BugFix für cardAlarm
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -100,6 +102,7 @@ Upgrades in Konsole:
 var Icons = new IconsSelector();
 var timeoutSlider: any;
 const NSPanel_Path = '0_userdata.0.NSPanel.1.';
+const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.'; //Neuer Pfad für gemeinsame Nutzung durch mehrere Panels
 const Debug = false;
 var manually_Update = true;
 
@@ -129,7 +132,7 @@ var weatherForecast = getState(NSPanel_Path + "ScreensaverInfo.weatherForecast")
 
 // Alexa-Instanz
 var alexaInstanz = 'alexa2.0';
-var alexaDevice = 'G070RR1075220388'; // Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
+var alexaDevice = 'G0XXXXXXXXXXXXXX'; // Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
 
 // Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
 // Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
@@ -154,7 +157,7 @@ var Test_Licht: PageEntities =
         //<PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", name: "Farbtemperatur", interpolateColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLicht", name: "RGB-Licht", minValueBrightness: 0, maxValueBrightness: 100, interpolateColor: true},
         //Beispiel für RGB Light mit neuem PageItem-Parameter colormode: "xy" alternativ colormode: "rgb" oder weglassen
-        //Steuert im z.B. DeConz Adapter die Farben per CIE (XY) mit dem Alias "RGB Licht"
+        //Steuert im z.B. DeConz Adapter unter Lampen die Farben per CIE (XY)
         <PageItem>{ id: "alias.0.NSPanel_2.WZ_E14_Fenster_rechts", name: "Fensterbank rechts", minValueBrightness: 0, maxValueBrightness: 100, minValueColorTemp: 500, maxValueColorTemp: 150, interpolateColor: false, colormode: "xy"},
         //<PageItem>{ id: "alias.0.NSPanel_1.TestCTmitHUE", name: "HUE-Licht-CT", minValueBrightness: 0, maxValueBrightness: 70, minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.TestHUELicht", name: "HUE-Licht-Color", minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true}
@@ -314,7 +317,7 @@ var Buero_Alarm: PageAlarm =
     "useColor": true,
     "subPage": false,
     "parent": undefined,
-    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Alarm" }]
+    "items": [<PageItem>{ id: "alias.0.Alarm" }]
 };
 
 var button1Page: PageGrid =
@@ -1053,9 +1056,12 @@ function SendToPanel(val: Payload | Payload[]): void {
     }
 }
 
-on({ id: NSPanel_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) => {
+on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) => {
     if ((obj.state ? obj.state.val : '') == 'armed' || (obj.state ? obj.state.val : '') == 'disarmed' || (obj.state ? obj.state.val : '') == 'triggered') {
-        GeneratePage(config.pages[8]);   //----------- muss noch dynamisch gefunden werden -------------------------------------------
+        if (Debug) console.log(activePage);
+        if (NSPanel_Path == getState(NSPanel_Alarm_Path + 'Alarm.PANEL').val) {
+            GeneratePage(activePage);
+        }
     }
 });
 
@@ -1945,22 +1951,25 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 }
 
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
+    activePage = page;
     var id = page.items[0].id
-    console.log(id)
+    
     var out_msgs: Array<Payload> = [];
     out_msgs.push({ payload: 'pageType~cardAlarm' });
-    var nsPath = NSPanel_Path + 'Alarm.';
+    var nsPath = NSPanel_Alarm_Path + 'Alarm.';
 
-    if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false) {
+    if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
         createState(nsPath + 'AlarmPin', '0000', { type: 'string' }, function () { setState(nsPath + 'AlarmPin', '0000') });
         createState(nsPath + 'AlarmState', 'disarmed', { type: 'string' }, function () { setState(nsPath + 'AlarmState', 'disarmed') });
-        createState(nsPath + 'AlarmType', '0', { type: 'string' }, function () { setState(nsPath + 'AlarmType', '0') });
+        createState(nsPath + 'AlarmType', 'D1', { type: 'string' }, function () { setState(nsPath + 'AlarmType', 'D1') });
+        createState(nsPath + 'PIN_Failed', 0, { type: 'number' }, function () { setState(nsPath + 'PIN_Failed', 0) });
+        createState(nsPath + 'PANEL', NSPanel_Path, { type: 'string' }, function () { setState(nsPath + 'PANEL', NSPanel_Path) });
     }
 
     if (existsState(nsPath + 'AlarmPin') && existsState(nsPath + 'AlarmState') && existsState(nsPath + 'AlarmType')) {
-        var entityPin = getState(nsPath + 'AlarmPin').val;
+        //var entityPin = getState(nsPath + 'AlarmPin').val;
         var entityState = getState(nsPath + 'AlarmState').val;
-        var entityType = getState(nsPath + 'AlarmType').val;
+        //var entityType = getState(nsPath + 'AlarmType').val;
         var arm1: string, arm2: string, arm3: string, arm4: string;
         var arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
         var icon = '0';
@@ -2132,6 +2141,8 @@ function HandleButtonEvent(words): void {
         GeneratePage(eval((words[2]).substring(9, (words[2]).length)));
         return;
     }
+
+    if (Debug) console.log(buttonAction);
 
     switch (buttonAction) {
         case 'bUp':
@@ -2419,52 +2430,63 @@ function HandleButtonEvent(words): void {
                 setIfExists(id + '.TYPE', 'A1');
                 setIfExists(id + '.PIN', words[4]);
                 setIfExists(id + '.ACTUAL', 'arming');
-                setTimeout(function () {
-                    GeneratePage(config.pages[pageId]);
-                }, 250)
+                setIfExists(id + '.PANEL', NSPanel_Path);
             }
+            setTimeout(function(){
+                GeneratePage(activePage);  
+            },250) 
             break;
         case 'A2': // Alarm-Page Alarm 2 aktivieren
             if (words[4] != '') {
                 setIfExists(id + '.TYPE', 'A2');
                 setIfExists(id + '.PIN', words[4]);
                 setIfExists(id + '.ACTUAL', 'arming');
-                setTimeout(function () {
-                    GeneratePage(config.pages[pageId]);
-                }, 250)
+                setIfExists(id + '.PANEL', NSPanel_Path);
             }
+            setTimeout(function(){
+                GeneratePage(activePage);  
+            },250)             
             break;
         case 'A3': // Alarm-Page Alarm 3 aktivieren
             if (words[4] != '') {
                 setIfExists(id + '.TYPE', 'A3');
                 setIfExists(id + '.PIN', words[4]);
                 setIfExists(id + '.ACTUAL', 'arming');
-                setTimeout(function () {
-                    GeneratePage(config.pages[pageId]);
-                }, 250)
+                setIfExists(id + '.PANEL', NSPanel_Path);
             }
+            setTimeout(function(){
+                GeneratePage(activePage);  
+            },250)            
             break;
         case 'A4': // Alarm-Page Alarm 4 aktivieren
             if (words[4] != '') {
                 setIfExists(id + '.TYPE', 'A4');
                 setIfExists(id + '.PIN', words[4]);
                 setIfExists(id + '.ACTUAL', 'arming');
-                setTimeout(function () {
-                    GeneratePage(config.pages[pageId]);
-                }, 250)
+                setIfExists(id + '.PANEL', NSPanel_Path);
             }
+            setTimeout(function(){
+                GeneratePage(activePage);  
+            },250)          
             break;
         case 'D1': // Alarm-Page Alarm Deaktivieren
-            if (Debug) console.log('D1: ' + getState(id + '.PIN').val);
+            //if (Debug) 
+            console.log('D1: ' + getState(id + '.PIN').val);
+            console.log(words[4]);
             if (words[4] != '') {
                 if (getState(id + '.PIN').val == words[4]) {
                     setIfExists(id + '.PIN', '0000');
                     setIfExists(id + '.TYPE', 'D1');
                     setIfExists(id + '.ACTUAL', 'pending');
-                    setTimeout(function () {
-                        GeneratePage(config.pages[pageId]);
-                    }, 250)
+                    setIfExists(id + '.PIN_Failed', 0);
+                } else {
+                    setIfExists(id + '.PIN_Failed', getState(id + '.PIN_Failed').val + 1);
+                    setIfExists(id + '.ACTUAL', 'triggered');
                 }
+                setIfExists(id + '.PANEL', NSPanel_Path);
+                setTimeout(function(){
+                    GeneratePage(activePage);  
+                },500)
             }
             break;
         default:
