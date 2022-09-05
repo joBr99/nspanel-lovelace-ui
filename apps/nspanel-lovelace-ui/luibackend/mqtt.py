@@ -59,3 +59,18 @@ class LuiMqttListener(object):
             if msg[1] == "pageOpenDetail":
                 self._controller.detail_open(msg[2], msg[3])
 
+class LuiMqttSender(object):
+    def __init__(self, api, mqttapi, topic_send):
+        self._ha_api = api
+        self._mqtt_api = mqttapi
+        self._topic_send = topic_send
+        self._prev_msg = ""
+
+    def send_mqtt_msg(self, msg, topic=None):
+        if self._prev_msg == msg:
+            return
+        self._prev_msg = msg
+        if topic is None:
+            topic = self._topic_send
+        self._ha_api.log(f"Sending MQTT Message: {msg}")
+        self._mqtt_api.mqtt_publish(topic, msg)
