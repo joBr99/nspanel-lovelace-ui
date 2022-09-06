@@ -1,4 +1,4 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-09-06 16:58:38.489880526 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-09-06 18:41:30.521724990 +0000
 +--- HMI/n2t-out/Program.s.txt	2022-08-31 18:53:56.794842960 +0000
 ++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-31 18:53:57.290849828 +0000
 +@@ -14,6 +14,6 @@
