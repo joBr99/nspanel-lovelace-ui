@@ -416,7 +416,7 @@ class LuiPagesGen(object):
             
             currently_translation = get_translation(self._locale, "frontend.ui.card.climate.currently")
             state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
-            action_translation = get_translation(self._locale, "frontend.ui.card.climate.operation")
+            action_translation = get_translation(self._locale, "frontend.ui.card.climate.operation").replace(' ','\r\n')
 
             command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}"
         self._send_mqtt_msg(command)
