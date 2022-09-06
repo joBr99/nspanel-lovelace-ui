@@ -685,15 +685,26 @@ class LuiPagesGen(object):
         switch_val = 1 if entity.state == "on" else 0
         icon_color = self.get_entity_color(entity)
         speed = entity.attributes.get("percentage")
+        percentage_step = entity.attributes.get("percentage_step")
         speedMax = 100
-        if(speed is None):
+        if percentage_step is None:
             speed = "disable"
         else:
-            speed = round(entity.attributes.get("percentage")/entity.attributes.get("percentage_step"))
-            speedMax = int(100/entity.attributes.get("percentage_step"))
+            if speed is None:
+                speed = 0
+            speed = round(speed/percentage_step)
+            speedMax = int(100/percentage_step)
 
         speed_translation = get_translation(self._locale, "frontend.ui.card.fan.speed")
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{get_icon_id('fan')}~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}")
+
+        preset_mode = entity.attributes.get("preset_mode", "")
+        preset_modes = entity.attributes.get("preset_modes", [])
+        if preset_modes is not None:
+            preset_modes = "?".join(entity.attributes.get("preset_modes", []))
+        else:
+            preset_modes = ""
+
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{get_icon_id('fan')}~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}~{preset_mode}~{preset_modes}")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
