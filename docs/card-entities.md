@@ -44,4 +44,6 @@ List of supported entitiy types for this page:
 - alarm
 - sun
 - person
-- iText
+- iText (internal entity for showing static text)
+- delete (internal entity to keep a entiy empty in the middle of the list)
+- navigate (internal entity for navigation, see subpages)
