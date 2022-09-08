@@ -291,7 +291,7 @@ class LuiPagesGen(object):
             value = entity.state + " " + unit_of_measurement
             if entityType == "binary_sensor":
                 value = get_translation(self._locale, f"backend.component.binary_sensor.state.{device_class}.{entity.state}")
-            if cardType == "cardGrid" and entityType == "sensor":
+            if cardType == "cardGrid" and entityType == "sensor" and icon is None:
                 icon_id = entity.state[:4]
                 if icon_id[-1] == ".":
                     icon_id = icon_id[:-1]
