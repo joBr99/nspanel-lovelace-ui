@@ -382,8 +382,11 @@ class LuiPagesGen(object):
             min_temp     = int(get_attr_safe(entity, "min_temp", 0)*10)
             max_temp     = int(get_attr_safe(entity, "max_temp", 0)*10)
             step_temp    = int(get_attr_safe(entity, "target_temp_step", 0.5)*10) 
+            icon_res_list = []
             icon_res = ""
+
             hvac_modes = get_attr_safe(entity, "hvac_modes", [])
+
             for mode in hvac_modes:
                 icon_id = get_icon_id('alert-circle-outline')
                 color_on = 64512
@@ -408,11 +411,21 @@ class LuiPagesGen(object):
                 state = 0
                 if(mode == entity.state):
                     state = 1
-                icon_res += f"~{icon_id}~{color_on}~{state}~{mode}"
-    
-            len_hvac_modes = len(hvac_modes)
-            padding_len = 8-len_hvac_modes
-            icon_res = icon_res + "~"*4*padding_len
+                
+                icon_res_list.append(f"~{icon_id}~{color_on}~{state}~{mode}")
+
+            icon_res = "".join(icon_res_list)
+
+            if len(icon_res_list) == 1:
+                icon_res = "~"*4 + icon_res_list[0] + "~"*4*6
+            elif len(icon_res_list) == 2:
+                icon_res = "~"*4*2 + icon_res_list[0] + "~"*4*2 + icon_res_list[1] + "~"*4*2
+            elif len(icon_res_list) == 3:
+                icon_res = "~"*4*2 + icon_res_list[0] + "~"*4 + icon_res_list[1] + "~"*4 + icon_res_list[2] + "~"*4
+            elif len(icon_res_list) == 4:
+                icon_res = "~"*4 + icon_res_list[0] + "~"*4 + icon_res_list[1] + "~"*4 + icon_res_list[2] + "~"*4 + icon_res_list[3]
+            elif len(icon_res_list) >= 5:
+                icon_res = "~"*4 + "".join(icon_res_list) + "~"*4*(7-len(icon_res_list))
             
             currently_translation = get_translation(self._locale, "frontend.ui.card.climate.currently")
             state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
