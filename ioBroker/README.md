@@ -1,7 +1,7 @@
 # NSPanel ioBroker Integration
 
-## Tutorials
-https://forum.iobroker.net/post/807730
+## German Tutorials
+https://github.com/joBr99/nspanel-lovelace-ui/wiki
 
 ## German Video Tutorial by haus-automatisierung.com
 https://www.youtube.com/watch?v=ZPLJk2ZLo_8  - NSPanel mit Lovelace UI - so habe ich mir das vorgestellt!
