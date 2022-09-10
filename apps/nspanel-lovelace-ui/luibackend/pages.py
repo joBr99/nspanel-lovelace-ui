@@ -220,14 +220,23 @@ class LuiPagesGen(object):
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
         if entityType == "iText":
-                value   = entityId.split(".", 2)[1]
-                name = name if name is not None else "conf name missing"
-                icon_res = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
-                return f"~text~{entityId}~{icon_res}~17299~{name}~{value}"
+            value   = entityId.split(".", 2)[1]
+            name = name if name is not None else "conf name missing"
+            icon_res = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
+            return f"~text~{entityId}~{icon_res}~17299~{name}~{value}"
         if entityType == "service":
             icon_id = get_icon_id_ha("script", overwrite=icon)
             text = get_translation(self._locale, "frontend.ui.card.script.run")
-            return f"~button~{uuid}~{icon_id}~17299~{name}~{text}"
+            icon_color = 17299
+            if item.status is not None and self._ha_api.entity_exists(item.status):
+                status_entity = self._ha_api.get_entity(item.status)
+                icon_id = get_icon_id_ha(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
+                icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
+                if item.status.startswith("sensor") and cardType == "cardGrid":
+                    icon_id = status_entity.state[:4]
+                    if icon_id[-1] == ".":
+                        icon_id = icon_id[:-1]
+            return f"~button~{uuid}~{icon_id}~{icon_color}~{name}~{text}"
         if not self._ha_api.entity_exists(entityId):
             return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
         
