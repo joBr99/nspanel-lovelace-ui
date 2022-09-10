@@ -14,7 +14,7 @@ key | optional | type | default | description
 `color` | True | array | `None` | Overwrite color of entity `color: [255, 0, 0]`
 `state` | True | string | `None` | Only displayed if Entity state is equal to this value
 `state_not` | True | string | `None` | Only displayed if Entity state is unequal to this value
-`status` | True | string | `None` | Only valid for navigate items, adds a entity to track state for the icon
+`status` | True | string | `None` | Only valid for navigate and service items, adds a entity to track state for the icon
 `assumed_state` | True | string | `None` | Only for cover items, up, down and stop buttons are always shown
 
 ## Override Icons or Names
