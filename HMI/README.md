@@ -223,9 +223,12 @@ tIconBtnEntityName is the entiy name used in the button event for pressing the u
 `event,buttonPress2,internalNameEntity,actionName,code`
 
 
-# Icons IDs
+### cardPower Page
 
-Please see Icon's int the [icons.md file](icons.md)
+`entityUpd,heading,navigation,colorHome,iconHome[,iconColor,icon,speed,valueUp,valueDown]x6
+
+`"entityUpd~test~1|1~6666~A~8888~B~1~t0o~t0u~9999~C~2~t1o~t1u~1111~D~3~t2o~t2u~33333~E~-1~t3o~t3u~3333~F~-2~t4o~t4u~4444~G~-3~t5o~t5u`
+
 
 # Design Guidelines for Nextion HMI Project
 
