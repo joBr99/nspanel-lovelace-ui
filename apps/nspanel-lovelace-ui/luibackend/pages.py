@@ -168,15 +168,35 @@ class LuiPagesGen(object):
 
         # status icons
         status_res = ""
-        for i in range(1,3):
+        for i in range(1,2):
             statusIcon = self._config._config_screensaver.raw_config.get(f"statusIcon{i}")
-            if statusIcon is not None:
+            if statusIcon is not None: 
                 icon = statusIcon.get("icon")
                 entity = self._ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
                 icon = get_icon_id_ha(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
-                color = self.get_entity_color(entity, overwrite=statusIcon.get("color", None))
+                test = entity.state
+                color = self.get_entity_color(entity, overwrite=[255,0,255])
+                colors = statusIcon.get("color", None)
+                if entity.state == "heat":
+                    color = self.get_entity_color(entity, overwrite=[255,0,0]) 
+                elif entity.state == "cool":
+                    color = self.get_entity_color(entity, overwrite=[0,0,255]) 
+                elif entity.state == "idle":
+                    color = self.get_entity_color(entity, overwrite=[255,255,255])
+                else:
+                    color = self.get_entity_color(entity, overwrite=[105,105,105]) 
                 status_res += f"~{icon}~{color}"
+        for i in range(2,3):
+            statusIcon = self._config._config_screensaver.raw_config.get(f"statusIcon{i}")
+            if statusIcon is not None: 
+                icon = statusIcon.get("icon")
+                entity = self._ha_api.get_entity(statusIcon.get("entity"))
+                entityType = statusIcon.get("entity").split(".")[0]
+                icon = get_icon_id_ha(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+                status = entity.state
+                color = self.get_entity_color(entity, overwrite=statusIcon.get("color", None))
+                status_res += f"~{icon}\n{status}°C~{color}"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}{status_res}")
         
