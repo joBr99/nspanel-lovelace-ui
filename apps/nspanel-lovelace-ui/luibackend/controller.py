@@ -22,12 +22,12 @@ class LuiController(object):
         # send panel back to startup page on restart of this script
         self._pages_gen.page_type("pageStartup")
        
-        # register callbacks
-        self.register_callbacks()
-
         # calculate current brightness
         self.current_screensaver_brightness = self.calc_current_brightness(self._config.get("sleepBrightness"))
-        self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))         
+        self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))
+       
+        # register callbacks
+        self.register_callbacks()     
 
     def startup(self):
         apis.ha_api.log(f"Startup Event")
