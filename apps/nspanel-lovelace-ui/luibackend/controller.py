@@ -21,46 +21,13 @@ class LuiController(object):
 
         # send panel back to startup page on restart of this script
         self._pages_gen.page_type("pageStartup")
-        
-        # time update callback
-        time = datetime.time(0, 0, 0)
-        apis.ha_api.run_minutely(self._pages_gen.update_time, time)
-
-        # Setup date callback
-        apis.ha_api.run_daily(self._pages_gen.update_date, time)
-
+       
         # register callbacks
         self.register_callbacks()
 
         # calculate current brightness
         self.current_screensaver_brightness = self.calc_current_brightness(self._config.get("sleepBrightness"))
-        self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))
-
-        # register callbacks for each time
-        if type(self._config.get("sleepBrightness")) == list:
-            for index, timeset in enumerate(self._config.get("sleepBrightness")):
-                apis.ha_api.run_daily(self.update_screensaver_brightness, timeset["time"], ssbr=timeset["value"], sbr=self.current_screen_brightness)
-        
-
-        # call update_screensaver_brightness on changes of entity configured in sleepTracking
-        bst = self._config.get("sleepTracking")
-        if bst is not None and apis.ha_api.entity_exists(bst):
-            apis.ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=bst)
-        
-        # call update_screensaver_brightness on entity configured in sleepOverride
-        sleepOverride = self._config.get("sleepOverride")
-        if sleepOverride is not None and type(sleepOverride) is dict  and sleepOverride["entity"] is not None and sleepOverride["brightness"] is not None and apis.ha_api.entity_exists(sleepOverride["entity"]):
-            apis.ha_api.log(f"Configuring Sleep Override. Config is {sleepOverride}")
-            apis.ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=sleepOverride["entity"])
-
-        # register callback for state changes on tracked value (for input_number) - sleepBrightness
-        sleep_brightness_config = self._config.get("sleepBrightness")
-        if type(sleep_brightness_config) == str and apis.ha_api.entity_exists(sleep_brightness_config):
-            apis.ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=sleep_brightness_config)
-        # register callback for state changes on tracked value (for input_number) - screenBrightness
-        screen_brightness_config = self._config.get("screenBrightness")
-        if type(screen_brightness_config) == str and apis.ha_api.entity_exists(screen_brightness_config):
-            apis.ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=screen_brightness_config)            
+        self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))         
 
     def startup(self):
         apis.ha_api.log(f"Startup Event")
@@ -150,6 +117,38 @@ class LuiController(object):
         return current_screensaver_brightness
     
     def register_callbacks(self):
+        # time update callback
+        time = datetime.time(0, 0, 0)
+        apis.ha_api.run_minutely(self._pages_gen.update_time, time)
+
+        # Setup date callback
+        apis.ha_api.run_daily(self._pages_gen.update_date, time)
+
+        # register callbacks for each time
+        if type(self._config.get("sleepBrightness")) == list:
+            for index, timeset in enumerate(self._config.get("sleepBrightness")):
+                apis.ha_api.run_daily(self.update_screensaver_brightness, timeset["time"], ssbr=timeset["value"], sbr=self.current_screen_brightness)        
+
+        # call update_screensaver_brightness on changes of entity configured in sleepTracking
+        bst = self._config.get("sleepTracking")
+        if bst is not None and apis.ha_api.entity_exists(bst):
+            apis.ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=bst)
+        
+        # call update_screensaver_brightness on entity configured in sleepOverride
+        sleepOverride = self._config.get("sleepOverride")
+        if sleepOverride is not None and type(sleepOverride) is dict  and sleepOverride["entity"] is not None and sleepOverride["brightness"] is not None and apis.ha_api.entity_exists(sleepOverride["entity"]):
+            apis.ha_api.log(f"Configuring Sleep Override. Config is {sleepOverride}")
+            apis.ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=sleepOverride["entity"])
+
+        # register callback for state changes on tracked value (for input_number) - sleepBrightness
+        sleep_brightness_config = self._config.get("sleepBrightness")
+        if type(sleep_brightness_config) == str and apis.ha_api.entity_exists(sleep_brightness_config):
+            apis.ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=sleep_brightness_config)
+        # register callback for state changes on tracked value (for input_number) - screenBrightness
+        screen_brightness_config = self._config.get("screenBrightness")
+        if type(screen_brightness_config) == str and apis.ha_api.entity_exists(screen_brightness_config):
+            apis.ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=screen_brightness_config)   
+    
         items = self._config.get_all_entity_names()
         apis.ha_api.log(f"Registering callbacks for the following items: {items}")
         for item in items:
