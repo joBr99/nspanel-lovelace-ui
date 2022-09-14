@@ -175,9 +175,6 @@ class LuiPagesGen(object):
                 entity = self._ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
                 icon = get_icon_id_ha(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
-                test = entity.state
-                color = self.get_entity_color(entity, overwrite=[255,0,255])
-                colors = statusIcon.get("color", None)
                 if entity.state == "heat":
                     color = self.get_entity_color(entity, overwrite=[255,0,0]) 
                 elif entity.state == "cool":
