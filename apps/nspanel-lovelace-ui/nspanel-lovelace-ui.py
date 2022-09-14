@@ -18,7 +18,7 @@ class NsPanelLovelaceUIManager(hass.Hass):
         # Request Tasmota Driver Version
         mqtt_api.mqtt_publish(topic_send.replace("CustomSend", "GetDriverVersion"), "x")
 
-        controller = LuiController(self, cfg, mqttsend.send_mqtt_msg)
+        controller = LuiController(cfg, mqttsend.send_mqtt_msg)
         
         desired_display_firmware_version = 41
         version     = "v3.3.1"
