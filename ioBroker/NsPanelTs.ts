@@ -1,10 +1,13 @@
-/*-----------------------------------------------------------------------
-TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker
-- abgestimmt auf TFT 41 / v3.3.1 / BerryDriver 4 / Tasmota 12.1.1
-joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
+/*--!!! BREAKING CHANGES---------------------------------------------------------------------
+TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
+- abgestimmt auf TFT 41 / v3.3.1.3 / BerryDriver 4 / Tasmota 12.1.1
+@joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
+
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
+
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
+WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 
 ReleaseNotes:
     Bugfixes und Erweiterungen:
@@ -32,6 +35,9 @@ ReleaseNotes:
         - 29.08.2022 - V3.3.0 - Upgrade TFT 40
         - 29.08.2022 - V3.3.1 - Upgrade TFT 41
         - 04.09.2022 - V3.3.1 - Überarbeitung und BugFix für cardAlarm
+        - 13.09.2022 - V3.3.1.3 BugFix Screensaver Toggle
+        - 13.09.2022 - V3.3.1.3 Überarbeitung und BugFix und Refresh Features für cardMedia (Breaking Changes)
+        - 13.09.2022 - V3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -101,10 +107,16 @@ Upgrades in Konsole:
 */ 
 var Icons = new IconsSelector();
 var timeoutSlider: any;
+var manually_Update = false;
+
 const NSPanel_Path = '0_userdata.0.NSPanel.1.';
-const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.'; //Neuer Pfad für gemeinsame Nutzung durch mehrere Panels
+const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.'; //Neuer Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm)
 const Debug = false;
-var manually_Update = true;
+
+// Variablen zur Steuerung der Wettericons auf dem Screensaver (Steuerung in 0_userdata.0.XPANELX.ScreensaverInfo)
+// Wenn weatherForecastTimer auf true, dann Wechsel zwischen Datenpunkten und Wettervorhersage (30 Sekunden nach Minute (Zeit))
+// Wenn weatherForecastTimer auf false, dann Möglichkeit über weatherForecast, ob Datenpunkte oder Wettervorhersage (true = WeatherForecast/false = Datenpunkte)
+var weatherForecast //= getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val
 
 //const Off: RGB = { red: 68, green: 115, blue: 158 };  // Blau-Off
 const Off: RGB = { red: 253, green: 128, blue: 0 };     // Orange-Off - schönere Farbübergänge
@@ -125,26 +137,7 @@ const colorRadio: RGB = { red: 255, green: 127, blue: 0 };
 const BatteryFull: RGB = { red: 96, green: 176, blue: 62 };
 const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 };
 
-// Variablen zur Steuerung der Wettericons auf dem Screensaver (Steuerung in 0_userdata.0.XPANELX.ScreensaverInfo)
-// Wenn weatherForecastTimer auf true, dann Wechsel zwischen Datenpunkten und Wettervorhersage (30 Sekunden nach Minute (Zeit))
-// Wenn weatherForecastTimer auf false, dann Möglichkeit über weatherForecast, ob Datenpunkte oder Wettervorhersage (true = WeatherForecast/false = Datenpunkte)
-var weatherForecast = getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val
-
-// Alexa-Instanz
-var alexaInstanz = 'alexa2.0';
-var alexaDevice = 'G0XXXXXXXXXXXXXX'; // Primär zu steuerndes Device oder Gruppe aus alexa2-Adapter (Seriennummer)
-
-// Wenn alexaSpeakerList definiert, dann werden Einträge verwendet, sonst alle relevanten Devices aus Alexa-Instanz
-// Speakerwechsel funktioniert nicht bei Radio/TuneIn sonden bei Playlists
-const alexaSpeakerList = [
-    'Echo Spot Buero',
-    'Überall',
-    'Gartenhaus',
-    'Esszimmer',
-    'Heimkino',
-    'Echo Dot Küche'
-];
-
+//-- Anfang der Beispiele für Seitengestaltung -- Aliase erforderlich ----------------
 var Test_Licht: PageEntities =
 {
     "type": "cardEntities",
@@ -154,8 +147,8 @@ var Test_Licht: PageEntities =
     "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLichteinzeln", name: "RGB-Licht Hex-Color", interpolateColor: true},
-        //<PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", name: "Farbtemperatur", interpolateColor: true},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLicht", name: "RGB-Licht", minValueBrightness: 0, maxValueBrightness: 100, interpolateColor: true},
+        <PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", name: "Farbtemperatur", interpolateColor: true},
+        //<PageItem>{ id: "alias.0.NSPanel_1.TestRGBLicht", name: "RGB-Licht", minValueBrightness: 0, maxValueBrightness: 100, interpolateColor: true},
         //Beispiel für RGB Light mit neuem PageItem-Parameter colormode: "xy" alternativ colormode: "rgb" oder weglassen
         //Steuert im z.B. DeConz Adapter unter Lampen die Farben per CIE (XY)
         <PageItem>{ id: "alias.0.NSPanel_2.WZ_E14_Fenster_rechts", name: "Fensterbank rechts", minValueBrightness: 0, maxValueBrightness: 100, minValueColorTemp: 500, maxValueColorTemp: 150, interpolateColor: false, colormode: "xy"},
@@ -172,7 +165,7 @@ var Test_Funktionen: PageEntities =
     "subPage": false,
     "parent": undefined,
     "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.TestLautstärke", offColor: MSRed /*if mute=true*/, onColor: MSGreen, name: "Echo Spot Büro", minValue: 0, maxValue: 100 },
+        <PageItem>{ id: "alias.0.NSPanel_1.TestLautstärke", offColor: MSRed, onColor: MSGreen, name: "Echo Spot Büro", minValue: 0, maxValue: 100 },
         <PageItem>{ id: "alias.0.NSPanel_1.TestTemperatur",name: "Temperatur außen", icon: "thermometer", onColor: White },
         <PageItem>{ id: "alias.0.NSPanel_1.TestFeuchtigkeit", name: "Luftfeuchte außen", icon: "water-percent", unit: "%H", onColor: White },
         <PageItem>{ id: "alias.0.NSPanel_1.TestInfo", name: "Windstärke", icon: "wind-power-outline", offColor: MSRed, onColor: MSGreen, unit: "bft", minValue: 0, maxValue: 12, interpolateColor: true, useColor: true }
@@ -269,6 +262,19 @@ var Buero_Seite_2: PageGrid =
     ]
 };
 
+var Radiosender: PageGrid =
+{
+    "type": "cardGrid",
+    "heading": "Büro 2",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "radio", name: "Radio BOB", onColor: colorRadio}]
+};
+
+// NEW: Neue Definition von Medien-Aliasen
+// adapterPlayerInstance = alexa2.0. or spotify-premium.0. or sonos.0. or chromecast.0.
+// MEDIA ALIASE können auch per JS-Script erstellt werden https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-ALIAS-Definitionen#medien---cardmedia
 var Alexa: PageMedia = 
 {
     "type": "cardMedia",
@@ -276,7 +282,41 @@ var Alexa: PageMedia =
     "useColor": true,
     "subPage": false,
     "parent": undefined,
-    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Alexa.PlayerBuero" }]
+    "items": [<PageItem>{   
+                id: "alias.0.NSPanel_1.Media.PlayerBuero", 
+                adapterPlayerInstance: "alexa2.0.",
+                mediaDevice: "G0XXXXXXXXXXXXXX", //Primäres Alexa Device
+                speakerList: ['Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
+             }]
+};
+
+var Sonos: PageMedia = 
+{
+    "type": "cardMedia",
+    "heading": "Sonos",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [<PageItem>{   
+                id: "alias.0.NSPanel_1.Media.PlayerSonos", 
+                adapterPlayerInstance: "sonos.0.",
+                mediaDevice: "192_168_1_212", //Primäres Sonos-Device
+                speakerList: ['Terrasse']
+             }]
+};
+
+var SpotifyPremium: PageMedia = 
+{
+    "type": "cardMedia",
+    "heading": "Spotify-Premium",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [<PageItem>{ 
+                id: "alias.0.NSPanel_1.Media.PlayerSpotifyPremium", 
+                adapterPlayerInstance: "spotify-premium.0.",
+                speakerList: ['LOGINT-W11-JB','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
+             }] 
 };
 
 var Buero_Themostat: PageThermo = 
@@ -412,6 +452,8 @@ var NSPanel_Firmware_Updates: PageEntities =
     ]
 };
 
+//-- ENDE der Beispiele für Seitengestaltung -- Aliase erforderlich ------------------
+
 export const config: Config = {
     panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // anpassen
     panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
@@ -432,28 +474,30 @@ export const config: Config = {
     defaultColor: Off,
     temperatureUnit: '°C',
     pages: [
-            Buero_Seite_2,
-            Buero_Seite_1,
-            Buero_Klimaanlage, 
-            Button_1,
-            Test_Licht,
-            Test_Funktionen,
-            Fenster_1,
-            Subpages_1,
-            Alexa,
-            Buero_Themostat,
-            Buero_Alarm,
-            Service
+            Sonos,              //Beispiel-Seite
+            SpotifyPremium,     //Beispiel-Seite
+            Alexa,              //Beispiel-Seite
+            Buero_Seite_2,      //Beispiel-Seite
+            Buero_Seite_1,      //Beispiel-Seite
+            Buero_Klimaanlage,  //Beispiel-Seite 
+            Button_1,           //Beispiel-Seite
+            Test_Licht,         //Beispiel-Seite
+            Test_Funktionen,    //Beispiel-Seite    
+            Fenster_1,          //Beispiel-Seite
+            Subpages_1,         //Beispiel-Seite
+            Buero_Themostat,    //Beispiel-Seite
+            Buero_Alarm,        //Beispiel-Seite
+            Service             //Beispiel-Seite
     ],
     subPages: [
-                Abfall,
-                WLAN,
-                NSPanel_Infos,
-                NSPanel_Einstellungen,
-                NSPanel_Firmware_Updates
+                Abfall,                     //Beispiel-Unterseite
+                WLAN,                       //Beispiel-Unterseite
+                NSPanel_Infos,              //Beispiel-Unterseite
+                NSPanel_Einstellungen,      //Beispiel-Unterseite
+                NSPanel_Firmware_Updates    //Beispiel-Unterseite
     ],
-    button1Page: button1Page,
-    button2Page: button2Page
+    button1Page: button1Page,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
+    button2Page: button2Page    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
 };
 
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
@@ -610,7 +654,7 @@ schedule('* * * * *', () => {
     //WeatherForcast true/false Umschaltung halbe Minute verzögert
     if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
         setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, 30000, false); 
-    } else {
+    } else if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == false && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
         setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, 30000, false);
     }
 });
@@ -647,18 +691,26 @@ check_updates();
 //------------------Begin Update Functions
 
 function get_locales() {
-    if (Debug) console.log('Requesting locales');
-    request({
-        url: 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/ioBroker/ioBroker_NSPanel_locales.json',
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async (error, response, result) => {
-        if (result) {
-            await createStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.StateCommon>{ type: 'string', role: 'json' });
-            await setStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.State>{ val: result, ack: true });
-        }
-    });
+    try {
+        if (Debug) console.log('Requesting locales');
+        request({
+            url: 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/ioBroker/ioBroker_NSPanel_locales.json',
+            headers: {
+                'User-Agent': 'ioBroker'
+            }
+        }, async (error, response, result) => {
+            try {
+                if (result) {
+                    await createStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.StateCommon>{ type: 'string', role: 'json' });
+                    await setStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.State>{ val: result, ack: true });
+                }
+            } catch (err) {
+                console.log(err.message);
+            }
+        });
+    } catch (err) {
+        console.error('error requesting locales in function get_locales: ' + err.message);
+    }    
 }
 
 async function check_updates() {
@@ -818,138 +870,170 @@ function get_current_tasmota_ip_address() {
 }
 
 function get_online_tasmota_firmware_version() {
-    if (Debug) console.log('Requesting tasmota firmware version');
-    request({
-        url: 'https://api.github.com/repositories/80286288/releases/latest',
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async (error, response, result) => {
-        try {
-            const Tasmota_JSON = JSON.parse(result);                       // JSON Resultat in Variable Schreiben
-            const TasmotaTagName = Tasmota_JSON.tag_name;                  // JSON nach "tag_name" filtern und in Variable schreiben
-            const TasmotaVersionOnline = TasmotaTagName.replace(/v/i, ''); // Aus Variable überflüssiges "v" filtern und in Release-Variable schreiben
+    try {
+        if (Debug) console.log('Requesting tasmota firmware version');
+        request({
+            url: 'https://api.github.com/repositories/80286288/releases/latest',
+            headers: {
+                'User-Agent': 'ioBroker'
+            }
+        }, async (error, response, result) => {
+            try {
+                const Tasmota_JSON = JSON.parse(result);                       // JSON Resultat in Variable Schreiben
+                const TasmotaTagName = Tasmota_JSON.tag_name;                  // JSON nach "tag_name" filtern und in Variable schreiben
+                const TasmotaVersionOnline = TasmotaTagName.replace(/v/i, ''); // Aus Variable überflüssiges "v" filtern und in Release-Variable schreiben
 
-            await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
-            await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.State>{ val: TasmotaVersionOnline, ack: true });
-        } catch (err) {
-            console.log(err);
-        }
-    });
+                await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+                await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.State>{ val: TasmotaVersionOnline, ack: true });
+            } catch (err) {
+                console.log(err.message);
+            }
+        });
+    } catch (err) {
+        console.warn('error requesting firmware in function get_online_tasmota_firmware_version: ' + err.message);
+    }
 }
 
 function get_current_berry_driver_version() {
-    if (Debug) console.log('Requesting current berry driver version');
-    request({
-        url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=GetDriverVersion`,
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async (error, response, result) => {
-        try {
-            await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'number' });
-            await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: JSON.parse(result).nlui_driver_version, ack: true });
-        } catch (err) {
-            console.error(err);
-        }
-    });
+    try {
+        if (Debug) console.log('Requesting current berry driver version');
+        request({
+            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=GetDriverVersion`,
+            headers: {
+                'User-Agent': 'ioBroker'
+            }
+        }, async (error, response, result) => {
+            try {
+                await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'number' });
+                await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: JSON.parse(result).nlui_driver_version, ack: true });
+            } catch (err) {
+                console.warn(err.message);
+            }
+        });
+    } catch (err) {
+        console.warn('error requesting firmware in function get_current_berry_driver_version: ' + err.message);
+    }
 }
 
 function get_tasmota_status0() {
-    if (Debug) console.log('Requesting tasmota status0');
-    request({
-        url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Status0`,
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async (error, response, result) => {
-        await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Uptime', <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Version', <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Hardware', <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.AP', <iobJS.StateCommon>{ type: 'number' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.SSId', <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.BSSId', <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Channel', <iobJS.StateCommon>{ type: 'number' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Mode', <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.RSSI', <iobJS.StateCommon>{ type: 'number' });
-        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.StateCommon>{ type: 'number' });
+    try {
+        if (Debug) console.log('Requesting tasmota status0');
+        request({
+            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Status0`,
+            headers: {
+                'User-Agent': 'ioBroker'
+            }
+        }, async (error, response, result) => {
+            await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Uptime', <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Version', <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Hardware', <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.AP', <iobJS.StateCommon>{ type: 'number' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.SSId', <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.BSSId', <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Channel', <iobJS.StateCommon>{ type: 'number' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Mode', <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.RSSI', <iobJS.StateCommon>{ type: 'number' });
+            await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.StateCommon>{ type: 'number' });
 
-        try {
-            const Tasmota_JSON = JSON.parse(result);
-            const tasmoVersion = Tasmota_JSON.StatusFWR.Version.indexOf('(') > -1 ? Tasmota_JSON.StatusFWR.Version.split('(')[0] : Tasmota_JSON.StatusFWR.Version;
+            try {
+                const Tasmota_JSON = JSON.parse(result);
+                const tasmoVersion = Tasmota_JSON.StatusFWR.Version.indexOf('(') > -1 ? Tasmota_JSON.StatusFWR.Version.split('(')[0] : Tasmota_JSON.StatusFWR.Version;
 
-            await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.State>{ val: tasmoVersion, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Uptime', <iobJS.State>{ val: Tasmota_JSON.StatusPRM.Uptime, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Version', <iobJS.State>{ val: Tasmota_JSON.StatusFWR.Version, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Hardware', <iobJS.State>{ val: Tasmota_JSON.StatusFWR.Hardware, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.AP', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.AP, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.SSId', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.SSId, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.BSSId', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.BSSId, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Channel', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Channel, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Mode', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Mode, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.RSSI', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.RSSI, ack: true });
-            await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Signal, ack: true });
-        } catch (err) {
-            console.log(err);
-        }
-    });
+                await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.State>{ val: tasmoVersion, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Uptime', <iobJS.State>{ val: Tasmota_JSON.StatusPRM.Uptime, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Version', <iobJS.State>{ val: Tasmota_JSON.StatusFWR.Version, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Hardware', <iobJS.State>{ val: Tasmota_JSON.StatusFWR.Hardware, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.AP', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.AP, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.SSId', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.SSId, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.BSSId', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.BSSId, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Channel', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Channel, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Mode', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Mode, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.RSSI', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.RSSI, ack: true });
+                await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Signal, ack: true });
+            } catch (err) {
+                console.warn(err.message);
+            }
+        });
+    } catch (err) {
+        console.warn('error requesting firmware in function get_tasmota_status0: ' + err.message);
+    }
 }
 
 function get_online_berry_driver_version() {
-    if (Debug) console.log('Requesting online berry driver version');
-    request({
-        url: 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be',
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async (error, response, result) => {
-        if (result) {
-            const BerryDriverVersionOnline = result.substring((result.indexOf('version_of_this_script = ') + 24), result.indexOf('version_of_this_script = ') + 27).replace(/\s+/g, '');
-            await createStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
-            await setStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.State>{ val: BerryDriverVersionOnline, ack: true });
-        }
-    });
+    try {
+        if (Debug) console.log('Requesting online berry driver version');
+        request({
+            url: 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be',
+            headers: {
+                'User-Agent': 'ioBroker'
+            }
+        }, async (error, response, result) => {
+            if (result) {
+                try {
+                    const BerryDriverVersionOnline = result.substring((result.indexOf('version_of_this_script = ') + 24), result.indexOf('version_of_this_script = ') + 27).replace(/\s+/g, '');
+                    await createStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+                    await setStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.State>{ val: BerryDriverVersionOnline, ack: true });
+                } catch (err) {
+                    console.warn(err.message);
+                }    
+            }
+        });
+    } catch (err) {
+        console.warn('error requesting firmware in function get_online_berry_driver_version: ' + err.message);
+    }
 }
 
 function check_version_tft_firmware() {
-    if (Debug) console.log('Requesting online TFT version');
-    request({
-        url: 'https://api.github.com/repos/joBr99/nspanel-lovelace-ui/releases/latest',
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async (error, response, result) => {
-        if (result) {
-            try {
-                var NSPanel_JSON = JSON.parse(result);                      // JSON Resultat in Variable Schreiben
-                var NSPanelTagName = NSPanel_JSON.tag_name;                 // created_at; published_at; name ; draft ; prerelease
-                var NSPanelVersion = NSPanelTagName.replace(/v/i, '');      // Aus Variable überflüssiges "v" filtern und in Release-Variable schreiben
-
-                await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
-                await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: NSPanelVersion, ack: true });
-            } catch (err) {
-                console.error(err);
+    try {
+        if (Debug) console.log('Requesting online TFT version');
+        request({
+            url: 'https://api.github.com/repos/joBr99/nspanel-lovelace-ui/releases/latest',
+            headers: {
+                'User-Agent': 'ioBroker'
             }
-        }
-    });
+        }, async (error, response, result) => {
+            if (result) {
+                try {
+                    var NSPanel_JSON = JSON.parse(result);                      // JSON Resultat in Variable Schreiben
+                    var NSPanelTagName = NSPanel_JSON.tag_name;                 // created_at; published_at; name ; draft ; prerelease
+                    var NSPanelVersion = NSPanelTagName.replace(/v/i, '');      // Aus Variable überflüssiges "v" filtern und in Release-Variable schreiben
+
+                    await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+                    await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: NSPanelVersion, ack: true });
+                } catch (err) {
+                    console.warn(err.message);
+                }
+            }
+        });
+    } catch (err) {
+        console.warn('error requesting firmware in function check_version_tft_firmware: ' + err.message);
+    }
 }
 
 function check_online_display_firmware() {
-    if (Debug) console.log('Requesting online firmware version');
-    request({
-        url: 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/apps/nspanel-lovelace-ui/nspanel-lovelace-ui.py',
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async (error, response, result) => {
-        if (result) {
-            let desired_display_firmware_version = result.substring((result.indexOf('desired_display_firmware_version =') + 34), result.indexOf('desired_display_firmware_version =') + 38).replace(/\s+/g, '');
+    try {
+        if (Debug) console.log('Requesting online firmware version');
+        request({
+            url: 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/apps/nspanel-lovelace-ui/nspanel-lovelace-ui.py',
+            headers: {
+                'User-Agent': 'ioBroker'
+            }
+        }, async (error, response, result) => {
+            if (result) {
+                try {
+                    let desired_display_firmware_version = result.substring((result.indexOf('desired_display_firmware_version =') + 34), result.indexOf('desired_display_firmware_version =') + 38).replace(/\s+/g, '');
 
-            await createStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.State>{ val: desired_display_firmware_version, ack: true });
-        }
-    });
+                    await createStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+                    await setStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.State>{ val: desired_display_firmware_version, ack: true });
+                } catch (err) {
+                    console.warn(err.message);
+                }
+            }
+        });
+    } catch (err) {
+        console.warn('error requesting firmware in function check_online_display_firmware: ' + err.message);
+    }
 }
 
 on({ id: config.panelRecvTopic }, async (obj) => {
@@ -965,45 +1049,56 @@ on({ id: config.panelRecvTopic }, async (obj) => {
                 await setStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.State>{ val: split[3], ack: true });
             }
         } catch (err) {
-            console.log(err);
+            console.warn('error rceiving CustomRecv: ' + err.message);
         }
     }
 });
 
 function update_berry_driver_version() {
-    request({
-        url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1`,
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async function (error, response, result) {
+    try {
+        request({
+            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1`,
+            headers: {
+                'User-Agent': 'ioBroker'
+            }
+        }, async function (error, response, result) {
 
-    });
+        });
+    } catch (err) {
+        console.warn('error at function update_berry_driver_version: ' + err.message);
+    }
 }
 
 function update_tft_firmware() {
     const tft_version: string = 'v3.3.1';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
-
-    request({
-        url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=FlashNextion ${desired_display_firmware_url}`,
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async function (error, response, result) {
-        await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
-        await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: tft_version, ack: true });
-    });
+    try {
+        request({
+            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=FlashNextion ${desired_display_firmware_url}`,
+            headers: {
+                'User-Agent': 'ioBroker'
+            }
+        }, async function (error, response, result) {
+            await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+            await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: tft_version, ack: true });
+        });
+    } catch (err) {
+        console.warn('error at function update_tft_firmware: ' + err.message);
+    }
 }
 
 function update_tasmota_firmware() {
-    request({
-        url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Upgrade 1`,
-        headers: {
-            'User-Agent': 'ioBroker'
-        }
-    }, async function (error, response, result) {
-    });
+    try {
+        request({
+            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Upgrade 1`,
+            headers: {
+                'User-Agent': 'ioBroker'
+            }
+        }, async function (error, response, result) {
+        });
+    } catch (err) {
+        console.warn('error at function update_tasmota_firmware: ' + err.message);
+    }
 }
 //------------------End Update Functions
 
@@ -1886,68 +1981,142 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
 function GenerateMediaPage(page: PageMedia): Payload[] {
     var id = page.items[0].id
-
-    // RegisterEntityWatcher(id + '.TITLE');
+    
     var out_msgs: Array<Payload> = [];
-    out_msgs.push({ payload: 'pageType~cardMedia' });
-    if (existsObject(id)) {
-        let name = getState(id + '.ALBUM').val;
-        let media_icon = Icons.GetIcon('playlist-music');
-        let title = getState(id + '.TITLE').val;
-        let author = getState(id + '.ARTIST').val;
-        let volume = getState(id + '.VOLUME').val;
-        var iconplaypause = Icons.GetIcon('pause'); //pause
-        var onoffbutton = 1374;
-        if (getState(id + '.STATE').val) {
-            onoffbutton = 65535;
-            iconplaypause = Icons.GetIcon('pause'); //pause
-        } else {
-            iconplaypause = Icons.GetIcon('play'); //play
-        }
 
-        let currentSpeaker = getState(([alexaInstanz, '.Echo-Devices.', alexaDevice, '.Info.name'].join(''))).val;
+    try {
+        out_msgs.push({ payload: 'pageType~cardMedia' });
+        if (existsObject(id)) {
+            let name = getState(id + '.ALBUM').val;
+            let title = getState(id + '.TITLE').val;
+            let author = getState(id + '.ARTIST').val;
+            
+            let vInstance = page.items[0].adapterPlayerInstance;
+            let v1Adapter = vInstance.split('.');
+            let v2Adapter = v1Adapter[0];
 
-        //-------------------------------------------------------------------------------------------------------------
-        // nachfolgend alle Alexa-Devices (ist Online / Player- und Commands-Verzeichnis vorhanden) auflisten und verketten
-        // Wenn Konstante alexaSpeakerList mind. einen Eintrag enthält, wird die Konstante verwendet - ansonsten Alle Devices aus dem Alexa Adapter
-        let speakerlist = '';
-        if (alexaSpeakerList.length > 0) {
-            for (let i_index in alexaSpeakerList) {
-                speakerlist = speakerlist + alexaSpeakerList[i_index] + '?';
-            }
-        } else {
-            let i_list = Array.prototype.slice.apply($('[state.id="' + alexaInstanz + '.Echo-Devices.*.Info.name"]'));
-            for (let i_index in i_list) {
-                let i = i_list[i_index];
-                let deviceId = i;
-                deviceId = deviceId.split('.');
-                if (getState(([alexaInstanz, '.Echo-Devices.', deviceId[3], '.online'].join(''))).val &&
-                    existsObject(([alexaInstanz, '.Echo-Devices.', deviceId[3], '.Player'].join(''))) &&
-                    existsObject(([alexaInstanz, '.Echo-Devices.', deviceId[3], '.Commands'].join('')))) {
-                    speakerlist = speakerlist + getState(i).val + '?';
+            //Alexa
+            let media_icon = Icons.GetIcon('playlist-music');
+            //Spotify-Premium
+            if (v2Adapter == 'spotify-premium') {
+                media_icon = Icons.GetIcon('spotify');
+                name = getState(id + '.CONTEXT_DESCRIPTION').val;
+                let nameLenght = name.length;
+                if (name.substring(0,9) == 'Playlist:') {
+                    let nameLenght = name.length;
+                    name = name.slice(10, nameLenght);
+                } else if (name.substring(0,6) == 'Album:') {
+                    let nameLenght = name.length;
+                    name = name.slice(10, nameLenght);
+                } else if (name.substring(0,6) == 'Track') { 
+                    name = 'Spotify-Premium';
+                }
+                if (nameLenght == 0) {
+                    name = 'Spotify-Premium';
                 }
             }
-        }
-        speakerlist = speakerlist.substring(0, speakerlist.length - 1);
-        //--------------------------------------------------------------------------------------------------------------
+            //Spotify-Premium
+            if (v2Adapter == 'sonos') {
+                media_icon = Icons.GetIcon('music');
+                name = getState(id + '.CONTEXT_DESCRIPTION').val;
+                let nameLenght = name.length;
+                if (nameLenght == 0) {
+                    name = 'Sonos Player';
+                } 
+            }
 
-        out_msgs.push({
-            payload: 'entityUpd~' +                         //entityUpd
-                name + '~' +                          //heading
-                GetNavigationString(pageId) + '~' +   //navigation
-                id + '~' +                            //internalNameEntiy
-                media_icon + '~' +                    //icon
-                title + '~' +                         //title
-                author + '~' +                        //author
-                volume + '~' +                        //volume
-                iconplaypause + '~' +                 //playpauseicon
-                currentSpeaker + '~' +                //currentSpeaker
-                speakerlist + '~' +                   //speakerList-seperated-by-?
-                onoffbutton
-        });                        //On/Off Button Color
+            //Alexa2
+            if (v2Adapter == 'alexa2') {
+                media_icon = Icons.GetIcon('playlist-music');
+                let nameLenght = name.length;
+                if (nameLenght == 0) {
+                    name = 'Alexa Player';
+                    author = 'no music to control';  
+                } 
+            }
+            
+            if (v2Adapter == 'spotify-premium') {
+                author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
+                if (author.length > 30) {
+                    author = getState(id + '.ARTIST').val;
+                }
+                if ((getState(id + '.ARTIST').val).length == 0) {
+                    author = 'no music to control';               
+                }
+            }
+
+            if (v2Adapter == 'sonos') {
+                author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
+                if ((getState(id + '.ARTIST').val).length == 0) {
+                    author = 'no music to control';               
+                }
+            }
+
+            let volume = getState(id + '.VOLUME').val;
+            var iconplaypause = Icons.GetIcon('pause'); //pause
+            var onoffbutton = 1374;
+            if (getState(id + '.STATE').val) {
+                onoffbutton = 65535;
+                iconplaypause = Icons.GetIcon('pause'); //pause
+            } else {
+                iconplaypause = Icons.GetIcon('play'); //play
+            }
+
+            if (Debug) console.log(v2Adapter);
+
+            let currentSpeaker = 'kein Speaker gefunden';
+
+            if (v2Adapter == 'alexa2') {
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', page.items[0].mediaDevice, '.Info.name'].join(''))).val;
+            } else if (v2Adapter == 'spotify-premium') {
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'player.device.name'].join(''))).val; 
+            } else if (v2Adapter == 'sonos') {
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.members'].join(''))).val;
+            }
+            //-------------------------------------------------------------------------------------------------------------
+            // nachfolgend alle Alexa-Devices (ist Online / Player- und Commands-Verzeichnis vorhanden) auflisten und verketten
+            // Wenn Konstante alexaSpeakerList mind. einen Eintrag enthält, wird die Konstante verwendet - ansonsten Alle Devices aus dem Alexa Adapter
+            let speakerlist = '';
+            if (page.items[0].speakerList.length > 0) {
+                for (let i_index in page.items[0].speakerList) {
+                    speakerlist = speakerlist + page.items[0].speakerList[i_index] + '?';
+                }
+            } else {
+                let i_list = Array.prototype.slice.apply($('[state.id="' + page.items[0].adapterPlayerInstance + 'Echo-Devices.*.Info.name"]'));
+                for (let i_index in i_list) {
+                    let i = i_list[i_index];
+                    let deviceId = i;
+                    deviceId = deviceId.split('.');
+                    if (getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.online'].join(''))).val &&
+                        existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Player'].join(''))) &&
+                        existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Commands'].join('')))) {
+                        speakerlist = speakerlist + getState(i).val + '?';
+                    }
+                }
+            }
+            speakerlist = speakerlist.substring(0, speakerlist.length - 1);
+            //--------------------------------------------------------------------------------------------------------------
+
+            out_msgs.push({
+                payload: 'entityUpd~' +                   //entityUpd
+                    name + '~' +                          //heading
+                    GetNavigationString(pageId) + '~' +   //navigation
+                    id + '~' +                            //internalNameEntiy
+                    media_icon + '~' +                    //icon
+                    title + '~' +                         //title
+                    author + '~' +                        //author
+                    volume + '~' +                        //volume
+                    iconplaypause + '~' +                 //playpauseicon
+                    currentSpeaker + '~' +                //currentSpeaker
+                    speakerlist + '~' +                   //speakerList-seperated-by-?
+                    onoffbutton
+            });                        //On/Off Button Color
+        }
+        if (Debug) console.log(out_msgs);
+        return out_msgs
+    } catch (err) {
+        console.warn('function GenerateMediaPage: ' + err.message);
     }
-    if (Debug) console.log(out_msgs);
-    return out_msgs
 }
 
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
@@ -2186,6 +2355,8 @@ function HandleButtonEvent(words): void {
                 }
             } else {
                 if (Debug) console.log('bExit: ' + words[4] + ' - ' + pageId);
+                setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
+                setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
                 GeneratePage(activePage);
             }
             break;
@@ -2348,6 +2519,9 @@ function HandleButtonEvent(words): void {
             break;
         case 'media-back':
             setIfExists(id + '.PREV', true);
+            setTimeout(function(){
+                GeneratePage(activePage);  
+            },3000)
             break;
         case 'media-pause':
             if (getState(id + '.STATE').val === true) {
@@ -2355,24 +2529,47 @@ function HandleButtonEvent(words): void {
             } else {
                 setIfExists(id + '.PLAY', true);
             }
+            setTimeout(function(){
+                GeneratePage(activePage);  
+            },3000)
             break;
         case 'media-next':
             setIfExists(id + '.NEXT', true);
+            setTimeout(function(){
+                GeneratePage(activePage);  
+            },3000)
             break;
         case 'volumeSlider':
             setIfExists(id + '.VOLUME', parseInt(words[4]))
             break;
         case 'speaker-sel':
-            let i_list = Array.prototype.slice.apply($('[state.id="' + alexaInstanz + '.Echo-Devices.*.Info.name"]'));
-            for (let i_index in i_list) {
-                let i = i_list[i_index];
-                if ((getState(i).val) === words[4]) {
-                    let deviceId = i;
-                    deviceId = deviceId.split('.');
-                    setIfExists(alexaInstanz + '.Echo-Devices.' + alexaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + words[4]);
-                    alexaDevice = deviceId[3];
-                }
-            }
+            let pageItem = findPageItem(id);
+            let adapterInstance = pageItem.adapterPlayerInstance;
+            let adapter = adapterInstance.split('.')
+            let deviceAdapter = adapter[0];
+
+            switch (deviceAdapter) {
+                case 'spotify-premium':
+                    var strDeviceID = spotifyGetDeviceID(words[4]);
+                    setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
+                    break;
+                case 'alexa2':
+                    let i_list = Array.prototype.slice.apply($('[state.id="' + adapterInstance + 'Echo-Devices.*.Info.name"]'));
+                    for (let i_index in i_list) {
+                        let i = i_list[i_index];
+                        if ((getState(i).val) === words[4]) {
+                            let deviceId = i;
+                            deviceId = deviceId.split('.');
+                            setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + words[4]);
+                            pageItem.mediaDevice = deviceId[3];
+                        }
+                    }
+                    break;
+                case 'sonos':
+                    break;
+                case 'chromecast':
+                    break;
+            }        
             break;
         case 'media-OnOff':
             setIfExists(id + '.STOP', true)
@@ -2470,9 +2667,8 @@ function HandleButtonEvent(words): void {
             },250)          
             break;
         case 'D1': // Alarm-Page Alarm Deaktivieren
-            //if (Debug) 
-            console.log('D1: ' + getState(id + '.PIN').val);
-            console.log(words[4]);
+            if (Debug) console.log('D1: ' + getState(id + '.PIN').val);
+            if (Debug) console.log(words[4]);
             if (words[4] != '') {
                 if (getState(id + '.PIN').val == words[4]) {
                     setIfExists(id + '.PIN', '0000');
@@ -3041,7 +3237,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
         await setStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ANALOG.Temperature1), ack: true });
         await setStateAsync(NSPanel_Path + 'Sensor.ESP32.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ESP32.Temperature), ack: true });
     } catch (err) {
-        console.error(err);
+        console.warn('error with reading senor-data: '+ err.message);
     }
 });
 //------------------End Read Internal Sensor Data
@@ -3171,6 +3367,16 @@ function rgb_to_cie(red, green, blue)
 	return cie;
 }
 
+function spotifyGetDeviceID(vDeviceString) {
+    const availableDeviceIDs = getState("spotify-premium.0.devices.availableDeviceListIds").val;
+    const availableDeviceNames = getState("spotify-premium.0.devices.availableDeviceListString").val;
+    var arrayDeviceListIds = availableDeviceIDs.split(";");
+    var arrayDeviceListSting = availableDeviceNames.split(";");
+    var indexPos = arrayDeviceListSting.indexOf(vDeviceString);
+    var strDevID = arrayDeviceListIds[indexPos];
+    return strDevID;
+}
+
 type RGB = {
     red: number,
     green: number,
@@ -3238,7 +3444,10 @@ type PageItem = {
     buttonText: (string | undefined),
     unit: (string | undefined),
     navigate: (boolean | undefined),
-    colormode: (string | undefined)
+    colormode: (string | undefined),
+    adapterPlayerInstance: (string | undefined),
+    mediaDevice: (string | undefined),
+    speakerList: (string[] | undefined)
 }
 
 type DimMode = {
