@@ -50,6 +50,20 @@ class LuiPagesGen(object):
             if entity.state == "armed_vacation":
                 icon_color = rgb_dec565([223,76,30])
 
+        if ha_type == "climate":
+            if entity.state in ["auto", "heat_cool"]
+                icon_color = 1024
+            if entity.state == "heat":
+                icon_color = 64512
+            if entity.state == "off":
+                icon_color = 35921
+            if entity.state == "cool":
+                icon_color = 11487
+            if entity.state == "dry":
+                icon_color = 60897
+            if entity.state == "fan_only":
+                icon_color = 35921
+
         if "rgb_color" in attr:
             color = attr.rgb_color
             if "brightness" in attr:
@@ -398,25 +412,19 @@ class LuiPagesGen(object):
             hvac_modes = get_attr_safe(entity, "hvac_modes", [])
 
             for mode in hvac_modes:
-                icon_id = get_icon_id('alert-circle-outline')
+                icon_id = get_icon("climate", state=mode)
                 color_on = 64512
                 if mode in ["auto", "heat_cool"]:
-                    icon_id = get_icon_id("calendar-sync")
                     color_on = 1024
                 if mode == "heat":
-                    icon_id = get_icon_id("fire")
                     color_on = 64512
                 if mode == "off":
-                    icon_id = get_icon_id("power")
                     color_on = 35921
                 if mode == "cool":
-                    icon_id = get_icon_id("snowflake")
                     color_on = 11487
                 if mode == "dry":
-                    icon_id = get_icon_id("water-percent")
                     color_on = 60897
                 if mode == "fan_only":
-                    icon_id = get_icon_id("fan")
                     color_on = 35921
                 state = 0
                 if(mode == entity.state):

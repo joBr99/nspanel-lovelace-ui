@@ -187,6 +187,19 @@ def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
             return "weather-night"
         if state == "armed_vacation":
             return "shield-airplane"
+    elif ha_type == "climate":
+        if state in ["auto", "heat_cool"]:
+            return "calendar-sync"
+        if state == "heat":
+            return "fire"
+        if state == "off":
+            return "power"
+        if state == "cool":
+            return "snowflake"
+        if state == "dry":
+            return "water-percent"
+        if state == "fan_only":
+            return "fan"
     elif ha_type == "sun":
         if state == "above_horizon":
             return "weather-sunset-up"
