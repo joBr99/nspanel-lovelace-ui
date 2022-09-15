@@ -35,7 +35,7 @@ jobs:
     - name: Download n2t
       continue-on-error: true
       run: |
-        wget https://raw.githubusercontent.com/joBr99/Nextion2Text/linux/Nextion2Text.py
+        wget https://raw.githubusercontent.com/joBr99/Nextion2Text/master/linux/Nextion2Text.py
   
     - name: Run n2t EU
       continue-on-error: true
