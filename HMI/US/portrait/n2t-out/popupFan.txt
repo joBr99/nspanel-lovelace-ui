@@ -39,7 +39,7 @@ Page popupFan
             prints crcval,2
             vis hSpeed,0
             popupFan.bco=defaultBcoColor
-            for(sys0=0;sys0<20;sys0++)
+            for(sys0=0;sys0<24;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
@@ -81,6 +81,29 @@ Variable (int32) mode_temp
         Scope: local
         Value: 0
     
+Variable (string) vaModeCur
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 400
+    
+Variable (string) vaModeList
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 400
+    
+Variable (int32) vaModePos
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (string) tSend
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
+    
 Text tEntity
     Attributes
         Scope                               : local
@@ -110,16 +133,6 @@ Text t1
         Associated Keyboard                 : none
         Text                                : 
         Max. Text Size                      : 50
-    
-Text tSend
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : newtxt
-        Max. Text Size                      : 100
     
 Text tTmp
     Attributes
@@ -212,6 +225,145 @@ Button b0
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+        
+Button bMode1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 40
+    
+    Events
+        Touch Press Event
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            sys2=vaModePos.val-3
+            covx sys2,tTmp.txt,0,0
+            tSend.txt+="mode-sel,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bMode2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 40
+    
+    Events
+        Touch Press Event
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            sys2=vaModePos.val-2
+            covx sys2,tTmp.txt,0,0
+            tSend.txt+="mode-sel,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bMode3
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 40
+    
+    Events
+        Touch Press Event
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            sys2=vaModePos.val-1
+            covx sys2,tTmp.txt,0,0
+            tSend.txt+="mode-sel,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bModeNext
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î´
+        Max. Text Size                      : 5
+    
+    Events
+        Touch Press Event
+            //if(bMode3.txt=="")
+            spstr vaModeList.txt,tTmp.txt,"?",vaModePos.val
+            if(tTmp.txt=="")
+            {
+                vaModePos.val=0
+                spstr vaModeList.txt,bMode1.txt,"?",vaModePos.val
+                spstr vaModeList.txt,bMode2.txt,"?",vaModePos.val+1
+                spstr vaModeList.txt,bMode3.txt,"?",vaModePos.val+2
+            }
+            spstr vaModeList.txt,bMode1.txt,"?",vaModePos.val
+            spstr vaModeList.txt,bMode2.txt,"?",vaModePos.val+1
+            spstr vaModeList.txt,bMode3.txt,"?",vaModePos.val+2
+            vaModePos.val+=3
+            spstr vaModeList.txt,tTmp.txt,"?",3
+            if(tTmp.txt=="")
+            {
+                vis bModeNext,0
+            }else
+            {
+                vis bModeNext,1
+            }
+            bMode1.pco=defaultFontColor
+            bMode2.pco=defaultFontColor
+            bMode3.pco=defaultFontColor
+            if(bMode1.txt==vaModeCur.txt)
+            {
+                bMode1.pco=1374
+            }
+            if(bMode2.txt==vaModeCur.txt)
+            {
+                bMode2.pco=1374
+            }
+            if(bMode3.txt==vaModeCur.txt)
+            {
+                bMode3.pco=1374
+            }
         
 Dual-state Button btOnOff1
     Attributes

@@ -113,77 +113,84 @@ Variable (string) strCommand
     
 Variable (string) type1
     Attributes
-        ID            : 45
+        ID            : 44
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type2
     Attributes
-        ID            : 46
+        ID            : 45
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type3
     Attributes
-        ID            : 47
+        ID            : 46
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) type4
     Attributes
-        ID            : 48
+        ID            : 47
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) entn1
     Attributes
-        ID            : 49
+        ID            : 48
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) entn2
     Attributes
-        ID            : 50
+        ID            : 49
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) entn3
     Attributes
-        ID            : 51
+        ID            : 50
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) entn4
     Attributes
-        ID            : 52
+        ID            : 51
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) entn5
     Attributes
-        ID            : 62
+        ID            : 61
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) type5
     Attributes
-        ID            : 63
+        ID            : 62
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
+Variable (string) tSend
+    Attributes
+        ID            : 76
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
+    
 Number nNum1
     Attributes
-        ID                                  : 69
+        ID                                  : 68
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -213,7 +220,7 @@ Number nNum1
     
 Number nNum2
     Attributes
-        ID                                  : 70
+        ID                                  : 69
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -243,7 +250,7 @@ Number nNum2
     
 Number nNum3
     Attributes
-        ID                                  : 71
+        ID                                  : 70
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -273,7 +280,7 @@ Number nNum3
     
 Number nNum4
     Attributes
-        ID                                  : 72
+        ID                                  : 71
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -303,7 +310,7 @@ Number nNum4
     
 Number nNum5
     Attributes
-        ID                                  : 73
+        ID                                  : 72
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -601,39 +608,9 @@ Text tIcon4
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tSend
-    Attributes
-        ID                                  : 28
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 0
-        Width                               : 230
-        Height                              : 24
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : newtxt
-        Max. Text Size                      : 100
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Text tTmp
     Attributes
-        ID                                  : 29
+        ID                                  : 28
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -663,7 +640,7 @@ Text tTmp
     
 Text tInstruction
     Attributes
-        ID                                  : 31
+        ID                                  : 30
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -693,7 +670,7 @@ Text tInstruction
     
 Text tId
     Attributes
-        ID                                  : 32
+        ID                                  : 31
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -723,7 +700,7 @@ Text tId
     
 Text tEntity5
     Attributes
-        ID                                  : 54
+        ID                                  : 53
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -753,7 +730,7 @@ Text tEntity5
     
 Text tIcon5
     Attributes
-        ID                                  : 55
+        ID                                  : 54
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -800,7 +777,7 @@ Picture p0
     
 Slider hSlider1
     Attributes
-        ID                                  : 64
+        ID                                  : 63
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -843,7 +820,7 @@ Slider hSlider1
         
 Slider hSlider2
     Attributes
-        ID                                  : 65
+        ID                                  : 64
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -886,7 +863,7 @@ Slider hSlider2
         
 Slider hSlider3
     Attributes
-        ID                                  : 66
+        ID                                  : 65
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -929,7 +906,7 @@ Slider hSlider3
         
 Slider hSlider4
     Attributes
-        ID                                  : 67
+        ID                                  : 66
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -972,7 +949,7 @@ Slider hSlider4
         
 Slider hSlider5
     Attributes
-        ID                                  : 68
+        ID                                  : 67
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1579,7 +1556,7 @@ Button bUp4
         
 Button bPrev
     Attributes
-        ID                                  : 33
+        ID                                  : 32
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1633,7 +1610,7 @@ Button bPrev
         
 Button bNext
     Attributes
-        ID                                  : 34
+        ID                                  : 33
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1680,7 +1657,7 @@ Button bNext
         
 Button bText1
     Attributes
-        ID                                  : 37
+        ID                                  : 36
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1727,7 +1704,7 @@ Button bText1
         
 Button bText2
     Attributes
-        ID                                  : 38
+        ID                                  : 37
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1774,7 +1751,7 @@ Button bText2
         
 Button bText3
     Attributes
-        ID                                  : 39
+        ID                                  : 38
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1821,7 +1798,7 @@ Button bText3
         
 Button bText4
     Attributes
-        ID                                  : 40
+        ID                                  : 39
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1868,7 +1845,7 @@ Button bText4
         
 Button bStop5
     Attributes
-        ID                                  : 56
+        ID                                  : 55
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1915,7 +1892,7 @@ Button bStop5
         
 Button bDown5
     Attributes
-        ID                                  : 57
+        ID                                  : 56
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1962,7 +1939,7 @@ Button bDown5
         
 Button bUp5
     Attributes
-        ID                                  : 58
+        ID                                  : 57
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2009,7 +1986,7 @@ Button bUp5
         
 Button bText5
     Attributes
-        ID                                  : 60
+        ID                                  : 59
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2236,7 +2213,7 @@ Dual-state Button btOnOff4
         
 Dual-state Button btOnOff5
     Attributes
-        ID                                  : 59
+        ID                                  : 58
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2281,7 +2258,7 @@ Dual-state Button btOnOff5
         
 Hotspot mSpecial
     Attributes
-        ID                                  : 35
+        ID                                  : 34
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2307,7 +2284,7 @@ Hotspot mSpecial
         
 Hotspot m2
     Attributes
-        ID                                  : 41
+        ID                                  : 40
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2342,7 +2319,7 @@ Hotspot m2
         
 Hotspot m1
     Attributes
-        ID                                  : 42
+        ID                                  : 41
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2377,7 +2354,7 @@ Hotspot m1
         
 Hotspot m0
     Attributes
-        ID                                  : 43
+        ID                                  : 42
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2412,7 +2389,7 @@ Hotspot m0
         
 Hotspot m3
     Attributes
-        ID                                  : 44
+        ID                                  : 43
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2447,7 +2424,7 @@ Hotspot m3
         
 Hotspot m4
     Attributes
-        ID                                  : 61
+        ID                                  : 60
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2482,7 +2459,7 @@ Hotspot m4
         
 Hotspot mSwipeNext
     Attributes
-        ID                                  : 74
+        ID                                  : 73
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2502,7 +2479,7 @@ Hotspot mSwipeNext
         
 Hotspot mSwipeUp
     Attributes
-        ID                                  : 75
+        ID                                  : 74
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2522,7 +2499,7 @@ Hotspot mSwipeUp
         
 Hotspot mSwipePrev
     Attributes
-        ID                                  : 76
+        ID                                  : 75
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -2542,7 +2519,7 @@ Hotspot mSwipePrev
         
 Timer tmSerial
     Attributes
-        ID         : 30
+        ID         : 29
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -3379,6 +3356,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
+                                        sleepValue=0
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,"~",1
@@ -3488,7 +3466,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 36
+        ID         : 35
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -3519,7 +3497,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 53
+        ID   : 52
         Scope: local
         Value: 0
     

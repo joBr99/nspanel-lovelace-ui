@@ -105,6 +105,12 @@ Variable (string) tTmp
         Text          : 
         Max. Text Size: 80
     
+Variable (string) tSend
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
+    
 Text tEntity
     Attributes
         Scope                               : local
@@ -124,16 +130,6 @@ Text tIcon1
         Associated Keyboard                 : none
         Text                                : î°
         Max. Text Size                      : 10
-    
-Text tSend
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : newtxt
-        Max. Text Size                      : 100
     
 Text tPosHeading
     Attributes

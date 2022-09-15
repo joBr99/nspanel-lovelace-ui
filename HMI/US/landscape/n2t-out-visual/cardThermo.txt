@@ -161,7 +161,7 @@ Variable (string) tSend
         ID            : 46
         Scope         : local
         Text          : 
-        Max. Text Size: 100
+        Max. Text Size: 200
     
 XFloat xTempDest1
     Attributes
@@ -315,7 +315,7 @@ XFloat xTempDest2
     
 XFloat xTempDest
     Attributes
-        ID                                  : 49
+        ID                                  : 48
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -523,39 +523,9 @@ Text tCF2
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tALbl
-    Attributes
-        ID                                  : 47
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 22
-        y coordinate                        : 260
-        Width                               : 74
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 6371
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : Action
-        Max. Text Size                      : 30
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Text tCF
     Attributes
-        ID                                  : 51
+        ID                                  : 50
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -585,7 +555,7 @@ Text tCF
     
 Text tCurTemp
     Attributes
-        ID                                  : 52
+        ID                                  : 51
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -739,16 +709,16 @@ Dual-state Button bt0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 97
+        x coordinate                        : 18
         y coordinate                        : 255
-        Width                               : 40
-        Height                              : 40
+        Width                               : 50
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -788,16 +758,16 @@ Dual-state Button bt2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 187
+        x coordinate                        : 130
         y coordinate                        : 255
-        Width                               : 40
-        Height                              : 40
+        Width                               : 50
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -837,16 +807,16 @@ Dual-state Button bt4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 277
+        x coordinate                        : 242
         y coordinate                        : 255
-        Width                               : 40
-        Height                              : 40
+        Width                               : 50
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -886,16 +856,16 @@ Dual-state Button bt6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 367
+        x coordinate                        : 354
         y coordinate                        : 255
-        Width                               : 40
-        Height                              : 40
+        Width                               : 50
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -935,16 +905,16 @@ Dual-state Button bt1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 142
+        x coordinate                        : 74
         y coordinate                        : 255
-        Width                               : 40
-        Height                              : 40
+        Width                               : 50
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -984,16 +954,16 @@ Dual-state Button bt3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 232
+        x coordinate                        : 186
         y coordinate                        : 255
-        Width                               : 40
-        Height                              : 40
+        Width                               : 50
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1033,16 +1003,16 @@ Dual-state Button bt5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 322
+        x coordinate                        : 298
         y coordinate                        : 255
-        Width                               : 40
-        Height                              : 40
+        Width                               : 50
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1082,16 +1052,16 @@ Dual-state Button bt7
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 412
+        x coordinate                        : 410
         y coordinate                        : 255
-        Width                               : 40
-        Height                              : 40
+        Width                               : 50
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1140,7 +1110,7 @@ Dual-state Button btUp1
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1201,7 +1171,7 @@ Dual-state Button btDown1
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1262,7 +1232,7 @@ Dual-state Button bUp2
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1323,7 +1293,7 @@ Dual-state Button bDown2
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1369,7 +1339,7 @@ Dual-state Button bDown2
         
 Dual-state Button btUp
     Attributes
-        ID                                  : 48
+        ID                                  : 47
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1384,7 +1354,7 @@ Dual-state Button btUp
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1427,7 +1397,7 @@ Dual-state Button btUp
         
 Dual-state Button btDown
     Attributes
-        ID                                  : 50
+        ID                                  : 49
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -1442,7 +1412,7 @@ Dual-state Button btDown
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1787,7 +1757,7 @@ Timer tmSerial
                                         //Text tStateLbl
                                         spstr strCommand.txt,tStateLbl.txt,"~",43
                                         //Text tALbl
-                                        spstr strCommand.txt,tALbl.txt,"~",44
+                                        //spstr strCommand.txt,tALbl.txt,"~",44
                                         //Text tCF
                                         spstr strCommand.txt,tCF.txt,"~",45
                                         tCF1.txt=tCF.txt
@@ -1813,6 +1783,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
+                                        sleepValue=0
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,"~",1

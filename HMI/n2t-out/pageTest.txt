@@ -220,6 +220,20 @@ Button b2
         Touch Press Event
             page cardQR
         
+Button b12
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : power
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            page cardPower
+        
 Timer tmSerial
     Attributes
         Scope      : local

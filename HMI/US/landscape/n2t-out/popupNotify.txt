@@ -48,15 +48,11 @@ Variable (int32) vaOldSleepT
         Scope: local
         Value: 0
     
-Text tSend
+Variable (string) tSend
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : newtxt
-        Max. Text Size                      : 100
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
     
 Text tTmp
     Attributes

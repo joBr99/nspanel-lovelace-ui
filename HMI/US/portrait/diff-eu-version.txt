@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-08-31 18:53:56.794842960 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-31 18:53:57.290849828 +0000
+--- HMI/n2t-out/Program.s.txt	2022-09-15 15:16:32.031795912 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-09-15 15:16:32.479794687 +0000
 @@ -14,6 +14,6 @@
      //color vars
      int defaultFontColor=65535
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-08-31 18:53:56.798843016 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-31 18:53:57.290849828 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-09-15 15:16:32.035795901 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-09-15 15:16:32.479794687 +0000
 @@ -65,6 +65,16 @@
              vis nNum4,0
              vis bPrev,0
@@ -46,10 +46,10 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
 +        Text          : 
 +        Max. Text Size: 10
 +    
- Number nNum1
+ Variable (string) tSend
      Attributes
-         Scope                               : local
-@@ -176,6 +198,15 @@
+         Scope         : local
+@@ -182,6 +204,15 @@
          Associated Keyboard                 : none
          Value                               : 0
      
@@ -65,7 +65,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Text tHeading
      Attributes
          Scope                               : local
-@@ -306,6 +337,26 @@
+@@ -302,6 +333,26 @@
          Text                                : 
          Max. Text Size                      : 50
      
@@ -92,7 +92,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Picture p0
      Attributes
          Scope                               : local
-@@ -425,6 +476,34 @@
+@@ -421,6 +472,34 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -127,7 +127,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Button bDown1
      Attributes
          Scope                               : local
-@@ -882,6 +961,106 @@
+@@ -878,6 +957,106 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -234,7 +234,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Dual-state Button btOnOff1
      Attributes
          Scope                               : local
-@@ -990,6 +1169,33 @@
+@@ -986,6 +1165,33 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -268,7 +268,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSpecial
      Attributes
          Scope                               : local
-@@ -1111,6 +1317,32 @@
+@@ -1107,6 +1313,32 @@
                  page popupFan
              }
          
@@ -301,7 +301,7 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
  Hotspot mSwipeNext
      Attributes
          Scope                               : local
-@@ -1830,6 +2062,155 @@
+@@ -1826,6 +2058,155 @@
                                              covx tTmp.txt,sys0,0,0
                                              hSlider4.maxval=sys0
                                          }
@@ -457,9 +457,10 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      }
                                      if(tInstruction.txt=="pageType")
                                      {
+Only in HMI/n2t-out: cardPower.txt
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-08-31 18:53:56.794842960 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-31 18:53:57.290849828 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-09-15 15:16:32.031795912 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-09-15 15:16:32.479794687 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -469,15 +470,6 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
          Max. Text Size                      : 100
      
  Text tVersion
-@@ -152,7 +152,7 @@
-         Disable release event after dragging: 0
-         Send Component ID                   : disabled
-         Associated Keyboard                 : none
--        Text                                : 41
-+        Text                                : 42
-         Max. Text Size                      : 10
-     
- Picture p0
 @@ -177,7 +177,7 @@
              recmod=1
              bauds=115200
@@ -488,8 +480,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-08-31 18:53:56.794842960 +0000
-+++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-31 18:53:57.290849828 +0000
+--- HMI/n2t-out/pageTest.txt	2022-09-15 15:16:32.031795912 +0000
++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-09-15 15:16:32.479794687 +0000
 @@ -13,36 +13,6 @@
      Events
          Preinitialize Event
@@ -527,10 +519,24 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
      
  Picture p0
      Attributes
-@@ -220,82 +190,3 @@
+@@ -220,96 +190,3 @@
          Touch Press Event
              page cardQR
          
+-Button b12
+-    Attributes
+-        Scope                               : local
+-        Dragging                            : 0
+-        Disable release event after dragging: 0
+-        Send Component ID                   : disabled
+-        State                               : unpressed
+-        Text                                : power
+-        Max. Text Size                      : 10
+-    
+-    Events
+-        Touch Press Event
+-            page cardPower
+-        
 -Timer tmSerial
 -    Attributes
 -        Scope      : local
@@ -610,3 +616,111 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
 -                }
 -            }
 -        
+diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
+--- HMI/n2t-out/popupFan.txt	2022-09-15 15:16:32.031795912 +0000
++++ HMI/US/portrait/n2t-out/popupFan.txt	2022-09-15 15:16:32.479794687 +0000
+@@ -81,23 +81,23 @@
+         Scope: local
+         Value: 0
+     
+-Variable (int32) vaModePos
+-    Attributes
+-        Scope: local
+-        Value: 0
+-    
+-Variable (string) vaModeList
++Variable (string) vaModeCur
+     Attributes
+         Scope         : local
+         Text          : 
+         Max. Text Size: 400
+     
+-Variable (string) vaModeCur
++Variable (string) vaModeList
+     Attributes
+         Scope         : local
+         Text          : 
+         Max. Text Size: 400
+     
++Variable (int32) vaModePos
++    Attributes
++        Scope: local
++        Value: 0
++    
+ Variable (string) tSend
+     Attributes
+         Scope         : local
+@@ -256,7 +256,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Button bMode3
++Button bMode2
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -271,7 +271,7 @@
+             //craft command
+             tSend.txt="event,buttonPress2,"
+             tSend.txt+=entn.txt+","
+-            sys2=vaModePos.val-1
++            sys2=vaModePos.val-2
+             covx sys2,tTmp.txt,0,0
+             tSend.txt+="mode-sel,"+tTmp.txt
+             //send calc crc
+@@ -286,7 +286,7 @@
+             prints tSend.txt,0
+             prints crcval,2
+         
+-Button bMode2
++Button bMode3
+     Attributes
+         Scope                               : local
+         Dragging                            : 0
+@@ -301,7 +301,7 @@
+             //craft command
+             tSend.txt="event,buttonPress2,"
+             tSend.txt+=entn.txt+","
+-            sys2=vaModePos.val-2
++            sys2=vaModePos.val-1
+             covx sys2,tTmp.txt,0,0
+             tSend.txt+="mode-sel,"+tTmp.txt
+             //send calc crc
+@@ -498,37 +498,6 @@
+                                         covx tTmp.txt,hSpeed.maxval,0,0
+                                         // set t1 Speed (Localization)
+                                         spstr strCommand.txt,t1.txt,"~",7
+-                                        //current mode
+-                                        spstr strCommand.txt,vaModeCur.txt,"~",8
+-                                        //mode list
+-                                        spstr strCommand.txt,vaModeList.txt,"~",9
+-                                        if(vaModeList.txt=="")
+-                                        {
+-                                            vis bMode1,0
+-                                            vis bMode2,0
+-                                            vis bMode3,0
+-                                            vis bModeNext,0
+-                                        }
+-                                        if(bMode1.txt=="")
+-                                        {
+-                                            click bModeNext,1
+-                                            click bModeNext,0
+-                                        }
+-                                        bMode1.pco=defaultFontColor
+-                                        bMode2.pco=defaultFontColor
+-                                        bMode3.pco=defaultFontColor
+-                                        if(bMode1.txt==vaModeCur.txt)
+-                                        {
+-                                            bMode1.pco=1374
+-                                        }
+-                                        if(bMode2.txt==vaModeCur.txt)
+-                                        {
+-                                            bMode2.pco=1374
+-                                        }
+-                                        if(bMode3.txt==vaModeCur.txt)
+-                                        {
+-                                            bMode3.pco=1374
+-                                        }
+                                     }
+                                     if(tInstruction.txt=="time")
+                                     {

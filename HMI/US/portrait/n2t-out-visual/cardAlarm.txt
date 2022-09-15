@@ -84,7 +84,7 @@ Variable (string) tSend
         ID            : 25
         Scope         : local
         Text          : 
-        Max. Text Size: 100
+        Max. Text Size: 200
     
 Variable (string) va1
     Attributes
@@ -1362,6 +1362,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
+                                        sleepValue=0
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,"~",1

@@ -96,6 +96,12 @@ Variable (int32) mode_temp
         Scope: local
         Value: 0
     
+Variable (string) tSend
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
+    
 Text tEntity
     Attributes
         Scope                               : local
@@ -155,16 +161,6 @@ Text t4
         Associated Keyboard                 : none
         Text                                : Temperature
         Max. Text Size                      : 50
-    
-Text tSend
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : newtxt
-        Max. Text Size                      : 100
     
 Text tTmp
     Attributes
