@@ -47,6 +47,7 @@ if(usize>1)
 sharedfoot = """
             if(tInstruction.txt=="pageType")
             {
+              sleepValue=0
               //command format pageType,specialPageName
               //write name of speical page to tId
               spstr strCommand.txt,tId.txt,"~",1
