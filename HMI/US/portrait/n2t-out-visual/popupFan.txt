@@ -47,7 +47,7 @@ Page popupFan
             prints crcval,2
             vis hSpeed,0
             popupFan.bco=defaultBcoColor
-            for(sys0=0;sys0<20;sys0++)
+            for(sys0=0;sys0<24;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
@@ -69,29 +69,56 @@ Page popupFan
         
 Variable (string) strCommand
     Attributes
-        ID            : 13
+        ID            : 12
         Scope         : local
         Text          : 
         Max. Text Size: 500
     
 Variable (string) entn
     Attributes
-        ID            : 16
+        ID            : 15
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (int32) mode
     Attributes
-        ID   : 17
+        ID   : 16
         Scope: local
         Value: 1
     
 Variable (int32) mode_temp
     Attributes
-        ID   : 18
+        ID   : 17
         Scope: local
         Value: 0
+    
+Variable (string) vaModeCur
+    Attributes
+        ID            : 23
+        Scope         : local
+        Text          : 
+        Max. Text Size: 400
+    
+Variable (string) vaModeList
+    Attributes
+        ID            : 24
+        Scope         : local
+        Text          : 
+        Max. Text Size: 400
+    
+Variable (int32) vaModePos
+    Attributes
+        ID   : 25
+        Scope: local
+        Value: 0
+    
+Variable (string) tSend
+    Attributes
+        ID            : 26
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
     
 Text tEntity
     Attributes
@@ -183,39 +210,9 @@ Text t1
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tSend
-    Attributes
-        ID                                  : 8
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 19
-        y coordinate                        : 2
-        Width                               : 284
-        Height                              : 8
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : newtxt
-        Max. Text Size                      : 100
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Text tTmp
     Attributes
-        ID                                  : 9
+        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -245,7 +242,7 @@ Text tTmp
     
 Text tInstruction
     Attributes
-        ID                                  : 14
+        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -275,7 +272,7 @@ Text tInstruction
     
 Text tId
     Attributes
-        ID                                  : 15
+        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -412,6 +409,233 @@ Button b0
             prints tSend.txt,0
             prints crcval,2
         
+Button bMode1
+    Attributes
+        ID                                  : 19
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 29
+        y coordinate                        : 256
+        Width                               : 120
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 65535
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 40
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            sys2=vaModePos.val-3
+            covx sys2,tTmp.txt,0,0
+            tSend.txt+="mode-sel,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bMode2
+    Attributes
+        ID                                  : 20
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 169
+        y coordinate                        : 255
+        Width                               : 120
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 65535
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 40
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            sys2=vaModePos.val-2
+            covx sys2,tTmp.txt,0,0
+            tSend.txt+="mode-sel,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bMode3
+    Attributes
+        ID                                  : 21
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 29
+        y coordinate                        : 330
+        Width                               : 120
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 65535
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 40
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            sys2=vaModePos.val-1
+            covx sys2,tTmp.txt,0,0
+            tSend.txt+="mode-sel,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bModeNext
+    Attributes
+        ID                                  : 22
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 208
+        y coordinate                        : 330
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 50712
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : î´
+        Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            //if(bMode3.txt=="")
+            spstr vaModeList.txt,tTmp.txt,"?",vaModePos.val
+            if(tTmp.txt=="")
+            {
+                vaModePos.val=0
+                spstr vaModeList.txt,bMode1.txt,"?",vaModePos.val
+                spstr vaModeList.txt,bMode2.txt,"?",vaModePos.val+1
+                spstr vaModeList.txt,bMode3.txt,"?",vaModePos.val+2
+            }
+            spstr vaModeList.txt,bMode1.txt,"?",vaModePos.val
+            spstr vaModeList.txt,bMode2.txt,"?",vaModePos.val+1
+            spstr vaModeList.txt,bMode3.txt,"?",vaModePos.val+2
+            vaModePos.val+=3
+            spstr vaModeList.txt,tTmp.txt,"?",3
+            if(tTmp.txt=="")
+            {
+                vis bModeNext,0
+            }else
+            {
+                vis bModeNext,1
+            }
+            bMode1.pco=defaultFontColor
+            bMode2.pco=defaultFontColor
+            bMode3.pco=defaultFontColor
+            if(bMode1.txt==vaModeCur.txt)
+            {
+                bMode1.pco=1374
+            }
+            if(bMode2.txt==vaModeCur.txt)
+            {
+                bMode2.pco=1374
+            }
+            if(bMode3.txt==vaModeCur.txt)
+            {
+                bMode3.pco=1374
+            }
+        
 Dual-state Button btOnOff1
     Attributes
         ID                                  : 7
@@ -460,7 +684,7 @@ Dual-state Button btOnOff1
         
 Timer tmSleep
     Attributes
-        ID         : 11
+        ID         : 10
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -480,7 +704,7 @@ Timer tmSleep
         
 Timer tmSerial
     Attributes
-        ID         : 12
+        ID         : 11
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -677,7 +901,7 @@ Timer tmSerial
         
 Timer tmCooldown
     Attributes
-        ID         : 19
+        ID         : 18
         Scope      : local
         Period (ms): 100
         Enabled    : no
@@ -688,7 +912,7 @@ Timer tmCooldown
         
 TouchCap tc0
     Attributes
-        ID   : 10
+        ID   : 9
         Scope: local
         Value: 0
     

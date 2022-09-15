@@ -140,6 +140,12 @@ Variable (string) entn4
         Text          : 
         Max. Text Size: 80
     
+Variable (string) tSend
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
+    
 Number nNum1
     Attributes
         Scope                               : local
@@ -265,16 +271,6 @@ Text tIcon4
         Associated Keyboard                 : none
         Text                                : î°
         Max. Text Size                      : 5
-    
-Text tSend
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : newtxt
-        Max. Text Size                      : 100
     
 Text tTmp
     Attributes
@@ -1833,6 +1829,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
+                                        sleepValue=0
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,"~",1

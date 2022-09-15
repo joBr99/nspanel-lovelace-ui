@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-09-15 15:07:49.178958808 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-08-31 18:53:56.794842960 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-08-31 18:53:57.290849828 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-09-15 15:16:32.491794654 +0000
++--- HMI/n2t-out/Program.s.txt	2022-09-15 15:16:32.031795912 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-09-15 15:16:32.479794687 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+--- HMI/n2t-out/cardEntities.txt	2022-08-31 18:53:56.798843016 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-08-31 18:53:57.290849828 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-09-15 15:16:32.035795901 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-09-15 15:16:32.479794687 +0000
 +@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -14,14 +14,16 @@
 +             for(sys0=0;sys0<65;sys0++)
 +             {
 +@@ -140,6 +150,18 @@
-+@@ -176,6 +198,15 @@
-+@@ -306,6 +337,26 @@
-+@@ -425,6 +476,34 @@
-+@@ -882,6 +961,106 @@
-+@@ -990,6 +1169,33 @@
-+@@ -1111,6 +1317,32 @@
++ Variable (string) tSend
++         Scope         : local
++@@ -182,6 +204,15 @@
++@@ -302,6 +333,26 @@
++@@ -421,6 +472,34 @@
++@@ -878,6 +957,106 @@
++@@ -986,6 +1165,33 @@
++@@ -1107,6 +1313,32 @@
 +                 page popupFan
-+@@ -1830,6 +2062,155 @@
++@@ -1826,6 +2058,155 @@
 ++                                            vis bUp5,0
 ++                                            vis bStop5,0
 ++                                            vis bDown5,0
@@ -33,20 +35,12 @@
 ++                                            spstr strCommand.txt,tTmp.txt,"~",32
 ++                                            covx tTmp.txt,sys0,0,0
 ++                                            btOnOff5.val=sys0
-+--- HMI/n2t-out/pageStartup.txt	2022-08-31 18:53:56.794842960 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-08-31 18:53:57.290849828 +0000
-+@@ -152,7 +152,7 @@
-+         Disable release event after dragging: 0
-+         Send Component ID                   : disabled
-+         Associated Keyboard                 : none
-+-        Text                                : 41
-++        Text                                : 42
-+         Max. Text Size                      : 10
-+     
-+ Picture p0
++Only in HMI/n2t-out: cardPower.txt
++--- HMI/n2t-out/pageStartup.txt	2022-09-15 15:16:32.031795912 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-09-15 15:16:32.479794687 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-08-31 18:53:56.794842960 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-08-31 18:53:57.290849828 +0000
++--- HMI/n2t-out/pageTest.txt	2022-09-15 15:16:32.031795912 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-09-15 15:16:32.479794687 +0000
 +@@ -13,36 +13,6 @@
 +     Events
 +         Preinitialize Event
@@ -84,10 +78,24 @@
 +     
 + Picture p0
 +     Attributes
-+@@ -220,82 +190,3 @@
++@@ -220,96 +190,3 @@
 +         Touch Press Event
 +             page cardQR
 +         
++-Button b12
++-    Attributes
++-        Scope                               : local
++-        Dragging                            : 0
++-        Disable release event after dragging: 0
++-        Send Component ID                   : disabled
++-        State                               : unpressed
++-        Text                                : power
++-        Max. Text Size                      : 10
++-    
++-    Events
++-        Touch Press Event
++-            page cardPower
++-        
 +-Timer tmSerial
 +-    Attributes
 +-        Scope      : local
@@ -167,3 +175,111 @@
 +-                }
 +-            }
 +-        
++diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
++--- HMI/n2t-out/popupFan.txt	2022-09-15 15:16:32.031795912 +0000
+++++ HMI/US/portrait/n2t-out/popupFan.txt	2022-09-15 15:16:32.479794687 +0000
++@@ -81,23 +81,23 @@
++         Scope: local
++         Value: 0
++     
++-Variable (int32) vaModePos
++-    Attributes
++-        Scope: local
++-        Value: 0
++-    
++-Variable (string) vaModeList
+++Variable (string) vaModeCur
++     Attributes
++         Scope         : local
++         Text          : 
++         Max. Text Size: 400
++     
++-Variable (string) vaModeCur
+++Variable (string) vaModeList
++     Attributes
++         Scope         : local
++         Text          : 
++         Max. Text Size: 400
++     
+++Variable (int32) vaModePos
+++    Attributes
+++        Scope: local
+++        Value: 0
+++    
++ Variable (string) tSend
++     Attributes
++         Scope         : local
++@@ -256,7 +256,7 @@
++             prints tSend.txt,0
++             prints crcval,2
++         
++-Button bMode3
+++Button bMode2
++     Attributes
++         Scope                               : local
++         Dragging                            : 0
++@@ -271,7 +271,7 @@
++             //craft command
++             tSend.txt="event,buttonPress2,"
++             tSend.txt+=entn.txt+","
++-            sys2=vaModePos.val-1
+++            sys2=vaModePos.val-2
++             covx sys2,tTmp.txt,0,0
++             tSend.txt+="mode-sel,"+tTmp.txt
++             //send calc crc
++@@ -286,7 +286,7 @@
++             prints tSend.txt,0
++             prints crcval,2
++         
++-Button bMode2
+++Button bMode3
++     Attributes
++         Scope                               : local
++         Dragging                            : 0
++@@ -301,7 +301,7 @@
++             //craft command
++             tSend.txt="event,buttonPress2,"
++             tSend.txt+=entn.txt+","
++-            sys2=vaModePos.val-2
+++            sys2=vaModePos.val-1
++             covx sys2,tTmp.txt,0,0
++             tSend.txt+="mode-sel,"+tTmp.txt
++             //send calc crc
++@@ -498,37 +498,6 @@
++                                         covx tTmp.txt,hSpeed.maxval,0,0
++                                         // set t1 Speed (Localization)
++                                         spstr strCommand.txt,t1.txt,"~",7
++-                                        //current mode
++-                                        spstr strCommand.txt,vaModeCur.txt,"~",8
++-                                        //mode list
++-                                        spstr strCommand.txt,vaModeList.txt,"~",9
++-                                        if(vaModeList.txt=="")
++-                                        {
++-                                            vis bMode1,0
++-                                            vis bMode2,0
++-                                            vis bMode3,0
++-                                            vis bModeNext,0
++-                                        }
++-                                        if(bMode1.txt=="")
++-                                        {
++-                                            click bModeNext,1
++-                                            click bModeNext,0
++-                                        }
++-                                        bMode1.pco=defaultFontColor
++-                                        bMode2.pco=defaultFontColor
++-                                        bMode3.pco=defaultFontColor
++-                                        if(bMode1.txt==vaModeCur.txt)
++-                                        {
++-                                            bMode1.pco=1374
++-                                        }
++-                                        if(bMode2.txt==vaModeCur.txt)
++-                                        {
++-                                            bMode2.pco=1374
++-                                        }
++-                                        if(bMode3.txt==vaModeCur.txt)
++-                                        {
++-                                            bMode3.pco=1374
++-                                        }
++                                     }
++                                     if(tInstruction.txt=="time")
++                                     {

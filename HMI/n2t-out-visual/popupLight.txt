@@ -84,29 +84,36 @@ Page popupLight
         
 Variable (string) strCommand
     Attributes
-        ID            : 17
+        ID            : 16
         Scope         : local
         Text          : 
         Max. Text Size: 500
     
 Variable (string) entn
     Attributes
-        ID            : 21
+        ID            : 20
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (int32) mode
     Attributes
-        ID   : 23
+        ID   : 22
         Scope: local
         Value: 1
     
 Variable (int32) mode_temp
     Attributes
-        ID   : 24
+        ID   : 23
         Scope: local
         Value: 0
+    
+Variable (string) tSend
+    Attributes
+        ID            : 26
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
     
 Text tEntity
     Attributes
@@ -288,39 +295,9 @@ Text t4
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tSend
-    Attributes
-        ID                                  : 12
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 0
-        Width                               : 348
-        Height                              : 7
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : newtxt
-        Max. Text Size                      : 100
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Text tTmp
     Attributes
-        ID                                  : 13
+        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -350,7 +327,7 @@ Text tTmp
     
 Text tInstruction
     Attributes
-        ID                                  : 18
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -380,7 +357,7 @@ Text tInstruction
     
 Text tId
     Attributes
-        ID                                  : 19
+        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -410,7 +387,7 @@ Text tId
     
 Text t0
     Attributes
-        ID                                  : 25
+        ID                                  : 24
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -547,7 +524,7 @@ Slider hBrightness
         
 Slider hTempSlider
     Attributes
-        ID                                  : 20
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -639,7 +616,7 @@ Button b0
         
 Button bColor
     Attributes
-        ID                                  : 22
+        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -742,7 +719,7 @@ Dual-state Button btOnOff1
         
 Timer tmSleep
     Attributes
-        ID         : 15
+        ID         : 14
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -762,7 +739,7 @@ Timer tmSleep
         
 Timer tmSerial
     Attributes
-        ID         : 16
+        ID         : 15
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -1027,7 +1004,7 @@ Timer tmSerial
         
 Timer tmCooldown
     Attributes
-        ID         : 26
+        ID         : 25
         Scope      : local
         Period (ms): 100
         Enabled    : no
@@ -1038,7 +1015,7 @@ Timer tmCooldown
         
 TouchCap tc0
     Attributes
-        ID   : 14
+        ID   : 13
         Scope: local
         Value: 0
     

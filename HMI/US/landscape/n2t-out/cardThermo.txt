@@ -139,7 +139,7 @@ Variable (string) tSend
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 100
+        Max. Text Size: 200
     
 XFloat xTempDest1
     Attributes
@@ -254,16 +254,6 @@ Text tCF2
         Associated Keyboard                 : none
         Text                                : î
         Max. Text Size                      : 10
-    
-Text tALbl
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : Action
-        Max. Text Size                      : 30
     
 Text tCF
     Attributes
@@ -1069,7 +1059,7 @@ Timer tmSerial
                                         //Text tStateLbl
                                         spstr strCommand.txt,tStateLbl.txt,"~",43
                                         //Text tALbl
-                                        spstr strCommand.txt,tALbl.txt,"~",44
+                                        //spstr strCommand.txt,tALbl.txt,"~",44
                                         //Text tCF
                                         spstr strCommand.txt,tCF.txt,"~",45
                                         tCF1.txt=tCF.txt
@@ -1095,6 +1085,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
+                                        sleepValue=0
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,"~",1
