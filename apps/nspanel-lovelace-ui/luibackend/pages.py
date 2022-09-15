@@ -51,7 +51,7 @@ class LuiPagesGen(object):
                 icon_color = rgb_dec565([223,76,30])
 
         if ha_type == "climate":
-            if entity.state in ["auto", "heat_cool"]
+            if entity.state in ["auto", "heat_cool"]:
                 icon_color = 1024
             if entity.state == "heat":
                 icon_color = 64512
