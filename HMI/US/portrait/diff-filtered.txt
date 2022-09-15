@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-09-15 15:16:32.491794654 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-09-15 15:16:32.031795912 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-09-15 15:16:32.479794687 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-09-15 18:53:18.765006808 +0000
++--- HMI/n2t-out/Program.s.txt	2022-09-15 18:53:18.301002047 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-09-15 18:53:18.749006644 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+--- HMI/n2t-out/cardEntities.txt	2022-09-15 15:16:32.035795901 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-09-15 15:16:32.479794687 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-09-15 18:53:18.305002088 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-09-15 18:53:18.753006685 +0000
 +@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -36,11 +36,11 @@
 ++                                            covx tTmp.txt,sys0,0,0
 ++                                            btOnOff5.val=sys0
 +Only in HMI/n2t-out: cardPower.txt
-+--- HMI/n2t-out/pageStartup.txt	2022-09-15 15:16:32.031795912 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-09-15 15:16:32.479794687 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-09-15 18:53:18.301002047 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-09-15 18:53:18.749006644 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-09-15 15:16:32.031795912 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-09-15 15:16:32.479794687 +0000
++--- HMI/n2t-out/pageTest.txt	2022-09-15 18:53:18.301002047 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-09-15 18:53:18.749006644 +0000
 +@@ -13,36 +13,6 @@
 +     Events
 +         Preinitialize Event
@@ -176,8 +176,8 @@
 +-            }
 +-        
 +diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
-+--- HMI/n2t-out/popupFan.txt	2022-09-15 15:16:32.031795912 +0000
-++++ HMI/US/portrait/n2t-out/popupFan.txt	2022-09-15 15:16:32.479794687 +0000
++--- HMI/n2t-out/popupFan.txt	2022-09-15 18:53:18.301002047 +0000
+++++ HMI/US/portrait/n2t-out/popupFan.txt	2022-09-15 18:53:18.749006644 +0000
 +@@ -81,23 +81,23 @@
 +         Scope: local
 +         Value: 0
@@ -245,41 +245,3 @@
 +             covx sys2,tTmp.txt,0,0
 +             tSend.txt+="mode-sel,"+tTmp.txt
 +             //send calc crc
-+@@ -498,37 +498,6 @@
-+                                         covx tTmp.txt,hSpeed.maxval,0,0
-+                                         // set t1 Speed (Localization)
-+                                         spstr strCommand.txt,t1.txt,"~",7
-+-                                        //current mode
-+-                                        spstr strCommand.txt,vaModeCur.txt,"~",8
-+-                                        //mode list
-+-                                        spstr strCommand.txt,vaModeList.txt,"~",9
-+-                                        if(vaModeList.txt=="")
-+-                                        {
-+-                                            vis bMode1,0
-+-                                            vis bMode2,0
-+-                                            vis bMode3,0
-+-                                            vis bModeNext,0
-+-                                        }
-+-                                        if(bMode1.txt=="")
-+-                                        {
-+-                                            click bModeNext,1
-+-                                            click bModeNext,0
-+-                                        }
-+-                                        bMode1.pco=defaultFontColor
-+-                                        bMode2.pco=defaultFontColor
-+-                                        bMode3.pco=defaultFontColor
-+-                                        if(bMode1.txt==vaModeCur.txt)
-+-                                        {
-+-                                            bMode1.pco=1374
-+-                                        }
-+-                                        if(bMode2.txt==vaModeCur.txt)
-+-                                        {
-+-                                            bMode2.pco=1374
-+-                                        }
-+-                                        if(bMode3.txt==vaModeCur.txt)
-+-                                        {
-+-                                            bMode3.pco=1374
-+-                                        }
-+                                     }
-+                                     if(tInstruction.txt=="time")
-+                                     {

@@ -498,6 +498,37 @@ Timer tmSerial
                                         covx tTmp.txt,hSpeed.maxval,0,0
                                         // set t1 Speed (Localization)
                                         spstr strCommand.txt,t1.txt,"~",7
+                                        //current mode
+                                        spstr strCommand.txt,vaModeCur.txt,"~",8
+                                        //mode list
+                                        spstr strCommand.txt,vaModeList.txt,"~",9
+                                        if(vaModeList.txt=="")
+                                        {
+                                            vis bMode1,0
+                                            vis bMode2,0
+                                            vis bMode3,0
+                                            vis bModeNext,0
+                                        }
+                                        if(bMode1.txt=="")
+                                        {
+                                            click bModeNext,1
+                                            click bModeNext,0
+                                        }
+                                        bMode1.pco=defaultFontColor
+                                        bMode2.pco=defaultFontColor
+                                        bMode3.pco=defaultFontColor
+                                        if(bMode1.txt==vaModeCur.txt)
+                                        {
+                                            bMode1.pco=1374
+                                        }
+                                        if(bMode2.txt==vaModeCur.txt)
+                                        {
+                                            bMode2.pco=1374
+                                        }
+                                        if(bMode3.txt==vaModeCur.txt)
+                                        {
+                                            bMode3.pco=1374
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
