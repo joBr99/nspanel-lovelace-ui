@@ -1,6 +1,6 @@
-/*---- BREAKING CHANGES -------------------------------------------------------------------
+/*-----------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
-- abgestimmt auf TFT 42 / v3.4.0 / BerryDriver 4 / Tasmota 12.1.1
+- abgestimmt auf TFT 42 / v3.4.0.1 / BerryDriver 4 / Tasmota 12.1.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -40,7 +40,8 @@ ReleaseNotes:
         - 13.09.2022 - V3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
         - 15.09.2022 - V3.4.2 - BugFix Dimmode
         - 15.09.2022 - V3.4.2 - Colormode für Screensaver + AutoColor WeatherForecast
-        - 16.09.2022 - V3.4.2 - Visualisierung der Relay Zustände (MRIcons) im Screensaver   
+        - 16.09.2022 - V3.4.2 - Visualisierung der Relay Zustände (MRIcons) im Screensaver
+	- 16.09.2022 - V3.4.2.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver 
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -119,27 +120,27 @@ const Debug = false;
 // Variablen zur Steuerung der Wettericons auf dem Screensaver (Steuerung in 0_userdata.0.XPANELX.ScreensaverInfo)
 // Wenn weatherForecastTimer auf true, dann Wechsel zwischen Datenpunkten und Wettervorhersage (30 Sekunden nach Minute (Zeit))
 // Wenn weatherForecastTimer auf false, dann Möglichkeit über weatherForecast, ob Datenpunkte oder Wettervorhersage (true = WeatherForecast/false = Datenpunkte)
-var weatherForecast //= getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val
+var weatherForecast;
 
-const HMIOff:           RGB = { red: 68, green: 115, blue: 158 };    // Blau-Off   - Original
-const Off:              RGB = { red: 253, green: 128, blue: 0 };     // Orange-Off - schönere Farbübergänge
-const On:               RGB = { red: 253, green: 216, blue: 53 };
-const MSRed:            RGB = { red: 251, green: 105, blue: 98 };
+const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blau-Off   - Original
+const Off:              RGB = { red: 253, green: 128, blue:   0 };     // Orange-Off - schönere Farbübergänge
+const On:               RGB = { red: 253, green: 216, blue:  53 };
+const MSRed:            RGB = { red: 251, green: 105, blue:  98 };
 const MSYellow:         RGB = { red: 255, green: 235, blue: 156 };
 const MSGreen:          RGB = { red: 121, green: 222, blue: 121 };
-const Red:              RGB = { red: 255, green: 0, blue: 0 };
+const Red:              RGB = { red: 255, green:   0, blue:   0 };
 const White:            RGB = { red: 255, green: 255, blue: 255 };
-const Yellow:           RGB = { red: 255, green: 255, blue: 0 };
-const Green:            RGB = { red: 0, green: 255, blue: 0 };
-const Blue:             RGB = { red: 0, green: 0, blue: 255 };
-const DarkBlue:         RGB = { red: 0, green: 0, blue: 136 };
+const Yellow:           RGB = { red: 255, green: 255, blue:   0 };
+const Green:            RGB = { red:   0, green: 255, blue:   0 };
+const Blue:             RGB = { red:   0, green:   0, blue: 255 };
+const DarkBlue:         RGB = { red:   0, green:   0, blue: 136 };
 const Gray:             RGB = { red: 136, green: 136, blue: 136 };
-const Black:            RGB = { red: 0, green: 0, blue: 0 };
-const colorSpotify:     RGB = { red: 30, green: 215, blue: 96 };
-const colorAlexa:       RGB = { red: 49, green: 196, blue: 243 };
-const colorRadio:       RGB = { red: 255, green: 127, blue: 0 };
-const BatteryFull:      RGB = { red: 96, green: 176, blue: 62 };
-const BatteryEmpty:     RGB = { red: 179, green: 45, blue: 25 };
+const Black:            RGB = { red:   0, green:   0, blue:   0 };
+const colorSpotify:     RGB = { red:  30, green: 215, blue:  96 };
+const colorAlexa:       RGB = { red:  49, green: 196, blue: 243 };
+const colorRadio:       RGB = { red: 255, green: 127, blue:   0 };
+const BatteryFull:      RGB = { red:  96, green: 176, blue:  62 };
+const BatteryEmpty:     RGB = { red: 179, green:  45, blue:  25 };
 
 //Screensaver Default Theme Colors
 const scbackground:     RGB = { red:   0, green:    0, blue:   0};
@@ -184,6 +185,17 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 var vwIconColor = [];
 
 //-- Anfang der Beispiele für Seitengestaltung -- Aliase erforderlich ----------------
+var Power: PagePower =
+{
+    "type": "cardPower",
+    "heading": "Power",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLichteinzeln", name: "RGB-Licht Hex-Color", interpolateColor: true}
+    ]
+};
 
 var Test_Licht: PageEntities =
 {
@@ -362,7 +374,7 @@ var SpotifyPremium: PageMedia =
     "items": [<PageItem>{ 
                 id: "alias.0.NSPanel_1.Media.PlayerSpotifyPremium", 
                 adapterPlayerInstance: "spotify-premium.0.",
-                speakerList: ['LENOVO-W11-X','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
+                speakerList: ['LOGINT-W11-JB','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
              }] 
 };
 
@@ -504,10 +516,10 @@ var NSPanel_Firmware_Updates: PageEntities =
 export const config: Config = {
     panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // anpassen
     panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
-    firstScreensaverEntity: { ScreensaverEntity: "accuweather.0.Daily.Day1.Day.PrecipitationProbability", ScreensaverEntityIcon: "weather-pouring", ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: undefined  },
-    secondScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.WindSpeed", ScreensaverEntityIcon: "weather-windy", ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: "km/h", ScreensaverEntityIconColor: MSYellow },
-    thirdScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.UVIndex", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "UV", ScreensaverEntityUnitText: "", ScreensaverEntityIconColor: undefined  },
-    fourthScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.RelativeHumidity", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: getState('accuweather.0.Current.RelativeHumidity').val >> 70 ? MSRed : MSGreen },
+    firstScreensaverEntity: { ScreensaverEntity: "accuweather.0.Daily.Day1.Day.PrecipitationProbability", ScreensaverEntityIcon: "weather-pouring", ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
+    secondScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.WindSpeed", ScreensaverEntityIcon: "weather-windy", ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: "km/h", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 180} },
+    thirdScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.UVIndex", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "UV", ScreensaverEntityUnitText: "", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} },
+    fourthScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.RelativeHumidity", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
     alternativeScreensaverLayout: false,
     autoWeatherColorScreensaverLayout: true,
     mrIcon1ScreensaverEntity: { ScreensaverEntity: "mqtt.0.SmartHome.NSPanel_1.stat.POWER1", ScreensaverEntityIcon: "light-switch" },
@@ -3233,25 +3245,232 @@ function HandleScreensaverUpdate(): void {
                 payloadString += GetScreenSaverEntityString(config.thirdScreensaverEntity);
                 payloadString += GetScreenSaverEntityString(config.fourthScreensaverEntity);
                 
+                const colorScale0:  RGB = { red:   99, green: 190, blue: 123 };
+                const colorScale1:  RGB = { red:  129, green: 199, blue: 126 };
+                const colorScale2:  RGB = { red:  161, green: 208, blue: 127 };
+                const colorScale3:  RGB = { red:  129, green: 217, blue: 126 };
+                const colorScale4:  RGB = { red:  222, green: 226, blue: 131 };
+                const colorScale5:  RGB = { red:  254, green: 235, blue: 132 };
+                const colorScale6:  RGB = { red:  255, green: 210, blue: 129 };
+                const colorScale7:  RGB = { red:  251, green: 185, blue: 124 };
+                const colorScale8:  RGB = { red:  251, green: 158, blue: 117 };
+                const colorScale9:  RGB = { red:  248, green: 131, blue: 111 };
+                const colorScale10: RGB = { red:  248, green: 105, blue: 107 };
+
                 if (config.firstScreensaverEntity.ScreensaverEntityIconColor != undefined) {
-                    vwIconColor[1] = rgb_dec565(config.firstScreensaverEntity.ScreensaverEntityIconColor);
+                    if (typeof getState(config.firstScreensaverEntity.ScreensaverEntity).val == 'boolean') {
+                        vwIconColor[1] = (getState(config.firstScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                    } else if (typeof config.firstScreensaverEntity.ScreensaverEntityIconColor == 'object') {
+                        let iconvalmin = (config.firstScreensaverEntity.ScreensaverEntityIconColor.val_min); 
+                        let iconvalmax = (config.firstScreensaverEntity.ScreensaverEntityIconColor.val_max);
+                        if (iconvalmin == 0 && iconvalmax == 1) {
+                            vwIconColor[1] = (getState(config.firstScreensaverEntity.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        } else {
+                            let valueScale: number = (parseInt(getState(config.firstScreensaverEntity.ScreensaverEntity).val) * 10) / (iconvalmax - iconvalmin)
+                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            switch (valueScaletemp) {
+                                case '0':
+                                    vwIconColor[1] = rgb_dec565(colorScale0);
+                                    break;
+                                case '1':
+                                    vwIconColor[1] = rgb_dec565(colorScale1);
+                                    break;
+                                case '2':
+                                    vwIconColor[1] = rgb_dec565(colorScale2);
+                                    break;
+                                case '3':
+                                    vwIconColor[1] = rgb_dec565(colorScale3);
+                                    break;
+                                case '4':
+                                    vwIconColor[1] = rgb_dec565(colorScale4);
+                                    break;
+                                case '5':
+                                    vwIconColor[1] = rgb_dec565(colorScale5);
+                                    break;
+                                case '6':
+                                    vwIconColor[1] = rgb_dec565(colorScale6);
+                                    break;
+                                case '7':
+                                    vwIconColor[1] = rgb_dec565(colorScale7);
+                                    break;                                 
+                                case '8':
+                                    vwIconColor[1] = rgb_dec565(colorScale8);
+                                    break;
+                                case '9':
+                                    vwIconColor[1] = rgb_dec565(colorScale9);
+                                    break;
+                                case '10':
+                                    vwIconColor[1] = rgb_dec565(colorScale10);
+                                    break;
+                            } 
+                        }
+                    } else {
+                        vwIconColor[1] = rgb_dec565(sctF1Icon);                        
+                    }
                 } else {
                     vwIconColor[1] = rgb_dec565(sctF1Icon);    
                 }
+
                 if (config.secondScreensaverEntity.ScreensaverEntityIconColor != undefined) {
-                    vwIconColor[2] = rgb_dec565(config.secondScreensaverEntity.ScreensaverEntityIconColor);
+                    if (typeof getState(config.secondScreensaverEntity.ScreensaverEntity).val == 'boolean') {
+                        vwIconColor[2] = (getState(config.secondScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                    } else if (typeof config.secondScreensaverEntity.ScreensaverEntityIconColor == 'object') {
+                        let iconvalmin = (config.secondScreensaverEntity.ScreensaverEntityIconColor.val_min); 
+                        let iconvalmax = (config.secondScreensaverEntity.ScreensaverEntityIconColor.val_max);
+                        if (iconvalmin == 0 && iconvalmax == 1) {
+                            vwIconColor[2] = (getState(config.secondScreensaverEntity.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        } else {
+                            let valueScale: number = (parseInt(getState(config.secondScreensaverEntity.ScreensaverEntity).val) * 10) / (iconvalmax - iconvalmin)
+                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            switch (valueScaletemp) {
+                                case '0':
+                                    vwIconColor[2] = rgb_dec565(colorScale0);
+                                    break;
+                                case '1':
+                                    vwIconColor[2] = rgb_dec565(colorScale1);
+                                    break;
+                                case '2':
+                                    vwIconColor[2] = rgb_dec565(colorScale2);
+                                    break;
+                                case '3':
+                                    vwIconColor[2] = rgb_dec565(colorScale3);
+                                    break;
+                                case '4':
+                                    vwIconColor[2] = rgb_dec565(colorScale4);
+                                    break;
+                                case '5':
+                                    vwIconColor[2] = rgb_dec565(colorScale5);
+                                    break;
+                                case '6':
+                                    vwIconColor[2] = rgb_dec565(colorScale6);
+                                    break;
+                                case '7':
+                                    vwIconColor[2] = rgb_dec565(colorScale7);
+                                    break;                                 
+                                case '8':
+                                    vwIconColor[2] = rgb_dec565(colorScale8);
+                                    break;
+                                case '9':
+                                    vwIconColor[2] = rgb_dec565(colorScale9);
+                                    break;
+                                case '10':
+                                    vwIconColor[2] = rgb_dec565(colorScale10);
+                                    break;
+                            } 
+                        }
+                    } else {
+                        vwIconColor[2] = rgb_dec565(sctF2Icon);                        
+                    }
                 } else {
                     vwIconColor[2] = rgb_dec565(sctF2Icon);    
                 }
+
                 if (config.thirdScreensaverEntity.ScreensaverEntityIconColor != undefined) {
-                    vwIconColor[3] = rgb_dec565(config.thirdScreensaverEntity.ScreensaverEntityIconColor);
+                    if (typeof getState(config.thirdScreensaverEntity.ScreensaverEntity).val == 'boolean') {
+                        vwIconColor[3] = (getState(config.thirdScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                    } else if (typeof config.thirdScreensaverEntity.ScreensaverEntityIconColor == 'object') {
+                        let iconvalmin = (config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_min); 
+                        let iconvalmax = (config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_max);
+                        if (iconvalmin == 0 && iconvalmax == 1) {
+                            vwIconColor[3] = (getState(config.thirdScreensaverEntity.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        } else {
+                            let valueScale: number = (parseInt(getState(config.thirdScreensaverEntity.ScreensaverEntity).val) * 10) / (iconvalmax - iconvalmin)
+                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            switch (valueScaletemp) {
+                                case '0':
+                                    vwIconColor[3] = rgb_dec565(colorScale0);
+                                    break;
+                                case '1':
+                                    vwIconColor[3] = rgb_dec565(colorScale1);
+                                    break;
+                                case '2':
+                                    vwIconColor[3] = rgb_dec565(colorScale2);
+                                    break;
+                                case '3':
+                                    vwIconColor[3] = rgb_dec565(colorScale3);
+                                    break;
+                                case '4':
+                                    vwIconColor[3] = rgb_dec565(colorScale4);
+                                    break;
+                                case '5':
+                                    vwIconColor[3] = rgb_dec565(colorScale5);
+                                    break;
+                                case '6':
+                                    vwIconColor[3] = rgb_dec565(colorScale6);
+                                    break;
+                                case '7':
+                                    vwIconColor[3] = rgb_dec565(colorScale7);
+                                    break;                                 
+                                case '8':
+                                    vwIconColor[3] = rgb_dec565(colorScale8);
+                                    break;
+                                case '9':
+                                    vwIconColor[3] = rgb_dec565(colorScale9);
+                                    break;
+                                case '10':
+                                    vwIconColor[3] = rgb_dec565(colorScale10);
+                                    break;
+                            } 
+                        }
+                    } else {
+                        vwIconColor[3] = rgb_dec565(sctF2Icon);                        
+                    }
                 } else {
-                    vwIconColor[3] = rgb_dec565(sctF3Icon);    
+                    vwIconColor[3] = rgb_dec565(sctF2Icon);    
                 }
+
                 if (config.fourthScreensaverEntity.ScreensaverEntityIconColor != undefined) {
-                    vwIconColor[4] = rgb_dec565(config.fourthScreensaverEntity.ScreensaverEntityIconColor);
+                    if (typeof getState(config.fourthScreensaverEntity.ScreensaverEntity).val == 'boolean') {
+                        vwIconColor[4] = (getState(config.fourthScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                    } else if (typeof config.fourthScreensaverEntity.ScreensaverEntityIconColor == 'object') {
+                        let iconvalmin = (config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_min); 
+                        let iconvalmax = (config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_max);
+                        if (iconvalmin == 0 && iconvalmax == 1) {
+                            vwIconColor[4] = (getState(config.fourthScreensaverEntity.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        } else {
+                            let valueScale: number = (parseInt(getState(config.fourthScreensaverEntity.ScreensaverEntity).val) * 10) / (iconvalmax - iconvalmin)
+                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            switch (valueScaletemp) {
+                                case '0':
+                                    vwIconColor[4] = rgb_dec565(colorScale0);
+                                    break;
+                                case '1':
+                                    vwIconColor[4] = rgb_dec565(colorScale1);
+                                    break;
+                                case '2':
+                                    vwIconColor[4] = rgb_dec565(colorScale2);
+                                    break;
+                                case '3':
+                                    vwIconColor[4] = rgb_dec565(colorScale3);
+                                    break;
+                                case '4':
+                                    vwIconColor[4] = rgb_dec565(colorScale4);
+                                    break;
+                                case '5':
+                                    vwIconColor[4] = rgb_dec565(colorScale5);
+                                    break;
+                                case '6':
+                                    vwIconColor[4] = rgb_dec565(colorScale6);
+                                    break;
+                                case '7':
+                                    vwIconColor[4] = rgb_dec565(colorScale7);
+                                    break;                                 
+                                case '8':
+                                    vwIconColor[4] = rgb_dec565(colorScale8);
+                                    break;
+                                case '9':
+                                    vwIconColor[4] = rgb_dec565(colorScale9);
+                                    break;
+                                case '10':
+                                    vwIconColor[4] = rgb_dec565(colorScale10);
+                                    break;
+                            } 
+                        }
+                    } else {
+                        vwIconColor[4] = rgb_dec565(sctF2Icon);                        
+                    }
                 } else {
-                    vwIconColor[4] = rgb_dec565(sctF4Icon);    
+                    vwIconColor[4] = rgb_dec565(sctF2Icon);    
                 }
             }
 
@@ -3352,8 +3571,8 @@ function HandleScreensaverColors(): void {
                         rgb_dec565(scbar)           + '~' +      //bar~
                         rgb_dec565(sctMainIconAlt)  + '~' +      //tMainIconAlt
                         rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
-                        rgb_dec565(sctTimeAdd)      + '~' +      
-                        true;                
+                        rgb_dec565(sctTimeAdd);      
+                        //true;                
 
     SendToPanel(<Payload>{ payload: payloadString });
 }
