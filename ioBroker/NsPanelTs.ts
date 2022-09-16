@@ -1,6 +1,6 @@
-/*--!!! BREAKING CHANGES---------------------------------------------------------------------
+/*---- BREAKING CHANGES -------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
-- abgestimmt auf TFT 41 / v3.3.1.3 / BerryDriver 4 / Tasmota 12.1.1
+- abgestimmt auf TFT 42 / v3.4.0 / BerryDriver 4 / Tasmota 12.1.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -38,6 +38,9 @@ ReleaseNotes:
         - 13.09.2022 - V3.3.1.3 BugFix Screensaver Toggle
         - 13.09.2022 - V3.3.1.3 Überarbeitung und BugFix und Refresh Features für cardMedia (Breaking Changes)
         - 13.09.2022 - V3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
+        - 15.09.2022 - V3.4.2 - BugFix Dimmode
+        - 15.09.2022 - V3.4.2 - Colormode für Screensaver + AutoColor WeatherForecast
+        - 16.09.2022 - V3.4.2 - Visualisierung der Relay Zustände (MRIcons) im Screensaver   
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -102,7 +105,7 @@ Erforderliche Adapter:
     JavaScript-Adapter
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.3.1.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.4.0.tft
 ---------------------------------------------------------------------------------------
 */ 
 var Icons = new IconsSelector();
@@ -118,26 +121,81 @@ const Debug = false;
 // Wenn weatherForecastTimer auf false, dann Möglichkeit über weatherForecast, ob Datenpunkte oder Wettervorhersage (true = WeatherForecast/false = Datenpunkte)
 var weatherForecast //= getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val
 
-//const Off: RGB = { red: 68, green: 115, blue: 158 };  // Blau-Off
-const Off: RGB = { red: 253, green: 128, blue: 0 };     // Orange-Off - schönere Farbübergänge
-const On: RGB = { red: 253, green: 216, blue: 53 };
-const MSRed: RGB = { red: 251, green: 105, blue: 98 };
-const MSYellow: RGB = { red: 255, green: 235, blue: 156 };
-const MSGreen: RGB = { red: 121, green: 222, blue: 121 };
-const Red: RGB = { red: 255, green: 0, blue: 0 };
-const White: RGB = { red: 255, green: 255, blue: 255 };
-const Yellow: RGB = { red: 255, green: 255, blue: 0 };
-const Green: RGB = { red: 0, green: 255, blue: 0 };
-const Blue: RGB = { red: 0, green: 0, blue: 255 };
-const Gray: RGB = { red: 136, green: 136, blue: 136 };
-const Black: RGB = { red: 0, green: 0, blue: 0 };
-const colorSpotify: RGB = { red: 30, green: 215, blue: 96 };
-const colorAlexa: RGB = { red: 49, green: 196, blue: 243 };
-const colorRadio: RGB = { red: 255, green: 127, blue: 0 };
-const BatteryFull: RGB = { red: 96, green: 176, blue: 62 };
-const BatteryEmpty: RGB = { red: 179, green: 45, blue: 25 };
+const HMIOff:           RGB = { red: 68, green: 115, blue: 158 };    // Blau-Off   - Original
+const Off:              RGB = { red: 253, green: 128, blue: 0 };     // Orange-Off - schönere Farbübergänge
+const On:               RGB = { red: 253, green: 216, blue: 53 };
+const MSRed:            RGB = { red: 251, green: 105, blue: 98 };
+const MSYellow:         RGB = { red: 255, green: 235, blue: 156 };
+const MSGreen:          RGB = { red: 121, green: 222, blue: 121 };
+const Red:              RGB = { red: 255, green: 0, blue: 0 };
+const White:            RGB = { red: 255, green: 255, blue: 255 };
+const Yellow:           RGB = { red: 255, green: 255, blue: 0 };
+const Green:            RGB = { red: 0, green: 255, blue: 0 };
+const Blue:             RGB = { red: 0, green: 0, blue: 255 };
+const DarkBlue:         RGB = { red: 0, green: 0, blue: 136 };
+const Gray:             RGB = { red: 136, green: 136, blue: 136 };
+const Black:            RGB = { red: 0, green: 0, blue: 0 };
+const colorSpotify:     RGB = { red: 30, green: 215, blue: 96 };
+const colorAlexa:       RGB = { red: 49, green: 196, blue: 243 };
+const colorRadio:       RGB = { red: 255, green: 127, blue: 0 };
+const BatteryFull:      RGB = { red: 96, green: 176, blue: 62 };
+const BatteryEmpty:     RGB = { red: 179, green: 45, blue: 25 };
+
+//Screensaver Default Theme Colors
+const scbackground:     RGB = { red:   0, green:    0, blue:   0};
+const sctime:           RGB = { red: 255, green:  255, blue: 255};
+const sctimeAMPM:       RGB = { red: 255, green:  255, blue: 255};
+const scdate:           RGB = { red: 255, green:  255, blue: 255};
+const sctMainIcon:      RGB = { red: 255, green:  255, blue: 255};
+const sctMainText:      RGB = { red: 255, green:  255, blue: 255};
+const sctForecast1:     RGB = { red: 255, green:  255, blue: 255};
+const sctForecast2:     RGB = { red: 255, green:  255, blue: 255};
+const sctForecast3:     RGB = { red: 255, green:  255, blue: 255};
+const sctForecast4:     RGB = { red: 255, green:  255, blue: 255};
+const sctF1Icon:        RGB = { red: 255, green:  235, blue: 156};
+const sctF2Icon:        RGB = { red: 255, green:  235, blue: 156};
+const sctF3Icon:        RGB = { red: 255, green:  235, blue: 156};
+const sctF4Icon:        RGB = { red: 255, green:  235, blue: 156};
+const sctForecast1Val:  RGB = { red: 255, green:  255, blue: 255};
+const sctForecast2Val:  RGB = { red: 255, green:  255, blue: 255};
+const sctForecast3Val:  RGB = { red: 255, green:  255, blue: 255};
+const sctForecast4Val:  RGB = { red: 255, green:  255, blue: 255};
+const scbar:            RGB = { red: 255, green:  255, blue: 255};
+const sctMainIconAlt:   RGB = { red: 255, green:  255, blue: 255};
+const sctMainTextAlt:   RGB = { red: 255, green:  255, blue: 255};
+const sctTimeAdd:       RGB = { red: 255, green:  255, blue: 255};
+
+//Auto-Weather-Colors
+const swClearNight:     RGB = { red: 150, green: 150, blue: 100};
+const swCloudy:         RGB = { red:  75, green:  75, blue:  75};
+const swExceptional:    RGB = { red: 255, green:  50, blue:  50};
+const swFog:            RGB = { red: 150, green: 150, blue: 150};
+const swHail:           RGB = { red: 200, green: 200, blue: 200};
+const swLightning:      RGB = { red: 200, green: 200, blue:  0};
+const swLightningRainy: RGB = { red: 200, green: 200, blue: 150};
+const swPartlycloudy:   RGB = { red: 150, green: 150, blue: 150};
+const swPouring:        RGB = { red:  50, green:  50, blue: 255};
+const swRainy:          RGB = { red: 100, green: 100, blue: 255};
+const swSnowy:          RGB = { red: 150, green: 150, blue: 150};
+const swSnowyRainy:     RGB = { red: 150, green: 150, blue: 255};
+const swSunny:          RGB = { red: 255, green: 255, blue:   0};
+const swWindy:          RGB = { red: 150, green: 150, blue: 150};
+
+var vwIconColor = [];
 
 //-- Anfang der Beispiele für Seitengestaltung -- Aliase erforderlich ----------------
+var Power: PagePower =
+{
+    "type": "cardPower",
+    "heading": "Power",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLichteinzeln", name: "RGB-Licht Hex-Color", interpolateColor: true}
+    ]
+};
+
 var Test_Licht: PageEntities =
 {
     "type": "cardEntities",
@@ -283,9 +341,9 @@ var Alexa: PageMedia =
     "subPage": false,
     "parent": undefined,
     "items": [<PageItem>{   
-                id: "alias.0.NSPanel_1.Media.PlayerBuero", 
+                id: "alias.0.NSPanel_1.Media.PlayerAlexa2", 
                 adapterPlayerInstance: "alexa2.0.",
-                mediaDevice: "G0XXXXXXXXXXXXXX", //Primäres Alexa Device
+                mediaDevice: "G0XXXXXXXXXXXXXX", 
                 speakerList: ['Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
              }]
 };
@@ -300,7 +358,7 @@ var Sonos: PageMedia =
     "items": [<PageItem>{   
                 id: "alias.0.NSPanel_1.Media.PlayerSonos", 
                 adapterPlayerInstance: "sonos.0.",
-                mediaDevice: "192_168_1_212", //Primäres Sonos-Device
+                mediaDevice: "192_168_1_212",
                 speakerList: ['Terrasse']
              }]
 };
@@ -315,7 +373,7 @@ var SpotifyPremium: PageMedia =
     "items": [<PageItem>{ 
                 id: "alias.0.NSPanel_1.Media.PlayerSpotifyPremium", 
                 adapterPlayerInstance: "spotify-premium.0.",
-                speakerList: ['LOGINT-W11-JB','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
+                speakerList: ['LENOVO-W11-X','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
              }] 
 };
 
@@ -457,12 +515,16 @@ var NSPanel_Firmware_Updates: PageEntities =
 export const config: Config = {
     panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // anpassen
     panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
-    firstScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.RelativeHumidity", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%" },
-    secondScreensaverEntity: { ScreensaverEntity: "accuweather.0.Daily.Day1.Day.PrecipitationProbability", ScreensaverEntityIcon: "weather-pouring", ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%" },
-    thirdScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.WindSpeed", ScreensaverEntityIcon: "weather-windy", ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: "km/h" },
-    fourthScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.UVIndex", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "UV", ScreensaverEntityUnitText: "" },
+    firstScreensaverEntity: { ScreensaverEntity: "accuweather.0.Daily.Day1.Day.PrecipitationProbability", ScreensaverEntityIcon: "weather-pouring", ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: undefined  },
+    secondScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.WindSpeed", ScreensaverEntityIcon: "weather-windy", ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: "km/h", ScreensaverEntityIconColor: MSYellow },
+    thirdScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.UVIndex", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "UV", ScreensaverEntityUnitText: "", ScreensaverEntityIconColor: undefined  },
+    fourthScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.RelativeHumidity", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: getState('accuweather.0.Current.RelativeHumidity').val >> 70 ? MSRed : MSGreen },
+    alternativeScreensaverLayout: false,
+    autoWeatherColorScreensaverLayout: true,
+    mrIcon1ScreensaverEntity: { ScreensaverEntity: "mqtt.0.SmartHome.NSPanel_1.stat.POWER1", ScreensaverEntityIcon: "light-switch" },
+    mrIcon2ScreensaverEntity: { ScreensaverEntity: "mqtt.0.SmartHome.NSPanel_1.stat.POWER2", ScreensaverEntityIcon: "lightbulb" },
     timeoutScreensaver: 15,
-    dimmode: 8,
+    dimmode: 20,
     active: 100, //Standard-Brightness TFT
     screenSaverDoubleClick: false,
     locale: 'de-DE',                    // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
@@ -474,6 +536,7 @@ export const config: Config = {
     defaultColor: Off,
     temperatureUnit: '°C',
     pages: [
+            //Power,
             Sonos,              //Beispiel-Seite
             SpotifyPremium,     //Beispiel-Seite
             Alexa,              //Beispiel-Seite
@@ -507,11 +570,14 @@ const request = require('request');
 //----------------------Begin Dimmode
 
 function ScreensaverDimmode(timeDimMode: DimMode) {
+    if (Debug) console.log('Dimmode='+ timeDimMode.dimmodeOn)
     if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
-        if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '23:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '06:00', 'not between', undefined)) {
+        if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
             SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active });
+            if (Debug) console.log('Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active )
         } else {
             SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active });
+            if (Debug) console.log('Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active )
         }
     } else {
         SendToPanel({ payload: 'dimmode~' + config.dimmode + '~' + config.active });
@@ -571,6 +637,8 @@ async function InitDimmode() {
     schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, () => {
         ScreensaverDimmode(timeDimMode);
     });
+
+    ScreensaverDimmode(timeDimMode);
 }
 
 InitDimmode();
@@ -659,6 +727,24 @@ schedule('* * * * *', () => {
     }
 });
 
+function InitHWButton1Color() {
+    if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null || config.mrIcon1ScreensaverEntity.ScreensaverEntity != undefined) {
+        on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+            HandleScreensaverUpdate();
+        });
+    }
+}
+InitHWButton1Color();
+
+function InitHWButton2Color() {
+    if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null || config.mrIcon2ScreensaverEntity.ScreensaverEntity != undefined) {
+        on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+            HandleScreensaverUpdate();
+        });
+    }
+}
+InitHWButton2Color();
+
 //Wechsel zwischen Datenpunkten und Weather-Forecast im Screensaver
 on({id: [].concat([NSPanel_Path + "ScreensaverInfo.weatherForecast"]), change: "ne"}, async function (obj) {
     weatherForecast = obj.state.val;
@@ -705,7 +791,7 @@ function get_locales() {
                     await setStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.State>{ val: result, ack: true });
                 }
             } catch (err) {
-                console.log(err.message);
+                console.log('get_locales: ' + err.message);
             }
         });
     } catch (err) {
@@ -714,7 +800,7 @@ function get_locales() {
 }
 
 async function check_updates() {
-    const desired_display_firmware_version = 41;
+    const desired_display_firmware_version = 42;
     const berry_driver_version = 4;
 
     if (Debug) console.log('Check-Updates');
@@ -886,7 +972,7 @@ function get_online_tasmota_firmware_version() {
                 await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                 await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.State>{ val: TasmotaVersionOnline, ack: true });
             } catch (err) {
-                console.log(err.message);
+                console.log('get_online_tasmota_firmware_version: ' + err.message);
             }
         });
     } catch (err) {
@@ -907,7 +993,7 @@ function get_current_berry_driver_version() {
                 await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'number' });
                 await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: JSON.parse(result).nlui_driver_version, ack: true });
             } catch (err) {
-                console.warn(err.message);
+                console.warn('get_current_berry_driver_version: ' + err.message);
             }
         });
     } catch (err) {
@@ -952,7 +1038,7 @@ function get_tasmota_status0() {
                 await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.RSSI', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.RSSI, ack: true });
                 await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Signal, ack: true });
             } catch (err) {
-                console.warn(err.message);
+                console.warn('get_tasmota_status0' + err.message);
             }
         });
     } catch (err) {
@@ -975,8 +1061,8 @@ function get_online_berry_driver_version() {
                     await createStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.State>{ val: BerryDriverVersionOnline, ack: true });
                 } catch (err) {
-                    console.warn(err.message);
-                }    
+                    console.log('get_online_berry_driver_version' +  err.message);
+                }
             }
         });
     } catch (err) {
@@ -1002,7 +1088,7 @@ function check_version_tft_firmware() {
                     await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: NSPanelVersion, ack: true });
                 } catch (err) {
-                    console.warn(err.message);
+                    console.log('check_version_tft_firmware: ' + err.message);
                 }
             }
         });
@@ -1027,7 +1113,7 @@ function check_online_display_firmware() {
                     await createStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.State>{ val: desired_display_firmware_version, ack: true });
                 } catch (err) {
-                    console.warn(err.message);
+                    console.warn('check_online_display_firmware' + err.message);
                 }
             }
         });
@@ -1070,7 +1156,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.3.1';
+    const tft_version: string = 'v3.4.0';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
     try {
         request({
@@ -1236,11 +1322,14 @@ function GeneratePage(page: Page): void {
         case 'cardQR':
             SendToPanel(GenerateQRPage(<PageQR>page));
             break;
+        case 'cardPower':
+            SendToPanel(GeneratePowerPage(<PagePower>page));
+            break;
     }
 }
 
 function HandleHardwareButton(method: string): void {
-    let page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | PageQR);
+    let page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | PageQR | PagePower);
     if (config.button1Page !== null && method == 'button1') {
         page = config.button1Page;
         pageId = -1;
@@ -1258,7 +1347,7 @@ function HandleStartupProcess(): void {
     SendDate();
     SendTime();
     SendToPanel({ payload: 'timeout~' + config.timeoutScreensaver });
-    SendToPanel({ payload: 'dimmode~' + config.dimmode + '~' + config.active });
+    //SendToPanel({ payload: 'dimmode~' + config.dimmode + '~' + config.active });
 }
 
 function SendDate(): void {
@@ -2250,7 +2339,7 @@ function GenerateQRPage(page: PageQR): Payload[] {
     var displayName2 = 'Passwort';
 
     out_msgs.push({
-        payload: 'entityUpd~' +                          //entityUpd
+        payload: 'entityUpd~' +                     //entityUpd
             heading + '~' +                         //heading
             GetNavigationString(pageId) + '~' +     //navigation
             textQR + '~' +                          //textQR
@@ -2269,6 +2358,18 @@ function GenerateQRPage(page: PageQR): Payload[] {
     });                       //optionalValue
 
     //entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
+    return out_msgs
+}
+
+// Check by Armilar
+function GeneratePowerPage(page: PagePower): Payload[] {
+    activePage = page;
+
+    var out_msgs: Array<Payload> = [];
+    //out_msgs.push({ payload: 'pageType~cardPower' });
+
+    //out_msgs.push({payload: 'entityUpd~test~1|1~6666~A~8888~B~1~t0o~t0u~9999~C~2~t1o~t1u~1111~D~3~t2o~t2u~33333~E~-1~t3o~t3u~3333~F~-2~t4o~t4u~4444~G~-3~t5o~t5u'});                   
+
     return out_msgs
 }
 
@@ -2997,13 +3098,13 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 out_msgs.push({
                     payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
                         + id + '~'
-                        + icon + '~'   //iconId
+                        + icon + '~'        //iconId
                         + iconColor + '~'   //iconColor
                         + switchVal + '~'   //buttonState
-                        + brightness + '~'   //sliderBrightnessPos
+                        + brightness + '~'  //sliderBrightnessPos
                         + colorTemp + '~'   //sliderColorTempPos
                         + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                        + 'Color' + '~'   //Color-Bezeichnung
+                        + 'Color' + '~'     //Color-Bezeichnung
                         + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
                         + findLocale('lights', 'Brightness')
                 });         //Brightness-Bezeichnung
@@ -3104,42 +3205,174 @@ function HandleScreensaver(): void {
     SendToPanel({ payload: 'pageType~screensaver' });
     UnsubscribeWatcher();
     HandleScreensaverUpdate();
+    HandleScreensaverColors();
 }
 
 function HandleScreensaverUpdate(): void {
-    if (screensaverEnabled && config.weatherEntity != null && existsObject(config.weatherEntity)) {
-        var icon = getState(config.weatherEntity + '.ICON').val;
+    try {
+        if (screensaverEnabled && config.weatherEntity != null && existsObject(config.weatherEntity)) {
+            var icon = getState(config.weatherEntity + '.ICON').val;
 
-        let temperature: string =
-            existsState(config.weatherEntity + '.ACTUAL') ? getState(config.weatherEntity + '.ACTUAL').val :
-                existsState(config.weatherEntity + '.TEMP') ? getState(config.weatherEntity + '.TEMP').val : 'null';
+            let temperature =
+                existsState(config.weatherEntity + '.ACTUAL') ? getState(config.weatherEntity + '.ACTUAL').val :
+                    existsState(config.weatherEntity + '.TEMP') ? getState(config.weatherEntity + '.TEMP').val : 'null';
 
-        let payloadString =
-            'weatherUpdate~' + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + '~'
-            + temperature + ' ' + config.temperatureUnit + '~';
-
-        if (weatherForecast) {
-            // Accu-Weather Forecast Tag 2 - Tag 5 -- Wenn weatherForecast = true
-            for (let i = 2; i < 6; i++) {
-                let TempMax = getState('accuweather.0.Summary.TempMax_d' + i).val;
-                let DayOfWeek = getState('accuweather.0.Summary.DayOfWeek_d' + i).val;
-                let WeatherIcon = GetAccuWeatherIcon(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
-                payloadString += DayOfWeek + '~' + Icons.GetIcon(WeatherIcon) + '~' + TempMax + ' ' + config.temperatureUnit + '~';
+            if (config.alternativeScreensaverLayout) {
+                temperature = parseInt(Math.round(temperature).toFixed());
             }
-        } else {
-            payloadString += GetScreenSaverEntityString(config.firstScreensaverEntity);
-            payloadString += GetScreenSaverEntityString(config.secondScreensaverEntity);
-            payloadString += GetScreenSaverEntityString(config.thirdScreensaverEntity);
-            payloadString += GetScreenSaverEntityString(config.fourthScreensaverEntity);
-        }
 
-        SendToPanel(<Payload>{ payload: payloadString });
+            let payloadString =
+                'weatherUpdate~' + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + '~'
+                + temperature + ' ' + config.temperatureUnit + '~';
+
+            vwIconColor[0] = GetAccuWeatherIconColor(parseInt(icon));
+            if (Debug) console.log(GetAccuWeatherIconColor(parseInt(icon)));
+
+            if (weatherForecast) {
+                // Accu-Weather Forecast Tag 2 - Tag 5 -- Wenn weatherForecast = true
+                for (let i = 2; i < 6; i++) {
+                    let TempMax = getState('accuweather.0.Summary.TempMax_d' + i).val;
+                    let DayOfWeek = getState('accuweather.0.Summary.DayOfWeek_d' + i).val;
+                    let WeatherIcon = GetAccuWeatherIcon(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
+                    vwIconColor[i-1] = GetAccuWeatherIconColor(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
+                    if (Debug) console.log(vwIconColor[i-1]);
+                    payloadString += DayOfWeek + '~' + Icons.GetIcon(WeatherIcon) + '~' + TempMax + ' ' + config.temperatureUnit + '~';
+                }
+            } else {
+                payloadString += GetScreenSaverEntityString(config.firstScreensaverEntity);
+                payloadString += GetScreenSaverEntityString(config.secondScreensaverEntity);
+                payloadString += GetScreenSaverEntityString(config.thirdScreensaverEntity);
+                payloadString += GetScreenSaverEntityString(config.fourthScreensaverEntity);
+                
+                if (config.firstScreensaverEntity.ScreensaverEntityIconColor != undefined) {
+                    vwIconColor[1] = rgb_dec565(config.firstScreensaverEntity.ScreensaverEntityIconColor);
+                } else {
+                    vwIconColor[1] = rgb_dec565(sctF1Icon);    
+                }
+                if (config.secondScreensaverEntity.ScreensaverEntityIconColor != undefined) {
+                    vwIconColor[2] = rgb_dec565(config.secondScreensaverEntity.ScreensaverEntityIconColor);
+                } else {
+                    vwIconColor[2] = rgb_dec565(sctF2Icon);    
+                }
+                if (config.thirdScreensaverEntity.ScreensaverEntityIconColor != undefined) {
+                    vwIconColor[3] = rgb_dec565(config.thirdScreensaverEntity.ScreensaverEntityIconColor);
+                } else {
+                    vwIconColor[3] = rgb_dec565(sctF3Icon);    
+                }
+                if (config.fourthScreensaverEntity.ScreensaverEntityIconColor != undefined) {
+                    vwIconColor[4] = rgb_dec565(config.fourthScreensaverEntity.ScreensaverEntityIconColor);
+                } else {
+                    vwIconColor[4] = rgb_dec565(sctF4Icon);    
+                }
+            }
+
+            //AltLayout
+            if (config.alternativeScreensaverLayout) {
+                payloadString += parseInt(getState(config.fourthScreensaverEntity.ScreensaverEntity).val) + '~'; 
+                payloadString += config.fourthScreensaverEntity.ScreensaverEntityUnitText + '~'
+            } else {
+                payloadString += '~~'            
+            }
+            
+            let hwBtn1Col: any = HMIOff;
+            if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
+                if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'string') {
+                    let hwBtn1: string = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
+                    if (hwBtn1 == 'ON') {
+                        hwBtn1Col = On;                
+                    }
+                    payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn1Col) + '~';
+                } else if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
+                    let hwBtn1: boolean = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
+                    if (hwBtn1) {
+                        hwBtn1Col = On;                
+                    }
+                    payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn1Col) + '~';
+                }  
+            } else {
+                hwBtn1Col = Black;
+                payloadString += '~~';
+            }
+
+            let hwBtn2Col: any = HMIOff;
+            if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
+                let hwBtn2: String = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
+                if (hwBtn2 == 'ON') {
+                    hwBtn2Col = On;                
+                }
+                payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col);  
+            } else {
+                hwBtn2Col = Black;
+                payloadString += '~';
+            }
+
+            HandleScreensaverColors();
+            
+            SendToPanel(<Payload>{ payload: payloadString });
+            
+        }
+    } catch (err) {
+        console.log('HandleScreensaverUpdate' + err.message);
+    }        
+}
+
+function HandleScreensaverColors(): void {
+
+    let vwIcon = [];
+    if (config.autoWeatherColorScreensaverLayout) {
+        vwIcon[0] = vwIconColor[0];
+        vwIcon[1] = vwIconColor[1];
+        vwIcon[2] = vwIconColor[2];
+        vwIcon[3] = vwIconColor[3];
+        vwIcon[4] = vwIconColor[4];
+    } else {
+        if (weatherForecast) {
+            vwIcon[0] = rgb_dec565(sctMainIcon);
+            vwIcon[1] = rgb_dec565(sctF1Icon);
+            vwIcon[2] = rgb_dec565(sctF2Icon);
+            vwIcon[3] = rgb_dec565(sctF3Icon);
+            vwIcon[4] = rgb_dec565(sctF4Icon);
+        } else {
+            vwIcon[0] = rgb_dec565(sctMainIcon);
+            vwIcon[1] = vwIconColor[1];
+            vwIcon[2] = vwIconColor[2];
+            vwIcon[3] = vwIconColor[3];
+            vwIcon[4] = vwIconColor[4];            
+        }
     }
+
+    let payloadString = 'color'                     + '~' +
+                        rgb_dec565(scbackground)    + '~' +      //background
+                        rgb_dec565(sctime)          + '~' +      //time
+                        rgb_dec565(sctimeAMPM)      + '~' +      //timeAMPM~
+                        rgb_dec565(scdate)          + '~' +      //date~
+                        vwIcon[0]                   + '~' +      //tMainIcon~   rgb_dec565(sctMainIcon)
+                        rgb_dec565(sctMainText)     + '~' +      //tMainText~
+                        rgb_dec565(sctForecast1)    + '~' +      //tForecast1~
+                        rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
+                        rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
+                        rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
+                        vwIcon[1]                   + '~' +      //tF1Icon~         rgb_dec565(sctF1Icon)
+                        vwIcon[2]                   + '~' +      //tF2Icon~         rgb_dec565(sctF2Icon)
+                        vwIcon[3]                   + '~' +      //tF3Icon~         rgb_dec565(sctF3Icon)
+                        vwIcon[4]                   + '~' +      //tF4Icon~         rgb_dec565(sctF4Icon)
+                        rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
+                        rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
+                        rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
+                        rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
+                        rgb_dec565(scbar)           + '~' +      //bar~
+                        rgb_dec565(sctMainIconAlt)  + '~' +      //tMainIconAlt
+                        rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
+                        rgb_dec565(sctTimeAdd)      + '~' +      
+                        true;                
+
+    SendToPanel(<Payload>{ payload: payloadString });
 }
 
 function GetScreenSaverEntityString(configElement: ScreenSaverElement | null): string {
     if (configElement != null && configElement.ScreensaverEntity != null && existsState(configElement.ScreensaverEntity)) {
         let u1 = getState(configElement.ScreensaverEntity).val;
+
         return configElement.ScreensaverEntityText + '~' + Icons.GetIcon(configElement.ScreensaverEntityIcon) + '~' + u1 + ' ' + configElement.ScreensaverEntityUnitText + '~';
     }
     else {
@@ -3219,6 +3452,82 @@ function GetAccuWeatherIcon(icon: number): string {
 
         default:
             return 'alert-circle-outline';
+    }
+}
+
+function GetAccuWeatherIconColor(icon: number): number {
+
+    switch (icon) {
+        case 24:        // Ice
+        case 30:        // Hot
+        case 31:        // Cold
+            return rgb_dec565(swExceptional);  // exceptional 
+
+        case 7:         // Cloudy
+        case 8:         // Dreary (Overcast)
+        case 38:        // Mostly Cloudy
+            return rgb_dec565(swCloudy);  // cloudy
+
+        case 11:        // fog
+            return rgb_dec565(swFog);  // fog
+
+        case 25:        // Sleet
+            return rgb_dec565(swHail);  // Hail
+
+        case 15:        // T-Storms
+            return rgb_dec565(swLightning);  // lightning
+
+        case 16:        // Mostly Cloudy w/ T-Storms
+        case 17:        // Partly Sunny w/ T-Storms
+        case 41:        // Partly Cloudy w/ T-Storms
+        case 42:        // Mostly Cloudy w/ T-Storms
+            return rgb_dec565(swLightningRainy);  // lightning-rainy
+
+        case 33:        // Clear
+        case 34:        // Mostly Clear
+        case 37:        // Hazy Moonlight
+            return rgb_dec565(swClearNight);
+
+        case 3:         // Partly Sunny
+        case 4:         // Intermittent Clouds
+        case 6:         // Mostly Cloudy
+        case 35:        // Partly Cloudy
+        case 36:        // Intermittent Clouds
+            return rgb_dec565(swPartlycloudy);  // partlycloudy
+
+        case 18:        // pouring
+            return rgb_dec565(swPouring);  // pouring
+
+        case 12:        // Showers
+        case 13:        // Mostly Cloudy w/ Showers
+        case 14:        // Partly Sunny w/ Showers
+        case 26:        // Freezing Rain
+        case 39:        // Partly Cloudy w/ Showers
+        case 40:        // Mostly Cloudy w/ Showers
+            return rgb_dec565(swRainy);  // rainy 
+
+        case 19:        // Flurries
+        case 20:        // Mostly Cloudy w/ Flurries
+        case 21:        // Partly Sunny w/ Flurries
+        case 22:        // Snow
+        case 23:        // Mostly Cloudy w/ Snow
+        case 43:        // Mostly Cloudy w/ Flurries
+        case 44:        // Mostly Cloudy w/ Snow
+            return rgb_dec565(swSnowy);  // snowy  
+
+        case 29:        // Rain and Snow
+            return rgb_dec565(swSnowyRainy);  // snowy-rainy
+
+        case 1:         // Sunny
+        case 2:         // Mostly Sunny
+        case 5:         // Hazy Sunshine
+            return rgb_dec565(swSunny);  // sunny
+
+        case 32:        // windy
+            return rgb_dec565(swWindy);  // windy
+
+        default:
+            return rgb_dec565(White);
     }
 }
 
@@ -3426,6 +3735,11 @@ interface PageQR extends Page {
     items: PageItem[],
 };
 
+interface PagePower extends Page {
+    type: 'cardPower',
+    items: PageItem[],
+};
+
 type PageItem = {
     id: string,
     icon: (string | undefined),
@@ -3474,13 +3788,17 @@ type Config = {
     secondScreensaverEntity: ScreenSaverElement | null,
     thirdScreensaverEntity: ScreenSaverElement | null,
     fourthScreensaverEntity: ScreenSaverElement | null,
+    alternativeScreensaverLayout: boolean,
+    autoWeatherColorScreensaverLayout: boolean,
+    mrIcon1ScreensaverEntity: ScreenSaverMRElement | null,
+    mrIcon2ScreensaverEntity: ScreenSaverMRElement | null,
     defaultColor: RGB,
     defaultOnColor: RGB,
     defaultOffColor: RGB,
-    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid)[],
-    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid)[],
-    button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | null),
-    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | null),
+    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower)[],
+    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower)[],
+    button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | null),
+    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower| null),
 };
 
 type ScreenSaverElement = {
@@ -3488,4 +3806,10 @@ type ScreenSaverElement = {
     ScreensaverEntityIcon: string | null,
     ScreensaverEntityText: string | null,
     ScreensaverEntityUnitText: string | null,
+    ScreensaverEntityIconColor: any | null,
+}
+
+type ScreenSaverMRElement = {
+    ScreensaverEntity: string | null,
+    ScreensaverEntityIcon: string | null,
 }
