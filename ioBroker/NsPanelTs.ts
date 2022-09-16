@@ -184,17 +184,6 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 var vwIconColor = [];
 
 //-- Anfang der Beispiele für Seitengestaltung -- Aliase erforderlich ----------------
-var Power: PagePower =
-{
-    "type": "cardPower",
-    "heading": "Power",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLichteinzeln", name: "RGB-Licht Hex-Color", interpolateColor: true}
-    ]
-};
 
 var Test_Licht: PageEntities =
 {
