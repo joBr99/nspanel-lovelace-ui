@@ -201,7 +201,7 @@ class LuiPagesGen(object):
                 state = None
             self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state))
 
-    def generate_entities_item(self, item, cardType):
+    def generate_entities_item(self, item, cardType, temp_unit):
         entityId = item.entityId
         icon = item.iconOverride
         colorOverride = item.colorOverride
@@ -359,15 +359,31 @@ class LuiPagesGen(object):
         elif entityType == "person":
             entityTypePanel = "text"
             value = get_translation(self._locale, f"backend.component.person.state._.{entity.state}")
+        elif entityType == "climate":
+            entityTypePanel = "text"
+            hvac_action  = get_attr_safe(entity, "hvac_action", "")
+            state_value  = ""
+            if hvac_action != "":
+                state_value = get_translation(self._locale, f"frontend.state_attributes.climate.hvac_action.{hvac_action}")
+                state_value += "("
+            state_value += get_translation(self._locale, f"backend.component.climate.state._.{entity.state}")
+            if hvac_action != "":
+                state_value += ")"
+            temperature = get_attr_safe(entity, "temperature", "")
+            temperature_unit = "°C" if(temp_unit == "celsius") else "°F"
+            value = f"{state_value} {temperature}{temperature_unit}"
+            currently_tanslation = get_translation(self._locale, f"frontend.ui.card.climate.currently")
+            current_temperature = get_attr_safe(entity, "current_temperature", "")
+            value += f"\r\n{currently_tanslation}: {current_temperature}{temperature_unit}"
         else:
             name = "unsupported"
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
-    def generate_entities_page(self, navigation, heading, items, cardType):
+    def generate_entities_page(self, navigation, heading, items, cardType, tempUnit):
         command = f"entityUpd~{heading}~{navigation}"
         # Get items and construct cmd string
         for item in items:
-            command += self.generate_entities_item(item, cardType)
+            command += self.generate_entities_item(item, cardType, tempUnit)
         self._send_mqtt_msg(command)
 
     def generate_thermo_page(self, navigation, title, entity, temp_unit):
@@ -598,30 +614,34 @@ class LuiPagesGen(object):
         # Switch to page
         if send_page_type:
             self.page_type(card.cardType)
-
+        
+        temp_unit = card.raw_config.get("temperatureUnit", "celsius")
         if card.cardType in ["cardEntities", "cardGrid"]:
-            self.generate_entities_page(navigation, card.title, card.entities, card.cardType)
+            self.generate_entities_page(navigation, card.title, card.entities, card.cardType, temp_unit)
             return
         if card.cardType == "cardThermo":
-            temp_unit = card.raw_config.get("temperatureUnit", "celsius")
             self.generate_thermo_page(navigation, card.title, card.entity, temp_unit)
+            return
         if card.cardType == "cardMedia":
             mediaBtn = card.raw_config.get("mediaControl", "")
             self.generate_media_page(navigation, card.title, card.entity, mediaBtn)
+            return
         if card.cardType == "cardAlarm":
             alarmBtn = card.raw_config.get("alarmControl")
             overwrite_supported_modes = card.raw_config.get("supportedModes")
             self.generate_alarm_page(navigation, card.entity, overwrite_supported_modes, alarmBtn)
+            return
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")
             self.update_screensaver_weather(theme)
+            return
         if card.cardType == "cardQR":
             qrcode = card.raw_config.get("qrCode", "")
             self.generate_qr_page(navigation, card.title, card.entities, card.cardType, qrcode)
+            return
         if card.cardType == "cardPower":
             self.generate_power_page(navigation, card.title, card.entities)
-
-
+            return
 
     def generate_light_detail_page(self, entity_id):
         entity = apis.ha_api.get_entity(entity_id)
