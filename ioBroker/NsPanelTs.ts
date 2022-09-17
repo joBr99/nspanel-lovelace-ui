@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
-- abgestimmt auf TFT 42 / v3.4.0.1 / BerryDriver 4 / Tasmota 12.1.1
+- abgestimmt auf TFT 42 / v3.4.0.2 / BerryDriver 4 / Tasmota 12.1.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -3259,15 +3259,30 @@ function HandleScreensaverUpdate(): void {
 
                 if (config.firstScreensaverEntity.ScreensaverEntityIconColor != undefined) {
                     if (typeof getState(config.firstScreensaverEntity.ScreensaverEntity).val == 'boolean') {
-                        vwIconColor[1] = (getState(config.firstScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        vwIconColor[1] = (getState(config.firstScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale10) : rgb_dec565(colorScale0);
                     } else if (typeof config.firstScreensaverEntity.ScreensaverEntityIconColor == 'object') {
-                        let iconvalmin = (config.firstScreensaverEntity.ScreensaverEntityIconColor.val_min); 
-                        let iconvalmax = (config.firstScreensaverEntity.ScreensaverEntityIconColor.val_max);
+
+                        let iconvalmin = (config.firstScreensaverEntity.ScreensaverEntityIconColor.val_min != undefined) ? config.firstScreensaverEntity.ScreensaverEntityIconColor.val_min : 0 ;
+                        let iconvalmax = (config.firstScreensaverEntity.ScreensaverEntityIconColor.val_max != undefined) ? config.firstScreensaverEntity.ScreensaverEntityIconColor.val_max : 100 ;
+                        let iconvalbest = (config.firstScreensaverEntity.ScreensaverEntityIconColor.val_best != undefined) ? config.firstScreensaverEntity.ScreensaverEntityIconColor.val_best : iconvalmin ;
+                        let valueScale = getState(config.firstScreensaverEntity.ScreensaverEntity).val;
+
                         if (iconvalmin == 0 && iconvalmax == 1) {
                             vwIconColor[1] = (getState(config.firstScreensaverEntity.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
                         } else {
-                            let valueScale: number = (parseInt(getState(config.firstScreensaverEntity.ScreensaverEntity).val) * 10) / (iconvalmax - iconvalmin)
+                            if (iconvalbest == iconvalmin) {
+                                valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
+                            } else {
+                                if (valueScale < iconvalbest) {
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                } else {
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                }
+                            }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            console.log(valueScaletemp);
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[1] = rgb_dec565(colorScale0);
@@ -3313,15 +3328,30 @@ function HandleScreensaverUpdate(): void {
 
                 if (config.secondScreensaverEntity.ScreensaverEntityIconColor != undefined) {
                     if (typeof getState(config.secondScreensaverEntity.ScreensaverEntity).val == 'boolean') {
-                        vwIconColor[2] = (getState(config.secondScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        vwIconColor[2] = (getState(config.secondScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale10) : rgb_dec565(colorScale0);
                     } else if (typeof config.secondScreensaverEntity.ScreensaverEntityIconColor == 'object') {
-                        let iconvalmin = (config.secondScreensaverEntity.ScreensaverEntityIconColor.val_min); 
-                        let iconvalmax = (config.secondScreensaverEntity.ScreensaverEntityIconColor.val_max);
+
+                        let iconvalmin = (config.secondScreensaverEntity.ScreensaverEntityIconColor.val_min != undefined) ? config.secondScreensaverEntity.ScreensaverEntityIconColor.val_min : 0 ;
+                        let iconvalmax = (config.secondScreensaverEntity.ScreensaverEntityIconColor.val_max != undefined) ? config.secondScreensaverEntity.ScreensaverEntityIconColor.val_max : 100 ;
+                        let iconvalbest = (config.secondScreensaverEntity.ScreensaverEntityIconColor.val_best != undefined) ? config.secondScreensaverEntity.ScreensaverEntityIconColor.val_best : iconvalmin ;
+                        let valueScale = getState(config.secondScreensaverEntity.ScreensaverEntity).val;
+
                         if (iconvalmin == 0 && iconvalmax == 1) {
                             vwIconColor[2] = (getState(config.secondScreensaverEntity.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
                         } else {
-                            let valueScale: number = (parseInt(getState(config.secondScreensaverEntity.ScreensaverEntity).val) * 10) / (iconvalmax - iconvalmin)
+                            if (iconvalbest == iconvalmin) {
+                                valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
+                            } else {
+                                if (valueScale < iconvalbest) {
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                } else {
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                }
+                            }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            console.log(valueScaletemp);
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[2] = rgb_dec565(colorScale0);
@@ -3367,15 +3397,30 @@ function HandleScreensaverUpdate(): void {
 
                 if (config.thirdScreensaverEntity.ScreensaverEntityIconColor != undefined) {
                     if (typeof getState(config.thirdScreensaverEntity.ScreensaverEntity).val == 'boolean') {
-                        vwIconColor[3] = (getState(config.thirdScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        vwIconColor[3] = (getState(config.thirdScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale10) : rgb_dec565(colorScale0);
                     } else if (typeof config.thirdScreensaverEntity.ScreensaverEntityIconColor == 'object') {
-                        let iconvalmin = (config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_min); 
-                        let iconvalmax = (config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_max);
+
+                        let iconvalmin = (config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_min != undefined) ? config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_min : 0 ;
+                        let iconvalmax = (config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_max != undefined) ? config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_max : 100 ;
+                        let iconvalbest = (config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_best != undefined) ? config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_best : iconvalmin ;
+                        let valueScale = getState(config.thirdScreensaverEntity.ScreensaverEntity).val;
+
                         if (iconvalmin == 0 && iconvalmax == 1) {
                             vwIconColor[3] = (getState(config.thirdScreensaverEntity.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
                         } else {
-                            let valueScale: number = (parseInt(getState(config.thirdScreensaverEntity.ScreensaverEntity).val) * 10) / (iconvalmax - iconvalmin)
+                            if (iconvalbest == iconvalmin) {
+                                valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
+                            } else {
+                                if (valueScale < iconvalbest) {
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                } else {
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                }
+                            }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            console.log(valueScaletemp);
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[3] = rgb_dec565(colorScale0);
@@ -3421,15 +3466,30 @@ function HandleScreensaverUpdate(): void {
 
                 if (config.fourthScreensaverEntity.ScreensaverEntityIconColor != undefined) {
                     if (typeof getState(config.fourthScreensaverEntity.ScreensaverEntity).val == 'boolean') {
-                        vwIconColor[4] = (getState(config.fourthScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        vwIconColor[4] = (getState(config.fourthScreensaverEntity.ScreensaverEntity).val == true) ? rgb_dec565(colorScale10) : rgb_dec565(colorScale0);
                     } else if (typeof config.fourthScreensaverEntity.ScreensaverEntityIconColor == 'object') {
-                        let iconvalmin = (config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_min); 
-                        let iconvalmax = (config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_max);
+
+                        let iconvalmin = (config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_min != undefined) ? config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_min : 0 ;
+                        let iconvalmax = (config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_max != undefined) ? config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_max : 100 ;
+                        let iconvalbest = (config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_best != undefined) ? config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_best : iconvalmin ;
+                        let valueScale = getState(config.fourthScreensaverEntity.ScreensaverEntity).val;
+
                         if (iconvalmin == 0 && iconvalmax == 1) {
                             vwIconColor[4] = (getState(config.fourthScreensaverEntity.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
                         } else {
-                            let valueScale: number = (parseInt(getState(config.fourthScreensaverEntity.ScreensaverEntity).val) * 10) / (iconvalmax - iconvalmin)
+                            if (iconvalbest == iconvalmin) {
+                                valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
+                            } else {
+                                if (valueScale < iconvalbest) {
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                } else {
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                }
+                            }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            console.log(valueScaletemp);
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[4] = rgb_dec565(colorScale0);
@@ -3504,16 +3564,23 @@ function HandleScreensaverUpdate(): void {
 
             let hwBtn2Col: any = HMIOff;
             if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
-                let hwBtn2: String = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
-                if (hwBtn2 == 'ON') {
-                    hwBtn2Col = On;                
-                }
-                payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col);  
+                if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'string') {
+                    let hwBtn2: string = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
+                    if (hwBtn2 == 'ON') {
+                        hwBtn2Col = On;                
+                    }
+                    payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
+                } else if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
+                    let hwBtn2: boolean = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
+                    if (hwBtn2) {
+                        hwBtn2Col = On;                
+                    }
+                    payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
+                }  
             } else {
                 hwBtn2Col = Black;
-                payloadString += '~';
+                payloadString += '~~';
             }
-
             HandleScreensaverColors();
             
             SendToPanel(<Payload>{ payload: payloadString });
