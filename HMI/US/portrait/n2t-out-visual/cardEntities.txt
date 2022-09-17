@@ -2302,6 +2302,7 @@ Hotspot m2
         Touch Press Event
             pageIcons.tTmp1.txt=tEntity3.txt
             pageIcons.tTmp2.txt=entn3.txt
+            pageIcons.tTmp3.txt=tIcon3.txt
             if(type3.txt=="shutter")
             {
                 //popupShutter.tHeading.txt=tEntity3.txt
@@ -2337,6 +2338,7 @@ Hotspot m1
         Touch Press Event
             pageIcons.tTmp1.txt=tEntity2.txt
             pageIcons.tTmp2.txt=entn2.txt
+            pageIcons.tTmp3.txt=tIcon2.txt
             if(type2.txt=="shutter")
             {
                 //popupShutter.tHeading.txt=tEntity2.txt
@@ -2372,6 +2374,7 @@ Hotspot m0
         Touch Press Event
             pageIcons.tTmp1.txt=tEntity1.txt
             pageIcons.tTmp2.txt=entn1.txt
+            pageIcons.tTmp3.txt=tIcon1.txt
             if(type1.txt=="shutter")
             {
                 //popupShutter.tHeading.txt=tEntity1.txt
@@ -2407,6 +2410,7 @@ Hotspot m3
         Touch Press Event
             pageIcons.tTmp1.txt=tEntity4.txt
             pageIcons.tTmp2.txt=entn4.txt
+            pageIcons.tTmp3.txt=tIcon4.txt
             if(type4.txt=="shutter")
             {
                 //popupShutter.tHeading.txt=tEntity4.txt
@@ -2442,6 +2446,7 @@ Hotspot m4
         Touch Press Event
             pageIcons.tTmp1.txt=tEntity5.txt
             pageIcons.tTmp2.txt=entn5.txt
+            pageIcons.tTmp3.txt=tIcon5.txt
             if(type5.txt=="shutter")
             {
                 //popupShutter.tHeading.txt=tEntity5.txt
