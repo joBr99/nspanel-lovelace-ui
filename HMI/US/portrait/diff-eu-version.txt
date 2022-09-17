@@ -1,6 +1,6 @@
 diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
---- HMI/n2t-out/Program.s.txt	2022-09-17 19:57:23.628206782 +0000
-+++ HMI/US/portrait/n2t-out/Program.s.txt	2022-09-17 19:57:24.072211415 +0000
+--- HMI/n2t-out/Program.s.txt	2022-09-17 20:03:39.418634155 +0000
++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-09-17 20:03:39.950633985 +0000
 @@ -14,6 +14,6 @@
      //color vars
      int defaultFontColor=65535
@@ -11,8 +11,8 @@ diff -bur HMI/n2t-out/Program.s.txt HMI/US/portrait/n2t-out/Program.s.txt
 +    //lcd_dev fffb 0002 0000 0020
      page pageStartup
 diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
---- HMI/n2t-out/cardEntities.txt	2022-09-17 19:57:23.628206782 +0000
-+++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-09-17 19:57:24.072211415 +0000
+--- HMI/n2t-out/cardEntities.txt	2022-09-17 20:03:39.422634154 +0000
++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-09-17 20:03:39.950633985 +0000
 @@ -65,6 +65,16 @@
              vis nNum4,0
              vis bPrev,0
@@ -460,8 +460,8 @@ diff -bur HMI/n2t-out/cardEntities.txt HMI/US/portrait/n2t-out/cardEntities.txt
                                      {
 Only in HMI/n2t-out: cardPower.txt
 diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
---- HMI/n2t-out/pageStartup.txt	2022-09-17 19:57:23.628206782 +0000
-+++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-09-17 19:57:24.072211415 +0000
+--- HMI/n2t-out/pageStartup.txt	2022-09-17 20:03:39.418634155 +0000
++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-09-17 20:03:39.950633985 +0000
 @@ -142,7 +142,7 @@
          Disable release event after dragging: 0
          Send Component ID                   : disabled
@@ -481,8 +481,8 @@ diff -bur HMI/n2t-out/pageStartup.txt HMI/US/portrait/n2t-out/pageStartup.txt
              btlen tSend.txt,sys0
              crcrest 1,0xffff // reset CRC
 diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
---- HMI/n2t-out/pageTest.txt	2022-09-17 19:57:23.628206782 +0000
-+++ HMI/US/portrait/n2t-out/pageTest.txt	2022-09-17 19:57:24.072211415 +0000
+--- HMI/n2t-out/pageTest.txt	2022-09-17 20:03:39.418634155 +0000
++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-09-17 20:03:39.950633985 +0000
 @@ -13,36 +13,6 @@
      Events
          Preinitialize Event
@@ -618,9 +618,9 @@ diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
 -            }
 -        
 diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
---- HMI/n2t-out/popupFan.txt	2022-09-17 19:57:23.628206782 +0000
-+++ HMI/US/portrait/n2t-out/popupFan.txt	2022-09-17 19:57:24.072211415 +0000
-@@ -81,23 +81,23 @@
+--- HMI/n2t-out/popupFan.txt	2022-09-17 20:03:39.418634155 +0000
++++ HMI/US/portrait/n2t-out/popupFan.txt	2022-09-17 20:03:39.950633985 +0000
+@@ -82,23 +82,23 @@
          Scope: local
          Value: 0
      
@@ -651,7 +651,7 @@ diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
  Variable (string) tSend
      Attributes
          Scope         : local
-@@ -256,7 +256,7 @@
+@@ -257,7 +257,7 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -660,7 +660,7 @@ diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -271,7 +271,7 @@
+@@ -272,7 +272,7 @@
              //craft command
              tSend.txt="event,buttonPress2,"
              tSend.txt+=entn.txt+","
@@ -669,7 +669,7 @@ diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
              covx sys2,tTmp.txt,0,0
              tSend.txt+="mode-sel,"+tTmp.txt
              //send calc crc
-@@ -286,7 +286,7 @@
+@@ -287,7 +287,7 @@
              prints tSend.txt,0
              prints crcval,2
          
@@ -678,7 +678,7 @@ diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
      Attributes
          Scope                               : local
          Dragging                            : 0
-@@ -301,7 +301,7 @@
+@@ -302,7 +302,7 @@
              //craft command
              tSend.txt="event,buttonPress2,"
              tSend.txt+=entn.txt+","
