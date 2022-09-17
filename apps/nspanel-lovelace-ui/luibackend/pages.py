@@ -266,7 +266,7 @@ class LuiPagesGen(object):
         # common res vars
         entityTypePanel = "text"
         icon_id = get_icon(entityType, state=entity.state, overwrite=icon)
-        color = self.get_entity_color(entity, overwrite=colorOverride)
+        color = self.get_entity_color(entity, ha_type=entityType, overwrite=colorOverride)
         value = ""
         name = name if name is not None else entity.attributes.get("friendly_name","unknown")
 
