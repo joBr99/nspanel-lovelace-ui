@@ -362,13 +362,7 @@ class LuiPagesGen(object):
         elif entityType == "climate":
             entityTypePanel = "text"
             hvac_action  = get_attr_safe(entity, "hvac_action", "")
-            state_value  = ""
-            if hvac_action != "":
-                state_value = get_translation(self._locale, f"frontend.state_attributes.climate.hvac_action.{hvac_action}")
-                state_value += "("
-            state_value += get_translation(self._locale, f"backend.component.climate.state._.{entity.state}")
-            if hvac_action != "":
-                state_value += ")"
+            state_value  = get_translation(self._locale, f"backend.component.climate.state._.{entity.state}")
             temperature = get_attr_safe(entity, "temperature", "")
             temperature_unit = "°C" if(temp_unit == "celsius") else "°F"
             value = f"{state_value} {temperature}{temperature_unit}"
