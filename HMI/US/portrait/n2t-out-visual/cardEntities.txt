@@ -1664,9 +1664,9 @@ Button bText1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 82
+        y coordinate                        : 76
         Width                               : 145
-        Height                              : 30
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -1682,8 +1682,8 @@ Button bText1
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
+        Max. Text Size                      : 45
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -1711,9 +1711,9 @@ Button bText2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 159
+        y coordinate                        : 152
         Width                               : 145
-        Height                              : 30
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -1729,8 +1729,8 @@ Button bText2
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
+        Max. Text Size                      : 45
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -1758,9 +1758,9 @@ Button bText3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 242
+        y coordinate                        : 230
         Width                               : 145
-        Height                              : 30
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -1776,8 +1776,8 @@ Button bText3
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
+        Max. Text Size                      : 45
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -1805,9 +1805,9 @@ Button bText4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 165
-        y coordinate                        : 321
+        y coordinate                        : 310
         Width                               : 145
-        Height                              : 30
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -1823,8 +1823,8 @@ Button bText4
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
+        Max. Text Size                      : 45
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -1993,9 +1993,9 @@ Button bText5
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 168
-        y coordinate                        : 401
+        y coordinate                        : 390
         Width                               : 145
-        Height                              : 30
+        Height                              : 53
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -2011,8 +2011,8 @@ Button bText5
         Vertical Alignment                  : center
         State                               : unpressed
         Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
+        Max. Text Size                      : 45
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
