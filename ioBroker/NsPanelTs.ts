@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
 TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
-- abgestimmt auf TFT 42 / v3.4.0.2 / BerryDriver 4 / Tasmota 12.1.1
+- abgestimmt auf TFT 42 / v3.4.0.3 / BerryDriver 4 / Tasmota 12.1.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -38,10 +38,11 @@ ReleaseNotes:
         - 13.09.2022 - V3.3.1.3 BugFix Screensaver Toggle
         - 13.09.2022 - V3.3.1.3 Überarbeitung und BugFix und Refresh Features für cardMedia (Breaking Changes)
         - 13.09.2022 - V3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
-        - 15.09.2022 - V3.4.2 - BugFix Dimmode
-        - 15.09.2022 - V3.4.2 - Colormode für Screensaver + AutoColor WeatherForecast
-        - 16.09.2022 - V3.4.2 - Visualisierung der Relay Zustände (MRIcons) im Screensaver
-	- 16.09.2022 - V3.4.2.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver 
+        - 15.09.2022 - V3.4.0 - BugFix Dimmode
+        - 15.09.2022 - V3.4.0 - Colormode für Screensaver + AutoColor WeatherForecast
+	- 16.09.2022 - V3.4.0.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver
+        - 16.09.2022 - V3.4.0.1 Bugfix Screensaver MRIcon2
+        - 17.09.2022 - V3.4.0.3 Bugfix bNext / bPrev by joBr99
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -374,7 +375,7 @@ var SpotifyPremium: PageMedia =
     "items": [<PageItem>{ 
                 id: "alias.0.NSPanel_1.Media.PlayerSpotifyPremium", 
                 adapterPlayerInstance: "spotify-premium.0.",
-                speakerList: ['LOGINT-W11-JB','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
+                speakerList: ['LENOVO-W11-X','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
              }] 
 };
 
@@ -519,7 +520,7 @@ export const config: Config = {
     firstScreensaverEntity: { ScreensaverEntity: "accuweather.0.Daily.Day1.Day.PrecipitationProbability", ScreensaverEntityIcon: "weather-pouring", ScreensaverEntityText: "Regen", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
     secondScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.WindSpeed", ScreensaverEntityIcon: "weather-windy", ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: "km/h", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 180} },
     thirdScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.UVIndex", ScreensaverEntityIcon: "solar-power", ScreensaverEntityText: "UV", ScreensaverEntityUnitText: "", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} },
-    fourthScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.RelativeHumidity", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
+    fourthScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.RelativeHumidity", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
     alternativeScreensaverLayout: false,
     autoWeatherColorScreensaverLayout: true,
     mrIcon1ScreensaverEntity: { ScreensaverEntity: "mqtt.0.SmartHome.NSPanel_1.stat.POWER1", ScreensaverEntityIcon: "light-switch" },
@@ -2426,14 +2427,14 @@ function HandleButtonEvent(words): void {
             GeneratePage(config.pages[pageId]);
             break;
         case 'bNext':
-            var pageNum = ((pageId + 1) % config.pages.length);
-            pageId = Math.abs(pageNum);
+            var pageNum = (((pageId + 1) % config.pages.length) + config.pages.length) % config.pages.length;
+            pageId = pageNum;
             UnsubscribeWatcher();
             GeneratePage(config.pages[pageId]);
             break;
         case 'bPrev':
-            var pageNum = ((pageId - 1) % config.pages.length);
-            pageId = Math.abs(pageNum);
+            var pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
+            pageId = pageNum;
             UnsubscribeWatcher();
             if (activePage != undefined && activePage.parent != undefined) {
                 //update pageID
@@ -2448,7 +2449,6 @@ function HandleButtonEvent(words): void {
             else {
                 GeneratePage(config.pages[pageId]);
             }
-
             break;
         case 'bExit':
             if (config.screenSaverDoubleClick) {
@@ -3282,7 +3282,7 @@ function HandleScreensaverUpdate(): void {
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
-                            console.log(valueScaletemp);
+                            if (Debug) console.log(valueScaletemp);
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[1] = rgb_dec565(colorScale0);
@@ -3351,7 +3351,7 @@ function HandleScreensaverUpdate(): void {
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
-                            console.log(valueScaletemp);
+                            if (Debug) console.log(valueScaletemp);
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[2] = rgb_dec565(colorScale0);
@@ -3420,7 +3420,7 @@ function HandleScreensaverUpdate(): void {
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
-                            console.log(valueScaletemp);
+                            if (Debug) console.log(valueScaletemp);
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[3] = rgb_dec565(colorScale0);
@@ -3489,7 +3489,7 @@ function HandleScreensaverUpdate(): void {
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
-                            console.log(valueScaletemp);
+                            if (Debug) console.log(valueScaletemp);
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[4] = rgb_dec565(colorScale0);
@@ -4036,6 +4036,7 @@ type PageItem = {
     colormode: (string | undefined),
     adapterPlayerInstance: (string | undefined),
     mediaDevice: (string | undefined),
+    targetPage: (string | undefined)
     speakerList: (string[] | undefined)
 }
 
