@@ -467,7 +467,7 @@ Timer tmSerial
                                     if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
                                     {
                                         // change icon
-                                        spstr strCommand.txt,tIcon1.txt,"~",2
+                                        //spstr strCommand.txt,tIcon1.txt,"~",2
                                         vis tIcon1,1
                                         // change icon color
                                         spstr strCommand.txt,tTmp.txt,"~",3
