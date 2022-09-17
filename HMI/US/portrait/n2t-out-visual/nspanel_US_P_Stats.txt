@@ -28,8 +28,8 @@ cardMedia
 	210  Unique line(s) of event code
 popupFan
 	27   Component(s)
-	342  Line(s) of event code
-	199  Unique line(s) of event code
+	343  Line(s) of event code
+	200  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	389  Line(s) of event code
@@ -62,5 +62,5 @@ cardEntities
 Total
 	14   Page(s)
 	451  Component(s)
-	5496 Line(s) of event code
+	5497 Line(s) of event code
 	1490 Unique line(s) of event code

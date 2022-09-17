@@ -1,12 +1,12 @@
-+++ HMI/US/portrait/diff-eu-version.txt	2022-09-17 19:57:24.084211540 +0000
-+--- HMI/n2t-out/Program.s.txt	2022-09-17 19:57:23.628206782 +0000
-++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-09-17 19:57:24.072211415 +0000
++++ HMI/US/portrait/diff-eu-version.txt	2022-09-17 20:03:39.966633980 +0000
++--- HMI/n2t-out/Program.s.txt	2022-09-17 20:03:39.418634155 +0000
+++++ HMI/US/portrait/n2t-out/Program.s.txt	2022-09-17 20:03:39.950633985 +0000
 +@@ -14,6 +14,6 @@
 +     //color vars
 +     int defaultFontColor=65535
 +     int defaultBcoColor=6371
-+--- HMI/n2t-out/cardEntities.txt	2022-09-17 19:57:23.628206782 +0000
-++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-09-17 19:57:24.072211415 +0000
++--- HMI/n2t-out/cardEntities.txt	2022-09-17 20:03:39.422634154 +0000
+++++ HMI/US/portrait/n2t-out/cardEntities.txt	2022-09-17 20:03:39.950633985 +0000
 +@@ -65,6 +65,16 @@
 +             vis bPrev,0
 +             vis bNext,0
@@ -38,11 +38,11 @@
 ++                                            covx tTmp.txt,sys0,0,0
 ++                                            btOnOff5.val=sys0
 +Only in HMI/n2t-out: cardPower.txt
-+--- HMI/n2t-out/pageStartup.txt	2022-09-17 19:57:23.628206782 +0000
-++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-09-17 19:57:24.072211415 +0000
++--- HMI/n2t-out/pageStartup.txt	2022-09-17 20:03:39.418634155 +0000
+++++ HMI/US/portrait/n2t-out/pageStartup.txt	2022-09-17 20:03:39.950633985 +0000
 +diff -bur HMI/n2t-out/pageTest.txt HMI/US/portrait/n2t-out/pageTest.txt
-+--- HMI/n2t-out/pageTest.txt	2022-09-17 19:57:23.628206782 +0000
-++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-09-17 19:57:24.072211415 +0000
++--- HMI/n2t-out/pageTest.txt	2022-09-17 20:03:39.418634155 +0000
+++++ HMI/US/portrait/n2t-out/pageTest.txt	2022-09-17 20:03:39.950633985 +0000
 +@@ -13,36 +13,6 @@
 +     Events
 +         Preinitialize Event
@@ -178,9 +178,9 @@
 +-            }
 +-        
 +diff -bur HMI/n2t-out/popupFan.txt HMI/US/portrait/n2t-out/popupFan.txt
-+--- HMI/n2t-out/popupFan.txt	2022-09-17 19:57:23.628206782 +0000
-++++ HMI/US/portrait/n2t-out/popupFan.txt	2022-09-17 19:57:24.072211415 +0000
-+@@ -81,23 +81,23 @@
++--- HMI/n2t-out/popupFan.txt	2022-09-17 20:03:39.418634155 +0000
+++++ HMI/US/portrait/n2t-out/popupFan.txt	2022-09-17 20:03:39.950633985 +0000
++@@ -82,23 +82,23 @@
 +         Scope: local
 +         Value: 0
 +     
@@ -211,7 +211,7 @@
 + Variable (string) tSend
 +     Attributes
 +         Scope         : local
-+@@ -256,7 +256,7 @@
++@@ -257,7 +257,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -220,7 +220,7 @@
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
-+@@ -271,7 +271,7 @@
++@@ -272,7 +272,7 @@
 +             //craft command
 +             tSend.txt="event,buttonPress2,"
 +             tSend.txt+=entn.txt+","
@@ -229,7 +229,7 @@
 +             covx sys2,tTmp.txt,0,0
 +             tSend.txt+="mode-sel,"+tTmp.txt
 +             //send calc crc
-+@@ -286,7 +286,7 @@
++@@ -287,7 +287,7 @@
 +             prints tSend.txt,0
 +             prints crcval,2
 +         
@@ -238,7 +238,7 @@
 +     Attributes
 +         Scope                               : local
 +         Dragging                            : 0
-+@@ -301,7 +301,7 @@
++@@ -302,7 +302,7 @@
 +             //craft command
 +             tSend.txt="event,buttonPress2,"
 +             tSend.txt+=entn.txt+","
