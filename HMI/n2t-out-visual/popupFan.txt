@@ -25,6 +25,7 @@ Page popupFan
             tEntity.txt=pageIcons.tTmp1.txt
             //get entity id
             entn.txt=pageIcons.tTmp2.txt
+            tIcon1.txt=pageIcons.tTmp3.txt
             vis p0,0
             vis tSend,0
             vis tTmp,0
