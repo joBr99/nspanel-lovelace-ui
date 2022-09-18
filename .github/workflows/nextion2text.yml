@@ -62,8 +62,8 @@ jobs:
     - name: Run n2t US P DIFF DIFF
       continue-on-error: true
       run: |
-        diffoscope --exclude-directory-metadata=recursive HMI/US/portrait/diff-eu-version.txt | grep -E "^\+" > HMI/US/portrait/diff-filtered.txt
-        #diff -u HMI/US/portrait/diff-eu-version-known-good.txt HMI/US/portrait/diff-eu-version.txt | grep -E "^\+" > HMI/US/portrait/diff-filtered.txt
+        diff -u <(cut -b13- HMI/US/portrait/diff-eu-version-known-good.txt) <(cut -b13- HMI/US/portrait/diff-eu-version.txt) | grep -E "^\+" > HMI/US/portrait/diff-filtered.txt
+        #diff -u HMI/US/portrait/diff-eu-version-known-good.txt | grep -E "^\+" > HMI/US/portrait/diff-filtered.txt
 
     - name: Run n2t US L DIFF
       continue-on-error: true
