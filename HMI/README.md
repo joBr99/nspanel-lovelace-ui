@@ -140,7 +140,13 @@ tIconBtnEntityName is the entiy name used in the button event for pressing the u
 
 ### cardQR Page
 
-`entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2`
+`entityUpd~heading~navigation~textQR[~type~internalName~iconId~displayName~optionalValue]x2`
+
+### cardPower Page
+
+`entityUpd~heading~navigation~colorHome~iconHome~textHome[~iconColor~icon~speed~valueDown]x6`
+
+`entityUpd~test~1|1~6666~A~hu~8888~B~1~t0u~9999~C~2~t1u~1111~D~3~t2u~33333~E~-1~t3u~3333~F~-2~t4u~4444~G~-3~t5u`
 
 ## Messages from Nextion Display
 
@@ -221,13 +227,6 @@ tIconBtnEntityName is the entiy name used in the button event for pressing the u
 ### cardAlarm Page
 
 `event,buttonPress2,internalNameEntity,actionName,code`
-
-
-### cardPower Page
-
-`entityUpd,heading,navigation,colorHome,iconHome[,iconColor,icon,speed,valueUp,valueDown]x6
-
-`"entityUpd~test~1|1~6666~A~8888~B~1~t0o~t0u~9999~C~2~t1o~t1u~1111~D~3~t2o~t2u~33333~E~-1~t3o~t3u~3333~F~-2~t4o~t4u~4444~G~-3~t5o~t5u`
 
 
 # Design Guidelines for Nextion HMI Project
