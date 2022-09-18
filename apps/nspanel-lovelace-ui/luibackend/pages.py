@@ -564,6 +564,18 @@ class LuiPagesGen(object):
             command += self.generate_entities_item(item, cardType)
         self._send_mqtt_msg(command)
 
+    def generate_power_page(self, navigation, heading, items):
+        command = f"entityUpd~{heading}~{navigation}~6666~A"
+        for item in items:
+            entity = apis.ha_api.get_entity(item.entityId)
+            icon_color = self.get_entity_color(entity)
+            device_class = entity.attributes.get("device_class", "")
+            icon = get_icon_id_ha(item.entityId.split(".")[0], state=entity.state, device_class=device_class, overwrite=item.iconOverride)
+            speed = 0
+            if float(entity.state) > 0:
+                speed = 1
+            command += f"~{icon_color}~{icon}~{speed}~{entity.state}~"
+        self._send_mqtt_msg(command)
 
     def render_card(self, card, send_page_type=True):    
         apis.ha_api.log(f"Started rendering of page {card.pos} with type {card.cardType}")
@@ -598,6 +610,8 @@ class LuiPagesGen(object):
         if card.cardType == "cardQR":
             qrcode = card.raw_config.get("qrCode", "")
             self.generate_qr_page(navigation, card.title, card.entities, card.cardType, qrcode)
+        if card.cardType == "cardPower":
+            self.generate_power_page(navigation, card.title, card.entities)
 
 
 
