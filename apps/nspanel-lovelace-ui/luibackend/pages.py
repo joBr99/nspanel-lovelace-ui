@@ -565,7 +565,7 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(command)
 
     def generate_power_page(self, navigation, heading, items):
-        command = f"entityUpd~{heading}~{navigation}~6666~A"
+        command = f"entityUpd~{heading}~{navigation}~6666~A~test"
         for item in items:
             entity = apis.ha_api.get_entity(item.entityId)
             icon_color = self.get_entity_color(entity)
