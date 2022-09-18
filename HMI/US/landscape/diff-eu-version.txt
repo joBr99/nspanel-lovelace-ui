@@ -27,6 +27,26 @@
 │ -    // fix touch offset
 │ -    lcd_dev fffb 0002 0000 0020
 │ -    page pageStartup
+├── cardAlarm.txt
+│ @@ -833,18 +833,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
 ├── cardEntities.txt
 │ @@ -782,15 +782,15 @@
 │      Attributes
@@ -96,6 +116,105 @@
 │              //send calc crc
 │              btlen tSend.txt,sys0
 │              crcrest 1,0xffff // reset CRC
+│ @@ -1886,18 +1886,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
+├── cardGrid.txt
+│ @@ -838,18 +838,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
+├── cardMedia.txt
+│ @@ -751,18 +751,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
+├── cardQR.txt
+│ @@ -702,18 +702,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
+├── cardThermo.txt
+│ @@ -1138,18 +1138,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
 ├── pageStartup.txt
 │ @@ -173,15 +173,15 @@
 │          Max. Text Size                      : 10
@@ -262,3 +381,103 @@
 │ -                }
 │ -            }
 │ -
+├── popupFan.txt
+│ @@ -623,18 +623,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
+├── popupLight.txt
+│ @@ -659,18 +659,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
+├── popupNotify.txt
+│ @@ -406,18 +406,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
+├── popupShutter.txt
+│ @@ -685,18 +685,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
+├── screensaver.txt
+│ @@ -683,18 +683,14 @@
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
+│                                          }
+│ -                                        if(tId.txt=="cardPower")
+│ -                                        {
+│ -                                            page cardPower
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }

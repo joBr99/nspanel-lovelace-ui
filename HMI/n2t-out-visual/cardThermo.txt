@@ -1840,6 +1840,10 @@ Timer tmSerial
                                         {
                                             page cardQR
                                         }
+                                        if(tId.txt=="cardPower")
+                                        {
+                                            page cardPower
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {

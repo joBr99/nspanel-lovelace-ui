@@ -706,6 +706,10 @@ Timer tmSerial
                                         {
                                             page cardQR
                                         }
+                                        if(tId.txt=="cardPower")
+                                        {
+                                            page cardPower
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
