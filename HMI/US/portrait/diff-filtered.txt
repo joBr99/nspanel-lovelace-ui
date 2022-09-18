@@ -1,4 +1,123 @@
-+++ /dev/fd/62	2022-09-18 12:42:04.807862862 +0000
++++ /dev/fd/62	2022-09-18 15:58:47.706858635 +0000
++rdAlarm.txt
++18 +833,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++,18 +2268,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++rdGrid.txt
++18 +838,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++rdMedia.txt
++18 +751,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++rdQR.txt
++18 +702,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++rdThermo.txt
++,18 +1138,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
 +geIcons.txt
 +5 +15,15 @@
 + Scope         : global
@@ -165,6 +284,85 @@
 +         }
 +     }
 +
++18 +623,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++pupLight.txt
++18 +659,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++pupNotify.txt
++18 +406,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++pupShutter.txt
++18 +685,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
 +reensaver.txt
 +5 +71,15 @@
 +ime
@@ -183,3 +381,22 @@
 + Scope                               : local
 + Dragging                            : 0
 + Disable release event after dragging: 0
++18 +683,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
