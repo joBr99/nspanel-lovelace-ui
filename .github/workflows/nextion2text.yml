@@ -35,7 +35,7 @@ jobs:
     - name: Download n2t
       continue-on-error: true
       run: |
-        wget https://raw.githubusercontent.com/joBr99/Nextion2Text/master/linux/Nextion2Text.py
+        wget https://raw.githubusercontent.com/joBr99/Nextion2Text/master/linux/Nextion2Text.py && apt install -y diffoscope
   
     - name: Run n2t EU
       continue-on-error: true
@@ -56,20 +56,22 @@ jobs:
         
         echo portrait
         python Nextion2Text.py -c ignore-id.py -p font -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
-        diff -bur HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
+        diffoscope --exclude-directory-metadata=recursive HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
+        #diff -bur HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
 
     - name: Run n2t US P DIFF DIFF
       continue-on-error: true
       run: |
-        diff -u HMI/US/portrait/diff-eu-version-known-good.txt HMI/US/portrait/diff-eu-version.txt | grep -E "^\+" > HMI/US/portrait/diff-filtered.txt
+        diffoscope --exclude-directory-metadata=recursive HMI/US/portrait/diff-eu-version.txt | grep -E "^\+" > HMI/US/portrait/diff-filtered.txt
+        #diff -u HMI/US/portrait/diff-eu-version-known-good.txt HMI/US/portrait/diff-eu-version.txt | grep -E "^\+" > HMI/US/portrait/diff-filtered.txt
 
     - name: Run n2t US L DIFF
       continue-on-error: true
       run: |      
         echo landscape
         python Nextion2Text.py -c ignore-id.py -p font -d -i HMI/US/landscape/nspanel_US_L.HMI -o HMI/US/landscape/n2t-out
-        diff -bur HMI/n2t-out HMI/US/landscape/n2t-out > HMI/US/landscape/diff-eu-version.txt
-
+        #diff -bur HMI/n2t-out HMI/US/landscape/n2t-out > HMI/US/landscape/diff-eu-version.txt
+        diffoscope --exclude-directory-metadata=recursive HMI/n2t-out HMI/US/landscape/n2t-out > HMI/US/landscape/diff-eu-version.txt
         
     - name: Display txt files 
       continue-on-error: true
