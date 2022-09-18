@@ -24,8 +24,6 @@ Page cardPower
             tsw h1,0
             tsw h2,0
             tsw h3,0
-            tsw h4,0
-            tsw h5,0
         
 Variable (string) strCommand
     Attributes
@@ -96,26 +94,6 @@ Text tHeading
         Associated Keyboard                 : none
         Text                                : 
         Max. Text Size                      : 40
-    
-Text t4Icon
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î´½
-        Max. Text Size                      : 5
-    
-Text t5Icon
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î
-        Max. Text Size                      : 5
     
 Text t0Icon
     Attributes
@@ -227,46 +205,6 @@ Text t2u
         Text                                : 
         Max. Text Size                      : 20
     
-Text t5u
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text t5o
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text t4u
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text t4o
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
 Text t3u
     Attributes
         Scope                               : local
@@ -304,16 +242,6 @@ Slider h1
         Upper range limit                   : 100
         Lower range limit                   : 0
     
-Slider h4
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
-        Lower range limit                   : 0
-    
 Slider h0
     Attributes
         Scope                               : local
@@ -325,16 +253,6 @@ Slider h0
         Lower range limit                   : 0
     
 Slider h2
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
-        Lower range limit                   : 0
-    
-Slider h5
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -639,56 +557,6 @@ Timer tmSerial
                                             vis t3u,0
                                             vis h3,0
                                         }
-                                        // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",25
-                                        covx tTmp.txt,t4Icon.pco,0,0
-                                        // icon
-                                        spstr strCommand.txt,t4Icon.txt,"~",26
-                                        // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",27
-                                        covx tTmp.txt,t4Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t4o.txt,"~",28
-                                        // lower text
-                                        spstr strCommand.txt,t4u.txt,"~",29
-                                        if(t4Icon.txt!="")
-                                        {
-                                            vis t4Icon,1
-                                            vis t4o,1
-                                            vis t4u,1
-                                            vis h4,1
-                                        }else
-                                        {
-                                            vis t4Icon,0
-                                            vis t4o,0
-                                            vis t4u,0
-                                            vis h4,0
-                                        }
-                                        // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",30
-                                        covx tTmp.txt,t5Icon.pco,0,0
-                                        // icon
-                                        spstr strCommand.txt,t5Icon.txt,"~",31
-                                        // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",32
-                                        covx tTmp.txt,t5Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t5o.txt,"~",33
-                                        // lower text
-                                        spstr strCommand.txt,t5u.txt,"~",34
-                                        if(t5Icon.txt!="")
-                                        {
-                                            vis t5Icon,1
-                                            vis t5o,1
-                                            vis t5u,1
-                                            vis h5,1
-                                        }else
-                                        {
-                                            vis t5Icon,0
-                                            vis t5o,0
-                                            vis t5u,0
-                                            vis h5,0
-                                        }
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
@@ -846,8 +714,6 @@ Timer tm0
             h1.val+=t1Speed.val
             h2.val+=t2Speed.val
             h3.val+=t3Speed.val
-            h4.val+=t4Speed.val
-            h5.val+=t5Speed.val
             if(h0.val>=100&&h0.val<=150)
             {
                 h0.val=0
@@ -864,14 +730,6 @@ Timer tm0
             {
                 h3.val=0
             }
-            if(h4.val>=100&&h4.val<=150)
-            {
-                h4.val=0
-            }
-            if(h5.val>=100&&h5.val<=150)
-            {
-                h5.val=0
-            }
             ref t0o
             ref t0u
             ref t1o
@@ -880,10 +738,6 @@ Timer tm0
             ref t2u
             ref t3o
             ref t3u
-            ref t4o
-            ref t4u
-            ref t5o
-            ref t5u
         
 TouchCap tc0
     Attributes
