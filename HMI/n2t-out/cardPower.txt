@@ -24,6 +24,8 @@ Page cardPower
             tsw h1,0
             tsw h2,0
             tsw h3,0
+            tsw h4,0
+            tsw h5,0
         
 Variable (string) strCommand
     Attributes
@@ -95,6 +97,26 @@ Text tHeading
         Text                                : 
         Max. Text Size                      : 40
     
+Text t4Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î´½
+        Max. Text Size                      : 5
+    
+Text t5Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 5
+    
 Text t0Icon
     Attributes
         Scope                               : local
@@ -155,37 +177,7 @@ Text t0u
         Text                                : 
         Max. Text Size                      : 20
     
-Text t0o
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
 Text t1u
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text t1o
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text t2o
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -205,6 +197,26 @@ Text t2u
         Text                                : 
         Max. Text Size                      : 20
     
+Text t5u
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
+    
+Text t4u
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
+    
 Text t3u
     Attributes
         Scope                               : local
@@ -215,7 +227,7 @@ Text t3u
         Text                                : 
         Max. Text Size                      : 20
     
-Text t3o
+Text tHome
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -242,6 +254,16 @@ Slider h1
         Upper range limit                   : 100
         Lower range limit                   : 0
     
+Slider h4
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
+    
 Slider h0
     Attributes
         Scope                               : local
@@ -253,6 +275,16 @@ Slider h0
         Lower range limit                   : 0
     
 Slider h2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
+    
+Slider h5
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -457,105 +489,133 @@ Timer tmSerial
                                         covx tTmp.txt,t1.pco,0,0
                                         // icon home
                                         spstr strCommand.txt,t1.txt,"~",4
+                                        // text home
+                                        spstr strCommand.txt,tHome.txt,"~",5
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        spstr strCommand.txt,tTmp.txt,"~",6
                                         covx tTmp.txt,t0Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t0Icon.txt,"~",6
+                                        spstr strCommand.txt,t0Icon.txt,"~",7
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",7
+                                        spstr strCommand.txt,tTmp.txt,"~",8
                                         covx tTmp.txt,t0Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t0o.txt,"~",8
                                         // lower text
                                         spstr strCommand.txt,t0u.txt,"~",9
                                         if(t0Icon.txt!="")
                                         {
                                             vis t0Icon,1
-                                            vis t0o,1
                                             vis t0u,1
                                             vis h0,1
                                         }else
                                         {
                                             vis t0Icon,0
-                                            vis t0o,0
                                             vis t0u,0
                                             vis h0,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        spstr strCommand.txt,tTmp.txt,"~",11
                                         covx tTmp.txt,t1Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t1Icon.txt,"~",11
+                                        spstr strCommand.txt,t1Icon.txt,"~",12
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",12
+                                        spstr strCommand.txt,tTmp.txt,"~",13
                                         covx tTmp.txt,t1Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t1o.txt,"~",13
                                         // lower text
                                         spstr strCommand.txt,t1u.txt,"~",14
                                         if(t1Icon.txt!="")
                                         {
                                             vis t1Icon,1
-                                            vis t1o,1
                                             vis t1u,1
                                             vis h1,1
                                         }else
                                         {
                                             vis t1Icon,0
-                                            vis t1o,0
                                             vis t1u,0
                                             vis h1,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",15
+                                        spstr strCommand.txt,tTmp.txt,"~",16
                                         covx tTmp.txt,t2Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t2Icon.txt,"~",16
+                                        spstr strCommand.txt,t2Icon.txt,"~",17
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",17
+                                        spstr strCommand.txt,tTmp.txt,"~",18
                                         covx tTmp.txt,t2Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t2o.txt,"~",18
                                         // lower text
                                         spstr strCommand.txt,t2u.txt,"~",19
                                         if(t2Icon.txt!="")
                                         {
                                             vis t2Icon,1
-                                            vis t2o,1
                                             vis t2u,1
                                             vis h2,1
                                         }else
                                         {
                                             vis t2Icon,0
-                                            vis t2o,0
                                             vis t2u,0
                                             vis h2,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",20
+                                        spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,t3Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t3Icon.txt,"~",21
+                                        spstr strCommand.txt,t3Icon.txt,"~",22
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        spstr strCommand.txt,tTmp.txt,"~",23
                                         covx tTmp.txt,t3Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t3o.txt,"~",23
                                         // lower text
                                         spstr strCommand.txt,t3u.txt,"~",24
                                         if(t3Icon.txt!="")
                                         {
                                             vis t3Icon,1
-                                            vis t3o,1
                                             vis t3u,1
                                             vis h3,1
                                         }else
                                         {
                                             vis t3Icon,0
-                                            vis t3o,0
                                             vis t3u,0
                                             vis h3,0
+                                        }
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",26
+                                        covx tTmp.txt,t4Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t4Icon.txt,"~",27
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",28
+                                        covx tTmp.txt,t4Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t4u.txt,"~",29
+                                        if(t4Icon.txt!="")
+                                        {
+                                            vis t4Icon,1
+                                            vis t4u,1
+                                            vis h4,1
+                                        }else
+                                        {
+                                            vis t4Icon,0
+                                            vis t4u,0
+                                            vis h4,0
+                                        }
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",31
+                                        covx tTmp.txt,t5Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t5Icon.txt,"~",32
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",33
+                                        covx tTmp.txt,t5Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t5u.txt,"~",34
+                                        if(t5Icon.txt!="")
+                                        {
+                                            vis t5Icon,1
+                                            vis t5u,1
+                                            vis h5,1
+                                        }else
+                                        {
+                                            vis t5Icon,0
+                                            vis t5u,0
+                                            vis h5,0
                                         }
                                     }
                                     if(tInstruction.txt=="pageType")
@@ -616,10 +676,6 @@ Timer tmSerial
                                         if(tId.txt=="cardQR")
                                         {
                                             page cardQR
-                                        }
-                                        if(tId.txt=="cardPower")
-                                        {
-                                            page cardPower
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -714,6 +770,8 @@ Timer tm0
             h1.val+=t1Speed.val
             h2.val+=t2Speed.val
             h3.val+=t3Speed.val
+            h4.val+=t4Speed.val
+            h5.val+=t5Speed.val
             if(h0.val>=100&&h0.val<=150)
             {
                 h0.val=0
@@ -730,14 +788,20 @@ Timer tm0
             {
                 h3.val=0
             }
-            ref t0o
+            if(h4.val>=100&&h4.val<=150)
+            {
+                h4.val=0
+            }
+            if(h5.val>=100&&h5.val<=150)
+            {
+                h5.val=0
+            }
             ref t0u
-            ref t1o
             ref t1u
-            ref t2o
             ref t2u
-            ref t3o
             ref t3u
+            ref t4u
+            ref t5u
         
 TouchCap tc0
     Attributes
