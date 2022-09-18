@@ -32,6 +32,8 @@ Page cardPower
             tsw h1,0
             tsw h2,0
             tsw h3,0
+            tsw h4,0
+            tsw h5,0
         
 Variable (string) strCommand
     Attributes
@@ -70,37 +72,37 @@ Variable (string) tInstruction
     
 Variable (int32) t0Speed
     Attributes
-        ID   : 34
+        ID   : 36
         Scope: local
         Value: 0
     
 Variable (int32) t1Speed
     Attributes
-        ID   : 35
+        ID   : 37
         Scope: local
         Value: 0
     
 Variable (int32) t3Speed
     Attributes
-        ID   : 36
+        ID   : 38
         Scope: local
         Value: 0
     
 Variable (int32) t4Speed
     Attributes
-        ID   : 37
+        ID   : 39
         Scope: local
         Value: 0
     
 Variable (int32) t5Speed
     Attributes
-        ID   : 38
+        ID   : 40
         Scope: local
         Value: 0
     
 Variable (int32) t2Speed
     Attributes
-        ID   : 39
+        ID   : 41
         Scope: local
         Value: 0
     
@@ -134,7 +136,7 @@ Text tHeading
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text t0Icon
+Text t4Icon
     Attributes
         ID                                  : 16
         Scope                               : local
@@ -142,8 +144,72 @@ Text t0Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
+        x coordinate                        : 378
+        y coordinate                        : 156
+        Width                               : 60
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
+        Associated Keyboard                 : none
+        Border Color                        : 17299
+        Border Width                        : 2
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 17299
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : î´½
+        Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text t5Icon
+    Attributes
+        ID                                  : 17
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 378
+        y coordinate                        : 232
+        Width                               : 60
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
+        Associated Keyboard                 : none
+        Border Color                        : 17299
+        Border Width                        : 2
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 17299
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : î
+        Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text t0Icon
+    Attributes
+        ID                                  : 18
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
         x coordinate                        : 18
-        y coordinate                        : 102
+        y coordinate                        : 80
         Width                               : 60
         Height                              : 60
         Effect                              : load
@@ -168,14 +234,14 @@ Text t0Icon
     
 Text t2Icon
     Attributes
-        ID                                  : 17
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 377
-        y coordinate                        : 102
+        x coordinate                        : 18
+        y coordinate                        : 232
         Width                               : 60
         Height                              : 60
         Effect                              : load
@@ -200,14 +266,14 @@ Text t2Icon
     
 Text t1Icon
     Attributes
-        ID                                  : 19
+        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 18
-        y coordinate                        : 205
+        y coordinate                        : 156
         Width                               : 60
         Height                              : 60
         Effect                              : load
@@ -232,7 +298,7 @@ Text t1Icon
     
 Text t1
     Attributes
-        ID                                  : 20
+        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -264,14 +330,14 @@ Text t1
     
 Text t3Icon
     Attributes
-        ID                                  : 23
+        ID                                  : 26
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 378
-        y coordinate                        : 205
+        y coordinate                        : 80
         Width                               : 60
         Height                              : 60
         Effect                              : load
@@ -296,44 +362,14 @@ Text t3Icon
     
 Text t0u
     Attributes
-        ID                                  : 26
+        ID                                  : 30
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 82
-        y coordinate                        : 154
-        Width                               : 108
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 6371
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text t0o
-    Attributes
-        ID                                  : 27
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 82
-        y coordinate                        : 80
+        y coordinate                        : 132
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -356,74 +392,14 @@ Text t0o
     
 Text t1u
     Attributes
-        ID                                  : 28
+        ID                                  : 31
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 82
-        y coordinate                        : 258
-        Width                               : 108
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 6371
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text t1o
-    Attributes
-        ID                                  : 29
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 82
-        y coordinate                        : 184
-        Width                               : 108
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 6371
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text t2o
-    Attributes
-        ID                                  : 30
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 261
-        y coordinate                        : 80
+        y coordinate                        : 209
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -446,14 +422,74 @@ Text t2o
     
 Text t2u
     Attributes
-        ID                                  : 31
+        ID                                  : 32
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 261
-        y coordinate                        : 154
+        x coordinate                        : 82
+        y coordinate                        : 285
+        Width                               : 108
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text t5u
+    Attributes
+        ID                                  : 33
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 262
+        y coordinate                        : 285
+        Width                               : 108
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text t4u
+    Attributes
+        ID                                  : 34
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 262
+        y coordinate                        : 209
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -476,14 +512,14 @@ Text t2u
     
 Text t3u
     Attributes
-        ID                                  : 32
+        ID                                  : 35
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 262
-        y coordinate                        : 258
+        y coordinate                        : 132
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -504,18 +540,18 @@ Text t3u
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text t3o
+Text tHome
     Attributes
-        ID                                  : 33
+        ID                                  : 42
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 262
-        y coordinate                        : 184
-        Width                               : 108
-        Height                              : 30
+        x coordinate                        : 200
+        y coordinate                        : 214
+        Width                               : 56
+        Height                              : 81
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -530,7 +566,7 @@ Text t3o
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 20
-        Word wrap                           : disabled
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
@@ -553,14 +589,39 @@ Picture p0
     
 Slider h1
     Attributes
-        ID                                  : 18
+        ID                                  : 20
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 78
-        y coordinate                        : 214
+        y coordinate                        : 165
+        Width                               : 120
+        Height                              : 44
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Direction                           : horizontal
+        Fill                                : image
+        Cursor width                        : auto
+        Cursor height                       : 255
+        Back. Picture ID                    : 18
+        Slided Back. Picture ID             : 18
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
+    
+Slider h4
+    Attributes
+        ID                                  : 22
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 258
+        y coordinate                        : 165
         Width                               : 120
         Height                              : 44
         Effect                              : load
@@ -578,14 +639,14 @@ Slider h1
     
 Slider h0
     Attributes
-        ID                                  : 22
+        ID                                  : 25
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 78
-        y coordinate                        : 110
+        y coordinate                        : 88
         Width                               : 120
         Height                              : 44
         Effect                              : load
@@ -603,14 +664,39 @@ Slider h0
     
 Slider h2
     Attributes
-        ID                                  : 24
+        ID                                  : 27
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 257
-        y coordinate                        : 110
+        x coordinate                        : 78
+        y coordinate                        : 241
+        Width                               : 120
+        Height                              : 44
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Direction                           : horizontal
+        Fill                                : image
+        Cursor width                        : auto
+        Cursor height                       : 255
+        Back. Picture ID                    : 18
+        Slided Back. Picture ID             : 18
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
+    
+Slider h5
+    Attributes
+        ID                                  : 28
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 258
+        y coordinate                        : 241
         Width                               : 120
         Height                              : 44
         Effect                              : load
@@ -628,14 +714,14 @@ Slider h2
     
 Slider h3
     Attributes
-        ID                                  : 25
+        ID                                  : 29
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 258
-        y coordinate                        : 214
+        y coordinate                        : 88
         Width                               : 120
         Height                              : 44
         Effect                              : load
@@ -908,105 +994,133 @@ Timer tmSerial
                                         covx tTmp.txt,t1.pco,0,0
                                         // icon home
                                         spstr strCommand.txt,t1.txt,"~",4
+                                        // text home
+                                        spstr strCommand.txt,tHome.txt,"~",5
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        spstr strCommand.txt,tTmp.txt,"~",6
                                         covx tTmp.txt,t0Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t0Icon.txt,"~",6
+                                        spstr strCommand.txt,t0Icon.txt,"~",7
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",7
+                                        spstr strCommand.txt,tTmp.txt,"~",8
                                         covx tTmp.txt,t0Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t0o.txt,"~",8
                                         // lower text
                                         spstr strCommand.txt,t0u.txt,"~",9
                                         if(t0Icon.txt!="")
                                         {
                                             vis t0Icon,1
-                                            vis t0o,1
                                             vis t0u,1
                                             vis h0,1
                                         }else
                                         {
                                             vis t0Icon,0
-                                            vis t0o,0
                                             vis t0u,0
                                             vis h0,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        spstr strCommand.txt,tTmp.txt,"~",11
                                         covx tTmp.txt,t1Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t1Icon.txt,"~",11
+                                        spstr strCommand.txt,t1Icon.txt,"~",12
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",12
+                                        spstr strCommand.txt,tTmp.txt,"~",13
                                         covx tTmp.txt,t1Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t1o.txt,"~",13
                                         // lower text
                                         spstr strCommand.txt,t1u.txt,"~",14
                                         if(t1Icon.txt!="")
                                         {
                                             vis t1Icon,1
-                                            vis t1o,1
                                             vis t1u,1
                                             vis h1,1
                                         }else
                                         {
                                             vis t1Icon,0
-                                            vis t1o,0
                                             vis t1u,0
                                             vis h1,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",15
+                                        spstr strCommand.txt,tTmp.txt,"~",16
                                         covx tTmp.txt,t2Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t2Icon.txt,"~",16
+                                        spstr strCommand.txt,t2Icon.txt,"~",17
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",17
+                                        spstr strCommand.txt,tTmp.txt,"~",18
                                         covx tTmp.txt,t2Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t2o.txt,"~",18
                                         // lower text
                                         spstr strCommand.txt,t2u.txt,"~",19
                                         if(t2Icon.txt!="")
                                         {
                                             vis t2Icon,1
-                                            vis t2o,1
                                             vis t2u,1
                                             vis h2,1
                                         }else
                                         {
                                             vis t2Icon,0
-                                            vis t2o,0
                                             vis t2u,0
                                             vis h2,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",20
+                                        spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,t3Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t3Icon.txt,"~",21
+                                        spstr strCommand.txt,t3Icon.txt,"~",22
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        spstr strCommand.txt,tTmp.txt,"~",23
                                         covx tTmp.txt,t3Speed.val,0,0
-                                        // upper text
-                                        spstr strCommand.txt,t3o.txt,"~",23
                                         // lower text
                                         spstr strCommand.txt,t3u.txt,"~",24
                                         if(t3Icon.txt!="")
                                         {
                                             vis t3Icon,1
-                                            vis t3o,1
                                             vis t3u,1
                                             vis h3,1
                                         }else
                                         {
                                             vis t3Icon,0
-                                            vis t3o,0
                                             vis t3u,0
                                             vis h3,0
+                                        }
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",26
+                                        covx tTmp.txt,t4Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t4Icon.txt,"~",27
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",28
+                                        covx tTmp.txt,t4Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t4u.txt,"~",29
+                                        if(t4Icon.txt!="")
+                                        {
+                                            vis t4Icon,1
+                                            vis t4u,1
+                                            vis h4,1
+                                        }else
+                                        {
+                                            vis t4Icon,0
+                                            vis t4u,0
+                                            vis h4,0
+                                        }
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",31
+                                        covx tTmp.txt,t5Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t5Icon.txt,"~",32
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",33
+                                        covx tTmp.txt,t5Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t5u.txt,"~",34
+                                        if(t5Icon.txt!="")
+                                        {
+                                            vis t5Icon,1
+                                            vis t5u,1
+                                            vis h5,1
+                                        }else
+                                        {
+                                            vis t5Icon,0
+                                            vis t5u,0
+                                            vis h5,0
                                         }
                                     }
                                     if(tInstruction.txt=="pageType")
@@ -1067,10 +1181,6 @@ Timer tmSerial
                                         if(tId.txt=="cardQR")
                                         {
                                             page cardQR
-                                        }
-                                        if(tId.txt=="cardPower")
-                                        {
-                                            page cardPower
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -1156,7 +1266,7 @@ Timer tmSleep
         
 Timer tm0
     Attributes
-        ID         : 21
+        ID         : 24
         Scope      : local
         Period (ms): 100
         Enabled    : yes
@@ -1167,6 +1277,8 @@ Timer tm0
             h1.val+=t1Speed.val
             h2.val+=t2Speed.val
             h3.val+=t3Speed.val
+            h4.val+=t4Speed.val
+            h5.val+=t5Speed.val
             if(h0.val>=100&&h0.val<=150)
             {
                 h0.val=0
@@ -1183,14 +1295,20 @@ Timer tm0
             {
                 h3.val=0
             }
-            ref t0o
+            if(h4.val>=100&&h4.val<=150)
+            {
+                h4.val=0
+            }
+            if(h5.val>=100&&h5.val<=150)
+            {
+                h5.val=0
+            }
             ref t0u
-            ref t1o
             ref t1u
-            ref t2o
             ref t2u
-            ref t3o
             ref t3u
+            ref t4u
+            ref t5u
         
 TouchCap tc0
     Attributes
