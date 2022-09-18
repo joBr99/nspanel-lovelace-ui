@@ -16,7 +16,7 @@ head = sharedhead + """
 print(head)
 start = 6
 for i in range(0,6):
-    idxstart = start + (i)*5
+    idxstart = start + (i)*4
     item = f"""
               // iconColor
               spstr strCommand.txt,tTmp.txt,"~",{idxstart}
