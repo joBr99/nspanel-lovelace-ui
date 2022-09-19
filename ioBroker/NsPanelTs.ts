@@ -3614,18 +3614,18 @@ function HandleScreensaverUpdate(): void {
                 payloadString += '~~';
             }
 
-            let hwBtn2Col: any = config.mrIcon1ScreensaverEntity.ScreensaverEntityOffColor;
+            let hwBtn2Col: any = config.mrIcon2ScreensaverEntity.ScreensaverEntityOffColor;
             if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
                 if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'string') {
                     let hwBtn2: string = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn2 == 'ON') {
-                        hwBtn2Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;                
+                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;                
                     }
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
                 } else if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
                     let hwBtn2: boolean = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn2) {
-                        hwBtn2Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;               
+                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;               
                     }
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
                 }  
