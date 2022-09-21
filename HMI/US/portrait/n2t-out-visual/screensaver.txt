@@ -790,7 +790,7 @@ Text tNotifyText
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 3
+        Font ID                             : 0
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center
