@@ -28,13 +28,13 @@ _A clear and concise description of what the problem is._
 ### REQUESTED INFORMATION
 _Make sure your have performed every step and checked the applicable boxes before submitting your issue. Thank you!_
 
-- [ ] Provide your apps.yaml:
+- [ ] Provide your apps.yaml (or your config):
 ```
   apps.yaml here:
 
 
 ```
-- [ ] Go to Settings>Add-ons>AppDaemon>Log and then, provide the output of the log during your issue/bug occurs:
+- [ ] Go to Settings>Add-ons>AppDaemon>Log (or the output of your TS script) and then, provide the output of the log during your issue/bug occurs:
 ```
   Log output here:
 
@@ -55,6 +55,7 @@ _If applicable, add screenshots/pictures to help explain your problem._
 
 ### ADDITIONAL CONTEXT
 _Add any other context about the problem here._
+_Please note here in case you are using ioBroker_
 
 ### PANEL / FIRMWARE VERION
 _Please add the Panel/Firmware Version you are using (EU, US-L or US-P)_

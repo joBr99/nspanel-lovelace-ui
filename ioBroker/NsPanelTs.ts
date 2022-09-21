@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
-- abgestimmt auf TFT 42 / v3.4.0.3 / BerryDriver 4 / Tasmota 12.1.1
+TypeScript v3.4.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
+- abgestimmt auf TFT 42 / v3.4.0 / BerryDriver 4 / Tasmota 12.1.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -40,10 +40,12 @@ ReleaseNotes:
         - 13.09.2022 - V3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
         - 15.09.2022 - V3.4.0 - BugFix Dimmode
         - 15.09.2022 - V3.4.0 - Colormode für Screensaver + AutoColor WeatherForecast
-	- 16.09.2022 - V3.4.0.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver
-        - 16.09.2022 - V3.4.0.1 Bugfix Screensaver MRIcon2
-        - 17.09.2022 - V3.4.0.3 Bugfix bNext / bPrev by joBr99
-
+	- 16.09.2022 - v3.4.0.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver + Bugfix Screensaver MRIcon2
+        - 17.09.2022 - v3.4.0.2 Bugfix for screensaver icons with scaled colors
+        - 17.09.2022 - v3.4.0.3 Bugfix bNext / bPrev by joBr99
+        - 18.09.2022 - v3.4.0.4 Add On/Off Colors in config.mrIcon1ScreensaverEntity and config.mrIcon2ScreensaverEntity
+        - 19.09.2022 - v3.4.0.5 Add Mode to cardThermo (Alias Thermostat)
+	
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
@@ -523,8 +525,8 @@ export const config: Config = {
     fourthScreensaverEntity: { ScreensaverEntity: "accuweather.0.Current.RelativeHumidity", ScreensaverEntityIcon: "water-percent", ScreensaverEntityText: "Luft", ScreensaverEntityUnitText: "%", ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
     alternativeScreensaverLayout: false,
     autoWeatherColorScreensaverLayout: true,
-    mrIcon1ScreensaverEntity: { ScreensaverEntity: "mqtt.0.SmartHome.NSPanel_1.stat.POWER1", ScreensaverEntityIcon: "light-switch" },
-    mrIcon2ScreensaverEntity: { ScreensaverEntity: "mqtt.0.SmartHome.NSPanel_1.stat.POWER2", ScreensaverEntityIcon: "lightbulb" },
+    mrIcon1ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER1', ScreensaverEntityIcon: 'light-switch', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: Off  },
+    mrIcon2ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER2', ScreensaverEntityIcon: 'lightbulb', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: Off  },
     timeoutScreensaver: 15,
     dimmode: 20,
     active: 100, //Standard-Brightness TFT
@@ -1865,7 +1867,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
         let minTemp = page.items[0].minValue !== undefined ? page.items[0].minValue : 50;   //Min Temp 5°C
         let maxTemp = page.items[0].maxValue !== undefined ? page.items[0].maxValue : 300;  //Max Temp 30°C
-        let stepTemp = 5
+        let stepTemp = 5 // 0,5° Schritte
 
         //Attribute hinzufügen, wenn im Alias definiert
         let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
@@ -1875,6 +1877,48 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             var bt = ['~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~'];
 
             if (o.common.role == 'thermostat') {
+
+                if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
+                    if (getState(id + '.AUTOMATIC').val) {
+                        bt[i++] = Icons.GetIcon('alpha-a-circle') + '~' + rgb_dec565(On) + '~1~' + 'AUTT' + '~';
+                        statusStr = 'AUTO';
+                    } else {
+                        bt[i++] = Icons.GetIcon('alpha-a-circle') + '~33840~1~' + 'AUTT' + '~';
+                    }
+                }
+                if (existsState(id + '.MANUAL') && getState(id + '.MANUAL').val != null) {
+                    if (getState(id + '.MANUAL').val) {
+                        bt[i++] = Icons.GetIcon('alpha-m-circle') + '~' + rgb_dec565(On) + '~1~' + 'MANT' + '~';
+                        statusStr = 'MANU';
+                    } else {
+                        bt[i++] = Icons.GetIcon('alpha-m-circle') + '~33840~1~' + 'MANT' + '~';
+                    }
+                }
+                if (existsState(id + '.PARTY') && getState(id + '.PARTY').val != null) {
+                    if (getState(id + '.PARTY').val) {
+                        bt[i++] = Icons.GetIcon('party-popper') + '~' + rgb_dec565(On) + '~1~' + 'PART' + '~';
+                        statusStr = 'PARTY';
+                    } else {
+                        bt[i++] = Icons.GetIcon('party-popper') + '~33840~1~' + 'PART' + '~';
+                    }
+                }
+                if (existsState(id + '.VACATION') && getState(id + '.VACATION').val != null) {
+                    if (getState(id + '.VACATION').val) {
+                        bt[i++] = Icons.GetIcon('palm-tree') + '~' + rgb_dec565(On) + '~1~' + 'VACT' + '~';
+                        statusStr = 'VAC';
+                    } else {
+                        bt[i++] = Icons.GetIcon('palm-tree') + '~33840~1~' + 'VACT' + '~';
+                    }
+                }
+                if (existsState(id + '.BOOST') && getState(id + '.BOOST').val != null) {
+                    if (getState(id + '.BOOST').val) {
+                        bt[i++] = Icons.GetIcon('fast-forward-60') + '~' + rgb_dec565(On) + '~1~' + 'BOOT' + '~';
+                        statusStr = 'BOOST';
+                    } else {
+                        bt[i++] = Icons.GetIcon('fast-forward-60') + '~33840~1~' + 'BOOT' + '~';
+                    }
+                }
+
                 for (let i_index in i_list) {
                     let thermostatState = i_list[i_index].split('.');
                     if (
@@ -1888,87 +1932,69 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                             case 'HUMIDITY':
                                 if (existsState(id + '.HUMIDITY') && getState(id + '.HUMIDITY').val != null) {
                                     if (parseInt(getState(id + '.HUMIDITY').val) < 40) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUMIDITY' + '~';
+                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
                                     } else if (parseInt(getState(id + '.HUMIDITY').val) < 30) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUMIDITY' + '~';
+                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
                                     } else if (parseInt(getState(id + '.HUMIDITY').val) >= 40) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~2016~1~' + 'HUMIDITY' + '~';
+                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~2016~1~' + 'HUM' + '~';
                                     } else if (parseInt(getState(id + '.HUMIDITY').val) > 65) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUMIDITY' + '~';
+                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
                                     } else if (parseInt(getState(id + '.HUMIDITY').val) > 75) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUMIDITY' + '~';
+                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
                                     }
                                 } else i--;
                                 break;
                             case 'LOWBAT':
                                 if (existsState(id + '.LOWBAT') && getState(id + '.LOWBAT').val != null) {
                                     if (getState(id + '.LOWBAT').val) {
-                                        bt[i - 1] = Icons.GetIcon('battery-low') + '~63488~1~' + 'LOWBAT' + '~';
+                                        bt[i - 1] = Icons.GetIcon('battery-low') + '~63488~1~' + 'LBAT' + '~';
                                     } else {
-                                        bt[i - 1] = Icons.GetIcon('battery-high') + '~2016~1~' + 'LOWBAT' + '~';
+                                        bt[i - 1] = Icons.GetIcon('battery-high') + '~2016~1~' + 'LBAT' + '~';
                                     }
                                 } else i--;
                                 break;
                             case 'MAINTAIN':
                                 if (existsState(id + '.MAINTAIN') && getState(id + '.MAINTAIN').val != null) {
                                     if (getState(id + '.MAINTAIN').val >> .1) {
-                                        bt[i - 1] = Icons.GetIcon('fire') + '~60897~1~' + 'MAINTAIN' + '~';
+                                        bt[i - 1] = Icons.GetIcon('fire') + '~60897~1~' + 'MAIN' + '~';
                                     } else {
-                                        bt[i - 1] = Icons.GetIcon('fire') + '~33840~0~' + 'MAINTAIN' + '~';
+                                        bt[i - 1] = Icons.GetIcon('fire') + '~33840~0~' + 'MAIN' + '~';
                                     }
                                 } else i--;
                                 break;
                             case 'UNREACH':
                                 if (existsState(id + '.UNREACH') && getState(id + '.UNREACH').val != null) {
                                     if (getState(id + '.UNREACH').val) {
-                                        bt[i - 1] = Icons.GetIcon('wifi-off') + '~63488~1~' + 'UNREACH' + '~';
+                                        bt[i - 1] = Icons.GetIcon('wifi-off') + '~63488~1~' + 'WLAN' + '~';
                                     } else {
-                                        bt[i - 1] = Icons.GetIcon('wifi') + '~2016~1~' + 'UNREACH' + '~';
+                                        bt[i - 1] = Icons.GetIcon('wifi') + '~2016~1~' + 'WLAN' + '~';
                                     }
                                 } else i--;
                                 break;
                             case 'POWER':
                                 if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
                                     if (getState(id + '.POWER').val) {
-                                        bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
+                                        bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POW' + '~';
                                     } else {
-                                        bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POWER' + '~';
+                                        bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POW' + '~';
                                     }
                                 } else i--;
                                 break;
                             case 'ERROR':
                                 if (existsState(id + '.ERROR') && getState(id + '.ERROR').val != null) {
                                     if (getState(id + '.ERROR').val) {
-                                        bt[i - 1] = Icons.GetIcon('alert-circle') + '~63488~1~' + 'ERROR' + '~';
+                                        bt[i - 1] = Icons.GetIcon('alert-circle') + '~63488~1~' + 'ERR' + '~';
                                     } else {
-                                        bt[i - 1] = Icons.GetIcon('alert-circle') + '~33840~1~' + 'ERROR' + '~';
+                                        bt[i - 1] = Icons.GetIcon('alert-circle') + '~33840~1~' + 'ERR' + '~';
                                     }
                                 } else i--;
                                 break;
                             case 'WORKING':
                                 if (existsState(id + '.WORKING') && getState(id + '.WORKING').val != null) {
                                     if (getState(id + '.WORKING').val) {
-                                        bt[i - 1] = Icons.GetIcon('briefcase-check') + '~2016~1~' + 'WORKING' + '~';
+                                        bt[i - 1] = Icons.GetIcon('briefcase-check') + '~2016~1~' + 'WORK' + '~';
                                     } else {
-                                        bt[i - 1] = Icons.GetIcon('briefcase-check') + '~33840~1~' + 'WORKING' + '~';
-                                    }
-                                } else i--;
-                                break;
-                            case 'BOOST':
-                                if (existsState(id + '.BOOST') && getState(id + '.BOOST').val != null) {
-                                    if (getState(id + '.BOOST').val) {
-                                        bt[i - 1] = Icons.GetIcon('fast-forward-60') + '~2016~1~' + 'BOOST' + '~';
-                                    } else {
-                                        bt[i - 1] = Icons.GetIcon('fast-forward-60') + '~33840~1~' + 'BOOST' + '~';
-                                    }
-                                } else i--;
-                                break;
-                            case 'PARTY':
-                                if (existsState(id + '.PARTY') && getState(id + '.PARTY').val != null) {
-                                    if (getState(id + '.PARTY').val) {
-                                        bt[i - 1] = Icons.GetIcon('party-popper') + '~2016~1~' + 'PARTY' + '~';
-                                    } else {
-                                        bt[i - 1] = Icons.GetIcon('party-popper') + '~33840~1~' + 'PARTY' + '~';
+                                        bt[i - 1] = Icons.GetIcon('briefcase-check') + '~33840~1~' + 'WORK' + '~';
                                     }
                                 } else i--;
                                 break;
@@ -1978,6 +2004,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                         }
                     }
                 }
+
                 for (let j = i; j < 9; j++) {
                     bt[j] = '~~~~';
                 }
@@ -2046,27 +2073,27 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
         out_msgs.push({
             payload: 'entityUpd~'
-                + name + '~'   // Heading
-                + GetNavigationString(pageId) + '~'   // Page Navigation
-                + id + '~'   // internalNameEntiy
-                + currentTemp + config.temperatureUnit + '~'   // Ist-Temperatur (String)
-                + destTemp + '~'   // Soll-Temperatur (numerisch ohne Komma)
-                + statusStr + '~'   // Mode
-                + minTemp + '~'   // Thermostat Min-Temperatur
-                + maxTemp + '~'   // Thermostat Max-Temperatur
-                + stepTemp + '~'   // Schritte für Soll (5°C)
+                + name + '~'                                    // Heading
+                + GetNavigationString(pageId) + '~'             // Page Navigation
+                + id + '~'                                      // internalNameEntiy
+                + currentTemp + config.temperatureUnit + '~'    // Ist-Temperatur (String)
+                + destTemp + '~'                                // Soll-Temperatur (numerisch ohne Komma)
+                + statusStr + '~'                               // Mode
+                + minTemp + '~'                                 // Thermostat Min-Temperatur
+                + maxTemp + '~'                                 // Thermostat Max-Temperatur
+                + stepTemp + '~'                                // Schritte für Soll (5°C)
                 + icon_res                                      // Icons Status
                 + findLocale('thermostat', 'Currently') + '~'   // Bezeicher vor Aktueller Raumtemperatur
-                + findLocale('thermostat', 'State') + '~'   // Bezeicner vor
-                + findLocale('thermostat', 'Action') + '~'   // Bezeichner vor HVAC
-                + config.temperatureUnit + '~'   // Bezeichner hinter Solltemp
-                + '' + '~'   // iconTemperature
+                + findLocale('thermostat', 'State') + '~'       // Bezeicner vor
+                + '~'                                           // Bezeichner vor HVAC -- Gibt es nicht mehr
+                + config.temperatureUnit + '~'                  // Bezeichner hinter Solltemp
+                + '' + '~'                                      // iconTemperature dstTempTwoTempMode
                 + ''                                            // dstTempTwoTempMode
         });
 
     }
 
-    if (Debug) console.log(out_msgs);
+    console.log(out_msgs);
     return out_msgs
 }
 
@@ -2677,8 +2704,33 @@ function HandleButtonEvent(words): void {
             setIfExists(id + '.STOP', true)
             break;
         case 'hvac_action':
-            if (words[4] == 'BOOST' || words[4] == 'PARTY') {
-                setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val)
+            if (words[4] == 'BOOT' || words[4] == 'PART' || words[4] == 'AUTT' || words[4] == 'MANT' || words[4] == 'VACT') {
+
+                switch (words[4]) {
+                    case 'BOOT':
+                        setIfExists(words[2] + '.' + 'BOOST', !getState(words[2] + '.' + 'BOOST').val)
+                        break;                
+                    case 'PART':
+                        setIfExists(words[2] + '.' + 'PARTY', !getState(words[2] + '.' + 'PARTY').val)
+                        break;                
+                    case 'AUTT':
+                        setIfExists(words[2] + '.' + 'AUTOMATIC', !getState(words[2] + '.' + 'AUTOMATIC').val)
+                        break;                
+                    case 'MANT':
+                        setIfExists(words[2] + '.' + 'MANUAL', !getState(words[2] + '.' + 'MANUAL').val)
+                        break;                
+                    case 'VACT':
+                        setIfExists(words[2] + '.' + 'VACATION', !getState(words[2] + '.' + 'VACATION').val)
+                        break;                
+                }
+                let modes = ['BOOT', 'PART', 'AUTT', 'MANT', 'VACT']
+                let modesDP = ['BOOST', 'PARTY', 'AUTOMATIC', 'MANUAL', 'VACATION']
+                for (let mode=0; mode < 5; mode++) {
+                    if (words[4] != modes[mode]) {
+                        setIfExists(words[2] + '.' + modesDP[mode], false)
+                    }
+                }
+                GeneratePage(config.pages[pageId]);
             } else {
                 var HVACMode = 0;
                 switch (words[4]) {
@@ -3542,18 +3594,18 @@ function HandleScreensaverUpdate(): void {
                 payloadString += '~~'            
             }
             
-            let hwBtn1Col: any = HMIOff;
+            let hwBtn1Col: any = config.mrIcon1ScreensaverEntity.ScreensaverEntityOffColor;
             if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
                 if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'string') {
                     let hwBtn1: string = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn1 == 'ON') {
-                        hwBtn1Col = On;                
+                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;                
                     }
                     payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn1Col) + '~';
                 } else if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
                     let hwBtn1: boolean = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn1) {
-                        hwBtn1Col = On;                
+                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;                
                     }
                     payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn1Col) + '~';
                 }  
@@ -3562,18 +3614,18 @@ function HandleScreensaverUpdate(): void {
                 payloadString += '~~';
             }
 
-            let hwBtn2Col: any = HMIOff;
+            let hwBtn2Col: any = config.mrIcon2ScreensaverEntity.ScreensaverEntityOffColor;
             if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
                 if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'string') {
                     let hwBtn2: string = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn2 == 'ON') {
-                        hwBtn2Col = On;                
+                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;                
                     }
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
                 } else if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
                     let hwBtn2: boolean = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn2) {
-                        hwBtn2Col = On;                
+                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;               
                     }
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
                 }  
@@ -4088,4 +4140,6 @@ type ScreenSaverElement = {
 type ScreenSaverMRElement = {
     ScreensaverEntity: string | null,
     ScreensaverEntityIcon: string | null,
+    ScreensaverEntityOnColor: RGB,
+    ScreensaverEntityOffColor: RGB,
 }
