@@ -20,7 +20,7 @@ key | optional | type | default | description
 ## Override Icons or Names
 
 To overwrite Icons or Names of entities you can configure an icon and/or name in your configuration, please see the following example.
-Only the icons listed in the [Icon Cheatsheet](https://htmlpreview.github.io/?https://github.com/joBr99/nspanel-lovelace-ui/blob/main/HMI/icon-cheatsheet.html) are useable.
+Only the icons listed in the [Icon Cheatsheet](https://docs.nspanel.pky.eu/icon-cheatsheet.html) are useable.
 
 ```yaml
         entities:
