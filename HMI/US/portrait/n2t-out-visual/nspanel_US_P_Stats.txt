@@ -52,7 +52,7 @@ cardThermo
 	303  Unique line(s) of event code
 screensaver
 	38   Component(s)
-	341  Line(s) of event code
+	349  Line(s) of event code
 	263  Unique line(s) of event code
 cardEntities
 	77   Component(s)
@@ -62,5 +62,5 @@ cardEntities
 Total
 	14   Page(s)
 	451  Component(s)
-	5495 Line(s) of event code
+	5503 Line(s) of event code
 	1489 Unique line(s) of event code
