@@ -447,7 +447,7 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sleepTimeout,0,0
                                     }
-                                    if(tInstruction.txt=="weatherUpdate")
+                                    if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {
                                         vis tMainIcon,1
                                         vis tMainIconAlt,0
@@ -521,16 +521,8 @@ Timer tmSerial
                                         spstr strCommand.txt,tIcon2.txt,"~",19
                                         spstr strCommand.txt,tTmp.txt,"~",20
                                         covx tTmp.txt,tIcon2.pco,0,0
-                                        if(tNotifyHead.txt!="")
-                                        {
-                                            ref tNotifyHead
-                                        }
-                                        if(tNotifyText.txt!="")
-                                        {
-                                            ref tNotifyText
-                                        }
                                     }
-                                    if(tInstruction.txt=="color")
+                                    if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,tTime.bco,0,0
@@ -617,14 +609,6 @@ Timer tmSerial
                                             tForecast4.pco=tForecast3.pco
                                             tForecast3.pco=tForecast2.pco
                                             tForecast2.pco=tForecast1.pco
-                                        }
-                                        if(tNotifyHead.txt!="")
-                                        {
-                                            ref tNotifyHead
-                                        }
-                                        if(tNotifyText.txt!="")
-                                        {
-                                            ref tNotifyText
                                         }
                                     }
                                     if(tInstruction.txt=="notify")
