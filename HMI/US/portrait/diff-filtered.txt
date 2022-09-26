@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-09-21 15:55:38.406625045 +0000
++++ /dev/fd/62	2022-09-22 16:21:40.160676588 +0000
 +rdAlarm.txt
 +18 +833,14 @@
 +                                 {
@@ -381,7 +381,7 @@
 + Scope                               : local
 + Dragging                            : 0
 + Disable release event after dragging: 0
-+18 +683,14 @@
++18 +691,14 @@
 +                                 {
 +                                     page cardAlarm
 +                                 }

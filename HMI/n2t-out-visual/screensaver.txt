@@ -1183,6 +1183,14 @@ Timer tmSerial
                                             tForecast3.pco=tForecast2.pco
                                             tForecast2.pco=tForecast1.pco
                                         }
+                                        if(tNotifyHead.txt!="")
+                                        {
+                                            ref tNotifyHead
+                                        }
+                                        if(tNotifyText.txt!="")
+                                        {
+                                            ref tNotifyText
+                                        }
                                     }
                                     if(tInstruction.txt=="notify")
                                     {

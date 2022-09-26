@@ -1069,7 +1069,7 @@
 │          Scope                               : local
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
-│ @@ -683,18 +683,14 @@
+│ @@ -691,18 +691,14 @@
 │                                          {
 │                                              page cardAlarm
 │                                          }
