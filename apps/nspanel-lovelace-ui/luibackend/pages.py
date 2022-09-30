@@ -50,6 +50,20 @@ class LuiPagesGen(object):
             if entity.state == "armed_vacation":
                 icon_color = rgb_dec565([223,76,30])
 
+        if ha_type == "climate":
+            if entity.state in ["auto", "heat_cool"]:
+                icon_color = 1024
+            if entity.state == "heat":
+                icon_color = 64512
+            if entity.state == "off":
+                icon_color = 35921
+            if entity.state == "cool":
+                icon_color = 11487
+            if entity.state == "dry":
+                icon_color = 60897
+            if entity.state == "fan_only":
+                icon_color = 35921
+
         if "rgb_color" in attr:
             color = attr.rgb_color
             if "brightness" in attr:
@@ -176,7 +190,7 @@ class LuiPagesGen(object):
                 entity = apis.ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
                 icon = get_icon(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
-                color = self.get_entity_color(entity, overwrite=statusIcon.get("color", None))
+                color = self.get_entity_color(entity, ha_type=entityType, overwrite=statusIcon.get("color", None))
                 status_res += f"~{icon}~{color}"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}{status_res}")
@@ -187,7 +201,7 @@ class LuiPagesGen(object):
                 state = None
             self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state))
 
-    def generate_entities_item(self, item, cardType):
+    def generate_entities_item(self, item, cardType, temp_unit):
         entityId = item.entityId
         icon = item.iconOverride
         colorOverride = item.colorOverride
@@ -252,7 +266,7 @@ class LuiPagesGen(object):
         # common res vars
         entityTypePanel = "text"
         icon_id = get_icon(entityType, state=entity.state, overwrite=icon)
-        color = self.get_entity_color(entity, overwrite=colorOverride)
+        color = self.get_entity_color(entity, ha_type=entityType, overwrite=colorOverride)
         value = ""
         name = name if name is not None else entity.attributes.get("friendly_name","unknown")
 
@@ -345,15 +359,25 @@ class LuiPagesGen(object):
         elif entityType == "person":
             entityTypePanel = "text"
             value = get_translation(self._locale, f"backend.component.person.state._.{entity.state}")
+        elif entityType == "climate":
+            entityTypePanel = "text"
+            hvac_action  = get_attr_safe(entity, "hvac_action", "")
+            state_value  = get_translation(self._locale, f"backend.component.climate.state._.{entity.state}")
+            temperature = get_attr_safe(entity, "temperature", "")
+            temperature_unit = "°C" if(temp_unit == "celsius") else "°F"
+            value = f"{state_value} {temperature}{temperature_unit}"
+            currently_tanslation = get_translation(self._locale, f"frontend.ui.card.climate.currently")
+            current_temperature = get_attr_safe(entity, "current_temperature", "")
+            value += f"\r\n{currently_tanslation}: {current_temperature}{temperature_unit}"
         else:
             name = "unsupported"
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
-    def generate_entities_page(self, navigation, heading, items, cardType):
+    def generate_entities_page(self, navigation, heading, items, cardType, tempUnit):
         command = f"entityUpd~{heading}~{navigation}"
         # Get items and construct cmd string
         for item in items:
-            command += self.generate_entities_item(item, cardType)
+            command += self.generate_entities_item(item, cardType, tempUnit)
         self._send_mqtt_msg(command)
 
     def generate_thermo_page(self, navigation, title, entity, temp_unit):
@@ -398,25 +422,19 @@ class LuiPagesGen(object):
             hvac_modes = get_attr_safe(entity, "hvac_modes", [])
 
             for mode in hvac_modes:
-                icon_id = get_icon_id('alert-circle-outline')
+                icon_id = get_icon("climate", state=mode)
                 color_on = 64512
                 if mode in ["auto", "heat_cool"]:
-                    icon_id = get_icon_id("calendar-sync")
                     color_on = 1024
                 if mode == "heat":
-                    icon_id = get_icon_id("fire")
                     color_on = 64512
                 if mode == "off":
-                    icon_id = get_icon_id("power")
                     color_on = 35921
                 if mode == "cool":
-                    icon_id = get_icon_id("snowflake")
                     color_on = 11487
                 if mode == "dry":
-                    icon_id = get_icon_id("water-percent")
                     color_on = 60897
                 if mode == "fan_only":
-                    icon_id = get_icon_id("fan")
                     color_on = 35921
                 state = 0
                 if(mode == entity.state):
@@ -590,30 +608,34 @@ class LuiPagesGen(object):
         # Switch to page
         if send_page_type:
             self.page_type(card.cardType)
-
+        
+        temp_unit = card.raw_config.get("temperatureUnit", "celsius")
         if card.cardType in ["cardEntities", "cardGrid"]:
-            self.generate_entities_page(navigation, card.title, card.entities, card.cardType)
+            self.generate_entities_page(navigation, card.title, card.entities, card.cardType, temp_unit)
             return
         if card.cardType == "cardThermo":
-            temp_unit = card.raw_config.get("temperatureUnit", "celsius")
             self.generate_thermo_page(navigation, card.title, card.entity, temp_unit)
+            return
         if card.cardType == "cardMedia":
             mediaBtn = card.raw_config.get("mediaControl", "")
             self.generate_media_page(navigation, card.title, card.entity, mediaBtn)
+            return
         if card.cardType == "cardAlarm":
             alarmBtn = card.raw_config.get("alarmControl")
             overwrite_supported_modes = card.raw_config.get("supportedModes")
             self.generate_alarm_page(navigation, card.entity, overwrite_supported_modes, alarmBtn)
+            return
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")
             self.update_screensaver_weather(theme)
+            return
         if card.cardType == "cardQR":
             qrcode = card.raw_config.get("qrCode", "")
             self.generate_qr_page(navigation, card.title, card.entities, card.cardType, qrcode)
+            return
         if card.cardType == "cardPower":
             self.generate_power_page(navigation, card.title, card.entities)
-
-
+            return
 
     def generate_light_detail_page(self, entity_id):
         entity = apis.ha_api.get_entity(entity_id)
