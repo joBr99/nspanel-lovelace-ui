@@ -53,6 +53,16 @@ It is also possible to use text instead of icons with `text:X`
                 "off": "text:"
 ```
 
+To insert dynamic values from a homeassistant template, like a temperature you can also use `ha:` which will be rendered as homeassistant template.
+There probably not much cases where this is needed, but here is an exmaple to show the current temperature on the status icon of the screensaver:
+
+```yaml
+      statusIcon2:
+        entity: climate.wohnzimmer_boden
+        icon: 'ha:{{ state_attr("climate.wohnzimmer_boden","current_temperature")}}'
+```
+
+
 ## Hide item based on state
 
 This sensor will only be shown on the card if it's state is equal to `off`
