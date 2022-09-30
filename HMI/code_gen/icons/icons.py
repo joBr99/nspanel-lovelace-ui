@@ -18,7 +18,12 @@ with open(os.path.join(__location__, "../../../apps/nspanel-lovelace-ui/luibacke
         f.write(f"    '{name}': '{iconchar}',\n")
     f.write("}\n")
     f.write("""
+import apis
 def get_icon_id(ma_name):
+    if "text:" in ma_name:
+        return ma_name.replace("text:","")
+    if "ha:" in ma_name:
+        return apis.ha_api.render_template(ma_name.replace("ha:",""))
     ma_name = ma_name.replace("mdi:","")
     if ma_name in icons:
         return icons[ma_name]
