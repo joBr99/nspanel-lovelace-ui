@@ -5,8 +5,8 @@ import apis
 
 from theme import get_screensaver_color_output
 from icon_mapping import get_icon_id
-from icons import get_icon_id_ha
-from icons import get_action_id_ha
+from icons import get_icon
+from icons import get_action_icon
 from helper import scale, rgb_dec565, rgb_brightness, get_attr_safe, convert_temperature
 from localization import get_translation
 
@@ -94,7 +94,7 @@ class LuiPagesGen(object):
             apis.ha_api.error(f"Skipping Weather Update, entity {we_name} not found")
             return
 
-        icon_cur        = get_icon_id_ha("weather", state=we.state)
+        icon_cur        = get_icon("weather", state=we.state)
         state["tMainIcon"] = we.state
         text_cur        = convert_temperature(we.attributes.temperature, unit)
 
@@ -121,7 +121,7 @@ class LuiPagesGen(object):
                             up = up.strftime('%H:%M')
                         else:
                             up = up.strftime('%a')
-                    icon = get_icon_id_ha("weather", state=we.attributes.forecast[fid]['condition'])
+                    icon = get_icon("weather", state=we.attributes.forecast[fid]['condition'])
                     if i == 1:
                         state["tF1Icon"] = we.attributes.forecast[fid]['condition']
                     elif i == 2:
@@ -141,7 +141,7 @@ class LuiPagesGen(object):
                 name = wOF.get("name")
                 entity = apis.ha_api.get_entity(wOF.get("entity"))
                 up = name if name is not None else entity.attributes.friendly_name
-                icon = get_icon_id_ha("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+                icon = get_icon("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
                 if "color" in wOF:
                     if theme is None:
                         theme = {}
@@ -175,7 +175,7 @@ class LuiPagesGen(object):
                 icon = statusIcon.get("icon")
                 entity = apis.ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
-                icon = get_icon_id_ha(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+                icon = get_icon(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
                 color = self.get_entity_color(entity, overwrite=statusIcon.get("color", None))
                 status_res += f"~{icon}~{color}"
 
@@ -203,13 +203,13 @@ class LuiPagesGen(object):
         if entityType == "navigate":
             page_search_res = self._config.searchCard(entityId)
             if page_search_res is not None:
-                icon_res = get_icon_id_ha("navigate", overwrite=icon)
+                icon_res = get_icon("navigate", overwrite=icon)
                 status_entity = None
                 name = name if name is not None else page_search_res.title
                 text = get_translation(self._locale, "frontend.ui.card.button.press")
                 if item.status is not None and apis.ha_api.entity_exists(item.status):
                     status_entity = apis.ha_api.get_entity(item.status)
-                    icon_res = get_icon_id_ha(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
+                    icon_res = get_icon(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
                     icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
                         icon_res = status_entity.state[:4]
@@ -226,12 +226,12 @@ class LuiPagesGen(object):
             icon_res = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
             return f"~text~{entityId}~{icon_res}~17299~{name}~{value}"
         if entityType == "service":
-            icon_id = get_icon_id_ha("script", overwrite=icon)
+            icon_id = get_icon("script", overwrite=icon)
             text = get_translation(self._locale, "frontend.ui.card.script.run")
             icon_color = 17299
             if item.status is not None and apis.ha_api.entity_exists(item.status):
                 status_entity = apis.ha_api.get_entity(item.status)
-                icon_id = get_icon_id_ha(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
+                icon_id = get_icon(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
                 icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
                 if item.status.startswith("sensor") and cardType == "cardGrid":
                     icon_id = status_entity.state[:4]
@@ -251,7 +251,7 @@ class LuiPagesGen(object):
         
         # common res vars
         entityTypePanel = "text"
-        icon_id = get_icon_id_ha(entityType, state=entity.state, overwrite=icon)
+        icon_id = get_icon(entityType, state=entity.state, overwrite=icon)
         color = self.get_entity_color(entity, overwrite=colorOverride)
         value = ""
         name = name if name is not None else entity.attributes.get("friendly_name","unknown")
@@ -259,7 +259,7 @@ class LuiPagesGen(object):
         if entityType == "cover":
             entityTypePanel = "shutter"
             device_class = entity.attributes.get("device_class", "window")
-            icon_id = get_icon_id_ha(ha_type=entityType, state=entity.state, device_class=device_class, overwrite=icon)
+            icon_id = get_icon(ha_type=entityType, state=entity.state, device_class=device_class, overwrite=icon)
             icon_up   = ""
             icon_stop = ""
             icon_down = ""
@@ -276,13 +276,13 @@ class LuiPagesGen(object):
             if bits & 0b00000001: # SUPPORT_OPEN
                 if ( pos != 100 and not (entity.state == "open" and pos == "disable") ) or item.assumedState:
                     icon_up_status = "enable"
-                icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
+                icon_up   = get_action_icon(ha_type=entityType, action="open", device_class=device_class)
             if bits & 0b00000010: # SUPPORT_CLOSE
                 if ( pos != 0 and not (entity.state == "closed" and pos == "disable") ) or item.assumedState:
                     icon_down_status = "enable"
-                icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
+                icon_down = get_action_icon(ha_type=entityType, action="close", device_class=device_class)
             if bits & 0b00001000: # SUPPORT_STOP
-                icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
+                icon_stop = get_action_icon(ha_type=entityType, action="stop", device_class=device_class)
                 icon_stop_status = "enable"
             value = f"{icon_up}|{icon_stop}|{icon_down}|{icon_up_status}|{icon_stop_status}|{icon_down_status}"
         elif entityType in "light":
@@ -306,7 +306,7 @@ class LuiPagesGen(object):
                 if icon_id[-1] == ".":
                     icon_id = icon_id[:-1]
             else:
-                icon_id = get_icon_id_ha(entityType, state=entity.state, device_class=device_class, overwrite=icon)
+                icon_id = get_icon(entityType, state=entity.state, device_class=device_class, overwrite=icon)
         elif entityType in ["button", "input_button"]:
             entityTypePanel = "button"
             value = get_translation(self._locale, "frontend.ui.card.button.press")
@@ -537,7 +537,7 @@ class LuiPagesGen(object):
                 add_btn=f"{get_icon_id('progress-alert')}~{rgb_dec565([243,179,0])}~"
             if alarmBtn is not None and type(alarmBtn) is dict:
                 entity  = alarmBtn.get("entity")
-                iconnav = get_icon_id_ha("alarm-arm-fail", overwrite=alarmBtn.get("icon"))
+                iconnav = get_icon("alarm-arm-fail", overwrite=alarmBtn.get("icon"))
                 status  = alarmBtn.get("status")
                 if status is not None and apis.ha_api.entity_exists(status):
                     icon_color = self.get_entity_color(apis.ha_api.get_entity(status))
@@ -653,7 +653,7 @@ class LuiPagesGen(object):
         entity = apis.ha_api.get_entity(entity_id)
         entityType="cover"
         device_class = entity.attributes.get("device_class", "window")
-        icon_id   = get_icon_id_ha(entityType, state=entity.state, device_class=device_class)
+        icon_id   = get_icon(entityType, state=entity.state, device_class=device_class)
         
         pos = entity.attributes.get("current_position")
         if pos is None:
@@ -686,14 +686,14 @@ class LuiPagesGen(object):
         if bits & 0b00000001: # SUPPORT_OPEN
             if ( pos != 100 and not (entity.state == "open" and pos == "disable") ):
                 icon_up_status = "enable"
-            icon_up   = get_action_id_ha(ha_type=entityType, action="open", device_class=device_class)
+            icon_up   = get_action_icon(ha_type=entityType, action="open", device_class=device_class)
         if bits & 0b00000010: # SUPPORT_CLOSE
             if ( pos != 0 and not (entity.state == "closed" and pos == "disable") ):
                 icon_down_status = "enable"
-            icon_down = get_action_id_ha(ha_type=entityType, action="close", device_class=device_class)
+            icon_down = get_action_icon(ha_type=entityType, action="close", device_class=device_class)
         #if bits & 0b00000100: # SUPPORT_SET_POSITION
         if bits & 0b00001000: # SUPPORT_STOP
-            icon_stop = get_action_id_ha(ha_type=entityType, action="stop", device_class=device_class)
+            icon_stop = get_action_icon(ha_type=entityType, action="stop", device_class=device_class)
             icon_stop_status = "enable"
 
         # tilt supported
