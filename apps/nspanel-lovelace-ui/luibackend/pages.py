@@ -201,7 +201,7 @@ class LuiPagesGen(object):
                 state = None
             self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state))
 
-    def generate_entities_item(self, item, cardType, temp_unit):
+    def generate_entities_item(self, item, cardType, temp_unit=""):
         entityId = item.entityId
         icon = item.iconOverride
         colorOverride = item.colorOverride
@@ -361,7 +361,6 @@ class LuiPagesGen(object):
             value = get_translation(self._locale, f"backend.component.person.state._.{entity.state}")
         elif entityType == "climate":
             entityTypePanel = "text"
-            hvac_action  = get_attr_safe(entity, "hvac_action", "")
             state_value  = get_translation(self._locale, f"backend.component.climate.state._.{entity.state}")
             temperature = get_attr_safe(entity, "temperature", "")
             temperature_unit = "°C" if(temp_unit == "celsius") else "°F"
