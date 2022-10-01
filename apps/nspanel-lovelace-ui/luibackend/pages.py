@@ -379,7 +379,7 @@ class LuiPagesGen(object):
             command += self.generate_entities_item(item, cardType, tempUnit)
         self._send_mqtt_msg(command)
 
-    def generate_thermo_page(self, navigation, title, entity, temp_unit):
+    def generate_thermo_page(self, navigation, title, entity, temp_unit, overwrite_supported_modes):
         item = entity.entityId
 
         if(temp_unit == "celsius"):
@@ -419,7 +419,8 @@ class LuiPagesGen(object):
             icon_res = ""
 
             hvac_modes = get_attr_safe(entity, "hvac_modes", [])
-
+            if overwrite_supported_modes is not None:
+                hvac_modes = overwrite_supported_modes
             for mode in hvac_modes:
                 icon_id = get_icon("climate", state=mode)
                 color_on = 64512
@@ -613,7 +614,9 @@ class LuiPagesGen(object):
             self.generate_entities_page(navigation, card.title, card.entities, card.cardType, temp_unit)
             return
         if card.cardType == "cardThermo":
-            self.generate_thermo_page(navigation, card.title, card.entity, temp_unit)
+            temp_unit = card.raw_config.get("temperatureUnit", "celsius")
+            overwrite_supported_modes = card.raw_config.get("supportedModes")
+            self.generate_thermo_page(navigation, card.title, card.entity, temp_unit, overwrite_supported_modes)
             return
         if card.cardType == "cardMedia":
             mediaBtn = card.raw_config.get("mediaControl", "")
