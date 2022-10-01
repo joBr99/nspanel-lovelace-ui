@@ -347,9 +347,9 @@ class LuiPagesGen(object):
         elif entityType == "vacuum":
             entityTypePanel = "button"
             if entity.state == "docked":
-                value = "Start"
+                value = get_translation(self._locale, f"frontend.ui.card.vacuum.actions.start_cleaning")
             else:
-                value = "Return"
+                value = get_translation(self._locale, f"frontend.ui.card.vacuum.actions.return_to_base")
         elif entityType == "alarm_control_panel":
             entityTypePanel = "text"
             value = get_translation(self._locale, f"frontend.state_badge.alarm_control_panel.{entity.state}")
