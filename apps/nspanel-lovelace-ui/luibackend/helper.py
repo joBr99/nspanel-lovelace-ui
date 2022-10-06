@@ -40,9 +40,7 @@ def rgb_dec565(rgb_color):
     red = rgb_color[0]
     green = rgb_color[1]
     blue = rgb_color[2]
-    # take in the red, green and blue values (0-255) as 8 bit values and then combine
-    # and shift them to make them a 16 bit dec value in 565 format. 
-    return ((int(red / 255 * 31) << 11) | (int(green / 255 * 63) << 5) | (int(blue / 255 * 31)))
+    return ((int(red >> 3) << 11) | (int(green >> 2) << 5) | (int(blue >> 3)))
 
 def convert_temperature(temp, unit):
     if unit == "fahrenheit":
