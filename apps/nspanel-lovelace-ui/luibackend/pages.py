@@ -591,11 +591,12 @@ class LuiPagesGen(object):
             icon = get_icon(item.entityId.split(".")[0], state=entity.state, device_class=device_class, overwrite=item.iconOverride)
             speed = 0
             if float(entity.state) > 0:
-                speed = item.data.get("speed", 1)
+                speed = item.entity_input_config.get("speed", 1)
+                apis.ha_api.log(f"{item.data}")
             if idx == 0:
-                command += f"~{icon_color}~{icon}~{entity.state}~"
+                command += f"~{icon_color}~{icon}~{entity.state}"
             else:
-                command += f"~{icon_color}~{icon}~{speed}~{entity.state}~"
+                command += f"~{icon_color}~{icon}~{speed}~{entity.state}"
         self._send_mqtt_msg(command)
 
     def render_card(self, card, send_page_type=True):    
