@@ -74,37 +74,37 @@ Variable (int32) t0Speed
     Attributes
         ID   : 36
         Scope: local
-        Value: 1
+        Value: 0
     
 Variable (int32) t1Speed
     Attributes
         ID   : 37
         Scope: local
-        Value: 2
+        Value: 0
     
 Variable (int32) t3Speed
     Attributes
         ID   : 38
         Scope: local
-        Value: 3
+        Value: 0
     
 Variable (int32) t4Speed
     Attributes
         ID   : 39
         Scope: local
-        Value: 4294967295
+        Value: 0
     
 Variable (int32) t5Speed
     Attributes
         ID   : 40
         Scope: local
-        Value: 4294967294
+        Value: 0
     
 Variable (int32) t2Speed
     Attributes
         ID   : 41
         Scope: local
-        Value: 4294967293
+        Value: 0
     
 Text tHeading
     Attributes
