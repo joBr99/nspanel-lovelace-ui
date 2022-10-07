@@ -616,10 +616,10 @@ async function InitWeatherForecast() {
         //----Möglichkeit, im Screensaver zwischen Accu-Weather Forecast oder selbstdefinierten Werten zu wählen---------------------------------
         if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false || 
             existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false || 
-            existsState(NSPanel_Path + "ScreensaverInfo.entiiesChangeTime") == false) {
+            existsState(NSPanel_Path + "ScreensaverInfo.entityChangeTime") == false) {
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean' });
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
-            await createStateAsync(NSPanel_Path + "ScreensaverInfo.entiiesChangeTime", 60, { type: 'number' });
+            await createStateAsync(NSPanel_Path + "ScreensaverInfo.entityChangeTime", 60, { type: 'number' });
         };
     } catch (err) {
         console.warn('function InitWeatherForecast: ' + err.message);
@@ -768,13 +768,13 @@ schedule('* * * * *', () => {
 });
 
 //Wechsel zwischen Screensaver Enities und WeatherForecast
-schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entiiesChangeTime').val +  ' * * * * *', () => {
+schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val +  ' * * * * *', () => {
     try {
         //WeatherForcast true/false Umschaltung verzögert
         if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
-            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, (getState(NSPanel_Path + 'ScreensaverInfo.entiiesChangeTime').val / 2 * 1000), false); 
+            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false); 
         } else if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == false && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
-            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, (getState(NSPanel_Path + 'ScreensaverInfo.entiiesChangeTime').val / 2 * 1000), false);
+            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false);
         }
     } catch (err) {
         console.warn('schedule: ' + err.message);
