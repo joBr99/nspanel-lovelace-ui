@@ -60,11 +60,11 @@ cardEntities
 	521  Unique line(s) of event code
 cardPower
 	43   Component(s)
-	388  Line(s) of event code
-	268  Unique line(s) of event code
+	410  Line(s) of event code
+	286  Unique line(s) of event code
 
 Total
 	15   Page(s)
 	488  Component(s)
-	5749 Line(s) of event code
-	1542 Unique line(s) of event code
+	5771 Line(s) of event code
+	1556 Unique line(s) of event code
