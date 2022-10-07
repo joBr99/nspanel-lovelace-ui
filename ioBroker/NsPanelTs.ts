@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.4.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
+TypeScript v3.4.0.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
 - abgestimmt auf TFT 42 / v3.4.0 / BerryDriver 4 / Tasmota 12.1.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 
@@ -8,36 +8,37 @@ icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroke
 
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
+Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
 
 ReleaseNotes:
     Bugfixes und Erweiterungen:
         - cardQR (für Gäste WLAN)
         - cardThermo (Neues Design für Alias Thermostat und zusätzlich für Alias Klimaanlage)
-        - 08.05.2022 - V2.9.0 - Menüpfeile bei HardwareButtons (button1Page; button2Page) mit Navigation auf Page 0
-        - 08.05.2022 - V2.9.0 - Standard-Brightness über neuen Parameter active einstellbar (Test mit 2.9.3)
-        - 08.05.2022 - V2.9.0 - Schalter (Licht, Dimmer, Hue, etc) in cardGrid lassen sich wieder schalten
-        - 14.06.2022 - V2.9.0 - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu (Many thanks to Grrzzz)
-        - 14.06.2022 - V2.9.0 - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc) (Many thanks to Grrzzz)
-        - 15.06.2022 - V3.0.0 - Date/Time im Screensaver auf Basis localString (de-DE/en-EN/nl-NL/etc.)
-        - 16.06.2022 - V3.0.0 - Multilingual - config.locale (en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.)
-        - 16.06.2022 - V3.0.0 - Bugfix by Grrzzz - Subpages
-        - 18.06.2022 - V3.1.0 - Längere Textfelder in cardEntities
+        - 08.05.2022 - v2.9.0 - Menüpfeile bei HardwareButtons (button1Page; button2Page) mit Navigation auf Page 0
+        - 08.05.2022 - v2.9.0 - Standard-Brightness über neuen Parameter active einstellbar (Test mit 2.9.3)
+        - 08.05.2022 - v2.9.0 - Schalter (Licht, Dimmer, Hue, etc) in cardGrid lassen sich wieder schalten
+        - 14.06.2022 - v2.9.0 - Aktion auf Submenüs schaltet unmittelbar auf vorheriges Mainmenu (Many thanks to Grrzzz)
+        - 14.06.2022 - v2.9.0 - Menü-Pfeile in Subpages (z.B. card QR, cardMedia, etc) (Many thanks to Grrzzz)
+        - 15.06.2022 - v3.0.0 - Date/Time im Screensaver auf Basis localString (de-DE/en-EN/nl-NL/etc.)
+        - 16.06.2022 - v3.0.0 - Multilingual - config.locale (en-EN, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.)
+        - 16.06.2022 - v3.0.0 - Bugfix by Grrzzz - Subpages
+        - 18.06.2022 - v3.1.0 - Längere Textfelder in cardEntities
         - 18.06.2022 - V3.1.0 - Detail-Page Lights/Shutter hat neuen Parameter "id"
-        - 19.06.2022 - V3.1.0 - Bugfix toLocalTimeString in en-EN/en-US
-        - 19.06.2022 - V3.1.0 - Fehler in findLocale abgefangen
-        - 19.06.2022 - V3.1.0 - Umstellung auf "Home Assistant" Sprachfile
-        - 19.06.2022 - V3.1.0 - Alias "light" und "socket" haben optionalen Parameter icon2 für negative Zustände
-        - 29.06.2022 - V3.1.1 - Bugfix Github #286 (Active Page) + Bugfix pageThermo, pageMedia, pageAlarm as first Page
-        - 25.08.2022 - V3.1.0 - Code-Verbesserungen (klein0r)
-        - 26.08.2022 - V3.2.0 - pageItem mit CIE (XY) Parameter für ColorWheel (Steuerung für z.B Deconz-Farben bei denen Hue nicht greift)
-        - 28.08.2022 - V3.2.0 - Wechsel zwischen Weather-Forecast und eigenen Datenpunkten im Screensaver (minütlich)
-        - 28.08.2022 - V3.2.0 - Bugfix für 3.2.0 in GenerateDetailPage: Color-Language nicht über findLocales, da nicht in Sprachfile enthalten
-        - 29.08.2022 - V3.3.0 - Upgrade TFT 40
-        - 29.08.2022 - V3.3.1 - Upgrade TFT 41
-        - 04.09.2022 - V3.3.1 - Überarbeitung und BugFix für cardAlarm
-        - 13.09.2022 - V3.3.1.3 BugFix Screensaver Toggle
-        - 13.09.2022 - V3.3.1.3 Überarbeitung und BugFix und Refresh Features für cardMedia (Breaking Changes)
-        - 13.09.2022 - V3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
+        - 19.06.2022 - v3.1.0 - Bugfix toLocalTimeString in en-EN/en-US
+        - 19.06.2022 - v3.1.0 - Fehler in findLocale abgefangen
+        - 19.06.2022 - v3.1.0 - Umstellung auf "Home Assistant" Sprachfile
+        - 19.06.2022 - v3.1.0 - Alias "light" und "socket" haben optionalen Parameter icon2 für negative Zustände
+        - 29.06.2022 - v3.1.1 - Bugfix Github #286 (Active Page) + Bugfix pageThermo, pageMedia, pageAlarm as first Page
+        - 25.08.2022 - v3.1.0 - Code-Verbesserungen (klein0r)
+        - 26.08.2022 - v3.2.0 - pageItem mit CIE (XY) Parameter für ColorWheel (Steuerung für z.B Deconz-Farben bei denen Hue nicht greift)
+        - 28.08.2022 - v3.2.0 - Wechsel zwischen Weather-Forecast und eigenen Datenpunkten im Screensaver (minütlich)
+        - 28.08.2022 - v3.2.0 - Bugfix für 3.2.0 in GenerateDetailPage: Color-Language nicht über findLocales, da nicht in Sprachfile enthalten
+        - 29.08.2022 - v3.3.0 - Upgrade TFT 40
+        - 29.08.2022 - v3.3.1 - Upgrade TFT 41
+        - 04.09.2022 - v3.3.1 - Überarbeitung und BugFix für cardAlarm
+        - 13.09.2022 - v3.3.1.3 BugFix Screensaver Toggle
+        - 13.09.2022 - v3.3.1.3 Überarbeitung und BugFix und Refresh Features für cardMedia (Breaking Changes)
+        - 13.09.2022 - v3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
         - 15.09.2022 - V3.4.0 - BugFix Dimmode
         - 15.09.2022 - V3.4.0 - Colormode für Screensaver + AutoColor WeatherForecast
 	- 16.09.2022 - v3.4.0.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver + Bugfix Screensaver MRIcon2
@@ -45,7 +46,12 @@ ReleaseNotes:
         - 17.09.2022 - v3.4.0.3 Bugfix bNext / bPrev by joBr99
         - 18.09.2022 - v3.4.0.4 Add On/Off Colors in config.mrIcon1ScreensaverEntity and config.mrIcon2ScreensaverEntity
         - 19.09.2022 - v3.4.0.5 Add Mode to cardThermo (Alias Thermostat)
-	
+        - 03.10.2022 - v3.4.0.6 Add 5 Entities in US Panel Version to cardEntities
+        - 03.10.2022 - v3.4.0.6 Fix screenSaverDoubleClick
+        - 03.10.2022 - v3.4.0.6 Add cardPower (experimental)
+        - 05.10.2022 - v3.4.0.6 Add sueezeboxrpc to cardMedia
+        - 07.10.2022 - v3.4.0.6 Time-configurable change for screensaver icons
+
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
@@ -123,7 +129,7 @@ const Debug = false;
 // Variablen zur Steuerung der Wettericons auf dem Screensaver (Steuerung in 0_userdata.0.XPANELX.ScreensaverInfo)
 // Wenn weatherForecastTimer auf true, dann Wechsel zwischen Datenpunkten und Wettervorhersage (30 Sekunden nach Minute (Zeit))
 // Wenn weatherForecastTimer auf false, dann Möglichkeit über weatherForecast, ob Datenpunkte oder Wettervorhersage (true = WeatherForecast/false = Datenpunkte)
-var weatherForecast;
+var weatherForecast: boolean; //Änderung zum Video --> Einstellung siehe Wiki
 
 const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blau-Off   - Original
 const Off:              RGB = { red: 253, green: 128, blue:   0 };     // Orange-Off - schönere Farbübergänge
@@ -144,6 +150,19 @@ const colorAlexa:       RGB = { red:  49, green: 196, blue: 243 };
 const colorRadio:       RGB = { red: 255, green: 127, blue:   0 };
 const BatteryFull:      RGB = { red:  96, green: 176, blue:  62 };
 const BatteryEmpty:     RGB = { red: 179, green:  45, blue:  25 };
+
+//Dynamische Indikatoren
+const colorScale0:      RGB = { red:   99, green: 190, blue: 123 };
+const colorScale1:      RGB = { red:  129, green: 199, blue: 126 };
+const colorScale2:      RGB = { red:  161, green: 208, blue: 127 };
+const colorScale3:      RGB = { red:  129, green: 217, blue: 126 };
+const colorScale4:      RGB = { red:  222, green: 226, blue: 131 };
+const colorScale5:      RGB = { red:  254, green: 235, blue: 132 };
+const colorScale6:      RGB = { red:  255, green: 210, blue: 129 };
+const colorScale7:      RGB = { red:  251, green: 185, blue: 124 };
+const colorScale8:      RGB = { red:  251, green: 158, blue: 117 };
+const colorScale9:      RGB = { red:  248, green: 131, blue: 111 };
+const colorScale10:     RGB = { red:  248, green: 105, blue: 107 };
 
 //Screensaver Default Theme Colors
 const scbackground:     RGB = { red:   0, green:    0, blue:   0};
@@ -574,75 +593,89 @@ const request = require('request');
 //----------------------Begin Dimmode
 
 function ScreensaverDimmode(timeDimMode: DimMode) {
-    if (Debug) console.log('Dimmode='+ timeDimMode.dimmodeOn)
-    if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
-        if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
-            SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active });
-            if (Debug) console.log('Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active )
+    try {
+        if (Debug) console.log('Dimmode='+ timeDimMode.dimmodeOn)
+        if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
+            if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
+                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active });
+                if (Debug) console.log('Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active )
+            } else {
+                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active });
+                if (Debug) console.log('Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active )
+            }
         } else {
-            SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active });
-            if (Debug) console.log('Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active )
+            SendToPanel({ payload: 'dimmode~' + config.dimmode + '~' + config.active });
         }
-    } else {
-        SendToPanel({ payload: 'dimmode~' + config.dimmode + '~' + config.active });
-    }
+    } catch (err) {
+        console.warn('function ScreensaverDimmode: ' + err.message);
+    }     
 }
 
 async function InitWeatherForecast() {
-    //----Möglichkeit, im Screensaver zwischen Accu-Weather Forecast oder selbstdefinierten Werten zu wählen---------------------------------
-    if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false || existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false) {
-        await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean' });
-        await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
-    };
+    try {
+        //----Möglichkeit, im Screensaver zwischen Accu-Weather Forecast oder selbstdefinierten Werten zu wählen---------------------------------
+        if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false || 
+            existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false || 
+            existsState(NSPanel_Path + "ScreensaverInfo.entiiesChangeTime") == false) {
+            await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + "ScreensaverInfo.entiiesChangeTime", 60, { type: 'number' });
+        };
+    } catch (err) {
+        console.warn('function InitWeatherForecast: ' + err.message);
+    }      
 }
 
 InitWeatherForecast();
 
 async function InitDimmode() {
+    try {
+        // Screensaver nachts auf dunkel ("brightnessNight: z.B. 2") oder aus ("brightnessNight:0")
+        if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay')) {
+            await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.StateCommon>{ type: 'number' });
+            await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.State>{ val: 8, ack: true });
+        }
 
-    // Screensaver nachts auf dunkel ("brightnessNight: z.B. 2") oder aus ("brightnessNight:0")
-    if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay')) {
-        await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.StateCommon>{ type: 'number' });
-        await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.State>{ val: 8, ack: true });
-    }
+        if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_hourDay')) {
+            await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourDay', <iobJS.StateCommon>{ type: 'number' });
+            await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourDay', <iobJS.State>{ val: 7, ack: true });
+        }
 
-    if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_hourDay')) {
-        await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourDay', <iobJS.StateCommon>{ type: 'number' });
-        await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourDay', <iobJS.State>{ val: 7, ack: true });
-    }
+        if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight')) {
+            await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', <iobJS.StateCommon>{ type: 'number' });
+            await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', <iobJS.State>{ val: 1, ack: true });
+        }
 
-    if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight')) {
-        await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', <iobJS.StateCommon>{ type: 'number' });
-        await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', <iobJS.State>{ val: 1, ack: true });
-    }
+        if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_hourNight')) {
+            await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourNight', <iobJS.StateCommon>{ type: 'number' });
+            await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourNight', <iobJS.State>{ val: 22, ack: true });
+        }
 
-    if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_hourNight')) {
-        await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourNight', <iobJS.StateCommon>{ type: 'number' });
-        await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourNight', <iobJS.State>{ val: 22, ack: true });
-    }
+        const vTimeDay = getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val;
+        const vTimeNight = getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val;
 
-    const vTimeDay = getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val;
-    const vTimeNight = getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val;
+        const timeDimMode = <DimMode>{
+            dimmodeOn: true,
+            brightnessDay: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay').val,
+            brightnessNight: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight').val,
+            timeDay: (vTimeDay < 10) ? `0${vTimeDay}:00` : `${vTimeDay}:00`,
+            timeNight: (vTimeNight < 10) ? `0${vTimeNight}:00` : `${vTimeNight}:00`
+        };
 
-    const timeDimMode = <DimMode>{
-        dimmodeOn: true,
-        brightnessDay: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay').val,
-        brightnessNight: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight').val,
-        timeDay: (vTimeDay < 10) ? `0${vTimeDay}:00` : `${vTimeDay}:00`,
-        timeNight: (vTimeNight < 10) ? `0${vTimeNight}:00` : `${vTimeNight}:00`
-    };
+        // timeDimMode Day
+        schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val, minute: 0 }, () => {
+            ScreensaverDimmode(timeDimMode);
+        });
 
-    // timeDimMode Day
-    schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val, minute: 0 }, () => {
+        // timeDimMode Night
+        schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, () => {
+            ScreensaverDimmode(timeDimMode);
+        });
+
         ScreensaverDimmode(timeDimMode);
-    });
-
-    // timeDimMode Night
-    schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, () => {
-        ScreensaverDimmode(timeDimMode);
-    });
-
-    ScreensaverDimmode(timeDimMode);
+    } catch (err) {
+        console.warn('function InitDimmode: ' + err.message);
+    }  
 }
 
 InitDimmode();
@@ -663,53 +696,57 @@ const popupNotifySleepTimeout = NSPanel_Path + 'popupNotify.popupNotifySleepTime
 const popupNotifyAction = NSPanel_Path + 'popupNotify.popupNotifyAction'; // Antwort aus dem Panel true/false
 
 async function InitPopupNotify() {
-    if (!existsState(screensaverNotifyHeading)) {
-        await createStateAsync(screensaverNotifyHeading, <iobJS.StateCommon>{ type: 'string' });
-        await setStateAsync(screensaverNotifyHeading, <iobJS.State>{ val: '', ack: true });
-    }
-
-    if (!existsState(screensaverNotifyText)) {
-        await createStateAsync(screensaverNotifyText, <iobJS.StateCommon>{ type: 'string' });
-        await setStateAsync(screensaverNotifyText, <iobJS.State>{ val: '', ack: true });
-    }
-
-    await createStateAsync(popupNotifyHeading, <iobJS.StateCommon>{ type: 'string' });
-    await createStateAsync(popupNotifyText, <iobJS.StateCommon>{ type: 'string' });
-    await createStateAsync(popupNotifyInternalName, <iobJS.StateCommon>{ type: 'string' });
-    await createStateAsync(popupNotifyButton1Text, <iobJS.StateCommon>{ type: 'string' });
-    await createStateAsync(popupNotifyButton2Text, <iobJS.StateCommon>{ type: 'string' });
-    await createStateAsync(popupNotifySleepTimeout, <iobJS.StateCommon>{ type: 'number' });
-    await createStateAsync(popupNotifyAction, <iobJS.StateCommon>{ type: 'boolean' });
-
-    // Notification to screensaver
-    on({ id: [screensaverNotifyHeading, screensaverNotifyText], change: 'ne', ack: false }, async (obj) => {
-        const heading = getState(screensaverNotifyHeading).val;
-        const text = getState(screensaverNotifyText).val;
-
-        setIfExists(config.panelSendTopic, `notify~${heading}~${text}`);
-
-        if (obj.id) {
-            await setStateAsync(obj.id, <iobJS.State>{ val: obj.state.val, ack: true }); // ack new value
+    try {
+        if (!existsState(screensaverNotifyHeading)) {
+            await createStateAsync(screensaverNotifyHeading, <iobJS.StateCommon>{ type: 'string' });
+            await setStateAsync(screensaverNotifyHeading, <iobJS.State>{ val: '', ack: true });
         }
-    });
 
-    // popupNotify - Notification an separate Seite
-    on({ id: [popupNotifyInternalName], change: 'ne' }, async (obj) => {
-        var notification = 'entityUpdateDetail' + '~'
-            + getState(popupNotifyInternalName).val + '~'
-            + getState(popupNotifyHeading).val + '~'
-            + '65504' + '~' // Farbe Headline - gelb
-            + getState(popupNotifyButton1Text).val + '~'
-            + '63488' + '~' // Farbe Button1 - rot
-            + getState(popupNotifyButton2Text).val + '~'
-            + '2016' + '~' // Farbe Button2 - grün
-            + getState(popupNotifyText).val + '~'
-            + '65535' + '~' // Farbe Text - weiß
-            + getState(popupNotifySleepTimeout).val;
+        if (!existsState(screensaverNotifyText)) {
+            await createStateAsync(screensaverNotifyText, <iobJS.StateCommon>{ type: 'string' });
+            await setStateAsync(screensaverNotifyText, <iobJS.State>{ val: '', ack: true });
+        }
 
-        setIfExists(config.panelSendTopic, 'pageType~popupNotify');
-        setIfExists(config.panelSendTopic, notification);
-    });
+        await createStateAsync(popupNotifyHeading, <iobJS.StateCommon>{ type: 'string' });
+        await createStateAsync(popupNotifyText, <iobJS.StateCommon>{ type: 'string' });
+        await createStateAsync(popupNotifyInternalName, <iobJS.StateCommon>{ type: 'string' });
+        await createStateAsync(popupNotifyButton1Text, <iobJS.StateCommon>{ type: 'string' });
+        await createStateAsync(popupNotifyButton2Text, <iobJS.StateCommon>{ type: 'string' });
+        await createStateAsync(popupNotifySleepTimeout, <iobJS.StateCommon>{ type: 'number' });
+        await createStateAsync(popupNotifyAction, <iobJS.StateCommon>{ type: 'boolean' });
+
+        // Notification to screensaver
+        on({ id: [screensaverNotifyHeading, screensaverNotifyText], change: 'ne', ack: false }, async (obj) => {
+            const heading = getState(screensaverNotifyHeading).val;
+            const text = getState(screensaverNotifyText).val;
+
+            setIfExists(config.panelSendTopic, `notify~${heading}~${text}`);
+
+            if (obj.id) {
+                await setStateAsync(obj.id, <iobJS.State>{ val: obj.state.val, ack: true }); // ack new value
+            }
+        });
+
+        // popupNotify - Notification an separate Seite
+        on({ id: [popupNotifyInternalName], change: 'ne' }, async (obj) => {
+            var notification = 'entityUpdateDetail' + '~'
+                + getState(popupNotifyInternalName).val + '~'
+                + getState(popupNotifyHeading).val + '~'
+                + '65504' + '~' // Farbe Headline - gelb
+                + getState(popupNotifyButton1Text).val + '~'
+                + '63488' + '~' // Farbe Button1 - rot
+                + getState(popupNotifyButton2Text).val + '~'
+                + '2016' + '~' // Farbe Button2 - grün
+                + getState(popupNotifyText).val + '~'
+                + '65535' + '~' // Farbe Text - weiß
+                + getState(popupNotifySleepTimeout).val;
+
+            setIfExists(config.panelSendTopic, 'pageType~popupNotify');
+            setIfExists(config.panelSendTopic, notification);
+        });
+    } catch (err) {
+        console.warn('function InitPopupNotify: ' + err.message);
+    }   
 }
 
 InitPopupNotify();
@@ -721,30 +758,51 @@ let pageId = 0;
 // Neu für Subpages
 let activePage = undefined;
 
+//Uhrzeit an NSPanel senden
 schedule('* * * * *', () => {
-    SendTime();
-    //WeatherForcast true/false Umschaltung halbe Minute verzögert
-    if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
-        setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, 30000, false); 
-    } else if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == false && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
-        setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, 30000, false);
-    }
+    try {
+        SendTime();
+    } catch (err) {
+        console.warn('schedule: ' + err.message);
+    }   
+});
+
+//Wechsel zwischen Screensaver Enities und WeatherForecast
+schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entiiesChangeTime').val +  ' * * * * *', () => {
+    try {
+        //WeatherForcast true/false Umschaltung verzögert
+        if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
+            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, (getState(NSPanel_Path + 'ScreensaverInfo.entiiesChangeTime').val / 2 * 1000), false); 
+        } else if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == false && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
+            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, (getState(NSPanel_Path + 'ScreensaverInfo.entiiesChangeTime').val / 2 * 1000), false);
+        }
+    } catch (err) {
+        console.warn('schedule: ' + err.message);
+    }   
 });
 
 function InitHWButton1Color() {
-    if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null || config.mrIcon1ScreensaverEntity.ScreensaverEntity != undefined) {
-        on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
-            HandleScreensaverUpdate();
-        });
-    }
+    try {
+        if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null || config.mrIcon1ScreensaverEntity.ScreensaverEntity != undefined) {
+            on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+                HandleScreensaverUpdate();
+            });
+        }
+    } catch (err) {
+        console.warn('function InitHWButton1Color: ' + err.message);
+    }    
 }
 InitHWButton1Color();
 
 function InitHWButton2Color() {
-    if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null || config.mrIcon2ScreensaverEntity.ScreensaverEntity != undefined) {
-        on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
-            HandleScreensaverUpdate();
-        });
+    try {
+        if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null || config.mrIcon2ScreensaverEntity.ScreensaverEntity != undefined) {
+            on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+                HandleScreensaverUpdate();
+            });
+        }
+    } catch (err) {
+        console.warn('function InitHWButton2Color: ' + err.message);
     }
 }
 InitHWButton2Color();
@@ -764,8 +822,8 @@ schedule({ hour: 3, minute: 30 }, async () => {
     await setStateAsync(config.panelSendTopic, 'pageType~pageStartup');
 });
 
-// Updates vergleichen aktuell alle 30 Minuten
-schedule('*/30 * * * *', () => {
+// Updates vergleichen aktuell alle 12 Stunden
+schedule('{"time":{"start":"00:00","end":"23:59","mode":"hours","interval":12},"period":{"days":1}}', () => {
     get_tasmota_status0();
     get_panel_update_data();
     check_updates();
@@ -804,159 +862,175 @@ function get_locales() {
 }
 
 async function check_updates() {
-    const desired_display_firmware_version = 42;
-    const berry_driver_version = 4;
+    try {
+        const desired_display_firmware_version = 42;
+        const berry_driver_version = 4;
 
-    if (Debug) console.log('Check-Updates');
-    // Tasmota-Firmware-Vergleich
-    if (existsObject(NSPanel_Path + 'Tasmota_Firmware.currentVersion') && existsObject(NSPanel_Path + 'Tasmota_Firmware.onlineVersion')) {
-        if (getState(NSPanel_Path + 'Tasmota_Firmware.currentVersion').val !== getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val) {
-            if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
-                if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
-                    if (Debug) console.log('Auto-Updates eingeschaltet - Update wird durchgeführt');
-                    // Tasmota Upgrade durchführen
-                    update_tasmota_firmware();
-                    // Aktuelle Tasmota Version = Online Tasmota Version
+        if (Debug) console.log('Check-Updates');
+        // Tasmota-Firmware-Vergleich
+        if (existsObject(NSPanel_Path + 'Tasmota_Firmware.currentVersion') && existsObject(NSPanel_Path + 'Tasmota_Firmware.onlineVersion')) {
+            if (getState(NSPanel_Path + 'Tasmota_Firmware.currentVersion').val !== getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val) {
+                if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
+                    if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
+                        if (Debug) console.log('Auto-Updates eingeschaltet - Update wird durchgeführt');
+                        // Tasmota Upgrade durchführen
+                        update_tasmota_firmware();
+                        // Aktuelle Tasmota Version = Online Tasmota Version
 
-                    await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val, ack: true });
-                } else {
-                    // Auf Tasmota-Updates hinweisen
-                    if (Debug) console.log('Automatische Updates aus');
+                        await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val, ack: true });
+                    } else {
+                        // Auf Tasmota-Updates hinweisen
+                        if (Debug) console.log('Automatische Updates aus');
 
-                    const InternalName = 'TasmotaFirmwareUpdate';
-                    const Headline = 'Tasmota-Firmware Update';
-                    const Text = ['Es ist eine neue Version der Tasmota-Firmware', '\r\n', 'verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.onlineVersion')).val), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
-                    const Button1 = 'Nein';
-                    const Button2 = 'Ja';
-                    const Timeout = 0;
+                        const InternalName = 'TasmotaFirmwareUpdate';
+                        const Headline = 'Tasmota-Firmware Update';
+                        const Text = ['Es ist eine neue Version der Tasmota-Firmware', '\r\n', 'verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.onlineVersion')).val), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
+                        const Button1 = 'Nein';
+                        const Button2 = 'Ja';
+                        const Timeout = 0;
 
-                    await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
-                    await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
-                    await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
-                    await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
-                    await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
-                    await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+                        await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
+                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
+                        await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
+                        await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
+                        await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
+                        await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+                    }
                 }
+            } else {
+                if (Debug) console.log('Tasmota-Version auf NSPanel aktuell');
             }
-        } else {
-            if (Debug) console.log('Tasmota-Version auf NSPanel aktuell');
         }
-    }
 
-    // Tasmota-Berry-Driver-Vergleich
-    if (existsObject(NSPanel_Path + 'Berry_Driver.currentVersion')) {
-        if (getState(NSPanel_Path + 'Berry_Driver.currentVersion').val < berry_driver_version) {
-            if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
-                if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
-                    // Tasmota Berry-Driver Update durchführen
-                    update_berry_driver_version();
-                    // Aktuelle Berry-Driver Version = Online Berry-Driver Version
-                    await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Berry_Driver.onlineVersion').val, ack: true });
+        // Tasmota-Berry-Driver-Vergleich
+        if (existsObject(NSPanel_Path + 'Berry_Driver.currentVersion')) {
+            if (getState(NSPanel_Path + 'Berry_Driver.currentVersion').val < berry_driver_version) {
+                if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
+                    if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
+                        // Tasmota Berry-Driver Update durchführen
+                        update_berry_driver_version();
+                        // Aktuelle Berry-Driver Version = Online Berry-Driver Version
+                        await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Berry_Driver.onlineVersion').val, ack: true });
 
-                    if (Debug) console.log('Berry-Driver automatisch aktualisiert');
-                } else {
-                    //Auf BerryDriver-Update hinweisen
-                    if (Debug) console.log('Automatische Updates aus');
+                        if (Debug) console.log('Berry-Driver automatisch aktualisiert');
+                    } else {
+                        //Auf BerryDriver-Update hinweisen
+                        if (Debug) console.log('Automatische Updates aus');
 
-                    const InternalName = 'BerryDriverUpdate';
-                    const Headline = 'Berry-Driver Update';
-                    const Text = ['Es ist eine neue Version des Berry-Drivers', '\r\n', '(Tasmota) verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Berry_Driver.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(berry_driver_version), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
-                    const Button1 = 'Nein';
-                    const Button2 = 'Ja';
-                    const Timeout = 0;
+                        const InternalName = 'BerryDriverUpdate';
+                        const Headline = 'Berry-Driver Update';
+                        const Text = ['Es ist eine neue Version des Berry-Drivers', '\r\n', '(Tasmota) verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Berry_Driver.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(berry_driver_version), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
+                        const Button1 = 'Nein';
+                        const Button2 = 'Ja';
+                        const Timeout = 0;
 
-                    await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
-                    await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
-                    await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
-                    await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
-                    await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
-                    await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+                        await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
+                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
+                        await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
+                        await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
+                        await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
+                        await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+                    }
                 }
+            } else {
+                if (Debug) console.log('Berry-Driver auf NSPanel aktuell');
             }
-        } else {
-            if (Debug) console.log('Berry-Driver auf NSPanel aktuell');
         }
-    }
 
-    // TFT-Firmware-Vergleich
-    if (existsObject(NSPanel_Path + 'Display_Firmware.currentVersion')) {
-        if (parseInt(getState(NSPanel_Path + 'Display_Firmware.currentVersion').val) < desired_display_firmware_version) {
-            if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
-                if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
-                    // TFT-Firmware Update durchführen
-                    update_tft_firmware();
-                    // Aktuelle TFT-Firmware Version = Online TFT-Firmware Version
-                    await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Display_Firmware.onlineVersion').val, ack: true });
+        // TFT-Firmware-Vergleich
+        if (existsObject(NSPanel_Path + 'Display_Firmware.currentVersion')) {
+            if (parseInt(getState(NSPanel_Path + 'Display_Firmware.currentVersion').val) < desired_display_firmware_version) {
+                if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
+                    if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
+                        // TFT-Firmware Update durchführen
+                        update_tft_firmware();
+                        // Aktuelle TFT-Firmware Version = Online TFT-Firmware Version
+                        await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Display_Firmware.onlineVersion').val, ack: true });
 
-                    if (Debug) console.log('Display_Firmware automatisch aktualisiert');
-                } else {
-                    // Auf TFT-Firmware hinweisen
-                    if (Debug) console.log('Automatische Updates aus');
+                        if (Debug) console.log('Display_Firmware automatisch aktualisiert');
+                    } else {
+                        // Auf TFT-Firmware hinweisen
+                        if (Debug) console.log('Automatische Updates aus');
 
-                    const InternalName = 'TFTFirmwareUpdate';
-                    const Headline = 'TFT-Firmware Update';
-                    const Text = ['Es ist eine neue Version der TFT-Firmware', '\r\n', 'verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Display_Firmware.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(desired_display_firmware_version), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
-                    const Button1 = 'Nein';
-                    const Button2 = 'Ja';
-                    const Timeout = 0;
+                        const InternalName = 'TFTFirmwareUpdate';
+                        const Headline = 'TFT-Firmware Update';
+                        const Text = ['Es ist eine neue Version der TFT-Firmware', '\r\n', 'verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Display_Firmware.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(desired_display_firmware_version), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
+                        const Button1 = 'Nein';
+                        const Button2 = 'Ja';
+                        const Timeout = 0;
 
-                    await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
-                    await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
-                    await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
-                    await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
-                    await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
-                    await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+                        await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
+                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
+                        await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
+                        await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
+                        await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
+                        await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+                    }
                 }
+            } else {
+                if (Debug) console.log('Display_Firmware auf NSPanel aktuell');
             }
-        } else {
-            if (Debug) console.log('Display_Firmware auf NSPanel aktuell');
         }
+    } catch (err) {
+        console.warn('function check_updates: ' + err.message);
     }
 }
 
 on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async function (obj) {
-    const val = obj.state ? obj.state.val : false;
+    try {
+        const val = obj.state ? obj.state.val : false;
 
-    if (!val) {
-        manually_Update = false;
-        if (Debug) console.log('Es wurde Button1 gedrückt');
-    } else if (val) {
-        if (manually_Update) {
-            const internalName = getState(NSPanel_Path + 'popupNotify.popupNotifyInternalName').val;
+        if (!val) {
+            manually_Update = false;
+            if (Debug) console.log('Es wurde Button1 gedrückt');
+        } else if (val) {
+            if (manually_Update) {
+                const internalName = getState(NSPanel_Path + 'popupNotify.popupNotifyInternalName').val;
 
-            if (internalName == 'TasmotaFirmwareUpdate') {
-                update_tasmota_firmware();
-            } else if (internalName == 'BerryDriverUpdate') {
-                update_berry_driver_version();
-            } else if (internalName == 'TFTFirmwareUpdate') {
-                update_tft_firmware();
+                if (internalName == 'TasmotaFirmwareUpdate') {
+                    update_tasmota_firmware();
+                } else if (internalName == 'BerryDriverUpdate') {
+                    update_berry_driver_version();
+                } else if (internalName == 'TFTFirmwareUpdate') {
+                    update_tft_firmware();
+                }
             }
-        }
 
-        if (Debug) console.log('Es wurde Button2 gedrückt');
+            if (Debug) console.log('Es wurde Button2 gedrückt');
+        }
+    } catch (err) {
+        console.warn('Trigger popupNotifyAction: ' + err.message);
     }
 });
 
 async function get_panel_update_data() {
-    await createStateAsync(NSPanel_Path + 'NSPanel_autoUpdate', false, <iobJS.StateCommon>{ read: true, write: true, name: 'Auto-Update', type: 'boolean', def: false });
+    try {
+        await createStateAsync(NSPanel_Path + 'NSPanel_autoUpdate', false, <iobJS.StateCommon>{ read: true, write: true, name: 'Auto-Update', type: 'boolean', def: false });
 
-    await createStateAsync(NSPanel_Path + 'NSPanel_ipAddress', <iobJS.StateCommon>{ type: 'string' });
-    await setStateAsync(NSPanel_Path + 'NSPanel_ipAddress', <iobJS.State>{ val: get_current_tasmota_ip_address(), ack: true });
+        await createStateAsync(NSPanel_Path + 'NSPanel_ipAddress', <iobJS.StateCommon>{ type: 'string' });
+        await setStateAsync(NSPanel_Path + 'NSPanel_ipAddress', <iobJS.State>{ val: get_current_tasmota_ip_address(), ack: true });
 
-    get_online_tasmota_firmware_version();
-    get_current_berry_driver_version();
-    get_online_berry_driver_version();
-    check_version_tft_firmware();
-    check_online_display_firmware();
+        get_online_tasmota_firmware_version();
+        get_current_berry_driver_version();
+        get_online_berry_driver_version();
+        check_version_tft_firmware();
+        check_online_display_firmware();
+    } catch (err) {
+        console.warn('function get_panel_update_data: ' + err.message);
+    }
 }
 
 function get_current_tasmota_ip_address() {
-    const infoObjId = config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESULT'.length) + 'INFO2';
-    const infoObj = JSON.parse(getState(infoObjId).val);
+    try {
+        const infoObjId = config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESULT'.length) + 'INFO2';
+        const infoObj = JSON.parse(getState(infoObjId).val);
 
-    if (Debug) console.log(`get_current_tasmota_ip_address: ${infoObj.Info2.IPAddress}`);
+        if (Debug) console.log(`get_current_tasmota_ip_address: ${infoObj.Info2.IPAddress}`);
 
-    return infoObj.Info2.IPAddress;
+        return infoObj.Info2.IPAddress;
+    } catch (err) {
+        console.warn('function get_current_tasmota_ip_address: ' + err.message);
+    }
 }
 
 function get_online_tasmota_firmware_version() {
@@ -1222,535 +1296,589 @@ on({ id: config.panelRecvTopic }, function (obj) {
                 var split = json.CustomRecv.split(',');
                 HandleMessage(split[0], split[1], parseInt(split[2]), split);
             } catch (err) {
-                console.error(err);
+                console.warn(err.message);
             }
         }
     } catch (err) {
-        console.log(err);
+        console.warn('Trigger panelRecTopic: ' + err.message);
     }
 });
 
 function SendToPanel(val: Payload | Payload[]): void {
-    if (Array.isArray(val)) {
-        val.forEach(function (id, i) {
-            setState(config.panelSendTopic, id.payload);
-            if (Debug) console.log(id.payload);
-        });
-    } else {
-        setState(config.panelSendTopic, val.payload);
+    try {
+        if (Array.isArray(val)) {
+            val.forEach(function (id, i) {
+                setState(config.panelSendTopic, id.payload);
+                if (Debug) console.log(id.payload);
+            });
+        } else {
+            setState(config.panelSendTopic, val.payload);
+        }
+    } catch (err) {
+        console.warn('function SendToPanel: ' + err.message);
     }
 }
 
 on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) => {
-    if ((obj.state ? obj.state.val : '') == 'armed' || (obj.state ? obj.state.val : '') == 'disarmed' || (obj.state ? obj.state.val : '') == 'triggered') {
-        if (Debug) console.log(activePage);
-        if (NSPanel_Path == getState(NSPanel_Alarm_Path + 'Alarm.PANEL').val) {
-            GeneratePage(activePage);
+    try {
+        if ((obj.state ? obj.state.val : '') == 'armed' || (obj.state ? obj.state.val : '') == 'disarmed' || (obj.state ? obj.state.val : '') == 'triggered') {
+            if (Debug) console.log(activePage);
+            if (NSPanel_Path == getState(NSPanel_Alarm_Path + 'Alarm.PANEL').val) {
+                GeneratePage(activePage);
+            }
         }
+    } catch (err) {
+        console.warn('Trigger AlarmState: ' + err.message);
     }
 });
 
 function HandleMessage(typ: string, method: string, page: number, words: Array<string>): void {
-    if (typ == 'event') {
-        switch (method) {
-            case 'startup':
-                screensaverEnabled = false;
-                UnsubscribeWatcher();
-                HandleStartupProcess();
-                pageId = 0;
-                GeneratePage(config.pages[0]);
-                break;
-            case 'sleepReached':
-                screensaverEnabled = true;
-                if (pageId < 0)
+    try {
+        if (typ == 'event') {
+            switch (method) {
+                case 'startup':
+                    screensaverEnabled = false;
+                    UnsubscribeWatcher();
+                    HandleStartupProcess();
                     pageId = 0;
-                HandleScreensaver();
-                break;
-            case 'pageOpenDetail':
-                screensaverEnabled = false;
-                UnsubscribeWatcher();
-                let pageItem = findPageItem(words[3]);
-                if (pageItem !== undefined)
-                    SendToPanel(GenerateDetailPage(words[2], pageItem));  
-            case 'buttonPress2':
-                screensaverEnabled = false;
-                HandleButtonEvent(words);
-                if (Debug) console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
-                break;
-            case 'button1':
-            case 'button2':
-                screensaverEnabled = false;
-                HandleHardwareButton(method);
-            default:
-                break;
+                    GeneratePage(config.pages[0]);
+                    break;
+                case 'sleepReached':
+                    screensaverEnabled = true;
+                    if (pageId < 0)
+                        pageId = 0;
+                    HandleScreensaver();
+                    break;
+                case 'pageOpenDetail':
+                    screensaverEnabled = false;
+                    UnsubscribeWatcher();
+                    let pageItem = findPageItem(words[3]);
+                    if (pageItem !== undefined)
+                        SendToPanel(GenerateDetailPage(words[2], pageItem));  
+                case 'buttonPress2':
+                    screensaverEnabled = false;
+                    HandleButtonEvent(words);
+                    if (Debug) console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                    break;
+                case 'button1':
+                case 'button2':
+                    screensaverEnabled = false;
+                    HandleHardwareButton(method);
+                default:
+                    break;
+            }
         }
+    } catch (err) {
+        console.warn('function HandleMessage: ' + err.message);
     }
 }
 
 function findPageItem(searching: String): PageItem {
-    let pageItem = activePage.items.find(e => e.id === searching);
+    try {
 
-    if (pageItem !== undefined) {
-        return pageItem;
-    }
+        let pageItem = activePage.items.find(e => e.id === searching);
 
-    config.subPages.every(sp => {
-        pageItem = sp.items.find(e => e.id === searching);
         if (pageItem !== undefined) {
-            return false;
+            return pageItem;
         }
-        return true;
-    });
 
-    return pageItem;
+        config.subPages.every(sp => {
+            pageItem = sp.items.find(e => e.id === searching);
+            if (pageItem !== undefined) {
+                return false;
+            }
+            return true;
+        });
+
+        return pageItem;
+    } catch (err) {
+        console.warn('function findPageItem: ' + err.message);
+    }
 }
 
 function GeneratePage(page: Page): void {
-    activePage = page;
-    switch (page.type) {
-        case 'cardEntities':
-            SendToPanel(GenerateEntitiesPage(<PageEntities>page));
-            break;
-        case 'cardThermo':
-            SendToPanel(GenerateThermoPage(<PageThermo>page));
-            break;
-        case 'cardGrid':
-            SendToPanel(GenerateGridPage(<PageGrid>page));
-            break;
-        case 'cardMedia':
-            SendToPanel(GenerateMediaPage(<PageMedia>page));
-            break;
-        case 'cardAlarm':
-            SendToPanel(GenerateAlarmPage(<PageAlarm>page));
-            break;
-        case 'cardQR':
-            SendToPanel(GenerateQRPage(<PageQR>page));
-            break;
-        case 'cardPower':
-            SendToPanel(GeneratePowerPage(<PagePower>page));
-            break;
+    try {
+        activePage = page;
+        switch (page.type) {
+            case 'cardEntities':
+                SendToPanel(GenerateEntitiesPage(<PageEntities>page));
+                break;
+            case 'cardThermo':
+                SendToPanel(GenerateThermoPage(<PageThermo>page));
+                break;
+            case 'cardGrid':
+                SendToPanel(GenerateGridPage(<PageGrid>page));
+                break;
+            case 'cardMedia':
+                SendToPanel(GenerateMediaPage(<PageMedia>page));
+                break;
+            case 'cardAlarm':
+                SendToPanel(GenerateAlarmPage(<PageAlarm>page));
+                break;
+            case 'cardQR':
+                SendToPanel(GenerateQRPage(<PageQR>page));
+                break;
+            case 'cardPower':
+                SendToPanel(GeneratePowerPage(<PagePower>page));
+                break;
+        }
+    } catch (err) {
+        console.warn('function GeneratePage: ' + err.message);
     }
 }
 
 function HandleHardwareButton(method: string): void {
-    let page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | PageQR | PagePower);
-    if (config.button1Page !== null && method == 'button1') {
-        page = config.button1Page;
-        pageId = -1;
-    } else if (config.button2Page !== null && method == 'button2') {
-        page = config.button2Page;
-        pageId = -2;
-    } else {
-        return;
-    }
+    try {    
+        let page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | PageQR | PagePower);
+        if (config.button1Page !== null && method == 'button1') {
+            page = config.button1Page;
+            pageId = -1;
+        } else if (config.button2Page !== null && method == 'button2') {
+            page = config.button2Page;
+            pageId = -2;
+        } else {
+            return;
+        }
 
-    GeneratePage(page);
+        GeneratePage(page);
+    } catch (err) {
+        console.warn('function HandleHardwareButton: ' + err.message);
+    }
 }
 
 function HandleStartupProcess(): void {
     SendDate();
     SendTime();
     SendToPanel({ payload: 'timeout~' + config.timeoutScreensaver });
-    //SendToPanel({ payload: 'dimmode~' + config.dimmode + '~' + config.active });
 }
 
 function SendDate(): void {
-    const date = new Date();
-    const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const _SendDate = date.toLocaleDateString(config.locale, options);
+    try {
+        const date = new Date();
+        const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const _SendDate = date.toLocaleDateString(config.locale, options);
 
-    SendToPanel(<Payload>{ payload: 'date~' + _SendDate });
+        SendToPanel(<Payload>{ payload: 'date~' + _SendDate });
+    } catch (err) {
+        console.warn('function SendDate: ' + err.message);
+    }
 }
 
 function SendTime(): void {
-    const d = new Date();
-    const hr = (d.getHours() < 10 ? '0' : '') + d.getHours();
-    const min = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+    try {
+        const d = new Date();
+        const hr = (d.getHours() < 10 ? '0' : '') + d.getHours();
+        const min = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
-    SendToPanel(<Payload>{ payload: 'time~' + hr + ':' + min });
+        SendToPanel(<Payload>{ payload: 'time~' + hr + ':' + min });
+    } catch (err) {
+        console.warn('function SendTime: ' + err.message);
+    }
 }
 
 function GenerateEntitiesPage(page: PageEntities): Payload[] {
-    var out_msgs: Array<Payload> = [];
-    out_msgs = [{ payload: 'pageType~cardEntities' }]
-    out_msgs.push({ payload: GeneratePageElements(page) });
-    return out_msgs
+    try {
+        var out_msgs: Array<Payload> = [];
+        out_msgs = [{ payload: 'pageType~cardEntities' }]
+        out_msgs.push({ payload: GeneratePageElements(page) });
+        return out_msgs
+    } catch (err) {
+        console.warn('function GenerateEntitiesPage: ' + err.message);
+    }
 }
 
 function GenerateGridPage(page: PageGrid): Payload[] {
-    var out_msgs: Array<Payload> = [];
-    out_msgs = [{ payload: 'pageType~cardGrid' }]
-    out_msgs.push({ payload: GeneratePageElements(page) });
-    return out_msgs
+    try {
+        var out_msgs: Array<Payload> = [];
+        out_msgs = [{ payload: 'pageType~cardGrid' }]
+        out_msgs.push({ payload: GeneratePageElements(page) });
+        return out_msgs
+    } catch (err) {
+        console.warn('function GenerateGridPage: ' + err.message);
+    }
 }
 
 function GeneratePageElements(page: Page): string {
-    activePage = page;
-    let maxItems = 0;
-    switch (page.type) {
-        case 'cardThermo':
-            maxItems = 1;
-            break;
-        case 'cardAlarm':
-            maxItems = 1;
-            break;
-        case 'cardMedia':
-            maxItems = 1;
-            break;
-        case 'cardQR':
-            maxItems = 1;
-            break;
-        case 'cardEntities':
-            maxItems = 4;
-            break;
-        case 'cardGrid':
-            maxItems = 6;
-            break;
-    }
-
-    let pageData = 'entityUpd~' + page.heading + '~' + GetNavigationString(pageId);
-
-    for (let index = 0; index < maxItems; index++) {
-        if (page.items[index] !== undefined) {
-            pageData += CreateEntity(page.items[index], index + 1, page.useColor);
+    try {
+        activePage = page;
+        let maxItems = 0;
+        switch (page.type) {
+            case 'cardThermo':
+                maxItems = 1;
+                break;
+            case 'cardAlarm':
+                maxItems = 1;
+                break;
+            case 'cardMedia':
+                maxItems = 1;
+                break;
+            case 'cardQR':
+                maxItems = 1;
+                break;
+            case 'cardEntities':
+                if (getState(NSPanel_Path + 'NSPanel_Version').val == 'eu') {
+                    maxItems = 4;
+                } else {
+                    maxItems = 5;
+                }
+                break;
+            case 'cardGrid':
+                maxItems = 6;
+                break;
         }
+
+        let pageData = 'entityUpd~' + page.heading + '~' + GetNavigationString(pageId);
+
+        for (let index = 0; index < maxItems; index++) {
+            if (page.items[index] !== undefined) {
+                pageData += CreateEntity(page.items[index], index + 1, page.useColor);
+            }
+        }
+        return pageData;
+    } catch (err) {
+        console.warn('function GeneratePageElements: ' + err.message);
     }
-    return pageData;
 }
 
 function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = false): string {
-    var iconId = '0';
-    if (pageItem.id == 'delete') {
-        return '~delete~~~~~';
-    }
-
-    var name: string;
-    var type: string;
-
-    // ioBroker
-    if (existsObject(pageItem.id) || pageItem.navigate === true) {
-        var iconColor = rgb_dec565(config.defaultColor);
-
-        if (pageItem.navigate) {
-            type = 'button';
-            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
-            iconColor = GetIconColor(pageItem, true, useColors);
-            let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
-            return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;
+    try {
+        var iconId = '0';
+        if (pageItem.id == 'delete') {
+            return '~delete~~~~~';
         }
 
-        let o = getObject(pageItem.id)
-        var val = null;
+        var name: string;
+        var type: string;
 
-        if (existsState(pageItem.id + '.GET')) {
-            val = getState(pageItem.id + '.GET').val;
-            RegisterEntityWatcher(pageItem.id + '.GET');
-        } else if (existsState(pageItem.id + '.SET')) {
-            val = getState(pageItem.id + '.SET').val;
-            RegisterEntityWatcher(pageItem.id + '.SET');
-        }
+        // ioBroker
+        if (existsObject(pageItem.id) || pageItem.navigate === true) {
+            var iconColor = rgb_dec565(config.defaultColor);
 
-        // Fallback if no name is given
-        name = pageItem.name !== undefined ? pageItem.name : o.common.name.de;
-
-        switch (o.common.role) {
-            case 'socket':
-            case 'light':
-                type = 'light';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-                var iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-                var optVal = '0';
-
-                if (val === true || val === 'true') {
-                    optVal = '1';
-                    iconColor = GetIconColor(pageItem, true, useColors);
-                } else {
-                    iconColor = GetIconColor(pageItem, false, useColors);
-                    if (pageItem.icon !== undefined) {
-                        if (pageItem.icon2 !== undefined) {
-                            iconId = iconId2;
-                        }
-                    }
-                }
-
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
-
-            case 'hue':
-                type = 'light';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                var optVal = '0';
-
-                if (existsState(pageItem.id + '.ON_ACTUAL')) {
-                    val = getState(pageItem.id + '.ON_ACTUAL').val;
-                    RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
-                }
-
-                if (val === true || val === 'true') {
-                    optVal = '1';
-                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
-                }
-
-                if (existsState(pageItem.id + '.HUE')) {
-                    if (getState(pageItem.id + '.HUE').val != null) {
-                        let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
-                        let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) };
-                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                        // RegisterDetailEntityWatcher(id + '.HUE');
-                    }
-                }
-
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
-
-            case 'ct':
-                type = 'light';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                var optVal = '0';
-
-                if (existsState(pageItem.id + '.ON')) {
-                    val = getState(pageItem.id + '.ON').val;
-                    RegisterEntityWatcher(pageItem.id + '.ON');
-                }
-
-                if (val === true || val === 'true') {
-                    optVal = '1';
-                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
-                }
-
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
-
-            case 'rgb':
-                type = 'light';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                var optVal = '0';
-
-                if (existsState(pageItem.id + '.ON_ACTUAL')) {
-                    val = getState(pageItem.id + '.ON_ACTUAL').val;
-                    RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
-                }
-
-                if (val === true || val === 'true') {
-                    optVal = '1';
-                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
-                }
-
-                if (existsState(pageItem.id + '.RED') && existsState(pageItem.id + '.GREEN') && existsState(pageItem.id + '.BLUE')) {
-                    if (getState(pageItem.id + '.RED').val != null && getState(pageItem.id + '.GREEN').val != null && getState(pageItem.id + '.BLUE').val != null) {
-                        let rgbRed = getState(pageItem.id + '.RED').val;
-                        let rgbGreen = getState(pageItem.id + '.GREEN').val;
-                        let rgbBlue = getState(pageItem.id + '.BLUE').val;
-                        let rgb = <RGB>{ red: Math.round(rgbRed), green: Math.round(rgbGreen), blue: Math.round(rgbBlue) };
-                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                    }
-                }
-
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
-
-            case 'rgbSingle':
-                type = 'light';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                var optVal = '0';
-
-                if (existsState(pageItem.id + '.ON_ACTUAL')) {
-                    val = getState(pageItem.id + '.ON_ACTUAL').val;
-                    RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
-                }
-
-                if (val === true || val === 'true') {
-                    optVal = '1'
-                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
-                }
-
-                if (existsState(pageItem.id + '.RGB')) {
-                    if (getState(pageItem.id + '.RGB').val != null) {
-                        var hex = getState(pageItem.id + '.RGB').val;
-                        var hexRed = parseInt(hex[1] + hex[2], 16);
-                        var hexGreen = parseInt(hex[3] + hex[4], 16);
-                        var hexBlue = parseInt(hex[5] + hex[6], 16);
-                        let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) };
-                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                    }
-                }
-
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
-
-            case 'dimmer':
-                type = 'light';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                var optVal = '0';
-
-                if (existsState(pageItem.id + '.ON_ACTUAL')) {
-                    val = getState(pageItem.id + '.ON_ACTUAL').val;
-                    RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
-                } else if (existsState(pageItem.id + '.ON_SET')) {
-                    val = getState(pageItem.id + '.ON_SET').val;
-                    RegisterEntityWatcher(pageItem.id + '.ON_SET');
-                }
-
-                if (val === true || val === 'true') {
-                    optVal = '1';
-                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? 100 - getState(pageItem.id + '.ACTUAL').val : true, useColors);
-                }
-
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
-
-            case 'blind':
-                type = 'shutter';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
-                iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
-
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~';
-
-            case 'door':
-            case 'window':
-                type = 'text';
-
-                if (existsState(pageItem.id + '.ACTUAL')) {
-                    if (getState(pageItem.id + '.ACTUAL').val) {
-                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
-                        iconColor = GetIconColor(pageItem, false, useColors);
-                        var windowState = findLocale('window', 'opened');
-                    } else {
-                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
-                        //iconId = Icons.GetIcon('window-closed-variant');
-                        iconColor = GetIconColor(pageItem, true, useColors);
-                        var windowState = findLocale('window', 'closed');
-                    }
-
-                    RegisterEntityWatcher(pageItem.id + '.ACTUAL');
-                }
-
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
-
-            case 'info':
-
-            case 'humidity':
-
-            case 'temperature':
-
-            case 'value.temperature':
-
-            case 'value.humidity':
-
-            case 'sensor.door':
-
-            case 'sensor.window':
-
-            case 'thermostat':
-                type = 'text';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
-                let unit = '';
-                var optVal = '0';
-
-                if (existsState(pageItem.id + '.ON_ACTUAL')) {
-                    optVal = getState(pageItem.id + '.ON_ACTUAL').val;
-                    unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ON_ACTUAL');
-                    RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
-                } else if (existsState(pageItem.id + '.ACTUAL')) {
-                    optVal = getState(pageItem.id + '.ACTUAL').val;
-                    unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ACTUAL');
-                    RegisterEntityWatcher(pageItem.id + '.ACTUAL');
-                }
-
-                if (o.common.role == 'value.temperature') {
-                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('thermometer');
-                }
-
-                iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
-
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
-
-            case 'buttonSensor':
-            case 'button':
+            if (pageItem.navigate) {
                 type = 'button';
                 iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
                 iconColor = GetIconColor(pageItem, true, useColors);
                 let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+                return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;
+            }
 
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
+            let o = getObject(pageItem.id)
+            var val = null;
 
-            case 'lock':
-                type = 'button';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock');
-                iconColor = GetIconColor(pageItem, true, useColors);
+            if (existsState(pageItem.id + '.GET')) {
+                val = getState(pageItem.id + '.GET').val;
+                RegisterEntityWatcher(pageItem.id + '.GET');
+            } else if (existsState(pageItem.id + '.SET')) {
+                val = getState(pageItem.id + '.SET').val;
+                RegisterEntityWatcher(pageItem.id + '.SET');
+            }
 
-                if (existsState(pageItem.id + '.ACTUAL')) {
-                    if (getState(pageItem.id + '.ACTUAL').val) {
-                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock');
+            // Fallback if no name is given
+            name = pageItem.name !== undefined ? pageItem.name : o.common.name.de;
+
+            switch (o.common.role) {
+                case 'socket':
+                case 'light':
+                    type = 'light';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                    var iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                    var optVal = '0';
+
+                    if (val === true || val === 'true') {
+                        optVal = '1';
                         iconColor = GetIconColor(pageItem, true, useColors);
-                        var lockState = findLocale('lock', 'UNLOCK');
                     } else {
-                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock-open-variant');
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        var lockState = findLocale('lock', 'LOCK');
+                        if (pageItem.icon !== undefined) {
+                            if (pageItem.icon2 !== undefined) {
+                                iconId = iconId2;
+                            }
+                        }
                     }
-                    lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
-                    RegisterEntityWatcher(pageItem.id + '.ACTUAL');
-                }
 
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState;
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
-            case 'slider':
-                type = 'number';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('plus-minus-variant');
+                case 'hue':
+                    type = 'light';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    var optVal = '0';
 
-                if (existsState(pageItem.id + '.SET')) {
-                    val = getState(pageItem.id + '.SET').val;
-                    RegisterEntityWatcher(pageItem.id + '.SET');
-                }
+                    if (existsState(pageItem.id + '.ON_ACTUAL')) {
+                        val = getState(pageItem.id + '.ON_ACTUAL').val;
+                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
+                    }
 
-                if (existsState(pageItem.id + '.ACTUAL')) {
-                    val = getState(pageItem.id + '.ACTUAL').val;
-                    RegisterEntityWatcher(pageItem.id + '.ACTUAL');
-                }
+                    if (val === true || val === 'true') {
+                        optVal = '1';
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                    }
 
-                iconColor = GetIconColor(pageItem, false, useColors)
+                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true) { 
+                        if (existsState(pageItem.id + '.HUE')) {
+                            if (getState(pageItem.id + '.HUE').val != null) {
+                                let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
+                                let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) };
+                                iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                                // RegisterDetailEntityWatcher(id + '.HUE');
+                            }
+                        }
+                    }
 
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
-            case 'volumeGroup':
-            case 'volume':
-                type = 'number';
-                if (existsState(pageItem.id + '.SET')) {
-                    val = getState(pageItem.id + '.SET').val;
-                    RegisterEntityWatcher(pageItem.id + '.SET');
-                }
-                if (existsState(pageItem.id + '.ACTUAL')) {
-                    val = getState(pageItem.id + '.ACTUAL').val;
-                    RegisterEntityWatcher(pageItem.id + '.ACTUAL');
-                }
+                case 'ct':
+                    type = 'light';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    var optVal = '0';
 
-                iconColor = GetIconColor(pageItem, false, useColors)
-                if (existsState(pageItem.id + '.MUTE')) {
-                    getState(pageItem.id + '.MUTE').val ? iconColor = GetIconColor(pageItem, false, useColors) : iconColor = GetIconColor(pageItem, true, useColors);
-                    RegisterEntityWatcher(pageItem.id + '.MUTE');
-                }
+                    if (existsState(pageItem.id + '.ON')) {
+                        val = getState(pageItem.id + '.ON').val;
+                        RegisterEntityWatcher(pageItem.id + '.ON');
+                    }
 
-                if (val > 0 && val <= 33 && !getState(pageItem.id + '.MUTE').val) {
-                    iconId = Icons.GetIcon('volume-low');
-                } else if (val > 33 && val <= 66 && !getState(pageItem.id + '.MUTE').val) {
-                    iconId = Icons.GetIcon('volume-medium');
-                } else if (val > 66 && val <= 100 && !getState(pageItem.id + '.MUTE').val) {
-                    iconId = Icons.GetIcon('volume-high');
-                } else {
-                    iconId = Icons.GetIcon('volume-mute');
-                }
+                    if (val === true || val === 'true') {
+                        optVal = '1';
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                    }
 
-                return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
-            case 'warning':
-                type = 'text';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('alert-outline');
-                iconColor = getState(([pageItem.id, '.LEVEL'].join(''))).val;
-                let itemName = getState(([pageItem.id, '.TITLE'].join(''))).val;
-                let itemInfo = getState(([pageItem.id, '.INFO'].join(''))).val;
+                case 'rgb':
+                    type = 'light';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    var optVal = '0';
 
-                return '~' + type + '~' + itemName + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo;
+                    if (existsState(pageItem.id + '.ON_ACTUAL')) {
+                        val = getState(pageItem.id + '.ON_ACTUAL').val;
+                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
+                    }
 
-            default:
-                return '~delete~~~~~';
+                    if (val === true || val === 'true') {
+                        optVal = '1';
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                    }
+
+                    if (existsState(pageItem.id + '.RED') && existsState(pageItem.id + '.GREEN') && existsState(pageItem.id + '.BLUE')) {
+                        if (getState(pageItem.id + '.RED').val != null && getState(pageItem.id + '.GREEN').val != null && getState(pageItem.id + '.BLUE').val != null) {
+                            let rgbRed = getState(pageItem.id + '.RED').val;
+                            let rgbGreen = getState(pageItem.id + '.GREEN').val;
+                            let rgbBlue = getState(pageItem.id + '.BLUE').val;
+                            let rgb = <RGB>{ red: Math.round(rgbRed), green: Math.round(rgbGreen), blue: Math.round(rgbBlue) };
+                            iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                        }
+                    }
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+
+                case 'rgbSingle':
+                    type = 'light';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    var optVal = '0';
+
+                    if (existsState(pageItem.id + '.ON_ACTUAL')) {
+                        val = getState(pageItem.id + '.ON_ACTUAL').val;
+                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
+                    }
+
+                    if (val === true || val === 'true') {
+                        optVal = '1'
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                    }
+
+                    if (existsState(pageItem.id + '.RGB')) {
+                        if (getState(pageItem.id + '.RGB').val != null) {
+                            var hex = getState(pageItem.id + '.RGB').val;
+                            var hexRed = parseInt(hex[1] + hex[2], 16);
+                            var hexGreen = parseInt(hex[3] + hex[4], 16);
+                            var hexBlue = parseInt(hex[5] + hex[6], 16);
+                            let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) };
+                            iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                        }
+                    }
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+
+                case 'dimmer':
+                    type = 'light';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    var optVal = '0';
+
+                    if (existsState(pageItem.id + '.ON_ACTUAL')) {
+                        val = getState(pageItem.id + '.ON_ACTUAL').val;
+                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
+                    } else if (existsState(pageItem.id + '.ON_SET')) {
+                        val = getState(pageItem.id + '.ON_SET').val;
+                        RegisterEntityWatcher(pageItem.id + '.ON_SET');
+                    }
+
+                    if (val === true || val === 'true') {
+                        optVal = '1';
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? 100 - getState(pageItem.id + '.ACTUAL').val : true, useColors);
+                    }
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+
+                case 'blind':
+                    type = 'shutter';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
+                    iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~';
+
+                case 'door':
+                case 'window':
+                    type = 'text';
+
+                    if (existsState(pageItem.id + '.ACTUAL')) {
+                        if (getState(pageItem.id + '.ACTUAL').val) {
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
+                            iconColor = GetIconColor(pageItem, false, useColors);
+                            var windowState = findLocale('window', 'opened');
+                        } else {
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
+                            //iconId = Icons.GetIcon('window-closed-variant');
+                            iconColor = GetIconColor(pageItem, true, useColors);
+                            var windowState = findLocale('window', 'closed');
+                        }
+
+                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+                    }
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
+
+                case 'info':
+
+                case 'humidity':
+
+                case 'temperature':
+
+                case 'value.temperature':
+
+                case 'value.humidity':
+
+                case 'sensor.door':
+
+                case 'sensor.window':
+
+                case 'thermostat':
+                    type = 'text';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
+                    let unit = '';
+                    var optVal = '0';
+
+                    if (existsState(pageItem.id + '.ON_ACTUAL')) {
+                        optVal = getState(pageItem.id + '.ON_ACTUAL').val;
+                        unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ON_ACTUAL');
+                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
+                    } else if (existsState(pageItem.id + '.ACTUAL')) {
+                        optVal = getState(pageItem.id + '.ACTUAL').val;
+                        unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ACTUAL');
+                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+                    }
+
+                    if (o.common.role == 'value.temperature') {
+                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('thermometer');
+                    }
+
+                    iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
+
+                case 'buttonSensor':
+                case 'button':
+                    type = 'button';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
+                    iconColor = GetIconColor(pageItem, true, useColors);
+                    let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
+
+                case 'lock':
+                    type = 'button';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock');
+                    iconColor = GetIconColor(pageItem, true, useColors);
+
+                    if (existsState(pageItem.id + '.ACTUAL')) {
+                        if (getState(pageItem.id + '.ACTUAL').val) {
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock');
+                            iconColor = GetIconColor(pageItem, true, useColors);
+                            var lockState = findLocale('lock', 'UNLOCK');
+                        } else {
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock-open-variant');
+                            iconColor = GetIconColor(pageItem, false, useColors);
+                            var lockState = findLocale('lock', 'LOCK');
+                        }
+                        lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
+                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+                    }
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState;
+
+                case 'slider':
+                    type = 'number';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('plus-minus-variant');
+
+                    if (existsState(pageItem.id + '.SET')) {
+                        val = getState(pageItem.id + '.SET').val;
+                        RegisterEntityWatcher(pageItem.id + '.SET');
+                    }
+
+                    if (existsState(pageItem.id + '.ACTUAL')) {
+                        val = getState(pageItem.id + '.ACTUAL').val;
+                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+                    }
+
+                    iconColor = GetIconColor(pageItem, false, useColors)
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+
+                case 'volumeGroup':
+                case 'volume':
+                    type = 'number';
+                    if (existsState(pageItem.id + '.SET')) {
+                        val = getState(pageItem.id + '.SET').val;
+                        RegisterEntityWatcher(pageItem.id + '.SET');
+                    }
+                    if (existsState(pageItem.id + '.ACTUAL')) {
+                        val = getState(pageItem.id + '.ACTUAL').val;
+                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+                    }
+
+                    iconColor = GetIconColor(pageItem, false, useColors)
+                    if (existsState(pageItem.id + '.MUTE')) {
+                        getState(pageItem.id + '.MUTE').val ? iconColor = GetIconColor(pageItem, false, useColors) : iconColor = GetIconColor(pageItem, true, useColors);
+                        RegisterEntityWatcher(pageItem.id + '.MUTE');
+                    }
+
+                    if (val > 0 && val <= 33 && !getState(pageItem.id + '.MUTE').val) {
+                        iconId = Icons.GetIcon('volume-low');
+                    } else if (val > 33 && val <= 66 && !getState(pageItem.id + '.MUTE').val) {
+                        iconId = Icons.GetIcon('volume-medium');
+                    } else if (val > 66 && val <= 100 && !getState(pageItem.id + '.MUTE').val) {
+                        iconId = Icons.GetIcon('volume-high');
+                    } else {
+                        iconId = Icons.GetIcon('volume-mute');
+                    }
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+
+                case 'warning':
+                    type = 'text';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('alert-outline');
+                    iconColor = getState(([pageItem.id, '.LEVEL'].join(''))).val;
+                    let itemName = getState(([pageItem.id, '.TITLE'].join(''))).val;
+                    let itemInfo = getState(([pageItem.id, '.INFO'].join(''))).val;
+
+                    return '~' + type + '~' + itemName + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo;
+
+                default:
+                    return '~delete~~~~~';
+            }
         }
+        return '~delete~~~~~';
+    } catch (err) {
+        console.warn('function CreateEntity: ' + err.message);
     }
-    return '~delete~~~~~';
 }
 
 function findLocale(controlsObject: string, controlsState: string): string {
@@ -1766,343 +1894,363 @@ function findLocale(controlsObject: string, controlsState: string): string {
         } else {
             return controlsState;
         }
+
     } catch (err) {
-        console.error(err);
+        console.warn('function findLocale: ' + err.message);
         return controlsState;
     }
 }
 
 function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: boolean): number {
-    // dimmer
-    if ((pageItem.useColor || useColors) && pageItem.interpolateColor && typeof (value) === 'number') {
-        let maxValue = pageItem.maxValueBrightness !== undefined ? pageItem.maxValueBrightness : 100;
-        let minValue = pageItem.minValueBrightness !== undefined ? pageItem.minValueBrightness : 0;
-        if (pageItem.maxValue !== undefined) maxValue = pageItem.maxValue;
-        if (pageItem.minValue !== undefined) minValue = pageItem.minValue;
-        value = value > maxValue ? maxValue : value;
-        value = value < minValue ? minValue : value;
+    try {
+        // dimmer
+        if ((pageItem.useColor || useColors) && pageItem.interpolateColor && typeof (value) === 'number') {
+            let maxValue = pageItem.maxValueBrightness !== undefined ? pageItem.maxValueBrightness : 100;
+            let minValue = pageItem.minValueBrightness !== undefined ? pageItem.minValueBrightness : 0;
+            if (pageItem.maxValue !== undefined) maxValue = pageItem.maxValue;
+            if (pageItem.minValue !== undefined) minValue = pageItem.minValue;
+            value = value > maxValue ? maxValue : value;
+            value = value < minValue ? minValue : value;
 
-        return rgb_dec565(
-            Interpolate(
-                pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor,
-                pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor,
-                scale(value, minValue, maxValue, 0, 1)
-            )
-        );
+            return rgb_dec565(
+                Interpolate(
+                    pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor,
+                    pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor,
+                    scale(value, minValue, maxValue, 0, 1)
+                )
+            );
+        }
+
+        if ((pageItem.useColor || useColors) && ((typeof (value) === 'boolean' && value) || value > (pageItem.minValueBrightness !== undefined ? pageItem.minValueBrightness : 0))) {
+            return rgb_dec565(pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor)
+        }
+
+        return rgb_dec565(pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor);
+    } catch (err) {
+        console.warn('function GetIconColor: ' + err.message);
     }
-
-    if ((pageItem.useColor || useColors) && ((typeof (value) === 'boolean' && value) || value > (pageItem.minValueBrightness !== undefined ? pageItem.minValueBrightness : 0))) {
-        return rgb_dec565(pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor)
-    }
-
-    return rgb_dec565(pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor);
 }
 
 function RegisterEntityWatcher(id: string): void {
+    try {
+        if (subscriptions.hasOwnProperty(id)) {
+            return;
+        }
 
-    if (subscriptions.hasOwnProperty(id)) {
-        return;
+        subscriptions[id] = (on({ id: id, change: 'any' }, (data) => {
+            if (pageId == -1 && config.button1Page != undefined) {
+                SendToPanel({ payload: GeneratePageElements(config.button1Page) });
+            }
+            if (pageId == -2 && config.button2Page != undefined) {
+                SendToPanel({ payload: GeneratePageElements(config.button2Page) });
+            }
+            if (activePage !== undefined) {
+                SendToPanel({ payload: GeneratePageElements(activePage) });
+            }
+        }));
+    } catch (err) {
+        console.warn('function RegisterEntityWatcher: ' + err.message);
     }
-
-    subscriptions[id] = (on({ id: id, change: 'any' }, (data) => {
-        if (pageId == -1 && config.button1Page != undefined) {
-            SendToPanel({ payload: GeneratePageElements(config.button1Page) });
-        }
-        if (pageId == -2 && config.button2Page != undefined) {
-            SendToPanel({ payload: GeneratePageElements(config.button2Page) });
-        }
-        if (activePage !== undefined) {
-            SendToPanel({ payload: GeneratePageElements(activePage) });
-        }
-    }));
 }
 
 function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: string): void {
-    if (subscriptions.hasOwnProperty(id)) {
-        return;
-    }
+    try {
+        if (subscriptions.hasOwnProperty(id)) {
+            return;
+        }
 
-    subscriptions[id] = (on({ id: id, change: 'any' }, () => {
-        SendToPanel(GenerateDetailPage(type, pageItem));
-    }))
+        subscriptions[id] = (on({ id: id, change: 'any' }, () => {
+            SendToPanel(GenerateDetailPage(type, pageItem));
+        }))
+    } catch (err) {
+        console.warn('function RegisterDetailEntityWatcher: ' + err.message);
+    }
 }
 
 function GetUnitOfMeasurement(id: string): string {
-    if (!existsObject(id))
+    try {
+        if (!existsObject(id))
+            return '';
+
+        let obj = getObject(id);
+        if (typeof obj.common.unit !== 'undefined') {
+            return obj.common.unit
+        }
+
+        if (typeof obj.common.alias !== 'undefined' && typeof obj.common.alias.id !== 'undefined') {
+            return GetUnitOfMeasurement(obj.common.alias.id);
+        }
+
         return '';
-
-    let obj = getObject(id);
-    if (typeof obj.common.unit !== 'undefined') {
-        return obj.common.unit
+    } catch (err) {
+        console.warn('function GetUnitOfMeasurement: ' + err.message);
     }
-
-    if (typeof obj.common.alias !== 'undefined' && typeof obj.common.alias.id !== 'undefined') {
-        return GetUnitOfMeasurement(obj.common.alias.id);
-    }
-
-    return '';
 }
 
 function GenerateThermoPage(page: PageThermo): Payload[] {
-    var id = page.items[0].id
-    var out_msgs: Array<Payload> = [];
-    out_msgs.push({ payload: 'pageType~cardThermo' });
+    try {
+        var id = page.items[0].id
+        var out_msgs: Array<Payload> = [];
+        out_msgs.push({ payload: 'pageType~cardThermo' });
 
-    // ioBroker
-    if (existsObject(id)) {
-        let o = getObject(id);
-        let name = page.heading !== undefined ? page.heading : o.common.name.de;
-        let currentTemp = 0;
-        if (existsState(id + '.ACTUAL'))
-            currentTemp = (Math.round(parseFloat(getState(id + '.ACTUAL').val) * 10) / 10);
+        // ioBroker
+        if (existsObject(id)) {
+            let o = getObject(id);
+            let name = page.heading !== undefined ? page.heading : o.common.name.de;
+            let currentTemp = 0;
+            if (existsState(id + '.ACTUAL'))
+                currentTemp = (Math.round(parseFloat(getState(id + '.ACTUAL').val) * 10) / 10);
 
-        let destTemp = 0;
-        if (existsState(id + '.SET')) {
-            destTemp = getState(id + '.SET').val.toFixed(2) * 10;
-        }
-        let statusStr: String = 'MANU';
-        let status = '';
-        if (existsState(id + '.MODE'))
-            status = getState(id + '.MODE').val;
+            let destTemp = 0;
+            if (existsState(id + '.SET')) {
+                destTemp = getState(id + '.SET').val.toFixed(2) * 10;
+            }
+            let statusStr: String = 'MANU';
+            let status = '';
+            if (existsState(id + '.MODE'))
+                status = getState(id + '.MODE').val;
 
-        let minTemp = page.items[0].minValue !== undefined ? page.items[0].minValue : 50;   //Min Temp 5°C
-        let maxTemp = page.items[0].maxValue !== undefined ? page.items[0].maxValue : 300;  //Max Temp 30°C
-        let stepTemp = 5 // 0,5° Schritte
+            let minTemp = page.items[0].minValue !== undefined ? page.items[0].minValue : 50;   //Min Temp 5°C
+            let maxTemp = page.items[0].maxValue !== undefined ? page.items[0].maxValue : 300;  //Max Temp 30°C
+            let stepTemp = 5 // 0,5° Schritte
 
-        //Attribute hinzufügen, wenn im Alias definiert
-        let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
-        if ((i_list.length - 3) != 0) {
+            //Attribute hinzufügen, wenn im Alias definiert
+            let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
+            if ((i_list.length - 3) != 0) {
 
-            var i = 0;
-            var bt = ['~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~'];
+                var i = 0;
+                var bt = ['~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~'];
 
-            if (o.common.role == 'thermostat') {
+                if (o.common.role == 'thermostat') {
 
-                if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
-                    if (getState(id + '.AUTOMATIC').val) {
-                        bt[i++] = Icons.GetIcon('alpha-a-circle') + '~' + rgb_dec565(On) + '~1~' + 'AUTT' + '~';
-                        statusStr = 'AUTO';
-                    } else {
-                        bt[i++] = Icons.GetIcon('alpha-a-circle') + '~33840~1~' + 'AUTT' + '~';
-                    }
-                }
-                if (existsState(id + '.MANUAL') && getState(id + '.MANUAL').val != null) {
-                    if (getState(id + '.MANUAL').val) {
-                        bt[i++] = Icons.GetIcon('alpha-m-circle') + '~' + rgb_dec565(On) + '~1~' + 'MANT' + '~';
-                        statusStr = 'MANU';
-                    } else {
-                        bt[i++] = Icons.GetIcon('alpha-m-circle') + '~33840~1~' + 'MANT' + '~';
-                    }
-                }
-                if (existsState(id + '.PARTY') && getState(id + '.PARTY').val != null) {
-                    if (getState(id + '.PARTY').val) {
-                        bt[i++] = Icons.GetIcon('party-popper') + '~' + rgb_dec565(On) + '~1~' + 'PART' + '~';
-                        statusStr = 'PARTY';
-                    } else {
-                        bt[i++] = Icons.GetIcon('party-popper') + '~33840~1~' + 'PART' + '~';
-                    }
-                }
-                if (existsState(id + '.VACATION') && getState(id + '.VACATION').val != null) {
-                    if (getState(id + '.VACATION').val) {
-                        bt[i++] = Icons.GetIcon('palm-tree') + '~' + rgb_dec565(On) + '~1~' + 'VACT' + '~';
-                        statusStr = 'VAC';
-                    } else {
-                        bt[i++] = Icons.GetIcon('palm-tree') + '~33840~1~' + 'VACT' + '~';
-                    }
-                }
-                if (existsState(id + '.BOOST') && getState(id + '.BOOST').val != null) {
-                    if (getState(id + '.BOOST').val) {
-                        bt[i++] = Icons.GetIcon('fast-forward-60') + '~' + rgb_dec565(On) + '~1~' + 'BOOT' + '~';
-                        statusStr = 'BOOST';
-                    } else {
-                        bt[i++] = Icons.GetIcon('fast-forward-60') + '~33840~1~' + 'BOOT' + '~';
-                    }
-                }
-
-                for (let i_index in i_list) {
-                    let thermostatState = i_list[i_index].split('.');
-                    if (
-                        thermostatState[thermostatState.length - 1] != 'SET' &&
-                        thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
-                        thermostatState[thermostatState.length - 1] != 'MODE'
-                    ) {
-                        i++;
-
-                        switch (thermostatState[thermostatState.length - 1]) {
-                            case 'HUMIDITY':
-                                if (existsState(id + '.HUMIDITY') && getState(id + '.HUMIDITY').val != null) {
-                                    if (parseInt(getState(id + '.HUMIDITY').val) < 40) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
-                                    } else if (parseInt(getState(id + '.HUMIDITY').val) < 30) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
-                                    } else if (parseInt(getState(id + '.HUMIDITY').val) >= 40) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~2016~1~' + 'HUM' + '~';
-                                    } else if (parseInt(getState(id + '.HUMIDITY').val) > 65) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
-                                    } else if (parseInt(getState(id + '.HUMIDITY').val) > 75) {
-                                        bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
-                                    }
-                                } else i--;
-                                break;
-                            case 'LOWBAT':
-                                if (existsState(id + '.LOWBAT') && getState(id + '.LOWBAT').val != null) {
-                                    if (getState(id + '.LOWBAT').val) {
-                                        bt[i - 1] = Icons.GetIcon('battery-low') + '~63488~1~' + 'LBAT' + '~';
-                                    } else {
-                                        bt[i - 1] = Icons.GetIcon('battery-high') + '~2016~1~' + 'LBAT' + '~';
-                                    }
-                                } else i--;
-                                break;
-                            case 'MAINTAIN':
-                                if (existsState(id + '.MAINTAIN') && getState(id + '.MAINTAIN').val != null) {
-                                    if (getState(id + '.MAINTAIN').val >> .1) {
-                                        bt[i - 1] = Icons.GetIcon('fire') + '~60897~1~' + 'MAIN' + '~';
-                                    } else {
-                                        bt[i - 1] = Icons.GetIcon('fire') + '~33840~0~' + 'MAIN' + '~';
-                                    }
-                                } else i--;
-                                break;
-                            case 'UNREACH':
-                                if (existsState(id + '.UNREACH') && getState(id + '.UNREACH').val != null) {
-                                    if (getState(id + '.UNREACH').val) {
-                                        bt[i - 1] = Icons.GetIcon('wifi-off') + '~63488~1~' + 'WLAN' + '~';
-                                    } else {
-                                        bt[i - 1] = Icons.GetIcon('wifi') + '~2016~1~' + 'WLAN' + '~';
-                                    }
-                                } else i--;
-                                break;
-                            case 'POWER':
-                                if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                                    if (getState(id + '.POWER').val) {
-                                        bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POW' + '~';
-                                    } else {
-                                        bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POW' + '~';
-                                    }
-                                } else i--;
-                                break;
-                            case 'ERROR':
-                                if (existsState(id + '.ERROR') && getState(id + '.ERROR').val != null) {
-                                    if (getState(id + '.ERROR').val) {
-                                        bt[i - 1] = Icons.GetIcon('alert-circle') + '~63488~1~' + 'ERR' + '~';
-                                    } else {
-                                        bt[i - 1] = Icons.GetIcon('alert-circle') + '~33840~1~' + 'ERR' + '~';
-                                    }
-                                } else i--;
-                                break;
-                            case 'WORKING':
-                                if (existsState(id + '.WORKING') && getState(id + '.WORKING').val != null) {
-                                    if (getState(id + '.WORKING').val) {
-                                        bt[i - 1] = Icons.GetIcon('briefcase-check') + '~2016~1~' + 'WORK' + '~';
-                                    } else {
-                                        bt[i - 1] = Icons.GetIcon('briefcase-check') + '~33840~1~' + 'WORK' + '~';
-                                    }
-                                } else i--;
-                                break;
-                            default:
-                                i--;
-                                break;
+                    if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
+                        if (getState(id + '.AUTOMATIC').val) {
+                            bt[i++] = Icons.GetIcon('alpha-a-circle') + '~' + rgb_dec565(On) + '~1~' + 'AUTT' + '~';
+                            statusStr = 'AUTO';
+                        } else {
+                            bt[i++] = Icons.GetIcon('alpha-a-circle') + '~33840~1~' + 'AUTT' + '~';
                         }
                     }
+                    if (existsState(id + '.MANUAL') && getState(id + '.MANUAL').val != null) {
+                        if (getState(id + '.MANUAL').val) {
+                            bt[i++] = Icons.GetIcon('alpha-m-circle') + '~' + rgb_dec565(On) + '~1~' + 'MANT' + '~';
+                            statusStr = 'MANU';
+                        } else {
+                            bt[i++] = Icons.GetIcon('alpha-m-circle') + '~33840~1~' + 'MANT' + '~';
+                        }
+                    }
+                    if (existsState(id + '.PARTY') && getState(id + '.PARTY').val != null) {
+                        if (getState(id + '.PARTY').val) {
+                            bt[i++] = Icons.GetIcon('party-popper') + '~' + rgb_dec565(On) + '~1~' + 'PART' + '~';
+                            statusStr = 'PARTY';
+                        } else {
+                            bt[i++] = Icons.GetIcon('party-popper') + '~33840~1~' + 'PART' + '~';
+                        }
+                    }
+                    if (existsState(id + '.VACATION') && getState(id + '.VACATION').val != null) {
+                        if (getState(id + '.VACATION').val) {
+                            bt[i++] = Icons.GetIcon('palm-tree') + '~' + rgb_dec565(On) + '~1~' + 'VACT' + '~';
+                            statusStr = 'VAC';
+                        } else {
+                            bt[i++] = Icons.GetIcon('palm-tree') + '~33840~1~' + 'VACT' + '~';
+                        }
+                    }
+                    if (existsState(id + '.BOOST') && getState(id + '.BOOST').val != null) {
+                        if (getState(id + '.BOOST').val) {
+                            bt[i++] = Icons.GetIcon('fast-forward-60') + '~' + rgb_dec565(On) + '~1~' + 'BOOT' + '~';
+                            statusStr = 'BOOST';
+                        } else {
+                            bt[i++] = Icons.GetIcon('fast-forward-60') + '~33840~1~' + 'BOOT' + '~';
+                        }
+                    }
+
+                    for (let i_index in i_list) {
+                        let thermostatState = i_list[i_index].split('.');
+                        if (
+                            thermostatState[thermostatState.length - 1] != 'SET' &&
+                            thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
+                            thermostatState[thermostatState.length - 1] != 'MODE'
+                        ) {
+                            i++;
+
+                            switch (thermostatState[thermostatState.length - 1]) {
+                                case 'HUMIDITY':
+                                    if (existsState(id + '.HUMIDITY') && getState(id + '.HUMIDITY').val != null) {
+                                        if (parseInt(getState(id + '.HUMIDITY').val) < 40) {
+                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
+                                        } else if (parseInt(getState(id + '.HUMIDITY').val) < 30) {
+                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
+                                        } else if (parseInt(getState(id + '.HUMIDITY').val) >= 40) {
+                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~2016~1~' + 'HUM' + '~';
+                                        } else if (parseInt(getState(id + '.HUMIDITY').val) > 65) {
+                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
+                                        } else if (parseInt(getState(id + '.HUMIDITY').val) > 75) {
+                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
+                                        }
+                                    } else i--;
+                                    break;
+                                case 'LOWBAT':
+                                    if (existsState(id + '.LOWBAT') && getState(id + '.LOWBAT').val != null) {
+                                        if (getState(id + '.LOWBAT').val) {
+                                            bt[i - 1] = Icons.GetIcon('battery-low') + '~63488~1~' + 'LBAT' + '~';
+                                        } else {
+                                            bt[i - 1] = Icons.GetIcon('battery-high') + '~2016~1~' + 'LBAT' + '~';
+                                        }
+                                    } else i--;
+                                    break;
+                                case 'MAINTAIN':
+                                    if (existsState(id + '.MAINTAIN') && getState(id + '.MAINTAIN').val != null) {
+                                        if (getState(id + '.MAINTAIN').val >> .1) {
+                                            bt[i - 1] = Icons.GetIcon('account-wrench') + '~60897~1~' + 'MAIN' + '~';
+                                        } else {
+                                            bt[i - 1] = Icons.GetIcon('account-wrench') + '~33840~1~' + 'MAIN' + '~';
+                                        }
+                                    } else i--;
+                                    break;
+                                case 'UNREACH':
+                                    if (existsState(id + '.UNREACH') && getState(id + '.UNREACH').val != null) {
+                                        if (getState(id + '.UNREACH').val) {
+                                            bt[i - 1] = Icons.GetIcon('wifi-off') + '~63488~1~' + 'WLAN' + '~';
+                                        } else {
+                                            bt[i - 1] = Icons.GetIcon('wifi') + '~2016~1~' + 'WLAN' + '~';
+                                        }
+                                    } else i--;
+                                    break;
+                                case 'POWER':
+                                    if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                                        if (getState(id + '.POWER').val) {
+                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POW' + '~';
+                                        } else {
+                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POW' + '~';
+                                        }
+                                    } else i--;
+                                    break;
+                                case 'ERROR':
+                                    if (existsState(id + '.ERROR') && getState(id + '.ERROR').val != null) {
+                                        if (getState(id + '.ERROR').val) {
+                                            bt[i - 1] = Icons.GetIcon('alert-circle') + '~63488~1~' + 'ERR' + '~';
+                                        } else {
+                                            bt[i - 1] = Icons.GetIcon('alert-circle') + '~33840~1~' + 'ERR' + '~';
+                                        }
+                                    } else i--;
+                                    break;
+                                case 'WORKING':
+                                    if (existsState(id + '.WORKING') && getState(id + '.WORKING').val != null) {
+                                        if (getState(id + '.WORKING').val) {
+                                            bt[i - 1] = Icons.GetIcon('briefcase-check') + '~2016~1~' + 'WORK' + '~';
+                                        } else {
+                                            bt[i - 1] = Icons.GetIcon('briefcase-check') + '~33840~1~' + 'WORK' + '~';
+                                        }
+                                    } else i--;
+                                    break;
+                                default:
+                                    i--;
+                                    break;
+                            }
+                        }
+                    }
+
+                    for (let j = i; j < 9; j++) {
+                        bt[j] = '~~~~';
+                    }
                 }
 
-                for (let j = i; j < 9; j++) {
-                    bt[j] = '~~~~';
+                if (o.common.role == 'airCondition') {
+                    if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
+                        let Mode = getState(id + '.MODE').val
+                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                            if (Mode != 0 || getState(id + '.POWER').val) {                                 //0=ON oder .POWER = true
+                                bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
+                                statusStr = 'ON';
+                            } else {
+                                bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
+                                statusStr = 'OFF';
+                            }
+                        }
+                        if (Mode == 1) {                                                                //1=AUTO
+                            bt[1] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
+                            statusStr = 'AUTO';
+                        } else {
+                            bt[1] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
+                        }
+                        if (Mode == 2) {                                                                //2=COOL
+                            bt[2] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
+                            statusStr = 'COOL';
+                        } else {
+                            bt[2] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
+                        }
+                        if (Mode == 3) {                                                                //3=HEAT
+                            bt[3] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
+                            statusStr = 'HEAT';
+                        } else {
+                            bt[3] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
+                        }
+                        if (Mode == 4) {                                                                //4=ECO
+                            bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                            statusStr = 'ECO';
+                        } else {
+                            bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                        }
+                        if (Mode == 5) {                                                                //5=FANONLY
+                            bt[5] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN' + '~';
+                            statusStr = 'FAN ONLY';
+                        } else {
+                            bt[5] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN' + '~';
+                        }
+                        if (Mode == 6) {                                                                //6=DRY
+                            bt[6] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
+                            statusStr = 'DRY';
+                        } else {
+                            bt[6] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
+                        }
+                        if (existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
+                            if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
+                                bt[7] = Icons.GetIcon('swap-vertical-bold') + '~2016~1~' + 'SWING' + '~';
+                            } else {
+                                bt[7] = Icons.GetIcon('swap-vertical-bold') + '~35921~0~' + 'SWING' + '~';
+                            }
+                        }
+                    }
                 }
             }
 
-            if (o.common.role == 'airCondition') {
-                if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
-                    let Mode = getState(id + '.MODE').val
-                    if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                        if (Mode != 0 || getState(id + '.POWER').val) {                                 //0=ON oder .POWER = true
-                            bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
-                            statusStr = 'ON';
-                        } else {
-                            bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
-                            statusStr = 'OFF';
-                        }
-                    }
-                    if (Mode == 1) {                                                                //1=AUTO
-                        bt[1] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
-                        statusStr = 'AUTO';
-                    } else {
-                        bt[1] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
-                    }
-                    if (Mode == 2) {                                                                //2=COOL
-                        bt[2] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
-                        statusStr = 'COOL';
-                    } else {
-                        bt[2] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
-                    }
-                    if (Mode == 3) {                                                                //3=HEAT
-                        bt[3] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
-                        statusStr = 'HEAT';
-                    } else {
-                        bt[3] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
-                    }
-                    if (Mode == 4) {                                                                //4=ECO
-                        bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
-                        statusStr = 'ECO';
-                    } else {
-                        bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
-                    }
-                    if (Mode == 5) {                                                                //5=FANONLY
-                        bt[5] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN' + '~';
-                        statusStr = 'FAN ONLY';
-                    } else {
-                        bt[5] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN' + '~';
-                    }
-                    if (Mode == 6) {                                                                //6=DRY
-                        bt[6] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
-                        statusStr = 'DRY';
-                    } else {
-                        bt[6] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
-                    }
-                    if (existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
-                        if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
-                            bt[7] = Icons.GetIcon('swap-vertical-bold') + '~2016~1~' + 'SWING' + '~';
-                        } else {
-                            bt[7] = Icons.GetIcon('swap-vertical-bold') + '~35921~0~' + 'SWING' + '~';
-                        }
-                    }
-                }
-            }
+            let icon_res = bt[0] + bt[1] + bt[2] + bt[3] + bt[4] + bt[5] + bt[6] + bt[7];
+
+            out_msgs.push({
+                payload: 'entityUpd~'
+                    + name + '~'                                    // Heading
+                    + GetNavigationString(pageId) + '~'             // Page Navigation
+                    + id + '~'                                      // internalNameEntiy
+                    + currentTemp + config.temperatureUnit + '~'    // Ist-Temperatur (String)
+                    + destTemp + '~'                                // Soll-Temperatur (numerisch ohne Komma)
+                    + statusStr + '~'                               // Mode
+                    + minTemp + '~'                                 // Thermostat Min-Temperatur
+                    + maxTemp + '~'                                 // Thermostat Max-Temperatur
+                    + stepTemp + '~'                                // Schritte für Soll (5°C)
+                    + icon_res                                      // Icons Status
+                    + findLocale('thermostat', 'Currently') + '~'   // Bezeicher vor Aktueller Raumtemperatur
+                    + findLocale('thermostat', 'State') + '~'       // Bezeicner vor
+                    + '~'                                           // Bezeichner vor HVAC -- Gibt es nicht mehr
+                    + config.temperatureUnit + '~'                  // Bezeichner hinter Solltemp
+                    + '' + '~'                                      // iconTemperature dstTempTwoTempMode
+                    + ''                                            // dstTempTwoTempMode
+            });
+
         }
 
-        let icon_res = bt[0] + bt[1] + bt[2] + bt[3] + bt[4] + bt[5] + bt[6] + bt[7];
-
-        out_msgs.push({
-            payload: 'entityUpd~'
-                + name + '~'                                    // Heading
-                + GetNavigationString(pageId) + '~'             // Page Navigation
-                + id + '~'                                      // internalNameEntiy
-                + currentTemp + config.temperatureUnit + '~'    // Ist-Temperatur (String)
-                + destTemp + '~'                                // Soll-Temperatur (numerisch ohne Komma)
-                + statusStr + '~'                               // Mode
-                + minTemp + '~'                                 // Thermostat Min-Temperatur
-                + maxTemp + '~'                                 // Thermostat Max-Temperatur
-                + stepTemp + '~'                                // Schritte für Soll (5°C)
-                + icon_res                                      // Icons Status
-                + findLocale('thermostat', 'Currently') + '~'   // Bezeicher vor Aktueller Raumtemperatur
-                + findLocale('thermostat', 'State') + '~'       // Bezeicner vor
-                + '~'                                           // Bezeichner vor HVAC -- Gibt es nicht mehr
-                + config.temperatureUnit + '~'                  // Bezeichner hinter Solltemp
-                + '' + '~'                                      // iconTemperature dstTempTwoTempMode
-                + ''                                            // dstTempTwoTempMode
-        });
-
+        if (Debug) console.log(out_msgs);
+        return out_msgs
+    } catch (err) {
+        console.warn('function GenerateThermoPage: ' + err.message);
     }
-
-    console.log(out_msgs);
-    return out_msgs
 }
 
 function GenerateMediaPage(page: PageMedia): Payload[] {
-    var id = page.items[0].id
-    
-    var out_msgs: Array<Payload> = [];
-
     try {
+        var id = page.items[0].id
+        
+        var out_msgs: Array<Payload> = [];
+
         out_msgs.push({ payload: 'pageType~cardMedia' });
         if (existsObject(id)) {
             let name = getState(id + '.ALBUM').val;
@@ -2113,8 +2261,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let v1Adapter = vInstance.split('.');
             let v2Adapter = v1Adapter[0];
 
-            //Alexa
+            //Alexa + neue Adpter/Player
             let media_icon = Icons.GetIcon('playlist-music');
+
             //Spotify-Premium
             if (v2Adapter == 'spotify-premium') {
                 media_icon = Icons.GetIcon('spotify');
@@ -2132,14 +2281,36 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 if (nameLenght == 0) {
                     name = 'Spotify-Premium';
                 }
+                author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
+                if (author.length > 30) {
+                    author = getState(id + '.ARTIST').val;
+                }
+                if ((getState(id + '.ARTIST').val).length == 0) {
+                    author = 'no music to control';               
+                }
             }
-            //Spotify-Premium
+
+            //Sonos
             if (v2Adapter == 'sonos') {
                 media_icon = Icons.GetIcon('music');
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
                 let nameLenght = name.length;
                 if (nameLenght == 0) {
                     name = 'Sonos Player';
+                } 
+                author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
+                if ((getState(id + '.ARTIST').val).length == 0) {
+                    author = 'no music to control';               
+                }
+            }
+
+            //Logitech Squeezebox RPC
+            if (v2Adapter == 'squeezeboxrpc') {
+                media_icon = Icons.GetIcon('dlna');
+                let nameLenght = name.length;
+                if (nameLenght == 0) {
+                    name = 'Squeezebox RPC';
+                    author = 'no music to control';
                 } 
             }
 
@@ -2153,27 +2324,20 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 } 
             }
             
-            if (v2Adapter == 'spotify-premium') {
-                author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
-                if (author.length > 30) {
-                    author = getState(id + '.ARTIST').val;
-                }
-                if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';               
-                }
-            }
-
-            if (v2Adapter == 'sonos') {
-                author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
-                if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';               
-                }
-            }
-
             let volume = getState(id + '.VOLUME').val;
             var iconplaypause = Icons.GetIcon('pause'); //pause
             var onoffbutton = 1374;
+
+            //Für alle Player
             if (getState(id + '.STATE').val) {
+                onoffbutton = 65535;
+                iconplaypause = Icons.GetIcon('pause'); //pause
+            } else {
+                iconplaypause = Icons.GetIcon('play'); //play
+            }
+
+            //Ausnahme für squeezebox, da State = Power
+            if (getState(id + '.PAUSE').val === false && v2Adapter == 'squeezeboxrpc') {
                 onoffbutton = 65535;
                 iconplaypause = Icons.GetIcon('pause'); //pause
             } else {
@@ -2190,6 +2354,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'player.device.name'].join(''))).val; 
             } else if (v2Adapter == 'sonos') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.members'].join(''))).val;
+            } else if (v2Adapter == 'squeezeboxrpc') {
+                if(existsObject(([page.items[0].adapterPlayerInstance, 'Playername'].join('')))) {
+                    currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Playername'].join(''))).val;
+                }
             }
             //-------------------------------------------------------------------------------------------------------------
             // nachfolgend alle Alexa-Devices (ist Online / Player- und Commands-Verzeichnis vorhanden) auflisten und verketten
@@ -2238,1020 +2406,1146 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 }
 
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
-    activePage = page;
-    var id = page.items[0].id
-    
-    var out_msgs: Array<Payload> = [];
-    out_msgs.push({ payload: 'pageType~cardAlarm' });
-    var nsPath = NSPanel_Alarm_Path + 'Alarm.';
+    try {
+        activePage = page;
+        var id = page.items[0].id
+        
+        var out_msgs: Array<Payload> = [];
+        out_msgs.push({ payload: 'pageType~cardAlarm' });
+        var nsPath = NSPanel_Alarm_Path + 'Alarm.';
 
-    if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
-        createState(nsPath + 'AlarmPin', '0000', { type: 'string' }, function () { setState(nsPath + 'AlarmPin', '0000') });
-        createState(nsPath + 'AlarmState', 'disarmed', { type: 'string' }, function () { setState(nsPath + 'AlarmState', 'disarmed') });
-        createState(nsPath + 'AlarmType', 'D1', { type: 'string' }, function () { setState(nsPath + 'AlarmType', 'D1') });
-        createState(nsPath + 'PIN_Failed', 0, { type: 'number' }, function () { setState(nsPath + 'PIN_Failed', 0) });
-        createState(nsPath + 'PANEL', NSPanel_Path, { type: 'string' }, function () { setState(nsPath + 'PANEL', NSPanel_Path) });
-    }
-
-    if (existsState(nsPath + 'AlarmPin') && existsState(nsPath + 'AlarmState') && existsState(nsPath + 'AlarmType')) {
-        //var entityPin = getState(nsPath + 'AlarmPin').val;
-        var entityState = getState(nsPath + 'AlarmState').val;
-        //var entityType = getState(nsPath + 'AlarmType').val;
-        var arm1: string, arm2: string, arm3: string, arm4: string;
-        var arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
-        var icon = '0';
-        var iconcolor = 63488;
-        var numpadStatus = 'disable';
-        var flashing = 'disable';
-
-        if (Debug) console.log(id);
-
-        if (entityState == 'armed' || entityState == 'triggered') {
-            arm1 = 'Deaktivieren';                                      //arm1*~*
-            arm1ActionName = 'D1';                                      //arm1ActionName*~*
-            arm2 = '';                                                  //arm2*~*
-            arm2ActionName = '';                                        //arm2ActionName*~*
-            arm3 = '';                                                  //arm3*~*
-            arm3ActionName = '';                                        //arm3ActionName*~*
-            arm4 = '';                                                  //arm4*~*
-            arm4ActionName = '';                                        //arm4ActionName*~*
+        if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
+            createState(nsPath + 'AlarmPin', '0000', { type: 'string' }, function () { setState(nsPath + 'AlarmPin', '0000') });
+            createState(nsPath + 'AlarmState', 'disarmed', { type: 'string' }, function () { setState(nsPath + 'AlarmState', 'disarmed') });
+            createState(nsPath + 'AlarmType', 'D1', { type: 'string' }, function () { setState(nsPath + 'AlarmType', 'D1') });
+            createState(nsPath + 'PIN_Failed', 0, { type: 'number' }, function () { setState(nsPath + 'PIN_Failed', 0) });
+            createState(nsPath + 'PANEL', NSPanel_Path, { type: 'string' }, function () { setState(nsPath + 'PANEL', NSPanel_Path) });
         }
 
-        if (entityState == 'disarmed' || entityState == 'arming' || entityState == 'pending') {
-            arm1 = 'Vollschutz';                                        //arm1*~*
-            arm1ActionName = 'A1';                                      //arm1ActionName*~*
-            arm2 = 'Zuhause';                                           //arm2*~*
-            arm2ActionName = 'A2';                                      //arm2ActionName*~*
-            arm3 = 'Nacht';                                             //arm3*~*
-            arm3ActionName = 'A3';                                      //arm3ActionName*~*
-            arm4 = 'Besuch';                                            //arm4*~*
-            arm4ActionName = 'A4';                                      //arm4ActionName*~*
-        }
+        if (existsState(nsPath + 'AlarmPin') && existsState(nsPath + 'AlarmState') && existsState(nsPath + 'AlarmType')) {
+            //var entityPin = getState(nsPath + 'AlarmPin').val;
+            var entityState = getState(nsPath + 'AlarmState').val;
+            //var entityType = getState(nsPath + 'AlarmType').val;
+            var arm1: string, arm2: string, arm3: string, arm4: string;
+            var arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
+            var icon = '0';
+            var iconcolor = 63488;
+            var numpadStatus = 'disable';
+            var flashing = 'disable';
 
-        if (entityState == 'armed') {
-            icon = Icons.GetIcon('shield-home');                        //icon*~*
-            iconcolor = 63488;                                          //iconcolor*~*
-            numpadStatus = 'enable';                                    //numpadStatus*~*
-            flashing = 'disable';                                       //flashing*
-        }
-        if (entityState == 'disarmed') {
-            icon = Icons.GetIcon('shield-off');                         //icon*~*
-            iconcolor = 2016;                                           //iconcolor*~*
-            numpadStatus = 'enable';                                    //numpadStatus*~*
-            flashing = 'disable';                                       //flashing*
-        }
-        if (entityState == 'arming' || entityState == 'pending') {
-            icon = Icons.GetIcon('shield');                             //icon*~*
-            iconcolor = rgb_dec565({ red: 243, green: 179, blue: 0 });  //iconcolor*~*
-            numpadStatus = 'disable';                                   //numpadStatus*~*
-            flashing = 'enable'                                         //flashing*
-        }
-        if (entityState == 'triggered') {
-            iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 });  //icon*~*
-            icon = Icons.GetIcon('bell-ring');                          //iconcolor*~*
-            numpadStatus = 'enable';                                   //numpadStatus*~*
-            flashing = 'enable'                                         //flashing*
-        }
+            if (Debug) console.log(id);
 
-        out_msgs.push({
-            payload: 'entityUpd~' +                          //entityUpd~*
-                id + '~' +                              //internalNameEntity*~*
-                GetNavigationString(pageId) + '~' +     //navigation*~* --> hiddenCards
-                arm1 + '~' +                            //arm1*~*
-                arm1ActionName + '~' +                  //arm1ActionName*~*
-                arm2 + '~' +                            //arm2*~*
-                arm2ActionName + '~' +                  //arm2ActionName*~*
-                arm3 + '~' +                            //arm3*~*
-                arm3ActionName + '~' +                  //arm3ActionName*~*
-                arm4 + '~' +                            //arm4*~*
-                arm4ActionName + '~' +                  //arm4ActionName*~*
-                icon + '~' +                            //icon*~*
-                iconcolor + '~' +                       //iconcolor*~*
-                numpadStatus + '~' +                    //numpadStatus*~*
-                flashing
-        });                             //flashing*
+            if (entityState == 'armed' || entityState == 'triggered') {
+                arm1 = 'Deaktivieren';                                      //arm1*~*
+                arm1ActionName = 'D1';                                      //arm1ActionName*~*
+                arm2 = '';                                                  //arm2*~*
+                arm2ActionName = '';                                        //arm2ActionName*~*
+                arm3 = '';                                                  //arm3*~*
+                arm3ActionName = '';                                        //arm3ActionName*~*
+                arm4 = '';                                                  //arm4*~*
+                arm4ActionName = '';                                        //arm4ActionName*~*
+            }
 
-        if (Debug) console.log(out_msgs);
-        return out_msgs
+            if (entityState == 'disarmed' || entityState == 'arming' || entityState == 'pending') {
+                arm1 = 'Vollschutz';                                        //arm1*~*
+                arm1ActionName = 'A1';                                      //arm1ActionName*~*
+                arm2 = 'Zuhause';                                           //arm2*~*
+                arm2ActionName = 'A2';                                      //arm2ActionName*~*
+                arm3 = 'Nacht';                                             //arm3*~*
+                arm3ActionName = 'A3';                                      //arm3ActionName*~*
+                arm4 = 'Besuch';                                            //arm4*~*
+                arm4ActionName = 'A4';                                      //arm4ActionName*~*
+            }
+
+            if (entityState == 'armed') {
+                icon = Icons.GetIcon('shield-home');                        //icon*~*
+                iconcolor = 63488;                                          //iconcolor*~*
+                numpadStatus = 'enable';                                    //numpadStatus*~*
+                flashing = 'disable';                                       //flashing*
+            }
+            if (entityState == 'disarmed') {
+                icon = Icons.GetIcon('shield-off');                         //icon*~*
+                iconcolor = 2016;                                           //iconcolor*~*
+                numpadStatus = 'enable';                                    //numpadStatus*~*
+                flashing = 'disable';                                       //flashing*
+            }
+            if (entityState == 'arming' || entityState == 'pending') {
+                icon = Icons.GetIcon('shield');                             //icon*~*
+                iconcolor = rgb_dec565({ red: 243, green: 179, blue: 0 });  //iconcolor*~*
+                numpadStatus = 'disable';                                   //numpadStatus*~*
+                flashing = 'enable'                                         //flashing*
+            }
+            if (entityState == 'triggered') {
+                iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 });  //icon*~*
+                icon = Icons.GetIcon('bell-ring');                          //iconcolor*~*
+                numpadStatus = 'enable';                                   //numpadStatus*~*
+                flashing = 'enable'                                         //flashing*
+            }
+
+            out_msgs.push({
+                payload: 'entityUpd~' +                          //entityUpd~*
+                    id + '~' +                              //internalNameEntity*~*
+                    GetNavigationString(pageId) + '~' +     //navigation*~* --> hiddenCards
+                    arm1 + '~' +                            //arm1*~*
+                    arm1ActionName + '~' +                  //arm1ActionName*~*
+                    arm2 + '~' +                            //arm2*~*
+                    arm2ActionName + '~' +                  //arm2ActionName*~*
+                    arm3 + '~' +                            //arm3*~*
+                    arm3ActionName + '~' +                  //arm3ActionName*~*
+                    arm4 + '~' +                            //arm4*~*
+                    arm4ActionName + '~' +                  //arm4ActionName*~*
+                    icon + '~' +                            //icon*~*
+                    iconcolor + '~' +                       //iconcolor*~*
+                    numpadStatus + '~' +                    //numpadStatus*~*
+                    flashing
+            });                             //flashing*
+
+            if (Debug) console.log(out_msgs);
+            return out_msgs
+        }
+    } catch (err) {
+        console.warn('function GenerateAlarmPage: ' + err.message);
     }
 }
 
 function GenerateQRPage(page: PageQR): Payload[] {
-    activePage = page;
+    try {
+        activePage = page;
 
-    var id = page.items[0].id
-    var out_msgs: Array<Payload> = [];
-    out_msgs.push({ payload: 'pageType~cardQR' });
+        var id = page.items[0].id
+        var out_msgs: Array<Payload> = [];
+        out_msgs.push({ payload: 'pageType~cardQR' });
 
-    let o = getObject(id)
+        let o = getObject(id)
 
-    var heading = page.heading !== undefined ? page.heading : o.common.name.de
-    var textQR = page.items[0].id + '.ACTUAL' !== undefined ? getState(page.items[0].id + '.ACTUAL').val : 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;'
+        var heading = page.heading !== undefined ? page.heading : o.common.name.de
+        var textQR = page.items[0].id + '.ACTUAL' !== undefined ? getState(page.items[0].id + '.ACTUAL').val : 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;'
 
-    const tempstr = textQR.split(';');
-    for (let w = 0; w < tempstr.length - 1; w++) {
-        if (tempstr[w].substring(0, 1) == 'S') {
-            var optionalValue1 = tempstr[w].slice(2);
+        const tempstr = textQR.split(';');
+        for (let w = 0; w < tempstr.length - 1; w++) {
+            if (tempstr[w].substring(0, 1) == 'S') {
+                var optionalValue1 = tempstr[w].slice(2);
+            }
+            if (tempstr[w].substring(0, 1) == 'P') {
+                var optionalValue2 = tempstr[w].slice(2);
+            }
         }
-        if (tempstr[w].substring(0, 1) == 'P') {
-            var optionalValue2 = tempstr[w].slice(2);
-        }
+
+        var type1 = 'text';
+        var internalName1 = 'SSID';
+        var iconId1 = Icons.GetIcon('wifi');
+        var displayName1 = 'SSID';
+        var type2 = 'text';
+        var internalName2 = 'Passwort';
+        var iconId2 = Icons.GetIcon('key');
+        var displayName2 = 'Passwort';
+
+        out_msgs.push({
+            payload: 'entityUpd~' +                     //entityUpd
+                heading + '~' +                         //heading
+                GetNavigationString(pageId) + '~' +     //navigation
+                textQR + '~' +                          //textQR
+                type1 + '~' +                           //type
+                internalName1 + '~' +                   //internalName
+                iconId1 + '~' +                         //iconId
+                65535 + '~' +                           //iconColor
+                displayName1 + '~' +                    //displayName
+                optionalValue1 + '~' +                  //optionalValue
+                type2 + '~' +                           //type
+                internalName2 + '~' +                   //internalName
+                iconId2 + '~' +                         //iconId
+                65535 + '~' +                           //iconColor
+                displayName2 + '~' +                    //displayName
+                optionalValue2
+        });                       //optionalValue
+
+        //entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
+        return out_msgs
+
+    } catch (err) {
+        console.warn('function GenerateQRPage: ' + err.message);
     }
-
-    var type1 = 'text';
-    var internalName1 = 'SSID';
-    var iconId1 = Icons.GetIcon('wifi');
-    var displayName1 = 'SSID';
-    var type2 = 'text';
-    var internalName2 = 'Passwort';
-    var iconId2 = Icons.GetIcon('key');
-    var displayName2 = 'Passwort';
-
-    out_msgs.push({
-        payload: 'entityUpd~' +                     //entityUpd
-            heading + '~' +                         //heading
-            GetNavigationString(pageId) + '~' +     //navigation
-            textQR + '~' +                          //textQR
-            type1 + '~' +                           //type
-            internalName1 + '~' +                   //internalName
-            iconId1 + '~' +                         //iconId
-            65535 + '~' +                           //iconColor
-            displayName1 + '~' +                    //displayName
-            optionalValue1 + '~' +                  //optionalValue
-            type2 + '~' +                           //type
-            internalName2 + '~' +                   //internalName
-            iconId2 + '~' +                         //iconId
-            65535 + '~' +                           //iconColor
-            displayName2 + '~' +                    //displayName
-            optionalValue2
-    });                       //optionalValue
-
-    //entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
-    return out_msgs
 }
 
-// Check by Armilar
 function GeneratePowerPage(page: PagePower): Payload[] {
-    activePage = page;
+    try {
+        activePage = page;
 
-    var out_msgs: Array<Payload> = [];
-    //out_msgs.push({ payload: 'pageType~cardPower' });
+        if (Debug) console.log(page.items[0].id);
 
-    //out_msgs.push({payload: 'entityUpd~test~1|1~6666~A~8888~B~1~t0o~t0u~9999~C~2~t1o~t1u~1111~D~3~t2o~t2u~33333~E~-1~t3o~t3u~3333~F~-2~t4o~t4u~4444~G~-3~t5o~t5u'});                   
+        var demoMode = false;
 
-    return out_msgs
+        try { 
+            var id = page.items[0].id
+        } catch (err) {
+            console.log("Kein PageItem definiert - cardPower Demo-Modus aktiv");
+            demoMode = true;
+        } 
+
+        let heading = 'cardPower Example';
+        if (demoMode != true) {
+            let o = getObject(id)
+             heading = page.heading !== undefined ? page.heading : o.common.name.de
+        } 
+
+        const obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
+
+        var out_msgs: Array<Payload> = [];
+        out_msgs.push({ payload: 'pageType~cardPower' });
+
+        //Demo Data if no pageItem present
+    	let array_icon_color = [HMIOff, MSGreen, MSYellow, MSGreen, MSYellow, MSGreen, MSRed];
+        let array_icon = ['home', 'battery-charging-60', 'solar-power-variant', 'wind-turbine', 'shape', 'transmission-tower', 'car'];
+        let array_powerspeed = ['', '-1', '2', '4', '1', '1', '5'];
+        let array_powerstate = ['', '0,5 kW', '0,9 kW', '2,8 kW', '0,2 kW', '0,1 kW', '4,6 kW'];
+
+        let arrayColorScale = [colorScale0, colorScale1, colorScale2, colorScale3, colorScale4, colorScale5, colorScale6, colorScale7, colorScale8, colorScale9, colorScale10]
+
+        if (!demoMode) {
+            for (let obji = 0; obji < 6; obji++) {
+                array_icon_color[obji + 1] = arrayColorScale[obj[obji].iconColor];
+                array_icon[obji + 1] = obj[obji].icon;
+                array_powerspeed[obji + 1] = obj[obji].speed;
+                array_powerstate[obji + 1] = obj[obji].value + ' ' + obj[obji].unit ;
+            } 
+        }
+
+        let power_string : any = '';
+        
+        for (let i = 1; i < 7; i++ ) {
+            power_string = power_string + rgb_dec565(array_icon_color[i]) + '~';    // icon_color~
+            power_string = power_string + Icons.GetIcon(array_icon[i]) + '~';       // icon~
+            power_string = power_string + array_powerspeed[i] + '~';                // speed~
+            power_string = power_string + array_powerstate[i] + '~';                // entity.state~
+        }
+
+        power_string = power_string.substring(0, power_string.length - 1); 
+
+        out_msgs.push({
+            payload: 'entityUpd~' +                         //entityUpd~*
+                heading                         + '~' +     //internalNameEntity*~*
+                GetNavigationString(pageId)     + '~' +     //navigation*~*
+    	        rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
+                Icons.GetIcon(array_icon[0])    + '~' +     // icon~            Mitte
+                array_powerspeed[0]             + '~' +     // entity.state~    Mitte
+                power_string              
+        });
+
+        return out_msgs
+    } catch (err) {
+        console.warn('function GeneratePowerPage: ' + err.message);
+    }
 }
 
 function setIfExists(id: string, value: any, type: string | null = null): boolean {
-    if (type === null) {
-        if (existsState(id)) {
-            setState(id, value);
-            return true;
+    try {
+        if (type === null) {
+            if (existsState(id)) {
+                setState(id, value);
+                return true;
+            }
+        } else {
+            const obj = getObject(id);
+            if (existsState(id) && obj.common.type !== undefined && obj.common.type === type) {
+                setState(id, value);
+                return true;
+            }
         }
-    } else {
-        const obj = getObject(id);
-        if (existsState(id) && obj.common.type !== undefined && obj.common.type === type) {
-            setState(id, value);
-            return true;
-        }
-    }
 
-    return false;
+        return false;
+    } catch (err) {
+        console.warn('function setIfExists: ' + err.message);
+    }        
 }
 
 function toggleState(id: string): boolean {
-    const obj = getObject(id);
-    if (existsState(id) && obj.common.type !== undefined && obj.common.type === 'boolean') {
-        setIfExists(id, !getState(id).val);
-        return true;
-    }
-    return false;
+    try {
+        const obj = getObject(id);
+        if (existsState(id) && obj.common.type !== undefined && obj.common.type === 'boolean') {
+            setIfExists(id, !getState(id).val);
+            return true;
+        }
+        return false;
+    } catch (err) {
+        console.warn('function toggleState: ' + err.message);
+    }  
 }
 
 function HandleButtonEvent(words): void {
-    var id = words[2]
-    var buttonAction = words[3];
+    try {
+        var id = words[2]
+        var buttonAction = words[3];
 
-    if (Debug) {
-        console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId);
-    }
+        if (Debug) {
+            console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId);
+        }
 
-    if ((words[2]).substring(0, 8) == 'navigate') {
-        GeneratePage(eval((words[2]).substring(9, (words[2]).length)));
-        return;
-    }
+        if ((words[2]).substring(0, 8) == 'navigate') {
+            GeneratePage(eval((words[2]).substring(9, (words[2]).length)));
+            return;
+        }
 
-    if (Debug) console.log(buttonAction);
+        if (Debug) console.log(buttonAction);
 
-    switch (buttonAction) {
-        case 'bUp':
-            if (pageId < 0) { // Prüfen, ob button1page oder button2page
-                pageId = 0;
-            } else {
-                pageId = Math.abs(pageNum);
-            }
-            UnsubscribeWatcher();
-            GeneratePage(config.pages[pageId]);
-            break;
-        case 'bNext':
-            var pageNum = (((pageId + 1) % config.pages.length) + config.pages.length) % config.pages.length;
-            pageId = pageNum;
-            UnsubscribeWatcher();
-            GeneratePage(config.pages[pageId]);
-            break;
-        case 'bPrev':
-            var pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
-            pageId = pageNum;
-            UnsubscribeWatcher();
-            if (activePage != undefined && activePage.parent != undefined) {
-                //update pageID
-                for (let i = 0; i < config.pages.length; i++) {
-                    if (config.pages[i] == activePage.parent) {
-                        pageId = i;
-                        break;
-                    }
+        switch (buttonAction) {
+            case 'bUp':
+                if (pageId < 0) { // Prüfen, ob button1page oder button2page
+                    pageId = 0;
+                } else {
+                    pageId = Math.abs(pageNum);
                 }
-                GeneratePage(activePage.parent);
-            }
-            else {
+                UnsubscribeWatcher();
                 GeneratePage(config.pages[pageId]);
-            }
-            break;
-        case 'bExit':
-            if (config.screenSaverDoubleClick) {
-                if (words[4] == 2) {
+                break;
+            case 'bNext':
+                var pageNum = (((pageId + 1) % config.pages.length) + config.pages.length) % config.pages.length;
+                pageId = pageNum;
+                UnsubscribeWatcher();
+                GeneratePage(config.pages[pageId]);
+                break;
+            case 'bPrev':
+                var pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
+                pageId = pageNum;
+                UnsubscribeWatcher();
+                if (activePage != undefined && activePage.parent != undefined) {
+                    //update pageID
+                    for (let i = 0; i < config.pages.length; i++) {
+                        if (config.pages[i] == activePage.parent) {
+                            pageId = i;
+                            break;
+                        }
+                    }
+                    GeneratePage(activePage.parent);
+                }
+                else {
                     GeneratePage(config.pages[pageId]);
                 }
-            } else {
-                if (Debug) console.log('bExit: ' + words[4] + ' - ' + pageId);
-                setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
-                setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
-                GeneratePage(activePage);
-            }
-            break;
-        case 'notifyAction':
-            if (words[4] == 'yes') {
-                setState(popupNotifyInternalName, <iobJS.State>{ val: words[2], ack: true });
-                setState(popupNotifyAction, <iobJS.State>{ val: true, ack: true });
-            } else if (words[4] == 'no') {
-                setState(popupNotifyInternalName, <iobJS.State>{ val: words[2], ack: true });
-                setState(popupNotifyAction, <iobJS.State>{ val: false, ack: true });
-            }
-
-            setIfExists(config.panelSendTopic, 'exitPopup');
-
-            break;
-        case 'OnOff':
-            if (existsObject(id)) {
-                var action = false
-                if (words[4] == '1')
-                    action = true;
-                let o = getObject(id);
-                switch (o.common.role) {
-                    case 'socket':
-                    case 'light':
-                        setIfExists(id + '.SET', action);
-                        break;
-                    case 'dimmer':
-                        setIfExists(id + '.ON_SET', action) ? true : setIfExists(id + '.ON_ACTUAL', action);
-                        break;
-                    case 'ct':
-                        setIfExists(id + '.ON', action);
-                        break;
-                    case 'rgb':
-                    case 'rgbSingle':
-                    case 'hue': // Armilar
-                        setIfExists(id + '.ON_ACTUAL', action);
+                break;
+            case 'bExit':
+                if (config.screenSaverDoubleClick && words[2] == 'screensaver') {
+                    if (words[4] == 2) {
+                        setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
+                        setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
+                        GeneratePage(config.pages[pageId]);
+                    }
+                } else {
+                    if (Debug) console.log('bExit: ' + words[4] + ' - ' + pageId);
+                    setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
+                    setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
+                    GeneratePage(activePage);
                 }
-            }
-            break;
-        case 'up':
-            setIfExists(id + '.OPEN', true);
-            break;
-        case 'stop':
-            setIfExists(id + '.STOP', true);
-            break;
-        case 'down':
-            setIfExists(id + '.CLOSE', true);
-            break;
-        case 'button':
-            if (existsObject(id)) {
-                var action = false
-                if (words[4] == '1')
-                    action = true;
-                let o = getObject(id);
-                switch (o.common.role) {
-                    case 'lock':
-                    case 'button':
-                        toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
-                        break;
-                    case 'buttonSensor':
-                        toggleState(id + '.ACTUAL');
-                        break;
-                    case 'socket':
-                    case 'light':
-                        toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
-                        break;
-                    case 'dimmer':
-                        toggleState(id + '.ON_SET') ? true : toggleState(id + '.ON_ACTUAL');
-                        break;
-                    case 'ct':
-                        toggleState(id + '.ON');
-                        break;
-                    case 'rgb':
-                    case 'rgbSingle':
-                    case 'hue': // Armilar
-                        toggleState(id + '.ON_ACTUAL');
+                break;
+            case 'notifyAction':
+                if (words[4] == 'yes') {
+                    setState(popupNotifyInternalName, <iobJS.State>{ val: words[2], ack: true });
+                    setState(popupNotifyAction, <iobJS.State>{ val: true, ack: true });
+                } else if (words[4] == 'no') {
+                    setState(popupNotifyInternalName, <iobJS.State>{ val: words[2], ack: true });
+                    setState(popupNotifyAction, <iobJS.State>{ val: false, ack: true });
                 }
-            }
-            break;
-        case 'positionSlider':
-            (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
-            timeoutSlider = setTimeout(async function () {
-                setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
-            }, 250);
-            break;
-        case 'brightnessSlider':
-            (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
-            timeoutSlider = setTimeout(async function () {
+
+                setIfExists(config.panelSendTopic, 'exitPopup');
+
+                break;
+            case 'OnOff':
                 if (existsObject(id)) {
+                    var action = false
+                    if (words[4] == '1')
+                        action = true;
                     let o = getObject(id);
-                    let pageItem = findPageItem(id);
-
                     switch (o.common.role) {
+                        case 'socket':
+                        case 'light':
+                            setIfExists(id + '.SET', action);
+                            break;
                         case 'dimmer':
-                            if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
-                                let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness))
-                                setIfExists(id + '.SET', sliderPos) ? true : setIfExists(id + '.ACTUAL', sliderPos);
-                            } else {
-                                setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
-                            }
+                            setIfExists(id + '.ON_SET', action) ? true : setIfExists(id + '.ON_ACTUAL', action);
+                            break;
+                        case 'ct':
+                            setIfExists(id + '.ON', action);
                             break;
                         case 'rgb':
-                        case 'ct':
                         case 'rgbSingle':
-                        case 'hue':
-                            if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
-                                let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness))
-                                setIfExists(id + '.DIMMER', sliderPos);
+                        case 'hue': // Armilar
+                            setIfExists(id + '.ON_ACTUAL', action);
+                    }
+                }
+                break;
+            case 'up':
+                setIfExists(id + '.OPEN', true);
+                break;
+            case 'stop':
+                setIfExists(id + '.STOP', true);
+                break;
+            case 'down':
+                setIfExists(id + '.CLOSE', true);
+                break;
+            case 'button':
+                if (existsObject(id)) {
+                    var action = false
+                    if (words[4] == '1')
+                        action = true;
+                    let o = getObject(id);
+                    switch (o.common.role) {
+                        case 'lock':
+                        case 'button':
+                            toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
+                            break;
+                        case 'buttonSensor':
+                            toggleState(id + '.ACTUAL');
+                            break;
+                        case 'socket':
+                        case 'light':
+                            toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
+                            break;
+                        case 'dimmer':
+                            toggleState(id + '.ON_SET') ? true : toggleState(id + '.ON_ACTUAL');
+                            break;
+                        case 'ct':
+                            toggleState(id + '.ON');
+                            break;
+                        case 'rgb':
+                        case 'rgbSingle':
+                        case 'hue': // Armilar
+                            toggleState(id + '.ON_ACTUAL');
+                    }
+                }
+                break;
+            case 'positionSlider':
+                (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
+                timeoutSlider = setTimeout(async function () {
+                    setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                }, 250);
+                break;
+            case 'brightnessSlider':
+                (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
+                timeoutSlider = setTimeout(async function () {
+                    if (existsObject(id)) {
+                        let o = getObject(id);
+                        let pageItem = findPageItem(id);
+
+                        switch (o.common.role) {
+                            case 'dimmer':
+                                if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                                    let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness))
+                                    setIfExists(id + '.SET', sliderPos) ? true : setIfExists(id + '.ACTUAL', sliderPos);
+                                } else {
+                                    setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                                }
+                                break;
+                            case 'rgb':
+                            case 'ct':
+                            case 'rgbSingle':
+                            case 'hue':
+                                if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                                    let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness))
+                                    setIfExists(id + '.DIMMER', sliderPos);
+                                } else {
+                                    setIfExists(id + '.DIMMER', parseInt(words[4]));
+                                }
+                                break;
+                        }
+                    }
+                }, 250);
+                break;
+            case 'colorTempSlider': // Armilar - Slider tickt verkehrt - Hell = 0 / Dunkel = 100 -> Korrektur
+                (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
+                timeoutSlider = setTimeout(async function () {
+                    let pageItem = findPageItem(id);
+                    if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                        let colorTempK = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
+                        setIfExists(id + '.TEMPERATURE', (colorTempK));
+                    } else {
+                        setIfExists(id + '.TEMPERATURE', 100 - words[4]);
+                    }
+                }, 250);
+                break;
+            case 'colorWheel':
+                let colorCoordinates = words[4].split('|');
+                let rgb = pos_to_color(colorCoordinates[0], colorCoordinates[1]);
+                if (Debug) console.log(rgb);
+                if (Debug) console.log(getHue(rgb.red, rgb.green, rgb.blue));
+                let o = getObject(id);
+                switch (o.common.role) {
+                    case 'hue':
+                        setIfExists(id + '.HUE', getHue(rgb.red, rgb.green, rgb.blue));
+                        break;
+                    case 'rgb':
+                        setIfExists(id + '.RED', rgb.red);
+                        setIfExists(id + '.GREEN', rgb.green);
+                        setIfExists(id + '.BLUE', rgb.blue);
+                        break;
+                    case 'rgbSingle':
+                        let pageItem = findPageItem(id); 
+                        if (pageItem.colormode == "xy") {
+                            //Für z.B. Deconz XY
+                            setIfExists(id + ".RGB", rgb_to_cie(rgb.red, rgb.green, rgb.blue));
+                            if (Debug) console.log(rgb_to_cie(rgb.red, rgb.green, rgb.blue));
+                        }
+                        else {
+                            //Für RGB
+                            setIfExists(id + ".RGB", ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue));  
+                        }
+                        break;      
+                }
+                break;
+            case 'tempUpd':
+                setIfExists(id + '.SET', parseInt(words[4]) / 10);
+                break;
+            case 'media-back':
+                setIfExists(id + '.PREV', true);
+                setTimeout(function(){
+                    GeneratePage(activePage);  
+                },3000)
+                break;
+            case 'media-pause':
+                let pageItemTemp = findPageItem(id);
+                let adaInstanceSplit = pageItemTemp.adapterPlayerInstance.split('.');
+                if (adaInstanceSplit[0] == 'squeezeboxrpc') {
+                    let stateVal = getState(pageItemTemp.adapterPlayerInstance + 'state').val
+                    if (stateVal == 0) {
+                        setState(pageItemTemp.adapterPlayerInstance + 'state', 1)
+                    } else if (stateVal == 1) {
+                        setState(pageItemTemp.adapterPlayerInstance + 'state', 0)
+                    } else if (stateVal == null) {
+                        setState(pageItemTemp.adapterPlayerInstance + 'state', 1)
+                    }
+                } else {
+                    if (getState(id + '.STATE').val === true) {
+                        setIfExists(id + '.PAUSE', true);
+                    } else {
+                        setIfExists(id + '.PLAY', true);
+                    }
+                }
+                setTimeout(function(){
+                    GeneratePage(activePage);  
+                },3000)
+                break;
+            case 'media-next':
+                setIfExists(id + '.NEXT', true);
+                setTimeout(function(){
+                    GeneratePage(activePage);  
+                },3000)
+                break;
+            case 'volumeSlider':
+                setIfExists(id + '.VOLUME', parseInt(words[4]))
+                break;
+            case 'speaker-sel':
+                let pageItem = findPageItem(id);
+                let adapterInstance = pageItem.adapterPlayerInstance;
+                let adapter = adapterInstance.split('.')
+                let deviceAdapter = adapter[0];
+
+                switch (deviceAdapter) {
+                    case 'spotify-premium':
+                        var strDeviceID = spotifyGetDeviceID(words[4]);
+                        setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
+                        break;
+                    case 'alexa2':
+                        let i_list = Array.prototype.slice.apply($('[state.id="' + adapterInstance + 'Echo-Devices.*.Info.name"]'));
+                        for (let i_index in i_list) {
+                            let i = i_list[i_index];
+                            if ((getState(i).val) === words[4]) {
+                                let deviceId = i;
+                                deviceId = deviceId.split('.');
+                                setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + words[4]);
+                                pageItem.mediaDevice = deviceId[3];
+                            }
+                        }
+                        break;
+                    case 'sonos':
+                        break;
+                    case 'chromecast':
+                        break;
+                }        
+                break;
+            case 'media-OnOff':
+                let pageItemTem = findPageItem(id);
+                let adaInstanceSpli = pageItemTem.adapterPlayerInstance.split('.');
+                if (adaInstanceSpli[0] == 'squeezeboxrpc') {
+                    let stateVal = getState(pageItemTem.adapterPlayerInstance + 'Power').val
+                    if (stateVal === 0) {
+                        setState(pageItemTem.adapterPlayerInstance + 'Power', 1)
+                        setIfExists(id + '.STOP', false)
+                        setIfExists(id + '.STATE', 1)
+                    } else {
+                        setState(pageItemTem.adapterPlayerInstance + 'Power', 0)
+                        setIfExists(id + '.STOP', true)
+                        setIfExists(id + '.STATE', 0)
+                    }
+                } else {
+                    setIfExists(id + '.STOP', true)
+                }
+                break;
+            case 'hvac_action':
+                if (words[4] == 'BOOT' || words[4] == 'PART' || words[4] == 'AUTT' || words[4] == 'MANT' || words[4] == 'VACT') {
+
+                    switch (words[4]) {
+                        case 'BOOT':
+                            setIfExists(words[2] + '.' + 'BOOST', !getState(words[2] + '.' + 'BOOST').val)
+                            break;                
+                        case 'PART':
+                            setIfExists(words[2] + '.' + 'PARTY', !getState(words[2] + '.' + 'PARTY').val)
+                            break;                
+                        case 'AUTT':
+                            setIfExists(words[2] + '.' + 'AUTOMATIC', !getState(words[2] + '.' + 'AUTOMATIC').val)
+                            break;                
+                        case 'MANT':
+                            setIfExists(words[2] + '.' + 'MANUAL', !getState(words[2] + '.' + 'MANUAL').val)
+                            break;                
+                        case 'VACT':
+                            setIfExists(words[2] + '.' + 'VACATION', !getState(words[2] + '.' + 'VACATION').val)
+                            break;                
+                    }
+                    let modes = ['BOOT', 'PART', 'AUTT', 'MANT', 'VACT']
+                    let modesDP = ['BOOST', 'PARTY', 'AUTOMATIC', 'MANUAL', 'VACATION']
+                    for (let mode=0; mode < 5; mode++) {
+                        if (words[4] != modes[mode]) {
+                            setIfExists(words[2] + '.' + modesDP[mode], false)
+                        }
+                    }
+                    GeneratePage(config.pages[pageId]);
+                } else {
+                    var HVACMode = 0;
+                    switch (words[4]) {
+                        case 'POWER':
+                            HVACMode = 0;
+                            setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val)
+                            if (getState(words[2] + '.' + words[4]).val) {
+                                HVACMode = 1;
+                            }
+                            break;
+                        case 'AUTO':
+                            HVACMode = 1;
+                            break;
+                        case 'COOL':
+                            HVACMode = 2;
+                            break;
+                        case 'HEAT':
+                            HVACMode = 3;
+                            break;
+                        case 'ECO':
+                            HVACMode = 4;
+                            break;
+                        case 'FAN':
+                            HVACMode = 5;
+                            break;
+                        case 'DRY':
+                            HVACMode = 6;
+                            break;
+                        case 'SWING':
+                            HVACMode = getState(words[2] + '.MODE').val;
+                            if (getState(words[2] + '.SWING').val == 0) {
+                                setIfExists(words[2] + '.SWING', 1);
                             } else {
-                                setIfExists(id + '.DIMMER', parseInt(words[4]));
+                                setIfExists(words[2] + '.' + 'SWING', 0);
                             }
                             break;
                     }
+                    setIfExists(words[2] + '.' + 'MODE', HVACMode)
+                    GeneratePage(config.pages[pageId]);
                 }
-            }, 250);
-            break;
-        case 'colorTempSlider': // Armilar - Slider tickt verkehrt - Hell = 0 / Dunkel = 100 -> Korrektur
-            (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
-            timeoutSlider = setTimeout(async function () {
-                let pageItem = findPageItem(id);
-                if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
-                    let colorTempK = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
-                    setIfExists(id + '.TEMPERATURE', (colorTempK));
-                } else {
-                    setIfExists(id + '.TEMPERATURE', 100 - words[4]);
-                }
-            }, 250);
-            break;
-        case 'colorWheel':
-            let colorCoordinates = words[4].split('|');
-            let rgb = pos_to_color(colorCoordinates[0], colorCoordinates[1]);
-            if (Debug) console.log(rgb);
-            if (Debug) console.log(getHue(rgb.red, rgb.green, rgb.blue));
-            let o = getObject(id);
-            switch (o.common.role) {
-                case 'hue':
-                    setIfExists(id + '.HUE', getHue(rgb.red, rgb.green, rgb.blue));
-                    break;
-                case 'rgb':
-                    setIfExists(id + '.RED', rgb.red);
-                    setIfExists(id + '.GREEN', rgb.green);
-                    setIfExists(id + '.BLUE', rgb.blue);
-                    break;
-                case 'rgbSingle':
-                    let pageItem = findPageItem(id); 
-                    if (pageItem.colormode == "xy") {
-                        //Für z.B. Deconz XY
-                        setIfExists(id + ".RGB", rgb_to_cie(rgb.red, rgb.green, rgb.blue));
-                        if (Debug) console.log(rgb_to_cie(rgb.red, rgb.green, rgb.blue));
-                    }
-                    else {
-                        //Für RGB
-                        setIfExists(id + ".RGB", ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue));  
-                    }
-                    break;      
-            }
-            break;
-        case 'tempUpd':
-            setIfExists(id + '.SET', parseInt(words[4]) / 10);
-            break;
-        case 'media-back':
-            setIfExists(id + '.PREV', true);
-            setTimeout(function(){
-                GeneratePage(activePage);  
-            },3000)
-            break;
-        case 'media-pause':
-            if (getState(id + '.STATE').val === true) {
-                setIfExists(id + '.PAUSE', true);
-            } else {
-                setIfExists(id + '.PLAY', true);
-            }
-            setTimeout(function(){
-                GeneratePage(activePage);  
-            },3000)
-            break;
-        case 'media-next':
-            setIfExists(id + '.NEXT', true);
-            setTimeout(function(){
-                GeneratePage(activePage);  
-            },3000)
-            break;
-        case 'volumeSlider':
-            setIfExists(id + '.VOLUME', parseInt(words[4]))
-            break;
-        case 'speaker-sel':
-            let pageItem = findPageItem(id);
-            let adapterInstance = pageItem.adapterPlayerInstance;
-            let adapter = adapterInstance.split('.')
-            let deviceAdapter = adapter[0];
 
-            switch (deviceAdapter) {
-                case 'spotify-premium':
-                    var strDeviceID = spotifyGetDeviceID(words[4]);
-                    setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
-                    break;
-                case 'alexa2':
-                    let i_list = Array.prototype.slice.apply($('[state.id="' + adapterInstance + 'Echo-Devices.*.Info.name"]'));
-                    for (let i_index in i_list) {
-                        let i = i_list[i_index];
-                        if ((getState(i).val) === words[4]) {
-                            let deviceId = i;
-                            deviceId = deviceId.split('.');
-                            setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + words[4]);
-                            pageItem.mediaDevice = deviceId[3];
-                        }
-                    }
-                    break;
-                case 'sonos':
-                    break;
-                case 'chromecast':
-                    break;
-            }        
-            break;
-        case 'media-OnOff':
-            setIfExists(id + '.STOP', true)
-            break;
-        case 'hvac_action':
-            if (words[4] == 'BOOT' || words[4] == 'PART' || words[4] == 'AUTT' || words[4] == 'MANT' || words[4] == 'VACT') {
-
-                switch (words[4]) {
-                    case 'BOOT':
-                        setIfExists(words[2] + '.' + 'BOOST', !getState(words[2] + '.' + 'BOOST').val)
-                        break;                
-                    case 'PART':
-                        setIfExists(words[2] + '.' + 'PARTY', !getState(words[2] + '.' + 'PARTY').val)
-                        break;                
-                    case 'AUTT':
-                        setIfExists(words[2] + '.' + 'AUTOMATIC', !getState(words[2] + '.' + 'AUTOMATIC').val)
-                        break;                
-                    case 'MANT':
-                        setIfExists(words[2] + '.' + 'MANUAL', !getState(words[2] + '.' + 'MANUAL').val)
-                        break;                
-                    case 'VACT':
-                        setIfExists(words[2] + '.' + 'VACATION', !getState(words[2] + '.' + 'VACATION').val)
-                        break;                
+                break;
+            case 'number-set':
+                setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                break;
+            case 'A1': // Alarm-Page Alarm 1 aktivieren
+                if (words[4] != '') {
+                    setIfExists(id + '.TYPE', 'A1');
+                    setIfExists(id + '.PIN', words[4]);
+                    setIfExists(id + '.ACTUAL', 'arming');
+                    setIfExists(id + '.PANEL', NSPanel_Path);
                 }
-                let modes = ['BOOT', 'PART', 'AUTT', 'MANT', 'VACT']
-                let modesDP = ['BOOST', 'PARTY', 'AUTOMATIC', 'MANUAL', 'VACATION']
-                for (let mode=0; mode < 5; mode++) {
-                    if (words[4] != modes[mode]) {
-                        setIfExists(words[2] + '.' + modesDP[mode], false)
-                    }
-                }
-                GeneratePage(config.pages[pageId]);
-            } else {
-                var HVACMode = 0;
-                switch (words[4]) {
-                    case 'POWER':
-                        HVACMode = 0;
-                        setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val)
-                        if (getState(words[2] + '.' + words[4]).val) {
-                            HVACMode = 1;
-                        }
-                        break;
-                    case 'AUTO':
-                        HVACMode = 1;
-                        break;
-                    case 'COOL':
-                        HVACMode = 2;
-                        break;
-                    case 'HEAT':
-                        HVACMode = 3;
-                        break;
-                    case 'ECO':
-                        HVACMode = 4;
-                        break;
-                    case 'FAN':
-                        HVACMode = 5;
-                        break;
-                    case 'DRY':
-                        HVACMode = 6;
-                        break;
-                    case 'SWING':
-                        HVACMode = getState(words[2] + '.MODE').val;
-                        if (getState(words[2] + '.SWING').val == 0) {
-                            setIfExists(words[2] + '.SWING', 1);
-                        } else {
-                            setIfExists(words[2] + '.' + 'SWING', 0);
-                        }
-                        break;
-                }
-                setIfExists(words[2] + '.' + 'MODE', HVACMode)
-                GeneratePage(config.pages[pageId]);
-            }
-
-            break;
-        case 'number-set':
-            setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
-            break;
-        case 'A1': // Alarm-Page Alarm 1 aktivieren
-            if (words[4] != '') {
-                setIfExists(id + '.TYPE', 'A1');
-                setIfExists(id + '.PIN', words[4]);
-                setIfExists(id + '.ACTUAL', 'arming');
-                setIfExists(id + '.PANEL', NSPanel_Path);
-            }
-            setTimeout(function(){
-                GeneratePage(activePage);  
-            },250) 
-            break;
-        case 'A2': // Alarm-Page Alarm 2 aktivieren
-            if (words[4] != '') {
-                setIfExists(id + '.TYPE', 'A2');
-                setIfExists(id + '.PIN', words[4]);
-                setIfExists(id + '.ACTUAL', 'arming');
-                setIfExists(id + '.PANEL', NSPanel_Path);
-            }
-            setTimeout(function(){
-                GeneratePage(activePage);  
-            },250)             
-            break;
-        case 'A3': // Alarm-Page Alarm 3 aktivieren
-            if (words[4] != '') {
-                setIfExists(id + '.TYPE', 'A3');
-                setIfExists(id + '.PIN', words[4]);
-                setIfExists(id + '.ACTUAL', 'arming');
-                setIfExists(id + '.PANEL', NSPanel_Path);
-            }
-            setTimeout(function(){
-                GeneratePage(activePage);  
-            },250)            
-            break;
-        case 'A4': // Alarm-Page Alarm 4 aktivieren
-            if (words[4] != '') {
-                setIfExists(id + '.TYPE', 'A4');
-                setIfExists(id + '.PIN', words[4]);
-                setIfExists(id + '.ACTUAL', 'arming');
-                setIfExists(id + '.PANEL', NSPanel_Path);
-            }
-            setTimeout(function(){
-                GeneratePage(activePage);  
-            },250)          
-            break;
-        case 'D1': // Alarm-Page Alarm Deaktivieren
-            if (Debug) console.log('D1: ' + getState(id + '.PIN').val);
-            if (Debug) console.log(words[4]);
-            if (words[4] != '') {
-                if (getState(id + '.PIN').val == words[4]) {
-                    setIfExists(id + '.PIN', '0000');
-                    setIfExists(id + '.TYPE', 'D1');
-                    setIfExists(id + '.ACTUAL', 'pending');
-                    setIfExists(id + '.PIN_Failed', 0);
-                } else {
-                    setIfExists(id + '.PIN_Failed', getState(id + '.PIN_Failed').val + 1);
-                    setIfExists(id + '.ACTUAL', 'triggered');
-                }
-                setIfExists(id + '.PANEL', NSPanel_Path);
                 setTimeout(function(){
                     GeneratePage(activePage);  
-                },500)
-            }
-            break;
-        default:
-            break;
-    }
+                },250) 
+                break;
+            case 'A2': // Alarm-Page Alarm 2 aktivieren
+                if (words[4] != '') {
+                    setIfExists(id + '.TYPE', 'A2');
+                    setIfExists(id + '.PIN', words[4]);
+                    setIfExists(id + '.ACTUAL', 'arming');
+                    setIfExists(id + '.PANEL', NSPanel_Path);
+                }
+                setTimeout(function(){
+                    GeneratePage(activePage);  
+                },250)             
+                break;
+            case 'A3': // Alarm-Page Alarm 3 aktivieren
+                if (words[4] != '') {
+                    setIfExists(id + '.TYPE', 'A3');
+                    setIfExists(id + '.PIN', words[4]);
+                    setIfExists(id + '.ACTUAL', 'arming');
+                    setIfExists(id + '.PANEL', NSPanel_Path);
+                }
+                setTimeout(function(){
+                    GeneratePage(activePage);  
+                },250)            
+                break;
+            case 'A4': // Alarm-Page Alarm 4 aktivieren
+                if (words[4] != '') {
+                    setIfExists(id + '.TYPE', 'A4');
+                    setIfExists(id + '.PIN', words[4]);
+                    setIfExists(id + '.ACTUAL', 'arming');
+                    setIfExists(id + '.PANEL', NSPanel_Path);
+                }
+                setTimeout(function(){
+                    GeneratePage(activePage);  
+                },250)          
+                break;
+            case 'D1': // Alarm-Page Alarm Deaktivieren
+                if (Debug) console.log('D1: ' + getState(id + '.PIN').val);
+                if (Debug) console.log(words[4]);
+                if (words[4] != '') {
+                    if (getState(id + '.PIN').val == words[4]) {
+                        setIfExists(id + '.PIN', '0000');
+                        setIfExists(id + '.TYPE', 'D1');
+                        setIfExists(id + '.ACTUAL', 'pending');
+                        setIfExists(id + '.PIN_Failed', 0);
+                    } else {
+                        setIfExists(id + '.PIN_Failed', getState(id + '.PIN_Failed').val + 1);
+                        setIfExists(id + '.ACTUAL', 'triggered');
+                    }
+                    setIfExists(id + '.PANEL', NSPanel_Path);
+                    setTimeout(function(){
+                        GeneratePage(activePage);  
+                    },500)
+                }
+                break;
+            default:
+                break;
+        }
+    } catch (err) {
+        console.log('function HandleButtonEvent: ' + err.message);
+    }         
 }
 
 function GetNavigationString(pageId: number): string {
-    if (Debug) console.log(pageId);
+    try {
 
-    if (activePage.subPage)
-        return '1|0';
+        if (Debug) console.log(pageId);
 
-    switch (pageId) {
-        case 0:
-            return '0|1';
-        case config.pages.length - 1:
+        if (activePage.subPage)
             return '1|0';
-        case -1:
-            return '2|0';
-        case -2:
-            return '2|0';
-        default:
-            return '1|1';
-    }
+
+        switch (pageId) {
+            case 0:
+                return '0|1';
+            case config.pages.length - 1:
+                return '1|0';
+            case -1:
+                return '2|0';
+            case -2:
+                return '2|0';
+            default:
+                return '1|1';
+        }
+    } catch (err) {
+        console.log('function GetNavigationString: ' + err.message);
+    }         
 }
 
 function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
+    try {
+        var out_msgs: Array<Payload> = [];
+        let id = pageItem.id
 
-    var out_msgs: Array<Payload> = [];
-    let id = pageItem.id
+        if (existsObject(id)) {
+            var o = getObject(id)
+            var val: (boolean | number) = 0;
+            let icon = Icons.GetIcon('lightbulb');
+            var iconColor = rgb_dec565(config.defaultColor);
 
-    if (existsObject(id)) {
-        var o = getObject(id)
-        var val: (boolean | number) = 0;
-        let icon = Icons.GetIcon('lightbulb');
-        var iconColor = rgb_dec565(config.defaultColor);
+            if (type == 'popupLight') {
+                let switchVal = '0';
+                let brightness = 0;
+                if (o.common.role == 'light' || o.common.role == 'socket') {
+                    if (existsState(id + '.GET')) {
+                        val = getState(id + '.GET').val;
+                        RegisterDetailEntityWatcher(id + '.GET', pageItem, type);
+                    } else if (existsState(id + '.SET')) {
+                        val = getState(id + '.SET').val;
+                        RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
+                    }
 
-        if (type == 'popupLight') {
-            let switchVal = '0';
-            let brightness = 0;
-            if (o.common.role == 'light' || o.common.role == 'socket') {
-                if (existsState(id + '.GET')) {
-                    val = getState(id + '.GET').val;
-                    RegisterDetailEntityWatcher(id + '.GET', pageItem, type);
+                    icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+
+                    if (val) {
+                        switchVal = '1';
+                        iconColor = GetIconColor(pageItem, true, true);
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, true);
+                    }
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail' + '~'   // entityUpdateDetail
+                            + id + '~'
+                            + icon + '~'   // iconId
+                            + iconColor + '~'   // iconColor
+                            + switchVal + '~'   // buttonState
+                            + 'disable' + '~'   // sliderBrightnessPos
+                            + 'disable' + '~'   // sliderColorTempPos
+                            + 'disable' + '~'   // colorMode
+                            + ''        + '~'   // Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
+                    });         // Brightness-Bezeichnung
+                }
+
+                // Dimmer
+                if (o.common.role == 'dimmer') {
+                    if (existsState(id + '.ON_ACTUAL')) {
+                        val = getState(id + '.ON_ACTUAL').val;
+                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
+                    } else if (existsState(id + '.ON_SET')) {
+                        val = getState(id + '.ON_SET').val;
+                        RegisterDetailEntityWatcher(id + '.ON_SET', pageItem, type);
+                    }
+
+                    if (val === true) {
+                        var iconColor = GetIconColor(pageItem, val, false);
+                        switchVal = '1'
+                    }
+
+                    if (existsState(id + '.ACTUAL')) {
+                        if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                            brightness = Math.trunc(scale(getState(id + '.ACTUAL').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                        } else {
+                            brightness = getState(id + '.ACTUAL').val;
+                        }
+                    } else {
+                        console.warn('Alisas-Datenpunkt: ' + id + '.ACTUAL could not be read');
+                    }
+
+                    if (val === true) {
+                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        switchVal = '1';
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, true);
+                    }
+
+                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                            + id + '~'
+                            + icon + '~'        //iconId
+                            + iconColor + '~'   //iconColor
+                            + switchVal + '~'   //buttonState
+                            + brightness + '~'  //sliderBrightnessPos
+                            + 'disable' + '~'   //sliderColorTempPos
+                            + 'disable' + '~'   //colorMod
+                            + ''        + '~'   //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
+                    });         //Brightness-Bezeichnung
+
+                    console.log('light.' + id)
+
+                }
+
+                // HUE-Licht
+                if (o.common.role == 'hue') {
+
+                    if (existsState(id + '.ON_ACTUAL')) {
+                        val = getState(id + '.ON_ACTUAL').val;
+                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
+                    }
+
+                    if (existsState(id + '.DIMMER')) {
+                        if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                            brightness = Math.trunc(scale(getState(id + '.DIMMER').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                        } else {
+                            brightness = getState(id + '.DIMMER').val;
+                        }
+                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
+                    } else {
+                        console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                    }
+
+                    if (val === true) {
+                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        switchVal = '1';
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, true);
+                    }
+
+                    var colorMode = 'disable';
+                    if (existsState(id + '.HUE')) {
+                        if (getState(id + '.HUE').val != null) {
+                            colorMode = 'enable';
+                            let huecolor = hsv2rgb(getState(id + '.HUE').val, 1, 1);
+                            let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) }
+                            iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                            //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
+                        }
+                    }
+
+                    var colorTemp = 0;
+                    if (existsState(id + '.TEMPERATURE')) {
+                        if (getState(id + '.TEMPERATURE').val != null) {
+                            if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                            } else {
+                                colorTemp = 100 - getState(id + '.TEMPERATURE').val;
+                            }
+                            //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
+                        }
+                    } else {
+                        console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                    }
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                            + id + '~'
+                            + icon + '~'   //iconId
+                            + iconColor + '~'   //iconColor
+                            + switchVal + '~'   //buttonState
+                            + brightness + '~'   //sliderBrightnessPos
+                            + colorTemp + '~'   //sliderColorTempPos
+                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color'   + '~'   //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
+                    });         //Brightness-Bezeichnung
+                }
+
+                // RGB-Licht
+                if (o.common.role == 'rgb') {
+
+                    if (existsState(id + '.ON_ACTUAL')) {
+                        val = getState(id + '.ON_ACTUAL').val;
+                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
+                    }
+
+                    if (existsState(id + '.DIMMER')) {
+                        if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                            brightness = Math.trunc(scale(getState(id + '.DIMMER').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                        } else {
+                            brightness = getState(id + '.DIMMER').val;
+                        }
+                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
+                    } else {
+                        console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                    }
+
+                    if (val === true) {
+                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        switchVal = '1';
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, true);
+                    }
+
+                    var colorMode = 'disable';
+                    if (existsState(id + '.RED') && existsState(id + '.GREEN') && existsState(id + '.BLUE')) {
+                        if (getState(id + '.RED').val != null && getState(id + '.GREEN').val != null && getState(id + '.BLUE').val != null) {
+                            colorMode = 'enable';
+                            let rgb = <RGB>{ red: Math.round(getState(id + '.RED').val), green: Math.round(getState(id + '.GREEN').val), blue: Math.round(getState(id + '.BLUE').val) }
+                            iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                            //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
+                        }
+                    }
+
+                    var colorTemp = 0;
+                    if (existsState(id + '.TEMPERATURE')) {
+                        if (getState(id + '.TEMPERATURE').val != null) {
+                            if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                            } else {
+                                colorTemp = 100 - getState(id + '.TEMPERATURE').val;
+                            }
+                            //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
+                        }
+                    } else {
+                        console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                    }
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                            + id + '~'
+                            + icon + '~'   //iconId
+                            + iconColor + '~'   //iconColor
+                            + switchVal + '~'   //buttonState
+                            + brightness + '~'   //sliderBrightnessPos
+                            + colorTemp + '~'   //sliderColorTempPos
+                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'   //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
+                    });         //Brightness-Bezeichnung
+                }
+
+                // RGB-Licht-einzeln (HEX)
+                if (o.common.role == 'rgbSingle') {
+
+                    if (existsState(id + '.ON_ACTUAL')) {
+                        val = getState(id + '.ON_ACTUAL').val;
+                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
+                    }
+
+                    if (existsState(id + '.DIMMER')) {
+                        if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                            brightness = Math.trunc(scale(getState(id + '.DIMMER').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                        } else {
+                            brightness = getState(id + '.DIMMER').val;
+                        }
+                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
+                    } else {
+                        console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                    }
+
+                    if (val === true) {
+                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        switchVal = '1';
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, true);
+                    }
+
+                    var colorMode = 'disable';
+                    if (existsState(id + '.RGB')) {
+                        if (getState(id + '.RGB').val != null) {
+                            colorMode = 'enable';
+                            var hex = getState(id + '.RGB').val;
+                            var hexRed = parseInt(hex[1] + hex[2], 16);
+                            var hexGreen = parseInt(hex[3] + hex[4], 16);
+                            var hexBlue = parseInt(hex[5] + hex[6], 16);
+                            let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) }
+                            iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                            //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
+                        }
+                    }
+
+                    var colorTemp = 0;
+                    if (existsState(id + '.TEMPERATURE')) {
+                        if (getState(id + '.TEMPERATURE').val != null) {
+                            if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                            } else {
+                                colorTemp = 100 - getState(id + '.TEMPERATURE').val;
+                            }
+                            //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
+                        }
+                    } else {
+                        console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                    }
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                            + id + '~'
+                            + icon + '~'        //iconId
+                            + iconColor + '~'   //iconColor
+                            + switchVal + '~'   //buttonState
+                            + brightness + '~'  //sliderBrightnessPos
+                            + colorTemp + '~'   //sliderColorTempPos
+                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'     //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
+                    });         //Brightness-Bezeichnung
+                }
+
+                // Farbtemperatur
+                if (o.common.role == 'ct') {
+
+                    if (existsState(id + '.ON')) {
+                        val = getState(id + '.ON').val;
+                        RegisterDetailEntityWatcher(id + '.ON', pageItem, type);
+                    }
+
+                    if (existsState(id + '.DIMMER')) {
+                        if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                            brightness = Math.trunc(scale(getState(id + '.DIMMER').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                        } else {
+                            brightness = getState(id + '.DIMMER').val;
+                        }
+                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
+                    } else {
+                        console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                    }
+
+                    if (val === true) {
+                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        switchVal = '1';
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, true);
+                    }
+
+                    var colorMode = 'disable';
+
+                    var colorTemp = 0;
+                    if (existsState(id + '.TEMPERATURE')) {
+                        if (getState(id + '.TEMPERATURE').val != null) {
+                            if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                            } else {
+                                colorTemp = 100 - getState(id + '.TEMPERATURE').val;
+                            }
+                            //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
+                        }
+                    } else {
+                        console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                    }
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail' + '~'                   //entityUpdateDetail
+                            + icon + '~'                   //iconId
+                            + iconColor + '~'                   //iconColor
+                            + switchVal + '~'                   //buttonState
+                            + brightness + '~'                   //sliderBrightnessPos
+                            + colorTemp + '~'                   //sliderColorTempPos
+                            + colorMode + '~'                   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'         //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
+                    });       //Brightness-Bezeichnung
+                }
+            }
+
+            if (type == 'popupShutter') {
+                icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
+                if (existsState(id + '.ACTUAL')) {
+                    val = getState(id + '.ACTUAL').val;
+                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
                 } else if (existsState(id + '.SET')) {
                     val = getState(id + '.SET').val;
                     RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
                 }
 
-                icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-
-                if (val) {
-                    switchVal = '1';
-                    iconColor = GetIconColor(pageItem, true, true);
-                } else {
-                    iconColor = GetIconColor(pageItem, false, true);
-                }
-
                 out_msgs.push({
-                    payload: 'entityUpdateDetail' + '~'   // entityUpdateDetail
+                    payload: 'entityUpdateDetail' + '~'           //entityUpdateDetail
                         + id + '~'
-                        + icon + '~'   // iconId
-                        + iconColor + '~'   // iconColor
-                        + switchVal + '~'   // buttonState
-                        + 'disable' + '~'   // sliderBrightnessPos
-                        + 'disable' + '~'   // sliderColorTempPos
-                        + 'disable' + '~'   // colorMode
-                        + ''        + '~'   // Color-Bezeichnung
-                        + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
-                        + findLocale('lights', 'Brightness')
-                });         // Brightness-Bezeichnung
-            }
-
-            // Dimmer
-            if (o.common.role == 'dimmer') {
-                if (existsState(id + '.ON_ACTUAL')) {
-                    val = getState(id + '.ON_ACTUAL').val;
-                    RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
-                } else if (existsState(id + '.ON_SET')) {
-                    val = getState(id + '.ON_SET').val;
-                    RegisterDetailEntityWatcher(id + '.ON_SET', pageItem, type);
-                }
-
-                if (val === true) {
-                    var iconColor = GetIconColor(pageItem, val, false);
-                    switchVal = '1'
-                }
-
-                if (existsState(id + '.ACTUAL')) {
-                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
-                        brightness = Math.trunc(scale(getState(id + '.ACTUAL').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
-                    } else {
-                        brightness = getState(id + '.ACTUAL').val;
-                    }
-                } else {
-                    console.warn('Alisas-Datenpunkt: ' + id + '.ACTUAL could not be read');
-                }
-
-                if (val === true) {
-                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
-                    switchVal = '1';
-                } else {
-                    iconColor = GetIconColor(pageItem, false, true);
-                }
-
-                RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
-
-                out_msgs.push({
-                    payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                        + id + '~'
-                        + icon + '~'        //iconId
-                        + iconColor + '~'   //iconColor
-                        + switchVal + '~'   //buttonState
-                        + brightness + '~'  //sliderBrightnessPos
-                        + 'disable' + '~'   //sliderColorTempPos
-                        + 'disable' + '~'   //colorMod
-                        + ''        + '~'   //Color-Bezeichnung
-                        + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                        + findLocale('lights', 'Brightness')
-                });         //Brightness-Bezeichnung
-
-                console.log('light.' + id)
-
-            }
-
-            // HUE-Licht
-            if (o.common.role == 'hue') {
-
-                if (existsState(id + '.ON_ACTUAL')) {
-                    val = getState(id + '.ON_ACTUAL').val;
-                    RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
-                }
-
-                if (existsState(id + '.DIMMER')) {
-                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
-                        brightness = Math.trunc(scale(getState(id + '.DIMMER').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
-                    } else {
-                        brightness = getState(id + '.DIMMER').val;
-                    }
-                    RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
-                } else {
-                    console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
-                }
-
-                if (val === true) {
-                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
-                    switchVal = '1';
-                } else {
-                    iconColor = GetIconColor(pageItem, false, true);
-                }
-
-                var colorMode = 'disable';
-                if (existsState(id + '.HUE')) {
-                    if (getState(id + '.HUE').val != null) {
-                        colorMode = 'enable';
-                        let huecolor = hsv2rgb(getState(id + '.HUE').val, 1, 1);
-                        let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) }
-                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                        //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
-                    }
-                }
-
-                var colorTemp = 0;
-                if (existsState(id + '.TEMPERATURE')) {
-                    if (getState(id + '.TEMPERATURE').val != null) {
-                        if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
-                            colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
-                        } else {
-                            colorTemp = 100 - getState(id + '.TEMPERATURE').val;
-                        }
-                        //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
-                    }
-                } else {
-                    console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
-                }
-
-                out_msgs.push({
-                    payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                        + id + '~'
-                        + icon + '~'   //iconId
-                        + iconColor + '~'   //iconColor
-                        + switchVal + '~'   //buttonState
-                        + brightness + '~'   //sliderBrightnessPos
-                        + colorTemp + '~'   //sliderColorTempPos
-                        + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                        + 'Color'   + '~'   //Color-Bezeichnung
-                        + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                        + findLocale('lights', 'Brightness')
-                });         //Brightness-Bezeichnung
-            }
-
-            // RGB-Licht
-            if (o.common.role == 'rgb') {
-
-                if (existsState(id + '.ON_ACTUAL')) {
-                    val = getState(id + '.ON_ACTUAL').val;
-                    RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
-                }
-
-                if (existsState(id + '.DIMMER')) {
-                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
-                        brightness = Math.trunc(scale(getState(id + '.DIMMER').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
-                    } else {
-                        brightness = getState(id + '.DIMMER').val;
-                    }
-                    RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
-                } else {
-                    console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
-                }
-
-                if (val === true) {
-                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
-                    switchVal = '1';
-                } else {
-                    iconColor = GetIconColor(pageItem, false, true);
-                }
-
-                var colorMode = 'disable';
-                if (existsState(id + '.RED') && existsState(id + '.GREEN') && existsState(id + '.BLUE')) {
-                    if (getState(id + '.RED').val != null && getState(id + '.GREEN').val != null && getState(id + '.BLUE').val != null) {
-                        colorMode = 'enable';
-                        let rgb = <RGB>{ red: Math.round(getState(id + '.RED').val), green: Math.round(getState(id + '.GREEN').val), blue: Math.round(getState(id + '.BLUE').val) }
-                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                        //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
-                    }
-                }
-
-                var colorTemp = 0;
-                if (existsState(id + '.TEMPERATURE')) {
-                    if (getState(id + '.TEMPERATURE').val != null) {
-                        if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
-                            colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
-                        } else {
-                            colorTemp = 100 - getState(id + '.TEMPERATURE').val;
-                        }
-                        //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
-                    }
-                } else {
-                    console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
-                }
-
-                out_msgs.push({
-                    payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                        + id + '~'
-                        + icon + '~'   //iconId
-                        + iconColor + '~'   //iconColor
-                        + switchVal + '~'   //buttonState
-                        + brightness + '~'   //sliderBrightnessPos
-                        + colorTemp + '~'   //sliderColorTempPos
-                        + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                        + 'Color' + '~'   //Color-Bezeichnung
-                        + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                        + findLocale('lights', 'Brightness')
-                });         //Brightness-Bezeichnung
-            }
-
-            // RGB-Licht-einzeln (HEX)
-            if (o.common.role == 'rgbSingle') {
-
-                if (existsState(id + '.ON_ACTUAL')) {
-                    val = getState(id + '.ON_ACTUAL').val;
-                    RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
-                }
-
-                if (existsState(id + '.DIMMER')) {
-                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
-                        brightness = Math.trunc(scale(getState(id + '.DIMMER').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
-                    } else {
-                        brightness = getState(id + '.DIMMER').val;
-                    }
-                    RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
-                } else {
-                    console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
-                }
-
-                if (val === true) {
-                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
-                    switchVal = '1';
-                } else {
-                    iconColor = GetIconColor(pageItem, false, true);
-                }
-
-                var colorMode = 'disable';
-                if (existsState(id + '.RGB')) {
-                    if (getState(id + '.RGB').val != null) {
-                        colorMode = 'enable';
-                        var hex = getState(id + '.RGB').val;
-                        var hexRed = parseInt(hex[1] + hex[2], 16);
-                        var hexGreen = parseInt(hex[3] + hex[4], 16);
-                        var hexBlue = parseInt(hex[5] + hex[6], 16);
-                        let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) }
-                        iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                        //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
-                    }
-                }
-
-                var colorTemp = 0;
-                if (existsState(id + '.TEMPERATURE')) {
-                    if (getState(id + '.TEMPERATURE').val != null) {
-                        if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
-                            colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
-                        } else {
-                            colorTemp = 100 - getState(id + '.TEMPERATURE').val;
-                        }
-                        //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
-                    }
-                } else {
-                    console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
-                }
-
-                out_msgs.push({
-                    payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                        + id + '~'
-                        + icon + '~'        //iconId
-                        + iconColor + '~'   //iconColor
-                        + switchVal + '~'   //buttonState
-                        + brightness + '~'  //sliderBrightnessPos
-                        + colorTemp + '~'   //sliderColorTempPos
-                        + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                        + 'Color' + '~'     //Color-Bezeichnung
-                        + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                        + findLocale('lights', 'Brightness')
-                });         //Brightness-Bezeichnung
-            }
-
-            // Farbtemperatur
-            if (o.common.role == 'ct') {
-
-                if (existsState(id + '.ON')) {
-                    val = getState(id + '.ON').val;
-                    RegisterDetailEntityWatcher(id + '.ON', pageItem, type);
-                }
-
-                if (existsState(id + '.DIMMER')) {
-                    if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
-                        brightness = Math.trunc(scale(getState(id + '.DIMMER').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
-                    } else {
-                        brightness = getState(id + '.DIMMER').val;
-                    }
-                    RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
-                } else {
-                    console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
-                }
-
-                if (val === true) {
-                    iconColor = GetIconColor(pageItem, 100 - brightness, true);
-                    switchVal = '1';
-                } else {
-                    iconColor = GetIconColor(pageItem, false, true);
-                }
-
-                var colorMode = 'disable';
-
-                var colorTemp = 0;
-                if (existsState(id + '.TEMPERATURE')) {
-                    if (getState(id + '.TEMPERATURE').val != null) {
-                        if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
-                            colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
-                        } else {
-                            colorTemp = 100 - getState(id + '.TEMPERATURE').val;
-                        }
-                        //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
-                    }
-                } else {
-                    console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
-                }
-
-                out_msgs.push({
-                    payload: 'entityUpdateDetail' + '~'                   //entityUpdateDetail
-                        + icon + '~'                   //iconId
-                        + iconColor + '~'                   //iconColor
-                        + switchVal + '~'                   //buttonState
-                        + brightness + '~'                   //sliderBrightnessPos
-                        + colorTemp + '~'                   //sliderColorTempPos
-                        + colorMode + '~'                   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                        + 'Color' + '~'         //Color-Bezeichnung
-                        + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                        + findLocale('lights', 'Brightness')
-                });       //Brightness-Bezeichnung
+                        + val + '~'           //Shutterposition
+                        + '' + '~'
+                        + findLocale('blinds', 'Position')
+                }); //Position-Bezeichnung
             }
         }
 
-        if (type == 'popupShutter') {
-            icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
-            if (existsState(id + '.ACTUAL')) {
-                val = getState(id + '.ACTUAL').val;
-                RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
-            } else if (existsState(id + '.SET')) {
-                val = getState(id + '.SET').val;
-                RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
-            }
+        return out_msgs;
 
-            out_msgs.push({
-                payload: 'entityUpdateDetail' + '~'           //entityUpdateDetail
-                    + id + '~'
-                    + val + '~'           //Shutterposition
-                    + '' + '~'
-                    + findLocale('blinds', 'Position')
-            }); //Position-Bezeichnung
-        }
-    }
-
-    return out_msgs;
+    } catch (err) {
+        console.log('function GenerateDetailPage: ' + err.message);
+    } 
 }
 
 function scale(number: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
-    return (outMax + outMin) - ((number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin);
+    try {
+        return (outMax + outMin) - ((number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin);
+    } catch (err) {
+        console.log('function scale: ' + err.message);
+    } 
 }
 
 function UnsubscribeWatcher(): void {
-    for (const [key, value] of Object.entries(subscriptions)) {
-        unsubscribe(value);
-        delete subscriptions[key];
-    }
+    try {
+        for (const [key, value] of Object.entries(subscriptions)) {
+            unsubscribe(value);
+            delete subscriptions[key];
+        }
+    } catch (err) {
+        console.log('function UnsubscribeWatcher: ' + err.message);
+    }         
 }
 
 function HandleScreensaver(): void {
@@ -3639,222 +3933,236 @@ function HandleScreensaverUpdate(): void {
             
         }
     } catch (err) {
-        console.log('HandleScreensaverUpdate' + err.message);
+        console.log('HandleScreensaverUpdate: ' + err.message);
     }        
 }
 
 function HandleScreensaverColors(): void {
-
-    let vwIcon = [];
-    if (config.autoWeatherColorScreensaverLayout) {
-        vwIcon[0] = vwIconColor[0];
-        vwIcon[1] = vwIconColor[1];
-        vwIcon[2] = vwIconColor[2];
-        vwIcon[3] = vwIconColor[3];
-        vwIcon[4] = vwIconColor[4];
-    } else {
-        if (weatherForecast) {
-            vwIcon[0] = rgb_dec565(sctMainIcon);
-            vwIcon[1] = rgb_dec565(sctF1Icon);
-            vwIcon[2] = rgb_dec565(sctF2Icon);
-            vwIcon[3] = rgb_dec565(sctF3Icon);
-            vwIcon[4] = rgb_dec565(sctF4Icon);
-        } else {
-            vwIcon[0] = rgb_dec565(sctMainIcon);
+    try {
+        let vwIcon = [];
+        if (config.autoWeatherColorScreensaverLayout) {
+            vwIcon[0] = vwIconColor[0];
             vwIcon[1] = vwIconColor[1];
             vwIcon[2] = vwIconColor[2];
             vwIcon[3] = vwIconColor[3];
-            vwIcon[4] = vwIconColor[4];            
+            vwIcon[4] = vwIconColor[4];
+        } else {
+            if (weatherForecast) {
+                vwIcon[0] = rgb_dec565(sctMainIcon);
+                vwIcon[1] = rgb_dec565(sctF1Icon);
+                vwIcon[2] = rgb_dec565(sctF2Icon);
+                vwIcon[3] = rgb_dec565(sctF3Icon);
+                vwIcon[4] = rgb_dec565(sctF4Icon);
+            } else {
+                vwIcon[0] = rgb_dec565(sctMainIcon);
+                vwIcon[1] = vwIconColor[1];
+                vwIcon[2] = vwIconColor[2];
+                vwIcon[3] = vwIconColor[3];
+                vwIcon[4] = vwIconColor[4];            
+            }
         }
+
+        let payloadString = 'color'                     + '~' +
+                            rgb_dec565(scbackground)    + '~' +      //background
+                            rgb_dec565(sctime)          + '~' +      //time
+                            rgb_dec565(sctimeAMPM)      + '~' +      //timeAMPM~
+                            rgb_dec565(scdate)          + '~' +      //date~
+                            vwIcon[0]                   + '~' +      //tMainIcon~   rgb_dec565(sctMainIcon)
+                            rgb_dec565(sctMainText)     + '~' +      //tMainText~
+                            rgb_dec565(sctForecast1)    + '~' +      //tForecast1~
+                            rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
+                            rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
+                            rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
+                            vwIcon[1]                   + '~' +      //tF1Icon~         rgb_dec565(sctF1Icon)
+                            vwIcon[2]                   + '~' +      //tF2Icon~         rgb_dec565(sctF2Icon)
+                            vwIcon[3]                   + '~' +      //tF3Icon~         rgb_dec565(sctF3Icon)
+                            vwIcon[4]                   + '~' +      //tF4Icon~         rgb_dec565(sctF4Icon)
+                            rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
+                            rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
+                            rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
+                            rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
+                            rgb_dec565(scbar)           + '~' +      //bar~
+                            rgb_dec565(sctMainIconAlt)  + '~' +      //tMainIconAlt
+                            rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
+                            rgb_dec565(sctTimeAdd);      
+                            //true;                
+
+        SendToPanel(<Payload>{ payload: payloadString });
+    } catch (err) {
+        console.warn('HandleScreensaverColors: '+ err.message);
     }
-
-    let payloadString = 'color'                     + '~' +
-                        rgb_dec565(scbackground)    + '~' +      //background
-                        rgb_dec565(sctime)          + '~' +      //time
-                        rgb_dec565(sctimeAMPM)      + '~' +      //timeAMPM~
-                        rgb_dec565(scdate)          + '~' +      //date~
-                        vwIcon[0]                   + '~' +      //tMainIcon~   rgb_dec565(sctMainIcon)
-                        rgb_dec565(sctMainText)     + '~' +      //tMainText~
-                        rgb_dec565(sctForecast1)    + '~' +      //tForecast1~
-                        rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
-                        rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
-                        rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
-                        vwIcon[1]                   + '~' +      //tF1Icon~         rgb_dec565(sctF1Icon)
-                        vwIcon[2]                   + '~' +      //tF2Icon~         rgb_dec565(sctF2Icon)
-                        vwIcon[3]                   + '~' +      //tF3Icon~         rgb_dec565(sctF3Icon)
-                        vwIcon[4]                   + '~' +      //tF4Icon~         rgb_dec565(sctF4Icon)
-                        rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
-                        rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
-                        rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
-                        rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
-                        rgb_dec565(scbar)           + '~' +      //bar~
-                        rgb_dec565(sctMainIconAlt)  + '~' +      //tMainIconAlt
-                        rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
-                        rgb_dec565(sctTimeAdd);      
-                        //true;                
-
-    SendToPanel(<Payload>{ payload: payloadString });
 }
 
 function GetScreenSaverEntityString(configElement: ScreenSaverElement | null): string {
-    if (configElement != null && configElement.ScreensaverEntity != null && existsState(configElement.ScreensaverEntity)) {
-        let u1 = getState(configElement.ScreensaverEntity).val;
+    try {
+        if (configElement != null && configElement.ScreensaverEntity != null && existsState(configElement.ScreensaverEntity)) {
+            let u1 = getState(configElement.ScreensaverEntity).val;
 
-        return configElement.ScreensaverEntityText + '~' + Icons.GetIcon(configElement.ScreensaverEntityIcon) + '~' + u1 + ' ' + configElement.ScreensaverEntityUnitText + '~';
-    }
-    else {
-        return '~~~';
+            return configElement.ScreensaverEntityText + '~' + Icons.GetIcon(configElement.ScreensaverEntityIcon) + '~' + u1 + ' ' + configElement.ScreensaverEntityUnitText + '~';
+        }
+        else {
+            return '~~~';
+        }
+    } catch (err) {
+        console.warn('GetScreenSaverEntityString: '+ err.message);
     }
 }
 
 function GetAccuWeatherIcon(icon: number): string {
-    switch (icon) {
-        case 24:        // Ice
-        case 30:        // Hot
-        case 31:        // Cold
-            return 'window-open';  // exceptional
+    try {
+        switch (icon) {
+            case 24:        // Ice
+            case 30:        // Hot
+            case 31:        // Cold
+                return 'window-open';  // exceptional
 
-        case 7:         // Cloudy
-        case 8:         // Dreary (Overcast)
-        case 38:        // Mostly Cloudy
-            return 'weather-cloudy';  // cloudy
+            case 7:         // Cloudy
+            case 8:         // Dreary (Overcast)
+            case 38:        // Mostly Cloudy
+                return 'weather-cloudy';  // cloudy
 
-        case 11:        // fog
-            return 'weather-fog';  // fog
+            case 11:        // fog
+                return 'weather-fog';  // fog
 
-        case 25:        // Sleet
-            return 'weather-hail';  // Hail
+            case 25:        // Sleet
+                return 'weather-hail';  // Hail
 
-        case 15:        // T-Storms
-            return 'weather-lightning';  // lightning
+            case 15:        // T-Storms
+                return 'weather-lightning';  // lightning
 
-        case 16:        // Mostly Cloudy w/ T-Storms
-        case 17:        // Partly Sunny w/ T-Storms
-        case 41:        // Partly Cloudy w/ T-Storms
-        case 42:        // Mostly Cloudy w/ T-Storms
-            return 'weather-lightning-rainy';  // lightning-rainy
+            case 16:        // Mostly Cloudy w/ T-Storms
+            case 17:        // Partly Sunny w/ T-Storms
+            case 41:        // Partly Cloudy w/ T-Storms
+            case 42:        // Mostly Cloudy w/ T-Storms
+                return 'weather-lightning-rainy';  // lightning-rainy
 
-        case 33:        // Clear
-        case 34:        // Mostly Clear
-        case 37:        // Hazy Moonlight
-            return 'weather-night';
+            case 33:        // Clear
+            case 34:        // Mostly Clear
+            case 37:        // Hazy Moonlight
+                return 'weather-night';
 
-        case 3:         // Partly Sunny
-        case 4:         // Intermittent Clouds
-        case 6:         // Mostly Cloudy
-        case 35:        // Partly Cloudy
-        case 36:        // Intermittent Clouds
-            return 'weather-partly-cloudy';  // partlycloudy
+            case 3:         // Partly Sunny
+            case 4:         // Intermittent Clouds
+            case 6:         // Mostly Cloudy
+            case 35:        // Partly Cloudy
+            case 36:        // Intermittent Clouds
+                return 'weather-partly-cloudy';  // partlycloudy
 
-        case 18:        // pouring
-            return 'weather-pouring';  // pouring
+            case 18:        // pouring
+                return 'weather-pouring';  // pouring
 
-        case 12:        // Showers
-        case 13:        // Mostly Cloudy w/ Showers
-        case 14:        // Partly Sunny w/ Showers
-        case 26:        // Freezing Rain
-        case 39:        // Partly Cloudy w/ Showers
-        case 40:        // Mostly Cloudy w/ Showers
-            return 'weather-rainy';  // rainy
+            case 12:        // Showers
+            case 13:        // Mostly Cloudy w/ Showers
+            case 14:        // Partly Sunny w/ Showers
+            case 26:        // Freezing Rain
+            case 39:        // Partly Cloudy w/ Showers
+            case 40:        // Mostly Cloudy w/ Showers
+                return 'weather-rainy';  // rainy
 
-        case 19:        // Flurries
-        case 20:        // Mostly Cloudy w/ Flurries
-        case 21:        // Partly Sunny w/ Flurries
-        case 22:        // Snow
-        case 23:        // Mostly Cloudy w/ Snow
-        case 43:        // Mostly Cloudy w/ Flurries
-        case 44:        // Mostly Cloudy w/ Snow
-            return 'weather-snowy';  // snowy
+            case 19:        // Flurries
+            case 20:        // Mostly Cloudy w/ Flurries
+            case 21:        // Partly Sunny w/ Flurries
+            case 22:        // Snow
+            case 23:        // Mostly Cloudy w/ Snow
+            case 43:        // Mostly Cloudy w/ Flurries
+            case 44:        // Mostly Cloudy w/ Snow
+                return 'weather-snowy';  // snowy
 
-        case 29:        // Rain and Snow
-            return 'weather-snowy-rainy';  // snowy-rainy
+            case 29:        // Rain and Snow
+                return 'weather-snowy-rainy';  // snowy-rainy
 
-        case 1:         // Sunny
-        case 2:         // Mostly Sunny
-        case 5:         // Hazy Sunshine
-            return 'weather-sunny';  // sunny
+            case 1:         // Sunny
+            case 2:         // Mostly Sunny
+            case 5:         // Hazy Sunshine
+                return 'weather-sunny';  // sunny
 
-        case 32:        // windy
-            return 'weather-windy';  // windy
+            case 32:        // windy
+                return 'weather-windy';  // windy
 
-        default:
-            return 'alert-circle-outline';
+            default:
+                return 'alert-circle-outline';
+        }
+    } catch (err) {
+        console.warn('GetAccuWeatherIcon: '+ err.message);
     }
 }
 
 function GetAccuWeatherIconColor(icon: number): number {
+    try{
+        switch (icon) {
+            case 24:        // Ice
+            case 30:        // Hot
+            case 31:        // Cold
+                return rgb_dec565(swExceptional);  // exceptional 
 
-    switch (icon) {
-        case 24:        // Ice
-        case 30:        // Hot
-        case 31:        // Cold
-            return rgb_dec565(swExceptional);  // exceptional 
+            case 7:         // Cloudy
+            case 8:         // Dreary (Overcast)
+            case 38:        // Mostly Cloudy
+                return rgb_dec565(swCloudy);  // cloudy
 
-        case 7:         // Cloudy
-        case 8:         // Dreary (Overcast)
-        case 38:        // Mostly Cloudy
-            return rgb_dec565(swCloudy);  // cloudy
+            case 11:        // fog
+                return rgb_dec565(swFog);  // fog
 
-        case 11:        // fog
-            return rgb_dec565(swFog);  // fog
+            case 25:        // Sleet
+                return rgb_dec565(swHail);  // Hail
 
-        case 25:        // Sleet
-            return rgb_dec565(swHail);  // Hail
+            case 15:        // T-Storms
+                return rgb_dec565(swLightning);  // lightning
 
-        case 15:        // T-Storms
-            return rgb_dec565(swLightning);  // lightning
+            case 16:        // Mostly Cloudy w/ T-Storms
+            case 17:        // Partly Sunny w/ T-Storms
+            case 41:        // Partly Cloudy w/ T-Storms
+            case 42:        // Mostly Cloudy w/ T-Storms
+                return rgb_dec565(swLightningRainy);  // lightning-rainy
 
-        case 16:        // Mostly Cloudy w/ T-Storms
-        case 17:        // Partly Sunny w/ T-Storms
-        case 41:        // Partly Cloudy w/ T-Storms
-        case 42:        // Mostly Cloudy w/ T-Storms
-            return rgb_dec565(swLightningRainy);  // lightning-rainy
+            case 33:        // Clear
+            case 34:        // Mostly Clear
+            case 37:        // Hazy Moonlight
+                return rgb_dec565(swClearNight);
 
-        case 33:        // Clear
-        case 34:        // Mostly Clear
-        case 37:        // Hazy Moonlight
-            return rgb_dec565(swClearNight);
+            case 3:         // Partly Sunny
+            case 4:         // Intermittent Clouds
+            case 6:         // Mostly Cloudy
+            case 35:        // Partly Cloudy
+            case 36:        // Intermittent Clouds
+                return rgb_dec565(swPartlycloudy);  // partlycloudy
 
-        case 3:         // Partly Sunny
-        case 4:         // Intermittent Clouds
-        case 6:         // Mostly Cloudy
-        case 35:        // Partly Cloudy
-        case 36:        // Intermittent Clouds
-            return rgb_dec565(swPartlycloudy);  // partlycloudy
+            case 18:        // pouring
+                return rgb_dec565(swPouring);  // pouring
 
-        case 18:        // pouring
-            return rgb_dec565(swPouring);  // pouring
+            case 12:        // Showers
+            case 13:        // Mostly Cloudy w/ Showers
+            case 14:        // Partly Sunny w/ Showers
+            case 26:        // Freezing Rain
+            case 39:        // Partly Cloudy w/ Showers
+            case 40:        // Mostly Cloudy w/ Showers
+                return rgb_dec565(swRainy);  // rainy 
 
-        case 12:        // Showers
-        case 13:        // Mostly Cloudy w/ Showers
-        case 14:        // Partly Sunny w/ Showers
-        case 26:        // Freezing Rain
-        case 39:        // Partly Cloudy w/ Showers
-        case 40:        // Mostly Cloudy w/ Showers
-            return rgb_dec565(swRainy);  // rainy 
+            case 19:        // Flurries
+            case 20:        // Mostly Cloudy w/ Flurries
+            case 21:        // Partly Sunny w/ Flurries
+            case 22:        // Snow
+            case 23:        // Mostly Cloudy w/ Snow
+            case 43:        // Mostly Cloudy w/ Flurries
+            case 44:        // Mostly Cloudy w/ Snow
+                return rgb_dec565(swSnowy);  // snowy  
 
-        case 19:        // Flurries
-        case 20:        // Mostly Cloudy w/ Flurries
-        case 21:        // Partly Sunny w/ Flurries
-        case 22:        // Snow
-        case 23:        // Mostly Cloudy w/ Snow
-        case 43:        // Mostly Cloudy w/ Flurries
-        case 44:        // Mostly Cloudy w/ Snow
-            return rgb_dec565(swSnowy);  // snowy  
+            case 29:        // Rain and Snow
+                return rgb_dec565(swSnowyRainy);  // snowy-rainy
 
-        case 29:        // Rain and Snow
-            return rgb_dec565(swSnowyRainy);  // snowy-rainy
+            case 1:         // Sunny
+            case 2:         // Mostly Sunny
+            case 5:         // Hazy Sunshine
+                return rgb_dec565(swSunny);  // sunny
 
-        case 1:         // Sunny
-        case 2:         // Mostly Sunny
-        case 5:         // Hazy Sunshine
-            return rgb_dec565(swSunny);  // sunny
+            case 32:        // windy
+                return rgb_dec565(swWindy);  // windy
 
-        case 32:        // windy
-            return rgb_dec565(swWindy);  // windy
-
-        default:
-            return rgb_dec565(White);
+            default:
+                return rgb_dec565(White);
+        }
+    } catch (err) {
+        console.warn('GetAccuWeatherIconColor: '+ err.message);
     }
 }
 
