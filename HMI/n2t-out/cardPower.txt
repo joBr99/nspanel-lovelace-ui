@@ -60,32 +60,32 @@ Variable (string) tInstruction
 Variable (int32) t0Speed
     Attributes
         Scope: local
-        Value: 1
+        Value: 0
     
 Variable (int32) t1Speed
     Attributes
         Scope: local
-        Value: 2
+        Value: 0
     
 Variable (int32) t3Speed
     Attributes
         Scope: local
-        Value: 3
+        Value: 0
     
 Variable (int32) t4Speed
     Attributes
         Scope: local
-        Value: 4294967295
+        Value: 0
     
 Variable (int32) t5Speed
     Attributes
         Scope: local
-        Value: 4294967294
+        Value: 0
     
 Variable (int32) t2Speed
     Attributes
         Scope: local
-        Value: 4294967293
+        Value: 0
     
 Text tHeading
     Attributes
