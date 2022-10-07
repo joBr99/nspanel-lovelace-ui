@@ -588,7 +588,7 @@ class LuiPagesGen(object):
             entity = apis.ha_api.get_entity(item.entityId)
             icon_color = self.get_entity_color(entity)
             device_class = entity.attributes.get("device_class", "")
-            icon = get_icon_id_ha(item.entityId.split(".")[0], state=entity.state, device_class=device_class, overwrite=item.iconOverride)
+            icon = get_icon(item.entityId.split(".")[0], state=entity.state, device_class=device_class, overwrite=item.iconOverride)
             speed = 0
             if float(entity.state) > 0:
                 speed = -1
