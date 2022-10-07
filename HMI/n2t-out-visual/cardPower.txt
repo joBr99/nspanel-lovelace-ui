@@ -74,37 +74,37 @@ Variable (int32) t0Speed
     Attributes
         ID   : 36
         Scope: local
-        Value: 0
+        Value: 1
     
 Variable (int32) t1Speed
     Attributes
         ID   : 37
         Scope: local
-        Value: 0
+        Value: 2
     
 Variable (int32) t3Speed
     Attributes
         ID   : 38
         Scope: local
-        Value: 0
+        Value: 3
     
 Variable (int32) t4Speed
     Attributes
         ID   : 39
         Scope: local
-        Value: 0
+        Value: 4294967295
     
 Variable (int32) t5Speed
     Attributes
         ID   : 40
         Scope: local
-        Value: 0
+        Value: 4294967294
     
 Variable (int32) t2Speed
     Attributes
         ID   : 41
         Scope: local
-        Value: 0
+        Value: 4294967293
     
 Text tHeading
     Attributes
@@ -1273,42 +1273,66 @@ Timer tm0
     
     Events
         Timer Event
+            sys0=h0.val+t0Speed.val
+            if(sys0>h0.maxval)
+            {
+                h0.val=h0.minval
+            }
+            if(sys0<h0.minval)
+            {
+                h0.val=h0.maxval
+            }
             h0.val+=t0Speed.val
+            sys0=h1.val+t1Speed.val
+            if(sys0>h1.maxval)
+            {
+                h1.val=h1.minval
+            }
+            if(sys0<h1.minval)
+            {
+                h1.val=h1.maxval
+            }
             h1.val+=t1Speed.val
+            sys0=h2.val+t2Speed.val
+            if(sys0>h2.maxval)
+            {
+                h2.val=h2.minval
+            }
+            if(sys0<h2.minval)
+            {
+                h2.val=h2.maxval
+            }
             h2.val+=t2Speed.val
+            sys0=h3.val+t3Speed.val
+            if(sys0>h3.maxval)
+            {
+                h3.val=h3.minval
+            }
+            if(sys0<h3.minval)
+            {
+                h3.val=h3.maxval
+            }
             h3.val+=t3Speed.val
+            sys0=h4.val+t4Speed.val
+            if(sys0>h4.maxval)
+            {
+                h4.val=h4.minval
+            }
+            if(sys0<h4.minval)
+            {
+                h4.val=h4.maxval
+            }
             h4.val+=t4Speed.val
+            sys0=h5.val+t5Speed.val
+            if(sys0>h5.maxval)
+            {
+                h5.val=h5.minval
+            }
+            if(sys0<h5.minval)
+            {
+                h5.val=h5.maxval
+            }
             h5.val+=t5Speed.val
-            if(h0.val>=100&&h0.val<=150)
-            {
-                h0.val=0
-            }
-            if(h1.val>=100&&h1.val<=150)
-            {
-                h1.val=0
-            }
-            if(h2.val>=100&&h2.val<=150)
-            {
-                h2.val=0
-            }
-            if(h3.val>=100&&h3.val<=150)
-            {
-                h3.val=0
-            }
-            if(h4.val>=100&&h4.val<=150)
-            {
-                h4.val=0
-            }
-            if(h5.val>=100&&h5.val<=150)
-            {
-                h5.val=0
-            }
-            ref t0u
-            ref t1u
-            ref t2u
-            ref t3u
-            ref t4u
-            ref t5u
         
 TouchCap tc0
     Attributes
