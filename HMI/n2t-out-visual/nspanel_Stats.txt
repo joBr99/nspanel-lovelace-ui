@@ -42,10 +42,6 @@ popupShutter
 	25   Component(s)
 	393  Line(s) of event code
 	214  Unique line(s) of event code
-cardPower
-	43   Component(s)
-	364  Line(s) of event code
-	256  Unique line(s) of event code
 cardQR
 	32   Component(s)
 	408  Line(s) of event code
@@ -62,9 +58,13 @@ cardEntities
 	65   Component(s)
 	1136 Line(s) of event code
 	521  Unique line(s) of event code
+cardPower
+	43   Component(s)
+	388  Line(s) of event code
+	268  Unique line(s) of event code
 
 Total
 	15   Page(s)
 	488  Component(s)
-	5725 Line(s) of event code
-	1530 Unique line(s) of event code
+	5749 Line(s) of event code
+	1542 Unique line(s) of event code
