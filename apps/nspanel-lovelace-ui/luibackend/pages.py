@@ -591,7 +591,7 @@ class LuiPagesGen(object):
             icon = get_icon(item.entityId.split(".")[0], state=entity.state, device_class=device_class, overwrite=item.iconOverride)
             speed = 0
             if float(entity.state) > 0:
-                speed = -1
+                speed = item.data.get("speed", 1)
             if idx == 0:
                 command += f"~{icon_color}~{icon}~{entity.state}~"
             else:
