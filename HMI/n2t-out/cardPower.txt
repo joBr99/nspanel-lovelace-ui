@@ -32,7 +32,6 @@ Page cardPower
             vis h3,0
             vis h4,0
             vis h5,0
-            vis t1,0
             vis t0Icon,0
             vis t1Icon,0
             vis t2Icon,0
