@@ -367,7 +367,7 @@ Slider hTilt
             // event,buttonPress2,internalNameEntity,positionSlider,50
             //craft command
             tSend.txt="event,buttonPress2,"+entn.txt+",tiltSlider,"
-            covx hPosition.val,tTmp.txt,0,0
+            covx hTilt.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0

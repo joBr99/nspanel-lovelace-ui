@@ -22,6 +22,10 @@ cardMedia
 	34   Component(s)
 	389  Line(s) of event code
 	210  Unique line(s) of event code
+popupShutter
+	25   Component(s)
+	389  Line(s) of event code
+	213  Unique line(s) of event code
 cardQR
 	32   Component(s)
 	404  Line(s) of event code
@@ -46,10 +50,6 @@ cardThermo
 	52   Component(s)
 	580  Line(s) of event code
 	303  Unique line(s) of event code
-popupShutter
-	25   Component(s)
-	389  Line(s) of event code
-	212  Unique line(s) of event code
 cardAlarm
 	40   Component(s)
 	422  Line(s) of event code
@@ -63,4 +63,4 @@ Total
 	14   Page(s)
 	439  Component(s)
 	5264 Line(s) of event code
-	1411 Unique line(s) of event code
+	1412 Unique line(s) of event code

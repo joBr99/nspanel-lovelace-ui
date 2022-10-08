@@ -41,7 +41,7 @@ cardMedia
 popupShutter
 	25   Component(s)
 	393  Line(s) of event code
-	214  Unique line(s) of event code
+	215  Unique line(s) of event code
 cardQR
 	32   Component(s)
 	408  Line(s) of event code
@@ -67,4 +67,4 @@ Total
 	15   Page(s)
 	488  Component(s)
 	5770 Line(s) of event code
-	1556 Unique line(s) of event code
+	1557 Unique line(s) of event code
