@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-10-08 21:40:20.817238068 +0000
++++ /dev/fd/62	2022-10-08 22:00:00.068849517 +0000
 +rdAlarm.txt
 +15 +784,14 @@
 +                                 //command format pageType,specialPageName
@@ -103,78 +103,6 @@
 +                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 +                             }
 +                             if(tInstruction.txt=="date")
-+rdMedia.txt
-+15 +702,14 @@
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
-+                                 //save second arg if there's one
-+                                 spstr strCommand.txt,tTmp.txt,"~",2
-+                                 //save third arg if there's one
-+                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-+                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-+                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-+                                 udelete payloadLength-1
-+                                 bufferPos=0
-+                                 if(tId.txt=="pageStartup")
-+                                 {
-+                                     page pageStartup
-+                                 }
-+18 +751,14 @@
-+                                 {
-+                                     page cardAlarm
-+                                 }
-+                                 if(tId.txt=="cardQR")
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
-+rdQR.txt
-+15 +653,14 @@
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
-+                                 //save second arg if there's one
-+                                 spstr strCommand.txt,tTmp.txt,"~",2
-+                                 //save third arg if there's one
-+                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-+                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-+                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-+                                 udelete payloadLength-1
-+                                 bufferPos=0
-+                                 if(tId.txt=="pageStartup")
-+                                 {
-+                                     page pageStartup
-+                                 }
-+18 +702,14 @@
-+                                 {
-+                                     page cardAlarm
-+                                 }
-+                                 if(tId.txt=="cardQR")
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
 +rdThermo.txt
 +,15 +1089,14 @@
 +                                 //command format pageType,specialPageName
