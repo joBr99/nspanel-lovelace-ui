@@ -1,14 +1,22 @@
 Page cardPower
     Attributes
+        ID                                  : 0
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        Width                               : 320
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
         Locked                              : no
         Swide up page ID                    : disabled
         Swide down page ID                  : disabled
         Swide left page ID                  : disabled
         Swide right page ID                 : disabled
+        Fill                                : solid color
+        Back. Color                         : 6371
     
     Events
         Preinitialize Event
@@ -56,290 +64,737 @@ Page cardPower
         
 Variable (string) strCommand
     Attributes
+        ID            : 5
         Scope         : local
         Text          : 
         Max. Text Size: 275
     
 Variable (string) tSend
     Attributes
+        ID            : 8
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) tTmp
     Attributes
+        ID            : 12
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
 Variable (string) tId
     Attributes
+        ID            : 13
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tInstruction
     Attributes
+        ID            : 14
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (int32) t0Speed
     Attributes
+        ID   : 36
         Scope: local
         Value: 0
     
 Variable (int32) t1Speed
     Attributes
+        ID   : 37
         Scope: local
         Value: 0
     
 Variable (int32) t3Speed
     Attributes
+        ID   : 38
         Scope: local
         Value: 0
     
 Variable (int32) t4Speed
     Attributes
+        ID   : 39
         Scope: local
         Value: 0
     
 Variable (int32) t5Speed
     Attributes
+        ID   : 40
         Scope: local
         Value: 0
     
 Variable (int32) t2Speed
     Attributes
+        ID   : 41
         Scope: local
         Value: 0
     
 Text tHeading
     Attributes
+        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 66
+        y coordinate                        : 26
+        Width                               : 184
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
         Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : 
         Max. Text Size                      : 40
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t4Icon
     Attributes
+        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 129
+        y coordinate                        : 369
+        Width                               : 60
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
         Associated Keyboard                 : none
+        Border Color                        : 17299
+        Border Width                        : 2
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 17299
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : î´½
         Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t5Icon
     Attributes
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 208
+        y coordinate                        : 369
+        Width                               : 60
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
         Associated Keyboard                 : none
+        Border Color                        : 17299
+        Border Width                        : 2
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 17299
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : î
         Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t0Icon
     Attributes
+        ID                                  : 18
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 50
+        y coordinate                        : 107
+        Width                               : 60
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
         Associated Keyboard                 : none
+        Border Color                        : 17299
+        Border Width                        : 2
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 1024
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : î¢
         Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t2Icon
     Attributes
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 210
+        y coordinate                        : 107
+        Width                               : 60
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
         Associated Keyboard                 : none
+        Border Color                        : 17299
+        Border Width                        : 2
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 17299
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : î °
         Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t1Icon
     Attributes
+        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 130
+        y coordinate                        : 107
+        Width                               : 60
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
         Associated Keyboard                 : none
+        Border Color                        : 17299
+        Border Width                        : 2
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 65504
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : î¶
         Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t1
     Attributes
+        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 46
+        y coordinate                        : 237
+        Width                               : 230
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
         Associated Keyboard                 : none
+        Border Color                        : 17299
+        Border Width                        : 2
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 17299
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : î
         Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t3Icon
     Attributes
+        ID                                  : 26
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 50
+        y coordinate                        : 369
+        Width                               : 60
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : border
         Associated Keyboard                 : none
+        Border Color                        : 17299
+        Border Width                        : 2
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 17299
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : î °
         Max. Text Size                      : 5
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t0u
     Attributes
+        ID                                  : 30
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 40
+        y coordinate                        : 77
+        Width                               : 80
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
         Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : 
         Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t1u
     Attributes
+        ID                                  : 31
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 120
+        y coordinate                        : 77
+        Width                               : 80
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
         Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : 
         Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t2u
     Attributes
+        ID                                  : 32
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 200
+        y coordinate                        : 77
+        Width                               : 80
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
         Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : 
         Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t5u
     Attributes
+        ID                                  : 33
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 197
+        y coordinate                        : 429
+        Width                               : 80
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
         Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : 
         Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t4u
     Attributes
+        ID                                  : 34
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 118
+        y coordinate                        : 429
+        Width                               : 80
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
         Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : 
         Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text t3u
     Attributes
+        ID                                  : 35
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 38
+        y coordinate                        : 429
+        Width                               : 80
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
         Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : 
         Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Text tHome
     Attributes
+        ID                                  : 42
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 277
+        y coordinate                        : 237
+        Width                               : 40
+        Height                              : 60
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
         Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : 
         Max. Text Size                      : 20
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Picture p0
     Attributes
+        ID                                  : 1
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 0
+        Width                               : 319
+        Height                              : 479
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Picture ID                          : 0
     
 Slider h1
     Attributes
+        ID                                  : 20
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 139
+        y coordinate                        : 166
+        Width                               : 44
+        Height                              : 72
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Direction                           : horizontal
+        Fill                                : image
+        Cursor width                        : auto
+        Cursor height                       : 255
+        Back. Picture ID                    : 18
+        Slided Back. Picture ID             : 18
         Position                            : 50
         Upper range limit                   : 100
         Lower range limit                   : 0
     
 Slider h4
     Attributes
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 139
+        y coordinate                        : 297
+        Width                               : 44
+        Height                              : 72
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Direction                           : horizontal
+        Fill                                : image
+        Cursor width                        : auto
+        Cursor height                       : 255
+        Back. Picture ID                    : 18
+        Slided Back. Picture ID             : 18
         Position                            : 50
         Upper range limit                   : 100
         Lower range limit                   : 0
     
 Slider h0
     Attributes
+        ID                                  : 25
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 61
+        y coordinate                        : 166
+        Width                               : 44
+        Height                              : 72
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Direction                           : vertical
+        Fill                                : image
+        Cursor width                        : auto
+        Cursor height                       : 255
+        Back. Picture ID                    : 18
+        Slided Back. Picture ID             : 18
         Position                            : 50
         Upper range limit                   : 100
         Lower range limit                   : 0
     
 Slider h2
     Attributes
+        ID                                  : 27
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 217
+        y coordinate                        : 166
+        Width                               : 44
+        Height                              : 72
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Direction                           : horizontal
+        Fill                                : image
+        Cursor width                        : auto
+        Cursor height                       : 255
+        Back. Picture ID                    : 18
+        Slided Back. Picture ID             : 18
         Position                            : 50
         Upper range limit                   : 100
         Lower range limit                   : 0
     
 Slider h5
     Attributes
+        ID                                  : 28
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 217
+        y coordinate                        : 297
+        Width                               : 44
+        Height                              : 72
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Direction                           : horizontal
+        Fill                                : image
+        Cursor width                        : auto
+        Cursor height                       : 255
+        Back. Picture ID                    : 18
+        Slided Back. Picture ID             : 18
         Position                            : 50
         Upper range limit                   : 100
         Lower range limit                   : 0
     
 Slider h3
     Attributes
+        ID                                  : 29
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 61
+        y coordinate                        : 297
+        Width                               : 44
+        Height                              : 72
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Direction                           : horizontal
+        Fill                                : image
+        Cursor width                        : auto
+        Cursor height                       : 255
+        Back. Picture ID                    : 18
+        Slided Back. Picture ID             : 18
         Position                            : 50
         Upper range limit                   : 100
         Lower range limit                   : 0
     
 Button bNext
     Attributes
+        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 262
+        y coordinate                        : 16
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 65535
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
         State                               : unpressed
         Text                                : î³
         Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
     Events
         Touch Press Event
@@ -358,13 +813,35 @@ Button bNext
         
 Button bPrev
     Attributes
+        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 9
+        y coordinate                        : 16
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 65535
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
         State                               : unpressed
         Text                                : î°
         Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
     Events
         Touch Press Event
@@ -390,10 +867,19 @@ Button bPrev
         
 Hotspot mSwipeNext
     Attributes
+        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 311
+        y coordinate                        : 5
+        Width                               : 7
+        Height                              : 475
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
     
     Events
         Touch Press Event
@@ -401,10 +887,19 @@ Hotspot mSwipeNext
         
 Hotspot mSwipeUp
     Attributes
+        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 11
+        y coordinate                        : 0
+        Width                               : 299
+        Height                              : 8
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
     
     Events
         Touch Press Event
@@ -412,10 +907,19 @@ Hotspot mSwipeUp
         
 Hotspot mSwipePrev
     Attributes
+        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 5
+        Width                               : 9
+        Height                              : 310
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
     
     Events
         Touch Press Event
@@ -423,6 +927,7 @@ Hotspot mSwipePrev
         
 Timer tmSerial
     Attributes
+        ID         : 4
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -762,6 +1267,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
+        ID         : 6
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -792,6 +1298,7 @@ Timer tmSleep
         
 Timer tm0
     Attributes
+        ID         : 24
         Scope      : local
         Period (ms): 100
         Enabled    : yes
@@ -861,6 +1368,7 @@ Timer tm0
         
 TouchCap tc0
     Attributes
+        ID   : 7
         Scope: local
         Value: 0
     
