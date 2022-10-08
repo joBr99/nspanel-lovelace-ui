@@ -635,42 +635,6 @@
 │                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 │                                      }
 │                                      if(tInstruction.txt=="date")
-├── cardThermo.txt
-│ @@ -1089,15 +1089,14 @@
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│                                          //save second arg if there's one
-│                                          spstr strCommand.txt,tTmp.txt,"~",2
-│                                          //save third arg if there's one
-│                                          spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-│ -                                        spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-│                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-│                                          udelete payloadLength-1
-│                                          bufferPos=0
-│                                          if(tId.txt=="pageStartup")
-│                                          {
-│                                              page pageStartup
-│                                          }
-│ @@ -1139,18 +1138,14 @@
-│                                          {
-│                                              page cardAlarm
-│                                          }
-│                                          if(tId.txt=="cardQR")
-│                                          {
-│                                              page cardQR
-│                                          }
-│ -                                        if(tId.txt=="cardPower")
-│ -                                        {
-│ -                                            page cardPower
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="time")
-│                                      {
-│                                          // get set time to global variable
-│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-│                                      }
-│                                      if(tInstruction.txt=="date")
 ├── pageIcons.txt
 │ @@ -15,15 +15,15 @@
 │          Scope         : global
@@ -760,6 +724,7 @@
 │                              }
 │                          }
 ├── popupFan.txt
+│┄ ordering differences only
 │ @@ -78,31 +78,31 @@
 │          Value: 1
 │      
@@ -864,149 +829,6 @@
 │              crcrest 1,0xffff // reset CRC
 │              crcputh 55 bb
 │              crcputs sys0,2
-│ @@ -574,15 +574,14 @@
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│                                          //save second arg if there's one
-│                                          spstr strCommand.txt,tTmp.txt,"~",2
-│                                          //save third arg if there's one
-│                                          spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-│ -                                        spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-│                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-│                                          udelete payloadLength-1
-│                                          bufferPos=0
-│                                          if(tId.txt=="pageStartup")
-│                                          {
-│                                              page pageStartup
-│                                          }
-│ @@ -624,18 +623,14 @@
-│                                          {
-│                                              page cardAlarm
-│                                          }
-│                                          if(tId.txt=="cardQR")
-│                                          {
-│                                              page cardQR
-│                                          }
-│ -                                        if(tId.txt=="cardPower")
-│ -                                        {
-│ -                                            page cardPower
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
-├── popupLight.txt
-│ @@ -610,15 +610,14 @@
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│                                          //save second arg if there's one
-│                                          spstr strCommand.txt,tTmp.txt,"~",2
-│                                          //save third arg if there's one
-│                                          spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-│ -                                        spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-│                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-│                                          udelete payloadLength-1
-│                                          bufferPos=0
-│                                          if(tId.txt=="pageStartup")
-│                                          {
-│                                              page pageStartup
-│                                          }
-│ @@ -660,18 +659,14 @@
-│                                          {
-│                                              page cardAlarm
-│                                          }
-│                                          if(tId.txt=="cardQR")
-│                                          {
-│                                              page cardQR
-│                                          }
-│ -                                        if(tId.txt=="cardPower")
-│ -                                        {
-│ -                                            page cardPower
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
-├── popupNotify.txt
-│ @@ -352,15 +352,14 @@
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│                                          //save second arg if there's one
-│                                          spstr strCommand.txt,tTmp.txt,"~",2
-│                                          //save third arg if there's one
-│                                          spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-│ -                                        spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-│                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-│                                          udelete payloadLength-1
-│                                          bufferPos=0
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│ @@ -407,18 +406,14 @@
-│                                          {
-│                                              page cardAlarm
-│                                          }
-│                                          if(tId.txt=="cardQR")
-│                                          {
-│                                              page cardQR
-│                                          }
-│ -                                        if(tId.txt=="cardPower")
-│ -                                        {
-│ -                                            page cardPower
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
-├── popupShutter.txt
-│ @@ -636,15 +636,14 @@
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│                                          //save second arg if there's one
-│                                          spstr strCommand.txt,tTmp.txt,"~",2
-│                                          //save third arg if there's one
-│                                          spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-│ -                                        spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-│                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-│                                          udelete payloadLength-1
-│                                          bufferPos=0
-│                                          if(tId.txt=="pageStartup")
-│                                          {
-│                                              page pageStartup
-│                                          }
-│ @@ -686,18 +685,14 @@
-│                                          {
-│                                              page cardAlarm
-│                                          }
-│                                          if(tId.txt=="cardQR")
-│                                          {
-│                                              page cardQR
-│                                          }
-│ -                                        if(tId.txt=="cardPower")
-│ -                                        {
-│ -                                            page cardPower
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
 ├── screensaver.txt
 │ @@ -71,15 +71,15 @@
 │  Text tTime
@@ -1025,38 +847,3 @@
 │          Scope                               : local
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
-│ @@ -631,15 +631,14 @@
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│                                          //save second arg if there's one
-│                                          spstr strCommand.txt,tTmp.txt,"~",2
-│                                          //save third arg if there's one
-│                                          spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-│ -                                        spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-│                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-│                                          udelete u[2]+3
-│                                          bufferPos=0
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│ @@ -676,18 +675,14 @@
-│                                          {
-│                                              page cardAlarm
-│                                          }
-│                                          if(tId.txt=="cardQR")
-│                                          {
-│                                              page cardQR
-│                                          }
-│ -                                        if(tId.txt=="cardPower")
-│ -                                        {
-│ -                                            page cardPower
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
