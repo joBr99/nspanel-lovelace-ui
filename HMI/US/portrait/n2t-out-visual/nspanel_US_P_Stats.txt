@@ -29,7 +29,7 @@ cardMedia
 popupShutter
 	25   Component(s)
 	389  Line(s) of event code
-	212  Unique line(s) of event code
+	213  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	469  Line(s) of event code
@@ -63,4 +63,4 @@ Total
 	14   Page(s)
 	451  Component(s)
 	5487 Line(s) of event code
-	1485 Unique line(s) of event code
+	1486 Unique line(s) of event code
