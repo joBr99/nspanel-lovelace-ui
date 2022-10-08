@@ -1,5 +1,21 @@
-+++ /dev/fd/62	2022-10-08 21:22:56.668959488 +0000
++++ /dev/fd/62	2022-10-08 21:40:20.817238068 +0000
 +rdAlarm.txt
++15 +784,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="pageStartup")
++                                 {
++                                     page pageStartup
++                                 }
 +18 +833,14 @@
 +                                 {
 +                                     page cardAlarm
@@ -19,6 +35,19 @@
 +                         }
 +                     }
 +                 }
++,26 +2059,174 @@
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="pageStartup")
++                                 {
++                                     page pageStartup
++                                 }
 +,18 +2268,14 @@
 +                                 {
 +                                     page cardAlarm
@@ -39,6 +68,22 @@
 +                             }
 +                             if(tInstruction.txt=="date")
 +rdGrid.txt
++15 +789,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="pageStartup")
++                                 {
++                                     page pageStartup
++                                 }
 +18 +838,14 @@
 +                                 {
 +                                     page cardAlarm
@@ -59,6 +104,22 @@
 +                             }
 +                             if(tInstruction.txt=="date")
 +rdMedia.txt
++15 +702,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="pageStartup")
++                                 {
++                                     page pageStartup
++                                 }
 +18 +751,14 @@
 +                                 {
 +                                     page cardAlarm
@@ -115,6 +176,22 @@
 +                     }
 +                 }
 +rdThermo.txt
++,15 +1089,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="pageStartup")
++                                 {
++                                     page pageStartup
++                                 }
 +,18 +1138,14 @@
 +                                 {
 +                                     page cardAlarm
@@ -152,6 +229,57 @@
 + Scope                               : global
 + Dragging                            : 0
 + Disable release event after dragging: 0
++15 +302,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="cardThermo")
++                                 {
++                                     page cardThermo
++                                 }
++18 +346,14 @@
++                                 {
++                                     page cardAlarm
++                                 }
++                                 if(tId.txt=="cardQR")
++                                 {
++                                     page cardQR
++                                 }
++                                 if(tId.txt=="cardPower")
++                                 {
++                                     page cardPower
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++15 +574,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="pageStartup")
++                                 {
++                                     page pageStartup
++                                 }
 +18 +623,14 @@
 +                                 {
 +                                     page cardAlarm
@@ -172,6 +300,22 @@
 +                     }
 +                 }
 +pupLight.txt
++15 +610,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="pageStartup")
++                                 {
++                                     page pageStartup
++                                 }
 +18 +659,14 @@
 +                                 {
 +                                     page cardAlarm
@@ -192,6 +336,22 @@
 +                     }
 +                 }
 +pupNotify.txt
++15 +352,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="popupLight")
++                                 {
++                                     pageIcons.tTmp1.txt=tTmp.txt
++                                     page popupLight
 +18 +406,14 @@
 +                                 {
 +                                     page cardAlarm
@@ -212,6 +372,22 @@
 +                     }
 +                 }
 +pupShutter.txt
++15 +636,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete payloadLength-1
++                                 bufferPos=0
++                                 if(tId.txt=="pageStartup")
++                                 {
++                                     page pageStartup
++                                 }
 +18 +685,14 @@
 +                                 {
 +                                     page cardAlarm
@@ -249,6 +425,22 @@
 + Scope                               : local
 + Dragging                            : 0
 + Disable release event after dragging: 0
++15 +631,14 @@
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 //save third arg if there's one
++                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
++                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
++                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
++                                 udelete u[2]+3
++                                 bufferPos=0
++                                 if(tId.txt=="popupLight")
++                                 {
++                                     pageIcons.tTmp1.txt=tTmp.txt
++                                     page popupLight
 +18 +675,14 @@
 +                                 {
 +                                     page cardAlarm
