@@ -36,8 +36,8 @@ pageTest
 	14   Unique line(s) of event code
 cardGrid
 	42   Component(s)
-	469  Line(s) of event code
-	278  Unique line(s) of event code
+	474  Line(s) of event code
+	281  Unique line(s) of event code
 cardPower
 	43   Component(s)
 	420  Line(s) of event code
@@ -54,17 +54,17 @@ screensaver
 	38   Component(s)
 	338  Line(s) of event code
 	262  Unique line(s) of event code
-cardEntities
-	65   Component(s)
-	1132 Line(s) of event code
-	519  Unique line(s) of event code
 cardThermo
 	52   Component(s)
 	585  Line(s) of event code
 	306  Unique line(s) of event code
+cardEntities
+	65   Component(s)
+	1137 Line(s) of event code
+	522  Unique line(s) of event code
 
 Total
 	15   Page(s)
 	482  Component(s)
-	5724 Line(s) of event code
+	5734 Line(s) of event code
 	1546 Unique line(s) of event code

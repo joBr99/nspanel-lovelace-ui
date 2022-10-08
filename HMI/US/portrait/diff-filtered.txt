@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-10-08 22:15:32.998264146 +0000
++++ /dev/fd/62	2022-10-08 22:37:22.226531609 +0000
 +rdAlarm.txt
 +15 +784,14 @@
 +                                 //command format pageType,specialPageName
