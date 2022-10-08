@@ -14,42 +14,6 @@
 │ +    // fix touch offset (Removed for US version)
 │ +    //lcd_dev fffb 0002 0000 0020
 │      page pageStartup
-├── cardAlarm.txt
-│ @@ -784,15 +784,14 @@
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│                                          //save second arg if there's one
-│                                          spstr strCommand.txt,tTmp.txt,"~",2
-│                                          //save third arg if there's one
-│                                          spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-│ -                                        spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-│                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-│                                          udelete payloadLength-1
-│                                          bufferPos=0
-│                                          if(tId.txt=="pageStartup")
-│                                          {
-│                                              page pageStartup
-│                                          }
-│ @@ -834,18 +833,14 @@
-│                                          {
-│                                              page cardAlarm
-│                                          }
-│                                          if(tId.txt=="cardQR")
-│                                          {
-│                                              page cardQR
-│                                          }
-│ -                                        if(tId.txt=="cardPower")
-│ -                                        {
-│ -                                            page cardPower
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
 ├── cardEntities.txt
 │ @@ -61,14 +61,24 @@
 │              vis tIcon4,0
