@@ -22,10 +22,6 @@ pageStartup
 	19   Component(s)
 	167  Line(s) of event code
 	122  Unique line(s) of event code
-cardMedia
-	34   Component(s)
-	389  Line(s) of event code
-	210  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	389  Line(s) of event code
@@ -40,8 +36,12 @@ cardGrid
 	278  Unique line(s) of event code
 cardQR
 	32   Component(s)
-	404  Line(s) of event code
-	235  Unique line(s) of event code
+	409  Line(s) of event code
+	238  Unique line(s) of event code
+cardMedia
+	34   Component(s)
+	394  Line(s) of event code
+	213  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	342  Line(s) of event code
@@ -66,5 +66,5 @@ cardEntities
 Total
 	15   Page(s)
 	494  Component(s)
-	5907 Line(s) of event code
+	5917 Line(s) of event code
 	1620 Unique line(s) of event code
