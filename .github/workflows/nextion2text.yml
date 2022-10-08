@@ -56,7 +56,7 @@ jobs:
         
         echo portrait
         python Nextion2Text.py -c ignore-id.py -p font -d -i HMI/US/portrait/nspanel_US_P.HMI -o HMI/US/portrait/n2t-out
-        diffoscope --exclude-directory-metadata=recursive HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
+        diffoscope --exclude=pageTest.txt --exclude-directory-metadata=recursive HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
         #diff -bur HMI/n2t-out HMI/US/portrait/n2t-out > HMI/US/portrait/diff-eu-version.txt
 
     - name: Run n2t US P DIFF DIFF
@@ -71,7 +71,7 @@ jobs:
         echo landscape
         python Nextion2Text.py -c ignore-id.py -p font -d -i HMI/US/landscape/nspanel_US_L.HMI -o HMI/US/landscape/n2t-out
         #diff -bur HMI/n2t-out HMI/US/landscape/n2t-out > HMI/US/landscape/diff-eu-version.txt
-        diffoscope --exclude-directory-metadata=recursive HMI/n2t-out HMI/US/landscape/n2t-out > HMI/US/landscape/diff-eu-version.txt
+        diffoscope --exclude=pageTest.txt --exclude-directory-metadata=recursive HMI/n2t-out HMI/US/landscape/n2t-out > HMI/US/landscape/diff-eu-version.txt
         
     - name: Display txt files 
       continue-on-error: true
