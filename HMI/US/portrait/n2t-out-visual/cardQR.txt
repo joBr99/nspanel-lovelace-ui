@@ -597,9 +597,9 @@ Hotspot mSwipeNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 311
+        x coordinate                        : 310
         y coordinate                        : 5
-        Width                               : 9
+        Width                               : 8
         Height                              : 475
         Effect                              : load
         Effect Priority                     : 0
