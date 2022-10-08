@@ -55,6 +55,7 @@ sharedfoot = """
               spstr strCommand.txt,tTmp.txt,"~",2
               //save third arg if there's one
               spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
+              spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
               //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
               udelete payloadLength-1
               bufferPos=0
@@ -103,6 +104,10 @@ sharedfoot = """
               if(tId.txt=="cardQR")
               {
                 page cardQR
+              }
+              if(tId.txt=="cardPower")
+              {
+                page cardPower
               }
             }
             if(tInstruction.txt=="time")
