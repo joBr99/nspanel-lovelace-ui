@@ -3489,6 +3489,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'                   //entityUpdateDetail
+			    + id + '~'
                             + icon + '~'                   //iconId
                             + iconColor + '~'                   //iconColor
                             + switchVal + '~'                   //buttonState
