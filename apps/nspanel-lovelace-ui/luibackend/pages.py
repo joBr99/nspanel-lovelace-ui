@@ -586,7 +586,7 @@ class LuiPagesGen(object):
         command = f"entityUpd~{heading}~{navigation}"
         for idx, item in enumerate(items):
             entity = apis.ha_api.get_entity(item.entityId)
-            icon_color = self.get_entity_color(entity)
+            icon_color = self.get_entity_color(entity, overwrite=item.colorOverride)
             device_class = entity.attributes.get("device_class", "")
             icon = get_icon(item.entityId.split(".")[0], state=entity.state, device_class=device_class, overwrite=item.iconOverride)
             speed = 0
