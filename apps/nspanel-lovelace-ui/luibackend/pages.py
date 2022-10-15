@@ -400,7 +400,11 @@ class LuiPagesGen(object):
             dest_temp2   = ""
             if dest_temp is None:
                 dest_temp    = get_attr_safe(entity, "target_temp_high", 0)
-                dest_temp2   = int(get_attr_safe(entity, "target_temp_low", 0)*10)
+                dest_temp2   = get_attr_safe(entity, "target_temp_low", None)
+                if dest_temp2 != None and dest_temp2 != "null":
+                    dest_temp2   = int(dest_temp2*10)
+                else:
+                    dest_temp2 = ""
             dest_temp    = int(dest_temp*10)
 
             hvac_action  = get_attr_safe(entity, "hvac_action", "")
@@ -586,7 +590,7 @@ class LuiPagesGen(object):
         command = f"entityUpd~{heading}~{navigation}"
         for idx, item in enumerate(items):
             entity = apis.ha_api.get_entity(item.entityId)
-            icon_color = self.get_entity_color(entity)
+            icon_color = self.get_entity_color(entity, overwrite=item.colorOverride)
             device_class = entity.attributes.get("device_class", "")
             icon = get_icon(item.entityId.split(".")[0], state=entity.state, device_class=device_class, overwrite=item.iconOverride)
             speed = 0
