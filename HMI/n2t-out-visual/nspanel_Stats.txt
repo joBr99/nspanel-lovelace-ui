@@ -18,14 +18,14 @@ popupLight
 	27   Component(s)
 	391  Line(s) of event code
 	214  Unique line(s) of event code
-popupNotify
-	19   Component(s)
-	253  Line(s) of event code
-	164  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	172  Line(s) of event code
 	125  Unique line(s) of event code
+popupNotify
+	19   Component(s)
+	253  Line(s) of event code
+	164  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	347  Line(s) of event code
