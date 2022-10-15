@@ -403,6 +403,8 @@ class LuiPagesGen(object):
                 dest_temp2   = get_attr_safe(entity, "target_temp_low", None)
                 if dest_temp2 != None and dest_temp2 != "null":
                     dest_temp2   = int(dest_temp2*10)
+                else:
+                    dest_temp2 = ""
             dest_temp    = int(dest_temp*10)
 
             hvac_action  = get_attr_safe(entity, "hvac_action", "")
