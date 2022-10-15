@@ -117,7 +117,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupNotify Page
 
-`entityUpdateDetail~*internalName*~*tHeading*~*tHeadingColor*~*b1*~*tB1Color*~*b2*~*tB2Color*~*tText*~*tTextColor*~*sleepTimeout*`
+`entityUpdateDetail~*internalName*~*tHeading*~*tHeadingColor*~*b1*~*tB1Color*~*b2*~*tB2Color*~*tText*~*tTextColor*~*sleepTimeout*~*font*~*alt_icon*`
 
 `exitPopup`
 
