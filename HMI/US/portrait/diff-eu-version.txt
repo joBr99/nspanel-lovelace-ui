@@ -691,6 +691,95 @@
 │              crcrest 1,0xffff // reset CRC
 │              crcputh 55 bb
 │              crcputs sys0,2
+├── popupNotify.txt
+│ @@ -21,25 +21,19 @@
+│              vis tId,0
+│              popupNotify.bco=defaultBcoColor
+│              tHeading.bco=defaultBcoColor
+│              b0.bco=defaultBcoColor
+│              tText.bco=defaultBcoColor
+│              b1.bco=defaultBcoColor
+│              b2.bco=defaultBcoColor
+│ -            tIcon.bco=defaultBcoColor
+│ -            tTextAlt.bco=defaultBcoColor
+│              tHeading.pco=defaultFontColor
+│              b0.pco=defaultFontColor
+│              tText.pco=defaultFontColor
+│              b1.pco=defaultFontColor
+│              b2.pco=defaultFontColor
+│ -            vis tIcon,0
+│ -            vis tTextAlt,0
+│ -            tIcon.bco=defaultFontColor
+│ -            tTextAlt.bco=defaultFontColor
+│          
+│  Variable (string) strCommand
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 1000
+│      
+│ @@ -106,34 +100,14 @@
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : 
+│          Max. Text Size                      : 500
+│      
+│ -Text tTextAlt
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        Associated Keyboard                 : none
+│ -        Text                                : 
+│ -        Max. Text Size                      : 500
+│ -    
+│ -Text tIcon
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        Associated Keyboard                 : none
+│ -        Text                                : 
+│ -        Max. Text Size                      : 250
+│ -    
+│  Picture p0
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│      
+│ @@ -325,26 +299,14 @@
+│                                          tText.pco=sys0
+│                                          //preserve old sleepTimeout
+│                                          vaOldSleepT.val=sleepTimeout
+│                                          // sleep timeout
+│                                          spstr strCommand.txt,tTmp.txt,"~",10
+│                                          covx tTmp.txt,sys0,0,0
+│                                          sleepTimeout=sys0
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",11
+│ -                                        covx tTmp.txt,sys0,0,0
+│ -                                        tTextAlt.font=sys0
+│ -                                        tText.font=sys0
+│ -                                        spstr strCommand.txt,tIcon.txt,"~",12
+│ -                                        if(tIcon.txt!="")
+│ -                                        {
+│ -                                            vis tIcon,1
+│ -                                            vis tTextAlt,1
+│ -                                            vis tText,0
+│ -                                            tTextAlt.txt=tText.txt
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
 ├── screensaver.txt
 │ @@ -71,15 +71,15 @@
 │  Text tTime

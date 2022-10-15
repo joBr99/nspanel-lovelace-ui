@@ -14,14 +14,14 @@ popupShutter
 	25   Component(s)
 	394  Line(s) of event code
 	216  Unique line(s) of event code
-popupNotify
-	17   Component(s)
-	231  Line(s) of event code
-	146  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	391  Line(s) of event code
 	214  Unique line(s) of event code
+popupNotify
+	19   Component(s)
+	249  Line(s) of event code
+	161  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	172  Line(s) of event code
@@ -65,6 +65,6 @@ cardEntities
 
 Total
 	15   Page(s)
-	488  Component(s)
-	5797 Line(s) of event code
-	1561 Unique line(s) of event code
+	490  Component(s)
+	5815 Line(s) of event code
+	1575 Unique line(s) of event code
