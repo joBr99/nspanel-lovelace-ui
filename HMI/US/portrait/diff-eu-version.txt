@@ -709,8 +709,8 @@
 │              b2.pco=defaultFontColor
 │ -            vis tIcon,0
 │ -            vis tTextAlt,0
-│ -            tIcon.bco=defaultFontColor
-│ -            tTextAlt.bco=defaultFontColor
+│ -            tIcon.pco=defaultFontColor
+│ -            tTextAlt.pco=defaultFontColor
 │          
 │  Variable (string) strCommand
 │      Attributes
@@ -753,7 +753,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │      
-│ @@ -325,26 +299,14 @@
+│ @@ -325,33 +299,14 @@
 │                                          tText.pco=sys0
 │                                          //preserve old sleepTimeout
 │                                          vaOldSleepT.val=sleepTimeout
@@ -761,10 +761,12 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",10
 │                                          covx tTmp.txt,sys0,0,0
 │                                          sleepTimeout=sys0
+│ -                                        //font size
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",11
 │ -                                        covx tTmp.txt,sys0,0,0
 │ -                                        tTextAlt.font=sys0
 │ -                                        tText.font=sys0
+│ -                                        //icon
 │ -                                        spstr strCommand.txt,tIcon.txt,"~",12
 │ -                                        if(tIcon.txt!="")
 │ -                                        {
@@ -772,7 +774,12 @@
 │ -                                            vis tTextAlt,1
 │ -                                            vis tText,0
 │ -                                            tTextAlt.txt=tText.txt
+│ -                                            tTextAlt.pco=tText.pco
 │ -                                        }
+│ -                                        // alt icon color
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",13
+│ -                                        covx tTmp.txt,sys0,0,0
+│ -                                        tIcon.pco=sys0
 │                                      }
 │                                      if(tInstruction.txt=="time")
 │                                      {
