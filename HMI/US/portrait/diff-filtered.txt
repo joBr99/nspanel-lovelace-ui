@@ -1,72 +1,4 @@
-+++ /dev/fd/62	2022-10-08 22:48:53.818299279 +0000
-+,26 +2059,174 @@
-+                                 //save second arg if there's one
-+                                 spstr strCommand.txt,tTmp.txt,"~",2
-+                                 //save third arg if there's one
-+                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-+                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-+                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-+                                 udelete payloadLength-1
-+                                 bufferPos=0
-+                                 if(tId.txt=="pageStartup")
-+                                 {
-+                                     page pageStartup
-+                                 }
-+,18 +2268,14 @@
-+                                 {
-+                                     page cardAlarm
-+                                 }
-+                                 if(tId.txt=="cardQR")
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 // get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                             }
-+                             if(tInstruction.txt=="date")
-+rdGrid.txt
-+15 +789,14 @@
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
-+                                 //save second arg if there's one
-+                                 spstr strCommand.txt,tTmp.txt,"~",2
-+                                 //save third arg if there's one
-+                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-+                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-+                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-+                                 udelete payloadLength-1
-+                                 bufferPos=0
-+                                 if(tId.txt=="pageStartup")
-+                                 {
-+                                     page pageStartup
-+                                 }
-+18 +838,14 @@
-+                                 {
-+                                     page cardAlarm
-+                                 }
-+                                 if(tId.txt=="cardQR")
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 // get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                             }
-+                             if(tInstruction.txt=="date")
++++ /dev/fd/62	2022-10-09 16:56:54.880530529 +0000
 +geIcons.txt
 +5 +15,15 @@
 + Scope         : global
@@ -85,41 +17,6 @@
 + Scope                               : global
 + Dragging                            : 0
 + Disable release event after dragging: 0
-+15 +302,14 @@
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
-+                                 //save second arg if there's one
-+                                 spstr strCommand.txt,tTmp.txt,"~",2
-+                                 //save third arg if there's one
-+                                 spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
-+                                 spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
-+                                 //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-+                                 udelete payloadLength-1
-+                                 bufferPos=0
-+                                 if(tId.txt=="cardThermo")
-+                                 {
-+                                     page cardThermo
-+                                 }
-+18 +346,14 @@
-+                                 {
-+                                     page cardAlarm
-+                                 }
-+                                 if(tId.txt=="cardQR")
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
 +reensaver.txt
 +5 +71,15 @@
 +ime
