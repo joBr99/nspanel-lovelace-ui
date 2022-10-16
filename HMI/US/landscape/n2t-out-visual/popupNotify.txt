@@ -33,11 +33,17 @@ Page popupNotify
             tText.bco=defaultBcoColor
             b1.bco=defaultBcoColor
             b2.bco=defaultBcoColor
+            tIcon.bco=defaultBcoColor
+            tTextAlt.bco=defaultBcoColor
             tHeading.pco=defaultFontColor
             b0.pco=defaultFontColor
             tText.pco=defaultFontColor
             b1.pco=defaultFontColor
             b2.pco=defaultFontColor
+            vis tIcon,0
+            vis tTextAlt,0
+            tIcon.pco=defaultFontColor
+            tTextAlt.pco=defaultFontColor
         
 Variable (string) strCommand
     Attributes
@@ -174,7 +180,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : left
@@ -212,6 +218,66 @@ Text tText
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 500
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tTextAlt
+    Attributes
+        ID                                  : 17
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 150
+        y coordinate                        : 74
+        Width                               : 285
+        Height                              : 171
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : left
+        Vertical Alignment                  : top
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 500
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tIcon
+    Attributes
+        ID                                  : 18
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 38
+        y coordinate                        : 74
+        Width                               : 109
+        Height                              : 171
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 4
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 250
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -298,7 +364,7 @@ Button b2
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 8
         Back. Color (Pressed)               : 1024
@@ -347,7 +413,7 @@ Button b1
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Back. Picture ID (Pressed)          : 8
         Back. Color (Pressed)               : 1024
@@ -493,6 +559,25 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",10
                                         covx tTmp.txt,sys0,0,0
                                         sleepTimeout=sys0
+                                        //font size
+                                        spstr strCommand.txt,tTmp.txt,"~",11
+                                        covx tTmp.txt,sys0,0,0
+                                        tTextAlt.font=sys0
+                                        tText.font=sys0
+                                        //icon
+                                        spstr strCommand.txt,tIcon.txt,"~",12
+                                        if(tIcon.txt!="")
+                                        {
+                                            vis tIcon,1
+                                            vis tTextAlt,1
+                                            vis tText,0
+                                            tTextAlt.txt=tText.txt
+                                            tTextAlt.pco=tText.pco
+                                        }
+                                        // alt icon color
+                                        spstr strCommand.txt,tTmp.txt,"~",13
+                                        covx tTmp.txt,sys0,0,0
+                                        tIcon.pco=sys0
                                     }
                                     if(tInstruction.txt=="time")
                                     {
