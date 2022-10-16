@@ -1,4 +1,40 @@
-+++ /dev/fd/62	2022-10-16 07:58:08.397597578 +0000
++++ /dev/fd/62	2022-10-16 08:26:34.101954953 +0000
+++9,8 @@
++tify.txt
++utter.txt
++ermo.txt
++aver.txt
++rdThermo.txt
++30 +779,14 @@
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++ate Button btDetail
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : pressed
++ Text                                : î
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     pageIcons.tTmp1.txt=tHeading.txt
++     pageIcons.tTmp2.txt=entn.txt
++     page popupThermo
++ 
++ mSwipeNext
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
 +geIcons.txt
 +5 +15,15 @@
 + Scope         : global
