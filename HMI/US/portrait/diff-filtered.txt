@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-10-15 13:53:17.697936240 +0000
++++ /dev/fd/62	2022-10-16 07:36:55.021416954 +0000
 +geIcons.txt
 +5 +15,15 @@
 + Scope         : global
@@ -43,76 +43,6 @@
 + Scope         : local
 + Text          : 
 + Max. Text Size: 1000
-+
-+34 +100,14 @@
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 
-+ Max. Text Size                      : 500
-+
-+extAlt
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 
-+ Max. Text Size                      : 500
-+
-+con
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 
-+ Max. Text Size                      : 250
-+
-+ p0
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+
-+33 +299,14 @@
-+                                 tText.pco=sys0
-+                                 //preserve old sleepTimeout
-+                                 vaOldSleepT.val=sleepTimeout
-+                                 // sleep timeout
-+                                 spstr strCommand.txt,tTmp.txt,"~",10
-+                                 covx tTmp.txt,sys0,0,0
-+                                 sleepTimeout=sys0
-+                                 //font size
-+                                 spstr strCommand.txt,tTmp.txt,"~",11
-+                                 covx tTmp.txt,sys0,0,0
-+                                 tTextAlt.font=sys0
-+                                 tText.font=sys0
-+                                 //icon
-+                                 spstr strCommand.txt,tIcon.txt,"~",12
-+                                 if(tIcon.txt!="")
-+                                 {
-+                                     vis tIcon,1
-+                                     vis tTextAlt,1
-+                                     vis tText,0
-+                                     tTextAlt.txt=tText.txt
-+                                     tTextAlt.pco=tText.pco
-+                                 }
-+                                 // alt icon color
-+                                 spstr strCommand.txt,tTmp.txt,"~",13
-+                                 covx tTmp.txt,sys0,0,0
-+                                 tIcon.pco=sys0
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 // get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                             }
-+                             if(tInstruction.txt=="date")
 +reensaver.txt
 +5 +71,15 @@
 +ime

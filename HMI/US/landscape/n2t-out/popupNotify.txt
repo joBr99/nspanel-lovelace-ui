@@ -25,11 +25,17 @@ Page popupNotify
             tText.bco=defaultBcoColor
             b1.bco=defaultBcoColor
             b2.bco=defaultBcoColor
+            tIcon.bco=defaultBcoColor
+            tTextAlt.bco=defaultBcoColor
             tHeading.pco=defaultFontColor
             b0.pco=defaultFontColor
             tText.pco=defaultFontColor
             b1.pco=defaultFontColor
             b2.pco=defaultFontColor
+            vis tIcon,0
+            vis tTextAlt,0
+            tIcon.pco=defaultFontColor
+            tTextAlt.pco=defaultFontColor
         
 Variable (string) strCommand
     Attributes
@@ -103,6 +109,26 @@ Text tText
         Associated Keyboard                 : none
         Text                                : 
         Max. Text Size                      : 500
+    
+Text tTextAlt
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 500
+    
+Text tIcon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 250
     
 Picture p0
     Attributes
@@ -303,6 +329,25 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",10
                                         covx tTmp.txt,sys0,0,0
                                         sleepTimeout=sys0
+                                        //font size
+                                        spstr strCommand.txt,tTmp.txt,"~",11
+                                        covx tTmp.txt,sys0,0,0
+                                        tTextAlt.font=sys0
+                                        tText.font=sys0
+                                        //icon
+                                        spstr strCommand.txt,tIcon.txt,"~",12
+                                        if(tIcon.txt!="")
+                                        {
+                                            vis tIcon,1
+                                            vis tTextAlt,1
+                                            vis tText,0
+                                            tTextAlt.txt=tText.txt
+                                            tTextAlt.pco=tText.pco
+                                        }
+                                        // alt icon color
+                                        spstr strCommand.txt,tTmp.txt,"~",13
+                                        covx tTmp.txt,sys0,0,0
+                                        tIcon.pco=sys0
                                     }
                                     if(tInstruction.txt=="time")
                                     {
