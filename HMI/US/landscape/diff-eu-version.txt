@@ -30,3 +30,31 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
+├── screensaver.txt
+│ @@ -620,26 +620,14 @@
+│                                              vis tNotifyHead,1
+│                                              vis tNotifyText,1
+│                                          }else
+│                                          {
+│                                              vis tNotifyHead,0
+│                                              vis tNotifyText,0
+│                                          }
+│ -                                        tNotifyHead.bco=tTime.bco
+│ -                                        tNotifyText.bco=tTime.bco
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",3
+│ -                                        if(tTmp.txt!="")
+│ -                                        {
+│ -                                            covx tTmp.txt,tNotifyHead.pco,0,0
+│ -                                        }
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",4
+│ -                                        if(tTmp.txt!="")
+│ -                                        {
+│ -                                            covx tTmp.txt,tNotifyText.pco,0,0
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="pageType")
+│                                      {
+│                                          dim=100
+│                                          //command format pageType,specialPageName
+│                                          //write name of speical page to tId
+│                                          spstr strCommand.txt,tId.txt,"~",1
