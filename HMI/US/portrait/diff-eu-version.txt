@@ -1,5 +1,16 @@
 --- HMI/n2t-out
 +++ HMI/US/portrait/n2t-out
+├── file list
+│ @@ -9,9 +9,8 @@
+│  pageIcons.txt
+│  pageStartup.txt
+│  pageTest.txt
+│  popupFan.txt
+│  popupLight.txt
+│  popupNotify.txt
+│  popupShutter.txt
+│ -popupThermo.txt
+│  screensaver.txt
 ├── Program.s.txt
 │ @@ -10,10 +10,10 @@
 │      int sleepValue=0
@@ -532,6 +543,37 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
+├── cardThermo.txt
+│ @@ -779,30 +779,14 @@
+│              crcputs tSend.txt,0
+│              //send cmd
+│              printh 55 bb
+│              prints sys0,2
+│              prints tSend.txt,0
+│              prints crcval,2
+│          
+│ -Dual-state Button btDetail
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        State                               : pressed
+│ -        Text                                : î
+│ -        Max. Text Size                      : 10
+│ -    
+│ -    Events
+│ -        Touch Press Event
+│ -            pageIcons.tTmp1.txt=tHeading.txt
+│ -            pageIcons.tTmp2.txt=entn.txt
+│ -            page popupThermo
+│ -        
+│  Hotspot mSwipeNext
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
 ├── pageIcons.txt
 │ @@ -15,15 +15,15 @@
 │          Scope         : global

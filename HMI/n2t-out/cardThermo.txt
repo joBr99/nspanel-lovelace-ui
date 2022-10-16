@@ -783,6 +783,22 @@ Dual-state Button btDown
             prints tSend.txt,0
             prints crcval,2
         
+Dual-state Button btDetail
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : pressed
+        Text                                : î
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tHeading.txt
+            pageIcons.tTmp2.txt=entn.txt
+            page popupThermo
+        
 Hotspot mSwipeNext
     Attributes
         Scope                               : local
