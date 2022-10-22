@@ -122,7 +122,7 @@ class LuiController(object):
         apis.ha_api.run_minutely(self._pages_gen.update_time, time)
 
         # Setup date callback
-        apis.ha_api.run_daily(self._pages_gen.update_date, time)
+        apis.ha_api.run_hourly(self._pages_gen.update_date, time)
 
         # register callbacks for each time
         if type(self._config.get("sleepBrightness")) == list:
