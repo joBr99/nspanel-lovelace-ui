@@ -791,10 +791,13 @@ class LuiPagesGen(object):
             modes = entity.attributes.get(mode, [])
             if modes is not None:
                 if mode == "preset_modes":
-                    for idx, mode in enumerate(modes):
-                        modes[idx] = get_translation(self._locale, f"frontend.state_attributes.climate.preset_mode.{mode}")
-                    mode = get_translation(self._locale, f"frontend.state_attributes.climate.preset_mode.{mode}")
-                modes_res = "?".join(modes)
+                    translated_modes = []
+                    for elem in modes:
+                        translated_modes.append(get_translation(self._locale, f"frontend.state_attributes.climate.preset_mode.{elem}"))
+                    cur_mode = get_translation(self._locale, f"frontend.state_attributes.climate.preset_mode.{cur_mode}")
+                    modes_res = "?".join(translated_modes)
+                else:
+                    modes_res = "?".join(modes)
                 modes_out += f"{heading}~{mode}~{cur_mode}~{modes_res}~"
 
         self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}")
