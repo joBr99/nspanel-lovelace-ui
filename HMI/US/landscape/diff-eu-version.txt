@@ -100,6 +100,58 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
+├── popupFan.txt
+│ @@ -240,15 +240,15 @@
+│      Events
+│          Touch Press Event
+│              //craft command
+│              tSend.txt="event,buttonPress2,"
+│              tSend.txt+=entn.txt+","
+│              sys2=vaModePos.val-3
+│              covx sys2,tTmp.txt,0,0
+│ -            tSend.txt+="mode-preset_modes,"+tTmp.txt
+│ +            tSend.txt+="mode-sel,"+tTmp.txt
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
+│ @@ -270,15 +270,15 @@
+│      Events
+│          Touch Press Event
+│              //craft command
+│              tSend.txt="event,buttonPress2,"
+│              tSend.txt+=entn.txt+","
+│              sys2=vaModePos.val-1
+│              covx sys2,tTmp.txt,0,0
+│ -            tSend.txt+="mode-preset_modes,"+tTmp.txt
+│ +            tSend.txt+="mode-sel,"+tTmp.txt
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
+│ @@ -300,15 +300,15 @@
+│      Events
+│          Touch Press Event
+│              //craft command
+│              tSend.txt="event,buttonPress2,"
+│              tSend.txt+=entn.txt+","
+│              sys2=vaModePos.val-2
+│              covx sys2,tTmp.txt,0,0
+│ -            tSend.txt+="mode-preset_modes,"+tTmp.txt
+│ +            tSend.txt+="mode-sel,"+tTmp.txt
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
 ├── screensaver.txt
 │ @@ -620,26 +620,14 @@
 │                                              vis tNotifyHead,1

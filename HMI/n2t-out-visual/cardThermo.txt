@@ -1475,7 +1475,7 @@ Dual-state Button btDetail
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
         Font Color (Unpressed)              : 50712
-        Font Color (Pressed)                : 64512
+        Font Color (Pressed)                : 50712
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         State                               : pressed

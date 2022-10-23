@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-10-23 14:41:10.580318674 +0000
++++ /dev/fd/62	2022-10-23 17:44:27.201912812 +0000
 ++9,8 @@
 +tify.txt
 +utter.txt
@@ -53,6 +53,25 @@
 + Scope                               : global
 + Dragging                            : 0
 + Disable release event after dragging: 0
++75 +240,75 @@
++nts
++ Touch Press Event
++     //craft command
++     tSend.txt="event,buttonPress2,"
++     tSend.txt+=entn.txt+","
++     sys2=vaModePos.val-3
++     covx sys2,tTmp.txt,0,0
++     tSend.txt+="mode-preset_modes,"+tTmp.txt
++     tSend.txt+="mode-sel,"+tTmp.txt
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     tSend.txt+="mode-preset_modes,"+tTmp.txt
++     tSend.txt+="mode-preset_modes,"+tTmp.txt
++     crcputs tSend.txt,0
++     //send cmd
 +pupNotify.txt
 +5 +21,19 @@
 +     vis tId,0
