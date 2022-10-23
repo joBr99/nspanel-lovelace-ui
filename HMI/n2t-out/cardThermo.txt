@@ -1100,7 +1100,7 @@ Timer tmSerial
                                         }
                                         //Show btDetail
                                         spstr strCommand.txt,tTmp.txt,"~",47
-                                        if(tTmp.txt!="1")
+                                        if(tTmp.txt=="1")
                                         {
                                             vis btDetail,1
                                         }else
