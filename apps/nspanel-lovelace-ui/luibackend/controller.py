@@ -169,6 +169,9 @@ class LuiController(object):
                     self._pages_gen.generate_shutter_detail_page(entity)
                 if entity.startswith("fan"):
                     self._pages_gen.generate_fan_detail_page(entity)
+            if self._current_card.cardType == "cardThermo":
+                if entity.startswith("climate"):
+                    self._pages_gen.generate_thermo_detail_page(entity)
 
 
     def detail_open(self, detail_type, entity_id):
