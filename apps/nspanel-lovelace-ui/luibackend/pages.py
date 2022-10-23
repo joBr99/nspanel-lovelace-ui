@@ -462,8 +462,12 @@ class LuiPagesGen(object):
             currently_translation = get_translation(self._locale, "frontend.ui.card.climate.currently")
             state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
             action_translation = get_translation(self._locale, "frontend.ui.card.climate.operation").replace(' ','\r\n')
+            
+            detailPage = ""
+            if any(x in ["preset_modes", "swing_modes", "fan_modes"] for x in entity.attributes):
+                detailPage = "1"
 
-            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}"
+            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
         self._send_mqtt_msg(command)
 
     def generate_media_page(self, navigation, title, entity, mediaBtn):
