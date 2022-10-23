@@ -38,18 +38,18 @@ cardQR
 	32   Component(s)
 	409  Line(s) of event code
 	238  Unique line(s) of event code
+popupNotify
+	19   Component(s)
+	253  Line(s) of event code
+	164  Unique line(s) of event code
 cardMedia
 	34   Component(s)
 	394  Line(s) of event code
 	213  Unique line(s) of event code
-popupNotify
-	19   Component(s)
-	247  Line(s) of event code
-	158  Unique line(s) of event code
 screensaver
 	38   Component(s)
-	338  Line(s) of event code
-	262  Unique line(s) of event code
+	350  Line(s) of event code
+	266  Unique line(s) of event code
 cardAlarm
 	40   Component(s)
 	427  Line(s) of event code
@@ -70,5 +70,5 @@ popupThermo
 Total
 	16   Page(s)
 	541  Component(s)
-	6512 Line(s) of event code
-	1740 Unique line(s) of event code
+	6530 Line(s) of event code
+	1750 Unique line(s) of event code

@@ -58,14 +58,14 @@ popupThermo
 	44   Component(s)
 	515  Line(s) of event code
 	272  Unique line(s) of event code
-cardEntities
-	65   Component(s)
-	1137 Line(s) of event code
-	522  Unique line(s) of event code
 cardThermo
 	53   Component(s)
 	596  Line(s) of event code
 	313  Unique line(s) of event code
+cardEntities
+	65   Component(s)
+	1137 Line(s) of event code
+	522  Unique line(s) of event code
 
 Total
 	16   Page(s)

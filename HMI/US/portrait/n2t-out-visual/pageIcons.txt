@@ -29,7 +29,7 @@ Variable (string) vaDate
     Attributes
         ID            : 5
         Scope         : global
-        Text          :  
+        Text          : 
         Max. Text Size: 35
     
 Text tTmp1

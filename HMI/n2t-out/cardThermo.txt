@@ -789,7 +789,7 @@ Dual-state Button btDetail
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        State                               : pressed
+        State                               : unpressed
         Text                                : î
         Max. Text Size                      : 10
     

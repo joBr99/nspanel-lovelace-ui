@@ -19,7 +19,7 @@ Variable (string) vaTime
 Variable (string) vaDate
     Attributes
         Scope         : global
-        Text          :  
+        Text          : 
         Max. Text Size: 35
     
 Text tTmp1
