@@ -775,6 +775,24 @@ class LuiPagesGen(object):
 
         self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}~{preset_mode}~{preset_modes}")
 
+    def generate_thermo_detail_page(self, entity_id):
+        entity = apis.ha_api.get_entity(entity_id)
+        icon_id = get_icon("climate", state=entity.state)
+        icon_color = self.get_entity_color(entity, ha_type="climate")
+
+        modes_res = ""
+        for mode_type in ["preset_modes", "swing_modes", "fan_modes"]:
+            heading = mode_type
+            mode = entity.attributes.get(mode_type[:-1], "")
+            modes = entity.attributes.get(mode_type, [])
+            if modes is not None:
+                modes = "?".join(modes)
+            else:
+                modes = ""
+            modes_res += f"{heading}~{mode_type}~{mode}~{modes}~"
+
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_res}")
+
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
         self._send_mqtt_msg(f"entityUpdateDetail~{ident}~{heading}~65535~{b1}~65535~{b2}~65535~{msg}~65535~0")
