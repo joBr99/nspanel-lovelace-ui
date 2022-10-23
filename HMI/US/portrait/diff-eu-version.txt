@@ -628,7 +628,6 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 ├── popupFan.txt
-│┄ ordering differences only
 │ @@ -78,31 +78,31 @@
 │          Value: 1
 │      
@@ -668,7 +667,21 @@
 │          Max. Text Size: 200
 │      
 │  Text tEntity
-│ @@ -253,60 +253,60 @@
+│ @@ -240,75 +240,75 @@
+│      Events
+│          Touch Press Event
+│              //craft command
+│              tSend.txt="event,buttonPress2,"
+│              tSend.txt+=entn.txt+","
+│              sys2=vaModePos.val-3
+│              covx sys2,tTmp.txt,0,0
+│ -            tSend.txt+="mode-preset_modes,"+tTmp.txt
+│ +            tSend.txt+="mode-sel,"+tTmp.txt
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -695,7 +708,8 @@
 │ -            sys2=vaModePos.val-1
 │ +            sys2=vaModePos.val-2
 │              covx sys2,tTmp.txt,0,0
-│              tSend.txt+="mode-sel,"+tTmp.txt
+│ -            tSend.txt+="mode-preset_modes,"+tTmp.txt
+│ +            tSend.txt+="mode-sel,"+tTmp.txt
 │              //send calc crc
 │              btlen tSend.txt,sys0
 │              crcrest 1,0xffff // reset CRC
@@ -727,12 +741,15 @@
 │ -            sys2=vaModePos.val-2
 │ +            sys2=vaModePos.val-1
 │              covx sys2,tTmp.txt,0,0
-│              tSend.txt+="mode-sel,"+tTmp.txt
+│ -            tSend.txt+="mode-preset_modes,"+tTmp.txt
+│ +            tSend.txt+="mode-sel,"+tTmp.txt
 │              //send calc crc
 │              btlen tSend.txt,sys0
 │              crcrest 1,0xffff // reset CRC
 │              crcputh 55 bb
 │              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
 ├── popupNotify.txt
 │ @@ -21,25 +21,19 @@
 │              vis tId,0
