@@ -1,23 +1,6 @@
-+++ /dev/fd/62	2022-10-23 21:26:32.359041592 +0000
-+75 +240,75 @@
-+nts
-+ Touch Press Event
-+     //craft command
-+     tSend.txt="event,buttonPress2,"
-+     tSend.txt+=entn.txt+","
-+     sys2=vaModePos.val-3
-+     covx sys2,tTmp.txt,0,0
-+     tSend.txt+="mode-preset_modes,"+tTmp.txt
-+     tSend.txt+="mode-sel,"+tTmp.txt
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
++++ /dev/fd/62	2022-10-23 21:42:24.358169322 +0000
 +     tSend.txt+="mode-preset_modes,"+tTmp.txt
 +     tSend.txt+="mode-preset_modes,"+tTmp.txt
-+     crcputs tSend.txt,0
-+     //send cmd
 +reensaver.txt
 +5 +71,15 @@
 +ime
