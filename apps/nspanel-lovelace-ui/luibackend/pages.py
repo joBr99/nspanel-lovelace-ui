@@ -185,7 +185,7 @@ class LuiPagesGen(object):
         status_res = ""
         for i in range(1,3):
             statusIcon = self._config._config_screensaver.raw_config.get(f"statusIcon{i}")
-            if statusIcon is not None:
+            if statusIcon is not None and apis.ha_api.entity_exists(statusIcon.get("entity","")):
                 icon = statusIcon.get("icon")
                 entity = apis.ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
@@ -800,7 +800,7 @@ class LuiPagesGen(object):
                     modes_res = "?".join(modes)
                 modes_out += f"{heading}~{mode}~{cur_mode}~{modes_res}~"
 
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}")   
 
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
