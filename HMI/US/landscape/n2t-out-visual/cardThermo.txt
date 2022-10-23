@@ -1478,7 +1478,7 @@ Dual-state Button btDetail
         Font Color (Pressed)                : 50712
         Horizontal Alignment                : center
         Vertical Alignment                  : center
-        State                               : pressed
+        State                               : unpressed
         Text                                : î
         Max. Text Size                      : 10
         Word wrap                           : disabled

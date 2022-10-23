@@ -532,42 +532,6 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
-├── cardThermo.txt
-│ @@ -785,15 +785,15 @@
-│          
-│  Dual-state Button btDetail
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│ -        State                               : pressed
-│ +        State                               : unpressed
-│          Text                                : î
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│              pageIcons.tTmp1.txt=tHeading.txt
-│              pageIcons.tTmp2.txt=entn.txt
-├── pageIcons.txt
-│ @@ -15,15 +15,15 @@
-│          Scope         : global
-│          Text          : 
-│          Max. Text Size: 15
-│      
-│  Variable (string) vaDate
-│      Attributes
-│          Scope         : global
-│ -        Text          : 
-│ +        Text          :  
-│          Max. Text Size: 35
-│      
-│  Text tTmp1
-│      Attributes
-│          Scope                               : global
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
 ├── pageStartup.txt
 │ @@ -138,15 +138,15 @@
 │  Text tMsg3
@@ -726,32 +690,6 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-├── popupNotify.txt
-│ @@ -21,25 +21,19 @@
-│              vis tId,0
-│              popupNotify.bco=defaultBcoColor
-│              tHeading.bco=defaultBcoColor
-│              b0.bco=defaultBcoColor
-│              tText.bco=defaultBcoColor
-│              b1.bco=defaultBcoColor
-│              b2.bco=defaultBcoColor
-│ -            tIcon.bco=defaultBcoColor
-│ -            tTextAlt.bco=defaultBcoColor
-│              tHeading.pco=defaultFontColor
-│              b0.pco=defaultFontColor
-│              tText.pco=defaultFontColor
-│              b1.pco=defaultFontColor
-│              b2.pco=defaultFontColor
-│ -            vis tIcon,0
-│ -            vis tTextAlt,0
-│ -            tIcon.pco=defaultFontColor
-│ -            tTextAlt.pco=defaultFontColor
-│          
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 1000
 ├── screensaver.txt
 │ @@ -71,15 +71,15 @@
 │  Text tTime
@@ -770,30 +708,3 @@
 │          Scope                               : local
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
-│ @@ -620,26 +620,14 @@
-│                                              vis tNotifyHead,1
-│                                              vis tNotifyText,1
-│                                          }else
-│                                          {
-│                                              vis tNotifyHead,0
-│                                              vis tNotifyText,0
-│                                          }
-│ -                                        tNotifyHead.bco=tTime.bco
-│ -                                        tNotifyText.bco=tTime.bco
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",3
-│ -                                        if(tTmp.txt!="")
-│ -                                        {
-│ -                                            covx tTmp.txt,tNotifyHead.pco,0,0
-│ -                                        }
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",4
-│ -                                        if(tTmp.txt!="")
-│ -                                        {
-│ -                                            covx tTmp.txt,tNotifyText.pco,0,0
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="pageType")
-│                                      {
-│                                          dim=100
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1

@@ -33,11 +33,17 @@ Page popupNotify
             tText.bco=defaultBcoColor
             b1.bco=defaultBcoColor
             b2.bco=defaultBcoColor
+            tIcon.bco=defaultBcoColor
+            tTextAlt.bco=defaultBcoColor
             tHeading.pco=defaultFontColor
             b0.pco=defaultFontColor
             tText.pco=defaultFontColor
             b1.pco=defaultFontColor
             b2.pco=defaultFontColor
+            vis tIcon,0
+            vis tTextAlt,0
+            tIcon.pco=defaultFontColor
+            tTextAlt.pco=defaultFontColor
         
 Variable (string) strCommand
     Attributes
