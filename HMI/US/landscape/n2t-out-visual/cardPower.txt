@@ -54,11 +54,14 @@ Page cardPower
                     b[sys0].bco=defaultBcoColor
                     b[sys0].pco=defaultFontColor
                 }
-                if(b[sys0].type==1)
+                if(defaultBcoColor==0)
                 {
-                    b[sys0].pic=19
-                    b[sys0].pic1=19
-                    b[sys0].pic2=15
+                    if(b[sys0].type==1)
+                    {
+                        b[sys0].pic=19
+                        b[sys0].pic1=19
+                        b[sys0].pic2=15
+                    }
                 }
             }
         

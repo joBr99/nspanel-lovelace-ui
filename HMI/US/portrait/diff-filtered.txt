@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-10-23 21:42:24.358169322 +0000
++++ /dev/fd/62	2022-10-23 21:53:31.436711258 +0000
 +     tSend.txt+="mode-preset_modes,"+tTmp.txt
 +     tSend.txt+="mode-preset_modes,"+tTmp.txt
 +reensaver.txt
