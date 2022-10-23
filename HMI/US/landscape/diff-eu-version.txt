@@ -12,34 +12,6 @@
 │ -    // fix touch offset
 │ -    lcd_dev fffb 0002 0000 0020
 │ -    page pageStartup
-├── cardPower.txt
-│ @@ -42,22 +42,19 @@
-│              for(sys0=0;sys0<43;sys0++)
-│              {
-│                  if(b[sys0].type==98||b[sys0].type==116)
-│                  {
-│                      b[sys0].bco=defaultBcoColor
-│                      b[sys0].pco=defaultFontColor
-│                  }
-│ -                if(defaultBcoColor==0)
-│ +                if(b[sys0].type==1)
-│                  {
-│ -                    if(b[sys0].type==1)
-│ -                    {
-│ -                        b[sys0].pic=19
-│ -                        b[sys0].pic1=19
-│ -                        b[sys0].pic2=15
-│ -                    }
-│ +                    b[sys0].pic=19
-│ +                    b[sys0].pic1=19
-│ +                    b[sys0].pic2=15
-│                  }
-│              }
-│          
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          :
 ├── pageStartup.txt
 │ @@ -173,15 +173,15 @@
 │          Max. Text Size                      : 10
