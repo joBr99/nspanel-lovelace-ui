@@ -785,18 +785,17 @@ class LuiPagesGen(object):
         icon_color = self.get_entity_color(entity, ha_type="climate")
 
         modes_out = ""
-        for type in ["preset_modes", "swing_modes", "fan_modes"]:
-            heading = get_translation(self._locale, f"frontend.ui.card.climate.{type[:-1]}")
-            type = type
-            mode = entity.attributes.get(type[:-1], "")
-            modes = entity.attributes.get(type, [])
+        for mode in ["preset_modes", "swing_modes", "fan_modes"]:
+            heading = get_translation(self._locale, f"frontend.ui.card.climate.{mode[:-1]}")
+            cur_mode = entity.attributes.get(mode[:-1], "")
+            modes = entity.attributes.get(mode, [])
             if modes is not None:
-                #if type == "preset_modes":
-                #    mode = get_translation(self._locale, f"frontend.state_attributes.climate.preset_mode.{mode}")
-                #    for idx, mode in enumerate(modes):
-                #        modes[idx] = get_translation(self._locale, f"frontend.state_attributes.climate.preset_mode.{mode}")
+                if mode == "preset_modes":
+                    for idx, mode in enumerate(modes):
+                        modes[idx] = get_translation(self._locale, f"frontend.state_attributes.climate.preset_mode.{mode}")
+                    mode = get_translation(self._locale, f"frontend.state_attributes.climate.preset_mode.{mode}")
                 modes_res = "?".join(modes)
-                modes_out += f"{heading}~{type}~{mode}~{modes_res}~"
+                modes_out += f"{heading}~{mode}~{cur_mode}~{modes_res}~"
 
         self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}")
 
