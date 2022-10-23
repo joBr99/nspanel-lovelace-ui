@@ -86,6 +86,15 @@ text += """
                 vis bDown2,1
                 vis tCF2,1
               }
+              //Show btDetail
+              spstr strCommand.txt,tTmp.txt,"~",47
+              if(tTmp.txt!="1")
+              {
+                vis btDetail,1
+              }else
+              {
+                vis btDetail,0
+              }
             }
 """ + sharedfoot
 print(text)
