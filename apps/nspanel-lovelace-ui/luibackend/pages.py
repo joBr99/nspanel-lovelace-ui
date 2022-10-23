@@ -798,9 +798,10 @@ class LuiPagesGen(object):
                     modes_res = "?".join(translated_modes)
                 else:
                     modes_res = "?".join(modes)
-                modes_out += f"{heading}~{mode}~{cur_mode}~{modes_res}~"
+                if modes:
+                    modes_out += f"{heading}~{mode}~{cur_mode}~{modes_res}~"
 
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}")   
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}")  
 
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
