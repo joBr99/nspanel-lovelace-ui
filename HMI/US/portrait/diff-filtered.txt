@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-10-23 17:50:22.699416515 +0000
++++ /dev/fd/62	2022-10-23 18:52:01.421240024 +0000
 ++9,8 @@
 +tify.txt
 +utter.txt
@@ -35,6 +35,31 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
++
++,23 +1078,14 @@
++                                     vis btDown1,1
++                                     vis tCF1,1
++                                     vis bUp2,1
++                                     vis xTempDest2,1
++                                     vis bDown2,1
++                                     vis tCF2,1
++                                 }
++                                 //Show btDetail
++                                 spstr strCommand.txt,tTmp.txt,"~",47
++                                 if(tTmp.txt!="1")
++                                 {
++                                     vis btDetail,1
++                                 }else
++                                 {
++                                     vis btDetail,0
++                                 }
++                             }
++                             if(tInstruction.txt=="pageType")
++                             {
++                                 sleepValue=0
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
 +geIcons.txt
 +5 +15,15 @@
 + Scope         : global
