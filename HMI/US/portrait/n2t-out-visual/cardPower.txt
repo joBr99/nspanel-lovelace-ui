@@ -54,11 +54,14 @@ Page cardPower
                     b[sys0].bco=defaultBcoColor
                     b[sys0].pco=defaultFontColor
                 }
-                if(b[sys0].type==1)
+                if(defaultBcoColor==0)
                 {
-                    b[sys0].pic=19
-                    b[sys0].pic1=19
-                    b[sys0].pic2=15
+                    if(b[sys0].type==1)
+                    {
+                        b[sys0].pic=19
+                        b[sys0].pic1=19
+                        b[sys0].pic2=15
+                    }
                 }
             }
         
@@ -629,7 +632,7 @@ Slider h1
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
-        Direction                           : horizontal
+        Direction                           : vertical
         Fill                                : image
         Cursor width                        : auto
         Cursor height                       : 255
@@ -654,7 +657,7 @@ Slider h4
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
-        Direction                           : horizontal
+        Direction                           : vertical
         Fill                                : image
         Cursor width                        : auto
         Cursor height                       : 255
@@ -704,7 +707,7 @@ Slider h2
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
-        Direction                           : horizontal
+        Direction                           : vertical
         Fill                                : image
         Cursor width                        : auto
         Cursor height                       : 255
@@ -729,7 +732,7 @@ Slider h5
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
-        Direction                           : horizontal
+        Direction                           : vertical
         Fill                                : image
         Cursor width                        : auto
         Cursor height                       : 255
@@ -754,7 +757,7 @@ Slider h3
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
-        Direction                           : horizontal
+        Direction                           : vertical
         Fill                                : image
         Cursor width                        : auto
         Cursor height                       : 255
