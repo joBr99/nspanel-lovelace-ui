@@ -20,8 +20,8 @@ popupLight
 	214  Unique line(s) of event code
 popupThermo
 	44   Component(s)
-	512  Line(s) of event code
-	269  Unique line(s) of event code
+	515  Line(s) of event code
+	272  Unique line(s) of event code
 popupNotify
 	19   Component(s)
 	253  Line(s) of event code
@@ -70,5 +70,5 @@ cardPower
 Total
 	16   Page(s)
 	535  Component(s)
-	6349 Line(s) of event code
-	1685 Unique line(s) of event code
+	6352 Line(s) of event code
+	1688 Unique line(s) of event code
