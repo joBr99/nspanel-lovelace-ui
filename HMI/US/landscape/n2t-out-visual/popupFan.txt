@@ -449,7 +449,7 @@ Button bMode1
             tSend.txt+=entn.txt+","
             sys2=vaModePos.val-3
             covx sys2,tTmp.txt,0,0
-            tSend.txt+="mode-sel,"+tTmp.txt
+            tSend.txt+="mode-preset_modes,"+tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -501,7 +501,7 @@ Button bMode3
             tSend.txt+=entn.txt+","
             sys2=vaModePos.val-1
             covx sys2,tTmp.txt,0,0
-            tSend.txt+="mode-sel,"+tTmp.txt
+            tSend.txt+="mode-preset_modes,"+tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -553,7 +553,7 @@ Button bMode2
             tSend.txt+=entn.txt+","
             sys2=vaModePos.val-2
             covx sys2,tTmp.txt,0,0
-            tSend.txt+="mode-sel,"+tTmp.txt
+            tSend.txt+="mode-preset_modes,"+tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
