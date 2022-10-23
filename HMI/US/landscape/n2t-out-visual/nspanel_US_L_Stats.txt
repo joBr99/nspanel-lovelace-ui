@@ -18,10 +18,6 @@ cardMedia
 	34   Component(s)
 	394  Line(s) of event code
 	213  Unique line(s) of event code
-popupFan
-	27   Component(s)
-	347  Line(s) of event code
-	202  Unique line(s) of event code
 popupLight
 	27   Component(s)
 	391  Line(s) of event code
@@ -30,6 +26,10 @@ popupShutter
 	25   Component(s)
 	394  Line(s) of event code
 	216  Unique line(s) of event code
+popupFan
+	27   Component(s)
+	347  Line(s) of event code
+	202  Unique line(s) of event code
 pageTest
 	14   Component(s)
 	14   Line(s) of event code
