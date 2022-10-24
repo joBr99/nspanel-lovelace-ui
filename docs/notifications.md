@@ -81,7 +81,12 @@ nspanel_screensaver_notification:
 ```
 
 ## Color Picker
+<input type="color" id="colorpicker" onchange="conv565()" value="#000000">
+
+<p id="out">Decimal RGB565: 0</p>
+
 <script>
+
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
@@ -90,17 +95,15 @@ function hexToRgb(hex) {
     blue: parseInt(result[3], 16)
   } : null;
 }
-function rgb_dec565(rgb: RGB): number {
+
+function rgb_dec565(rgb) {
   return ((Math.floor(rgb.red / 255 * 31) << 11) | (Math.floor(rgb.green / 255 * 63) << 5) | (Math.floor(rgb.blue / 255 * 31)));
 }
-function calcRGB565() {
-   let in = document.getElementById('colorpicker');
-   let out = document.getElementById('color-out');
-   
 
-   out.innerHTML = rgb_dec565(hexToRgb(in.value));
+function conv565() {
+  var x = document.getElementById("colorpicker").value;
+  document.getElementById("out").innerHTML = "Decimal RGB565: " + rgb_dec565(hexToRgb(x));
 }
 </script>
-<input type="color" id="colorpicker" onchange="calcRGB565()" value="#000000">
-<p id="color-out">0</p>
+
 
