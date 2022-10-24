@@ -81,12 +81,25 @@ nspanel_screensaver_notification:
 ```
 
 ## Color Picker
-<input type="color" id="colorpicker" onchange="calcRGB565()" value="#000000">
-Use this value in your Message (converted to RGB565 in Decimal) <p id="color-out"></p>
 <script>
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    red: parseInt(result[1], 16),
+    green: parseInt(result[2], 16),
+    blue: parseInt(result[3], 16)
+  } : null;
+}
+function rgb_dec565(rgb: RGB): number {
+  return ((Math.floor(rgb.red / 255 * 31) << 11) | (Math.floor(rgb.green / 255 * 63) << 5) | (Math.floor(rgb.blue / 255 * 31)));
+}
 function calcRGB565() {
    let in = document.getElementById('colorpicker');
    let out = document.getElementById('color-out');
-   out.innerHTML = in.value;
+   
+
+   out.innerHTML = rgb_dec565(hexToRgb(in.value));
 }
+<input type="color" id="colorpicker" onchange="calcRGB565()" value="#000000">
+<p id="color-out">0</p>
 </script>
