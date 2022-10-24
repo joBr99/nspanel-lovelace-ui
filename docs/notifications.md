@@ -79,3 +79,13 @@ nspanel_screensaver_notification:
   mode: single
   icon: mdi:message-badge
 ```
+
+## Color Picker
+<input type="color" id="colorpicker" onchange="calcRGB565()" value="#000000">
+<p id="color-out"></p>
+<script>
+function calcRGB565() {
+   let show = document.getElementById('color-out');
+   show.innerHTML = this.value;
+}
+</script>
