@@ -219,7 +219,10 @@ class LuiController(object):
         if button_type == "bExit":
             self._pages_gen.render_card(self._current_card)
         if button_type == "bUp":
-            self._current_card = self._previous_cards.pop()
+            if self._previous_cards:
+                self._current_card = self._previous_cards.pop()
+            else:
+                self._current_card = self._config.getCard(0)
             self._pages_gen.render_card(self._current_card)
 
         if button_type == "bNext":
