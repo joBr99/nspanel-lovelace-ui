@@ -10,6 +10,10 @@ This is the notification used by the backend for updates, opening it requires to
    
 `entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout`
 
+Alternative Layout with Icon:
+
+`entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout~fontIdText~icon~iconColor`
+
 It is possible to exit from the page by sending `exitPopup`
   
 Send Message to the Panel combined with a buzzer sound:
