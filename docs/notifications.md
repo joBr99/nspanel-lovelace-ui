@@ -100,6 +100,7 @@ function calcRGB565() {
 
    out.innerHTML = rgb_dec565(hexToRgb(in.value));
 }
+</script>
 <input type="color" id="colorpicker" onchange="calcRGB565()" value="#000000">
 <p id="color-out">0</p>
-</script>
+
