@@ -2460,7 +2460,7 @@ Timer tmSerial
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText2.txt,"~",14
                                         }
-                                        if(type2.txt=="button"||type2.txt=="i")
+                                        if(type2.txt=="button"||type2.txt=="input_sel")
                                         {
                                             vis bUp2,0
                                             vis bStop2,0
