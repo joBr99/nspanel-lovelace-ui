@@ -595,10 +595,7 @@ export const config: Config = {
     panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // anpassen
     panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
     firstScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Hourly.h0.PrecipitationProbability', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
-    //firstScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Hourly.h0.PrecipitationProbability', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: Red },
-    secondScreensaverEntity: { ScreensaverEntity: '0_userdata.0.Wetter.Windstaerke_homaticIP', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: 'Wind', ScreensaverEntityUnitText: 'bft', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 12} },
-    //secondScreensaverEntity: { ScreensaverEntity: 'deconz.0.Sensors.5.open', ScreensaverEntityIcon: 'window-closed-variant', ScreensaverEntityText: 'Fenster', ScreensaverEntityUnitText: '', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 12} },
-    //secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
+    secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
     thirdScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.UVIndex', ScreensaverEntityIcon: 'solar-power', ScreensaverEntityText: 'UV', ScreensaverEntityUnitText: '', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} },
     fourthScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
     alternativeScreensaverLayout: false,
