@@ -326,12 +326,12 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │      
-│ @@ -1107,14 +1313,41 @@
-│                  page popupLight
-│              }
-│              if(type4.txt=="fan")
-│              {
+│ @@ -1123,14 +1329,45 @@
 │                  page popupFan
+│              }
+│              if(type4.txt=="input_sel")
+│              {
+│                  page popupInSel
 │              }
 │          
 │ +Hotspot m4
@@ -360,6 +360,10 @@
 │ +            {
 │ +                page popupFan
 │ +            }
+│ +            if(type5.txt=="input_sel")
+│ +            {
+│ +                page popupInSel
+│ +            }
 │ +        
 │  Hotspot mSwipeNext
 │      Attributes
@@ -368,7 +372,24 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │      
-│ @@ -1826,14 +2059,163 @@
+│ @@ -1503,15 +1740,15 @@
+│                                              vis hSlider2,0
+│                                              vis nNum2,0
+│                                              bText2.pco=65535
+│                                              bText2.pco2=65535
+│                                              // get Text (optional Value)
+│                                              spstr strCommand.txt,bText2.txt,"~",14
+│                                          }
+│ -                                        if(type2.txt=="button"||type2.txt=="i")
+│ +                                        if(type2.txt=="button"||type2.txt=="input_sel")
+│                                          {
+│                                              vis bUp2,0
+│                                              vis bStop2,0
+│                                              vis bDown2,0
+│                                              vis btOnOff2,0
+│                                              vis bText2,1
+│                                              tsw bText2,1
+│ @@ -1842,14 +2079,163 @@
 │                                              covx tTmp.txt,sys0,0,0
 │                                              hSlider4.minval=sys0
 │                                              //third value is max value
@@ -484,7 +505,7 @@
 │ +                                            // get Text (optional Value)
 │ +                                            spstr strCommand.txt,bText5.txt,"~",32
 │ +                                        }
-│ +                                        if(type5.txt=="button")
+│ +                                        if(type5.txt=="button"||type5.txt=="input_sel")
 │ +                                        {
 │ +                                            vis bUp5,0
 │ +                                            vis bStop5,0

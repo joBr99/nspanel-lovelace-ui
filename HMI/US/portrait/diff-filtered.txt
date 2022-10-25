@@ -1,4 +1,31 @@
-+++ /dev/fd/62	2022-10-23 21:58:41.243864067 +0000
++++ /dev/fd/62	2022-10-25 17:08:32.504898978 +0000
++,14 +1329,45 @@
++         page popupFan
++     if(type4.txt=="input_sel")
++         page popupInSel
++     if(type5.txt=="input_sel")
++     {
++         page popupInSel
++     }
++,15 +1740,15 @@
++                                     vis hSlider2,0
++                                     vis nNum2,0
++                                     bText2.pco=65535
++                                     bText2.pco2=65535
++                                     // get Text (optional Value)
++                                     spstr strCommand.txt,bText2.txt,"~",14
++                                 }
++                                 if(type2.txt=="button"||type2.txt=="i")
++                                 if(type2.txt=="button"||type2.txt=="input_sel")
++                                 {
++                                     vis bUp2,0
++                                     vis bStop2,0
++                                     vis bDown2,0
++                                     vis btOnOff2,0
++                                     vis bText2,1
++                                     tsw bText2,1
++,14 +2079,163 @@
++                                 if(type5.txt=="button"||type5.txt=="input_sel")
 +     tSend.txt+="mode-preset_modes,"+tTmp.txt
 +     tSend.txt+="mode-preset_modes,"+tTmp.txt
 +reensaver.txt
