@@ -142,7 +142,7 @@ const Debug = false;
 // Variablen zur Steuerung der Wettericons auf dem Screensaver (Steuerung in 0_userdata.0.XPANELX.ScreensaverInfo)
 // Wenn weatherForecastTimer auf true, dann Wechsel zwischen Datenpunkten und Wettervorhersage (30 Sekunden nach Minute (Zeit))
 // Wenn weatherForecastTimer auf false, dann Möglichkeit über weatherForecast, ob Datenpunkte oder Wettervorhersage (true = WeatherForecast/false = Datenpunkte)
-var weatherForecast: boolean; //= getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val
+var weatherForecast: boolean; //Änderung zum Video --> Einstellung siehe Wiki
 
 const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blau-Off - Original Entity Off
 const HMIDark:          RGB = { red:  29, green:  29, blue:  29 };     // Original Background Color
@@ -2674,9 +2674,9 @@ function GenerateQRPage(page: PageQR): Payload[] {
         var displayName2 = 'Passwort';
 
         if (hiddenPWD) {
-            var type2 = 'disable';
-            var iconId2 = '';
-            var displayName2 = '';
+            type2 = 'disable';
+            iconId2 = '';
+            displayName2 = '';
         }
 
         out_msgs.push({
