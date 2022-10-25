@@ -125,7 +125,7 @@ for i in range(1,5):
                 // get Text (optional Value)
                 spstr strCommand.txt,bText{i}.txt,"~",{idxstart+5}
               }}
-              if(type{i}.txt=="button")
+              if(type{i}.txt=="button"||type{i}.txt=="input_sel")
               {{
                 vis bUp{i},0
                 vis bStop{i},0
