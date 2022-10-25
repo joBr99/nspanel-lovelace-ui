@@ -711,7 +711,7 @@ Timer tmSerial
                                     if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
                                     {
                                         // change icon
-                                        spstr strCommand.txt,tIcon1.txt,"~",2
+                                        //spstr strCommand.txt,tIcon1.txt,"~",2
                                         vis tIcon1,1
                                         // change icon color
                                         spstr strCommand.txt,tTmp.txt,"~",3
@@ -728,6 +728,15 @@ Timer tmSerial
                                             vis bMode1,0
                                             vis bMode2,0
                                             vis bMode3,0
+                                            vis bMode4,0
+                                            vis bMode5,0
+                                            vis bMode6,0
+                                            vis bMode7,0
+                                            vis bMode8,0
+                                            vis bMode9,0
+                                            vis bMode10,0
+                                            vis bMode11,0
+                                            vis bMode12,0
                                             vis bModeNext,0
                                         }
                                         if(bMode1.txt=="")
@@ -738,6 +747,15 @@ Timer tmSerial
                                         bMode1.pco=defaultFontColor
                                         bMode2.pco=defaultFontColor
                                         bMode3.pco=defaultFontColor
+                                        bMode4.pco=defaultFontColor
+                                        bMode5.pco=defaultFontColor
+                                        bMode6.pco=defaultFontColor
+                                        bMode7.pco=defaultFontColor
+                                        bMode8.pco=defaultFontColor
+                                        bMode9.pco=defaultFontColor
+                                        bMode10.pco=defaultFontColor
+                                        bMode11.pco=defaultFontColor
+                                        bMode12.pco=defaultFontColor
                                         if(bMode1.txt==vaModeCur.txt)
                                         {
                                             bMode1.pco=1374
@@ -749,6 +767,42 @@ Timer tmSerial
                                         if(bMode3.txt==vaModeCur.txt)
                                         {
                                             bMode3.pco=1374
+                                        }
+                                        if(bMode4.txt==vaModeCur.txt)
+                                        {
+                                            bMode4.pco=1374
+                                        }
+                                        if(bMode5.txt==vaModeCur.txt)
+                                        {
+                                            bMode5.pco=1374
+                                        }
+                                        if(bMode6.txt==vaModeCur.txt)
+                                        {
+                                            bMode6.pco=1374
+                                        }
+                                        if(bMode7.txt==vaModeCur.txt)
+                                        {
+                                            bMode7.pco=1374
+                                        }
+                                        if(bMode8.txt==vaModeCur.txt)
+                                        {
+                                            bMode8.pco=1374
+                                        }
+                                        if(bMode9.txt==vaModeCur.txt)
+                                        {
+                                            bMode9.pco=1374
+                                        }
+                                        if(bMode10.txt==vaModeCur.txt)
+                                        {
+                                            bMode10.pco=1374
+                                        }
+                                        if(bMode11.txt==vaModeCur.txt)
+                                        {
+                                            bMode11.pco=1374
+                                        }
+                                        if(bMode12.txt==vaModeCur.txt)
+                                        {
+                                            bMode12.pco=1374
                                         }
                                     }
                                     if(tInstruction.txt=="time")
