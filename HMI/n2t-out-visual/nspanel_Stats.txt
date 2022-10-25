@@ -62,14 +62,14 @@ cardAlarm
 	40   Component(s)
 	427  Line(s) of event code
 	258  Unique line(s) of event code
-cardEntities
-	65   Component(s)
-	1153 Line(s) of event code
-	527  Unique line(s) of event code
 cardPower
 	43   Component(s)
 	423  Line(s) of event code
 	293  Unique line(s) of event code
+cardEntities
+	65   Component(s)
+	1153 Line(s) of event code
+	527  Unique line(s) of event code
 
 Total
 	17   Page(s)
