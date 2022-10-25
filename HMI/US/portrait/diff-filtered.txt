@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-10-25 17:27:14.174175138 +0000
++++ /dev/fd/62	2022-10-25 18:20:57.776626176 +0000
 +,14 +1329,45 @@
 +         page popupFan
 +     if(type4.txt=="input_sel")
@@ -11,6 +11,24 @@
 +                                 if(type5.txt=="button"||type5.txt=="input_sel")
 +     tSend.txt+="mode-preset_modes,"+tTmp.txt
 +     tSend.txt+="mode-preset_modes,"+tTmp.txt
++pupThermo.txt
++5 +38,15 @@
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     popupThermo.bco=defaultBcoColor
++     for(sys0=0;sys0<43;sys0++)
++     for(sys0=0;sys0<24;sys0++)
++     {
++         if(b[sys0].type==98||b[sys0].type==116)
++         {
++             b[sys0].bco=defaultBcoColor
++             b[sys0].pco=defaultFontColor
++         }
++         if(b[sys0].type==53&&defaultBcoColor==0)
 +reensaver.txt
 +5 +71,15 @@
 +ime
