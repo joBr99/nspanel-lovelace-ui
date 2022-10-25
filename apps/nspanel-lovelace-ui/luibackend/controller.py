@@ -374,8 +374,22 @@ class LuiController(object):
                     msg += f"- {apis.ha_api.get_entity(e).attributes.friendly_name}\r\n"
             self._pages_gen.send_message_page("opnSensorNotifyRes", "", msg, "", "")
 
-        # for fan popup / preset selection
-        if button_type == "mode-sel":
+        if button_type == "mode-preset_modes":
             entity = apis.ha_api.get_entity(entity_id)
             preset_mode = entity.attributes.preset_modes[int(value)]
             entity.call_service("set_preset_mode", preset_mode=preset_mode)
+
+        if button_type == "mode-swing_modes":
+            entity = apis.ha_api.get_entity(entity_id)
+            swing_mode = entity.attributes.swing_modes[int(value)]
+            entity.call_service("set_swing_mode", swing_mode=swing_mode)
+
+        if button_type == "mode-fan_modes":
+            entity = apis.ha_api.get_entity(entity_id)
+            fan_mode = entity.attributes.fan_modes[int(value)]
+            entity.call_service("set_fan_mode", fan_mode=fan_mode)
+
+        if button_type == "mode-input_select":
+            entity = apis.ha_api.get_entity(entity_id)
+            option = entity.attributes.options[int(value)]
+            entity.call_service("select_option", option=option)
