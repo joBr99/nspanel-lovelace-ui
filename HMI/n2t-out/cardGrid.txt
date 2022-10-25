@@ -944,6 +944,10 @@ Timer tmLP
             {
                 page popupFan
             }
+            if(tTmp.txt=="input_sel")
+            {
+                page popupInSel
+            }
         
 TouchCap tc0
     Attributes
