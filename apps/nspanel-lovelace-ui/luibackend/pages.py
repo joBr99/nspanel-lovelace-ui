@@ -342,7 +342,7 @@ class LuiPagesGen(object):
             entityTypePanel = "text"
             value = entity.state
         elif entityType == "input_select":
-            entityTypePanel = "button"
+            entityTypePanel = "input_sel"
             value = entity.state
         elif entityType == "vacuum":
             entityTypePanel = "button"
@@ -802,6 +802,15 @@ class LuiPagesGen(object):
                     modes_out += f"{heading}~{mode}~{cur_mode}~{modes_res}~"
 
         self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}")  
+
+    def generate_input_select_detail_page(self, entity_id):
+        entity = apis.ha_api.get_entity(entity_id)
+        icon_color = self.get_entity_color(entity, ha_type="input_select")
+
+        options = entity.attributes.get("options", [])
+        options = "?".join(options)
+
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~input_select~{entity.state}~{options}~")
 
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")

@@ -169,6 +169,8 @@ class LuiController(object):
                     self._pages_gen.generate_shutter_detail_page(entity)
                 if entity.startswith("fan"):
                     self._pages_gen.generate_fan_detail_page(entity)
+                if entity.startswith("input_select"):
+                    self._pages_gen.generate_input_select_detail_page(entity)
             if self._current_card.cardType == "cardThermo":
                 if entity.startswith("climate"):
                     self._pages_gen.generate_thermo_detail_page(entity)
@@ -183,6 +185,8 @@ class LuiController(object):
             self._pages_gen.generate_fan_detail_page(entity_id)
         if detail_type == "popupThermo":
             self._pages_gen.generate_thermo_detail_page(entity_id)
+        if detail_type == "popupInSel":
+            self._pages_gen.generate_input_select_detail_page(entity_id)
             
     def button_press(self, entity_id, button_type, value):
         apis.ha_api.log(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
