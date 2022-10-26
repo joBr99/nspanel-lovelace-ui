@@ -43,7 +43,7 @@ class LuiPagesGen(object):
                 icon_color = rgb_dec565([13,160,53])
             if entity.state == "arming":
                 icon_color = rgb_dec565([244,180,0])
-            if entity.state in ["armed_home", "armed_away", "armed_night", "armed_vacation", "pending"]:
+            if entity.state in ["armed_home", "armed_away", "armed_night", "armed_vacation", "pending", "triggered"]:
                 icon_color = rgb_dec565([223,76,30])
 
         if ha_type == "climate":
