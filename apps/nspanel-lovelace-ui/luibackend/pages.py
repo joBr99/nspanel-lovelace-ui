@@ -41,13 +41,9 @@ class LuiPagesGen(object):
         if ha_type == "alarm_control_panel":
             if entity.state == "disarmed":
                 icon_color = rgb_dec565([13,160,53])
-            if entity.state == "armed_home":
-                icon_color = rgb_dec565([223,76,30])
-            if entity.state == "armed_away":
-                icon_color = rgb_dec565([223,76,30])
-            if entity.state == "armed_night":
-                icon_color = rgb_dec565([223,76,30])
-            if entity.state == "armed_vacation":
+            if entity.state == "arming":
+                icon_color = rgb_dec565([244,180,0])
+            if entity.state in ["armed_home", "armed_away", "armed_night", "armed_vacation", "pending"]:
                 icon_color = rgb_dec565([223,76,30])
 
         if ha_type == "climate":
