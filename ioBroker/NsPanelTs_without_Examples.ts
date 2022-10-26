@@ -1740,21 +1740,28 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             let o = getObject(id);
             let name = page.heading !== undefined ? page.heading : o.common.name.de;
             let currentTemp = 0;
-            if (existsState(id + '.ACTUAL'))
+            if (existsState(id + '.ACTUAL')) {
                 currentTemp = (Math.round(parseFloat(getState(id + '.ACTUAL').val) * 10) / 10);
+            }
+
+            let minTemp = page.items[0].minValue !== undefined ? page.items[0].minValue : 50;   //Min Temp 5°C
+            let maxTemp = page.items[0].maxValue !== undefined ? page.items[0].maxValue : 300;  //Max Temp 30°C
+            let stepTemp = 5 // 0,5° Schritte
 
             let destTemp = 0;
             if (existsState(id + '.SET')) {
-                destTemp = getState(id + '.SET').val.toFixed(2) * 10;
+                // using minValue, if .SET is null (e.g. for tado AWAY or tado is off)
+                let setValue = getState(id + '.SET').val;
+                if (setValue == null) {
+                    setValue = minTemp;
+                }
+
+                destTemp = setValue.toFixed(2) * 10;
             }
             let statusStr: String = 'MANU';
             let status = '';
             if (existsState(id + '.MODE'))
                 status = getState(id + '.MODE').val;
-
-            let minTemp = page.items[0].minValue !== undefined ? page.items[0].minValue : 50;   //Min Temp 5°C
-            let maxTemp = page.items[0].maxValue !== undefined ? page.items[0].maxValue : 300;  //Max Temp 30°C
-            let stepTemp = 5 // 0,5° Schritte
 
             //Attribute hinzufügen, wenn im Alias definiert
             let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
