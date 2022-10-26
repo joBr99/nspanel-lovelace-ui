@@ -187,10 +187,10 @@ def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
             return "weather-night"
         if state == "armed_vacation":
             return "shield-airplane"
-        if state == "arming":
+        if state in ["arming", "pending"]:
             return "shield"
         if state == "triggered":
-            return "shield-home"
+            return "bell-ring"
     elif ha_type == "climate":
         if state in ["auto", "heat_cool"]:
             return "calendar-sync"
