@@ -46,7 +46,7 @@ ReleaseNotes:
         - 13.09.2022 - v3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
         - 15.09.2022 - V3.4.0 - BugFix Dimmode
         - 15.09.2022 - V3.4.0 - Colormode für Screensaver + AutoColor WeatherForecast
-	- 16.09.2022 - v3.4.0.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver + Bugfix Screensaver MRIcon2
+        - 16.09.2022 - v3.4.0.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver + Bugfix Screensaver MRIcon2
         - 17.09.2022 - v3.4.0.2 Bugfix for screensaver icons with scaled colors
         - 17.09.2022 - v3.4.0.3 Bugfix bNext / bPrev by joBr99
         - 18.09.2022 - v3.4.0.4 Add On/Off Colors in config.mrIcon1ScreensaverEntity and config.mrIcon2ScreensaverEntity
@@ -60,10 +60,11 @@ ReleaseNotes:
         - 08.10.2022 - v3.5.0   Add Tilt-Slider and TILT_Fucntions (Open/Stop/Close) to Blinds/Cover/Shutter popUp
         - 12.10.2022 - v3.5.0   Add PageNavigation via Datapoint
         - 25.10.2022 - v3.5.0   Add New Parameters to popUpNotify / Layout 2
-	- 26.10.2022 - v3.5.0.1 Fix Thermostat for tado Support (by Sternmiere)
-	- 27.10.2022 - v3.5.0.1 Add VirtualDevice Gate
+        - 26.10.2022 - v3.5.0.1 Fix Thermostat for tado Support (by Sternmiere)
+        - 27.10.2022 - v3.5.0.1 Add VirtualDevice Gate
+        - 27.10.2022 - v3.5.0.2 Applied Boy Scout Rule (Fixed some typos, changed var to let, fixed min/max colorTemp Bug)
 
-Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
+Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 Tasmota Konsole: 
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
@@ -71,17 +72,17 @@ Tasmota Konsole:
 
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
-                          (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höschsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)   
+                          (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
     cardEntities Page   - 4 vertikale angeordnete Steuerelemente - auch als Subpage
     cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
-    cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnes Player angelegt werden
+    cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
-    cardPower Page	- Energiefluss
+    cardPower Page      - Energiefluss
 
 Popup-Pages:
-    popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farb-Temperatur" und "Farbauswahl" bereitgestellt
-    popupShutter Page   - die Shutter-Potition (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
+    popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
+    popupShutter Page   - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
 
@@ -105,14 +106,14 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Tastensensor        - analog Taste
     Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc. 
     Klimaanlage         - Buttons zur Steuerung der Klimaanlage im unteren Bereich
-    Temperatur          - Anzeige von Temperture - Datenpunkten, ananlog Info
-    Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, ananlog Info 
+    Temperatur          - Anzeige von Temperatur - Datenpunkten, analog Info
+    Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, analog Info
     Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
-    Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles Accu-Wheather-Icon (Icon) für Screensaver
+    Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
 
 Interne Sonoff-Sensoren (über Tasmota):
-    ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden --> SetOption146 1
-    Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importieert werden 
+    ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden --> SetOption146 1
+    Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden
                           (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!! 
                           ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
@@ -121,10 +122,10 @@ Tasmota-Status0 - (zyklische Ausführung)
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
 
 Erforderliche Adapter:
-    Accu-Wheater:       - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
+    AccuWeather:        - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten    - Für Erstellung der Aliase
-    Alias-Manager       - !!! ausschießlich für MEDIA-Alias
+    Alias-Manager       - !!! ausschließlich für MEDIA-Alias
     MQTT-Adapter        - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
 
@@ -133,9 +134,9 @@ Upgrades in Konsole:
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.5.0.tft
 ---------------------------------------------------------------------------------------
 */ 
-var Icons = new IconsSelector();
-var timeoutSlider: any;
-var manually_Update = false;
+let Icons = new IconsSelector();
+let timeoutSlider: any;
+let manually_Update = false;
 
 const NSPanel_Path = '0_userdata.0.NSPanel.1.';
 const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.'; //Neuer Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm)
@@ -144,7 +145,7 @@ const Debug = false;
 // Variablen zur Steuerung der Wettericons auf dem Screensaver (Steuerung in 0_userdata.0.XPANELX.ScreensaverInfo)
 // Wenn weatherForecastTimer auf true, dann Wechsel zwischen Datenpunkten und Wettervorhersage (30 Sekunden nach Minute (Zeit))
 // Wenn weatherForecastTimer auf false, dann Möglichkeit über weatherForecast, ob Datenpunkte oder Wettervorhersage (true = WeatherForecast/false = Datenpunkte)
-var weatherForecast: boolean; //Änderung zum Video --> Einstellung siehe Wiki
+let weatherForecast: boolean; // Änderung zum Video --> Einstellung siehe Wiki
 
 const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blau-Off - Original Entity Off
 const HMIDark:          RGB = { red:  29, green:  29, blue:  29 };     // Original Background Color
@@ -220,11 +221,11 @@ const swSnowyRainy:     RGB = { red: 150, green: 150, blue: 255};
 const swSunny:          RGB = { red: 255, green: 255, blue:   0};
 const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
-var vwIconColor = [];
+let vwIconColor = [];
 
 //-- Anfang der Beispiele für Seitengestaltung -- Aliase erforderlich ----------------
 
-var Test_Licht1: PageEntities =
+let Test_Licht1: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Color Aliase 1",
@@ -239,7 +240,7 @@ var Test_Licht1: PageEntities =
     ]
 };
 
-var CardPowerExample: PagePower =
+let CardPowerExample: PagePower =
 {
     "type": "cardPower",
     "heading": "cardPower Emulator",
@@ -251,7 +252,7 @@ var CardPowerExample: PagePower =
     ]
 };
 
-var Test_Licht2: PageEntities =
+let Test_Licht2: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Color Aliase 2",
@@ -266,7 +267,7 @@ var Test_Licht2: PageEntities =
     ]
 };
 
-var Test_Funktionen: PageEntities =
+let Test_Funktionen: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Sonstige Aliase",
@@ -281,7 +282,7 @@ var Test_Funktionen: PageEntities =
     ]
 };
 
-var Buero_Seite_1: PageEntities =
+let Buero_Seite_1: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Büro",
@@ -296,7 +297,7 @@ var Buero_Seite_1: PageEntities =
     ]
 };
 
-var Fenster_1: PageEntities =
+let Fenster_1: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Fenster und Türen",
@@ -311,7 +312,7 @@ var Fenster_1: PageEntities =
     ]
 };
 //<PageItem>{ id: "alias.0.NS-Panel.Buero.Rollade", icon: "blinds-horizontal", offColor: White, onColor: Yellow, name: "Büro", secondRow: "Hier Text für 2. Zeile"},
-var Button_1: PageEntities =
+let Button_1: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Button Aliase",
@@ -326,7 +327,7 @@ var Button_1: PageEntities =
     ]
 };
 
-var Subpages_1: PageEntities =
+let Subpages_1: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Test Subpages",
@@ -340,7 +341,7 @@ var Subpages_1: PageEntities =
 };
 
         //Subpage 1 von Subpages_1
-        var Abfall: PageEntities =
+        let Abfall: PageEntities =
         {
             "type": "cardEntities",
             "heading": "Abfallkalender",
@@ -356,7 +357,7 @@ var Subpages_1: PageEntities =
         };
 
         //Subpage 2 von Subpages_1
-        var WLAN: PageQR = 
+        let WLAN: PageQR = 
         {
             "type": "cardQR",
             "heading": "Gäste WLAN",
@@ -366,7 +367,7 @@ var Subpages_1: PageEntities =
             "items": [<PageItem>{ id: "alias.0.NSPanel_1.Guest_Wifi", hidePassword: true }]
         };
 
-var Buero_Seite_2: PageGrid =
+let Buero_Seite_2: PageGrid =
 {
     "type": "cardGrid",
     "heading": "Büro 2",
@@ -383,7 +384,7 @@ var Buero_Seite_2: PageGrid =
     ]
 };
 
-var Radiosender: PageGrid =
+let Radiosender: PageGrid =
 {
     "type": "cardGrid",
     "heading": "Büro 2",
@@ -396,7 +397,7 @@ var Radiosender: PageGrid =
 // NEW: Neue Definition von Medien-Aliasen
 // adapterPlayerInstance = alexa2.0. or spotify-premium.0. or sonos.0. or chromecast.0.
 // MEDIA ALIASE können auch per JS-Script erstellt werden https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-ALIAS-Definitionen#medien---cardmedia
-var Alexa: PageMedia = 
+let Alexa: PageMedia = 
 {
     "type": "cardMedia",
     "heading": "Alexa",
@@ -411,7 +412,7 @@ var Alexa: PageMedia =
              }]
 };
 
-var Sonos: PageMedia = 
+let Sonos: PageMedia = 
 {
     "type": "cardMedia",
     "heading": "Sonos",
@@ -426,7 +427,7 @@ var Sonos: PageMedia =
              }]
 };
 
-var SpotifyPremium: PageMedia = 
+let SpotifyPremium: PageMedia = 
 {
     "type": "cardMedia",
     "heading": "Spotify-Premium",
@@ -440,7 +441,7 @@ var SpotifyPremium: PageMedia =
              }] 
 };
 
-var SqueezeboxRPC: PageMedia = 
+let SqueezeboxRPC: PageMedia = 
 {
     "type": "cardMedia",
     "heading": "SqueezeboxRPC",
@@ -454,7 +455,7 @@ var SqueezeboxRPC: PageMedia =
              }] 
 };
 
-var Buero_Themostat: PageThermo = 
+let Buero_Themostat: PageThermo = 
 {
     "type": "cardThermo",
     "heading": "Test Thermostat",
@@ -464,7 +465,7 @@ var Buero_Themostat: PageThermo =
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Thermostat_Buero", minValue: 50, maxValue: 300 }]
 };
 
-var Buero_Klimaanlage: PageThermo = 
+let Buero_Klimaanlage: PageThermo = 
 {
     "type": "cardThermo",
     "heading": "Test Klimaanlage",
@@ -474,7 +475,7 @@ var Buero_Klimaanlage: PageThermo =
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.TestKlimaanlage", minValue: 50, maxValue: 250}]
 };
 
-var Buero_Alarm: PageAlarm = 
+let Buero_Alarm: PageAlarm = 
 {
     "type": "cardAlarm",
     "heading": "Alarm",
@@ -485,7 +486,7 @@ var Buero_Alarm: PageAlarm =
 };
 
 //Subpages 2 (+ Info)
-var Service: PageEntities =
+let Service: PageEntities =
 {
     "type": "cardEntities",
     "heading": "NSPanel Service",
@@ -501,7 +502,7 @@ var Service: PageEntities =
 };
 
         //Subpage 1 von Subpages_2
-        var NSPanel_Infos: PageEntities =
+        let NSPanel_Infos: PageEntities =
         {
             "type": "cardEntities",
             "heading": "NSPanel Infos",
@@ -517,7 +518,7 @@ var Service: PageEntities =
         };
 
         //Subpage 2 von Subpages_2
-        var NSPanel_Einstellungen: PageEntities =
+        let NSPanel_Einstellungen: PageEntities =
         {
             "type": "cardEntities",
             "heading": "Screensaver",
@@ -533,7 +534,7 @@ var Service: PageEntities =
         };
 
         //Subpage 3 von Subpages_2
-        var NSPanel_Firmware_Updates: PageEntities =
+        let NSPanel_Firmware_Updates: PageEntities =
         {
             "type": "cardEntities",
             "heading": "Firmware-Updates",
@@ -548,7 +549,7 @@ var Service: PageEntities =
         };
 
                 //Subpage1 von Subpage3 von Subpages_2
-                var Subpage2_Level_2: PageEntities =
+                let Subpage2_Level_2: PageEntities =
                 {
                     "type": "cardEntities",
                     "heading": "Firmware-Updates",
@@ -561,7 +562,7 @@ var Service: PageEntities =
                     ]
                 };
 
-var button1Page: PageGrid =
+let button1Page: PageGrid =
 {
     "type": "cardGrid",
     "heading": "Radio",
@@ -578,7 +579,7 @@ var button1Page: PageGrid =
     ]
 };
 
-var button2Page: PageEntities =
+let button2Page: PageEntities =
 {
     "type": "cardEntities",
     "heading": "Büro",
@@ -680,15 +681,23 @@ on({id: [].concat([NSPanel_Path + 'PageNavi']), change: "any"}, async function (
 
 function ScreensaverDimmode(timeDimMode: DimMode) {
     try {
-        if (Debug) console.log(rgb_dec565(HMIDark))
-        if (Debug) console.log('Dimmode='+ timeDimMode.dimmodeOn)
+        if (Debug) {
+            console.log(rgb_dec565(HMIDark))
+        }
+        if (Debug) {
+            console.log('Dimmode=' + timeDimMode.dimmodeOn)
+        }
         if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
             if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active + '~' + rgb_dec565(config.defaultBackgroundColor) });
-                if (Debug) console.log('Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active )
+                if (Debug) {
+                    console.log('Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active)
+                }
             } else {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active + '~' + rgb_dec565(config.defaultBackgroundColor) });
-                if (Debug) console.log('Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active )
+                if (Debug) {
+                    console.log('Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active)
+                }
             }
         } else {
             SendToPanel({ payload: 'dimmode~' + config.dimmode + '~' + config.active + '~' + rgb_dec565(config.defaultBackgroundColor) });
@@ -707,7 +716,7 @@ async function InitWeatherForecast() {
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean' });
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.entityChangeTime", 60, { type: 'number' });
-        };
+        }
     } catch (err) {
         console.warn('function InitWeatherForecast: ' + err.message);
     }      
@@ -786,9 +795,9 @@ const popupNotifyButton2Text = NSPanel_Path + 'popupNotify.popupNotifyButton2Tex
 const popupNotifySleepTimeout = NSPanel_Path + 'popupNotify.popupNotifySleepTimeout'; // in sek. / wenn 0, dann bleibt die Nachricht stehen
 const popupNotifyAction = NSPanel_Path + 'popupNotify.popupNotifyAction'; // Antwort aus dem Panel true/false
 const popupNotifyLayout = NSPanel_Path + 'popupNotify.popupNotifyLayout';  
-const popupNotifyFontIdText = NSPanel_Path + 'popupNotify.popupNotifyFontIdText';  1 - 5
-const popupNotifyIcon = NSPanel_Path + 'popupNotify.popupNotifyIcon';  1 - 5
-const popupNotifyIconColor = NSPanel_Path + 'popupNotify.popupNotifyIconColor';  1 - 5
+const popupNotifyFontIdText = NSPanel_Path + 'popupNotify.popupNotifyFontIdText';  // 1 - 5
+const popupNotifyIcon = NSPanel_Path + 'popupNotify.popupNotifyIcon';  // 1 - 5
+const popupNotifyIconColor = NSPanel_Path + 'popupNotify.popupNotifyIconColor';  // 1 - 5
 
 async function InitPopupNotify() {
     try {
@@ -831,10 +840,10 @@ async function InitPopupNotify() {
         });
 
         // popupNotify - Notification an separate Seite
-        on({ id: [popupNotifyInternalName], change: 'ne' }, async (obj) => {
-            
-            var notification : string = '' 
-            
+        on({ id: [popupNotifyInternalName], change: 'ne' }, async () => {
+
+            let notification: string;
+
             let v_popupNotifyHeadingColor = (getState(popupNotifyHeadingColor).val != null) ? getState(popupNotifyHeadingColor).val  : '65504'// Farbe Headline - gelb 65504
             let v_popupNotifyButton1TextColor = (getState(popupNotifyButton1TextColor).val != null) ? getState(popupNotifyButton1TextColor).val  : '63488'// Farbe Headline - gelb 65504
             let v_popupNotifyButton2TextColor = (getState(popupNotifyButton2TextColor).val != null) ? getState(popupNotifyButton2TextColor).val  : '2016'// Farbe Headline - gelb 65504
@@ -889,10 +898,10 @@ schedule('* * * * *', () => {
     }   
 });
 
-//Wechsel zwischen Screensaver Enities und WeatherForecast
+//Wechsel zwischen Screensaver Entities und WeatherForecast
 schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val +  ' * * * * *', () => {
     try {
-        //WeatherForcast true/false Umschaltung verzögert
+        //WeatherForecast true/false Umschaltung verzögert
         if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
             setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false); 
         } else if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == false && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
@@ -906,7 +915,7 @@ schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val 
 function InitHWButton1Color() {
     try {
         if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null || config.mrIcon1ScreensaverEntity.ScreensaverEntity != undefined) {
-            on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+            on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function () {
                 HandleScreensaverUpdate();
             });
         }
@@ -919,7 +928,7 @@ InitHWButton1Color();
 function InitHWButton2Color() {
     try {
         if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null || config.mrIcon2ScreensaverEntity.ScreensaverEntity != undefined) {
-            on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+            on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function () {
                 HandleScreensaverUpdate();
             });
         }
@@ -962,7 +971,9 @@ check_updates();
 
 function get_locales() {
     try {
-        if (Debug) console.log('Requesting locales');
+        if (Debug) {
+            console.log('Requesting locales');
+        }
         request({
             url: 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/ioBroker/ioBroker_NSPanel_locales.json',
             headers: {
@@ -988,13 +999,17 @@ async function check_updates() {
         const desired_display_firmware_version = 43;
         const berry_driver_version = 4;
 
-        if (Debug) console.log('Check-Updates');
+        if (Debug) {
+            console.log('Check-Updates');
+        }
         // Tasmota-Firmware-Vergleich
         if (existsObject(NSPanel_Path + 'Tasmota_Firmware.currentVersion') && existsObject(NSPanel_Path + 'Tasmota_Firmware.onlineVersion')) {
             if (getState(NSPanel_Path + 'Tasmota_Firmware.currentVersion').val !== getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val) {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
-                        if (Debug) console.log('Auto-Updates eingeschaltet - Update wird durchgeführt');
+                        if (Debug) {
+                            console.log('Auto-Updates eingeschaltet - Update wird durchgeführt');
+                        }
                         // Tasmota Upgrade durchführen
                         update_tasmota_firmware();
                         // Aktuelle Tasmota Version = Online Tasmota Version
@@ -1002,7 +1017,9 @@ async function check_updates() {
                         await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val, ack: true });
                     } else {
                         // Auf Tasmota-Updates hinweisen
-                        if (Debug) console.log('Automatische Updates aus');
+                        if (Debug) {
+                            console.log('Automatische Updates aus');
+                        }
 
                         const InternalName = 'TasmotaFirmwareUpdate';
                         const Headline = 'Tasmota-Firmware Update';
@@ -1020,7 +1037,9 @@ async function check_updates() {
                     }
                 }
             } else {
-                if (Debug) console.log('Tasmota-Version auf NSPanel aktuell');
+                if (Debug) {
+                    console.log('Tasmota-Version auf NSPanel aktuell');
+                }
             }
         }
 
@@ -1034,10 +1053,14 @@ async function check_updates() {
                         // Aktuelle Berry-Driver Version = Online Berry-Driver Version
                         await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Berry_Driver.onlineVersion').val, ack: true });
 
-                        if (Debug) console.log('Berry-Driver automatisch aktualisiert');
+                        if (Debug) {
+                            console.log('Berry-Driver automatisch aktualisiert');
+                        }
                     } else {
                         //Auf BerryDriver-Update hinweisen
-                        if (Debug) console.log('Automatische Updates aus');
+                        if (Debug) {
+                            console.log('Automatische Updates aus');
+                        }
 
                         const InternalName = 'BerryDriverUpdate';
                         const Headline = 'Berry-Driver Update';
@@ -1055,7 +1078,9 @@ async function check_updates() {
                     }
                 }
             } else {
-                if (Debug) console.log('Berry-Driver auf NSPanel aktuell');
+                if (Debug) {
+                    console.log('Berry-Driver auf NSPanel aktuell');
+                }
             }
         }
 
@@ -1069,10 +1094,14 @@ async function check_updates() {
                         // Aktuelle TFT-Firmware Version = Online TFT-Firmware Version
                         await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Display_Firmware.onlineVersion').val, ack: true });
 
-                        if (Debug) console.log('Display_Firmware automatisch aktualisiert');
+                        if (Debug) {
+                            console.log('Display_Firmware automatisch aktualisiert');
+                        }
                     } else {
                         // Auf TFT-Firmware hinweisen
-                        if (Debug) console.log('Automatische Updates aus');
+                        if (Debug) {
+                            console.log('Automatische Updates aus');
+                        }
 
                         const InternalName = 'TFTFirmwareUpdate';
                         const Headline = 'TFT-Firmware Update';
@@ -1090,7 +1119,9 @@ async function check_updates() {
                     }
                 }
             } else {
-                if (Debug) console.log('Display_Firmware auf NSPanel aktuell');
+                if (Debug) {
+                    console.log('Display_Firmware auf NSPanel aktuell');
+                }
             }
         }
     } catch (err) {
@@ -1104,7 +1135,9 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
 
         if (!val) {
             manually_Update = false;
-            if (Debug) console.log('Es wurde Button1 gedrückt');
+            if (Debug) {
+                console.log('Es wurde Button1 gedrückt');
+            }
         } else if (val) {
             if (manually_Update) {
                 const internalName = getState(NSPanel_Path + 'popupNotify.popupNotifyInternalName').val;
@@ -1118,7 +1151,9 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
                 }
             }
 
-            if (Debug) console.log('Es wurde Button2 gedrückt');
+            if (Debug) {
+                console.log('Es wurde Button2 gedrückt');
+            }
         }
     } catch (err) {
         console.warn('Trigger popupNotifyAction: ' + err.message);
@@ -1147,7 +1182,9 @@ function get_current_tasmota_ip_address() {
         const infoObjId = config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESULT'.length) + 'INFO2';
         const infoObj = JSON.parse(getState(infoObjId).val);
 
-        if (Debug) console.log(`get_current_tasmota_ip_address: ${infoObj.Info2.IPAddress}`);
+        if (Debug) {
+            console.log(`get_current_tasmota_ip_address: ${infoObj.Info2.IPAddress}`);
+        }
 
         return infoObj.Info2.IPAddress;
     } catch (err) {
@@ -1157,7 +1194,9 @@ function get_current_tasmota_ip_address() {
 
 function get_online_tasmota_firmware_version() {
     try {
-        if (Debug) console.log('Requesting tasmota firmware version');
+        if (Debug) {
+            console.log('Requesting tasmota firmware version');
+        }
         request({
             url: 'https://api.github.com/repositories/80286288/releases/latest',
             headers: {
@@ -1182,7 +1221,9 @@ function get_online_tasmota_firmware_version() {
 
 function get_current_berry_driver_version() {
     try {
-        if (Debug) console.log('Requesting current berry driver version');
+        if (Debug) {
+            console.log('Requesting current berry driver version');
+        }
         request({
             url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=GetDriverVersion`,
             headers: {
@@ -1203,7 +1244,9 @@ function get_current_berry_driver_version() {
 
 function get_tasmota_status0() {
     try {
-        if (Debug) console.log('Requesting tasmota status0');
+        if (Debug) {
+            console.log('Requesting tasmota status0');
+        }
         request({
             url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Status0`,
             headers: {
@@ -1248,7 +1291,9 @@ function get_tasmota_status0() {
 
 function get_online_berry_driver_version() {
     try {
-        if (Debug) console.log('Requesting online berry driver version');
+        if (Debug) {
+            console.log('Requesting online berry driver version');
+        }
         request({
             url: 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be',
             headers: {
@@ -1272,7 +1317,9 @@ function get_online_berry_driver_version() {
 
 function check_version_tft_firmware() {
     try {
-        if (Debug) console.log('Requesting online TFT version');
+        if (Debug) {
+            console.log('Requesting online TFT version');
+        }
         request({
             url: 'https://api.github.com/repos/joBr99/nspanel-lovelace-ui/releases/latest',
             headers: {
@@ -1281,9 +1328,9 @@ function check_version_tft_firmware() {
         }, async (error, response, result) => {
             if (result) {
                 try {
-                    var NSPanel_JSON = JSON.parse(result);                      // JSON Resultat in Variable Schreiben
-                    var NSPanelTagName = NSPanel_JSON.tag_name;                 // created_at; published_at; name ; draft ; prerelease
-                    var NSPanelVersion = NSPanelTagName.replace(/v/i, '');      // Aus Variable überflüssiges "v" filtern und in Release-Variable schreiben
+                    let NSPanel_JSON = JSON.parse(result);                      // JSON Resultat in Variable Schreiben
+                    let NSPanelTagName = NSPanel_JSON.tag_name;                 // created_at; published_at; name ; draft ; prerelease
+                    let NSPanelVersion = NSPanelTagName.replace(/v/i, '');      // Aus Variable überflüssiges "v" filtern und in Release-Variable schreiben
 
                     await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: NSPanelVersion, ack: true });
@@ -1299,7 +1346,9 @@ function check_version_tft_firmware() {
 
 function check_online_display_firmware() {
     try {
-        if (Debug) console.log('Requesting online firmware version');
+        if (Debug) {
+            console.log('Requesting online firmware version');
+        }
         request({
             url: 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/apps/nspanel-lovelace-ui/nspanel-lovelace-ui.py',
             headers: {
@@ -1325,8 +1374,8 @@ function check_online_display_firmware() {
 on({ id: config.panelRecvTopic }, async (obj) => {
     if (obj.state.val.startsWith('\{"CustomRecv":')) {
         try {
-            var json = JSON.parse(obj.state.val);
-            var split = json.CustomRecv.split(',');
+            let json = JSON.parse(obj.state.val);
+            let split = json.CustomRecv.split(',');
             if (split[0] == 'event' && split[1] == 'startup') {
                 await createStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string' });
                 await createStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.StateCommon>{ type: 'string' });
@@ -1347,7 +1396,7 @@ function update_berry_driver_version() {
             headers: {
                 'User-Agent': 'ioBroker'
             }
-        }, async function (error, response, result) {
+        }, async function () {
 
         });
     } catch (err) {
@@ -1364,7 +1413,7 @@ function update_tft_firmware() {
             headers: {
                 'User-Agent': 'ioBroker'
             }
-        }, async function (error, response, result) {
+        }, async function () {
             await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
             await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: tft_version, ack: true });
         });
@@ -1380,7 +1429,7 @@ function update_tasmota_firmware() {
             headers: {
                 'User-Agent': 'ioBroker'
             }
-        }, async function (error, response, result) {
+        }, async function () {
         });
     } catch (err) {
         console.warn('error at function update_tasmota_firmware: ' + err.message);
@@ -1389,7 +1438,7 @@ function update_tasmota_firmware() {
 //------------------End Update Functions
 
 // Only monitor the extra nodes if present
-var updateArray: string[] = [];
+let updateArray: string[] = [];
 
 if (config.firstScreensaverEntity !== null && config.firstScreensaverEntity.ScreensaverEntity != null && existsState(config.firstScreensaverEntity.ScreensaverEntity)) {
     updateArray.push(config.firstScreensaverEntity.ScreensaverEntity)
@@ -1413,9 +1462,9 @@ on({ id: config.panelRecvTopic }, function (obj) {
     try {
         if (obj.state.val.startsWith('\{"CustomRecv":')) {
             try {
-                var json = JSON.parse(obj.state.val);
+                let json = JSON.parse(obj.state.val);
 
-                var split = json.CustomRecv.split(',');
+                let split = json.CustomRecv.split(',');
                 HandleMessage(split[0], split[1], parseInt(split[2]), split);
             } catch (err) {
                 console.warn(err.message);
@@ -1429,9 +1478,11 @@ on({ id: config.panelRecvTopic }, function (obj) {
 function SendToPanel(val: Payload | Payload[]): void {
     try {
         if (Array.isArray(val)) {
-            val.forEach(function (id, i) {
+            val.forEach(function (id) {
                 setState(config.panelSendTopic, id.payload);
-                if (Debug) console.log(id.payload);
+                if (Debug) {
+                    console.log(id.payload);
+                }
             });
         } else {
             setState(config.panelSendTopic, val.payload);
@@ -1444,7 +1495,9 @@ function SendToPanel(val: Payload | Payload[]): void {
 on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) => {
     try {
         if ((obj.state ? obj.state.val : '') == 'armed' || (obj.state ? obj.state.val : '') == 'disarmed' || (obj.state ? obj.state.val : '') == 'triggered') {
-            if (Debug) console.log(activePage);
+            if (Debug) {
+                console.log(activePage);
+            }
             if (NSPanel_Path == getState(NSPanel_Alarm_Path + 'Alarm.PANEL').val) {
                 GeneratePage(activePage);
             }
@@ -1475,17 +1528,22 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
                     let pageItem = findPageItem(words[3]);
-                    if (pageItem !== undefined)
-                        SendToPanel(GenerateDetailPage(words[2], pageItem));  
+                    if (pageItem !== undefined) {
+                        SendToPanel(GenerateDetailPage(words[2], pageItem));
+                    }
+                    break;
                 case 'buttonPress2':
                     screensaverEnabled = false;
                     HandleButtonEvent(words);
-                    if (Debug) console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                    if (Debug) {
+                        console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                    }
                     break;
                 case 'button1':
                 case 'button2':
                     screensaverEnabled = false;
                     HandleHardwareButton(method);
+                    break;
                 default:
                     break;
             }
@@ -1506,10 +1564,8 @@ function findPageItem(searching: String): PageItem {
 
         config.subPages.every(sp => {
             pageItem = sp.items.find(e => e.id === searching);
-            if (pageItem !== undefined) {
-                return false;
-            }
-            return true;
+
+            return pageItem === undefined;
         });
 
         return pageItem;
@@ -1600,7 +1656,7 @@ function SendTime(): void {
 
 function GenerateEntitiesPage(page: PageEntities): Payload[] {
     try {
-        var out_msgs: Array<Payload> = [];
+        let out_msgs: Array<Payload>;
         out_msgs = [{ payload: 'pageType~cardEntities' }]
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs
@@ -1611,8 +1667,7 @@ function GenerateEntitiesPage(page: PageEntities): Payload[] {
 
 function GenerateGridPage(page: PageGrid): Payload[] {
     try {
-        var out_msgs: Array<Payload> = [];
-        out_msgs = [{ payload: 'pageType~cardGrid' }]
+        let out_msgs: Array<Payload> = [{ payload: 'pageType~cardGrid' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs
     } catch (err) {
@@ -1664,17 +1719,17 @@ function GeneratePageElements(page: Page): string {
 
 function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = false): string {
     try {
-        var iconId = '0';
+        let iconId = '0';
         if (pageItem.id == 'delete') {
             return '~delete~~~~~';
         }
 
-        var name: string;
-        var type: string;
+        let name: string;
+        let type: string;
 
         // ioBroker
         if (existsObject(pageItem.id) || pageItem.navigate === true) {
-            var iconColor = rgb_dec565(config.defaultColor);
+            let iconColor = rgb_dec565(config.defaultColor);
 
             if (pageItem.navigate) {
                 type = 'button';
@@ -1685,7 +1740,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
             }
 
             let o = getObject(pageItem.id)
-            var val = null;
+            let val = null;
 
             if (existsState(pageItem.id + '.GET')) {
                 val = getState(pageItem.id + '.GET').val;
@@ -1698,13 +1753,15 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
             // Fallback if no name is given
             name = pageItem.name !== undefined ? pageItem.name : o.common.name.de;
 
+            let optVal = '0';
+
             switch (o.common.role) {
                 case 'socket':
                 case 'light':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-                    var iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-                    var optVal = '0';
+                    let iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                    optVal = '0';
 
                     if (val === true || val === 'true') {
                         optVal = '1';
@@ -1723,7 +1780,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 case 'hue':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                    var optVal = '0';
+                    optVal = '0';
 
                     if (existsState(pageItem.id + '.ON_ACTUAL')) {
                         val = getState(pageItem.id + '.ON_ACTUAL').val;
@@ -1751,7 +1808,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 case 'ct':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                    var optVal = '0';
+                    optVal = '0';
 
                     if (existsState(pageItem.id + '.ON')) {
                         val = getState(pageItem.id + '.ON').val;
@@ -1768,7 +1825,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 case 'rgb':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                    var optVal = '0';
+                    optVal = '0';
 
                     if (existsState(pageItem.id + '.ON_ACTUAL')) {
                         val = getState(pageItem.id + '.ON_ACTUAL').val;
@@ -1795,7 +1852,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 case 'rgbSingle':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                    var optVal = '0';
+                    optVal = '0';
 
                     if (existsState(pageItem.id + '.ON_ACTUAL')) {
                         val = getState(pageItem.id + '.ON_ACTUAL').val;
@@ -1809,10 +1866,10 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     if (existsState(pageItem.id + '.RGB')) {
                         if (getState(pageItem.id + '.RGB').val != null) {
-                            var hex = getState(pageItem.id + '.RGB').val;
-                            var hexRed = parseInt(hex[1] + hex[2], 16);
-                            var hexGreen = parseInt(hex[3] + hex[4], 16);
-                            var hexBlue = parseInt(hex[5] + hex[6], 16);
+                            let hex = getState(pageItem.id + '.RGB').val;
+                            let hexRed = parseInt(hex[1] + hex[2], 16);
+                            let hexGreen = parseInt(hex[3] + hex[4], 16);
+                            let hexBlue = parseInt(hex[5] + hex[6], 16);
                             let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) };
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                         }
@@ -1823,7 +1880,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 case 'dimmer':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
-                    var optVal = '0';
+                    optVal = '0';
 
                     if (existsState(pageItem.id + '.ON_ACTUAL')) {
                         val = getState(pageItem.id + '.ON_ACTUAL').val;
@@ -1849,16 +1906,18 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                 case 'gate':
                     type = 'text';
+                    let gateState: string;
                     if (existsState(pageItem.id + '.ACTUAL')) {
+
                         if (getState(pageItem.id + '.ACTUAL').val == 0 || getState(pageItem.id + '.ACTUAL').val === false) {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('garage');
                             iconColor = GetIconColor(pageItem, false, useColors);
-                            var gateState = findLocale('window', 'closed');
+                            gateState = findLocale('window', 'closed');
                         } else {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('garage-open');
                             iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('garage-open');
                             iconColor = GetIconColor(pageItem, true, useColors);
-                            var gateState = findLocale('window', 'opened');
+                            gateState = findLocale('window', 'opened');
                         }
  
                         RegisterEntityWatcher(pageItem.id + '.ACTUAL');
@@ -1866,21 +1925,22 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     }
  
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
-			    
+
                 case 'door':
                 case 'window':
                     type = 'text';
+                    let windowState;
 
                     if (existsState(pageItem.id + '.ACTUAL')) {
                         if (getState(pageItem.id + '.ACTUAL').val) {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
                             iconColor = GetIconColor(pageItem, false, useColors);
-                            var windowState = findLocale('window', 'opened');
+                            windowState = findLocale('window', 'opened');
                         } else {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
                             //iconId = Icons.GetIcon('window-closed-variant');
                             iconColor = GetIconColor(pageItem, true, useColors);
-                            var windowState = findLocale('window', 'closed');
+                            windowState = findLocale('window', 'closed');
                         }
 
                         RegisterEntityWatcher(pageItem.id + '.ACTUAL');
@@ -1906,7 +1966,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     type = 'text';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
                     let unit = '';
-                    var optVal = '0';
+                    optVal = '0';
 
                     if (existsState(pageItem.id + '.ON_ACTUAL')) {
                         optVal = getState(pageItem.id + '.ON_ACTUAL').val;
@@ -1939,16 +1999,17 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     type = 'button';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock');
                     iconColor = GetIconColor(pageItem, true, useColors);
+                    let lockState;
 
                     if (existsState(pageItem.id + '.ACTUAL')) {
                         if (getState(pageItem.id + '.ACTUAL').val) {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock');
                             iconColor = GetIconColor(pageItem, true, useColors);
-                            var lockState = findLocale('lock', 'UNLOCK');
+                            lockState = findLocale('lock', 'UNLOCK');
                         } else {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock-open-variant');
                             iconColor = GetIconColor(pageItem, false, useColors);
-                            var lockState = findLocale('lock', 'LOCK');
+                            lockState = findLocale('lock', 'LOCK');
                         }
                         lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
                         RegisterEntityWatcher(pageItem.id + '.ACTUAL');
@@ -2027,7 +2088,9 @@ function findLocale(controlsObject: string, controlsState: string): string {
     const locale = config.locale;
     const strJson = getState(NSPanel_Path + 'NSPanel_locales_json').val;
 
-    if (Debug) console.log(controlsObject + ' - ' + controlsState);
+    if (Debug) {
+        console.log(controlsObject + ' - ' + controlsState);
+    }
 
     try {
         const obj = JSON.parse(strJson);
@@ -2041,7 +2104,9 @@ function findLocale(controlsObject: string, controlsState: string): string {
 
     } catch (err) {
         if (err.message.substring(0, 35) == 'Cannot read properties of undefined') {
-            if (Debug) console.log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState);
+            if (Debug) {
+                console.log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState);
+            }
         } else { 
             console.warn('function findLocale: ' + err.message);
         }
@@ -2085,7 +2150,7 @@ function RegisterEntityWatcher(id: string): void {
             return;
         }
 
-        subscriptions[id] = (on({ id: id, change: 'any' }, (data) => {
+        subscriptions[id] = (on({ id: id, change: 'any' }, () => {
             if (pageId == -1 && config.button1Page != undefined) {
                 SendToPanel({ payload: GeneratePageElements(config.button1Page) });
             }
@@ -2137,8 +2202,8 @@ function GetUnitOfMeasurement(id: string): string {
 
 function GenerateThermoPage(page: PageThermo): Payload[] {
     try {
-        var id = page.items[0].id
-        var out_msgs: Array<Payload> = [];
+        let id = page.items[0].id
+        let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardThermo' });
 
         // ioBroker
@@ -2166,15 +2231,16 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             }
             let statusStr: String = 'MANU';
             let status = '';
-            if (existsState(id + '.MODE'))
-                status = getState(id + '.MODE').val;
+            if (existsState(id + '.MODE')) {
+                status = getState(id + '.MODE').val;    // FixMe: Variable status is never used!
+            }
 
             //Attribute hinzufügen, wenn im Alias definiert
             let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
+            let bt = ['~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~'];
             if ((i_list.length - 3) != 0) {
 
-                var i = 0;
-                var bt = ['~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~'];
+                let i = 0;
 
                 if (o.common.role == 'thermostat') {
 
@@ -2375,7 +2441,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                 payload: 'entityUpd~'
                     + name + '~'                                    // Heading
                     + GetNavigationString(pageId) + '~'             // Page Navigation
-                    + id + '~'                                      // internalNameEntiy
+                    + id + '~'                                      // internalNameEntity
                     + currentTemp + config.temperatureUnit + '~'    // Ist-Temperatur (String)
                     + destTemp + '~'                                // Soll-Temperatur (numerisch ohne Komma)
                     + statusStr + '~'                               // Mode
@@ -2383,8 +2449,8 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                     + maxTemp + '~'                                 // Thermostat Max-Temperatur
                     + stepTemp + '~'                                // Schritte für Soll (5°C)
                     + icon_res                                      // Icons Status
-                    + findLocale('thermostat', 'Currently') + '~'   // Bezeicher vor Aktueller Raumtemperatur
-                    + findLocale('thermostat', 'State') + '~'       // Bezeicner vor
+                    + findLocale('thermostat', 'Currently') + '~'   // Bezeichner vor Aktueller Raumtemperatur
+                    + findLocale('thermostat', 'State') + '~'       // Bezeichner vor
                     + '~'                                           // Bezeichner vor HVAC -- Gibt es nicht mehr
                     + config.temperatureUnit + '~'                  // Bezeichner hinter Solltemp
                     + '' + '~'                                      // iconTemperature dstTempTwoTempMode
@@ -2393,7 +2459,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
         }
 
-        if (Debug) console.log(out_msgs);
+        if (Debug) {
+            console.log(out_msgs);
+        }
         return out_msgs
     } catch (err) {
         console.warn('function GenerateThermoPage: ' + err.message);
@@ -2402,9 +2470,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
 function GenerateMediaPage(page: PageMedia): Payload[] {
     try {
-        var id = page.items[0].id
+        let id = page.items[0].id
         
-        var out_msgs: Array<Payload> = [];
+        let out_msgs: Array<Payload> = [];
 
         out_msgs.push({ payload: 'pageType~cardMedia' });
         if (existsObject(id)) {
@@ -2416,24 +2484,24 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let v1Adapter = vInstance.split('.');
             let v2Adapter = v1Adapter[0];
 
-            //Alexa + neue Adpter/Player
+            //Alexa + neue Adapter/Player
             let media_icon = Icons.GetIcon('playlist-music');
 
             //Spotify-Premium
             if (v2Adapter == 'spotify-premium') {
                 media_icon = Icons.GetIcon('spotify');
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
-                let nameLenght = name.length;
+                let nameLength = name.length;
                 if (name.substring(0,9) == 'Playlist:') {
-                    let nameLenght = name.length;
-                    name = name.slice(10, nameLenght);
+                    let nameLength = name.length;
+                    name = name.slice(10, nameLength);
                 } else if (name.substring(0,6) == 'Album:') {
-                    let nameLenght = name.length;
-                    name = name.slice(10, nameLenght);
+                    let nameLength = name.length;
+                    name = name.slice(10, nameLength);
                 } else if (name.substring(0,6) == 'Track') { 
                     name = 'Spotify-Premium';
                 }
-                if (nameLenght == 0) {
+                if (nameLength == 0) {
                     name = 'Spotify-Premium';
                 }
                 author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
@@ -2462,8 +2530,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             //Logitech Squeezebox RPC
             if (v2Adapter == 'squeezeboxrpc') {
                 media_icon = Icons.GetIcon('dlna');
-                let nameLenght = name.length;
-                if (nameLenght == 0) {
+                let nameLength = name.length;
+                if (nameLength == 0) {
                     name = 'Squeezebox RPC';
                     author = 'no music to control';
                 } 
@@ -2472,16 +2540,16 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             //Alexa2
             if (v2Adapter == 'alexa2') {
                 media_icon = Icons.GetIcon('playlist-music');
-                let nameLenght = name.length;
-                if (nameLenght == 0) {
+                let nameLength = name.length;
+                if (nameLength == 0) {
                     name = 'Alexa Player';
                     author = 'no music to control';  
                 } 
             }
             
             let volume = getState(id + '.VOLUME').val;
-            var iconplaypause = Icons.GetIcon('pause'); //pause
-            var onoffbutton = 1374;
+            let iconplaypause = Icons.GetIcon('pause'); //pause
+            let onoffbutton = 1374;
 
             //Für alle Player
             if (getState(id + '.STATE').val) {
@@ -2499,7 +2567,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 iconplaypause = Icons.GetIcon('play'); //play
             }
 
-            if (Debug) console.log(v2Adapter);
+            if (Debug) {
+                console.log(v2Adapter);
+            }
 
             let currentSpeaker = 'kein Speaker gefunden';
 
@@ -2517,10 +2587,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             //-------------------------------------------------------------------------------------------------------------
             // nachfolgend alle Alexa-Devices (ist Online / Player- und Commands-Verzeichnis vorhanden) auflisten und verketten
             // Wenn Konstante alexaSpeakerList mind. einen Eintrag enthält, wird die Konstante verwendet - ansonsten Alle Devices aus dem Alexa Adapter
-            let speakerlist = '';
+            let speakerList = '';
             if (page.items[0].speakerList.length > 0) {
                 for (let i_index in page.items[0].speakerList) {
-                    speakerlist = speakerlist + page.items[0].speakerList[i_index] + '?';
+                    speakerList = speakerList + page.items[0].speakerList[i_index] + '?';
                 }
             } else {
                 let i_list = Array.prototype.slice.apply($('[state.id="' + page.items[0].adapterPlayerInstance + 'Echo-Devices.*.Info.name"]'));
@@ -2531,11 +2601,11 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     if (getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.online'].join(''))).val &&
                         existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Player'].join(''))) &&
                         existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Commands'].join('')))) {
-                        speakerlist = speakerlist + getState(i).val + '?';
+                        speakerList = speakerList + getState(i).val + '?';
                     }
                 }
             }
-            speakerlist = speakerlist.substring(0, speakerlist.length - 1);
+            speakerList = speakerList.substring(0, speakerList.length - 1);
             //--------------------------------------------------------------------------------------------------------------
 
             out_msgs.push({
@@ -2549,11 +2619,13 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     volume + '~' +                        //volume
                     iconplaypause + '~' +                 //playpauseicon
                     currentSpeaker + '~' +                //currentSpeaker
-                    speakerlist + '~' +                   //speakerList-seperated-by-?
+                    speakerList + '~' +                   //speakerList-seperated-by-?
                     onoffbutton
             });                        //On/Off Button Color
         }
-        if (Debug) console.log(out_msgs);
+        if (Debug) {
+            console.log(out_msgs);
+        }
         return out_msgs
     } catch (err) {
         console.warn('function GenerateMediaPage: ' + err.message);
@@ -2563,11 +2635,11 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
     try {
         activePage = page;
-        var id = page.items[0].id
+        let id = page.items[0].id
         
-        var out_msgs: Array<Payload> = [];
+        let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
-        var nsPath = NSPanel_Alarm_Path + 'Alarm.';
+        let nsPath = NSPanel_Alarm_Path + 'Alarm.';
 
         if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
             createState(nsPath + 'AlarmPin', '0000', { type: 'string' }, function () { setState(nsPath + 'AlarmPin', '0000') });
@@ -2578,17 +2650,19 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
         }
 
         if (existsState(nsPath + 'AlarmPin') && existsState(nsPath + 'AlarmState') && existsState(nsPath + 'AlarmType')) {
-            //var entityPin = getState(nsPath + 'AlarmPin').val;
-            var entityState = getState(nsPath + 'AlarmState').val;
-            //var entityType = getState(nsPath + 'AlarmType').val;
-            var arm1: string, arm2: string, arm3: string, arm4: string;
-            var arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
-            var icon = '0';
-            var iconcolor = 63488;
-            var numpadStatus = 'disable';
-            var flashing = 'disable';
+            //let entityPin = getState(nsPath + 'AlarmPin').val;
+            let entityState = getState(nsPath + 'AlarmState').val;
+            //let entityType = getState(nsPath + 'AlarmType').val;
+            let arm1: string, arm2: string, arm3: string, arm4: string;
+            let arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
+            let icon = '0';
+            let iconcolor = 63488;
+            let numpadStatus = 'disable';
+            let flashing = 'disable';
 
-            if (Debug) console.log(id);
+            if (Debug) {
+                console.log(id);
+            }
 
             if (entityState == 'armed' || entityState == 'triggered') {
                 arm1 = 'Deaktivieren';                                      //arm1*~*
@@ -2655,7 +2729,9 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
                     flashing
             });                             //flashing*
 
-            if (Debug) console.log(out_msgs);
+            if (Debug) {
+                console.log(out_msgs);
+            }
             return out_msgs
         }
     } catch (err) {
@@ -2667,37 +2743,39 @@ function GenerateQRPage(page: PageQR): Payload[] {
     try {
         activePage = page;
 
-        var id = page.items[0].id
-        var out_msgs: Array<Payload> = [];
+        let id = page.items[0].id
+        let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardQR' });
 
         let o = getObject(id)
 
-        var heading = page.heading !== undefined ? page.heading : o.common.name.de
-        var textQR = page.items[0].id + '.ACTUAL' !== undefined ? getState(page.items[0].id + '.ACTUAL').val : 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;'
-        var hiddenPWD = false;
+        let heading = page.heading !== undefined ? page.heading : o.common.name.de
+        let textQR = page.items[0].id + '.ACTUAL' !== undefined ? getState(page.items[0].id + '.ACTUAL').val : 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;'
+        let hiddenPWD = false;
         if (page.items[0].hidePassword !== undefined && page.items[0].hidePassword == true) {
             hiddenPWD = true
         }
 
         const tempstr = textQR.split(';');
+        let optionalValue1;
+        let optionalValue2
         for (let w = 0; w < tempstr.length - 1; w++) {
             if (tempstr[w].substring(0, 1) == 'S') {
-                var optionalValue1 = tempstr[w].slice(2);
+                optionalValue1 = tempstr[w].slice(2);
             }
             if (tempstr[w].substring(0, 1) == 'P') {
-                var optionalValue2 = tempstr[w].slice(2);
+                optionalValue2 = tempstr[w].slice(2);
             }
         }
 
-        var type1 = 'text';
-        var internalName1 = 'SSID';
-        var iconId1 = Icons.GetIcon('wifi');
-        var displayName1 = 'SSID';
-        var type2 = 'text';
-        var internalName2 = 'Passwort';
-        var iconId2 = Icons.GetIcon('key');
-        var displayName2 = 'Passwort';
+        let type1 = 'text';
+        let internalName1 = 'SSID';
+        let iconId1 = Icons.GetIcon('wifi');
+        let displayName1 = 'SSID';
+        let type2 = 'text';
+        let internalName2 = 'Passwort';
+        let iconId2 = Icons.GetIcon('key');
+        let displayName2 = 'Passwort';
 
         if (hiddenPWD) {
             type2 = 'disable';
@@ -2736,12 +2814,15 @@ function GeneratePowerPage(page: PagePower): Payload[] {
     try {
         activePage = page;
 
-        if (Debug) console.log(page.items[0].id);
+        if (Debug) {
+            console.log(page.items[0].id);
+        }
 
-        var demoMode = false;
+        let demoMode = false;
+        let id;
 
         try { 
-            var id = page.items[0].id
+            id = page.items[0].id
         } catch (err) {
             console.log("Kein PageItem definiert - cardPower Demo-Modus aktiv");
             demoMode = true;
@@ -2755,11 +2836,11 @@ function GeneratePowerPage(page: PagePower): Payload[] {
 
         const obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
 
-        var out_msgs: Array<Payload> = [];
+        let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardPower' });
 
         //Demo Data if no pageItem present
-    	let array_icon_color = [White, MSGreen, MSYellow, MSGreen, MSYellow, MSGreen, MSRed];
+        let array_icon_color = [White, MSGreen, MSYellow, MSGreen, MSYellow, MSGreen, MSRed];
         let array_icon = ['home', 'battery-charging-60', 'solar-power-variant', 'wind-turbine', 'shape', 'transmission-tower', 'car'];
         let array_powerspeed = ['', '-1', '2', '4', '1', '1', '5'];
         let array_powerstate = ['', '0,5 kW', '0,9 kW', '2,8 kW', '0,2 kW', '0,1 kW', '4,6 kW'];
@@ -2790,7 +2871,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             payload: 'entityUpd~' +                         //entityUpd~*
                 heading                         + '~' +     //internalNameEntity*~*
                 GetNavigationString(pageId)     + '~' +     //navigation*~*
-    	        rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
+                rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
                 Icons.GetIcon(array_icon[0])    + '~' +     // icon~            Mitte
                 array_powerspeed[0]             + '~' +     // entity.state~    Mitte
                 power_string              
@@ -2839,8 +2920,8 @@ function toggleState(id: string): boolean {
 
 function HandleButtonEvent(words): void {
     try {
-        var id = words[2]
-        var buttonAction = words[3];
+        let id = words[2]
+        let buttonAction = words[3];
 
         if (Debug) {
             console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId);
@@ -2851,7 +2932,11 @@ function HandleButtonEvent(words): void {
             return;
         }
 
-        if (Debug) console.log(buttonAction);
+        if (Debug) {
+            console.log(buttonAction);
+        }
+
+        let pageNum:number = 0;
 
         switch (buttonAction) {
             case 'bUp':
@@ -2864,13 +2949,13 @@ function HandleButtonEvent(words): void {
                 GeneratePage(config.pages[pageId]);
                 break;
             case 'bNext':
-                var pageNum = (((pageId + 1) % config.pages.length) + config.pages.length) % config.pages.length;
+                pageNum = (((pageId + 1) % config.pages.length) + config.pages.length) % config.pages.length;
                 pageId = pageNum;
                 UnsubscribeWatcher();
                 GeneratePage(config.pages[pageId]);
                 break;
             case 'bPrev':
-                var pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
+                pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
                 pageId = pageNum;
                 UnsubscribeWatcher();
                 if (activePage != undefined && activePage.parent != undefined) {
@@ -2895,7 +2980,9 @@ function HandleButtonEvent(words): void {
                         GeneratePage(config.pages[pageId]);
                     }
                 } else {
-                    if (Debug) console.log('bExit: ' + words[4] + ' - ' + pageId);
+                    if (Debug) {
+                        console.log('bExit: ' + words[4] + ' - ' + pageId);
+                    }
                     setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
                     setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
                     GeneratePage(activePage);
@@ -2915,7 +3002,7 @@ function HandleButtonEvent(words): void {
                 break;
             case 'OnOff':
                 if (existsObject(id)) {
-                    var action = false
+                    let action = false
                     if (words[4] == '1')
                         action = true;
                     let o = getObject(id);
@@ -2939,7 +3026,7 @@ function HandleButtonEvent(words): void {
                 break;
             case 'button':
                 if (existsObject(id)) {
-                    var action = false
+                    let action = false
                     if (words[4] == '1')
                         action = true;
                     let o = getObject(id);
@@ -3033,7 +3120,7 @@ function HandleButtonEvent(words): void {
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                 timeoutSlider = setTimeout(async function () {
                     let pageItem = findPageItem(id);
-                    if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                    if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
                         let colorTempK = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
                         setIfExists(id + '.TEMPERATURE', (colorTempK));
                     } else {
@@ -3044,8 +3131,12 @@ function HandleButtonEvent(words): void {
             case 'colorWheel':
                 let colorCoordinates = words[4].split('|');
                 let rgb = pos_to_color(colorCoordinates[0], colorCoordinates[1]);
-                if (Debug) console.log(rgb);
-                if (Debug) console.log(getHue(rgb.red, rgb.green, rgb.blue));
+                if (Debug) {
+                    console.log(rgb);
+                }
+                if (Debug) {
+                    console.log(getHue(rgb.red, rgb.green, rgb.blue));
+                }
                 let o = getObject(id);
                 switch (o.common.role) {
                     case 'hue':
@@ -3061,13 +3152,15 @@ function HandleButtonEvent(words): void {
                         if (pageItem.colormode == "xy") {
                             //Für z.B. Deconz XY
                             setIfExists(id + ".RGB", rgb_to_cie(rgb.red, rgb.green, rgb.blue));
-                            if (Debug) console.log(rgb_to_cie(rgb.red, rgb.green, rgb.blue));
+                            if (Debug) {
+                                console.log(rgb_to_cie(rgb.red, rgb.green, rgb.blue));
+                            }
                         }
                         else {
                             //Für RGB
-                            setIfExists(id + ".RGB", ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue));  
+                            setIfExists(id + ".RGB", ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue));
                         }
-                        break;      
+                        break;
                 }
                 break;
             case 'tempUpd':
@@ -3119,7 +3212,7 @@ function HandleButtonEvent(words): void {
 
                 switch (deviceAdapter) {
                     case 'spotify-premium':
-                        var strDeviceID = spotifyGetDeviceID(words[4]);
+                        let strDeviceID = spotifyGetDeviceID(words[4]);
                         setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
                         break;
                     case 'alexa2':
@@ -3187,7 +3280,7 @@ function HandleButtonEvent(words): void {
                     }
                     GeneratePage(config.pages[pageId]);
                 } else {
-                    var HVACMode = 0;
+                    let HVACMode = 0;
                     switch (words[4]) {
                         case 'POWER':
                             HVACMode = 0;
@@ -3276,8 +3369,12 @@ function HandleButtonEvent(words): void {
                 },250)          
                 break;
             case 'D1': // Alarm-Page Alarm Deaktivieren
-                if (Debug) console.log('D1: ' + getState(id + '.PIN').val);
-                if (Debug) console.log(words[4]);
+                if (Debug) {
+                    console.log('D1: ' + getState(id + '.PIN').val);
+                }
+                if (Debug) {
+                    console.log(words[4]);
+                }
                 if (words[4] != '') {
                     if (getState(id + '.PIN').val == words[4]) {
                         setIfExists(id + '.PIN', '0000');
@@ -3299,13 +3396,15 @@ function HandleButtonEvent(words): void {
         }
     } catch (err) {
         console.log('function HandleButtonEvent: ' + err.message);
-    }         
+    }
 }
 
 function GetNavigationString(pageId: number): string {
     try {
 
-        if (Debug) console.log(pageId);
+        if (Debug) {
+            console.log(pageId);
+        }
 
         if (activePage.subPage)
             return '1|0';
@@ -3329,14 +3428,14 @@ function GetNavigationString(pageId: number): string {
 
 function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
     try {
-        var out_msgs: Array<Payload> = [];
+        let out_msgs: Array<Payload> = [];
         let id = pageItem.id
 
         if (existsObject(id)) {
-            var o = getObject(id)
-            var val: (boolean | number) = 0;
+            let o = getObject(id)
+            let val: (boolean | number) = 0;
             let icon = Icons.GetIcon('lightbulb');
-            var iconColor = rgb_dec565(config.defaultColor);
+            let iconColor = rgb_dec565(config.defaultColor);
 
             if (type == 'popupLight') {
                 let switchVal = '0';
@@ -3385,7 +3484,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     }
 
                     if (val === true) {
-                        var iconColor = GetIconColor(pageItem, val, false);
+                        let iconColor = GetIconColor(pageItem, val, false);
                         switchVal = '1'
                     }
 
@@ -3452,7 +3551,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         iconColor = GetIconColor(pageItem, false, true);
                     }
 
-                    var colorMode = 'disable';
+                    let colorMode = 'disable';
                     if (existsState(id + '.HUE')) {
                         if (getState(id + '.HUE').val != null) {
                             colorMode = 'enable';
@@ -3463,10 +3562,10 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         }
                     }
 
-                    var colorTemp = 0;
+                    let colorTemp = 0;
                     if (existsState(id + '.TEMPERATURE')) {
                         if (getState(id + '.TEMPERATURE').val != null) {
-                            if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                            if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
                                 colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
                             } else {
                                 colorTemp = 100 - getState(id + '.TEMPERATURE').val;
@@ -3518,7 +3617,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         iconColor = GetIconColor(pageItem, false, true);
                     }
 
-                    var colorMode = 'disable';
+                    let colorMode = 'disable';
                     if (existsState(id + '.RED') && existsState(id + '.GREEN') && existsState(id + '.BLUE')) {
                         if (getState(id + '.RED').val != null && getState(id + '.GREEN').val != null && getState(id + '.BLUE').val != null) {
                             colorMode = 'enable';
@@ -3528,7 +3627,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         }
                     }
 
-                    var colorTemp = 0;
+                    let colorTemp = 0;
                     if (existsState(id + '.TEMPERATURE')) {
                         if (getState(id + '.TEMPERATURE').val != null) {
                             if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
@@ -3583,24 +3682,24 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         iconColor = GetIconColor(pageItem, false, true);
                     }
 
-                    var colorMode = 'disable';
+                    let colorMode = 'disable';
                     if (existsState(id + '.RGB')) {
                         if (getState(id + '.RGB').val != null) {
                             colorMode = 'enable';
-                            var hex = getState(id + '.RGB').val;
-                            var hexRed = parseInt(hex[1] + hex[2], 16);
-                            var hexGreen = parseInt(hex[3] + hex[4], 16);
-                            var hexBlue = parseInt(hex[5] + hex[6], 16);
+                            let hex = getState(id + '.RGB').val;
+                            let hexRed = parseInt(hex[1] + hex[2], 16);
+                            let hexGreen = parseInt(hex[3] + hex[4], 16);
+                            let hexBlue = parseInt(hex[5] + hex[6], 16);
                             let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) }
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                             //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
                         }
                     }
 
-                    var colorTemp = 0;
+                    let colorTemp = 0;
                     if (existsState(id + '.TEMPERATURE')) {
                         if (getState(id + '.TEMPERATURE').val != null) {
-                            if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                            if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
                                 colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
                             } else {
                                 colorTemp = 100 - getState(id + '.TEMPERATURE').val;
@@ -3652,12 +3751,12 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         iconColor = GetIconColor(pageItem, false, true);
                     }
 
-                    var colorMode = 'disable';
+                    let colorMode = 'disable';
 
-                    var colorTemp = 0;
+                    let colorTemp = 0;
                     if (existsState(id + '.TEMPERATURE')) {
                         if (getState(id + '.TEMPERATURE').val != null) {
-                            if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                            if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
                                 colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
                             } else {
                                 colorTemp = 100 - getState(id + '.TEMPERATURE').val;
@@ -3693,7 +3792,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     val = getState(id + '.SET').val;
                     RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
                 }
-                var tilt_position: any = 'disabled'
+                let tilt_position: any = 'disabled'
                 if (existsState(id + '.TILT_ACTUAL')) {
                     tilt_position = getState(id + '.TILT_ACTUAL').val;
                     RegisterDetailEntityWatcher(id + '.TILT_ACTUAL', pageItem, type);
@@ -3795,7 +3894,7 @@ function HandleScreensaver(): void {
 function HandleScreensaverUpdate(): void {
     try {
         if (screensaverEnabled && config.weatherEntity != null && existsObject(config.weatherEntity)) {
-            var icon = getState(config.weatherEntity + '.ICON').val;
+            let icon = getState(config.weatherEntity + '.ICON').val;
 
             let temperature =
                 existsState(config.weatherEntity + '.ACTUAL') ? getState(config.weatherEntity + '.ACTUAL').val :
@@ -3810,16 +3909,20 @@ function HandleScreensaverUpdate(): void {
                 + temperature + ' ' + config.temperatureUnit + '~';
 
             vwIconColor[0] = GetAccuWeatherIconColor(parseInt(icon));
-            if (Debug) console.log(GetAccuWeatherIconColor(parseInt(icon)));
+            if (Debug) {
+                console.log(GetAccuWeatherIconColor(parseInt(icon)));
+            }
 
             if (weatherForecast) {
-                // Accu-Weather Forecast Tag 2 - Tag 5 -- Wenn weatherForecast = true
+                // AccuWeather Forecast Tag 2 - Tag 5 -- Wenn weatherForecast = true
                 for (let i = 2; i < 6; i++) {
                     let TempMax = getState('accuweather.0.Summary.TempMax_d' + i).val;
                     let DayOfWeek = getState('accuweather.0.Summary.DayOfWeek_d' + i).val;
                     let WeatherIcon = GetAccuWeatherIcon(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
                     vwIconColor[i-1] = GetAccuWeatherIconColor(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
-                    if (Debug) console.log(vwIconColor[i-1]);
+                    if (Debug) {
+                        console.log(vwIconColor[i - 1]);
+                    }
                     payloadString += DayOfWeek + '~' + Icons.GetIcon(WeatherIcon) + '~' + TempMax + ' ' + config.temperatureUnit + '~';
                 }
             } else {
@@ -3864,7 +3967,9 @@ function HandleScreensaverUpdate(): void {
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
-                            if (Debug) console.log(valueScaletemp);
+                            if (Debug) {
+                                console.log(valueScaletemp);
+                            }
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[1] = rgb_dec565(colorScale0);
@@ -3936,7 +4041,9 @@ function HandleScreensaverUpdate(): void {
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
-                            if (Debug) console.log(valueScaletemp);
+                            if (Debug) {
+                                console.log(valueScaletemp);
+                            }
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[2] = rgb_dec565(colorScale0);
@@ -4008,7 +4115,9 @@ function HandleScreensaverUpdate(): void {
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
-                            if (Debug) console.log(valueScaletemp);
+                            if (Debug) {
+                                console.log(valueScaletemp);
+                            }
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[3] = rgb_dec565(colorScale0);
@@ -4080,7 +4189,9 @@ function HandleScreensaverUpdate(): void {
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed(); 
-                            if (Debug) console.log(valueScaletemp);
+                            if (Debug) {
+                                console.log(valueScaletemp);
+                            }
                             switch (valueScaletemp) {
                                 case '0':
                                     vwIconColor[4] = rgb_dec565(colorScale0);
@@ -4443,9 +4554,9 @@ function GetBlendedColor(percentage: number): RGB {
 }
 
 function Interpolate(color1: RGB, color2: RGB, fraction: number): RGB {
-    var r: number = InterpolateNum(color1.red, color2.red, fraction);
-    var g: number = InterpolateNum(color1.green, color2.green, fraction);
-    var b: number = InterpolateNum(color1.blue, color2.blue, fraction);
+    let r: number = InterpolateNum(color1.red, color2.red, fraction);
+    let g: number = InterpolateNum(color1.green, color2.green, fraction);
+    let b: number = InterpolateNum(color1.blue, color2.blue, fraction);
     return <RGB>{ red: Math.round(r), green: Math.round(g), blue: Math.round(b) };
 }
 
@@ -4467,7 +4578,7 @@ function rad2deg(rad) {
 }
 
 function ColorToHex(color) {
-    var hexadecimal = color.toString(16);
+    let hexadecimal = color.toString(16);
     return hexadecimal.length == 1 ? '0' + hexadecimal : hexadecimal;
 }
 
@@ -4497,14 +4608,14 @@ function hsv2rgb(hue: number, saturation: number, value: number) {
 
 function getHue(red: number, green: number, blue: number) {
 
-    var min = Math.min(Math.min(red, green), blue);
-    var max = Math.max(Math.max(red, green), blue);
+    let min = Math.min(Math.min(red, green), blue);
+    let max = Math.max(Math.max(red, green), blue);
 
     if (min == max) {
         return 0;
     }
 
-    var hue = 0;
+    let hue = 0;
     if (max == red) {
         hue = (green - blue) / (max - min);
 
@@ -4522,9 +4633,9 @@ function getHue(red: number, green: number, blue: number) {
 }
 
 function pos_to_color(x: number, y: number): RGB {
-    var r = 160 / 2;
-    var x = Math.round((x - r) / r * 100) / 100;
-    var y = Math.round((r - y) / r * 100) / 100;
+    let r = 160 / 2;
+    x = Math.round((x - r) / r * 100) / 100;
+    y = Math.round((r - y) / r * 100) / 100;
 
     r = Math.sqrt(x * x + y * y);
     let sat = 0
@@ -4534,8 +4645,8 @@ function pos_to_color(x: number, y: number): RGB {
         sat = r;
     }
 
-    var hsv = rad2deg(Math.atan2(y, x));
-    var rgb = hsv2rgb(hsv, sat, 1);
+    let hsv = rad2deg(Math.atan2(y, x));
+    let rgb = hsv2rgb(hsv, sat, 1);
 
     return <RGB>{ red: Math.round(rgb[0]), green: Math.round(rgb[1]), blue: Math.round(rgb[2]) };
 }
@@ -4563,10 +4674,10 @@ function rgb_to_cie(red, green, blue)
 function spotifyGetDeviceID(vDeviceString) {
     const availableDeviceIDs = getState("spotify-premium.0.devices.availableDeviceListIds").val;
     const availableDeviceNames = getState("spotify-premium.0.devices.availableDeviceListString").val;
-    var arrayDeviceListIds = availableDeviceIDs.split(";");
-    var arrayDeviceListSting = availableDeviceNames.split(";");
-    var indexPos = arrayDeviceListSting.indexOf(vDeviceString);
-    var strDevID = arrayDeviceListIds[indexPos];
+    let arrayDeviceListIds = availableDeviceIDs.split(";");
+    let arrayDeviceListSting = availableDeviceNames.split(";");
+    let indexPos = arrayDeviceListSting.indexOf(vDeviceString);
+    let strDevID = arrayDeviceListIds[indexPos];
     return strDevID;
 }
 
@@ -4592,37 +4703,37 @@ type Page = {
 interface PageEntities extends Page {
     type: 'cardEntities',
     items: PageItem[],
-};
+}
 
 interface PageGrid extends Page {
     type: 'cardGrid',
     items: PageItem[],
-};
+}
 
 interface PageThermo extends Page {
     type: 'cardThermo',
     items: PageItem[],
-};
+}
 
 interface PageMedia extends Page {
     type: 'cardMedia',
     items: PageItem[],
-};
+}
 
 interface PageAlarm extends Page {
     type: 'cardAlarm',
     items: PageItem[],
-};
+}
 
 interface PageQR extends Page {
     type: 'cardQR',
     items: PageItem[],
-};
+}
 
 interface PagePower extends Page {
     type: 'cardPower',
     items: PageItem[],
-};
+}
 
 type PageItem = {
     id: string,
@@ -4687,7 +4798,7 @@ type Config = {
     subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower)[],
     button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | null),
     button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower| null),
-};
+}
 
 type ScreenSaverElement = {
     ScreensaverEntity: string | null,
