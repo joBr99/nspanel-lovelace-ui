@@ -62,6 +62,7 @@ ReleaseNotes:
         - 25.10.2022 - v3.5.0   Add New Parameters to popUpNotify / Layout 2
         - 26.10.2022 - v3.5.0.1 Fix Thermostat for tado Support (by Sternmiere)
         - 27.10.2022 - v3.5.0.1 Add VirtualDevice Gate
+        - 27.10.2022 - v3.5.0.2 Applied Boy Scout Rule (Fixed some typos, changed var to let, fixed min/max colorTemp Bug)
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 Tasmota Konsole: 
