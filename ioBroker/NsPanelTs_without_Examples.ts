@@ -60,6 +60,8 @@ ReleaseNotes:
         - 08.10.2022 - v3.5.0   Add Tilt-Slider and TILT_Fucntions (Open/Stop/Close) to Blinds/Cover/Shutter popUp
         - 12.10.2022 - v3.5.0   Add PageNavigation via Datapoint
         - 25.10.2022 - v3.5.0   Add New Parameters to popUpNotify / Layout 2
+	- 26.10.2022 - v3.5.0.1 Fix Thermostat for tado Support (by Sternmiere)
+	- 27.10.2022 - v3.5.0.1 Add VirtualDevice Gate
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Releais) genutzt werden
 Tasmota Konsole: 
@@ -1460,6 +1462,26 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~';
+
+		case 'gate':
+                    type = 'text';
+                    if (existsState(pageItem.id + '.ACTUAL')) {
+                        if (getState(pageItem.id + '.ACTUAL').val == 0 || getState(pageItem.id + '.ACTUAL').val === false) {
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('garage');
+                            iconColor = GetIconColor(pageItem, false, useColors);
+                            var gateState = findLocale('window', 'closed');
+                        } else {
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('garage-open');
+                            iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('garage-open');
+                            iconColor = GetIconColor(pageItem, true, useColors);
+                            var gateState = findLocale('window', 'opened');
+                        }
+ 
+                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+ 
+                    }
+ 
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
 
                 case 'door':
                 case 'window':
