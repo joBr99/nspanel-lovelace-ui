@@ -1,6 +1,7 @@
 name: nextion2text
 
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - HMI/nspanel.HMI
