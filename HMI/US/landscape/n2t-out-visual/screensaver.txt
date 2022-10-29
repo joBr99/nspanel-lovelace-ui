@@ -82,6 +82,42 @@ Variable (string) tSend
         Text          : 
         Max. Text Size: 50
     
+Variable (int32) xcR
+    Attributes
+        ID   : 38
+        Scope: local
+        Value: 0
+    
+Variable (int32) ycR
+    Attributes
+        ID   : 39
+        Scope: local
+        Value: 0
+    
+Variable (int32) yc2
+    Attributes
+        ID   : 40
+        Scope: local
+        Value: 0
+    
+Variable (int32) xc2
+    Attributes
+        ID   : 41
+        Scope: local
+        Value: 0
+    
+Variable (int32) yc1
+    Attributes
+        ID   : 42
+        Scope: local
+        Value: 0
+    
+Variable (int32) xc1
+    Attributes
+        ID   : 43
+        Scope: local
+        Value: 0
+    
 Text tTime
     Attributes
         ID                                  : 5
@@ -1294,6 +1330,21 @@ Timer tmSleep
                 }
             }
         
+Timer tm0
+    Attributes
+        ID         : 44
+        Scope      : local
+        Period (ms): 50
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            if(tc0.val!=0)
+            {
+                xc2.val=tch0
+                yc2.val=tch1
+            }
+        
 TouchCap tc0
     Attributes
         ID   : 2
@@ -1302,6 +1353,9 @@ TouchCap tc0
     
     Events
         Touch Press Event
+            xc1.val=tch0
+            yc1.val=tch1
+            tm0.en=1
             if(tNotifyHead.txt!=""||tNotifyText.txt!="")
             {
                 if(dim!=0)
@@ -1316,6 +1370,67 @@ TouchCap tc0
             vaTap.val+=1
             covx vaTap.val,tTmp.txt,0,0
             tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
+            //send calc crc
+            //btlen tSend.txt,sys0
+            //crcrest 1,0xffff // reset CRC
+            //crcputh 55 bb
+            //crcputs sys0,2
+            //crcputs tSend.txt,0
+            //send cmd
+            //printh 55 bb
+            //prints sys0,2
+            //prints tSend.txt,0
+            //prints crcval,2
+        
+        Touch Release Event
+            tm0.en=0
+            if(tch0==0)
+            // When this is zero we can interpret that as the real end of the drag event
+            {
+                xcR.val=xc1.val-xc2.val
+                ycR.val=yc1.val-yc2.val
+                // new method
+                // one of the difference values should be low to be a valid direction, in case it has a high value it's not a valid swipe, because it's diagonal
+                // x difference between -125 and 125 (swipe on y-axis)
+                if(xcR.val>-125&&xcR.val<125)
+                {
+                    //tStatusNew.txt="x low, -> y"
+                    // check if below minimum value (change is negative)
+                    if(ycR.val<-80)
+                    {
+                        //tDirNew.txt="down"
+                        tSend.txt="event,buttonPress2,screensaver,swipeDown"
+                    }else if(ycR.val>80)
+                    {
+                        //tDirNew.txt="up"
+                        tSend.txt="event,buttonPress2,screensaver,swipeUp"
+                    }else
+                    {
+                        //tDirNew.txt="invalid"
+                    }
+                    // y difference between -125 and 125 (swipe on x-axis)
+                }else if(ycR.val>-125&&ycR.val<125)
+                {
+                    //tStatusNew.txt="y low, -> x"
+                    if(xcR.val<-80)
+                    {
+                        //tDirNew.txt="right"
+                        tSend.txt="event,buttonPress2,screensaver,swipeRight"
+                    }else if(xcR.val>80)
+                    {
+                        //tDirNew.txt="left"
+                        tSend.txt="event,buttonPress2,screensaver,swipeLeft"
+                    }else
+                    {
+                        //tDirNew.txt="invalid"
+                    }
+                    //diagonal swipe invalid
+                }else
+                {
+                    //tStatusNew.txt="invalid"
+                    //tDirNew.txt="diagonal"
+                }
+            }
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC

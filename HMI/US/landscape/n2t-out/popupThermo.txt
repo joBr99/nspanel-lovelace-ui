@@ -42,7 +42,7 @@ Page popupThermo
             prints tSend.txt,0
             prints crcval,2
             popupThermo.bco=defaultBcoColor
-            for(sys0=0;sys0<24;sys0++)
+            for(sys0=0;sys0<43;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
