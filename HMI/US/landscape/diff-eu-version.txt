@@ -12,7 +12,7 @@
 │ -    // fix touch offset
 │ -    lcd_dev fffb 0002 0000 0020
 │ -    page pageStartup
-├── pageStartup.txt
+├── bSendStartup.txt
 │ @@ -173,15 +173,15 @@
 │          Max. Text Size                      : 10
 │      
@@ -30,52 +30,3 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-├── screensaver.txt
-│┄ ordering differences only
-│ @@ -64,40 +64,40 @@
-│      
-│  Variable (string) tSend
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 50
-│      
-│ -Variable (int32) xc1
-│ +Variable (int32) xcR
-│      Attributes
-│          Scope: local
-│          Value: 0
-│      
-│ -Variable (int32) yc1
-│ +Variable (int32) ycR
-│      Attributes
-│          Scope: local
-│          Value: 0
-│      
-│ -Variable (int32) xc2
-│ +Variable (int32) yc2
-│      Attributes
-│          Scope: local
-│          Value: 0
-│      
-│ -Variable (int32) yc2
-│ +Variable (int32) xc2
-│      Attributes
-│          Scope: local
-│          Value: 0
-│      
-│ -Variable (int32) ycR
-│ +Variable (int32) yc1
-│      Attributes
-│          Scope: local
-│          Value: 0
-│      
-│ -Variable (int32) xcR
-│ +Variable (int32) xc1
-│      Attributes
-│          Scope: local
-│          Value: 0
-│      
-│  Text tTime
-│      Attributes
-│          Scope                               : local
