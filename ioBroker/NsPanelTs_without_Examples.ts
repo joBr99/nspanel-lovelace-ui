@@ -65,10 +65,10 @@ ReleaseNotes:
         - 27.10.2022 - v3.5.0.2 Applied Boy Scout Rule (Fixed some typos, changed var to let, fixed min/max colorTemp Bug)
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
-Tasmota Konsole: 
+Tasmota Konsole:
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
-    Rule2 0 (Rule deaktivieren) 
+    Rule2 0 (Rule deaktivieren)
 
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
@@ -86,39 +86,39 @@ Popup-Pages:
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
 
-Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)    
+Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
-    Lautstärke          - Volume (SET/ACTUAL) und MUTE 
-    Lautstärke-Gruppe   - analog Lautstärke 
+    Lautstärke          - Volume (SET/ACTUAL) und MUTE
+    Lautstärke-Gruppe   - analog Lautstärke
     Licht               - An/Aus (Schalter)
     Steckdose           - An/Aus (Schalter)
     Dimmer              - An/Aus, Brightness
-    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness 
-    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (HUE kann auch fehlen) 
-    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
-    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
-    Jalousien           - Up, Stop, Down, Position 
-    Fenster             - Sensor open 
-    Tür                 - Sensor open 
+    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness
+    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (HUE kann auch fehlen)
+    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
+    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
+    Jalousien           - Up, Stop, Down, Position
+    Fenster             - Sensor open
+    Tür                 - Sensor open
     Verschluss          - Türschloss SET/ACTUAL/OPEN
     Taste               - Für Szenen oder Radiosender, etc. --> Nur Funktionsaufruf - Kein Taster wie MonoButton - True/False
     Tastensensor        - analog Taste
-    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc. 
+    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc.
     Klimaanlage         - Buttons zur Steuerung der Klimaanlage im unteren Bereich
     Temperatur          - Anzeige von Temperatur - Datenpunkten, analog Info
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, analog Info
-    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
+    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
 
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden --> SetOption146 1
     Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden
-                          (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!! 
+                          (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!!
                           ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
 
-Tasmota-Status0 - (zyklische Ausführung) 
+Tasmota-Status0 - (zyklische Ausführung)
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
 
 Erforderliche Adapter:
@@ -133,7 +133,9 @@ Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.5.0.tft
 ---------------------------------------------------------------------------------------
-*/ 
+*/
+import { config } from './NsPanelTs'
+
 let Icons = new IconsSelector();
 let timeoutSlider: any;
 let manually_Update = false;
@@ -223,430 +225,11 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
 let vwIconColor = [];
 
-//-- Anfang der Beispiele für Seitengestaltung -- Aliase erforderlich ----------------
+//-- Anfang der Variablen für Seitengestaltung -- Aliase erforderlich ----------------
 
-let Test_Licht1: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "Color Aliase 1",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLichteinzeln", name: "RGB-Licht Hex-Color", interpolateColor: true},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLicht", name: "RGB-Licht", minValueBrightness: 0, maxValueBrightness: 100, interpolateColor: true},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestCTmitHUE", name: "HUE-Licht-CT", minValueBrightness: 0, maxValueBrightness: 70, minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestHUELicht", name: "HUE-Licht-Color", minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true}
-    ]
-};
 
-let CardPowerExample: PagePower =
-{
-    "type": "cardPower",
-    "heading": "cardPower Emulator",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.Power.PowerCard" },
-    ]
-};
 
-let Test_Licht2: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "Color Aliase 2",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        //Beispiel für RGB Light mit neuem PageItem-Parameter colormode: "xy" alternativ colormode: "rgb" oder weglassen
-        //Steuert im z.B. DeConz Adapter unter Lampen die Farben per CIE (XY)
-        <PageItem>{ id: "alias.0.NSPanel_2.WZ_E14_Fenster_rechts", name: "Fensterbank rechts", minValueBrightness: 0, maxValueBrightness: 100, minValueColorTemp: 500, maxValueColorTemp: 150, interpolateColor: true, colormode: "xy"},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", name: "Farbtemperatur", interpolateColor: true},
-    ]
-};
-
-let Test_Funktionen: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "Sonstige Aliase",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.TestLautstärke", offColor: MSRed, onColor: MSGreen, name: "Echo Spot Büro", minValue: 0, maxValue: 100 },
-        <PageItem>{ id: "alias.0.NSPanel_1.TestTemperatur",name: "Temperatur außen", icon: "thermometer", onColor: White },
-        <PageItem>{ id: "alias.0.NSPanel_1.TestFeuchtigkeit", name: "Luftfeuchte außen", icon: "water-percent", unit: "%H", onColor: White },
-        <PageItem>{ id: "alias.0.NSPanel_1.TestInfo", name: "Windstärke", icon: "wind-power-outline", offColor: MSRed, onColor: MSGreen, unit: "bft", minValue: 0, maxValue: 12, interpolateColor: true, useColor: true }
-    ]
-};
-
-let Buero_Seite_1: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "Büro",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe", interpolateColor: true},
-        <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", interpolateColor: true},
-        <PageItem>{ id: "alias.0.NSPanel_1.Testlampe2", name: "Filamentlampe", minValueBrightness: 0, maxValueBrightness: 70, interpolateColor: true},
-        <PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "power", icon2: "power",offColor: MSRed, onColor: MSGreen}
-    ]
-};
-
-let Fenster_1: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "Fenster und Türen",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.TestFenster", offColor: MSRed, onColor: MSGreen, name: "Büro Fenster"},
-        <PageItem>{ id: "alias.0.NSPanel_1.Haustuer", offColor: MSRed, onColor: MSGreen, name: "Haustür"},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestBlind", icon: "blinds-horizontal", offColor: White, onColor: Yellow, name: "Büro", secondRow: "Hier Text für 2. Zeile"},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestDoorlock", offColor: MSRed, onColor: MSGreen, name: "Türschloss"},
-    ]
-};
-//<PageItem>{ id: "alias.0.NS-Panel.Buero.Rollade", icon: "blinds-horizontal", offColor: White, onColor: Yellow, name: "Büro", secondRow: "Hier Text für 2. Zeile"},
-let Button_1: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "Button Aliase",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.TestTastensensor", name: "Tastensensor (FFN)"},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.NDR2", icon: "radio", name: "Taste (NDR2)", onColor: colorRadio},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestVentil1", icon: "valve-open", icon2: "valve-closed",offColor: MSRed, onColor: MSGreen, name: "Test-Ventil 1"},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.NDR2", icon: 'alarm-light', name: "Alert mit Zielseite", offColor: MSGreen, onColor: MSRed, targetPage: 'Abfall', buttonText: 'Popup'},
-    ]
-};
-
-let Subpages_1: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "Test Subpages",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ navigate: true, id: "Abfall", onColor: White, name: "Abfallkalender"},
-        <PageItem>{ navigate: true, id: "WLAN", onColor: White, name: "Gäste WLAN"},
-    ]
-};
-
-        //Subpage 1 von Subpages_1
-        let Abfall: PageEntities =
-        {
-            "type": "cardEntities",
-            "heading": "Abfallkalender",
-            "useColor": true,
-            "subPage": true,
-            "parent": Subpages_1,
-            "items": [
-                <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event1",icon: "trash-can"},
-                <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event2",icon: "trash-can"},
-                <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event3",icon: "trash-can"},
-                <PageItem>{ id: "alias.0.NSPanel_1.Abfall.event4",icon: "trash-can"}
-            ]
-        };
-
-        //Subpage 2 von Subpages_1
-        let WLAN: PageQR = 
-        {
-            "type": "cardQR",
-            "heading": "Gäste WLAN",
-            "useColor": true,
-            "subPage": true,
-            "parent": Subpages_1,
-            "items": [<PageItem>{ id: "alias.0.NSPanel_1.Guest_Wifi", hidePassword: true }]
-        };
-
-let Buero_Seite_2: PageGrid =
-{
-    "type": "cardGrid",
-    "heading": "Büro 2",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe", name: "Schreibtisch"},
-        <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung", name: "Deckenlampe"},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestFenster", offColor: MSRed, onColor: MSGreen, name: "Büro Fenster"},
-        <PageItem>{ id: "alias.0.NSPanel_1.Luftreiniger", icon: "power", offColor: MSRed, onColor: MSGreen},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestBlind", icon: "projector-screen", onColor: White, name: "Beamer", secondRow: "auch Text"},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "play", onColor: White, name: "TuneIn"}
-    ]
-};
-
-let Radiosender: PageGrid =
-{
-    "type": "cardGrid",
-    "heading": "Büro 2",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "radio", name: "Radio BOB", onColor: colorRadio}]
-};
-
-// NEW: Neue Definition von Medien-Aliasen
-// adapterPlayerInstance = alexa2.0. or spotify-premium.0. or sonos.0. or chromecast.0.
-// MEDIA ALIASE können auch per JS-Script erstellt werden https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-ALIAS-Definitionen#medien---cardmedia
-let Alexa: PageMedia = 
-{
-    "type": "cardMedia",
-    "heading": "Alexa",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{   
-                id: "alias.0.NSPanel_1.Media.PlayerAlexa2", 
-                adapterPlayerInstance: "alexa2.0.",
-                mediaDevice: "G0XXXXXXXXXXXXXX", 
-                speakerList: ['Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
-             }]
-};
-
-let Sonos: PageMedia = 
-{
-    "type": "cardMedia",
-    "heading": "Sonos",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{   
-                id: "alias.0.NSPanel_1.Media.PlayerSonos", 
-                adapterPlayerInstance: "sonos.0.",
-                mediaDevice: "192_168_1_212",
-                speakerList: ['Terrasse']
-             }]
-};
-
-let SpotifyPremium: PageMedia = 
-{
-    "type": "cardMedia",
-    "heading": "Spotify-Premium",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{ 
-                id: "alias.0.NSPanel_1.Media.PlayerSpotifyPremium", 
-                adapterPlayerInstance: "spotify-premium.0.",
-                speakerList: ['LENOVO-W11-01','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
-             }] 
-};
-
-let SqueezeboxRPC: PageMedia = 
-{
-    "type": "cardMedia",
-    "heading": "SqueezeboxRPC",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{ 
-                id: "alias.0.Media.LMS.SqueezePlay", 
-                adapterPlayerInstance: "squeezeboxrpc.0.Players.SqueezePlay.",
-                speakerList: ['SqueezePlay']
-             }] 
-};
-
-let Buero_Themostat: PageThermo = 
-{
-    "type": "cardThermo",
-    "heading": "Test Thermostat",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Thermostat_Buero", minValue: 50, maxValue: 300 }]
-};
-
-let Buero_Klimaanlage: PageThermo = 
-{
-    "type": "cardThermo",
-    "heading": "Test Klimaanlage",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{ id: "alias.0.NSPanel_1.TestKlimaanlage", minValue: 50, maxValue: 250}]
-};
-
-let Buero_Alarm: PageAlarm = 
-{
-    "type": "cardAlarm",
-    "heading": "Alarm",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{ id: "alias.0.Alarm" }]
-};
-
-//Subpages 2 (+ Info)
-let Service: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "NSPanel Service",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined, 
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_AutoUpdate", name: "Auto-Updates" ,icon: "update", offColor: MSRed, onColor: MSGreen},
-        <PageItem>{ navigate: true, id: "NSPanel_Infos", icon: "information-outline", onColor: White, name: "NSPanel Infos"},
-        <PageItem>{ navigate: true, id: "NSPanel_Firmware_Updates", icon: "update", onColor: White, name: "Manuelle-Updates"},
-        <PageItem>{ navigate: true, id: "NSPanel_Einstellungen", icon: "wrench-outline", onColor: White, name: "Einstellungen"}
-    ]
-};
-
-        //Subpage 1 von Subpages_2
-        let NSPanel_Infos: PageEntities =
-        {
-            "type": "cardEntities",
-            "heading": "NSPanel Infos",
-            "useColor": true,
-            "subPage": true,
-            "parent": Service,
-            "items": [
-                <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_Hardware", name: "Hardware", icon: "memory", offColor: MSYellow, onColor: MSYellow, useColor: true},
-                <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_ESP_Temp", name: "ESP Temperatur", icon: "thermometer", unit: "°C", offColor: MSYellow, onColor: MSYellow, useColor: true},
-                <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_UpTime", name: "Uptime", icon: "timeline-clock-outline", offColor: MSYellow, onColor: MSYellow, useColor: true},
-                <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_RSSI", name: "Wifi-Signal", icon: "signal-distance-variant", unit: "dBm", offColor: MSYellow, onColor: MSYellow, useColor: true}
-            ]
-        };
-
-        //Subpage 2 von Subpages_2
-        let NSPanel_Einstellungen: PageEntities =
-        {
-            "type": "cardEntities",
-            "heading": "Screensaver",
-            "useColor": true,
-            "subPage": true,
-            "parent": Service,
-            "items": [
-                <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_BrightnessDay", name: "Brightness Tag", icon: "brightness-5", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 5, maxValue: 10},
-                <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_BrightnessNight", name: "Brightness Nacht", icon: "brightness-4", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 4},
-                <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_HourDay", name: "Stunde Tag", icon: "sun-clock", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23},
-                <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_HourNight", name: "Stunde Nacht", icon: "sun-clock-outline", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23}
-            ]
-        };
-
-        //Subpage 3 von Subpages_2
-        let NSPanel_Firmware_Updates: PageEntities =
-        {
-            "type": "cardEntities",
-            "heading": "Firmware-Updates",
-            "useColor": true,
-            "subPage": true,
-            "parent": Service,
-            "items": [
-                <PageItem>{ id: "alias.0.NSPanel_1.Tasmota_Version", name: "Tasmota Firmware", useColor: true},
-                <PageItem>{ id: "alias.0.NSPanel_1.TFT_Firmware", name: "TFT-Firmware", useColor: true},
-                <PageItem>{ navigate: true, id: "Subpage_Level2", icon: "wrench-outline", onColor: White, name: "Subpage Level 2"}
-            ]
-        };
-
-                //Subpage1 von Subpage3 von Subpages_2
-                let Subpage2_Level_2: PageEntities =
-                {
-                    "type": "cardEntities",
-                    "heading": "Firmware-Updates",
-                    "useColor": true,
-                    "subPage": true,
-                    "parent": NSPanel_Firmware_Updates,
-                    "items": [
-                        <PageItem>{ id: "alias.0.NSPanel_1.Tasmota_Version", name: "Tasmota Firmware", useColor: true},
-                        <PageItem>{ id: "alias.0.NSPanel_1.TFT_Firmware", name: "TFT-Firmware", useColor: true},
-                    ]
-                };
-
-let button1Page: PageGrid =
-{
-    "type": "cardGrid",
-    "heading": "Radio",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.FFN", icon: "radio", name: "FFN", onColor: colorRadio},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Antenne" , icon: "radio", name: "Antenne Nds.", onColor: colorRadio},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.NDR2", icon: "radio", name: "NDR2", onColor: colorRadio},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "radio", name: "Radio BOB", onColor: colorRadio},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Spotify", icon: "spotify", name: "Party Playlist", onColor: colorSpotify},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Alexa", icon: "playlist-music", name: "Playlist 2021", onColor: colorAlexa}
-    ]
-};
-
-let button2Page: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "Büro",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe"},
-        <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung"}
-    ]
-};
-
-//-- ENDE der Beispiele für Seitengestaltung -- Aliase erforderlich ------------------
-
-export const config: Config = {
-    panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // anpassen
-    panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
-    firstScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Hourly.h0.PrecipitationProbability', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
-    secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
-    thirdScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.UVIndex', ScreensaverEntityIcon: 'solar-power', ScreensaverEntityText: 'UV', ScreensaverEntityUnitText: '', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} },
-    fourthScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
-    alternativeScreensaverLayout: false,
-    autoWeatherColorScreensaverLayout: true,
-    mrIcon1ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER1', ScreensaverEntityIcon: 'light-switch', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: Off  },
-    mrIcon2ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER2', ScreensaverEntityIcon: 'lightbulb', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: Off  },
-    timeoutScreensaver: 20,
-    dimmode: 20,
-    active: 100, //Standard-Brightness TFT
-    screenSaverDoubleClick: true,
-    locale: 'de-DE',                    // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
-    timeFormat: '%H:%M',                // currently not used 
-    dateFormat: '%A, %d. %B %Y',        // currently not used 
-    weatherEntity: 'alias.0.Wetter',    // Dieser Alias muss erstellt werden, damit die 4 kleineren Icons (Wetter oder DP) angezeigt werden können
-    defaultOffColor: Off,
-    defaultOnColor: On,
-    defaultColor: Off,
-    defaultBackgroundColor: Black,    //New Parameter
-    temperatureUnit: '°C',
-    pages: [
-            SqueezeboxRPC,      //Beispiel-Seite
-            Buero_Seite_1,      //Beispiel-Seite
-            CardPowerExample,   //Beispiel-Seite
-            SpotifyPremium,     //Beispiel-Seite
-            Alexa,              //Beispiel-Seite
-            Buero_Seite_2,      //Beispiel-Seite
-            Buero_Klimaanlage,  //Beispiel-Seite 
-            Button_1,           //Beispiel-Seite
-            Test_Licht1,        //Beispiel-Seite
-            Test_Licht2,        //Beispiel-Seite
-            Test_Funktionen,    //Beispiel-Seite    
-            Fenster_1,          //Beispiel-Seite
-            Subpages_1,         //Beispiel-Seite
-            Buero_Themostat,    //Beispiel-Seite
-            Buero_Alarm,        //Beispiel-Seite
-            Service             //Beispiel-Seite
-    ],
-    subPages: [
-                Abfall,                     //Beispiel-Unterseite
-                WLAN,                       //Beispiel-Unterseite
-                NSPanel_Infos,              //Beispiel-Unterseite
-                NSPanel_Einstellungen,      //Beispiel-Unterseite
-                NSPanel_Firmware_Updates,   //Beispiel-Unterseite
-                Subpage2_Level_2
-    ],
-    button1Page: button1Page,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
-    button2Page: button2Page    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
-};
+//-- ENDE der Variablen für Seitengestaltung -- Aliase erforderlich ------------------
 
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
@@ -704,22 +287,22 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
         }
     } catch (err) {
         console.warn('function ScreensaverDimmode: ' + err.message);
-    }     
+    }
 }
 
 async function InitWeatherForecast() {
     try {
         //----Möglichkeit, im Screensaver zwischen Accu-Weather Forecast oder selbstdefinierten Werten zu wählen---------------------------------
-        if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false || 
-            existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false || 
-            existsState(NSPanel_Path + "ScreensaverInfo.entityChangeTime") == false) {
+        if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false ||
+          existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false ||
+          existsState(NSPanel_Path + "ScreensaverInfo.entityChangeTime") == false) {
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean' });
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.entityChangeTime", 60, { type: 'number' });
         }
     } catch (err) {
         console.warn('function InitWeatherForecast: ' + err.message);
-    }      
+    }
 }
 
 InitWeatherForecast();
@@ -771,7 +354,7 @@ async function InitDimmode() {
         ScreensaverDimmode(timeDimMode);
     } catch (err) {
         console.warn('function InitDimmode: ' + err.message);
-    }  
+    }
 }
 
 InitDimmode();
@@ -794,7 +377,7 @@ const popupNotifyButton2TextColor = NSPanel_Path + 'popupNotify.popupNotifyButto
 const popupNotifyButton2Text = NSPanel_Path + 'popupNotify.popupNotifyButton2Text';
 const popupNotifySleepTimeout = NSPanel_Path + 'popupNotify.popupNotifySleepTimeout'; // in sek. / wenn 0, dann bleibt die Nachricht stehen
 const popupNotifyAction = NSPanel_Path + 'popupNotify.popupNotifyAction'; // Antwort aus dem Panel true/false
-const popupNotifyLayout = NSPanel_Path + 'popupNotify.popupNotifyLayout';  
+const popupNotifyLayout = NSPanel_Path + 'popupNotify.popupNotifyLayout';
 const popupNotifyFontIdText = NSPanel_Path + 'popupNotify.popupNotifyFontIdText';  // 1 - 5
 const popupNotifyIcon = NSPanel_Path + 'popupNotify.popupNotifyIcon';  // 1 - 5
 const popupNotifyIconColor = NSPanel_Path + 'popupNotify.popupNotifyIconColor';  // 1 - 5
@@ -812,14 +395,14 @@ async function InitPopupNotify() {
         }
 
         await createStateAsync(popupNotifyHeading, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyHeadingColor, <iobJS.StateCommon>{ type: 'string' });        
+        await createStateAsync(popupNotifyHeadingColor, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifyText, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyTextColor, <iobJS.StateCommon>{ type: 'string' });      
+        await createStateAsync(popupNotifyTextColor, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifyInternalName, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifyButton1Text, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyButton1TextColor, <iobJS.StateCommon>{ type: 'string' });      
+        await createStateAsync(popupNotifyButton1TextColor, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifyButton2Text, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyButton2TextColor, <iobJS.StateCommon>{ type: 'string' });  
+        await createStateAsync(popupNotifyButton2TextColor, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifySleepTimeout, <iobJS.StateCommon>{ type: 'number' });
         await createStateAsync(popupNotifyAction, <iobJS.StateCommon>{ type: 'boolean' });
         await createStateAsync(popupNotifyLayout, <iobJS.StateCommon>{ type: 'number' });
@@ -853,22 +436,22 @@ async function InitPopupNotify() {
             let v_popupNotifyIcon = (getState(popupNotifyIcon).val != null) ? getState(popupNotifyIcon).val : 'alert'
 
             notification = 'entityUpdateDetail' + '~'
-                + getState(popupNotifyInternalName).val + '~'
-                + getState(popupNotifyHeading).val + '~'
-                + v_popupNotifyHeadingColor + '~'
-                + getState(popupNotifyButton1Text).val + '~'
-                + v_popupNotifyButton1TextColor + '~'
-                + getState(popupNotifyButton2Text).val + '~'
-                + v_popupNotifyButton2TextColor + '~'
-                + getState(popupNotifyText).val + '~'
-                + v_popupNotifyTextColor + '~'
-                + getState(popupNotifySleepTimeout).val;
+              + getState(popupNotifyInternalName).val + '~'
+              + getState(popupNotifyHeading).val + '~'
+              + v_popupNotifyHeadingColor + '~'
+              + getState(popupNotifyButton1Text).val + '~'
+              + v_popupNotifyButton1TextColor + '~'
+              + getState(popupNotifyButton2Text).val + '~'
+              + v_popupNotifyButton2TextColor + '~'
+              + getState(popupNotifyText).val + '~'
+              + v_popupNotifyTextColor + '~'
+              + getState(popupNotifySleepTimeout).val;
 
             if (getState(popupNotifyLayout).val == 2) {
                 notification = notification + '~'
-                + v_popupNotifyFontIdText + '~'
-                + Icons.GetIcon(v_popupNotifyIcon) + '~'
-                + v_popupNotifyIconColor;
+                  + v_popupNotifyFontIdText + '~'
+                  + Icons.GetIcon(v_popupNotifyIcon) + '~'
+                  + v_popupNotifyIconColor;
             }
 
             setIfExists(config.panelSendTopic, 'pageType~popupNotify');
@@ -877,7 +460,7 @@ async function InitPopupNotify() {
         });
     } catch (err) {
         console.warn('function InitPopupNotify: ' + err.message);
-    }   
+    }
 }
 
 InitPopupNotify();
@@ -895,7 +478,7 @@ schedule('* * * * *', () => {
         SendTime();
     } catch (err) {
         console.warn('schedule: ' + err.message);
-    }   
+    }
 });
 
 //Wechsel zwischen Screensaver Entities und WeatherForecast
@@ -903,13 +486,13 @@ schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val 
     try {
         //WeatherForecast true/false Umschaltung verzögert
         if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
-            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false); 
+            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false);
         } else if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == false && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
             setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false);
         }
     } catch (err) {
         console.warn('schedule: ' + err.message);
-    }   
+    }
 });
 
 function InitHWButton1Color() {
@@ -921,7 +504,7 @@ function InitHWButton1Color() {
         }
     } catch (err) {
         console.warn('function InitHWButton1Color: ' + err.message);
-    }    
+    }
 }
 InitHWButton1Color();
 
@@ -991,7 +574,7 @@ function get_locales() {
         });
     } catch (err) {
         console.error('error requesting locales in function get_locales: ' + err.message);
-    }    
+    }
 }
 
 async function check_updates() {
@@ -1606,7 +1189,7 @@ function GeneratePage(page: Page): void {
 }
 
 function HandleHardwareButton(method: string): void {
-    try {    
+    try {
         let page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | PageQR | PagePower);
         if (config.button1Page !== null && method == 'button1') {
             page = config.button1Page;
@@ -1792,7 +1375,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
                     }
 
-                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true) { 
+                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true) {
                         if (existsState(pageItem.id + '.HUE')) {
                             if (getState(pageItem.id + '.HUE').val != null) {
                                 let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
@@ -1919,11 +1502,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             iconColor = GetIconColor(pageItem, true, useColors);
                             gateState = findLocale('window', 'opened');
                         }
- 
+
                         RegisterEntityWatcher(pageItem.id + '.ACTUAL');
- 
+
                     }
- 
+
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
 
                 case 'door':
@@ -2107,7 +1690,7 @@ function findLocale(controlsObject: string, controlsState: string): string {
             if (Debug) {
                 console.log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState);
             }
-        } else { 
+        } else {
             console.warn('function findLocale: ' + err.message);
         }
         return controlsState;
@@ -2126,11 +1709,11 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
             value = value < minValue ? minValue : value;
 
             return rgb_dec565(
-                Interpolate(
-                    pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor,
-                    pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor,
-                    scale(value, minValue, maxValue, 0, 1)
-                )
+              Interpolate(
+                pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor,
+                pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor,
+                scale(value, minValue, maxValue, 0, 1)
+              )
             );
         }
 
@@ -2288,9 +1871,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                     for (let i_index in i_list) {
                         let thermostatState = i_list[i_index].split('.');
                         if (
-                            thermostatState[thermostatState.length - 1] != 'SET' &&
-                            thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
-                            thermostatState[thermostatState.length - 1] != 'MODE'
+                          thermostatState[thermostatState.length - 1] != 'SET' &&
+                          thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
+                          thermostatState[thermostatState.length - 1] != 'MODE'
                         ) {
                             i++;
 
@@ -2439,22 +2022,22 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
             out_msgs.push({
                 payload: 'entityUpd~'
-                    + name + '~'                                    // Heading
-                    + GetNavigationString(pageId) + '~'             // Page Navigation
-                    + id + '~'                                      // internalNameEntity
-                    + currentTemp + config.temperatureUnit + '~'    // Ist-Temperatur (String)
-                    + destTemp + '~'                                // Soll-Temperatur (numerisch ohne Komma)
-                    + statusStr + '~'                               // Mode
-                    + minTemp + '~'                                 // Thermostat Min-Temperatur
-                    + maxTemp + '~'                                 // Thermostat Max-Temperatur
-                    + stepTemp + '~'                                // Schritte für Soll (5°C)
-                    + icon_res                                      // Icons Status
-                    + findLocale('thermostat', 'Currently') + '~'   // Bezeichner vor Aktueller Raumtemperatur
-                    + findLocale('thermostat', 'State') + '~'       // Bezeichner vor
-                    + '~'                                           // Bezeichner vor HVAC -- Gibt es nicht mehr
-                    + config.temperatureUnit + '~'                  // Bezeichner hinter Solltemp
-                    + '' + '~'                                      // iconTemperature dstTempTwoTempMode
-                    + ''                                            // dstTempTwoTempMode
+                  + name + '~'                                    // Heading
+                  + GetNavigationString(pageId) + '~'             // Page Navigation
+                  + id + '~'                                      // internalNameEntity
+                  + currentTemp + config.temperatureUnit + '~'    // Ist-Temperatur (String)
+                  + destTemp + '~'                                // Soll-Temperatur (numerisch ohne Komma)
+                  + statusStr + '~'                               // Mode
+                  + minTemp + '~'                                 // Thermostat Min-Temperatur
+                  + maxTemp + '~'                                 // Thermostat Max-Temperatur
+                  + stepTemp + '~'                                // Schritte für Soll (5°C)
+                  + icon_res                                      // Icons Status
+                  + findLocale('thermostat', 'Currently') + '~'   // Bezeichner vor Aktueller Raumtemperatur
+                  + findLocale('thermostat', 'State') + '~'       // Bezeichner vor
+                  + '~'                                           // Bezeichner vor HVAC -- Gibt es nicht mehr
+                  + config.temperatureUnit + '~'                  // Bezeichner hinter Solltemp
+                  + '' + '~'                                      // iconTemperature dstTempTwoTempMode
+                  + ''                                            // dstTempTwoTempMode
             });
 
         }
@@ -2471,7 +2054,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 function GenerateMediaPage(page: PageMedia): Payload[] {
     try {
         let id = page.items[0].id
-        
+
         let out_msgs: Array<Payload> = [];
 
         out_msgs.push({ payload: 'pageType~cardMedia' });
@@ -2479,7 +2062,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
             let author = getState(id + '.ARTIST').val;
-            
+
             let vInstance = page.items[0].adapterPlayerInstance;
             let v1Adapter = vInstance.split('.');
             let v2Adapter = v1Adapter[0];
@@ -2498,7 +2081,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 } else if (name.substring(0,6) == 'Album:') {
                     let nameLength = name.length;
                     name = name.slice(10, nameLength);
-                } else if (name.substring(0,6) == 'Track') { 
+                } else if (name.substring(0,6) == 'Track') {
                     name = 'Spotify-Premium';
                 }
                 if (nameLength == 0) {
@@ -2509,7 +2092,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     author = getState(id + '.ARTIST').val;
                 }
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';               
+                    author = 'no music to control';
                 }
             }
 
@@ -2520,10 +2103,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 let nameLenght = name.length;
                 if (nameLenght == 0) {
                     name = 'Sonos Player';
-                } 
+                }
                 author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';               
+                    author = 'no music to control';
                 }
             }
 
@@ -2534,7 +2117,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 if (nameLength == 0) {
                     name = 'Squeezebox RPC';
                     author = 'no music to control';
-                } 
+                }
             }
 
             //Alexa2
@@ -2543,10 +2126,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 let nameLength = name.length;
                 if (nameLength == 0) {
                     name = 'Alexa Player';
-                    author = 'no music to control';  
-                } 
+                    author = 'no music to control';
+                }
             }
-            
+
             let volume = getState(id + '.VOLUME').val;
             let iconplaypause = Icons.GetIcon('pause'); //pause
             let onoffbutton = 1374;
@@ -2576,7 +2159,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             if (v2Adapter == 'alexa2') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', page.items[0].mediaDevice, '.Info.name'].join(''))).val;
             } else if (v2Adapter == 'spotify-premium') {
-                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'player.device.name'].join(''))).val; 
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'player.device.name'].join(''))).val;
             } else if (v2Adapter == 'sonos') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.members'].join(''))).val;
             } else if (v2Adapter == 'squeezeboxrpc') {
@@ -2599,8 +2182,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     let deviceId = i;
                     deviceId = deviceId.split('.');
                     if (getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.online'].join(''))).val &&
-                        existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Player'].join(''))) &&
-                        existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Commands'].join('')))) {
+                      existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Player'].join(''))) &&
+                      existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Commands'].join('')))) {
                         speakerList = speakerList + getState(i).val + '?';
                     }
                 }
@@ -2610,17 +2193,17 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
             out_msgs.push({
                 payload: 'entityUpd~' +                   //entityUpd
-                    name + '~' +                          //heading
-                    GetNavigationString(pageId) + '~' +   //navigation
-                    id + '~' +                            //internalNameEntiy
-                    media_icon + '~' +                    //icon
-                    title + '~' +                         //title
-                    author + '~' +                        //author
-                    volume + '~' +                        //volume
-                    iconplaypause + '~' +                 //playpauseicon
-                    currentSpeaker + '~' +                //currentSpeaker
-                    speakerList + '~' +                   //speakerList-seperated-by-?
-                    onoffbutton
+                  name + '~' +                          //heading
+                  GetNavigationString(pageId) + '~' +   //navigation
+                  id + '~' +                            //internalNameEntiy
+                  media_icon + '~' +                    //icon
+                  title + '~' +                         //title
+                  author + '~' +                        //author
+                  volume + '~' +                        //volume
+                  iconplaypause + '~' +                 //playpauseicon
+                  currentSpeaker + '~' +                //currentSpeaker
+                  speakerList + '~' +                   //speakerList-seperated-by-?
+                  onoffbutton
             });                        //On/Off Button Color
         }
         if (Debug) {
@@ -2636,7 +2219,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
     try {
         activePage = page;
         let id = page.items[0].id
-        
+
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
         let nsPath = NSPanel_Alarm_Path + 'Alarm.';
@@ -2713,20 +2296,20 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
 
             out_msgs.push({
                 payload: 'entityUpd~' +                          //entityUpd~*
-                    id + '~' +                              //internalNameEntity*~*
-                    GetNavigationString(pageId) + '~' +     //navigation*~* --> hiddenCards
-                    arm1 + '~' +                            //arm1*~*
-                    arm1ActionName + '~' +                  //arm1ActionName*~*
-                    arm2 + '~' +                            //arm2*~*
-                    arm2ActionName + '~' +                  //arm2ActionName*~*
-                    arm3 + '~' +                            //arm3*~*
-                    arm3ActionName + '~' +                  //arm3ActionName*~*
-                    arm4 + '~' +                            //arm4*~*
-                    arm4ActionName + '~' +                  //arm4ActionName*~*
-                    icon + '~' +                            //icon*~*
-                    iconcolor + '~' +                       //iconcolor*~*
-                    numpadStatus + '~' +                    //numpadStatus*~*
-                    flashing
+                  id + '~' +                              //internalNameEntity*~*
+                  GetNavigationString(pageId) + '~' +     //navigation*~* --> hiddenCards
+                  arm1 + '~' +                            //arm1*~*
+                  arm1ActionName + '~' +                  //arm1ActionName*~*
+                  arm2 + '~' +                            //arm2*~*
+                  arm2ActionName + '~' +                  //arm2ActionName*~*
+                  arm3 + '~' +                            //arm3*~*
+                  arm3ActionName + '~' +                  //arm3ActionName*~*
+                  arm4 + '~' +                            //arm4*~*
+                  arm4ActionName + '~' +                  //arm4ActionName*~*
+                  icon + '~' +                            //icon*~*
+                  iconcolor + '~' +                       //iconcolor*~*
+                  numpadStatus + '~' +                    //numpadStatus*~*
+                  flashing
             });                             //flashing*
 
             if (Debug) {
@@ -2785,21 +2368,21 @@ function GenerateQRPage(page: PageQR): Payload[] {
 
         out_msgs.push({
             payload: 'entityUpd~' +                     //entityUpd
-                heading + '~' +                         //heading
-                GetNavigationString(pageId) + '~' +     //navigation
-                textQR + '~' +                          //textQR
-                type1 + '~' +                           //type
-                internalName1 + '~' +                   //internalName
-                iconId1 + '~' +                         //iconId
-                65535 + '~' +                           //iconColor
-                displayName1 + '~' +                    //displayName
-                optionalValue1 + '~' +                  //optionalValue
-                type2 + '~' +                           //type
-                internalName2 + '~' +                   //internalName
-                iconId2 + '~' +                         //iconId
-                65535 + '~' +                           //iconColor
-                displayName2 + '~' +                    //displayName
-                optionalValue2
+              heading + '~' +                         //heading
+              GetNavigationString(pageId) + '~' +     //navigation
+              textQR + '~' +                          //textQR
+              type1 + '~' +                           //type
+              internalName1 + '~' +                   //internalName
+              iconId1 + '~' +                         //iconId
+              65535 + '~' +                           //iconColor
+              displayName1 + '~' +                    //displayName
+              optionalValue1 + '~' +                  //optionalValue
+              type2 + '~' +                           //type
+              internalName2 + '~' +                   //internalName
+              iconId2 + '~' +                         //iconId
+              65535 + '~' +                           //iconColor
+              displayName2 + '~' +                    //displayName
+              optionalValue2
         });                       //optionalValue
 
         //entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
@@ -2821,18 +2404,18 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         let demoMode = false;
         let id;
 
-        try { 
+        try {
             id = page.items[0].id
         } catch (err) {
             console.log("Kein PageItem definiert - cardPower Demo-Modus aktiv");
             demoMode = true;
-        } 
+        }
 
         let heading = 'cardPower Example';
         if (demoMode != true) {
             let o = getObject(id)
-             heading = page.heading !== undefined ? page.heading : o.common.name.de
-        } 
+            heading = page.heading !== undefined ? page.heading : o.common.name.de
+        }
 
         const obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
 
@@ -2853,11 +2436,11 @@ function GeneratePowerPage(page: PagePower): Payload[] {
                 array_icon[obji + 1] = obj[obji].icon;
                 array_powerspeed[obji + 1] = obj[obji].speed;
                 array_powerstate[obji + 1] = obj[obji].value + ' ' + obj[obji].unit ;
-            } 
+            }
         }
 
         let power_string : any = '';
-        
+
         for (let i = 1; i < 7; i++ ) {
             power_string = power_string + rgb_dec565(array_icon_color[i]) + '~';    // icon_color~
             power_string = power_string + Icons.GetIcon(array_icon[i]) + '~';       // icon~
@@ -2865,16 +2448,16 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             power_string = power_string + array_powerstate[i] + '~';                // entity.state~
         }
 
-        power_string = power_string.substring(0, power_string.length - 1); 
+        power_string = power_string.substring(0, power_string.length - 1);
 
         out_msgs.push({
             payload: 'entityUpd~' +                         //entityUpd~*
-                heading                         + '~' +     //internalNameEntity*~*
-                GetNavigationString(pageId)     + '~' +     //navigation*~*
-                rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
-                Icons.GetIcon(array_icon[0])    + '~' +     // icon~            Mitte
-                array_powerspeed[0]             + '~' +     // entity.state~    Mitte
-                power_string              
+              heading                         + '~' +     //internalNameEntity*~*
+              GetNavigationString(pageId)     + '~' +     //navigation*~*
+              rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
+              Icons.GetIcon(array_icon[0])    + '~' +     // icon~            Mitte
+              array_powerspeed[0]             + '~' +     // entity.state~    Mitte
+              power_string
         });
 
         return out_msgs
@@ -2902,7 +2485,7 @@ function setIfExists(id: string, value: any, type: string | null = null): boolea
         return false;
     } catch (err) {
         console.warn('function setIfExists: ' + err.message);
-    }        
+    }
 }
 
 function toggleState(id: string): boolean {
@@ -2915,7 +2498,7 @@ function toggleState(id: string): boolean {
         return false;
     } catch (err) {
         console.warn('function toggleState: ' + err.message);
-    }  
+    }
 }
 
 function HandleButtonEvent(words): void {
@@ -3078,7 +2661,7 @@ function HandleButtonEvent(words): void {
                 break;
             case 'tiltClose':
                 setIfExists(id + '.TILT_CLOSE', true);
-                break;    
+                break;
             case 'tiltSlider':
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                 timeoutSlider = setTimeout(async function () {
@@ -3148,7 +2731,7 @@ function HandleButtonEvent(words): void {
                         setIfExists(id + '.BLUE', rgb.blue);
                         break;
                     case 'rgbSingle':
-                        let pageItem = findPageItem(id); 
+                        let pageItem = findPageItem(id);
                         if (pageItem.colormode == "xy") {
                             //Für z.B. Deconz XY
                             setIfExists(id + ".RGB", rgb_to_cie(rgb.red, rgb.green, rgb.blue));
@@ -3169,7 +2752,7 @@ function HandleButtonEvent(words): void {
             case 'media-back':
                 setIfExists(id + '.PREV', true);
                 setTimeout(function(){
-                    GeneratePage(activePage);  
+                    GeneratePage(activePage);
                 },3000)
                 break;
             case 'media-pause':
@@ -3192,13 +2775,13 @@ function HandleButtonEvent(words): void {
                     }
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);  
+                    GeneratePage(activePage);
                 },3000)
                 break;
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
                 setTimeout(function(){
-                    GeneratePage(activePage);  
+                    GeneratePage(activePage);
                 },3000)
                 break;
             case 'volumeSlider':
@@ -3231,7 +2814,7 @@ function HandleButtonEvent(words): void {
                         break;
                     case 'chromecast':
                         break;
-                }        
+                }
                 break;
             case 'media-OnOff':
                 let pageItemTem = findPageItem(id);
@@ -3257,19 +2840,19 @@ function HandleButtonEvent(words): void {
                     switch (words[4]) {
                         case 'BOOT':
                             setIfExists(words[2] + '.' + 'BOOST', !getState(words[2] + '.' + 'BOOST').val)
-                            break;                
+                            break;
                         case 'PART':
                             setIfExists(words[2] + '.' + 'PARTY', !getState(words[2] + '.' + 'PARTY').val)
-                            break;                
+                            break;
                         case 'AUTT':
                             setIfExists(words[2] + '.' + 'AUTOMATIC', !getState(words[2] + '.' + 'AUTOMATIC').val)
-                            break;                
+                            break;
                         case 'MANT':
                             setIfExists(words[2] + '.' + 'MANUAL', !getState(words[2] + '.' + 'MANUAL').val)
-                            break;                
+                            break;
                         case 'VACT':
                             setIfExists(words[2] + '.' + 'VACATION', !getState(words[2] + '.' + 'VACATION').val)
-                            break;                
+                            break;
                     }
                     let modes = ['BOOT', 'PART', 'AUTT', 'MANT', 'VACT']
                     let modesDP = ['BOOST', 'PARTY', 'AUTOMATIC', 'MANUAL', 'VACATION']
@@ -3332,8 +2915,8 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);  
-                },250) 
+                    GeneratePage(activePage);
+                },250)
                 break;
             case 'A2': // Alarm-Page Alarm 2 aktivieren
                 if (words[4] != '') {
@@ -3343,8 +2926,8 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);  
-                },250)             
+                    GeneratePage(activePage);
+                },250)
                 break;
             case 'A3': // Alarm-Page Alarm 3 aktivieren
                 if (words[4] != '') {
@@ -3354,8 +2937,8 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);  
-                },250)            
+                    GeneratePage(activePage);
+                },250)
                 break;
             case 'A4': // Alarm-Page Alarm 4 aktivieren
                 if (words[4] != '') {
@@ -3365,8 +2948,8 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);  
-                },250)          
+                    GeneratePage(activePage);
+                },250)
                 break;
             case 'D1': // Alarm-Page Alarm Deaktivieren
                 if (Debug) {
@@ -3387,7 +2970,7 @@ function HandleButtonEvent(words): void {
                     }
                     setIfExists(id + '.PANEL', NSPanel_Path);
                     setTimeout(function(){
-                        GeneratePage(activePage);  
+                        GeneratePage(activePage);
                     },500)
                 }
                 break;
@@ -3423,7 +3006,7 @@ function GetNavigationString(pageId: number): string {
         }
     } catch (err) {
         console.log('function GetNavigationString: ' + err.message);
-    }         
+    }
 }
 
 function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
@@ -3460,16 +3043,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   // entityUpdateDetail
-                            + id + '~'
-                            + icon + '~'   // iconId
-                            + iconColor + '~'   // iconColor
-                            + switchVal + '~'   // buttonState
-                            + 'disable' + '~'   // sliderBrightnessPos
-                            + 'disable' + '~'   // sliderColorTempPos
-                            + 'disable' + '~'   // colorMode
-                            + ''        + '~'   // Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
+                          + id + '~'
+                          + icon + '~'   // iconId
+                          + iconColor + '~'   // iconColor
+                          + switchVal + '~'   // buttonState
+                          + 'disable' + '~'   // sliderBrightnessPos
+                          + 'disable' + '~'   // sliderColorTempPos
+                          + 'disable' + '~'   // colorMode
+                          + ''        + '~'   // Color-Bezeichnung
+                          + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
+                          + findLocale('lights', 'Brightness')
                     });         // Brightness-Bezeichnung
                 }
 
@@ -3509,16 +3092,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                            + id + '~'
-                            + icon + '~'        //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'  //sliderBrightnessPos
-                            + 'disable' + '~'   //sliderColorTempPos
-                            + 'disable' + '~'   //colorMod
-                            + ''        + '~'   //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
+                          + id + '~'
+                          + icon + '~'        //iconId
+                          + iconColor + '~'   //iconColor
+                          + switchVal + '~'   //buttonState
+                          + brightness + '~'  //sliderBrightnessPos
+                          + 'disable' + '~'   //sliderColorTempPos
+                          + 'disable' + '~'   //colorMod
+                          + ''        + '~'   //Color-Bezeichnung
+                          + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                          + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
 
                     console.log('light.' + id)
@@ -3578,16 +3161,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                            + id + '~'
-                            + icon + '~'   //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'   //sliderBrightnessPos
-                            + colorTemp + '~'   //sliderColorTempPos
-                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color'   + '~'   //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
+                          + id + '~'
+                          + icon + '~'   //iconId
+                          + iconColor + '~'   //iconColor
+                          + switchVal + '~'   //buttonState
+                          + brightness + '~'   //sliderBrightnessPos
+                          + colorTemp + '~'   //sliderColorTempPos
+                          + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                          + 'Color'   + '~'   //Color-Bezeichnung
+                          + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                          + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
                 }
 
@@ -3643,16 +3226,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                            + id + '~'
-                            + icon + '~'   //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'   //sliderBrightnessPos
-                            + colorTemp + '~'   //sliderColorTempPos
-                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'   //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
+                          + id + '~'
+                          + icon + '~'   //iconId
+                          + iconColor + '~'   //iconColor
+                          + switchVal + '~'   //buttonState
+                          + brightness + '~'   //sliderBrightnessPos
+                          + colorTemp + '~'   //sliderColorTempPos
+                          + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                          + 'Color' + '~'   //Color-Bezeichnung
+                          + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                          + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
                 }
 
@@ -3712,16 +3295,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                            + id + '~'
-                            + icon + '~'        //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'  //sliderBrightnessPos
-                            + colorTemp + '~'   //sliderColorTempPos
-                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'     //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
+                          + id + '~'
+                          + icon + '~'        //iconId
+                          + iconColor + '~'   //iconColor
+                          + switchVal + '~'   //buttonState
+                          + brightness + '~'  //sliderBrightnessPos
+                          + colorTemp + '~'   //sliderColorTempPos
+                          + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                          + 'Color' + '~'     //Color-Bezeichnung
+                          + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                          + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
                 }
 
@@ -3769,16 +3352,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
-                            + id + '~'
-                            + icon + '~'                                //iconId
-                            + iconColor + '~'                           //iconColor
-                            + switchVal + '~'                           //buttonState
-                            + brightness + '~'                          //sliderBrightnessPos
-                            + colorTemp + '~'                           //sliderColorTempPos
-                            + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'                             //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
+                          + id + '~'
+                          + icon + '~'                                //iconId
+                          + iconColor + '~'                           //iconColor
+                          + switchVal + '~'                           //buttonState
+                          + brightness + '~'                          //sliderBrightnessPos
+                          + colorTemp + '~'                           //sliderColorTempPos
+                          + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
+                          + 'Color' + '~'                             //Color-Bezeichnung
+                          + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
+                          + findLocale('lights', 'Brightness')
                     });       //Brightness-Bezeichnung
                 }
             }
@@ -3802,7 +3385,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 }
 
                 let textSecondRow = '';
-                let icon_id = icon; 
+                let icon_id = icon;
                 let icon_up = Icons.GetIcon('arrow-up');
                 let icon_stop = Icons.GetIcon('stop');
                 let icon_down = Icons.GetIcon('arrow-down');
@@ -3835,25 +3418,25 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                 out_msgs.push({
                     payload: 'entityUpdateDetail' + '~'           //entityUpdateDetail
-                        + id + '~'                                //entity_id
-                        + val + '~'                               //Shutterposition
-                        + textSecondRow + '~'                     //pos_status 2.line
-                        + findLocale('blinds', 'Position') + '~'  //pos_translation
-                        + icon_id + '~'                           //{icon_id}~
-                        + icon_up + '~'                           //{icon_up}~
-                        + icon_stop + '~'                         //{icon_stop}~
-                        + icon_down + '~'                         //{icon_down}~
-                        + icon_up_status + '~'                    //{icon_up_status}~
-                        + icon_stop_status + '~'                  //{icon_stop_status}~
-                        + icon_down_status + '~'                  //{icon_down_status}~
-                        + textTilt + '~'                           //{textTilt}~
-                        + iconTiltLeft + '~'                      //{iconTiltLeft}~
-                        + iconTiltStop + '~'                      //{iconTiltStop}~
-                        + iconTiltRight + '~'                     //{iconTiltRight}~
-                        + iconTiltLeftStatus + '~'                //{iconTiltLeftStatus}~
-                        + iconTiltStopStatus + '~'                //{iconTiltStopStatus}~
-                        + iconTiltRightStatus + '~'               //{iconTiltRightStatus}~
-                        + tilt_pos                                //{tilt_pos}")
+                      + id + '~'                                //entity_id
+                      + val + '~'                               //Shutterposition
+                      + textSecondRow + '~'                     //pos_status 2.line
+                      + findLocale('blinds', 'Position') + '~'  //pos_translation
+                      + icon_id + '~'                           //{icon_id}~
+                      + icon_up + '~'                           //{icon_up}~
+                      + icon_stop + '~'                         //{icon_stop}~
+                      + icon_down + '~'                         //{icon_down}~
+                      + icon_up_status + '~'                    //{icon_up_status}~
+                      + icon_stop_status + '~'                  //{icon_stop_status}~
+                      + icon_down_status + '~'                  //{icon_down_status}~
+                      + textTilt + '~'                           //{textTilt}~
+                      + iconTiltLeft + '~'                      //{iconTiltLeft}~
+                      + iconTiltStop + '~'                      //{iconTiltStop}~
+                      + iconTiltRight + '~'                     //{iconTiltRight}~
+                      + iconTiltLeftStatus + '~'                //{iconTiltLeftStatus}~
+                      + iconTiltStopStatus + '~'                //{iconTiltStopStatus}~
+                      + iconTiltRightStatus + '~'               //{iconTiltRightStatus}~
+                      + tilt_pos                                //{tilt_pos}")
                 });
             }
         }
@@ -3862,7 +3445,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
     } catch (err) {
         console.log('function GenerateDetailPage: ' + err.message);
-    } 
+    }
 }
 
 function scale(number: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
@@ -3870,7 +3453,7 @@ function scale(number: number, inMin: number, inMax: number, outMin: number, out
         return (outMax + outMin) - ((number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin);
     } catch (err) {
         console.log('function scale: ' + err.message);
-    } 
+    }
 }
 
 function UnsubscribeWatcher(): void {
@@ -3881,7 +3464,7 @@ function UnsubscribeWatcher(): void {
         }
     } catch (err) {
         console.log('function UnsubscribeWatcher: ' + err.message);
-    }         
+    }
 }
 
 function HandleScreensaver(): void {
@@ -3897,16 +3480,16 @@ function HandleScreensaverUpdate(): void {
             let icon = getState(config.weatherEntity + '.ICON').val;
 
             let temperature =
-                existsState(config.weatherEntity + '.ACTUAL') ? getState(config.weatherEntity + '.ACTUAL').val :
-                    existsState(config.weatherEntity + '.TEMP') ? getState(config.weatherEntity + '.TEMP').val : 'null';
+              existsState(config.weatherEntity + '.ACTUAL') ? getState(config.weatherEntity + '.ACTUAL').val :
+                existsState(config.weatherEntity + '.TEMP') ? getState(config.weatherEntity + '.TEMP').val : 'null';
 
             if (config.alternativeScreensaverLayout) {
                 temperature = parseInt(Math.round(temperature).toFixed());
             }
 
             let payloadString =
-                'weatherUpdate~' + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + '~'
-                + temperature + ' ' + config.temperatureUnit + '~';
+              'weatherUpdate~' + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + '~'
+              + temperature + ' ' + config.temperatureUnit + '~';
 
             vwIconColor[0] = GetAccuWeatherIconColor(parseInt(icon));
             if (Debug) {
@@ -3930,7 +3513,7 @@ function HandleScreensaverUpdate(): void {
                 payloadString += GetScreenSaverEntityString(config.secondScreensaverEntity);
                 payloadString += GetScreenSaverEntityString(config.thirdScreensaverEntity);
                 payloadString += GetScreenSaverEntityString(config.fourthScreensaverEntity);
-                
+
                 const colorScale0:  RGB = { red:   99, green: 190, blue: 123 };
                 const colorScale1:  RGB = { red:  129, green: 199, blue: 126 };
                 const colorScale2:  RGB = { red:  161, green: 208, blue: 127 };
@@ -3959,14 +3542,14 @@ function HandleScreensaverUpdate(): void {
                                 valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                             } else {
                                 if (valueScale < iconvalbest) {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
-                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                    valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
-                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            let valueScaletemp = (Math.round(valueScale)).toFixed();
                             if (Debug) {
                                 console.log(valueScaletemp);
                             }
@@ -3994,7 +3577,7 @@ function HandleScreensaverUpdate(): void {
                                     break;
                                 case '7':
                                     vwIconColor[1] = rgb_dec565(colorScale7);
-                                    break;                                 
+                                    break;
                                 case '8':
                                     vwIconColor[1] = rgb_dec565(colorScale8);
                                     break;
@@ -4004,7 +3587,7 @@ function HandleScreensaverUpdate(): void {
                                 case '10':
                                     vwIconColor[1] = rgb_dec565(colorScale10);
                                     break;
-                            } 
+                            }
                         }
                         if (config.firstScreensaverEntity.ScreensaverEntityIconColor.val_min == undefined) {
                             vwIconColor[1] = rgb_dec565(config.firstScreensaverEntity.ScreensaverEntityIconColor);
@@ -4013,7 +3596,7 @@ function HandleScreensaverUpdate(): void {
                         vwIconColor[1] = rgb_dec565(sctF1Icon);
                     }
                 } else {
-                    vwIconColor[1] = rgb_dec565(sctF1Icon);    
+                    vwIconColor[1] = rgb_dec565(sctF1Icon);
                 }
 
                 if (config.secondScreensaverEntity.ScreensaverEntityIconColor != undefined) {
@@ -4033,14 +3616,14 @@ function HandleScreensaverUpdate(): void {
                                 valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                             } else {
                                 if (valueScale < iconvalbest) {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
-                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                    valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
-                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            let valueScaletemp = (Math.round(valueScale)).toFixed();
                             if (Debug) {
                                 console.log(valueScaletemp);
                             }
@@ -4068,7 +3651,7 @@ function HandleScreensaverUpdate(): void {
                                     break;
                                 case '7':
                                     vwIconColor[2] = rgb_dec565(colorScale7);
-                                    break;                                 
+                                    break;
                                 case '8':
                                     vwIconColor[2] = rgb_dec565(colorScale8);
                                     break;
@@ -4078,16 +3661,16 @@ function HandleScreensaverUpdate(): void {
                                 case '10':
                                     vwIconColor[2] = rgb_dec565(colorScale10);
                                     break;
-                            } 
+                            }
                         }
                         if (config.secondScreensaverEntity.ScreensaverEntityIconColor.val_min == undefined) {
                             vwIconColor[2] = rgb_dec565(config.secondScreensaverEntity.ScreensaverEntityIconColor);
                         }
                     } else {
-                        vwIconColor[2] = rgb_dec565(sctF2Icon);                        
+                        vwIconColor[2] = rgb_dec565(sctF2Icon);
                     }
                 } else {
-                    vwIconColor[2] = rgb_dec565(sctF2Icon);    
+                    vwIconColor[2] = rgb_dec565(sctF2Icon);
                 }
 
                 if (config.thirdScreensaverEntity.ScreensaverEntityIconColor != undefined) {
@@ -4107,14 +3690,14 @@ function HandleScreensaverUpdate(): void {
                                 valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                             } else {
                                 if (valueScale < iconvalbest) {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
-                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                    valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
-                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            let valueScaletemp = (Math.round(valueScale)).toFixed();
                             if (Debug) {
                                 console.log(valueScaletemp);
                             }
@@ -4142,7 +3725,7 @@ function HandleScreensaverUpdate(): void {
                                     break;
                                 case '7':
                                     vwIconColor[3] = rgb_dec565(colorScale7);
-                                    break;                                 
+                                    break;
                                 case '8':
                                     vwIconColor[3] = rgb_dec565(colorScale8);
                                     break;
@@ -4152,16 +3735,16 @@ function HandleScreensaverUpdate(): void {
                                 case '10':
                                     vwIconColor[3] = rgb_dec565(colorScale10);
                                     break;
-                            } 
+                            }
                         }
                         if (config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_min == undefined) {
                             vwIconColor[3] = rgb_dec565(config.thirdScreensaverEntity.ScreensaverEntityIconColor);
                         }
                     } else {
-                        vwIconColor[3] = rgb_dec565(sctF2Icon);                        
+                        vwIconColor[3] = rgb_dec565(sctF2Icon);
                     }
                 } else {
-                    vwIconColor[3] = rgb_dec565(sctF2Icon);    
+                    vwIconColor[3] = rgb_dec565(sctF2Icon);
                 }
 
                 if (config.fourthScreensaverEntity.ScreensaverEntityIconColor != undefined) {
@@ -4181,14 +3764,14 @@ function HandleScreensaverUpdate(): void {
                                 valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                             } else {
                                 if (valueScale < iconvalbest) {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
-                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                    valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
-                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            let valueScaletemp = (Math.round(valueScale)).toFixed();
                             if (Debug) {
                                 console.log(valueScaletemp);
                             }
@@ -4216,7 +3799,7 @@ function HandleScreensaverUpdate(): void {
                                     break;
                                 case '7':
                                     vwIconColor[4] = rgb_dec565(colorScale7);
-                                    break;                                 
+                                    break;
                                 case '8':
                                     vwIconColor[4] = rgb_dec565(colorScale8);
                                     break;
@@ -4226,42 +3809,42 @@ function HandleScreensaverUpdate(): void {
                                 case '10':
                                     vwIconColor[4] = rgb_dec565(colorScale10);
                                     break;
-                            } 
+                            }
                         }
                         if (config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_min == undefined) {
                             vwIconColor[4] = rgb_dec565(config.fourthScreensaverEntity.ScreensaverEntityIconColor);
                         }
                     } else {
-                        vwIconColor[4] = rgb_dec565(sctF2Icon);                        
+                        vwIconColor[4] = rgb_dec565(sctF2Icon);
                     }
                 } else {
-                    vwIconColor[4] = rgb_dec565(sctF2Icon);    
+                    vwIconColor[4] = rgb_dec565(sctF2Icon);
                 }
             }
 
             //AltLayout
             if (config.alternativeScreensaverLayout) {
-                payloadString += parseInt(getState(config.fourthScreensaverEntity.ScreensaverEntity).val) + '~'; 
+                payloadString += parseInt(getState(config.fourthScreensaverEntity.ScreensaverEntity).val) + '~';
                 payloadString += config.fourthScreensaverEntity.ScreensaverEntityUnitText + '~'
             } else {
-                payloadString += '~~'            
+                payloadString += '~~'
             }
-            
+
             let hwBtn1Col: any = config.mrIcon1ScreensaverEntity.ScreensaverEntityOffColor;
             if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
                 if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'string') {
                     let hwBtn1: string = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn1 == 'ON') {
-                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;                
+                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
                     }
                     payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn1Col) + '~';
                 } else if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
                     let hwBtn1: boolean = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn1) {
-                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;                
+                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
                     }
                     payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn1Col) + '~';
-                }  
+                }
             } else {
                 hwBtn1Col = Black;
                 payloadString += '~~';
@@ -4272,28 +3855,28 @@ function HandleScreensaverUpdate(): void {
                 if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'string') {
                     let hwBtn2: string = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn2 == 'ON') {
-                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;                
+                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
                     }
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
                 } else if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
                     let hwBtn2: boolean = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn2) {
-                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;               
+                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
                     }
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
-                }  
+                }
             } else {
                 hwBtn2Col = Black;
                 payloadString += '~~';
             }
             HandleScreensaverColors();
-            
+
             SendToPanel(<Payload>{ payload: payloadString });
-            
+
         }
     } catch (err) {
         console.log('HandleScreensaverUpdate: ' + err.message);
-    }        
+    }
 }
 
 function HandleScreensaverColors(): void {
@@ -4317,34 +3900,34 @@ function HandleScreensaverColors(): void {
                 vwIcon[1] = vwIconColor[1];
                 vwIcon[2] = vwIconColor[2];
                 vwIcon[3] = vwIconColor[3];
-                vwIcon[4] = vwIconColor[4];            
+                vwIcon[4] = vwIconColor[4];
             }
         }
 
         let payloadString = 'color'                     + '~' +
-                            rgb_dec565(scbackground)    + '~' +      //background
-                            rgb_dec565(sctime)          + '~' +      //time
-                            rgb_dec565(sctimeAMPM)      + '~' +      //timeAMPM~
-                            rgb_dec565(scdate)          + '~' +      //date~
-                            vwIcon[0]                   + '~' +      //tMainIcon~   rgb_dec565(sctMainIcon)
-                            rgb_dec565(sctMainText)     + '~' +      //tMainText~
-                            rgb_dec565(sctForecast1)    + '~' +      //tForecast1~
-                            rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
-                            rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
-                            rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
-                            vwIcon[1]                   + '~' +      //tF1Icon~         rgb_dec565(sctF1Icon)
-                            vwIcon[2]                   + '~' +      //tF2Icon~         rgb_dec565(sctF2Icon)
-                            vwIcon[3]                   + '~' +      //tF3Icon~         rgb_dec565(sctF3Icon)
-                            vwIcon[4]                   + '~' +      //tF4Icon~         rgb_dec565(sctF4Icon)
-                            rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
-                            rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
-                            rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
-                            rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
-                            rgb_dec565(scbar)           + '~' +      //bar~
-                            rgb_dec565(sctMainIconAlt)  + '~' +      //tMainIconAlt
-                            rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
-                            rgb_dec565(sctTimeAdd);      
-                            //true;                
+          rgb_dec565(scbackground)    + '~' +      //background
+          rgb_dec565(sctime)          + '~' +      //time
+          rgb_dec565(sctimeAMPM)      + '~' +      //timeAMPM~
+          rgb_dec565(scdate)          + '~' +      //date~
+          vwIcon[0]                   + '~' +      //tMainIcon~   rgb_dec565(sctMainIcon)
+          rgb_dec565(sctMainText)     + '~' +      //tMainText~
+          rgb_dec565(sctForecast1)    + '~' +      //tForecast1~
+          rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
+          rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
+          rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
+          vwIcon[1]                   + '~' +      //tF1Icon~         rgb_dec565(sctF1Icon)
+          vwIcon[2]                   + '~' +      //tF2Icon~         rgb_dec565(sctF2Icon)
+          vwIcon[3]                   + '~' +      //tF3Icon~         rgb_dec565(sctF3Icon)
+          vwIcon[4]                   + '~' +      //tF4Icon~         rgb_dec565(sctF4Icon)
+          rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
+          rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
+          rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
+          rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
+          rgb_dec565(scbar)           + '~' +      //bar~
+          rgb_dec565(sctMainIconAlt)  + '~' +      //tMainIconAlt
+          rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
+          rgb_dec565(sctTimeAdd);
+        //true;
 
         SendToPanel(<Payload>{ payload: payloadString });
     } catch (err) {
@@ -4452,7 +4035,7 @@ function GetAccuWeatherIconColor(icon: number): number {
             case 24:        // Ice
             case 30:        // Hot
             case 31:        // Cold
-                return rgb_dec565(swExceptional);  // exceptional 
+                return rgb_dec565(swExceptional);  // exceptional
 
             case 7:         // Cloudy
             case 8:         // Dreary (Overcast)
@@ -4495,7 +4078,7 @@ function GetAccuWeatherIconColor(icon: number): number {
             case 26:        // Freezing Rain
             case 39:        // Partly Cloudy w/ Showers
             case 40:        // Mostly Cloudy w/ Showers
-                return rgb_dec565(swRainy);  // rainy 
+                return rgb_dec565(swRainy);  // rainy
 
             case 19:        // Flurries
             case 20:        // Mostly Cloudy w/ Flurries
@@ -4504,7 +4087,7 @@ function GetAccuWeatherIconColor(icon: number): number {
             case 23:        // Mostly Cloudy w/ Snow
             case 43:        // Mostly Cloudy w/ Flurries
             case 44:        // Mostly Cloudy w/ Snow
-                return rgb_dec565(swSnowy);  // snowy  
+                return rgb_dec565(swSnowy);  // snowy
 
             case 29:        // Rain and Snow
                 return rgb_dec565(swSnowyRainy);  // snowy-rainy
@@ -4597,11 +4180,11 @@ function hsv2rgb(hue: number, saturation: number, value: number) {
     let chroma = value * saturation;
     let x = chroma * (1 - Math.abs((hue % 2) - 1));
     let rgb = hue <= 1 ? [chroma, x, 0] :
-        hue <= 2 ? [x, chroma, 0] :
-            hue <= 3 ? [0, chroma, x] :
-                hue <= 4 ? [0, x, chroma] :
-                    hue <= 5 ? [x, 0, chroma] :
-                        [chroma, 0, x];
+      hue <= 2 ? [x, chroma, 0] :
+        hue <= 3 ? [0, chroma, x] :
+          hue <= 4 ? [0, x, chroma] :
+            hue <= 5 ? [x, 0, chroma] :
+              [chroma, 0, x];
 
     return rgb.map(v => (v + value - chroma) * 255);
 }
@@ -4653,22 +4236,22 @@ function pos_to_color(x: number, y: number): RGB {
 
 function rgb_to_cie(red, green, blue)
 {
-   //Apply a gamma correction to the RGB values, which makes the color more vivid and more the like the color displayed on the screen of your device
-   let vred   = (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92);
-   let vgreen = (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92);
-   let vblue  = (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92); 
- 
-   //RGB values to XYZ using the Wide RGB D65 conversion formula
-   let X = vred * 0.664511 + vgreen * 0.154324 + vblue * 0.162028;
-   let Y = vred * 0.283881 + vgreen * 0.668433 + vblue * 0.047685;
-   let Z = vred * 0.000088 + vgreen * 0.072310 + vblue * 0.986039;
- 
-   //Calculate the xy values from the XYZ values
-   let ciex = (X / (X + Y + Z)).toFixed(4);
-   let ciey = (Y / (X + Y + Z)).toFixed(4);
-   let cie  = "[" + ciex + "," + ciey + "]"
-   
-   return cie;
+    //Apply a gamma correction to the RGB values, which makes the color more vivid and more the like the color displayed on the screen of your device
+    let vred   = (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92);
+    let vgreen = (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92);
+    let vblue  = (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92);
+
+    //RGB values to XYZ using the Wide RGB D65 conversion formula
+    let X = vred * 0.664511 + vgreen * 0.154324 + vblue * 0.162028;
+    let Y = vred * 0.283881 + vgreen * 0.668433 + vblue * 0.047685;
+    let Z = vred * 0.000088 + vgreen * 0.072310 + vblue * 0.986039;
+
+    //Calculate the xy values from the XYZ values
+    let ciex = (X / (X + Y + Z)).toFixed(4);
+    let ciey = (Y / (X + Y + Z)).toFixed(4);
+    let cie  = "[" + ciex + "," + ciey + "]"
+
+    return cie;
 }
 
 function spotifyGetDeviceID(vDeviceString) {
