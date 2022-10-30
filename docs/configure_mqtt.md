@@ -54,6 +54,7 @@ nspanel-1:
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
+    model: eu
 ```
 
 Please adjust `tasmota_your_mqtt_topic` to the topic used in Tasmota MQTT Configuration.

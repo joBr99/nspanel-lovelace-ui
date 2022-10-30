@@ -1,0 +1,474 @@
+Page pageTest
+    Attributes
+        ID                                  : 0
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        Width                               : 320
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Locked                              : no
+        Swide up page ID                    : disabled
+        Swide down page ID                  : disabled
+        Swide left page ID                  : disabled
+        Swide right page ID                 : disabled
+        Fill                                : solid color
+        Back. Color                         : 4226
+    
+    Events
+        Preinitialize Event
+            vis p0,0
+        
+Picture p0
+    Attributes
+        ID                                  : 1
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 0
+        Width                               : 319
+        Height                              : 479
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Picture ID                          : 0
+    
+Button b0
+    Attributes
+        ID                                  : 2
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 35
+        y coordinate                        : 20
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : entities
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            page cardEntities
+        
+Button b3
+    Attributes
+        ID                                  : 3
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 39
+        y coordinate                        : 395
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 0
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : disable recmod
+        Max. Text Size                      : 20
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            recmod=0
+        
+Button b6
+    Attributes
+        ID                                  : 4
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 34
+        y coordinate                        : 92
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : shutter
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            page popupShutter
+        
+Button b4
+    Attributes
+        ID                                  : 5
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 35
+        y coordinate                        : 164
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : light
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            page popupLight
+        
+Button b5
+    Attributes
+        ID                                  : 6
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 184
+        y coordinate                        : 20
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : thermo
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            page cardThermo
+        
+Button b7
+    Attributes
+        ID                                  : 7
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 186
+        y coordinate                        : 92
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : media
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            page cardMedia
+        
+Button b8
+    Attributes
+        ID                                  : 8
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 188
+        y coordinate                        : 308
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : screens
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            dimValue=50
+            page screensaver
+        
+Button b9
+    Attributes
+        ID                                  : 9
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 34
+        y coordinate                        : 236
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : notify
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            page popupNotify
+        
+Button b10
+    Attributes
+        ID                                  : 10
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 188
+        y coordinate                        : 164
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : alarm
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            page cardAlarm
+        
+Button b11
+    Attributes
+        ID                                  : 11
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 190
+        y coordinate                        : 236
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : grid
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            page cardGrid
+        
+Button b1
+    Attributes
+        ID                                  : 12
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 175
+        y coordinate                        : 402
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 0
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : bauds=115200
+        Max. Text Size                      : 20
+        Word wrap                           : enabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            bauds=115200
+        
+Button b2
+    Attributes
+        ID                                  : 13
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 38
+        y coordinate                        : 317
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 3
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : qr
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            page cardQR
+        

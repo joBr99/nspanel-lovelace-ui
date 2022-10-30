@@ -63,6 +63,7 @@ ReleaseNotes:
         - 26.10.2022 - v3.5.0.1 Fix Thermostat for tado Support (by Sternmiere)
         - 27.10.2022 - v3.5.0.1 Add VirtualDevice Gate
         - 27.10.2022 - v3.5.0.2 Applied Boy Scout Rule (Fixed some typos, changed var to let, fixed min/max colorTemp Bug)
+        - 27.10.2022 - v3.5.0.3 Fixed Media Play/Pause icon for alexa (and others) devices
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 Tasmota Konsole:
@@ -2751,9 +2752,11 @@ function HandleButtonEvent(words): void {
                 break;
             case 'media-back':
                 setIfExists(id + '.PREV', true);
-                setTimeout(function(){
-                    GeneratePage(activePage);
-                },3000)
+                on({id: id + '.TITLE', change: "ne"}, async function () {
+                    setTimeout(function(){
+                        GeneratePage(activePage);
+                    },25)
+                });
                 break;
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
@@ -2774,15 +2777,24 @@ function HandleButtonEvent(words): void {
                         setIfExists(id + '.PLAY', true);
                     }
                 }
-                setTimeout(function(){
+                on({id: id + '.STATE', val: true}, async function () {
+                    on({id: [].concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']), change: "ne"}, async function () {
+                        setTimeout(function(){
+                            GeneratePage(activePage);
+                        },25)
+                    });
+                });
+                on({id: id + '.STATE', val: false}, async function () {
                     GeneratePage(activePage);
-                },3000)
+                });
                 break;
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
-                setTimeout(function(){
-                    GeneratePage(activePage);
-                },3000)
+                on({id: id + '.TITLE', change: "ne"}, async function () {
+                    setTimeout(function(){
+                        GeneratePage(activePage);
+                    },25)
+                });
                 break;
             case 'volumeSlider':
                 setIfExists(id + '.VOLUME', parseInt(words[4]))
@@ -4380,7 +4392,7 @@ type Config = {
     pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower)[],
     subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower)[],
     button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | null),
-    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower| null),
+    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | null),
 }
 
 type ScreenSaverElement = {

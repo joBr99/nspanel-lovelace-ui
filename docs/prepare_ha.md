@@ -12,7 +12,7 @@ The easiest way to install it is through Home Assistant's Supervisor Add-on Stor
 <details>
 <summary>Instructions for users of HomeAssistant Core installed through docker containers.</summary>
 
-In case you have a homeassistant setup using docker cotainers and the Add-on Store is not available to you, you can follow this guide for setting up AppDaemon. [AppDaemon Docker Tutorial](https://appdaemon.readthedocs.io/en/latest/DOCKER_TUTORIAL.html).
+In case you have a homeassistant setup using docker cotainers and the Add-on Store is not available to you, you can follow this guide for setting up AppDaemon. https://appdaemon.readthedocs.io/en/latest/DOCKER_TUTORIAL.html
 Please also pay attention to the correct volume mount for the conf folder of appdaemon, that has to point to the appdaemon folder within your homeassistant config folder.
 
 Here is an example docker compose file for homeassistant and appdaemon:
