@@ -1,0 +1,141 @@
+Page pageIcons
+    Attributes
+        ID                                  : 0
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        Width                               : 480
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Locked                              : no
+        Swide up page ID                    : disabled
+        Swide down page ID                  : disabled
+        Swide left page ID                  : disabled
+        Swide right page ID                 : disabled
+        Fill                                : solid color
+        Back. Color                         : 65535
+    
+Variable (string) vaTime
+    Attributes
+        ID            : 4
+        Scope         : global
+        Text          : 
+        Max. Text Size: 15
+    
+Variable (string) vaDate
+    Attributes
+        ID            : 5
+        Scope         : global
+        Text          : 
+        Max. Text Size: 35
+    
+Text tTmp1
+    Attributes
+        ID                                  : 2
+        Scope                               : global
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 302
+        y coordinate                        : 8
+        Width                               : 146
+        Height                              : 69
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 65535
+        Font Color                          : 0
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 80
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tTmp2
+    Attributes
+        ID                                  : 3
+        Scope                               : global
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 302
+        y coordinate                        : 82
+        Width                               : 146
+        Height                              : 69
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 65535
+        Font Color                          : 0
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 80
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tTmp3
+    Attributes
+        ID                                  : 6
+        Scope                               : global
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 302
+        y coordinate                        : 154
+        Width                               : 146
+        Height                              : 69
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 65535
+        Font Color                          : 0
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Picture p0
+    Attributes
+        ID                                  : 1
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 0
+        Width                               : 479
+        Height                              : 319
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Picture ID                          : 0
+    
