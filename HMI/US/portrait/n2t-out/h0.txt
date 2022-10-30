@@ -1,4 +1,4 @@
-Page cardGrid
+Page cardPower
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -13,80 +13,97 @@ Page cardGrid
     Events
         Preinitialize Event
             dim=dimValueNormal
-            //remove background & activate reparse mode
             vis p0,0
-            recmod=1
-            bauds=115200
-            //debug stuff
-            vis tTmp,0
             vis tSend,0
             vis tInstruction,0
+            vis tTmp,0
             vis tId,0
-            vis bEntity1,0
-            vis bEntity2,0
-            vis bEntity3,0
-            vis bEntity4,0
-            vis bEntity5,0
-            vis bEntity6,0
-            vis tEntity1,0
-            vis tEntity2,0
-            vis tEntity3,0
-            vis tEntity4,0
-            vis tEntity5,0
-            vis tEntity6,0
             vis bPrev,0
             vis bNext,0
-            cardGrid.bco=defaultBcoColor
-            for(sys0=0;sys0<42;sys0++)
+            tsw h0,0
+            tsw h1,0
+            tsw h2,0
+            tsw h3,0
+            tsw h4,0
+            tsw h5,0
+            vis h0,0
+            vis h1,0
+            vis h2,0
+            vis h3,0
+            vis h4,0
+            vis h5,0
+            vis t0Icon,0
+            vis t1Icon,0
+            vis t2Icon,0
+            vis t3Icon,0
+            vis t4Icon,0
+            vis t5Icon,0
+            cardPower.bco=defaultBcoColor
+            for(sys0=0;sys0<43;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
                     b[sys0].bco=defaultBcoColor
                     b[sys0].pco=defaultFontColor
                 }
+                if(defaultBcoColor==0)
+                {
+                    if(b[sys0].type==1)
+                    {
+                        b[sys0].pic=19
+                        b[sys0].pic1=19
+                        b[sys0].pic2=15
+                    }
+                }
             }
         
-Variable (string) entn1
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Variable (string) entn2
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Variable (string) entn3
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Variable (string) entn4
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Variable (string) entn5
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Variable (string) entn6
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
 Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 500
+        Max. Text Size: 275
+    
+Variable (int32) t0Speed
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) t1Speed
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) t2Speed
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) t3Speed
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) t4Speed
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) t5Speed
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (string) tId
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tInstruction
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
     
 Variable (string) tSend
     Attributes
@@ -94,101 +111,141 @@ Variable (string) tSend
         Text          : 
         Max. Text Size: 200
     
-Variable (string) type1
+Variable (string) tTmp
     Attributes
         Scope         : local
         Text          : 
         Max. Text Size: 10
     
-Variable (string) type2
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 10
-    
-Variable (string) type3
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 10
-    
-Variable (string) type4
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 10
-    
-Variable (string) type5
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 10
-    
-Variable (string) type6
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 10
-    
-Text tEntity1
+Text t0Icon
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : tEntity1
-        Max. Text Size                      : 30
+        Text                                : î¢
+        Max. Text Size                      : 5
     
-Text tEntity2
+Text t0u
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : tEntity2
-        Max. Text Size                      : 30
+        Text                                : 
+        Max. Text Size                      : 20
     
-Text tEntity3
+Text t1
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : tEntity3
-        Max. Text Size                      : 30
+        Text                                : î
+        Max. Text Size                      : 5
     
-Text tEntity4
+Text t1Icon
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : tEntity4
-        Max. Text Size                      : 30
+        Text                                : î¶
+        Max. Text Size                      : 5
     
-Text tEntity5
+Text t1u
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : tEntity5
-        Max. Text Size                      : 30
+        Text                                : 
+        Max. Text Size                      : 20
     
-Text tEntity6
+Text t2Icon
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : tEntity6
-        Max. Text Size                      : 30
+        Text                                : î °
+        Max. Text Size                      : 5
+    
+Text t2u
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
+    
+Text t3Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î °
+        Max. Text Size                      : 5
+    
+Text t3u
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
+    
+Text t4Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î´½
+        Max. Text Size                      : 5
+    
+Text t4u
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
+    
+Text t5Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î
+        Max. Text Size                      : 5
+    
+Text t5u
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
     
 Text tHeading
     Attributes
@@ -200,17 +257,7 @@ Text tHeading
         Text                                : 
         Max. Text Size                      : 40
     
-Text tId
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 50
-    
-Text tInstruction
+Text tHome
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -220,16 +267,6 @@ Text tInstruction
         Text                                : 
         Max. Text Size                      : 20
     
-Text tTmp
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
-    
 Picture p0
     Attributes
         Scope                               : local
@@ -237,228 +274,66 @@ Picture p0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
     
-Button bEntity1
+Slider h0
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
     
-    Events
-        Touch Press Event
-            tmLP.en=1
-            tTmp.txt=type1.txt
-            pageIcons.tTmp1.txt=tEntity1.txt
-            pageIcons.tTmp2.txt=entn1.txt
-            pageIcons.tTmp3.txt=bEntity1.txt
-            if(type1.txt=="shutter")
-            {
-                page popupShutter
-            }
-        
-        Touch Release Event
-            tmLP.en=0
-            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bEntity2
+Slider h1
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
     
-    Events
-        Touch Press Event
-            tmLP.en=1
-            tTmp.txt=type2.txt
-            pageIcons.tTmp1.txt=tEntity2.txt
-            pageIcons.tTmp2.txt=entn2.txt
-            pageIcons.tTmp3.txt=bEntity2.txt
-            if(type2.txt=="shutter")
-            {
-                page popupShutter
-            }
-        
-        Touch Release Event
-            tmLP.en=0
-            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bEntity3
+Slider h2
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
     
-    Events
-        Touch Press Event
-            tmLP.en=1
-            tTmp.txt=type3.txt
-            pageIcons.tTmp1.txt=tEntity3.txt
-            pageIcons.tTmp2.txt=entn3.txt
-            pageIcons.tTmp3.txt=bEntity3.txt
-            if(type3.txt=="shutter")
-            {
-                page popupShutter
-            }
-        
-        Touch Release Event
-            tmLP.en=0
-            tSend.txt="event,buttonPress2,"+entn3.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bEntity4
+Slider h3
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
     
-    Events
-        Touch Press Event
-            tmLP.en=1
-            tTmp.txt=type4.txt
-            pageIcons.tTmp1.txt=tEntity4.txt
-            pageIcons.tTmp2.txt=entn4.txt
-            pageIcons.tTmp3.txt=bEntity4.txt
-            if(type4.txt=="shutter")
-            {
-                page popupShutter
-            }
-        
-        Touch Release Event
-            tmLP.en=0
-            tSend.txt="event,buttonPress2,"+entn4.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bEntity5
+Slider h4
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
     
-    Events
-        Touch Press Event
-            tmLP.en=1
-            tTmp.txt=type5.txt
-            pageIcons.tTmp1.txt=tEntity5.txt
-            pageIcons.tTmp2.txt=entn5.txt
-            pageIcons.tTmp3.txt=bEntity5.txt
-            if(type5.txt=="shutter")
-            {
-                page popupShutter
-            }
-        
-        Touch Release Event
-            tmLP.en=0
-            tSend.txt="event,buttonPress2,"+entn5.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bEntity6
+Slider h5
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
     
-    Events
-        Touch Press Event
-            tmLP.en=1
-            tTmp.txt=type6.txt
-            pageIcons.tTmp1.txt=tEntity6.txt
-            pageIcons.tTmp2.txt=entn6.txt
-            pageIcons.tTmp3.txt=bEntity6.txt
-            if(type6.txt=="shutter")
-            {
-                page popupShutter
-            }
-        
-        Touch Release Event
-            tmLP.en=0
-            tSend.txt="event,buttonPress2,"+entn6.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
 Button bNext
     Attributes
         Scope                               : local
@@ -471,7 +346,7 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardGrid,bNext"
+            tSend.txt="event,buttonPress2,cardAlarm,bNext"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -496,7 +371,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardGrid,"
+            tSend.txt="event,buttonPress2,cardAlarm,"
             if(bPrev.txt=="î¶")
             {
                 tSend.txt+="bUp"
@@ -515,23 +390,6 @@ Button bPrev
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-        
-Hotspot mSpecial
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-    
-    Events
-        Touch Press Event
-            sys2=sys2+1
-            sys2%=10
-            //n0.val=sys2
-            if(sys2==9)
-            {
-                page pageTest
-            }
         
 Hotspot mSwipeNext
     Attributes
@@ -566,26 +424,74 @@ Hotspot mSwipeUp
         Touch Press Event
             click bPrev,1
         
-Timer tmLP
+Timer tm0
     Attributes
         Scope      : local
-        Period (ms): 500
-        Enabled    : no
+        Period (ms): 100
+        Enabled    : yes
     
     Events
         Timer Event
-            if(tTmp.txt=="light")
+            sys0=h0.val+t0Speed.val
+            if(sys0>h0.maxval)
             {
-                page popupLight
+                h0.val=h0.minval
             }
-            if(tTmp.txt=="fan")
+            if(sys0<h0.minval)
             {
-                page popupFan
+                h0.val=h0.maxval
             }
-            if(tTmp.txt=="input_sel")
+            h0.val+=t0Speed.val
+            sys0=h1.val+t1Speed.val
+            if(sys0>h1.maxval)
             {
-                page popupInSel
+                h1.val=h1.minval
             }
+            if(sys0<h1.minval)
+            {
+                h1.val=h1.maxval
+            }
+            h1.val+=t1Speed.val
+            sys0=h2.val+t2Speed.val
+            if(sys0>h2.maxval)
+            {
+                h2.val=h2.minval
+            }
+            if(sys0<h2.minval)
+            {
+                h2.val=h2.maxval
+            }
+            h2.val+=t2Speed.val
+            sys0=h3.val+t3Speed.val
+            if(sys0>h3.maxval)
+            {
+                h3.val=h3.minval
+            }
+            if(sys0<h3.minval)
+            {
+                h3.val=h3.maxval
+            }
+            h3.val+=t3Speed.val
+            sys0=h4.val+t4Speed.val
+            if(sys0>h4.maxval)
+            {
+                h4.val=h4.minval
+            }
+            if(sys0<h4.minval)
+            {
+                h4.val=h4.maxval
+            }
+            h4.val+=t4Speed.val
+            sys0=h5.val+t5Speed.val
+            if(sys0>h5.maxval)
+            {
+                h5.val=h5.minval
+            }
+            if(sys0<h5.minval)
+            {
+                h5.val=h5.maxval
+            }
+            h5.val+=t5Speed.val
         
 Timer tmSerial
     Attributes
@@ -640,7 +546,7 @@ Timer tmSerial
                                     spstr strCommand.txt,tInstruction.txt,"~",0
                                     if(tInstruction.txt=="entityUpd")
                                     {
-                                        // command format: entityUpd,heading,navigation,[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
+                                        // command format: entityUpd,heading,navigation,colorHome,iconHome[,iconColor,icon,speed,valueUp,valueDown]x6
                                         spstr strCommand.txt,tHeading.txt,"~",1
                                         // navigation icons
                                         spstr strCommand.txt,tId.txt,"~",2
@@ -677,131 +583,138 @@ Timer tmSerial
                                             tsw mSwipeNext,1
                                             bNext.txt="î³"
                                         }
-                                        // get Type
-                                        spstr strCommand.txt,type1.txt,"~",3
-                                        // get internal name
-                                        spstr strCommand.txt,entn1.txt,"~",4
-                                        if(type1.txt=="delete"||type1.txt=="")
+                                        // icon color home
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        covx tTmp.txt,t1.pco,0,0
+                                        // icon home
+                                        spstr strCommand.txt,t1.txt,"~",4
+                                        // text home
+                                        spstr strCommand.txt,tHome.txt,"~",5
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        covx tTmp.txt,t0Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t0Icon.txt,"~",7
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",8
+                                        covx tTmp.txt,t0Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t0u.txt,"~",9
+                                        if(t0Icon.txt!="")
                                         {
-                                            vis tEntity1,0
-                                            vis bEntity1,0
+                                            vis t0Icon,1
+                                            vis t0u,1
+                                            vis h0,1
                                         }else
                                         {
-                                            // change icon
-                                            spstr strCommand.txt,bEntity1.txt,"~",5
-                                            vis bEntity1,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",6
-                                            covx tTmp.txt,sys0,0,0
-                                            bEntity1.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity1.txt,"~",7
-                                            vis tEntity1,1
+                                            vis t0Icon,0
+                                            vis t0u,0
+                                            vis h0,0
                                         }
-                                        // get Type
-                                        spstr strCommand.txt,type2.txt,"~",9
-                                        // get internal name
-                                        spstr strCommand.txt,entn2.txt,"~",10
-                                        if(type2.txt=="delete"||type2.txt=="")
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        covx tTmp.txt,t1Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t1Icon.txt,"~",11
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",12
+                                        covx tTmp.txt,t1Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t1u.txt,"~",13
+                                        if(t1Icon.txt!="")
                                         {
-                                            vis tEntity2,0
-                                            vis bEntity2,0
+                                            vis t1Icon,1
+                                            vis t1u,1
+                                            vis h1,1
                                         }else
                                         {
-                                            // change icon
-                                            spstr strCommand.txt,bEntity2.txt,"~",11
-                                            vis bEntity2,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",12
-                                            covx tTmp.txt,sys0,0,0
-                                            bEntity2.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity2.txt,"~",13
-                                            vis tEntity2,1
+                                            vis t1Icon,0
+                                            vis t1u,0
+                                            vis h1,0
                                         }
-                                        // get Type
-                                        spstr strCommand.txt,type3.txt,"~",15
-                                        // get internal name
-                                        spstr strCommand.txt,entn3.txt,"~",16
-                                        if(type3.txt=="delete"||type3.txt=="")
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",14
+                                        covx tTmp.txt,t2Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t2Icon.txt,"~",15
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        covx tTmp.txt,t2Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t2u.txt,"~",17
+                                        if(t2Icon.txt!="")
                                         {
-                                            vis tEntity3,0
-                                            vis bEntity3,0
+                                            vis t2Icon,1
+                                            vis t2u,1
+                                            vis h2,1
                                         }else
                                         {
-                                            // change icon
-                                            spstr strCommand.txt,bEntity3.txt,"~",17
-                                            vis bEntity3,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",18
-                                            covx tTmp.txt,sys0,0,0
-                                            bEntity3.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity3.txt,"~",19
-                                            vis tEntity3,1
+                                            vis t2Icon,0
+                                            vis t2u,0
+                                            vis h2,0
                                         }
-                                        // get Type
-                                        spstr strCommand.txt,type4.txt,"~",21
-                                        // get internal name
-                                        spstr strCommand.txt,entn4.txt,"~",22
-                                        if(type4.txt=="delete"||type4.txt=="")
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",18
+                                        covx tTmp.txt,t3Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t3Icon.txt,"~",19
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",20
+                                        covx tTmp.txt,t3Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t3u.txt,"~",21
+                                        if(t3Icon.txt!="")
                                         {
-                                            vis tEntity4,0
-                                            vis bEntity4,0
+                                            vis t3Icon,1
+                                            vis t3u,1
+                                            vis h3,1
                                         }else
                                         {
-                                            // change icon
-                                            spstr strCommand.txt,bEntity4.txt,"~",23
-                                            vis bEntity4,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",24
-                                            covx tTmp.txt,sys0,0,0
-                                            bEntity4.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity4.txt,"~",25
-                                            vis tEntity4,1
+                                            vis t3Icon,0
+                                            vis t3u,0
+                                            vis h3,0
                                         }
-                                        // get Type
-                                        spstr strCommand.txt,type5.txt,"~",27
-                                        // get internal name
-                                        spstr strCommand.txt,entn5.txt,"~",28
-                                        if(type5.txt=="delete"||type5.txt=="")
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        covx tTmp.txt,t4Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t4Icon.txt,"~",23
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",24
+                                        covx tTmp.txt,t4Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t4u.txt,"~",25
+                                        if(t4Icon.txt!="")
                                         {
-                                            vis tEntity5,0
-                                            vis bEntity5,0
+                                            vis t4Icon,1
+                                            vis t4u,1
+                                            vis h4,1
                                         }else
                                         {
-                                            // change icon
-                                            spstr strCommand.txt,bEntity5.txt,"~",29
-                                            vis bEntity5,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",30
-                                            covx tTmp.txt,sys0,0,0
-                                            bEntity5.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity5.txt,"~",31
-                                            vis tEntity5,1
+                                            vis t4Icon,0
+                                            vis t4u,0
+                                            vis h4,0
                                         }
-                                        // get Type
-                                        spstr strCommand.txt,type6.txt,"~",33
-                                        // get internal name
-                                        spstr strCommand.txt,entn6.txt,"~",34
-                                        if(type6.txt=="delete"||type6.txt=="")
+                                        // iconColor
+                                        spstr strCommand.txt,tTmp.txt,"~",26
+                                        covx tTmp.txt,t5Icon.pco,0,0
+                                        // icon
+                                        spstr strCommand.txt,t5Icon.txt,"~",27
+                                        // speed
+                                        spstr strCommand.txt,tTmp.txt,"~",28
+                                        covx tTmp.txt,t5Speed.val,0,0
+                                        // lower text
+                                        spstr strCommand.txt,t5u.txt,"~",29
+                                        if(t5Icon.txt!="")
                                         {
-                                            vis tEntity6,0
-                                            vis bEntity6,0
+                                            vis t5Icon,1
+                                            vis t5u,1
+                                            vis h5,1
                                         }else
                                         {
-                                            // change icon
-                                            spstr strCommand.txt,bEntity6.txt,"~",35
-                                            vis bEntity6,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",36
-                                            covx tTmp.txt,sys0,0,0
-                                            bEntity6.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity6.txt,"~",37
-                                            vis tEntity6,1
+                                            vis t5Icon,0
+                                            vis t5u,0
+                                            vis h5,0
                                         }
                                     }
                                     if(tInstruction.txt=="pageType")
@@ -934,7 +847,7 @@ Timer tmSleep
                 {
                     sleepValue=0
                     dim=dimValue
-                    tSend.txt="event,sleepReached,cardGrid"
+                    tSend.txt="event,sleepReached,cardAlarm"
                     //send calc crc
                     btlen tSend.txt,sys0
                     crcrest 1,0xffff // reset CRC

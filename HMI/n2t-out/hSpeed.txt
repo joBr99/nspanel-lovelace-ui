@@ -1,4 +1,4 @@
-Page cardAlarm
+Page popupFan
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -13,48 +13,51 @@ Page cardAlarm
     Events
         Preinitialize Event
             dim=dimValueNormal
+            //get entitiy name
+            tEntity.txt=pageIcons.tTmp1.txt
+            //get entity id
+            entn.txt=pageIcons.tTmp2.txt
+            tIcon1.txt=pageIcons.tTmp3.txt
             vis p0,0
             vis tSend,0
-            vis tInstruction,0
             vis tTmp,0
+            vis tInstruction,0
             vis tId,0
-            vis arm1,0
-            vis arm2,0
-            vis arm3,0
-            vis arm4,0
-            vis b0,0
-            vis b1,0
-            vis b2,0
-            vis b3,0
-            vis b4,0
-            vis b5,0
-            vis b6,0
-            vis b7,0
-            vis b8,0
-            vis b9,0
-            vis b10,0
-            vis b11,0
-            vis tCode,0
-            vis bPrev,0
-            vis bNext,0
-            cardAlarm.bco=defaultBcoColor
-            for(sys0=0;sys0<40;sys0++)
+            //page open event
+            // event,pageOpenDetail,typeOfPage,tEntityName
+            // craft command
+            tSend.txt="event,pageOpenDetail,popupFan,"+entn.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            vis hSpeed,0
+            popupFan.bco=defaultBcoColor
+            for(sys0=0;sys0<24;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
                     b[sys0].bco=defaultBcoColor
                     b[sys0].pco=defaultFontColor
                 }
+                if(b[sys0].type==53&&defaultBcoColor==0)
+                {
+                    b[sys0].pic=10
+                    b[sys0].pic2=11
+                }
             }
             if(defaultBcoColor==0)
             {
-                tCode.bco=6371
-                tCode.pco=40179
-            }
-            if(defaultBcoColor==6371)
-            {
-                tCode.bco=10565
-                tCode.pco=40179
+                hSpeed.pic=14
+                hSpeed.pic1=13
+                hSpeed.pic2=15
             }
         
 Variable (string) entn
@@ -63,11 +66,21 @@ Variable (string) entn
         Text          : 
         Max. Text Size: 80
     
+Variable (int32) mode
+    Attributes
+        Scope: local
+        Value: 1
+    
+Variable (int32) mode_temp
+    Attributes
+        Scope: local
+        Value: 0
+    
 Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 200
+        Max. Text Size: 500
     
 Variable (string) tSend
     Attributes
@@ -75,37 +88,24 @@ Variable (string) tSend
         Text          : 
         Max. Text Size: 200
     
-Variable (string) va1
+Variable (string) vaModeCur
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 20
+        Max. Text Size: 400
     
-Variable (string) va2
+Variable (string) vaModeList
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 20
+        Max. Text Size: 400
     
-Variable (string) va3
+Variable (int32) vaModePos
     Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 20
+        Scope: local
+        Value: 0
     
-Variable (string) va4
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 20
-    
-Variable (string) vaAddBtn
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Text tCode
+Text t1
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -113,9 +113,19 @@ Text tCode
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 50
     
-Text tIcon
+Text tEntity
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 25
+    
+Text tIcon1
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -153,7 +163,7 @@ Text tTmp
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 80
     
 Picture p0
     Attributes
@@ -162,23 +172,24 @@ Picture p0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
     
-Button arm1
+Slider hSpeed
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 40
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
     
     Events
-        Touch Press Event
-            // event,buttonPress2,entn,arm1,tCode
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+=va1.txt+","
-            tSend.txt+=tCode.txt
+        Touch Release Event
+            tmCooldown.en=1
+            tmCooldown.tim=2500
+            //craft command
+            tSend.txt="event,buttonPress2,"+entn.txt+",number-set,"
+            covx hSpeed.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -190,97 +201,6 @@ Button arm1
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
-            tCode.txt=""
-        
-Button arm2
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 40
-    
-    Events
-        Touch Press Event
-            // event,buttonPress2,entn,arm1,tCode
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+=va2.txt+","
-            tSend.txt+=tCode.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-            tCode.txt=""
-        
-Button arm3
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 40
-    
-    Events
-        Touch Press Event
-            // event,buttonPress2,entn,arm1,tCode
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+=va3.txt+","
-            tSend.txt+=tCode.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-            tCode.txt=""
-        
-Button arm4
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 40
-    
-    Events
-        Touch Press Event
-            // event,buttonPress2,entn,arm1,tCode
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+=va4.txt+","
-            tSend.txt+=tCode.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-            tCode.txt=""
         
 Button b0
     Attributes
@@ -289,154 +209,164 @@ Button b0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : 1
+        Text                                : î
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            tCode.txt=tCode.txt+"1"
+            tSend.txt="event,buttonPress2,popupLight,bExit"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
-Button b1
+Button bMode1
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : 2
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 40
     
     Events
         Touch Press Event
-            tCode.txt=tCode.txt+"2"
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            sys2=vaModePos.val-3
+            covx sys2,tTmp.txt,0,0
+            tSend.txt+="mode-preset_modes,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
-Button b10
+Button bMode2
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : 0
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 40
     
     Events
         Touch Press Event
-            tCode.txt=tCode.txt+"0"
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            sys2=vaModePos.val-2
+            covx sys2,tTmp.txt,0,0
+            tSend.txt+="mode-preset_modes,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
-Button b11
+Button bMode3
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : CLR
-        Max. Text Size                      : 10
+        Text                                : 
+        Max. Text Size                      : 40
     
     Events
         Touch Press Event
-            tCode.txt=""
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            sys2=vaModePos.val-1
+            covx sys2,tTmp.txt,0,0
+            tSend.txt+="mode-preset_modes,"+tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
-Button b2
+Button bModeNext
     Attributes
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : 3
-        Max. Text Size                      : 10
+        Text                                : î´
+        Max. Text Size                      : 5
     
     Events
         Touch Press Event
-            tCode.txt=tCode.txt+"3"
+            //if(bMode3.txt=="")
+            spstr vaModeList.txt,tTmp.txt,"?",vaModePos.val
+            if(tTmp.txt=="")
+            {
+                vaModePos.val=0
+                spstr vaModeList.txt,bMode1.txt,"?",vaModePos.val
+                spstr vaModeList.txt,bMode2.txt,"?",vaModePos.val+1
+                spstr vaModeList.txt,bMode3.txt,"?",vaModePos.val+2
+            }
+            spstr vaModeList.txt,bMode1.txt,"?",vaModePos.val
+            spstr vaModeList.txt,bMode2.txt,"?",vaModePos.val+1
+            spstr vaModeList.txt,bMode3.txt,"?",vaModePos.val+2
+            vaModePos.val+=3
+            spstr vaModeList.txt,tTmp.txt,"?",3
+            if(tTmp.txt=="")
+            {
+                vis bModeNext,0
+            }else
+            {
+                vis bModeNext,1
+            }
+            bMode1.pco=defaultFontColor
+            bMode2.pco=defaultFontColor
+            bMode3.pco=defaultFontColor
+            if(bMode1.txt==vaModeCur.txt)
+            {
+                bMode1.pco=1374
+            }
+            if(bMode2.txt==vaModeCur.txt)
+            {
+                bMode2.pco=1374
+            }
+            if(bMode3.txt==vaModeCur.txt)
+            {
+                bMode3.pco=1374
+            }
         
-Button b3
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 4
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tCode.txt=tCode.txt+"4"
-        
-Button b4
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 5
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tCode.txt=tCode.txt+"5"
-        
-Button b5
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 6
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tCode.txt=tCode.txt+"6"
-        
-Button b6
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 7
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tCode.txt=tCode.txt+"7"
-        
-Button b7
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 8
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tCode.txt=tCode.txt+"8"
-        
-Button b8
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 9
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tCode.txt=tCode.txt+"9"
-        
-Button b9
+Dual-state Button btOnOff1
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -448,41 +378,10 @@ Button b9
     
     Events
         Touch Press Event
-            // event,buttonPress2,entn,arm1,tCode
-            tSend.txt="event,buttonPress2,"
-            if(vaAddBtn.txt!="")
-            {
-                tSend.txt+=vaAddBtn.txt+",button"
-            }else
-            {
-                tSend.txt+=entn.txt+",opnSensorNotify"
-            }
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-            tCode.txt=""
-        
-Button bNext
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î³
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,bNext"
+            //craft command
+            tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
+            covx btOnOff1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -495,88 +394,15 @@ Button bNext
             prints tSend.txt,0
             prints crcval,2
         
-Button bPrev
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î°
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,"
-            if(bPrev.txt=="î¶")
-            {
-                tSend.txt+="bUp"
-            }else
-            {
-                tSend.txt+="bPrev"
-            }
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Hotspot mSwipeNext
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-    
-    Events
-        Touch Press Event
-            click bNext,1
-        
-Hotspot mSwipePrev
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-    
-    Events
-        Touch Press Event
-            click bPrev,1
-        
-Hotspot mSwipeUp
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-    
-    Events
-        Touch Press Event
-            click bPrev,1
-        
-Timer tmFlash
+Timer tmCooldown
     Attributes
         Scope      : local
-        Period (ms): 600
+        Period (ms): 100
         Enabled    : no
     
     Events
         Timer Event
-            if(tIcon.isbr==1)
-            {
-                tIcon.isbr=0
-                vis tIcon,0
-            }else
-            {
-                tIcon.isbr=1
-                vis tIcon,1
-            }
+            tmCooldown.en=0
         
 Timer tmSerial
     Attributes
@@ -629,133 +455,71 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
-                                    if(tInstruction.txt=="entityUpd")
+                                    spstr strCommand.txt,tTmp.txt,"~",1
+                                    if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
                                     {
-                                        //entn
-                                        spstr strCommand.txt,entn.txt,"~",1
-                                        // navigation icons
-                                        spstr strCommand.txt,tId.txt,"~",2
-                                        spstr tId.txt,tTmp.txt,"|",0
-                                        if(tTmp.txt=="0")
-                                        {
-                                            vis bPrev,0
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,0
-                                        }
-                                        if(tTmp.txt=="1")
-                                        {
-                                            vis bPrev,1
-                                            tsw mSwipePrev,1
-                                            tsw mSwipeUp,0
-                                            bPrev.txt="î°"
-                                        }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bPrev,1
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,1
-                                            bPrev.txt="î¶"
-                                        }
-                                        spstr tId.txt,tTmp.txt,"|",1
-                                        if(tTmp.txt=="0")
-                                        {
-                                            vis bNext,0
-                                            tsw mSwipeNext,0
-                                        }
-                                        if(tTmp.txt=="1")
-                                        {
-                                            vis bNext,1
-                                            tsw mSwipeNext,1
-                                            bNext.txt="î³"
-                                        }
-                                        //text arm1
-                                        spstr strCommand.txt,arm1.txt,"~",3
-                                        if(arm1.txt!="")
-                                        {
-                                            vis arm1,1
-                                        }
-                                        //id arm1
-                                        spstr strCommand.txt,va1.txt,"~",4
-                                        //text arm2
-                                        spstr strCommand.txt,arm2.txt,"~",5
-                                        if(arm2.txt!="")
-                                        {
-                                            vis arm2,1
-                                        }
-                                        //id arm2
-                                        spstr strCommand.txt,va2.txt,"~",6
-                                        //text arm3
-                                        spstr strCommand.txt,arm3.txt,"~",7
-                                        if(arm3.txt!="")
-                                        {
-                                            vis arm3,1
-                                        }
-                                        //id arm3
-                                        spstr strCommand.txt,va3.txt,"~",8
-                                        //text arm4
-                                        spstr strCommand.txt,arm4.txt,"~",9
-                                        if(arm4.txt!="")
-                                        {
-                                            vis arm4,1
-                                        }
-                                        //id arm4
-                                        spstr strCommand.txt,va4.txt,"~",10
-                                        //icon
-                                        spstr strCommand.txt,tIcon.txt,"~",11
-                                        //icon color
-                                        spstr strCommand.txt,tTmp.txt,"~",12
+                                        // change icon
+                                        //spstr strCommand.txt,tIcon1.txt,"~",2
+                                        vis tIcon1,1
+                                        // change icon color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
                                         covx tTmp.txt,sys0,0,0
-                                        tIcon.pco=sys0
-                                        //numpad status
-                                        spstr strCommand.txt,tTmp.txt,"~",13
-                                        if(tTmp.txt!="disable")
+                                        tIcon1.pco=sys0
+                                        // get Button State
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        covx tTmp.txt,sys0,0,0
+                                        btOnOff1.val=sys0
+                                        // get Speed value
+                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        if(tTmp.txt=="disable")
                                         {
-                                            vis b0,1
-                                            vis b1,1
-                                            vis b2,1
-                                            vis b3,1
-                                            vis b4,1
-                                            vis b5,1
-                                            vis b6,1
-                                            vis b7,1
-                                            vis b8,1
-                                            vis b9,1
-                                            vis b10,1
-                                            vis b11,1
-                                            vis tCode,1
+                                            vis t1,0
+                                            vis hSpeed,0
                                         }else
                                         {
-                                            vis b0,0
-                                            vis b1,0
-                                            vis b2,0
-                                            vis b3,0
-                                            vis b4,0
-                                            vis b5,0
-                                            vis b6,0
-                                            vis b7,0
-                                            vis b8,0
-                                            vis b9,0
-                                            vis b10,0
-                                            vis b11,0
-                                            vis tCode,0
+                                            vis t1,1
+                                            vis hSpeed,1
+                                            covx tTmp.txt,sys0,0,0
+                                            if(tmCooldown.en==0)
+                                            {
+                                                hSpeed.val=sys0
+                                            }
                                         }
-                                        //flashing status
-                                        spstr strCommand.txt,tTmp.txt,"~",14
-                                        if(tTmp.txt=="enable")
+                                        // set hSpeed maxValue
+                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        covx tTmp.txt,hSpeed.maxval,0,0
+                                        // set t1 Speed (Localization)
+                                        spstr strCommand.txt,t1.txt,"~",7
+                                        //current mode
+                                        spstr strCommand.txt,vaModeCur.txt,"~",8
+                                        //mode list
+                                        spstr strCommand.txt,vaModeList.txt,"~",9
+                                        if(vaModeList.txt=="")
                                         {
-                                            tmFlash.en=1
-                                        }else
-                                        {
-                                            tmFlash.en=0
+                                            vis bMode1,0
+                                            vis bMode2,0
+                                            vis bMode3,0
+                                            vis bModeNext,0
                                         }
-                                        // extra button
-                                        spstr strCommand.txt,b9.txt,"~",15
-                                        if(b9.txt!="")
+                                        if(bMode1.txt=="")
                                         {
-                                            vis b9,1
-                                            spstr strCommand.txt,tTmp.txt,"~",16
-                                            covx tTmp.txt,b9.pco,0,0
-                                            spstr strCommand.txt,vaAddBtn.txt,"~",17
+                                            click bModeNext,1
+                                            click bModeNext,0
+                                        }
+                                        bMode1.pco=defaultFontColor
+                                        bMode2.pco=defaultFontColor
+                                        bMode3.pco=defaultFontColor
+                                        if(bMode1.txt==vaModeCur.txt)
+                                        {
+                                            bMode1.pco=1374
+                                        }
+                                        if(bMode2.txt==vaModeCur.txt)
+                                        {
+                                            bMode2.pco=1374
+                                        }
+                                        if(bMode3.txt==vaModeCur.txt)
+                                        {
+                                            bMode3.pco=1374
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -798,7 +562,6 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
-                                        sleepValue=0
                                         //command format pageType,specialPageName
                                         //write name of speical page to tId
                                         spstr strCommand.txt,tId.txt,"~",1
@@ -881,25 +644,14 @@ Timer tmSleep
     
     Events
         Timer Event
-            if(sleepTimeout!=0&&dimValue!=dim)
+            if(sleepTimeout!=0)
             {
                 sleepValue+=1
                 if(sleepTimeout<=sleepValue)
                 {
                     sleepValue=0
-                    dim=dimValue
-                    tSend.txt="event,sleepReached,cardAlarm"
-                    //send calc crc
-                    btlen tSend.txt,sys0
-                    crcrest 1,0xffff // reset CRC
-                    crcputh 55 bb
-                    crcputs sys0,2
-                    crcputs tSend.txt,0
-                    //send cmd
-                    printh 55 bb
-                    prints sys0,2
-                    prints tSend.txt,0
-                    prints crcval,2
+                    click b0,1
+                    click b0,0
                 }
             }
         
