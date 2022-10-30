@@ -12,6 +12,7 @@ nspanel-1:
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
+    model: eu
 ```
 
 You can continue from this point adding configuration for the weather forcecast on the screensaver, configuring a schedule for the brightness of the screensaver and your first cards.
@@ -24,6 +25,7 @@ nspanel-1:
   config:
     panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
+    model: eu
     sleepTimeout: 20
     sleepBrightness:
       - time: "7:00:00"

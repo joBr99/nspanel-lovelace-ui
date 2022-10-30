@@ -8,14 +8,29 @@ This is the notification used by the backend for updates, opening it requires to
    
 `pageType popupNotify`
    
-`entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout`
+`entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout~fontIdText`
 
 Alternative Layout with Icon:
 
 `entityUpdateDetail~internalName~heading~headingColor~button1text~button1color~button2text~tB2Color~notificationText~textColor~sleepTimeout~fontIdText~icon~iconColor`
 
+
+`fontIdText` is the font used by the notification text
+Possible values are 0-5:
+```
+Font 0 - Default - Size 24 (No Icons, Support for various special chars from different langs)
+Font 1 - Size 32 (Icons and limited chars)
+Font 2 - Size 32 (No Icons, Support for various special chars from different langs)
+Font 3 - Size 48 (Icons and limited chars)
+Font 4 - Size 80 (Icons and limited chars)
+Font 5 - Size 128 (ascii only)
+```
+
+
 It is possible to exit from the page by sending `exitPopup`
   
+If you want to add newlines to your message add this string for the newline `{{'\r\n'}}`
+
 Send Message to the Panel combined with a buzzer sound:
    
 ```
