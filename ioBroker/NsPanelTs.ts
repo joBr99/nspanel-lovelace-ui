@@ -63,12 +63,13 @@ ReleaseNotes:
         - 26.10.2022 - v3.5.0.1 Fix Thermostat for tado Support (by Sternmiere)
         - 27.10.2022 - v3.5.0.1 Add VirtualDevice Gate
         - 27.10.2022 - v3.5.0.2 Applied Boy Scout Rule (Fixed some typos, changed var to let, fixed min/max colorTemp Bug)
+        - 27.10.2022 - v3.5.0.3 Fixed Media Play/Pause icon for alexa (and others) devices
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
-Tasmota Konsole: 
+Tasmota Konsole:
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
-    Rule2 0 (Rule deaktivieren) 
+    Rule2 0 (Rule deaktivieren)
 
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
@@ -86,39 +87,39 @@ Popup-Pages:
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
 
-Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)    
+Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
-    Lautstärke          - Volume (SET/ACTUAL) und MUTE 
-    Lautstärke-Gruppe   - analog Lautstärke 
+    Lautstärke          - Volume (SET/ACTUAL) und MUTE
+    Lautstärke-Gruppe   - analog Lautstärke
     Licht               - An/Aus (Schalter)
     Steckdose           - An/Aus (Schalter)
     Dimmer              - An/Aus, Brightness
-    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness 
-    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (HUE kann auch fehlen) 
-    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
-    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur 
-    Jalousien           - Up, Stop, Down, Position 
-    Fenster             - Sensor open 
-    Tür                 - Sensor open 
+    Farbtemperatur      - An/Aus, Farbtemperatur und Brightness
+    HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (HUE kann auch fehlen)
+    RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
+    RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
+    Jalousien           - Up, Stop, Down, Position
+    Fenster             - Sensor open
+    Tür                 - Sensor open
     Verschluss          - Türschloss SET/ACTUAL/OPEN
     Taste               - Für Szenen oder Radiosender, etc. --> Nur Funktionsaufruf - Kein Taster wie MonoButton - True/False
     Tastensensor        - analog Taste
-    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc. 
+    Thermostat          - Aktuelle Raumtemperatur, Setpoint, etc.
     Klimaanlage         - Buttons zur Steuerung der Klimaanlage im unteren Bereich
     Temperatur          - Anzeige von Temperatur - Datenpunkten, analog Info
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, analog Info
-    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht) 
+    Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
 
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden --> SetOption146 1
     Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden
-                          (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!! 
+                          (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!!
                           ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
 
-Tasmota-Status0 - (zyklische Ausführung) 
+Tasmota-Status0 - (zyklische Ausführung)
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
 
 Erforderliche Adapter:
@@ -133,7 +134,7 @@ Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.5.0.tft
 ---------------------------------------------------------------------------------------
-*/ 
+*/
 let Icons = new IconsSelector();
 let timeoutSlider: any;
 let manually_Update = false;
@@ -357,7 +358,7 @@ let Subpages_1: PageEntities =
         };
 
         //Subpage 2 von Subpages_1
-        let WLAN: PageQR = 
+        let WLAN: PageQR =
         {
             "type": "cardQR",
             "heading": "Gäste WLAN",
@@ -397,65 +398,65 @@ let Radiosender: PageGrid =
 // NEW: Neue Definition von Medien-Aliasen
 // adapterPlayerInstance = alexa2.0. or spotify-premium.0. or sonos.0. or chromecast.0.
 // MEDIA ALIASE können auch per JS-Script erstellt werden https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-ALIAS-Definitionen#medien---cardmedia
-let Alexa: PageMedia = 
+let Alexa: PageMedia =
 {
     "type": "cardMedia",
     "heading": "Alexa",
     "useColor": true,
     "subPage": false,
     "parent": undefined,
-    "items": [<PageItem>{   
-                id: "alias.0.NSPanel_1.Media.PlayerAlexa2", 
+    "items": [<PageItem>{
+                id: "alias.0.NSPanel_1.Media.PlayerAlexa2",
                 adapterPlayerInstance: "alexa2.0.",
-                mediaDevice: "G0XXXXXXXXXXXXXX", 
+                mediaDevice: "G0XXXXXXXXXXXXXX",
                 speakerList: ['Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
              }]
 };
 
-let Sonos: PageMedia = 
+let Sonos: PageMedia =
 {
     "type": "cardMedia",
     "heading": "Sonos",
     "useColor": true,
     "subPage": false,
     "parent": undefined,
-    "items": [<PageItem>{   
-                id: "alias.0.NSPanel_1.Media.PlayerSonos", 
+    "items": [<PageItem>{
+                id: "alias.0.NSPanel_1.Media.PlayerSonos",
                 adapterPlayerInstance: "sonos.0.",
                 mediaDevice: "192_168_1_212",
                 speakerList: ['Terrasse']
              }]
 };
 
-let SpotifyPremium: PageMedia = 
+let SpotifyPremium: PageMedia =
 {
     "type": "cardMedia",
     "heading": "Spotify-Premium",
     "useColor": true,
     "subPage": false,
     "parent": undefined,
-    "items": [<PageItem>{ 
-                id: "alias.0.NSPanel_1.Media.PlayerSpotifyPremium", 
+    "items": [<PageItem>{
+                id: "alias.0.NSPanel_1.Media.PlayerSpotifyPremium",
                 adapterPlayerInstance: "spotify-premium.0.",
                 speakerList: ['LENOVO-W11-01','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
-             }] 
+             }]
 };
 
-let SqueezeboxRPC: PageMedia = 
+let SqueezeboxRPC: PageMedia =
 {
     "type": "cardMedia",
     "heading": "SqueezeboxRPC",
     "useColor": true,
     "subPage": false,
     "parent": undefined,
-    "items": [<PageItem>{ 
-                id: "alias.0.Media.LMS.SqueezePlay", 
+    "items": [<PageItem>{
+                id: "alias.0.Media.LMS.SqueezePlay",
                 adapterPlayerInstance: "squeezeboxrpc.0.Players.SqueezePlay.",
                 speakerList: ['SqueezePlay']
-             }] 
+             }]
 };
 
-let Buero_Themostat: PageThermo = 
+let Buero_Themostat: PageThermo =
 {
     "type": "cardThermo",
     "heading": "Test Thermostat",
@@ -465,7 +466,7 @@ let Buero_Themostat: PageThermo =
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Thermostat_Buero", minValue: 50, maxValue: 300 }]
 };
 
-let Buero_Klimaanlage: PageThermo = 
+let Buero_Klimaanlage: PageThermo =
 {
     "type": "cardThermo",
     "heading": "Test Klimaanlage",
@@ -475,7 +476,7 @@ let Buero_Klimaanlage: PageThermo =
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.TestKlimaanlage", minValue: 50, maxValue: 250}]
 };
 
-let Buero_Alarm: PageAlarm = 
+let Buero_Alarm: PageAlarm =
 {
     "type": "cardAlarm",
     "heading": "Alarm",
@@ -492,7 +493,7 @@ let Service: PageEntities =
     "heading": "NSPanel Service",
     "useColor": true,
     "subPage": false,
-    "parent": undefined, 
+    "parent": undefined,
     "items": [
         <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_AutoUpdate", name: "Auto-Updates" ,icon: "update", offColor: MSRed, onColor: MSGreen},
         <PageItem>{ navigate: true, id: "NSPanel_Infos", icon: "information-outline", onColor: White, name: "NSPanel Infos"},
@@ -610,8 +611,8 @@ export const config: Config = {
     active: 100, //Standard-Brightness TFT
     screenSaverDoubleClick: true,
     locale: 'de-DE',                    // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
-    timeFormat: '%H:%M',                // currently not used 
-    dateFormat: '%A, %d. %B %Y',        // currently not used 
+    timeFormat: '%H:%M',                // currently not used
+    dateFormat: '%A, %d. %B %Y',        // currently not used
     weatherEntity: 'alias.0.Wetter',    // Dieser Alias muss erstellt werden, damit die 4 kleineren Icons (Wetter oder DP) angezeigt werden können
     defaultOffColor: Off,
     defaultOnColor: On,
@@ -625,11 +626,11 @@ export const config: Config = {
             SpotifyPremium,     //Beispiel-Seite
             Alexa,              //Beispiel-Seite
             Buero_Seite_2,      //Beispiel-Seite
-            Buero_Klimaanlage,  //Beispiel-Seite 
+            Buero_Klimaanlage,  //Beispiel-Seite
             Button_1,           //Beispiel-Seite
             Test_Licht1,        //Beispiel-Seite
             Test_Licht2,        //Beispiel-Seite
-            Test_Funktionen,    //Beispiel-Seite    
+            Test_Funktionen,    //Beispiel-Seite
             Fenster_1,          //Beispiel-Seite
             Subpages_1,         //Beispiel-Seite
             Buero_Themostat,    //Beispiel-Seite
@@ -644,7 +645,7 @@ export const config: Config = {
                 NSPanel_Firmware_Updates,   //Beispiel-Unterseite
                 Subpage2_Level_2
     ],
-    button1Page: button1Page,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
+    button1Page: button1Page,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
     button2Page: button2Page    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
 };
 
@@ -704,14 +705,14 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
         }
     } catch (err) {
         console.warn('function ScreensaverDimmode: ' + err.message);
-    }     
+    }
 }
 
 async function InitWeatherForecast() {
     try {
         //----Möglichkeit, im Screensaver zwischen Accu-Weather Forecast oder selbstdefinierten Werten zu wählen---------------------------------
-        if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false || 
-            existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false || 
+        if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false ||
+            existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false ||
             existsState(NSPanel_Path + "ScreensaverInfo.entityChangeTime") == false) {
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean' });
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
@@ -719,7 +720,7 @@ async function InitWeatherForecast() {
         }
     } catch (err) {
         console.warn('function InitWeatherForecast: ' + err.message);
-    }      
+    }
 }
 
 InitWeatherForecast();
@@ -771,7 +772,7 @@ async function InitDimmode() {
         ScreensaverDimmode(timeDimMode);
     } catch (err) {
         console.warn('function InitDimmode: ' + err.message);
-    }  
+    }
 }
 
 InitDimmode();
@@ -794,7 +795,7 @@ const popupNotifyButton2TextColor = NSPanel_Path + 'popupNotify.popupNotifyButto
 const popupNotifyButton2Text = NSPanel_Path + 'popupNotify.popupNotifyButton2Text';
 const popupNotifySleepTimeout = NSPanel_Path + 'popupNotify.popupNotifySleepTimeout'; // in sek. / wenn 0, dann bleibt die Nachricht stehen
 const popupNotifyAction = NSPanel_Path + 'popupNotify.popupNotifyAction'; // Antwort aus dem Panel true/false
-const popupNotifyLayout = NSPanel_Path + 'popupNotify.popupNotifyLayout';  
+const popupNotifyLayout = NSPanel_Path + 'popupNotify.popupNotifyLayout';
 const popupNotifyFontIdText = NSPanel_Path + 'popupNotify.popupNotifyFontIdText';  // 1 - 5
 const popupNotifyIcon = NSPanel_Path + 'popupNotify.popupNotifyIcon';  // 1 - 5
 const popupNotifyIconColor = NSPanel_Path + 'popupNotify.popupNotifyIconColor';  // 1 - 5
@@ -812,14 +813,14 @@ async function InitPopupNotify() {
         }
 
         await createStateAsync(popupNotifyHeading, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyHeadingColor, <iobJS.StateCommon>{ type: 'string' });        
+        await createStateAsync(popupNotifyHeadingColor, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifyText, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyTextColor, <iobJS.StateCommon>{ type: 'string' });      
+        await createStateAsync(popupNotifyTextColor, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifyInternalName, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifyButton1Text, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyButton1TextColor, <iobJS.StateCommon>{ type: 'string' });      
+        await createStateAsync(popupNotifyButton1TextColor, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifyButton2Text, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyButton2TextColor, <iobJS.StateCommon>{ type: 'string' });  
+        await createStateAsync(popupNotifyButton2TextColor, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifySleepTimeout, <iobJS.StateCommon>{ type: 'number' });
         await createStateAsync(popupNotifyAction, <iobJS.StateCommon>{ type: 'boolean' });
         await createStateAsync(popupNotifyLayout, <iobJS.StateCommon>{ type: 'number' });
@@ -877,7 +878,7 @@ async function InitPopupNotify() {
         });
     } catch (err) {
         console.warn('function InitPopupNotify: ' + err.message);
-    }   
+    }
 }
 
 InitPopupNotify();
@@ -895,7 +896,7 @@ schedule('* * * * *', () => {
         SendTime();
     } catch (err) {
         console.warn('schedule: ' + err.message);
-    }   
+    }
 });
 
 //Wechsel zwischen Screensaver Entities und WeatherForecast
@@ -903,13 +904,13 @@ schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val 
     try {
         //WeatherForecast true/false Umschaltung verzögert
         if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
-            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false); 
+            setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false);
         } else if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == false && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
             setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false);
         }
     } catch (err) {
         console.warn('schedule: ' + err.message);
-    }   
+    }
 });
 
 function InitHWButton1Color() {
@@ -921,7 +922,7 @@ function InitHWButton1Color() {
         }
     } catch (err) {
         console.warn('function InitHWButton1Color: ' + err.message);
-    }    
+    }
 }
 InitHWButton1Color();
 
@@ -991,7 +992,7 @@ function get_locales() {
         });
     } catch (err) {
         console.error('error requesting locales in function get_locales: ' + err.message);
-    }    
+    }
 }
 
 async function check_updates() {
@@ -1606,7 +1607,7 @@ function GeneratePage(page: Page): void {
 }
 
 function HandleHardwareButton(method: string): void {
-    try {    
+    try {
         let page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | PageQR | PagePower);
         if (config.button1Page !== null && method == 'button1') {
             page = config.button1Page;
@@ -1792,7 +1793,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
                     }
 
-                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true) { 
+                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true) {
                         if (existsState(pageItem.id + '.HUE')) {
                             if (getState(pageItem.id + '.HUE').val != null) {
                                 let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
@@ -1919,11 +1920,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             iconColor = GetIconColor(pageItem, true, useColors);
                             gateState = findLocale('window', 'opened');
                         }
- 
+
                         RegisterEntityWatcher(pageItem.id + '.ACTUAL');
- 
+
                     }
- 
+
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
 
                 case 'door':
@@ -2107,7 +2108,7 @@ function findLocale(controlsObject: string, controlsState: string): string {
             if (Debug) {
                 console.log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState);
             }
-        } else { 
+        } else {
             console.warn('function findLocale: ' + err.message);
         }
         return controlsState;
@@ -2471,7 +2472,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 function GenerateMediaPage(page: PageMedia): Payload[] {
     try {
         let id = page.items[0].id
-        
+
         let out_msgs: Array<Payload> = [];
 
         out_msgs.push({ payload: 'pageType~cardMedia' });
@@ -2479,7 +2480,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
             let author = getState(id + '.ARTIST').val;
-            
+
             let vInstance = page.items[0].adapterPlayerInstance;
             let v1Adapter = vInstance.split('.');
             let v2Adapter = v1Adapter[0];
@@ -2498,7 +2499,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 } else if (name.substring(0,6) == 'Album:') {
                     let nameLength = name.length;
                     name = name.slice(10, nameLength);
-                } else if (name.substring(0,6) == 'Track') { 
+                } else if (name.substring(0,6) == 'Track') {
                     name = 'Spotify-Premium';
                 }
                 if (nameLength == 0) {
@@ -2509,7 +2510,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     author = getState(id + '.ARTIST').val;
                 }
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';               
+                    author = 'no music to control';
                 }
             }
 
@@ -2520,10 +2521,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 let nameLenght = name.length;
                 if (nameLenght == 0) {
                     name = 'Sonos Player';
-                } 
+                }
                 author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';               
+                    author = 'no music to control';
                 }
             }
 
@@ -2534,7 +2535,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 if (nameLength == 0) {
                     name = 'Squeezebox RPC';
                     author = 'no music to control';
-                } 
+                }
             }
 
             //Alexa2
@@ -2543,10 +2544,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 let nameLength = name.length;
                 if (nameLength == 0) {
                     name = 'Alexa Player';
-                    author = 'no music to control';  
-                } 
+                    author = 'no music to control';
+                }
             }
-            
+
             let volume = getState(id + '.VOLUME').val;
             let iconplaypause = Icons.GetIcon('pause'); //pause
             let onoffbutton = 1374;
@@ -2560,11 +2561,13 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             }
 
             //Ausnahme für squeezebox, da State = Power
-            if (getState(id + '.PAUSE').val === false && v2Adapter == 'squeezeboxrpc') {
-                onoffbutton = 65535;
-                iconplaypause = Icons.GetIcon('pause'); //pause
-            } else {
-                iconplaypause = Icons.GetIcon('play'); //play
+            if (v2Adapter == 'squeezeboxrpc') {
+                if (getState(id + '.PAUSE').val === false) {
+                    onoffbutton = 65535;
+                    iconplaypause = Icons.GetIcon('pause'); //pause
+                } else {
+                    iconplaypause = Icons.GetIcon('play'); //play
+                }
             }
 
             if (Debug) {
@@ -2576,7 +2579,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             if (v2Adapter == 'alexa2') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', page.items[0].mediaDevice, '.Info.name'].join(''))).val;
             } else if (v2Adapter == 'spotify-premium') {
-                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'player.device.name'].join(''))).val; 
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'player.device.name'].join(''))).val;
             } else if (v2Adapter == 'sonos') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.members'].join(''))).val;
             } else if (v2Adapter == 'squeezeboxrpc') {
@@ -2620,8 +2623,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     iconplaypause + '~' +                 //playpauseicon
                     currentSpeaker + '~' +                //currentSpeaker
                     speakerList + '~' +                   //speakerList-seperated-by-?
-                    onoffbutton
-            });                        //On/Off Button Color
+                    onoffbutton                           //On/Off Button Color
+            });
         }
         if (Debug) {
             console.log(out_msgs);
@@ -2636,7 +2639,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
     try {
         activePage = page;
         let id = page.items[0].id
-        
+
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
         let nsPath = NSPanel_Alarm_Path + 'Alarm.';
@@ -2821,18 +2824,18 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         let demoMode = false;
         let id;
 
-        try { 
+        try {
             id = page.items[0].id
         } catch (err) {
             console.log("Kein PageItem definiert - cardPower Demo-Modus aktiv");
             demoMode = true;
-        } 
+        }
 
         let heading = 'cardPower Example';
         if (demoMode != true) {
             let o = getObject(id)
              heading = page.heading !== undefined ? page.heading : o.common.name.de
-        } 
+        }
 
         const obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
 
@@ -2853,11 +2856,11 @@ function GeneratePowerPage(page: PagePower): Payload[] {
                 array_icon[obji + 1] = obj[obji].icon;
                 array_powerspeed[obji + 1] = obj[obji].speed;
                 array_powerstate[obji + 1] = obj[obji].value + ' ' + obj[obji].unit ;
-            } 
+            }
         }
 
         let power_string : any = '';
-        
+
         for (let i = 1; i < 7; i++ ) {
             power_string = power_string + rgb_dec565(array_icon_color[i]) + '~';    // icon_color~
             power_string = power_string + Icons.GetIcon(array_icon[i]) + '~';       // icon~
@@ -2865,7 +2868,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             power_string = power_string + array_powerstate[i] + '~';                // entity.state~
         }
 
-        power_string = power_string.substring(0, power_string.length - 1); 
+        power_string = power_string.substring(0, power_string.length - 1);
 
         out_msgs.push({
             payload: 'entityUpd~' +                         //entityUpd~*
@@ -2874,7 +2877,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
                 rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
                 Icons.GetIcon(array_icon[0])    + '~' +     // icon~            Mitte
                 array_powerspeed[0]             + '~' +     // entity.state~    Mitte
-                power_string              
+                power_string
         });
 
         return out_msgs
@@ -2902,7 +2905,7 @@ function setIfExists(id: string, value: any, type: string | null = null): boolea
         return false;
     } catch (err) {
         console.warn('function setIfExists: ' + err.message);
-    }        
+    }
 }
 
 function toggleState(id: string): boolean {
@@ -2915,7 +2918,7 @@ function toggleState(id: string): boolean {
         return false;
     } catch (err) {
         console.warn('function toggleState: ' + err.message);
-    }  
+    }
 }
 
 function HandleButtonEvent(words): void {
@@ -3078,7 +3081,7 @@ function HandleButtonEvent(words): void {
                 break;
             case 'tiltClose':
                 setIfExists(id + '.TILT_CLOSE', true);
-                break;    
+                break;
             case 'tiltSlider':
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                 timeoutSlider = setTimeout(async function () {
@@ -3148,7 +3151,7 @@ function HandleButtonEvent(words): void {
                         setIfExists(id + '.BLUE', rgb.blue);
                         break;
                     case 'rgbSingle':
-                        let pageItem = findPageItem(id); 
+                        let pageItem = findPageItem(id);
                         if (pageItem.colormode == "xy") {
                             //Für z.B. Deconz XY
                             setIfExists(id + ".RGB", rgb_to_cie(rgb.red, rgb.green, rgb.blue));
@@ -3168,9 +3171,11 @@ function HandleButtonEvent(words): void {
                 break;
             case 'media-back':
                 setIfExists(id + '.PREV', true);
-                setTimeout(function(){
-                    GeneratePage(activePage);  
-                },3000)
+                on({id: id + '.TITLE', change: "ne"}, async function () {
+                    setTimeout(function(){
+                        GeneratePage(activePage);
+                    },25)
+                });
                 break;
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
@@ -3191,15 +3196,24 @@ function HandleButtonEvent(words): void {
                         setIfExists(id + '.PLAY', true);
                     }
                 }
-                setTimeout(function(){
-                    GeneratePage(activePage);  
-                },3000)
+                on({id: id + '.STATE', val: true}, async function () {
+                    on({id: [].concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']), change: "ne"}, async function () {
+                        setTimeout(function(){
+                            GeneratePage(activePage);
+                        },25)
+                    });
+                });
+                on({id: id + '.STATE', val: false}, async function () {
+                    GeneratePage(activePage);
+                });
                 break;
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
-                setTimeout(function(){
-                    GeneratePage(activePage);  
-                },3000)
+                on({id: id + '.TITLE', change: "ne"}, async function () {
+                    setTimeout(function(){
+                        GeneratePage(activePage);
+                    },25)
+                });
                 break;
             case 'volumeSlider':
                 setIfExists(id + '.VOLUME', parseInt(words[4]))
@@ -3231,7 +3245,7 @@ function HandleButtonEvent(words): void {
                         break;
                     case 'chromecast':
                         break;
-                }        
+                }
                 break;
             case 'media-OnOff':
                 let pageItemTem = findPageItem(id);
@@ -3257,19 +3271,19 @@ function HandleButtonEvent(words): void {
                     switch (words[4]) {
                         case 'BOOT':
                             setIfExists(words[2] + '.' + 'BOOST', !getState(words[2] + '.' + 'BOOST').val)
-                            break;                
+                            break;
                         case 'PART':
                             setIfExists(words[2] + '.' + 'PARTY', !getState(words[2] + '.' + 'PARTY').val)
-                            break;                
+                            break;
                         case 'AUTT':
                             setIfExists(words[2] + '.' + 'AUTOMATIC', !getState(words[2] + '.' + 'AUTOMATIC').val)
-                            break;                
+                            break;
                         case 'MANT':
                             setIfExists(words[2] + '.' + 'MANUAL', !getState(words[2] + '.' + 'MANUAL').val)
-                            break;                
+                            break;
                         case 'VACT':
                             setIfExists(words[2] + '.' + 'VACATION', !getState(words[2] + '.' + 'VACATION').val)
-                            break;                
+                            break;
                     }
                     let modes = ['BOOT', 'PART', 'AUTT', 'MANT', 'VACT']
                     let modesDP = ['BOOST', 'PARTY', 'AUTOMATIC', 'MANUAL', 'VACATION']
@@ -3332,8 +3346,8 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);  
-                },250) 
+                    GeneratePage(activePage);
+                },250)
                 break;
             case 'A2': // Alarm-Page Alarm 2 aktivieren
                 if (words[4] != '') {
@@ -3343,8 +3357,8 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);  
-                },250)             
+                    GeneratePage(activePage);
+                },250)
                 break;
             case 'A3': // Alarm-Page Alarm 3 aktivieren
                 if (words[4] != '') {
@@ -3354,8 +3368,8 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);  
-                },250)            
+                    GeneratePage(activePage);
+                },250)
                 break;
             case 'A4': // Alarm-Page Alarm 4 aktivieren
                 if (words[4] != '') {
@@ -3365,8 +3379,8 @@ function HandleButtonEvent(words): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);  
-                },250)          
+                    GeneratePage(activePage);
+                },250)
                 break;
             case 'D1': // Alarm-Page Alarm Deaktivieren
                 if (Debug) {
@@ -3387,7 +3401,7 @@ function HandleButtonEvent(words): void {
                     }
                     setIfExists(id + '.PANEL', NSPanel_Path);
                     setTimeout(function(){
-                        GeneratePage(activePage);  
+                        GeneratePage(activePage);
                     },500)
                 }
                 break;
@@ -3423,7 +3437,7 @@ function GetNavigationString(pageId: number): string {
         }
     } catch (err) {
         console.log('function GetNavigationString: ' + err.message);
-    }         
+    }
 }
 
 function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
@@ -3802,7 +3816,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                 }
 
                 let textSecondRow = '';
-                let icon_id = icon; 
+                let icon_id = icon;
                 let icon_up = Icons.GetIcon('arrow-up');
                 let icon_stop = Icons.GetIcon('stop');
                 let icon_down = Icons.GetIcon('arrow-down');
@@ -3862,7 +3876,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
     } catch (err) {
         console.log('function GenerateDetailPage: ' + err.message);
-    } 
+    }
 }
 
 function scale(number: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
@@ -3870,7 +3884,7 @@ function scale(number: number, inMin: number, inMax: number, outMin: number, out
         return (outMax + outMin) - ((number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin);
     } catch (err) {
         console.log('function scale: ' + err.message);
-    } 
+    }
 }
 
 function UnsubscribeWatcher(): void {
@@ -3881,7 +3895,7 @@ function UnsubscribeWatcher(): void {
         }
     } catch (err) {
         console.log('function UnsubscribeWatcher: ' + err.message);
-    }         
+    }
 }
 
 function HandleScreensaver(): void {
@@ -3930,7 +3944,7 @@ function HandleScreensaverUpdate(): void {
                 payloadString += GetScreenSaverEntityString(config.secondScreensaverEntity);
                 payloadString += GetScreenSaverEntityString(config.thirdScreensaverEntity);
                 payloadString += GetScreenSaverEntityString(config.fourthScreensaverEntity);
-                
+
                 const colorScale0:  RGB = { red:   99, green: 190, blue: 123 };
                 const colorScale1:  RGB = { red:  129, green: 199, blue: 126 };
                 const colorScale2:  RGB = { red:  161, green: 208, blue: 127 };
@@ -3959,14 +3973,14 @@ function HandleScreensaverUpdate(): void {
                                 valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                             } else {
                                 if (valueScale < iconvalbest) {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
-                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
-                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            let valueScaletemp = (Math.round(valueScale)).toFixed();
                             if (Debug) {
                                 console.log(valueScaletemp);
                             }
@@ -3994,7 +4008,7 @@ function HandleScreensaverUpdate(): void {
                                     break;
                                 case '7':
                                     vwIconColor[1] = rgb_dec565(colorScale7);
-                                    break;                                 
+                                    break;
                                 case '8':
                                     vwIconColor[1] = rgb_dec565(colorScale8);
                                     break;
@@ -4004,7 +4018,7 @@ function HandleScreensaverUpdate(): void {
                                 case '10':
                                     vwIconColor[1] = rgb_dec565(colorScale10);
                                     break;
-                            } 
+                            }
                         }
                         if (config.firstScreensaverEntity.ScreensaverEntityIconColor.val_min == undefined) {
                             vwIconColor[1] = rgb_dec565(config.firstScreensaverEntity.ScreensaverEntityIconColor);
@@ -4013,7 +4027,7 @@ function HandleScreensaverUpdate(): void {
                         vwIconColor[1] = rgb_dec565(sctF1Icon);
                     }
                 } else {
-                    vwIconColor[1] = rgb_dec565(sctF1Icon);    
+                    vwIconColor[1] = rgb_dec565(sctF1Icon);
                 }
 
                 if (config.secondScreensaverEntity.ScreensaverEntityIconColor != undefined) {
@@ -4033,14 +4047,14 @@ function HandleScreensaverUpdate(): void {
                                 valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                             } else {
                                 if (valueScale < iconvalbest) {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
-                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
-                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            let valueScaletemp = (Math.round(valueScale)).toFixed();
                             if (Debug) {
                                 console.log(valueScaletemp);
                             }
@@ -4068,7 +4082,7 @@ function HandleScreensaverUpdate(): void {
                                     break;
                                 case '7':
                                     vwIconColor[2] = rgb_dec565(colorScale7);
-                                    break;                                 
+                                    break;
                                 case '8':
                                     vwIconColor[2] = rgb_dec565(colorScale8);
                                     break;
@@ -4078,16 +4092,16 @@ function HandleScreensaverUpdate(): void {
                                 case '10':
                                     vwIconColor[2] = rgb_dec565(colorScale10);
                                     break;
-                            } 
+                            }
                         }
                         if (config.secondScreensaverEntity.ScreensaverEntityIconColor.val_min == undefined) {
                             vwIconColor[2] = rgb_dec565(config.secondScreensaverEntity.ScreensaverEntityIconColor);
                         }
                     } else {
-                        vwIconColor[2] = rgb_dec565(sctF2Icon);                        
+                        vwIconColor[2] = rgb_dec565(sctF2Icon);
                     }
                 } else {
-                    vwIconColor[2] = rgb_dec565(sctF2Icon);    
+                    vwIconColor[2] = rgb_dec565(sctF2Icon);
                 }
 
                 if (config.thirdScreensaverEntity.ScreensaverEntityIconColor != undefined) {
@@ -4107,14 +4121,14 @@ function HandleScreensaverUpdate(): void {
                                 valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                             } else {
                                 if (valueScale < iconvalbest) {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
-                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
-                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            let valueScaletemp = (Math.round(valueScale)).toFixed();
                             if (Debug) {
                                 console.log(valueScaletemp);
                             }
@@ -4142,7 +4156,7 @@ function HandleScreensaverUpdate(): void {
                                     break;
                                 case '7':
                                     vwIconColor[3] = rgb_dec565(colorScale7);
-                                    break;                                 
+                                    break;
                                 case '8':
                                     vwIconColor[3] = rgb_dec565(colorScale8);
                                     break;
@@ -4152,16 +4166,16 @@ function HandleScreensaverUpdate(): void {
                                 case '10':
                                     vwIconColor[3] = rgb_dec565(colorScale10);
                                     break;
-                            } 
+                            }
                         }
                         if (config.thirdScreensaverEntity.ScreensaverEntityIconColor.val_min == undefined) {
                             vwIconColor[3] = rgb_dec565(config.thirdScreensaverEntity.ScreensaverEntityIconColor);
                         }
                     } else {
-                        vwIconColor[3] = rgb_dec565(sctF2Icon);                        
+                        vwIconColor[3] = rgb_dec565(sctF2Icon);
                     }
                 } else {
-                    vwIconColor[3] = rgb_dec565(sctF2Icon);    
+                    vwIconColor[3] = rgb_dec565(sctF2Icon);
                 }
 
                 if (config.fourthScreensaverEntity.ScreensaverEntityIconColor != undefined) {
@@ -4181,14 +4195,14 @@ function HandleScreensaverUpdate(): void {
                                 valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                             } else {
                                 if (valueScale < iconvalbest) {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)    
+                                    valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10)
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
-                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)    
+                                    valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)  
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
-                            let valueScaletemp = (Math.round(valueScale)).toFixed(); 
+                            let valueScaletemp = (Math.round(valueScale)).toFixed();
                             if (Debug) {
                                 console.log(valueScaletemp);
                             }
@@ -4216,7 +4230,7 @@ function HandleScreensaverUpdate(): void {
                                     break;
                                 case '7':
                                     vwIconColor[4] = rgb_dec565(colorScale7);
-                                    break;                                 
+                                    break;
                                 case '8':
                                     vwIconColor[4] = rgb_dec565(colorScale8);
                                     break;
@@ -4226,42 +4240,42 @@ function HandleScreensaverUpdate(): void {
                                 case '10':
                                     vwIconColor[4] = rgb_dec565(colorScale10);
                                     break;
-                            } 
+                            }
                         }
                         if (config.fourthScreensaverEntity.ScreensaverEntityIconColor.val_min == undefined) {
                             vwIconColor[4] = rgb_dec565(config.fourthScreensaverEntity.ScreensaverEntityIconColor);
                         }
                     } else {
-                        vwIconColor[4] = rgb_dec565(sctF2Icon);                        
+                        vwIconColor[4] = rgb_dec565(sctF2Icon);
                     }
                 } else {
-                    vwIconColor[4] = rgb_dec565(sctF2Icon);    
+                    vwIconColor[4] = rgb_dec565(sctF2Icon);
                 }
             }
 
             //AltLayout
             if (config.alternativeScreensaverLayout) {
-                payloadString += parseInt(getState(config.fourthScreensaverEntity.ScreensaverEntity).val) + '~'; 
+                payloadString += parseInt(getState(config.fourthScreensaverEntity.ScreensaverEntity).val) + '~';
                 payloadString += config.fourthScreensaverEntity.ScreensaverEntityUnitText + '~'
             } else {
-                payloadString += '~~'            
+                payloadString += '~~'
             }
-            
+
             let hwBtn1Col: any = config.mrIcon1ScreensaverEntity.ScreensaverEntityOffColor;
             if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
                 if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'string') {
                     let hwBtn1: string = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn1 == 'ON') {
-                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;                
+                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
                     }
                     payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn1Col) + '~';
                 } else if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
                     let hwBtn1: boolean = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn1) {
-                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;                
+                        hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
                     }
                     payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn1Col) + '~';
-                }  
+                }
             } else {
                 hwBtn1Col = Black;
                 payloadString += '~~';
@@ -4272,28 +4286,28 @@ function HandleScreensaverUpdate(): void {
                 if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'string') {
                     let hwBtn2: string = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn2 == 'ON') {
-                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;                
+                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
                     }
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
                 } else if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
                     let hwBtn2: boolean = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
                     if (hwBtn2) {
-                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;               
+                        hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
                     }
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIcon) + '~' + rgb_dec565(hwBtn2Col) + '~';
-                }  
+                }
             } else {
                 hwBtn2Col = Black;
                 payloadString += '~~';
             }
             HandleScreensaverColors();
-            
+
             SendToPanel(<Payload>{ payload: payloadString });
-            
+
         }
     } catch (err) {
         console.log('HandleScreensaverUpdate: ' + err.message);
-    }        
+    }
 }
 
 function HandleScreensaverColors(): void {
@@ -4317,7 +4331,7 @@ function HandleScreensaverColors(): void {
                 vwIcon[1] = vwIconColor[1];
                 vwIcon[2] = vwIconColor[2];
                 vwIcon[3] = vwIconColor[3];
-                vwIcon[4] = vwIconColor[4];            
+                vwIcon[4] = vwIconColor[4];
             }
         }
 
@@ -4343,8 +4357,8 @@ function HandleScreensaverColors(): void {
                             rgb_dec565(scbar)           + '~' +      //bar~
                             rgb_dec565(sctMainIconAlt)  + '~' +      //tMainIconAlt
                             rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
-                            rgb_dec565(sctTimeAdd);      
-                            //true;                
+                            rgb_dec565(sctTimeAdd);
+                            //true;
 
         SendToPanel(<Payload>{ payload: payloadString });
     } catch (err) {
@@ -4452,7 +4466,7 @@ function GetAccuWeatherIconColor(icon: number): number {
             case 24:        // Ice
             case 30:        // Hot
             case 31:        // Cold
-                return rgb_dec565(swExceptional);  // exceptional 
+                return rgb_dec565(swExceptional);  // exceptional
 
             case 7:         // Cloudy
             case 8:         // Dreary (Overcast)
@@ -4495,7 +4509,7 @@ function GetAccuWeatherIconColor(icon: number): number {
             case 26:        // Freezing Rain
             case 39:        // Partly Cloudy w/ Showers
             case 40:        // Mostly Cloudy w/ Showers
-                return rgb_dec565(swRainy);  // rainy 
+                return rgb_dec565(swRainy);  // rainy
 
             case 19:        // Flurries
             case 20:        // Mostly Cloudy w/ Flurries
@@ -4504,7 +4518,7 @@ function GetAccuWeatherIconColor(icon: number): number {
             case 23:        // Mostly Cloudy w/ Snow
             case 43:        // Mostly Cloudy w/ Flurries
             case 44:        // Mostly Cloudy w/ Snow
-                return rgb_dec565(swSnowy);  // snowy  
+                return rgb_dec565(swSnowy);  // snowy
 
             case 29:        // Rain and Snow
                 return rgb_dec565(swSnowyRainy);  // snowy-rainy
@@ -4656,18 +4670,18 @@ function rgb_to_cie(red, green, blue)
    //Apply a gamma correction to the RGB values, which makes the color more vivid and more the like the color displayed on the screen of your device
    let vred   = (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92);
    let vgreen = (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92);
-   let vblue  = (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92); 
- 
+   let vblue  = (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92);
+
    //RGB values to XYZ using the Wide RGB D65 conversion formula
    let X = vred * 0.664511 + vgreen * 0.154324 + vblue * 0.162028;
    let Y = vred * 0.283881 + vgreen * 0.668433 + vblue * 0.047685;
    let Z = vred * 0.000088 + vgreen * 0.072310 + vblue * 0.986039;
- 
+
    //Calculate the xy values from the XYZ values
    let ciex = (X / (X + Y + Z)).toFixed(4);
    let ciey = (Y / (X + Y + Z)).toFixed(4);
    let cie  = "[" + ciex + "," + ciey + "]"
-   
+
    return cie;
 }
 
@@ -4797,7 +4811,7 @@ type Config = {
     pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower)[],
     subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower)[],
     button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | null),
-    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower| null),
+    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | null),
 }
 
 type ScreenSaverElement = {
