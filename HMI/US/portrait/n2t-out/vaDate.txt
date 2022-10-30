@@ -1,0 +1,61 @@
+Page pageIcons
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Locked                              : no
+        Swide up page ID                    : disabled
+        Swide down page ID                  : disabled
+        Swide left page ID                  : disabled
+        Swide right page ID                 : disabled
+    
+Variable (string) vaDate
+    Attributes
+        Scope         : global
+        Text          : 
+        Max. Text Size: 35
+    
+Variable (string) vaTime
+    Attributes
+        Scope         : global
+        Text          : 
+        Max. Text Size: 15
+    
+Text tTmp1
+    Attributes
+        Scope                               : global
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 80
+    
+Text tTmp2
+    Attributes
+        Scope                               : global
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 80
+    
+Text tTmp3
+    Attributes
+        Scope                               : global
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Picture p0
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
