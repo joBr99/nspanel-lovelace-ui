@@ -9,6 +9,45 @@ The easiest way to install it is through Home Assistant's Supervisor Add-on Stor
 
 ![hass-add-on-store](img/hass-add-on-store.png)
 
+<details>
+<summary>Instructions for users of HomeAssistant Core installed through docker containers.</summary>
+
+In case you have a homeassistant setup using docker cotainers and the Add-on Store is not available to you, you can follow this guide for setting up AppDaemon. [AppDaemon Docker Tutorial](https://appdaemon.readthedocs.io/en/latest/DOCKER_TUTORIAL.html).
+Please also pay attention to the correct volume mount for the conf folder of appdaemon, that has to point to the appdaemon folder within your homeassistant config folder.
+
+Here is an example docker compose file for homeassistant and appdaemon:
+
+```
+version: "3.5"
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    network_mode: host
+    volumes:
+      - ./docker-data/homeassistant/:/config
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=Europe/Berlin
+    privileged: true
+    restart: unless-stopped
+	
+  appdaemon:
+    container_name: appdaemon
+    image: acockburn/appdaemon:latest
+    environment:
+      - HA_URL=http://your-homeassistant-url:8123
+      - TOKEN="xxxxxx"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./docker-data/homeassistant/appdaemon:/conf
+    depends_on:
+      - homeassistant
+    restart: unless-stopped
+```
+</details>
+
+
 ### Add babel package to AppDaemon Container (Optional)
 
 For localisation (date in your local language) you need to add the python package babel to your AppDaemon Installation.
