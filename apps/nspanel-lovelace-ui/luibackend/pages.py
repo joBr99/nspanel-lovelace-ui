@@ -813,7 +813,7 @@ class LuiPagesGen(object):
         if ha_type == "light":
             options = entity.attributes.get("effect_list", [])
         options = "?".join(options)
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{ha_type}~{entity.state}~{options}~")
+        self._send_mqtt_msg(f"entityUpdateDetail2~{entity_id}~~{icon_color}~{ha_type}~{entity.state}~{options}~")
         
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
