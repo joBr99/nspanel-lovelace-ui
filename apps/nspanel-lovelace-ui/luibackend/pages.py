@@ -676,10 +676,13 @@ class LuiPagesGen(object):
                 color = "enable"
             else:
                 color = "disable"
+            effect_supported = False
+            if "effect_list" in entity.attributes:
+                effect_supported = True
         color_translation      = "Color"
         brightness_translation = get_translation(self._locale, "frontend.ui.card.light.brightness")
         color_temp_translation = get_translation(self._locale, "frontend.ui.card.light.color_temperature")
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}~{effect_supported}")
     
     def generate_shutter_detail_page(self, entity_id):
         entity = apis.ha_api.get_entity(entity_id)
@@ -801,13 +804,17 @@ class LuiPagesGen(object):
 
     def generate_input_select_detail_page(self, entity_id):
         entity = apis.ha_api.get_entity(entity_id)
-        icon_color = self.get_entity_color(entity, ha_type="input_select")
-
-        options = entity.attributes.get("options", [])
+        options = []
+        icon_color = 0
+        ha_type = entity_id.split(".")[0]
+        icon_color = self.get_entity_color(entity, ha_type=ha_type)
+        if ha_type == "input_select":
+            options = entity.attributes.get("options", [])
+        if ha_type == "light":
+            options = entity.attributes.get("effect_list", [])
         options = "?".join(options)
-
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~input_select~{entity.state}~{options}~")
-
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{ha_type}~{entity.state}~{options}~")
+        
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
         self._send_mqtt_msg(f"entityUpdateDetail~{ident}~{heading}~65535~{b1}~65535~{b2}~65535~{msg}~65535~0")

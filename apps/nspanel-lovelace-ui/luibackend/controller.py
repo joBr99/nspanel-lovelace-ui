@@ -393,3 +393,9 @@ class LuiController(object):
             entity = apis.ha_api.get_entity(entity_id)
             option = entity.attributes.options[int(value)]
             entity.call_service("select_option", option=option)
+
+        if button_type == "mode-light":
+            entity = apis.ha_api.get_entity(entity_id)
+            option = entity.attributes.effect_list[int(value)]
+            entity.call_service("select_effect", option=option)
+            
