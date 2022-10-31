@@ -676,9 +676,9 @@ class LuiPagesGen(object):
                 color = "enable"
             else:
                 color = "disable"
-            effect_supported = False
+            effect_supported = "disable"
             if "effect_list" in entity.attributes:
-                effect_supported = True
+                effect_supported = "enable"
         color_translation      = "Color"
         brightness_translation = get_translation(self._locale, "frontend.ui.card.light.brightness")
         color_temp_translation = get_translation(self._locale, "frontend.ui.card.light.color_temperature")
