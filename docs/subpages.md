@@ -16,3 +16,12 @@ will allow you to navigate to a cardGrid page with the configured key testKey
           - entity: light.test_item
         key: testKey
 ```
+
+# Override Status of Navigation Items
+
+You can override the status of navigation items, to make them look like different entities.
+
+```yaml
+          - entity: navigate.cardThermo_test
+            status: climate.test
+```
