@@ -1,20 +1,16 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.5.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
+TypeScript v3.5.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 43 / v3.5.0 / BerryDriver 4 / Tasmota 12.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
-
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
-
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
-
 *******************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
 *******************************************************************************
-
 ReleaseNotes:
     Bugfixes und Erweiterungen:
         - cardQR (für Gäste WLAN)
@@ -45,6 +41,7 @@ ReleaseNotes:
         - 13.09.2022 - v3.3.1.3 Überarbeitung und BugFix und Refresh Features für cardMedia (Breaking Changes)
         - 13.09.2022 - v3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
         - 15.09.2022 - V3.4.0 - BugFix Dimmode
+        - 15.09.2022 - v3.4.0   Upgrade TFT 42
         - 15.09.2022 - V3.4.0 - Colormode für Screensaver + AutoColor WeatherForecast
         - 16.09.2022 - v3.4.0.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver + Bugfix Screensaver MRIcon2
         - 17.09.2022 - v3.4.0.2 Bugfix for screensaver icons with scaled colors
@@ -56,6 +53,7 @@ ReleaseNotes:
         - 03.10.2022 - v3.4.0.6 Add cardPower (experimental)
         - 05.10.2022 - v3.4.0.6 Add sueezeboxrpc to cardMedia
         - 07.10.2022 - v3.4.0.6 Time-configurable change for screensaver icons
+        - 07.10.2022 - v3.5.0   Upgrade TFT 43
         - 07.10.2022 - v3.5.0   Add Backgroundcolor to Pages
         - 08.10.2022 - v3.5.0   Add Tilt-Slider and TILT_Fucntions (Open/Stop/Close) to Blinds/Cover/Shutter popUp
         - 12.10.2022 - v3.5.0   Add PageNavigation via Datapoint
@@ -63,14 +61,13 @@ ReleaseNotes:
         - 26.10.2022 - v3.5.0.1 Fix Thermostat for tado Support (by Sternmiere)
         - 27.10.2022 - v3.5.0.1 Add VirtualDevice Gate
         - 27.10.2022 - v3.5.0.2 Applied Boy Scout Rule (Fixed some typos, changed var to let, fixed min/max colorTemp Bug)
-        - 27.10.2022 - v3.5.0.3 Fixed Media Play/Pause icon for alexa (and others) devices
-
+        - 30.10.2022 - v3.5.0.3 Fixed Media Play/Pause icon for alexa (and others) devices
+        - 31.10.2022 - v3.5.0.4 Reengineering Media Subscriptions
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 Tasmota Konsole:
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
     Rule2 0 (Rule deaktivieren)
-
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
@@ -80,13 +77,11 @@ Mögliche Seiten-Ansichten:
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
     cardPower Page      - Energiefluss
-
 Popup-Pages:
     popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
     popupShutter Page   - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
-
 Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
@@ -111,17 +106,14 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, analog Info
     Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
-
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden --> SetOption146 1
     Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden
                           (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!!
                           ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
-
 Tasmota-Status0 - (zyklische Ausführung)
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
-
 Erforderliche Adapter:
     AccuWeather:        - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
@@ -129,14 +121,11 @@ Erforderliche Adapter:
     Alias-Manager       - !!! ausschließlich für MEDIA-Alias
     MQTT-Adapter        - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
-
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.5.0.tft
 ---------------------------------------------------------------------------------------
 */
-import { config } from './NsPanelTs'
-
 let Icons = new IconsSelector();
 let timeoutSlider: any;
 let manually_Update = false;
@@ -232,9 +221,46 @@ let vwIconColor = [];
 
 //-- ENDE der Variablen für Seitengestaltung -- Aliase erforderlich ------------------
 
+export const config: Config = {
+    panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // anpassen
+    panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
+    firstScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Hourly.h0.PrecipitationProbability', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
+    secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
+    thirdScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.UVIndex', ScreensaverEntityIcon: 'solar-power', ScreensaverEntityText: 'UV', ScreensaverEntityUnitText: '', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} },
+    fourthScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
+    alternativeScreensaverLayout: false,
+    autoWeatherColorScreensaverLayout: true,
+    mrIcon1ScreensaverEntity: { ScreensaverEntity: null, ScreensaverEntityIcon: 'light-switch', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: Off  },
+    mrIcon2ScreensaverEntity: { ScreensaverEntity: null, ScreensaverEntityIcon: 'lightbulb', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: Off  },
+    timeoutScreensaver: 20,
+    dimmode: 20,
+    active: 100, //Standard-Brightness TFT
+    screenSaverDoubleClick: true,
+    locale: 'de-DE',                    // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
+    timeFormat: '%H:%M',                // currently not used
+    dateFormat: '%A, %d. %B %Y',        // currently not used
+    weatherEntity: 'alias.0.Wetter',    // Dieser Alias muss erstellt werden, damit die 4 kleineren Icons (Wetter oder DP) angezeigt werden können
+    defaultOffColor: Off,
+    defaultOnColor: On,
+    defaultColor: Off,
+    defaultBackgroundColor: Black,      //New Parameter
+    temperatureUnit: '°C',
+    pages: [
+
+    ],
+    subPages: [
+
+    ],
+    button1Page: null,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
+    button2Page: null    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
+};
+
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
 const request = require('request');
+
+let useMediaEvents: boolean = false;
+let timeoutMedia: any;
 
 //---------------------Begin PageNavi
 async function InitPageNavi() {
@@ -295,8 +321,8 @@ async function InitWeatherForecast() {
     try {
         //----Möglichkeit, im Screensaver zwischen Accu-Weather Forecast oder selbstdefinierten Werten zu wählen---------------------------------
         if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false ||
-          existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false ||
-          existsState(NSPanel_Path + "ScreensaverInfo.entityChangeTime") == false) {
+            existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false ||
+            existsState(NSPanel_Path + "ScreensaverInfo.entityChangeTime") == false) {
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean' });
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
             await createStateAsync(NSPanel_Path + "ScreensaverInfo.entityChangeTime", 60, { type: 'number' });
@@ -437,22 +463,22 @@ async function InitPopupNotify() {
             let v_popupNotifyIcon = (getState(popupNotifyIcon).val != null) ? getState(popupNotifyIcon).val : 'alert'
 
             notification = 'entityUpdateDetail' + '~'
-              + getState(popupNotifyInternalName).val + '~'
-              + getState(popupNotifyHeading).val + '~'
-              + v_popupNotifyHeadingColor + '~'
-              + getState(popupNotifyButton1Text).val + '~'
-              + v_popupNotifyButton1TextColor + '~'
-              + getState(popupNotifyButton2Text).val + '~'
-              + v_popupNotifyButton2TextColor + '~'
-              + getState(popupNotifyText).val + '~'
-              + v_popupNotifyTextColor + '~'
-              + getState(popupNotifySleepTimeout).val;
+                + getState(popupNotifyInternalName).val + '~'
+                + getState(popupNotifyHeading).val + '~'
+                + v_popupNotifyHeadingColor + '~'
+                + getState(popupNotifyButton1Text).val + '~'
+                + v_popupNotifyButton1TextColor + '~'
+                + getState(popupNotifyButton2Text).val + '~'
+                + v_popupNotifyButton2TextColor + '~'
+                + getState(popupNotifyText).val + '~'
+                + v_popupNotifyTextColor + '~'
+                + getState(popupNotifySleepTimeout).val;
 
             if (getState(popupNotifyLayout).val == 2) {
                 notification = notification + '~'
-                  + v_popupNotifyFontIdText + '~'
-                  + Icons.GetIcon(v_popupNotifyIcon) + '~'
-                  + v_popupNotifyIconColor;
+                + v_popupNotifyFontIdText + '~'
+                + Icons.GetIcon(v_popupNotifyIcon) + '~'
+                + v_popupNotifyIconColor;
             }
 
             setIfExists(config.panelSendTopic, 'pageType~popupNotify');
@@ -1103,6 +1129,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     GeneratePage(config.pages[0]);
                     break;
                 case 'sleepReached':
+                    useMediaEvents = false;
                     screensaverEnabled = true;
                     if (pageId < 0)
                         pageId = 0;
@@ -1172,6 +1199,7 @@ function GeneratePage(page: Page): void {
                 SendToPanel(GenerateGridPage(<PageGrid>page));
                 break;
             case 'cardMedia':
+                useMediaEvents = true;
                 SendToPanel(GenerateMediaPage(<PageMedia>page));
                 break;
             case 'cardAlarm':
@@ -1710,11 +1738,11 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
             value = value < minValue ? minValue : value;
 
             return rgb_dec565(
-              Interpolate(
-                pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor,
-                pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor,
-                scale(value, minValue, maxValue, 0, 1)
-              )
+                Interpolate(
+                    pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor,
+                    pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor,
+                    scale(value, minValue, maxValue, 0, 1)
+                )
             );
         }
 
@@ -1872,9 +1900,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                     for (let i_index in i_list) {
                         let thermostatState = i_list[i_index].split('.');
                         if (
-                          thermostatState[thermostatState.length - 1] != 'SET' &&
-                          thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
-                          thermostatState[thermostatState.length - 1] != 'MODE'
+                            thermostatState[thermostatState.length - 1] != 'SET' &&
+                            thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
+                            thermostatState[thermostatState.length - 1] != 'MODE'
                         ) {
                             i++;
 
@@ -2023,22 +2051,22 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
             out_msgs.push({
                 payload: 'entityUpd~'
-                  + name + '~'                                    // Heading
-                  + GetNavigationString(pageId) + '~'             // Page Navigation
-                  + id + '~'                                      // internalNameEntity
-                  + currentTemp + config.temperatureUnit + '~'    // Ist-Temperatur (String)
-                  + destTemp + '~'                                // Soll-Temperatur (numerisch ohne Komma)
-                  + statusStr + '~'                               // Mode
-                  + minTemp + '~'                                 // Thermostat Min-Temperatur
-                  + maxTemp + '~'                                 // Thermostat Max-Temperatur
-                  + stepTemp + '~'                                // Schritte für Soll (5°C)
-                  + icon_res                                      // Icons Status
-                  + findLocale('thermostat', 'Currently') + '~'   // Bezeichner vor Aktueller Raumtemperatur
-                  + findLocale('thermostat', 'State') + '~'       // Bezeichner vor
-                  + '~'                                           // Bezeichner vor HVAC -- Gibt es nicht mehr
-                  + config.temperatureUnit + '~'                  // Bezeichner hinter Solltemp
-                  + '' + '~'                                      // iconTemperature dstTempTwoTempMode
-                  + ''                                            // dstTempTwoTempMode
+                    + name + '~'                                    // Heading
+                    + GetNavigationString(pageId) + '~'             // Page Navigation
+                    + id + '~'                                      // internalNameEntity
+                    + currentTemp + config.temperatureUnit + '~'    // Ist-Temperatur (String)
+                    + destTemp + '~'                                // Soll-Temperatur (numerisch ohne Komma)
+                    + statusStr + '~'                               // Mode
+                    + minTemp + '~'                                 // Thermostat Min-Temperatur
+                    + maxTemp + '~'                                 // Thermostat Max-Temperatur
+                    + stepTemp + '~'                                // Schritte für Soll (5°C)
+                    + icon_res                                      // Icons Status
+                    + findLocale('thermostat', 'Currently') + '~'   // Bezeichner vor Aktueller Raumtemperatur
+                    + findLocale('thermostat', 'State') + '~'       // Bezeichner vor
+                    + '~'                                           // Bezeichner vor HVAC -- Gibt es nicht mehr
+                    + config.temperatureUnit + '~'                  // Bezeichner hinter Solltemp
+                    + '' + '~'                                      // iconTemperature dstTempTwoTempMode
+                    + ''                                            // dstTempTwoTempMode
             });
 
         }
@@ -2052,11 +2080,39 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
     }
 }
 
+function unsubscribeMediaSubscriptions(): void {
+    for (let i = 0; i < config.pages.length; i++) {
+        if (config.pages[i].type == 'cardMedia') {
+            let mediaID = config.pages[i].items[0].id;
+            unsubscribe(mediaID + '.STATE')
+            unsubscribe(mediaID + '.ARTIST')
+            unsubscribe(mediaID + '.TITLE')
+            unsubscribe(mediaID + '.ALBUM')
+            unsubscribe(mediaID + '.VOLUME')
+        }
+    }
+} 
+
+function subscribeMediaSubscriptions(id: string): void {
+    on({id: [].concat([id + '.STATE']).concat([id + '.VOLUME']).concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']), change: "ne"}, async function () {
+        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
+        timeoutMedia = setTimeout(async function () {
+            if (useMediaEvents) {
+                GeneratePage(activePage);
+            }
+        },25)
+    });
+} 
+
 function GenerateMediaPage(page: PageMedia): Payload[] {
     try {
         let id = page.items[0].id
 
         let out_msgs: Array<Payload> = [];
+
+        unsubscribeMediaSubscriptions();
+        
+        subscribeMediaSubscriptions(id);
 
         out_msgs.push({ payload: 'pageType~cardMedia' });
         if (existsObject(id)) {
@@ -2077,11 +2133,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
                 let nameLength = name.length;
                 if (name.substring(0,9) == 'Playlist:') {
-                    let nameLength = name.length;
-                    name = name.slice(10, nameLength);
+                    name = name.slice(10, 26) + '...';
                 } else if (name.substring(0,6) == 'Album:') {
-                    let nameLength = name.length;
-                    name = name.slice(10, nameLength);
+                    name = name.slice(7, 23) + '...';
                 } else if (name.substring(0,6) == 'Track') {
                     name = 'Spotify-Premium';
                 }
@@ -2144,11 +2198,13 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             }
 
             //Ausnahme für squeezebox, da State = Power
-            if (getState(id + '.PAUSE').val === false && v2Adapter == 'squeezeboxrpc') {
-                onoffbutton = 65535;
-                iconplaypause = Icons.GetIcon('pause'); //pause
-            } else {
-                iconplaypause = Icons.GetIcon('play'); //play
+            if (v2Adapter == 'squeezeboxrpc') {
+                if (getState(id + '.PAUSE').val === false) {
+                    onoffbutton = 65535;
+                    iconplaypause = Icons.GetIcon('pause'); //pause
+                } else {
+                    iconplaypause = Icons.GetIcon('play'); //play
+                }
             }
 
             if (Debug) {
@@ -2183,8 +2239,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     let deviceId = i;
                     deviceId = deviceId.split('.');
                     if (getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.online'].join(''))).val &&
-                      existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Player'].join(''))) &&
-                      existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Commands'].join('')))) {
+                        existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Player'].join(''))) &&
+                        existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Commands'].join('')))) {
                         speakerList = speakerList + getState(i).val + '?';
                     }
                 }
@@ -2194,18 +2250,18 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
             out_msgs.push({
                 payload: 'entityUpd~' +                   //entityUpd
-                  name + '~' +                          //heading
-                  GetNavigationString(pageId) + '~' +   //navigation
-                  id + '~' +                            //internalNameEntiy
-                  media_icon + '~' +                    //icon
-                  title + '~' +                         //title
-                  author + '~' +                        //author
-                  volume + '~' +                        //volume
-                  iconplaypause + '~' +                 //playpauseicon
-                  currentSpeaker + '~' +                //currentSpeaker
-                  speakerList + '~' +                   //speakerList-seperated-by-?
-                  onoffbutton
-            });                        //On/Off Button Color
+                    name + '~' +                          //heading
+                    GetNavigationString(pageId) + '~' +   //navigation
+                    id + '~' +                            //internalNameEntiy
+                    media_icon + '~' +                    //icon
+                    title + '~' +                         //title
+                    author + '~' +                        //author
+                    volume + '~' +                        //volume
+                    iconplaypause + '~' +                 //playpauseicon
+                    currentSpeaker + '~' +                //currentSpeaker
+                    speakerList + '~' +                   //speakerList-seperated-by-?
+                    onoffbutton                           //On/Off Button Color
+            });
         }
         if (Debug) {
             console.log(out_msgs);
@@ -2297,20 +2353,20 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
 
             out_msgs.push({
                 payload: 'entityUpd~' +                          //entityUpd~*
-                  id + '~' +                              //internalNameEntity*~*
-                  GetNavigationString(pageId) + '~' +     //navigation*~* --> hiddenCards
-                  arm1 + '~' +                            //arm1*~*
-                  arm1ActionName + '~' +                  //arm1ActionName*~*
-                  arm2 + '~' +                            //arm2*~*
-                  arm2ActionName + '~' +                  //arm2ActionName*~*
-                  arm3 + '~' +                            //arm3*~*
-                  arm3ActionName + '~' +                  //arm3ActionName*~*
-                  arm4 + '~' +                            //arm4*~*
-                  arm4ActionName + '~' +                  //arm4ActionName*~*
-                  icon + '~' +                            //icon*~*
-                  iconcolor + '~' +                       //iconcolor*~*
-                  numpadStatus + '~' +                    //numpadStatus*~*
-                  flashing
+                    id + '~' +                              //internalNameEntity*~*
+                    GetNavigationString(pageId) + '~' +     //navigation*~* --> hiddenCards
+                    arm1 + '~' +                            //arm1*~*
+                    arm1ActionName + '~' +                  //arm1ActionName*~*
+                    arm2 + '~' +                            //arm2*~*
+                    arm2ActionName + '~' +                  //arm2ActionName*~*
+                    arm3 + '~' +                            //arm3*~*
+                    arm3ActionName + '~' +                  //arm3ActionName*~*
+                    arm4 + '~' +                            //arm4*~*
+                    arm4ActionName + '~' +                  //arm4ActionName*~*
+                    icon + '~' +                            //icon*~*
+                    iconcolor + '~' +                       //iconcolor*~*
+                    numpadStatus + '~' +                    //numpadStatus*~*
+                    flashing
             });                             //flashing*
 
             if (Debug) {
@@ -2369,21 +2425,21 @@ function GenerateQRPage(page: PageQR): Payload[] {
 
         out_msgs.push({
             payload: 'entityUpd~' +                     //entityUpd
-              heading + '~' +                         //heading
-              GetNavigationString(pageId) + '~' +     //navigation
-              textQR + '~' +                          //textQR
-              type1 + '~' +                           //type
-              internalName1 + '~' +                   //internalName
-              iconId1 + '~' +                         //iconId
-              65535 + '~' +                           //iconColor
-              displayName1 + '~' +                    //displayName
-              optionalValue1 + '~' +                  //optionalValue
-              type2 + '~' +                           //type
-              internalName2 + '~' +                   //internalName
-              iconId2 + '~' +                         //iconId
-              65535 + '~' +                           //iconColor
-              displayName2 + '~' +                    //displayName
-              optionalValue2
+                heading + '~' +                         //heading
+                GetNavigationString(pageId) + '~' +     //navigation
+                textQR + '~' +                          //textQR
+                type1 + '~' +                           //type
+                internalName1 + '~' +                   //internalName
+                iconId1 + '~' +                         //iconId
+                65535 + '~' +                           //iconColor
+                displayName1 + '~' +                    //displayName
+                optionalValue1 + '~' +                  //optionalValue
+                type2 + '~' +                           //type
+                internalName2 + '~' +                   //internalName
+                iconId2 + '~' +                         //iconId
+                65535 + '~' +                           //iconColor
+                displayName2 + '~' +                    //displayName
+                optionalValue2
         });                       //optionalValue
 
         //entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
@@ -2415,7 +2471,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         let heading = 'cardPower Example';
         if (demoMode != true) {
             let o = getObject(id)
-            heading = page.heading !== undefined ? page.heading : o.common.name.de
+             heading = page.heading !== undefined ? page.heading : o.common.name.de
         }
 
         const obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
@@ -2453,12 +2509,12 @@ function GeneratePowerPage(page: PagePower): Payload[] {
 
         out_msgs.push({
             payload: 'entityUpd~' +                         //entityUpd~*
-              heading                         + '~' +     //internalNameEntity*~*
-              GetNavigationString(pageId)     + '~' +     //navigation*~*
-              rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
-              Icons.GetIcon(array_icon[0])    + '~' +     // icon~            Mitte
-              array_powerspeed[0]             + '~' +     // entity.state~    Mitte
-              power_string
+                heading                         + '~' +     //internalNameEntity*~*
+                GetNavigationString(pageId)     + '~' +     //navigation*~*
+                rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
+                Icons.GetIcon(array_icon[0])    + '~' +     // icon~            Mitte
+                array_powerspeed[0]             + '~' +     // entity.state~    Mitte
+                power_string
         });
 
         return out_msgs
@@ -2752,11 +2808,6 @@ function HandleButtonEvent(words): void {
                 break;
             case 'media-back':
                 setIfExists(id + '.PREV', true);
-                on({id: id + '.TITLE', change: "ne"}, async function () {
-                    setTimeout(function(){
-                        GeneratePage(activePage);
-                    },25)
-                });
                 break;
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
@@ -2777,24 +2828,9 @@ function HandleButtonEvent(words): void {
                         setIfExists(id + '.PLAY', true);
                     }
                 }
-                on({id: id + '.STATE', val: true}, async function () {
-                    on({id: [].concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']), change: "ne"}, async function () {
-                        setTimeout(function(){
-                            GeneratePage(activePage);
-                        },25)
-                    });
-                });
-                on({id: id + '.STATE', val: false}, async function () {
-                    GeneratePage(activePage);
-                });
                 break;
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
-                on({id: id + '.TITLE', change: "ne"}, async function () {
-                    setTimeout(function(){
-                        GeneratePage(activePage);
-                    },25)
-                });
                 break;
             case 'volumeSlider':
                 setIfExists(id + '.VOLUME', parseInt(words[4]))
@@ -3055,16 +3091,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   // entityUpdateDetail
-                          + id + '~'
-                          + icon + '~'   // iconId
-                          + iconColor + '~'   // iconColor
-                          + switchVal + '~'   // buttonState
-                          + 'disable' + '~'   // sliderBrightnessPos
-                          + 'disable' + '~'   // sliderColorTempPos
-                          + 'disable' + '~'   // colorMode
-                          + ''        + '~'   // Color-Bezeichnung
-                          + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
-                          + findLocale('lights', 'Brightness')
+                            + id + '~'
+                            + icon + '~'   // iconId
+                            + iconColor + '~'   // iconColor
+                            + switchVal + '~'   // buttonState
+                            + 'disable' + '~'   // sliderBrightnessPos
+                            + 'disable' + '~'   // sliderColorTempPos
+                            + 'disable' + '~'   // colorMode
+                            + ''        + '~'   // Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
                     });         // Brightness-Bezeichnung
                 }
 
@@ -3104,16 +3140,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                          + id + '~'
-                          + icon + '~'        //iconId
-                          + iconColor + '~'   //iconColor
-                          + switchVal + '~'   //buttonState
-                          + brightness + '~'  //sliderBrightnessPos
-                          + 'disable' + '~'   //sliderColorTempPos
-                          + 'disable' + '~'   //colorMod
-                          + ''        + '~'   //Color-Bezeichnung
-                          + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                          + findLocale('lights', 'Brightness')
+                            + id + '~'
+                            + icon + '~'        //iconId
+                            + iconColor + '~'   //iconColor
+                            + switchVal + '~'   //buttonState
+                            + brightness + '~'  //sliderBrightnessPos
+                            + 'disable' + '~'   //sliderColorTempPos
+                            + 'disable' + '~'   //colorMod
+                            + ''        + '~'   //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
 
                     console.log('light.' + id)
@@ -3173,16 +3209,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                          + id + '~'
-                          + icon + '~'   //iconId
-                          + iconColor + '~'   //iconColor
-                          + switchVal + '~'   //buttonState
-                          + brightness + '~'   //sliderBrightnessPos
-                          + colorTemp + '~'   //sliderColorTempPos
-                          + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                          + 'Color'   + '~'   //Color-Bezeichnung
-                          + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                          + findLocale('lights', 'Brightness')
+                            + id + '~'
+                            + icon + '~'   //iconId
+                            + iconColor + '~'   //iconColor
+                            + switchVal + '~'   //buttonState
+                            + brightness + '~'   //sliderBrightnessPos
+                            + colorTemp + '~'   //sliderColorTempPos
+                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color'   + '~'   //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
                 }
 
@@ -3238,16 +3274,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                          + id + '~'
-                          + icon + '~'   //iconId
-                          + iconColor + '~'   //iconColor
-                          + switchVal + '~'   //buttonState
-                          + brightness + '~'   //sliderBrightnessPos
-                          + colorTemp + '~'   //sliderColorTempPos
-                          + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                          + 'Color' + '~'   //Color-Bezeichnung
-                          + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                          + findLocale('lights', 'Brightness')
+                            + id + '~'
+                            + icon + '~'   //iconId
+                            + iconColor + '~'   //iconColor
+                            + switchVal + '~'   //buttonState
+                            + brightness + '~'   //sliderBrightnessPos
+                            + colorTemp + '~'   //sliderColorTempPos
+                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'   //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
                 }
 
@@ -3307,16 +3343,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
-                          + id + '~'
-                          + icon + '~'        //iconId
-                          + iconColor + '~'   //iconColor
-                          + switchVal + '~'   //buttonState
-                          + brightness + '~'  //sliderBrightnessPos
-                          + colorTemp + '~'   //sliderColorTempPos
-                          + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                          + 'Color' + '~'     //Color-Bezeichnung
-                          + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                          + findLocale('lights', 'Brightness')
+                            + id + '~'
+                            + icon + '~'        //iconId
+                            + iconColor + '~'   //iconColor
+                            + switchVal + '~'   //buttonState
+                            + brightness + '~'  //sliderBrightnessPos
+                            + colorTemp + '~'   //sliderColorTempPos
+                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'     //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
                 }
 
@@ -3364,16 +3400,16 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
-                          + id + '~'
-                          + icon + '~'                                //iconId
-                          + iconColor + '~'                           //iconColor
-                          + switchVal + '~'                           //buttonState
-                          + brightness + '~'                          //sliderBrightnessPos
-                          + colorTemp + '~'                           //sliderColorTempPos
-                          + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
-                          + 'Color' + '~'                             //Color-Bezeichnung
-                          + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                          + findLocale('lights', 'Brightness')
+                            + id + '~'
+                            + icon + '~'                                //iconId
+                            + iconColor + '~'                           //iconColor
+                            + switchVal + '~'                           //buttonState
+                            + brightness + '~'                          //sliderBrightnessPos
+                            + colorTemp + '~'                           //sliderColorTempPos
+                            + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'                             //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')
                     });       //Brightness-Bezeichnung
                 }
             }
@@ -3430,25 +3466,25 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
 
                 out_msgs.push({
                     payload: 'entityUpdateDetail' + '~'           //entityUpdateDetail
-                      + id + '~'                                //entity_id
-                      + val + '~'                               //Shutterposition
-                      + textSecondRow + '~'                     //pos_status 2.line
-                      + findLocale('blinds', 'Position') + '~'  //pos_translation
-                      + icon_id + '~'                           //{icon_id}~
-                      + icon_up + '~'                           //{icon_up}~
-                      + icon_stop + '~'                         //{icon_stop}~
-                      + icon_down + '~'                         //{icon_down}~
-                      + icon_up_status + '~'                    //{icon_up_status}~
-                      + icon_stop_status + '~'                  //{icon_stop_status}~
-                      + icon_down_status + '~'                  //{icon_down_status}~
-                      + textTilt + '~'                           //{textTilt}~
-                      + iconTiltLeft + '~'                      //{iconTiltLeft}~
-                      + iconTiltStop + '~'                      //{iconTiltStop}~
-                      + iconTiltRight + '~'                     //{iconTiltRight}~
-                      + iconTiltLeftStatus + '~'                //{iconTiltLeftStatus}~
-                      + iconTiltStopStatus + '~'                //{iconTiltStopStatus}~
-                      + iconTiltRightStatus + '~'               //{iconTiltRightStatus}~
-                      + tilt_pos                                //{tilt_pos}")
+                        + id + '~'                                //entity_id
+                        + val + '~'                               //Shutterposition
+                        + textSecondRow + '~'                     //pos_status 2.line
+                        + findLocale('blinds', 'Position') + '~'  //pos_translation
+                        + icon_id + '~'                           //{icon_id}~
+                        + icon_up + '~'                           //{icon_up}~
+                        + icon_stop + '~'                         //{icon_stop}~
+                        + icon_down + '~'                         //{icon_down}~
+                        + icon_up_status + '~'                    //{icon_up_status}~
+                        + icon_stop_status + '~'                  //{icon_stop_status}~
+                        + icon_down_status + '~'                  //{icon_down_status}~
+                        + textTilt + '~'                           //{textTilt}~
+                        + iconTiltLeft + '~'                      //{iconTiltLeft}~
+                        + iconTiltStop + '~'                      //{iconTiltStop}~
+                        + iconTiltRight + '~'                     //{iconTiltRight}~
+                        + iconTiltLeftStatus + '~'                //{iconTiltLeftStatus}~
+                        + iconTiltStopStatus + '~'                //{iconTiltStopStatus}~
+                        + iconTiltRightStatus + '~'               //{iconTiltRightStatus}~
+                        + tilt_pos                                //{tilt_pos}")
                 });
             }
         }
@@ -3492,16 +3528,16 @@ function HandleScreensaverUpdate(): void {
             let icon = getState(config.weatherEntity + '.ICON').val;
 
             let temperature =
-              existsState(config.weatherEntity + '.ACTUAL') ? getState(config.weatherEntity + '.ACTUAL').val :
-                existsState(config.weatherEntity + '.TEMP') ? getState(config.weatherEntity + '.TEMP').val : 'null';
+                existsState(config.weatherEntity + '.ACTUAL') ? getState(config.weatherEntity + '.ACTUAL').val :
+                    existsState(config.weatherEntity + '.TEMP') ? getState(config.weatherEntity + '.TEMP').val : 'null';
 
             if (config.alternativeScreensaverLayout) {
                 temperature = parseInt(Math.round(temperature).toFixed());
             }
 
             let payloadString =
-              'weatherUpdate~' + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + '~'
-              + temperature + ' ' + config.temperatureUnit + '~';
+                'weatherUpdate~' + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + '~'
+                + temperature + ' ' + config.temperatureUnit + '~';
 
             vwIconColor[0] = GetAccuWeatherIconColor(parseInt(icon));
             if (Debug) {
@@ -3558,7 +3594,7 @@ function HandleScreensaverUpdate(): void {
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
                                     valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed();
@@ -3632,7 +3668,7 @@ function HandleScreensaverUpdate(): void {
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
                                     valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed();
@@ -3706,7 +3742,7 @@ function HandleScreensaverUpdate(): void {
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
                                     valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed();
@@ -3780,7 +3816,7 @@ function HandleScreensaverUpdate(): void {
                                 } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
                                     valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0)
                                 } else {
-                                    valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
+                                  valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0)
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed();
@@ -3917,29 +3953,29 @@ function HandleScreensaverColors(): void {
         }
 
         let payloadString = 'color'                     + '~' +
-          rgb_dec565(scbackground)    + '~' +      //background
-          rgb_dec565(sctime)          + '~' +      //time
-          rgb_dec565(sctimeAMPM)      + '~' +      //timeAMPM~
-          rgb_dec565(scdate)          + '~' +      //date~
-          vwIcon[0]                   + '~' +      //tMainIcon~   rgb_dec565(sctMainIcon)
-          rgb_dec565(sctMainText)     + '~' +      //tMainText~
-          rgb_dec565(sctForecast1)    + '~' +      //tForecast1~
-          rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
-          rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
-          rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
-          vwIcon[1]                   + '~' +      //tF1Icon~         rgb_dec565(sctF1Icon)
-          vwIcon[2]                   + '~' +      //tF2Icon~         rgb_dec565(sctF2Icon)
-          vwIcon[3]                   + '~' +      //tF3Icon~         rgb_dec565(sctF3Icon)
-          vwIcon[4]                   + '~' +      //tF4Icon~         rgb_dec565(sctF4Icon)
-          rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
-          rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
-          rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
-          rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
-          rgb_dec565(scbar)           + '~' +      //bar~
-          rgb_dec565(sctMainIconAlt)  + '~' +      //tMainIconAlt
-          rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
-          rgb_dec565(sctTimeAdd);
-        //true;
+                            rgb_dec565(scbackground)    + '~' +      //background
+                            rgb_dec565(sctime)          + '~' +      //time
+                            rgb_dec565(sctimeAMPM)      + '~' +      //timeAMPM~
+                            rgb_dec565(scdate)          + '~' +      //date~
+                            vwIcon[0]                   + '~' +      //tMainIcon~   rgb_dec565(sctMainIcon)
+                            rgb_dec565(sctMainText)     + '~' +      //tMainText~
+                            rgb_dec565(sctForecast1)    + '~' +      //tForecast1~
+                            rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
+                            rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
+                            rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
+                            vwIcon[1]                   + '~' +      //tF1Icon~         rgb_dec565(sctF1Icon)
+                            vwIcon[2]                   + '~' +      //tF2Icon~         rgb_dec565(sctF2Icon)
+                            vwIcon[3]                   + '~' +      //tF3Icon~         rgb_dec565(sctF3Icon)
+                            vwIcon[4]                   + '~' +      //tF4Icon~         rgb_dec565(sctF4Icon)
+                            rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
+                            rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
+                            rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
+                            rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
+                            rgb_dec565(scbar)           + '~' +      //bar~
+                            rgb_dec565(sctMainIconAlt)  + '~' +      //tMainIconAlt
+                            rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
+                            rgb_dec565(sctTimeAdd);
+                            //true;
 
         SendToPanel(<Payload>{ payload: payloadString });
     } catch (err) {
@@ -4192,11 +4228,11 @@ function hsv2rgb(hue: number, saturation: number, value: number) {
     let chroma = value * saturation;
     let x = chroma * (1 - Math.abs((hue % 2) - 1));
     let rgb = hue <= 1 ? [chroma, x, 0] :
-      hue <= 2 ? [x, chroma, 0] :
-        hue <= 3 ? [0, chroma, x] :
-          hue <= 4 ? [0, x, chroma] :
-            hue <= 5 ? [x, 0, chroma] :
-              [chroma, 0, x];
+        hue <= 2 ? [x, chroma, 0] :
+            hue <= 3 ? [0, chroma, x] :
+                hue <= 4 ? [0, x, chroma] :
+                    hue <= 5 ? [x, 0, chroma] :
+                        [chroma, 0, x];
 
     return rgb.map(v => (v + value - chroma) * 255);
 }
@@ -4248,22 +4284,22 @@ function pos_to_color(x: number, y: number): RGB {
 
 function rgb_to_cie(red, green, blue)
 {
-    //Apply a gamma correction to the RGB values, which makes the color more vivid and more the like the color displayed on the screen of your device
-    let vred   = (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92);
-    let vgreen = (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92);
-    let vblue  = (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92);
+   //Apply a gamma correction to the RGB values, which makes the color more vivid and more the like the color displayed on the screen of your device
+   let vred   = (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92);
+   let vgreen = (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92);
+   let vblue  = (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92);
 
-    //RGB values to XYZ using the Wide RGB D65 conversion formula
-    let X = vred * 0.664511 + vgreen * 0.154324 + vblue * 0.162028;
-    let Y = vred * 0.283881 + vgreen * 0.668433 + vblue * 0.047685;
-    let Z = vred * 0.000088 + vgreen * 0.072310 + vblue * 0.986039;
+   //RGB values to XYZ using the Wide RGB D65 conversion formula
+   let X = vred * 0.664511 + vgreen * 0.154324 + vblue * 0.162028;
+   let Y = vred * 0.283881 + vgreen * 0.668433 + vblue * 0.047685;
+   let Z = vred * 0.000088 + vgreen * 0.072310 + vblue * 0.986039;
 
-    //Calculate the xy values from the XYZ values
-    let ciex = (X / (X + Y + Z)).toFixed(4);
-    let ciey = (Y / (X + Y + Z)).toFixed(4);
-    let cie  = "[" + ciex + "," + ciey + "]"
+   //Calculate the xy values from the XYZ values
+   let ciex = (X / (X + Y + Z)).toFixed(4);
+   let ciey = (Y / (X + Y + Z)).toFixed(4);
+   let cie  = "[" + ciex + "," + ciey + "]"
 
-    return cie;
+   return cie;
 }
 
 function spotifyGetDeviceID(vDeviceString) {
