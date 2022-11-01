@@ -1,20 +1,16 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.5.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Britzelpuf
+TypeScript v3.5.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 43 / v3.5.0 / BerryDriver 4 / Tasmota 12.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
-
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
-
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
-
 *******************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
 *******************************************************************************
-
 ReleaseNotes:
     Bugfixes und Erweiterungen:
         - cardQR (für Gäste WLAN)
@@ -45,6 +41,7 @@ ReleaseNotes:
         - 13.09.2022 - v3.3.1.3 Überarbeitung und BugFix und Refresh Features für cardMedia (Breaking Changes)
         - 13.09.2022 - v3.3.1.3 Hinzufügen von SpotifyPremium, Sonos und Chromecast (Google home) zur cardMedia-Logik
         - 15.09.2022 - V3.4.0 - BugFix Dimmode
+        - 15.09.2022 - v3.4.0   Upgrade TFT 42
         - 15.09.2022 - V3.4.0 - Colormode für Screensaver + AutoColor WeatherForecast
         - 16.09.2022 - v3.4.0.1 Visualisierung der Relay Zustände (MRIcons) im Screensaver + Bugfix Screensaver MRIcon2
         - 17.09.2022 - v3.4.0.2 Bugfix for screensaver icons with scaled colors
@@ -56,6 +53,7 @@ ReleaseNotes:
         - 03.10.2022 - v3.4.0.6 Add cardPower (experimental)
         - 05.10.2022 - v3.4.0.6 Add sueezeboxrpc to cardMedia
         - 07.10.2022 - v3.4.0.6 Time-configurable change for screensaver icons
+        - 07.10.2022 - v3.5.0   Upgrade TFT 43
         - 07.10.2022 - v3.5.0   Add Backgroundcolor to Pages
         - 08.10.2022 - v3.5.0   Add Tilt-Slider and TILT_Fucntions (Open/Stop/Close) to Blinds/Cover/Shutter popUp
         - 12.10.2022 - v3.5.0   Add PageNavigation via Datapoint
@@ -63,9 +61,11 @@ ReleaseNotes:
         - 26.10.2022 - v3.5.0.1 Fix Thermostat for tado Support (by Sternmiere)
         - 27.10.2022 - v3.5.0.1 Add VirtualDevice Gate
         - 27.10.2022 - v3.5.0.2 Applied Boy Scout Rule (Fixed some typos, changed var to let, fixed min/max colorTemp Bug)
-        - 27.10.2022 - v3.5.0.3 Fixed Media Play/Pause icon for alexa (and others) devices
+        - 30.10.2022 - v3.5.0.3 Fixed Media Play/Pause icon for alexa (and others) devices
+        - 31.10.2022 - v3.5.0.4 Reengineering Media Subscriptions
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
+
 Tasmota Konsole:
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
@@ -118,11 +118,11 @@ Interne Sonoff-Sensoren (über Tasmota):
                           (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!!
                           ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
-
 Tasmota-Status0 - (zyklische Ausführung)
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
 
 Erforderliche Adapter:
+
     AccuWeather:        - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten    - Für Erstellung der Aliase
@@ -652,6 +652,9 @@ export const config: Config = {
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
 const request = require('request');
+
+let useMediaEvents: boolean = false;
+let timeoutMedia: any;
 
 //---------------------Begin PageNavi
 async function InitPageNavi() {
@@ -1520,6 +1523,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     GeneratePage(config.pages[0]);
                     break;
                 case 'sleepReached':
+                    useMediaEvents = false;
                     screensaverEnabled = true;
                     if (pageId < 0)
                         pageId = 0;
@@ -1589,6 +1593,7 @@ function GeneratePage(page: Page): void {
                 SendToPanel(GenerateGridPage(<PageGrid>page));
                 break;
             case 'cardMedia':
+                useMediaEvents = true;
                 SendToPanel(GenerateMediaPage(<PageMedia>page));
                 break;
             case 'cardAlarm':
@@ -2469,11 +2474,39 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
     }
 }
 
+function unsubscribeMediaSubscriptions(): void {
+    for (let i = 0; i < config.pages.length; i++) {
+        if (config.pages[i].type == 'cardMedia') {
+            let mediaID = config.pages[i].items[0].id;
+            unsubscribe(mediaID + '.STATE')
+            unsubscribe(mediaID + '.ARTIST')
+            unsubscribe(mediaID + '.TITLE')
+            unsubscribe(mediaID + '.ALBUM')
+            unsubscribe(mediaID + '.VOLUME')
+        }
+    }
+} 
+
+function subscribeMediaSubscriptions(id: string): void {
+    on({id: [].concat([id + '.STATE']).concat([id + '.VOLUME']).concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']), change: "ne"}, async function () {
+        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
+        timeoutMedia = setTimeout(async function () {
+            if (useMediaEvents) {
+                GeneratePage(activePage);
+            }
+        },25)
+    });
+} 
+
 function GenerateMediaPage(page: PageMedia): Payload[] {
     try {
         let id = page.items[0].id
 
         let out_msgs: Array<Payload> = [];
+
+        unsubscribeMediaSubscriptions();
+        
+        subscribeMediaSubscriptions(id);
 
         out_msgs.push({ payload: 'pageType~cardMedia' });
         if (existsObject(id)) {
@@ -2494,11 +2527,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
                 let nameLength = name.length;
                 if (name.substring(0,9) == 'Playlist:') {
-                    let nameLength = name.length;
-                    name = name.slice(10, nameLength);
+                    name = name.slice(10, 26) + '...';
                 } else if (name.substring(0,6) == 'Album:') {
-                    let nameLength = name.length;
-                    name = name.slice(10, nameLength);
+                    name = name.slice(7, 23) + '...';
                 } else if (name.substring(0,6) == 'Track') {
                     name = 'Spotify-Premium';
                 }
@@ -3171,11 +3202,6 @@ function HandleButtonEvent(words): void {
                 break;
             case 'media-back':
                 setIfExists(id + '.PREV', true);
-                on({id: id + '.TITLE', change: "ne"}, async function () {
-                    setTimeout(function(){
-                        GeneratePage(activePage);
-                    },25)
-                });
                 break;
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
@@ -3196,24 +3222,9 @@ function HandleButtonEvent(words): void {
                         setIfExists(id + '.PLAY', true);
                     }
                 }
-                on({id: id + '.STATE', val: true}, async function () {
-                    on({id: [].concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']), change: "ne"}, async function () {
-                        setTimeout(function(){
-                            GeneratePage(activePage);
-                        },25)
-                    });
-                });
-                on({id: id + '.STATE', val: false}, async function () {
-                    GeneratePage(activePage);
-                });
                 break;
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
-                on({id: id + '.TITLE', change: "ne"}, async function () {
-                    setTimeout(function(){
-                        GeneratePage(activePage);
-                    },25)
-                });
                 break;
             case 'volumeSlider':
                 setIfExists(id + '.VOLUME', parseInt(words[4]))
