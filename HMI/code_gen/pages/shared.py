@@ -197,4 +197,9 @@ navigation = """
                 tsw mSwipeNext,1
                 bNext.txt=""
               }
+              if(tTmp.txt=="2")
+              {
+                vis bNext,1
+                bNext.txt=""
+              }
 """
