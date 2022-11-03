@@ -14,794 +14,7 @@
 │ +    // fix touch offset (Removed for US version)
 │ +    //lcd_dev fffb 0002 0000 0020
 │      page pageStartup
-├── b0.txt
-│ @@ -1,8 +1,8 @@
-│ -Page popupThermo
-│ +Page popupFan
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Locked                              : no
-│          Swide up page ID                    : disabled
-│ @@ -19,46 +19,50 @@
-│              entn.txt=pageIcons.tTmp2.txt
-│              tIcon1.txt=pageIcons.tTmp3.txt
-│              vis p0,0
-│              vis tSend,0
-│              vis tTmp,0
-│              vis tInstruction,0
-│              vis tId,0
-│ -            vis bModeNext,0
-│ -            vis cModeNext,0
-│ -            vis dModeNext,0
-│              //page open event
-│              // event,pageOpenDetail,typeOfPage,tEntityName
-│              // craft command
-│ -            tSend.txt="event,pageOpenDetail,popupThermo,"+entn.txt
-│ +            tSend.txt="event,pageOpenDetail,popupFan,"+entn.txt
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│ -            popupThermo.bco=defaultBcoColor
-│ -            for(sys0=0;sys0<43;sys0++)
-│ +            vis hSpeed,0
-│ +            popupFan.bco=defaultBcoColor
-│ +            for(sys0=0;sys0<24;sys0++)
-│              {
-│                  if(b[sys0].type==98||b[sys0].type==116)
-│                  {
-│                      b[sys0].bco=defaultBcoColor
-│                      b[sys0].pco=defaultFontColor
-│                  }
-│                  if(b[sys0].type==53&&defaultBcoColor==0)
-│                  {
-│                      b[sys0].pic=10
-│                      b[sys0].pic2=11
-│                  }
-│              }
-│ +            if(defaultBcoColor==0)
-│ +            {
-│ +                hSpeed.pic=14
-│ +                hSpeed.pic1=13
-│ +                hSpeed.pic2=15
-│ +            }
-│          
-│  Variable (string) entn
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│ @@ -74,164 +78,134 @@
-│      
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 500
-│      
-│ -Variable (string) tId
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 20
-│ -    
-│ -Variable (string) tInstruction
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 20
-│ -    
-│  Variable (string) tSend
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 200
-│      
-│ -Variable (string) tTmp
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│  Variable (string) vaModeCur
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│ -        Max. Text Size: 40
-│ -    
-│ -Variable (string) vaModeCur2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 40
-│ -    
-│ -Variable (string) vaModeCur3
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 40
-│ -    
-│ -Variable (string) vaModeList
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│          Max. Text Size: 400
-│      
-│ -Variable (string) vaModeList2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 400
-│ -    
-│ -Variable (string) vaModeList3
-│ +Variable (string) vaModeList
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 400
-│      
-│  Variable (int32) vaModePos
-│      Attributes
-│          Scope: local
-│          Value: 0
-│      
-│ -Variable (int32) vaModePos2
-│ -    Attributes
-│ -        Scope: local
-│ -        Value: 0
-│ -    
-│ -Variable (int32) vaModePos3
-│ +Text t1
-│      Attributes
-│ -        Scope: local
-│ -        Value: 0
-│ -    
-│ -Variable (string) vaType
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 20
-│ -    
-│ -Variable (string) vaType2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 20
-│ -    
-│ -Variable (string) vaType3
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 20
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : 
-│ +        Max. Text Size                      : 50
-│      
-│ -Text heading1
-│ +Text tEntity
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│          Max. Text Size                      : 25
-│      
-│ -Text heading2
-│ +Text tIcon1
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│ -        Max. Text Size                      : 25
-│ +        Max. Text Size                      : 10
-│      
-│ -Text heading3
-│ +Text tId
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│ -        Max. Text Size                      : 25
-│ +        Max. Text Size                      : 20
-│      
-│ -Text tEntity
-│ +Text tInstruction
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│ -        Max. Text Size                      : 25
-│ +        Max. Text Size                      : 20
-│      
-│ -Text tIcon1
-│ +Text tTmp
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│ -        Max. Text Size                      : 10
-│ +        Max. Text Size                      : 80
-│      
-│  Picture p0
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│      
-│ +Slider hSpeed
-│ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Position                            : 50
-│ +        Upper range limit                   : 100
-│ +        Lower range limit                   : 0
-│ +    
-│ +    Events
-│ +        Touch Release Event
-│ +            tmCooldown.en=1
-│ +            tmCooldown.tim=2500
-│ +            //craft command
-│ +            tSend.txt="event,buttonPress2,"+entn.txt+",number-set,"
-│ +            covx hSpeed.val,tTmp.txt,0,0
-│ +            tSend.txt+=tTmp.txt
-│ +            //send calc crc
-│ +            btlen tSend.txt,sys0
-│ +            crcrest 1,0xffff // reset CRC
-│ +            crcputh 55 bb
-│ +            crcputs sys0,2
-│ +            crcputs tSend.txt,0
-│ +            //send cmd
-│ +            printh 55 bb
-│ +            prints sys0,2
-│ +            prints tSend.txt,0
-│ +            prints crcval,2
-│ +        
-│  Button b0
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│ @@ -266,15 +240,15 @@
-│      Events
-│          Touch Press Event
-│              //craft command
-│              tSend.txt="event,buttonPress2,"
-│              tSend.txt+=entn.txt+","
-│              sys2=vaModePos.val-3
-│              covx sys2,tTmp.txt,0,0
-│ -            tSend.txt+="mode-"+vaType.txt+","+tTmp.txt
-│ +            tSend.txt+="mode-preset_modes,"+tTmp.txt
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -296,15 +270,15 @@
-│      Events
-│          Touch Press Event
-│              //craft command
-│              tSend.txt="event,buttonPress2,"
-│              tSend.txt+=entn.txt+","
-│              sys2=vaModePos.val-2
-│              covx sys2,tTmp.txt,0,0
-│ -            tSend.txt+="mode-"+vaType.txt+","+tTmp.txt
-│ +            tSend.txt+="mode-preset_modes,"+tTmp.txt
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -326,15 +300,15 @@
-│      Events
-│          Touch Press Event
-│              //craft command
-│              tSend.txt="event,buttonPress2,"
-│              tSend.txt+=entn.txt+","
-│              sys2=vaModePos.val-1
-│              covx sys2,tTmp.txt,0,0
-│ -            tSend.txt+="mode-"+vaType.txt+","+tTmp.txt
-│ +            tSend.txt+="mode-preset_modes,"+tTmp.txt
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -347,15 +321,15 @@
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î´
-│ -        Max. Text Size                      : 3
-│ +        Max. Text Size                      : 5
-│      
-│      Events
-│          Touch Press Event
-│              //if(bMode3.txt=="")
-│              spstr vaModeList.txt,tTmp.txt,"?",vaModePos.val
-│              if(tTmp.txt=="")
-│              {
-│ @@ -388,290 +362,42 @@
-│                  bMode2.pco=1374
-│              }
-│              if(bMode3.txt==vaModeCur.txt)
-│              {
-│                  bMode3.pco=1374
-│              }
-│          
-│ -Button cMode1
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        State                               : unpressed
-│ -        Text                                : 
-│ -        Max. Text Size                      : 40
-│ -    
-│ -    Events
-│ -        Touch Press Event
-│ -            //craft command
-│ -            tSend.txt="event,buttonPress2,"
-│ -            tSend.txt+=entn.txt+","
-│ -            sys2=vaModePos2.val-3
-│ -            covx sys2,tTmp.txt,0,0
-│ -            tSend.txt+="mode-"+vaType2.txt+","+tTmp.txt
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
-│ -        
-│ -Button cMode2
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        State                               : unpressed
-│ -        Text                                : 
-│ -        Max. Text Size                      : 40
-│ -    
-│ -    Events
-│ -        Touch Press Event
-│ -            //craft command
-│ -            tSend.txt="event,buttonPress2,"
-│ -            tSend.txt+=entn.txt+","
-│ -            sys2=vaModePos2.val-2
-│ -            covx sys2,tTmp.txt,0,0
-│ -            tSend.txt+="mode-"+vaType2.txt+","+tTmp.txt
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
-│ -        
-│ -Button cMode3
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        State                               : unpressed
-│ -        Text                                : 
-│ -        Max. Text Size                      : 40
-│ -    
-│ -    Events
-│ -        Touch Press Event
-│ -            //craft command
-│ -            tSend.txt="event,buttonPress2,"
-│ -            tSend.txt+=entn.txt+","
-│ -            sys2=vaModePos2.val-1
-│ -            covx sys2,tTmp.txt,0,0
-│ -            tSend.txt+="mode-"+vaType2.txt+","+tTmp.txt
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
-│ -        
-│ -Button cModeNext
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        State                               : unpressed
-│ -        Text                                : î´
-│ -        Max. Text Size                      : 3
-│ -    
-│ -    Events
-│ -        Touch Press Event
-│ -            spstr vaModeList2.txt,tTmp.txt,"?",vaModePos2.val
-│ -            if(tTmp.txt=="")
-│ -            {
-│ -                vaModePos2.val=0
-│ -                spstr vaModeList2.txt,cMode1.txt,"?",vaModePos2.val
-│ -                spstr vaModeList2.txt,cMode2.txt,"?",vaModePos2.val+1
-│ -                spstr vaModeList2.txt,cMode3.txt,"?",vaModePos2.val+2
-│ -            }
-│ -            spstr vaModeList2.txt,cMode1.txt,"?",vaModePos2.val
-│ -            spstr vaModeList2.txt,cMode2.txt,"?",vaModePos2.val+1
-│ -            spstr vaModeList2.txt,cMode3.txt,"?",vaModePos2.val+2
-│ -            vaModePos2.val+=3
-│ -            spstr vaModeList2.txt,tTmp.txt,"?",3
-│ -            if(tTmp.txt=="")
-│ -            {
-│ -                vis cModeNext,0
-│ -            }else
-│ -            {
-│ -                vis cModeNext,1
-│ -            }
-│ -            cMode1.pco=defaultFontColor
-│ -            cMode2.pco=defaultFontColor
-│ -            cMode3.pco=defaultFontColor
-│ -            if(cMode1.txt==vaModeCur.txt)
-│ -            {
-│ -                cMode1.pco=1374
-│ -            }
-│ -            if(cMode2.txt==vaModeCur.txt)
-│ -            {
-│ -                cMode2.pco=1374
-│ -            }
-│ -            if(cMode3.txt==vaModeCur.txt)
-│ -            {
-│ -                cMode3.pco=1374
-│ -            }
-│ -        
-│ -Button dMode1
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        State                               : unpressed
-│ -        Text                                : 
-│ -        Max. Text Size                      : 40
-│ -    
-│ -    Events
-│ -        Touch Press Event
-│ -            //craft command
-│ -            tSend.txt="event,buttonPress2,"
-│ -            tSend.txt+=entn.txt+","
-│ -            sys2=vaModePos3.val-3
-│ -            covx sys2,tTmp.txt,0,0
-│ -            tSend.txt+="mode-"+vaType3.txt+","+tTmp.txt
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
-│ -        
-│ -Button dMode2
-│ +Dual-state Button btOnOff1
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : 
-│ -        Max. Text Size                      : 40
-│ -    
-│ -    Events
-│ -        Touch Press Event
-│ -            //craft command
-│ -            tSend.txt="event,buttonPress2,"
-│ -            tSend.txt+=entn.txt+","
-│ -            sys2=vaModePos3.val-2
-│ -            covx sys2,tTmp.txt,0,0
-│ -            tSend.txt+="mode-"+vaType3.txt+","+tTmp.txt
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
-│ -        
-│ -Button dMode3
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        State                               : unpressed
-│ -        Text                                : 
-│ -        Max. Text Size                      : 40
-│ +        Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│              //craft command
-│ -            tSend.txt="event,buttonPress2,"
-│ -            tSend.txt+=entn.txt+","
-│ -            sys2=vaModePos3.val-1
-│ -            covx sys2,tTmp.txt,0,0
-│ -            tSend.txt+="mode-"+vaType3.txt+","+tTmp.txt
-│ +            tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
-│ +            covx btOnOff1.val,tTmp.txt,0,0
-│ +            tSend.txt+=tTmp.txt
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│          
-│ -Button dModeNext
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        State                               : unpressed
-│ -        Text                                : î´
-│ -        Max. Text Size                      : 3
-│ -    
-│ -    Events
-│ -        Touch Press Event
-│ -            spstr vaModeList3.txt,tTmp.txt,"?",vaModePos3.val
-│ -            if(tTmp.txt=="")
-│ -            {
-│ -                vaModePos3.val=0
-│ -                spstr vaModeList3.txt,dMode1.txt,"?",vaModePos3.val
-│ -                spstr vaModeList3.txt,dMode2.txt,"?",vaModePos3.val+1
-│ -                spstr vaModeList3.txt,dMode3.txt,"?",vaModePos3.val+2
-│ -            }
-│ -            spstr vaModeList3.txt,dMode1.txt,"?",vaModePos3.val
-│ -            spstr vaModeList3.txt,dMode2.txt,"?",vaModePos3.val+1
-│ -            spstr vaModeList3.txt,dMode3.txt,"?",vaModePos3.val+2
-│ -            vaModePos3.val+=3
-│ -            spstr vaModeList3.txt,tTmp.txt,"?",3
-│ -            if(tTmp.txt=="")
-│ -            {
-│ -                vis dModeNext,0
-│ -            }else
-│ -            {
-│ -                vis dModeNext,1
-│ -            }
-│ -            dMode1.pco=defaultFontColor
-│ -            dMode2.pco=defaultFontColor
-│ -            dMode3.pco=defaultFontColor
-│ -            if(dMode1.txt==vaModeCur.txt)
-│ -            {
-│ -                dMode1.pco=1374
-│ -            }
-│ -            if(dMode2.txt==vaModeCur.txt)
-│ -            {
-│ -                dMode2.pco=1374
-│ -            }
-│ -            if(dMode3.txt==vaModeCur.txt)
-│ -            {
-│ -                dMode3.pco=1374
-│ -            }
-│ -        
-│  Timer tmCooldown
-│      Attributes
-│          Scope      : local
-│          Period (ms): 100
-│          Enabled    : no
-│      
-│      Events
-│ @@ -729,28 +455,49 @@
-│                                      ucopy strCommand.txt,4,payloadLength-5,0
-│                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-│                                      spstr strCommand.txt,tInstruction.txt,"~",0
-│                                      spstr strCommand.txt,tTmp.txt,"~",1
-│                                      if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
-│                                      {
-│                                          // change icon
-│ -                                        spstr strCommand.txt,tIcon1.txt,"~",2
-│ +                                        //spstr strCommand.txt,tIcon1.txt,"~",2
-│                                          vis tIcon1,1
-│                                          // change icon color
-│                                          spstr strCommand.txt,tTmp.txt,"~",3
-│                                          covx tTmp.txt,sys0,0,0
-│                                          tIcon1.pco=sys0
-│ -                                        //mode 1 heading
-│ -                                        spstr strCommand.txt,heading1.txt,"~",4
-│ -                                        //mode 1 type
-│ -                                        spstr strCommand.txt,vaType.txt,"~",5
-│ +                                        // get Button State
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",4
-│ +                                        covx tTmp.txt,sys0,0,0
-│ +                                        btOnOff1.val=sys0
-│ +                                        // get Speed value
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",5
-│ +                                        if(tTmp.txt=="disable")
-│ +                                        {
-│ +                                            vis t1,0
-│ +                                            vis hSpeed,0
-│ +                                        }else
-│ +                                        {
-│ +                                            vis t1,1
-│ +                                            vis hSpeed,1
-│ +                                            covx tTmp.txt,sys0,0,0
-│ +                                            if(tmCooldown.en==0)
-│ +                                            {
-│ +                                                hSpeed.val=sys0
-│ +                                            }
-│ +                                        }
-│ +                                        // set hSpeed maxValue
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",6
-│ +                                        covx tTmp.txt,hSpeed.maxval,0,0
-│ +                                        // set t1 Speed (Localization)
-│ +                                        spstr strCommand.txt,t1.txt,"~",7
-│                                          //current mode
-│ -                                        spstr strCommand.txt,vaModeCur.txt,"~",6
-│ +                                        spstr strCommand.txt,vaModeCur.txt,"~",8
-│                                          //mode list
-│ -                                        spstr strCommand.txt,vaModeList.txt,"~",7
-│ +                                        spstr strCommand.txt,vaModeList.txt,"~",9
-│                                          if(vaModeList.txt=="")
-│                                          {
-│                                              vis bMode1,0
-│                                              vis bMode2,0
-│                                              vis bMode3,0
-│                                              vis bModeNext,0
-│                                          }
-│ @@ -770,84 +517,14 @@
-│                                          {
-│                                              bMode2.pco=1374
-│                                          }
-│                                          if(bMode3.txt==vaModeCur.txt)
-│                                          {
-│                                              bMode3.pco=1374
-│                                          }
-│ -                                        //mode 2 heading
-│ -                                        spstr strCommand.txt,heading2.txt,"~",8
-│ -                                        //mode 2 type
-│ -                                        spstr strCommand.txt,vaType2.txt,"~",9
-│ -                                        //current mode
-│ -                                        spstr strCommand.txt,vaModeCur2.txt,"~",10
-│ -                                        //mode list
-│ -                                        spstr strCommand.txt,vaModeList2.txt,"~",11
-│ -                                        if(vaModeList2.txt=="")
-│ -                                        {
-│ -                                            vis cMode1,0
-│ -                                            vis cMode2,0
-│ -                                            vis cMode3,0
-│ -                                            vis cModeNext,0
-│ -                                        }
-│ -                                        if(cMode1.txt=="")
-│ -                                        {
-│ -                                            click cModeNext,1
-│ -                                            click cModeNext,0
-│ -                                        }
-│ -                                        cMode1.pco=defaultFontColor
-│ -                                        cMode2.pco=defaultFontColor
-│ -                                        cMode3.pco=defaultFontColor
-│ -                                        if(cMode1.txt==vaModeCur2.txt)
-│ -                                        {
-│ -                                            cMode1.pco=1374
-│ -                                        }
-│ -                                        if(cMode2.txt==vaModeCur2.txt)
-│ -                                        {
-│ -                                            cMode2.pco=1374
-│ -                                        }
-│ -                                        if(cMode3.txt==vaModeCur2.txt)
-│ -                                        {
-│ -                                            cMode3.pco=1374
-│ -                                        }
-│ -                                        //mode 3 heading
-│ -                                        spstr strCommand.txt,heading3.txt,"~",12
-│ -                                        //mode 3 type
-│ -                                        spstr strCommand.txt,vaType3.txt,"~",13
-│ -                                        //current mode
-│ -                                        spstr strCommand.txt,vaModeCur3.txt,"~",14
-│ -                                        //mode list
-│ -                                        spstr strCommand.txt,vaModeList3.txt,"~",15
-│ -                                        if(vaModeList3.txt=="")
-│ -                                        {
-│ -                                            vis dMode1,0
-│ -                                            vis dMode2,0
-│ -                                            vis dMode3,0
-│ -                                            vis dModeNext,0
-│ -                                        }
-│ -                                        if(dMode1.txt=="")
-│ -                                        {
-│ -                                            click dModeNext,1
-│ -                                            click dModeNext,0
-│ -                                        }
-│ -                                        dMode1.pco=defaultFontColor
-│ -                                        dMode2.pco=defaultFontColor
-│ -                                        dMode3.pco=defaultFontColor
-│ -                                        if(dMode1.txt==vaModeCur3.txt)
-│ -                                        {
-│ -                                            dMode1.pco=1374
-│ -                                        }
-│ -                                        if(dMode2.txt==vaModeCur3.txt)
-│ -                                        {
-│ -                                            dMode2.pco=1374
-│ -                                        }
-│ -                                        if(dMode3.txt==vaModeCur3.txt)
-│ -                                        {
-│ -                                            dMode3.pco=1374
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="time")
-│                                      {
-│                                          // get set time to global variable
-│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-│                                      }
-│                                      if(tInstruction.txt=="date")
-├── bDown1.txt
+├── cardEntities.txt
 │ @@ -61,14 +61,24 @@
 │              vis tIcon4,0
 │              vis tEntity4,0
@@ -1398,7 +611,7 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
-├── bSendStartup.txt
+├── pageStartup.txt
 │ @@ -118,15 +118,15 @@
 │  Text tMsg3
 │      Attributes
@@ -1433,3 +646,127 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
+├── popupInSel.txt
+│ @@ -14,14 +14,15 @@
+│          Preinitialize Event
+│              dim=dimValueNormal
+│              //get entitiy name
+│              tEntity.txt=pageIcons.tTmp1.txt
+│              //get entity id
+│              entn.txt=pageIcons.tTmp2.txt
+│              tIcon1.txt=pageIcons.tTmp3.txt
+│ +            vis p0,0
+│              vis tSend,0
+│              vis tTmp,0
+│              vis tInstruction,0
+│              vis tId,0
+│              vis bModeNext,0
+│              //page open event
+│              // event,pageOpenDetail,typeOfPage,tEntityName
+│ @@ -69,15 +70,15 @@
+│          Scope: local
+│          Value: 0
+│      
+│  Variable (string) strCommand
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│ -        Max. Text Size: 960
+│ +        Max. Text Size: 500
+│      
+│  Variable (string) tId
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 20
+│      
+│ @@ -105,15 +106,15 @@
+│          Text          : 
+│          Max. Text Size: 40
+│      
+│  Variable (string) vaModeList
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│ -        Max. Text Size: 900
+│ +        Max. Text Size: 400
+│      
+│  Variable (int32) vaModePos
+│      Attributes
+│          Scope: local
+│          Value: 0
+│      
+│  Variable (string) vaType
+├── popupLight.txt
+│ @@ -19,15 +19,14 @@
+│              entn.txt=pageIcons.tTmp2.txt
+│              tIcon1.txt=pageIcons.tTmp3.txt
+│              vis p0,0
+│              vis tSend,0
+│              vis tTmp,0
+│              vis tInstruction,0
+│              vis tId,0
+│ -            vis bEffect,0
+│              //page open event
+│              // event,pageOpenDetail,typeOfPage,tEntityName
+│              // craft command
+│              tSend.txt="event,pageOpenDetail,popupLight,"+entn.txt
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│ @@ -362,31 +361,14 @@
+│                      //enable color temp
+│                      vis t4,1
+│                      vis t3,1
+│                      vis hTempSlider,1
+│                  }
+│              }
+│          
+│ -Button bEffect
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        State                               : unpressed
+│ -        Text                                : î¸¯
+│ -        Max. Text Size                      : 10
+│ -    
+│ -    Events
+│ -        Touch Press Event
+│ -            pageIcons.tTmp1.txt=tEntity.txt
+│ -            pageIcons.tTmp2.txt=entn.txt
+│ -            pageIcons.tTmp3.txt=tIcon1.txt
+│ -            page popupInSel
+│ -        
+│  Dual-state Button btOnOff1
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          State                               : unpressed
+│ @@ -571,23 +553,14 @@
+│                                          }
+│                                          // set t0 Color (Localization)
+│                                          spstr strCommand.txt,t0.txt,"~",8
+│                                          // set t4 Temperature (Localization)
+│                                          spstr strCommand.txt,t4.txt,"~",9
+│                                          // set t1 Brightness (Localization)
+│                                          spstr strCommand.txt,t1.txt,"~",10
+│ -                                        // activate effect button
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",11
+│ -                                        if(tTmp.txt=="enable")
+│ -                                        {
+│ -                                            vis bEffect,1
+│ -                                        }else
+│ -                                        {
+│ -                                            vis bEffect,0
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
