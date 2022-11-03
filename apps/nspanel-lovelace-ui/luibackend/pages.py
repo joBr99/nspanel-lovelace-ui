@@ -657,6 +657,7 @@ class LuiPagesGen(object):
         brightness = "disable"
         color_temp = "disable"
         color = "disable"
+        effect_supported = "disable"
         
         if "onoff" not in entity.attributes.supported_color_modes:
             brightness = 0
@@ -679,7 +680,6 @@ class LuiPagesGen(object):
                 color = "enable"
             else:
                 color = "disable"
-            effect_supported = "disable"
             if "effect_list" in entity.attributes:
                 effect_supported = "enable"
         color_translation      = "Color"
