@@ -1,49 +1,4 @@
-+++ /dev/fd/62	2022-11-03 17:05:36.052771693 +0000
-+m1.txt
-+22 +478,15 @@
-+ Send Component ID                   : disabled
-+ State                               : unpressed
-+ Text                                : î³
-+ Max. Text Size                      : 10
-+
-+nts
-+ Touch Press Event
-+     tSend.txt="event,buttonPress2,cardAlarm,"
-+     if(bPrev.txt=="î")
-+     {
-+         tSend.txt+="bHome"
-+     }else
-+     {
-+         tSend.txt+="bNext"
-+     }
-+     tSend.txt="event,buttonPress2,cardAlarm,bNext"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+19 +664,14 @@
-+                                 }
-+                                 if(tTmp.txt=="1")
-+                                 {
-+                                     vis bNext,1
-+                                     tsw mSwipeNext,1
-+                                     bNext.txt="î³"
-+                                 }
-+                                 if(tTmp.txt=="2")
-+                                 {
-+                                     vis bNext,1
-+                                     bNext.txt="î"
-+                                 }
-+                                 //text arm1
-+                                 spstr strCommand.txt,arm1.txt,"~",3
-+                                 if(arm1.txt!="")
-+                                 {
-+                                     vis arm1,1
-+                                 }
-+                                 //id arm1
++++ /dev/fd/62	2022-11-03 17:14:06.344831301 +0000
 +.txt
 ++1,8 @@
 +pupThermo
@@ -872,35 +827,12 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+34 +596,52 @@
++14 +596,39 @@
 +bDown5
 + Text                                : î
 +     tSend.txt="event,buttonPress2,"+entn5.txt+",down"
 +bNext
-+ Text                                : î³
-+     tSend.txt="event,buttonPress2,cardEntities,"
-+     if(bPrev.txt=="î")
-+     {
-+         tSend.txt+="bHome"
-+     }else
-+     {
-+         tSend.txt+="bNext"
-+     }
-+     tSend.txt="event,buttonPress2,cardEntities,bNext"
-+14 +778,39 @@
-+     crcputs tSend.txt,0
-+     //send cmd
-+bStop5
-+ Text                                : î
-+     tSend.txt="event,buttonPress2,"+entn5.txt+",stop"
-+bText1
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ State                               : unpressed
-+14 +903,39 @@
++14 +785,39 @@
 +     crcputs tSend.txt,0
 +     //send cmd
 +     printh 55 bb
@@ -908,14 +840,36 @@
 +     prints tSend.txt,0
 +     prints crcval,2
 + 
-+bUp1
++bStop5
 +ributes
 + Scope                               : local
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + State                               : unpressed
-+14 +1028,39 @@
++ Text                                : î
++     tSend.txt="event,buttonPress2,"+entn5.txt+",stop"
++bText1
++14 +910,39 @@
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++bText5
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 
++ Max. Text Size                      : 45
++     tSend.txt="event,buttonPress2,"+entn5.txt+",button"
++bUp1
++14 +1035,39 @@
 +     crcputs tSend.txt,0
 +     //send cmd
 +     printh 55 bb
@@ -932,24 +886,10 @@
 + State                               : unpressed
 + Text                                : î
 + Max. Text Size                      : 10
-+
-+nts
-+ Touch Press Event
 +     tSend.txt="event,buttonPress2,"+entn5.txt+",up"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
++14 +1168,41 @@
 + m0
-+,14 +1312,45 @@
++,14 +1319,45 @@
 +         page popupFan
 +     if(type4.txt=="input_sel")
 +         page popupInSel
@@ -958,155 +898,8 @@
 +         page popupInSel
 +     }
 + mSpecial
-+,19 +1483,14 @@
-+                                 }
-+                                 if(tTmp.txt=="1")
-+                                 {
-+                                     vis bNext,1
-+                                     tsw mSwipeNext,1
-+                                     bNext.txt="î³"
-+                                 }
-+                                 if(tTmp.txt=="2")
-+                                 {
-+                                     vis bNext,1
-+                                     bNext.txt="î"
-+                                 }
-+                                 // get Type
-+                                 spstr strCommand.txt,type1.txt,"~",3
-+                                 // get internal name
-+                                 spstr strCommand.txt,entn1.txt,"~",4
-+                                 if(type1.txt=="delete"||type1.txt=="")
-+                                 {
-+                                     vis bUp1,0
-+,14 +2079,163 @@
++,14 +2091,163 @@
 +                                 if(type5.txt=="button"||type5.txt=="input_sel")
-+own2.txt
-+22 +290,15 @@
-+ State                               : unpressed
-+ Text                                : î³
-+     tSend.txt="event,buttonPress2,cardThermo,"
-+     if(bPrev.txt=="î")
-+     {
-+         tSend.txt+="bHome"
-+     }else
-+     {
-+         tSend.txt+="bNext"
-+     }
-+     tSend.txt="event,buttonPress2,cardThermo,bNext"
-+19 +918,14 @@
-+                                 }
-+                                 if(tTmp.txt=="1")
-+                                 {
-+                                     vis bNext,1
-+                                     tsw mSwipeNext,1
-+                                     bNext.txt="î³"
-+                                 }
-+                                 if(tTmp.txt=="2")
-+                                 {
-+                                     vis bNext,1
-+                                     bNext.txt="î"
-+                                 }
-+                                 //entity name
-+                                 spstr strCommand.txt,entn.txt,"~",3
-+                                 //currentTemp
-+                                 spstr strCommand.txt,tCurTemp.txt,"~",4
-+                                 //dstTemp
-+                                 spstr strCommand.txt,tTmp.txt,"~",5
-+                                 covx tTmp.txt,xTempDest1.val,0,0
-+ntity1.txt
-+22 +467,15 @@
-+ Send Component ID                   : disabled
-+ State                               : unpressed
-+ Text                                : î³
-+ Max. Text Size                      : 10
-+nts
-+ Touch Press Event
-+     tSend.txt="event,buttonPress2,cardGrid,"
-+     if(bPrev.txt=="î")
-+     {
-+         tSend.txt+="bHome"
-+     }else
-+     {
-+         tSend.txt+="bNext"
-+     }
-+     tSend.txt="event,buttonPress2,cardGrid,bNext"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+19 +673,14 @@
-+                                 }
-+                                 if(tTmp.txt=="1")
-+                                 {
-+                                     vis bNext,1
-+                                     tsw mSwipeNext,1
-+                                     bNext.txt="î³"
-+                                 }
-+                                 if(tTmp.txt=="2")
-+                                 {
-+                                     vis bNext,1
-+                                     bNext.txt="î"
-+                                 }
-+                                 // get Type
-+                                 spstr strCommand.txt,type1.txt,"~",3
-+                                 // get internal name
-+                                 spstr strCommand.txt,entn1.txt,"~",4
-+                                 if(type1.txt=="delete"||type1.txt=="")
-+                                 {
-+                                     vis tEntity1,0
-+ext.txt
-+22 +443,15 @@
-+ Text                                : î³
-+ Max. Text Size                      : 10
-+     tSend.txt="event,buttonPress2,cardMedia,"
-+     if(bPrev.txt=="î")
-+     {
-+         tSend.txt+="bHome"
-+     }else
-+     {
-+         tSend.txt+="bNext"
-+     }
-+     tSend.txt="event,buttonPress2,cardMedia,bNext"
-+19 +621,14 @@
-+                                 }
-+                                 if(tTmp.txt=="1")
-+                                 {
-+                                     vis bNext,1
-+                                     tsw mSwipeNext,1
-+                                     bNext.txt="î³"
-+                                 }
-+                                 if(tTmp.txt=="2")
-+                                 {
-+                                     vis bNext,1
-+                                     bNext.txt="î"
-+                                 }
-+                                 //entity name
-+                                 spstr strCommand.txt,entn.txt,"~",3
-+                                 //icon
-+                                 spstr strCommand.txt,tIcon.txt,"~",4
-+                                 //title
-+                                 spstr strCommand.txt,tTitle.txt,"~",5
-+                                 //author
 +endStartup.txt
 +15 +118,15 @@
-+sg3
-+ Associated Keyboard                 : none
-+ Text                                : please check your backend configuration
-+ Text                                : pls check your backend configuration
-+ Max. Text Size                      : 100
-+
 +end
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+15 +173,15 @@
-+ Max. Text Size                      : 10
-+     recmod=1
-+     bauds=115200
-+     // startup event
-+     tSend.txt="event,startup,"+tVersion.txt+",eu"
-+     tSend.txt="event,startup,"+tVersion.txt+",us-p"
-+     crcputs tSend.txt,0
-+     //send cmd

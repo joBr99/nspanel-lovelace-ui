@@ -634,7 +634,14 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardThermo,bNext"
+            tSend.txt="event,buttonPress2,cardThermo,"
+            if(bPrev.txt=="î")
+            {
+                tSend.txt+="bHome"
+            }else
+            {
+                tSend.txt+="bNext"
+            }
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1641,6 +1648,11 @@ Timer tmSerial
                                             vis bNext,1
                                             tsw mSwipeNext,1
                                             bNext.txt="î³"
+                                        }
+                                        if(tTmp.txt=="2")
+                                        {
+                                            vis bNext,1
+                                            bNext.txt="î"
                                         }
                                         //entity name
                                         spstr strCommand.txt,entn.txt,"~",3

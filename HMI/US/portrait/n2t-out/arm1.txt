@@ -482,7 +482,14 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,bNext"
+            tSend.txt="event,buttonPress2,cardAlarm,"
+            if(bPrev.txt=="î")
+            {
+                tSend.txt+="bHome"
+            }else
+            {
+                tSend.txt+="bNext"
+            }
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -667,6 +674,11 @@ Timer tmSerial
                                             vis bNext,1
                                             tsw mSwipeNext,1
                                             bNext.txt="î³"
+                                        }
+                                        if(tTmp.txt=="2")
+                                        {
+                                            vis bNext,1
+                                            bNext.txt="î"
                                         }
                                         //text arm1
                                         spstr strCommand.txt,arm1.txt,"~",3
