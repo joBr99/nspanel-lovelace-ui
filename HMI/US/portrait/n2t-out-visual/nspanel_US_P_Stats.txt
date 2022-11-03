@@ -12,31 +12,31 @@ b0
 	202  Unique line(s) of event code
 bNext
 	34   Component(s)
-	394  Line(s) of event code
-	213  Unique line(s) of event code
+	406  Line(s) of event code
+	216  Unique line(s) of event code
+arm1
+	40   Component(s)
+	439  Line(s) of event code
+	261  Unique line(s) of event code
 bSendStartup
 	19   Component(s)
 	172  Line(s) of event code
 	125  Unique line(s) of event code
 bEntity1
 	42   Component(s)
-	478  Line(s) of event code
-	283  Unique line(s) of event code
-arm1
-	40   Component(s)
-	427  Line(s) of event code
-	258  Unique line(s) of event code
+	490  Line(s) of event code
+	286  Unique line(s) of event code
 bDown2
 	53   Component(s)
-	596  Line(s) of event code
-	313  Unique line(s) of event code
+	608  Line(s) of event code
+	316  Unique line(s) of event code
 bDown1
 	77   Component(s)
-	1379 Line(s) of event code
-	614  Unique line(s) of event code
+	1391 Line(s) of event code
+	617  Unique line(s) of event code
 
 Total
 	17   Page(s)
 	337  Component(s)
-	4194 Line(s) of event code
-	1292 Unique line(s) of event code
+	4254 Line(s) of event code
+	1291 Unique line(s) of event code
