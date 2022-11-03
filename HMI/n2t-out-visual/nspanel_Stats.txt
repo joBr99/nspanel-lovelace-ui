@@ -22,10 +22,6 @@ popupNotify
 	19   Component(s)
 	253  Line(s) of event code
 	164  Unique line(s) of event code
-popupInSel
-	34   Component(s)
-	528  Line(s) of event code
-	256  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	172  Line(s) of event code
@@ -66,6 +62,10 @@ popupThermo
 	44   Component(s)
 	515  Line(s) of event code
 	272  Unique line(s) of event code
+popupInSel
+	34   Component(s)
+	529  Line(s) of event code
+	257  Unique line(s) of event code
 cardThermo
 	53   Component(s)
 	608  Line(s) of event code
@@ -74,5 +74,5 @@ cardThermo
 Total
 	17   Page(s)
 	577  Component(s)
-	7044 Line(s) of event code
+	7045 Line(s) of event code
 	1816 Unique line(s) of event code

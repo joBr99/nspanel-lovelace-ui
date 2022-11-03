@@ -365,6 +365,23 @@ Button bColor
                 }
             }
         
+Button bEffect
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î¸¯
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity.txt
+            pageIcons.tTmp2.txt=entn.txt
+            pageIcons.tTmp3.txt=tIcon1.txt
+            page popupInSel
+        
 Dual-state Button btOnOff1
     Attributes
         Scope                               : local
@@ -557,6 +574,15 @@ Timer tmSerial
                                         spstr strCommand.txt,t4.txt,"~",9
                                         // set t1 Brightness (Localization)
                                         spstr strCommand.txt,t1.txt,"~",10
+                                        // activate effect button
+                                        spstr strCommand.txt,tTmp.txt,"~",11
+                                        if(tTmp.txt=="enable")
+                                        {
+                                            vis bEffect,1
+                                        }else
+                                        {
+                                            vis bEffect,0
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
