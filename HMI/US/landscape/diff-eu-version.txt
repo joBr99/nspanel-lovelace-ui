@@ -13,31 +13,7 @@
 │ -    lcd_dev fffb 0002 0000 0020
 │ -    page pageStartup
 ├── arm1.txt
-│ @@ -478,22 +478,15 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,cardAlarm,"
-│ -            if(bPrev.txt=="î")
-│ -            {
-│ -                tSend.txt+="bHome"
-│ -            }else
-│ -            {
-│ -                tSend.txt+="bNext"
-│ -            }
-│ +            tSend.txt="event,buttonPress2,cardAlarm,bNext"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -671,19 +664,14 @@
+│ @@ -671,19 +671,14 @@
 │                                          }
 │                                          if(tTmp.txt=="1")
 │                                          {
@@ -58,31 +34,7 @@
 │                                          }
 │                                          //id arm1
 ├── bDown1.txt
-│ @@ -529,22 +529,15 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,cardEntities,"
-│ -            if(bPrev.txt=="î")
-│ -            {
-│ -                tSend.txt+="bHome"
-│ -            }else
-│ -            {
-│ -                tSend.txt+="bNext"
-│ -            }
-│ +            tSend.txt="event,buttonPress2,cardEntities,bNext"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -1253,19 +1246,14 @@
+│ @@ -1253,19 +1253,14 @@
 │                                          }
 │                                          if(tTmp.txt=="1")
 │                                          {
@@ -103,31 +55,7 @@
 │                                          {
 │                                              vis bUp1,0
 ├── bDown2.txt
-│ @@ -290,22 +290,15 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,cardThermo,"
-│ -            if(bPrev.txt=="î")
-│ -            {
-│ -                tSend.txt+="bHome"
-│ -            }else
-│ -            {
-│ -                tSend.txt+="bNext"
-│ -            }
-│ +            tSend.txt="event,buttonPress2,cardThermo,bNext"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -925,19 +918,14 @@
+│ @@ -925,19 +925,14 @@
 │                                          }
 │                                          if(tTmp.txt=="1")
 │                                          {
@@ -148,31 +76,7 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",5
 │                                          covx tTmp.txt,xTempDest1.val,0,0
 ├── bEntity1.txt
-│ @@ -467,22 +467,15 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,cardGrid,"
-│ -            if(bPrev.txt=="î")
-│ -            {
-│ -                tSend.txt+="bHome"
-│ -            }else
-│ -            {
-│ -                tSend.txt+="bNext"
-│ -            }
-│ +            tSend.txt="event,buttonPress2,cardGrid,bNext"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -680,19 +673,14 @@
+│ @@ -680,19 +680,14 @@
 │                                          }
 │                                          if(tTmp.txt=="1")
 │                                          {
@@ -203,7 +107,7 @@
 │          Send Component ID                   : disabled
 │          Locked                              : no
 │          Swide up page ID                    : disabled
-│ @@ -14,451 +14,343 @@
+│ @@ -14,444 +14,343 @@
 │          Preinitialize Event
 │              dim=dimValueNormal
 │              vis p0,0
@@ -794,22 +698,15 @@
 │      Events
 │          Touch Press Event
 │ -            tSend.txt="event,buttonPress2,cardMedia,"
-│ -            if(bPrev.txt=="î")
-│ -            {
-│ -                tSend.txt+="bHome"
-│ -            }else
-│ -            {
-│ -                tSend.txt+="bNext"
-│ -            }
-│ +            tSend.txt="event,buttonPress2,cardAlarm,bNext"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -475,15 +367,15 @@
+│ +            tSend.txt="event,buttonPress2,cardPower,"
+│              if(bPrev.txt=="î")
+│              {
+│                  tSend.txt+="bHome"
+│              }else
+│              {
+│                  tSend.txt+="bNext"
+│              }
+│ @@ -475,15 +374,15 @@
 │          Send Component ID                   : disabled
 │          State                               : unpressed
 │          Text                                : î°
@@ -826,7 +723,7 @@
 │              {
 │                  tSend.txt+="bPrev"
 │              }
-│ @@ -528,23 +420,82 @@
+│ @@ -528,23 +427,82 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │      
@@ -912,7 +809,7 @@
 │          Period (ms): 50
 │          Enabled    : yes
 │      
-│ @@ -591,15 +542,15 @@
+│ @@ -591,15 +549,15 @@
 │                                      // here is the location where acual code should be
 │                                      // write command to variable strCommand
 │                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -929,7 +826,7 @@
 │                                          if(tTmp.txt=="0")
 │                                          {
 │                                              vis bPrev,0
-│ @@ -628,100 +579,148 @@
+│ @@ -628,100 +586,148 @@
 │                                          }
 │                                          if(tTmp.txt=="1")
 │                                          {
@@ -1154,7 +1051,7 @@
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
 │                                          //save second arg if there's one
-│ @@ -779,33 +778,62 @@
+│ @@ -779,33 +785,62 @@
 │                                              page cardQR
 │                                          }
 │                                          if(tId.txt=="cardPower")
@@ -1226,7 +1123,7 @@
 │          Scope      : local
 │          Period (ms): 1000
 │          Enabled    : yes
-│ @@ -815,15 +843,15 @@
+│ @@ -815,15 +850,15 @@
 │              if(sleepTimeout!=0&&dimValue!=dim)
 │              {
 │                  sleepValue+=1
