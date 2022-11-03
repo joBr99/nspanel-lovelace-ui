@@ -31,6 +31,7 @@ Page popupLight
             vis tTmp,0
             vis tInstruction,0
             vis tId,0
+            vis bEffect,0
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
@@ -672,6 +673,45 @@ Button bColor
                 }
             }
         
+Button bEffect
+    Attributes
+        ID                                  : 27
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 415
+        y coordinate                        : 79
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 65535
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity.txt
+            pageIcons.tTmp2.txt=entn.txt
+            pageIcons.tTmp3.txt=tIcon1.txt
+            page popupInSel
+        
 Dual-state Button btOnOff1
     Attributes
         ID                                  : 8
@@ -680,7 +720,7 @@ Dual-state Button btOnOff1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 385
+        x coordinate                        : 356
         y coordinate                        : 79
         Width                               : 50
         Height                              : 50
@@ -884,6 +924,15 @@ Timer tmSerial
                                         spstr strCommand.txt,t4.txt,"~",9
                                         // set t1 Brightness (Localization)
                                         spstr strCommand.txt,t1.txt,"~",10
+                                        // activate effect button
+                                        spstr strCommand.txt,tTmp.txt,"~",11
+                                        if(tTmp.txt=="enable")
+                                        {
+                                            vis bEffect,1
+                                        }else
+                                        {
+                                            vis bEffect,0
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
