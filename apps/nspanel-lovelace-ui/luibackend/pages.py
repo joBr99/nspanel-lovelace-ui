@@ -326,6 +326,9 @@ class LuiPagesGen(object):
         elif entityType == "script":
             entityTypePanel = "button"
             value = get_translation(self._locale, "frontend.ui.card.script.run")
+            override = item.entity_input_config.get("action_name")
+            if override is not None:
+                value = override
         elif entityType == "lock":
             entityTypePanel = "button"
             value = get_translation(self._locale, "frontend.ui.card.lock.lock") if entity.state == "unlocked" else get_translation(self._locale, "frontend.ui.card.lock.unlock")

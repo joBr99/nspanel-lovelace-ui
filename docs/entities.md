@@ -16,6 +16,7 @@ key | optional | type | default | description
 `state_not` | True | string | `None` | Only displayed if Entity state is unequal to this value
 `status` | True | string | `None` | Only valid for navigate and service items, adds a entity to track state for the icon
 `assumed_state` | True | string | `None` | Only for cover items, up, down and stop buttons are always shown
+`action_name` | True | string | `None` | Only valid for script; Button label
 
 ## Override Icons or Names
 
