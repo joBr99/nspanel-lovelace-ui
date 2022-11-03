@@ -47,113 +47,24 @@
 │              vis bModeNext,0
 │              //page open event
 │              // event,pageOpenDetail,typeOfPage,tEntityName
-│ @@ -69,15 +70,15 @@
-│          Scope: local
-│          Value: 0
-│      
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│ -        Max. Text Size: 960
-│ +        Max. Text Size: 500
-│      
-│  Variable (string) tId
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 20
-│      
-│ @@ -105,15 +106,15 @@
-│          Text          : 
-│          Max. Text Size: 40
-│      
-│  Variable (string) vaModeList
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│ -        Max. Text Size: 900
-│ +        Max. Text Size: 400
-│      
-│  Variable (int32) vaModePos
-│      Attributes
-│          Scope: local
-│          Value: 0
-│      
-│  Variable (string) vaType
 ├── popupLight.txt
-│ @@ -19,15 +19,14 @@
-│              entn.txt=pageIcons.tTmp2.txt
-│              tIcon1.txt=pageIcons.tTmp3.txt
-│              vis p0,0
-│              vis tSend,0
-│              vis tTmp,0
-│              vis tInstruction,0
-│              vis tId,0
-│ -            vis bEffect,0
-│              //page open event
-│              // event,pageOpenDetail,typeOfPage,tEntityName
-│              // craft command
-│              tSend.txt="event,pageOpenDetail,popupLight,"+entn.txt
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│ @@ -362,31 +361,14 @@
-│                      //enable color temp
-│                      vis t4,1
-│                      vis t3,1
-│                      vis hTempSlider,1
-│                  }
-│              }
-│          
-│ -Button bEffect
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        State                               : unpressed
-│ -        Text                                : î¸¯
-│ -        Max. Text Size                      : 10
-│ -    
-│ -    Events
-│ -        Touch Press Event
-│ -            pageIcons.tTmp1.txt=tEntity.txt
-│ -            pageIcons.tTmp2.txt=entn.txt
-│ -            pageIcons.tTmp3.txt=tIcon1.txt
-│ -            page popupInSel
-│ -        
-│  Dual-state Button btOnOff1
+│ @@ -369,15 +369,15 @@
+│  Button bEffect
 │      Attributes
 │          Scope                               : local
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          State                               : unpressed
-│ @@ -571,23 +553,14 @@
-│                                          }
-│                                          // set t0 Color (Localization)
-│                                          spstr strCommand.txt,t0.txt,"~",8
-│                                          // set t4 Temperature (Localization)
-│                                          spstr strCommand.txt,t4.txt,"~",9
-│                                          // set t1 Brightness (Localization)
-│                                          spstr strCommand.txt,t1.txt,"~",10
-│ -                                        // activate effect button
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",11
-│ -                                        if(tTmp.txt=="enable")
-│ -                                        {
-│ -                                            vis bEffect,1
-│ -                                        }else
-│ -                                        {
-│ -                                            vis bEffect,0
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="time")
-│                                      {
-│                                          // get set time to global variable
-│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-│                                      }
-│                                      if(tInstruction.txt=="date")
+│ -        Text                                : î¸¯
+│ +        Text                                : î
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              pageIcons.tTmp1.txt=tEntity.txt
+│              pageIcons.tTmp2.txt=entn.txt
+│              pageIcons.tTmp3.txt=tIcon1.txt
 ├── screensaver.txt
 │ @@ -351,15 +351,15 @@
 │  Text tTime
