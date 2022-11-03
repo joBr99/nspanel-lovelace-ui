@@ -590,6 +590,11 @@ Timer tmSerial
                                             tsw mSwipeNext,1
                                             bNext.txt="î³"
                                         }
+                                        if(tTmp.txt=="2")
+                                        {
+                                            vis bNext,1
+                                            bNext.txt="î"
+                                        }
                                         // icon color home
                                         spstr strCommand.txt,tTmp.txt,"~",3
                                         covx tTmp.txt,t1.pco,0,0

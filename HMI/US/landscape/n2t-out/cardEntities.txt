@@ -1257,6 +1257,11 @@ Timer tmSerial
                                             tsw mSwipeNext,1
                                             bNext.txt="î³"
                                         }
+                                        if(tTmp.txt=="2")
+                                        {
+                                            vis bNext,1
+                                            bNext.txt="î"
+                                        }
                                         // get Type
                                         spstr strCommand.txt,type1.txt,"~",3
                                         // get internal name
