@@ -86,7 +86,7 @@ Variable (string) strCommand
         ID            : 8
         Scope         : local
         Text          : 
-        Max. Text Size: 500
+        Max. Text Size: 960
     
 Variable (string) tId
     Attributes
@@ -128,7 +128,7 @@ Variable (string) vaModeList
         ID            : 18
         Scope         : local
         Text          : 
-        Max. Text Size: 400
+        Max. Text Size: 900
     
 Variable (int32) vaModePos
     Attributes
