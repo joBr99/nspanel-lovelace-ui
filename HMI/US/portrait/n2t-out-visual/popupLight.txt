@@ -155,7 +155,7 @@ Text t1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 10
-        y coordinate                        : 341
+        y coordinate                        : 374
         Width                               : 240
         Height                              : 30
         Effect                              : load
@@ -185,7 +185,7 @@ Text t2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 10
-        y coordinate                        : 382
+        y coordinate                        : 415
         Width                               : 45
         Height                              : 30
         Effect                              : load
@@ -215,7 +215,7 @@ Text t3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 10
-        y coordinate                        : 274
+        y coordinate                        : 307
         Width                               : 45
         Height                              : 30
         Effect                              : load
@@ -245,7 +245,7 @@ Text t4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 9
-        y coordinate                        : 234
+        y coordinate                        : 267
         Width                               : 242
         Height                              : 30
         Effect                              : load
@@ -335,7 +335,7 @@ Text tId
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 100
-        y coordinate                        : 416
+        y coordinate                        : 417
         Width                               : 100
         Height                              : 30
         Effect                              : load
@@ -365,7 +365,7 @@ Text tInstruction
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 416
+        y coordinate                        : 417
         Width                               : 100
         Height                              : 30
         Effect                              : load
@@ -395,7 +395,7 @@ Text tTmp
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 282
-        y coordinate                        : 412
+        y coordinate                        : 413
         Width                               : 34
         Height                              : 30
         Effect                              : load
@@ -425,7 +425,7 @@ Picture p0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 0
+        y coordinate                        : 1
         Width                               : 319
         Height                              : 479
         Effect                              : load
@@ -487,7 +487,7 @@ Slider hBrightness
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 61
-        y coordinate                        : 376
+        y coordinate                        : 409
         Width                               : 250
         Height                              : 44
         Effect                              : load
@@ -532,7 +532,7 @@ Slider hTempSlider
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 61
-        y coordinate                        : 271
+        y coordinate                        : 304
         Width                               : 250
         Height                              : 44
         Effect                              : load
@@ -671,6 +671,45 @@ Button bColor
                     vis hTempSlider,1
                 }
             }
+        
+Button bEffect
+    Attributes
+        ID                                  : 27
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 12
+        y coordinate                        : 195
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 65535
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : î¸¯
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity.txt
+            pageIcons.tTmp2.txt=entn.txt
+            pageIcons.tTmp3.txt=tIcon1.txt
+            page popupInSel
         
 Dual-state Button btOnOff1
     Attributes
@@ -884,6 +923,15 @@ Timer tmSerial
                                         spstr strCommand.txt,t4.txt,"~",9
                                         // set t1 Brightness (Localization)
                                         spstr strCommand.txt,t1.txt,"~",10
+                                        // activate effect button
+                                        spstr strCommand.txt,tTmp.txt,"~",11
+                                        if(tTmp.txt=="enable")
+                                        {
+                                            vis bEffect,1
+                                        }else
+                                        {
+                                            vis bEffect,0
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
