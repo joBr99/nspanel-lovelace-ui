@@ -646,20 +646,3 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-├── popupLight.txt
-│ @@ -19,15 +19,14 @@
-│              entn.txt=pageIcons.tTmp2.txt
-│              tIcon1.txt=pageIcons.tTmp3.txt
-│              vis p0,0
-│              vis tSend,0
-│              vis tTmp,0
-│              vis tInstruction,0
-│              vis tId,0
-│ -            vis bEffect,0
-│              //page open event
-│              // event,pageOpenDetail,typeOfPage,tEntityName
-│              // craft command
-│              tSend.txt="event,pageOpenDetail,popupLight,"+entn.txt
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
