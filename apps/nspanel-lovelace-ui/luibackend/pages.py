@@ -814,7 +814,7 @@ class LuiPagesGen(object):
         if ha_type == "input_select":
             options = entity.attributes.get("options", [])
         if ha_type == "light":
-            options = entity.attributes.get("effect_list", [])
+            options = entity.attributes.get("effect_list", [])[:15]
         options = "?".join(options)
         self._send_mqtt_msg(f"entityUpdateDetail2~{entity_id}~~{icon_color}~{ha_type}~{entity.state}~{options}~")
         
