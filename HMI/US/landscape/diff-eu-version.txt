@@ -30,24 +30,6 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-├── popupLight.txt
-│ @@ -369,15 +369,15 @@
-│  Button bEffect
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│ -        Text                                : î¸¯
-│ +        Text                                : î
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│              pageIcons.tTmp1.txt=tEntity.txt
-│              pageIcons.tTmp2.txt=entn.txt
-│              pageIcons.tTmp3.txt=tIcon1.txt
 ├── screensaver.txt
 │ @@ -351,15 +351,15 @@
 │  Text tTime
