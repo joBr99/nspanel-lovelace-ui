@@ -22,10 +22,6 @@ cardPower
 	43   Component(s)
 	435  Line(s) of event code
 	297  Unique line(s) of event code
-popupLight
-	28   Component(s)
-	404  Line(s) of event code
-	223  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	394  Line(s) of event code
@@ -42,6 +38,10 @@ cardQR
 	32   Component(s)
 	421  Line(s) of event code
 	242  Unique line(s) of event code
+popupLight
+	28   Component(s)
+	404  Line(s) of event code
+	223  Unique line(s) of event code
 cardThermo
 	53   Component(s)
 	608  Line(s) of event code
