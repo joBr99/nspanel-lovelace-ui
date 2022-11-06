@@ -101,6 +101,8 @@ The following message can be used to update the content on the cardEntities Page
 
 `~number~input_number.entityName~4~17299~Number123~value|min|max`
 
+`~input_sel~input_select.entityName~3~17299~sel-name~sel-text`
+
 ### popupLight Page
 
 `entityUpdateDetail~entityName~*ignored*~*iconColor*~*buttonState*~*sliderBrightnessPos*~*sliderColorTempPos*~*colorMode*~*color_translation*~*color_temp_translation*~*brightness_translation*`
