@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.5.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+TypeScript v3.5.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 43 / v3.5.0 / BerryDriver 4 / Tasmota 12.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -7,10 +7,12 @@ icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroke
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
+
 *******************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
 *******************************************************************************
+
 ReleaseNotes:
     Bugfixes und Erweiterungen:
         - cardQR (für Gäste WLAN)
@@ -63,6 +65,14 @@ ReleaseNotes:
         - 27.10.2022 - v3.5.0.2 Applied Boy Scout Rule (Fixed some typos, changed var to let, fixed min/max colorTemp Bug)
         - 30.10.2022 - v3.5.0.3 Fixed Media Play/Pause icon for alexa (and others) devices
         - 31.10.2022 - v3.5.0.4 Reengineering Media Subscriptions
+        - 02.11.2022 - v3.5.0.5 Page navigation continues with page 0 from the last page
+        - 04.11.2022 - v3.5.0.5 Create Auto-Alias for Service Pages
+        - 07.11.2022 - v3.5.0.5 Create Auto-Alias for Alexa2, Spotify-Premium, Sonos
+        - 08.11.2022 - v3.5.0.5 Create Auto-Alias for Wheather-Forcast (Screensaver Big-Icon)
+        
+*****************************************************************************************************************
+* Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
+*****************************************************************************************************************
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 
@@ -138,9 +148,12 @@ Upgrades in Konsole:
 let Icons = new IconsSelector();
 let timeoutSlider: any;
 let manually_Update = false;
+const autoCreateAlias = true;  //Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.  
 
 const NSPanel_Path = '0_userdata.0.NSPanel.1.';
 const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.'; //Neuer Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm)
+
+let AliasPath: string = 'alias.0.' + NSPanel_Path.substring(13, NSPanel_Path.length);
 const Debug = false;
 
 // Variablen zur Steuerung der Wettericons auf dem Screensaver (Steuerung in 0_userdata.0.XPANELX.ScreensaverInfo)
@@ -224,7 +237,8 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
 let vwIconColor = [];
 
-//-- Anfang der Beispiele für Seitengestaltung -- Aliase erforderlich ----------------
+
+//-- Anfang der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich ----------------
 
 let Test_Licht1: PageEntities =
 {
@@ -358,7 +372,7 @@ let Subpages_1: PageEntities =
         };
 
         //Subpage 2 von Subpages_1
-        let WLAN: PageQR =
+        let WLAN: PageQR = 
         {
             "type": "cardQR",
             "heading": "Gäste WLAN",
@@ -398,65 +412,68 @@ let Radiosender: PageGrid =
 // NEW: Neue Definition von Medien-Aliasen
 // adapterPlayerInstance = alexa2.0. or spotify-premium.0. or sonos.0. or chromecast.0.
 // MEDIA ALIASE können auch per JS-Script erstellt werden https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-ALIAS-Definitionen#medien---cardmedia
-let Alexa: PageMedia =
+let Alexa: PageMedia = 
 {
-    "type": "cardMedia",
-    "heading": "Alexa",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{
-                id: "alias.0.NSPanel_1.Media.PlayerAlexa2",
-                adapterPlayerInstance: "alexa2.0.",
-                mediaDevice: "G0XXXXXXXXXXXXXX",
-                speakerList: ['Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
+    'type': 'cardMedia',
+    'heading': 'Alexa',
+    'useColor': true,
+    'subPage': false,
+    'parent': undefined,
+    'items': [<PageItem>{   
+                id: AliasPath + 'Media.PlayerAlexa', 
+                adapterPlayerInstance: 'alexa2.0.',
+                mediaDevice: 'G0XXXXXXXXXXXXXX',                                                                    //Hier eigenes Device (Alexa-Seriennummer) auswählen
+                speakerList: ['Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero'],    //anpassen an eigene Alexa's
+                autoCreateALias : true
              }]
 };
 
-let Sonos: PageMedia =
+let Sonos: PageMedia = 
 {
-    "type": "cardMedia",
-    "heading": "Sonos",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [<PageItem>{
-                id: "alias.0.NSPanel_1.Media.PlayerSonos",
+    'type': 'cardMedia',
+    'heading': 'Sonos',
+    'useColor': true,
+    'subPage': false,
+    'parent': undefined,
+    'items': [<PageItem>{   
+                id: AliasPath + 'Media.PlayerSonos', 
                 adapterPlayerInstance: "sonos.0.",
-                mediaDevice: "192_168_1_212",
-                speakerList: ['Terrasse']
+                mediaDevice: "192_168_1_212",           //IP der eigenen Sonos anpassen
+                speakerList: ['Terrasse'],
+                autoCreateALias : true
              }]
 };
 
-let SpotifyPremium: PageMedia =
+let SpotifyPremium: PageMedia = 
 {
     "type": "cardMedia",
     "heading": "Spotify-Premium",
     "useColor": true,
     "subPage": false,
     "parent": undefined,
-    "items": [<PageItem>{
-                id: "alias.0.NSPanel_1.Media.PlayerSpotifyPremium",
+    "items": [<PageItem>{ 
+                id: AliasPath + 'Media.PlayerSpotifyPremium', 
                 adapterPlayerInstance: "spotify-premium.0.",
-                speakerList: ['LENOVO-W11-01','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero']
-             }]
+                speakerList: ['LENOVO-W11-01','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero'], //anpassen
+                autoCreateALias : true
+             }] 
 };
 
-let SqueezeboxRPC: PageMedia =
+let SqueezeboxRPC: PageMedia = 
 {
     "type": "cardMedia",
     "heading": "SqueezeboxRPC",
     "useColor": true,
     "subPage": false,
     "parent": undefined,
-    "items": [<PageItem>{
-                id: "alias.0.Media.LMS.SqueezePlay",
-                adapterPlayerInstance: "squeezeboxrpc.0.Players.SqueezePlay.",
+    "items": [<PageItem>{ 
+                id: "alias.0.Media.LMS.SqueezePlay", 
+                adapterPlayerInstance: "squeezeboxrpc.0.Players.SqueezePlay.", //Player anpassen
                 speakerList: ['SqueezePlay']
-             }]
+             }] 
 };
 
-let Buero_Themostat: PageThermo =
+let Buero_Themostat: PageThermo = 
 {
     "type": "cardThermo",
     "heading": "Test Thermostat",
@@ -466,7 +483,7 @@ let Buero_Themostat: PageThermo =
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.Thermostat_Buero", minValue: 50, maxValue: 300 }]
 };
 
-let Buero_Klimaanlage: PageThermo =
+let Buero_Klimaanlage: PageThermo = 
 {
     "type": "cardThermo",
     "heading": "Test Klimaanlage",
@@ -476,7 +493,7 @@ let Buero_Klimaanlage: PageThermo =
     "items": [<PageItem>{ id: "alias.0.NSPanel_1.TestKlimaanlage", minValue: 50, maxValue: 250}]
 };
 
-let Buero_Alarm: PageAlarm =
+let Buero_Alarm: PageAlarm = 
 {
     "type": "cardAlarm",
     "heading": "Alarm",
@@ -486,19 +503,55 @@ let Buero_Alarm: PageAlarm =
     "items": [<PageItem>{ id: "alias.0.Alarm" }]
 };
 
-//Subpages 2 (+ Info)
+let button1Page: PageGrid =
+{
+    'type': 'cardGrid',
+    'heading': 'Radio',
+    'useColor': true,
+    'subPage': false,
+    'parent': undefined,
+    'items': [
+        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.FFN', icon: 'radio', name: 'FFN', onColor: colorRadio},
+        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Antenne' , icon: 'radio', name: 'Antenne Nds.', onColor: colorRadio},
+        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.NDR2', icon: 'radio', name: 'NDR2', onColor: colorRadio},
+        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Bob', icon: 'radio', name: 'Radio BOB', onColor: colorRadio},
+        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Spotify', icon: 'spotify', name: 'Party Playlist', onColor: colorSpotify},
+        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Alexa', icon: 'playlist-music', name: 'Playlist 2021', onColor: colorAlexa}
+    ]
+};
+
+let button2Page: PageEntities =
+{
+    'type': 'cardEntities',
+    'heading': 'Büro',
+    'useColor': true,
+    'subPage': false,
+    'parent': undefined,
+    'items': [
+        <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe'},
+        <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung'}
+    ]
+};
+
+//-- ENDE der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich ------------------
+
+
+/********************************************************************************************************** */
+//Service Pages mit Auto-Alias (Nachfolgende Seiten werden mit Alias automatisch angelegt)
+/********************************************************************************************************** */
+
 let Service: PageEntities =
 {
     "type": "cardEntities",
     "heading": "NSPanel Service",
     "useColor": true,
     "subPage": false,
-    "parent": undefined,
+    "parent": undefined, 
     "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_AutoUpdate", name: "Auto-Updates" ,icon: "update", offColor: MSRed, onColor: MSGreen},
+        <PageItem>{ id: AliasPath + 'autoUpdate', name: "Auto-Updates" ,icon: "update", offColor: MSRed, onColor: MSGreen},
         <PageItem>{ navigate: true, id: "NSPanel_Infos", icon: "information-outline", onColor: White, name: "NSPanel Infos"},
-        <PageItem>{ navigate: true, id: "NSPanel_Firmware_Updates", icon: "update", onColor: White, name: "Manuelle-Updates"},
-        <PageItem>{ navigate: true, id: "NSPanel_Einstellungen", icon: "wrench-outline", onColor: White, name: "Einstellungen"}
+        <PageItem>{ navigate: true, id: "NSPanel_Firmware_Info", icon: "update", onColor: White, name: "Firmware Infos"},
+        <PageItem>{ navigate: true, id: "NSPanel_Einstellungen", icon: "wrench-outline", onColor: White, name: "Screensaver"}
     ]
 };
 
@@ -511,89 +564,44 @@ let Service: PageEntities =
             "subPage": true,
             "parent": Service,
             "items": [
-                <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_Hardware", name: "Hardware", icon: "memory", offColor: MSYellow, onColor: MSYellow, useColor: true},
-                <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_ESP_Temp", name: "ESP Temperatur", icon: "thermometer", unit: "°C", offColor: MSYellow, onColor: MSYellow, useColor: true},
-                <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_UpTime", name: "Uptime", icon: "timeline-clock-outline", offColor: MSYellow, onColor: MSYellow, useColor: true},
-                <PageItem>{ id: "alias.0.NSPanel_1.NSPanel_RSSI", name: "Wifi-Signal", icon: "signal-distance-variant", unit: "dBm", offColor: MSYellow, onColor: MSYellow, useColor: true}
+                <PageItem>{ id: AliasPath + 'Tasmota.Hardware', name: 'Hardware', icon: 'memory', offColor: MSYellow, onColor: MSYellow, useColor: true},
+                <PageItem>{ id: AliasPath + 'Sensor.ESP32.Temperature', name: "ESP Temperatur", icon: "thermometer", unit: "°C", offColor: MSYellow, onColor: MSYellow, useColor: true},
+                <PageItem>{ id: AliasPath + 'Tasmota.Uptime', name: "Uptime", icon: "timeline-clock-outline", offColor: MSYellow, onColor: MSYellow, useColor: true},
+                <PageItem>{ id: AliasPath + 'Tasmota.Wifi.RSSI', name: "Wifi-Signal", icon: "signal-distance-variant", unit: "dBm", offColor: MSYellow, onColor: MSYellow, useColor: true}
             ]
         };
 
         //Subpage 2 von Subpages_2
         let NSPanel_Einstellungen: PageEntities =
         {
-            "type": "cardEntities",
-            "heading": "Screensaver",
-            "useColor": true,
-            "subPage": true,
-            "parent": Service,
-            "items": [
-                <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_BrightnessDay", name: "Brightness Tag", icon: "brightness-5", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 5, maxValue: 10},
-                <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_BrightnessNight", name: "Brightness Nacht", icon: "brightness-4", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 4},
-                <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_HourDay", name: "Stunde Tag", icon: "sun-clock", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23},
-                <PageItem>{ id: "alias.0.NSPanel_1.Dimmode_HourNight", name: "Stunde Nacht", icon: "sun-clock-outline", offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23}
+            'type': 'cardEntities',
+            'heading': 'Screensaver',
+            'useColor': true,
+            'subPage': true,
+            'parent': Service,
+            'items': [
+                <PageItem>{ id: AliasPath + 'Dimmode.brightnessDay', name: 'Brightness Tag', icon: 'brightness-5', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 5, maxValue: 10},
+                <PageItem>{ id: AliasPath + 'Dimmode.brightnessNight', name: 'Brightness Nacht', icon: 'brightness-4', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 4},
+                <PageItem>{ id: AliasPath + 'Dimmode.hourDay', name: 'Stunde Tag', icon: 'sun-clock', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23},
+                <PageItem>{ id: AliasPath + 'Dimmode.hourNight', name: 'Stunde Nacht', icon: 'sun-clock-outline', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 23}
             ]
         };
 
         //Subpage 3 von Subpages_2
-        let NSPanel_Firmware_Updates: PageEntities =
+        let NSPanel_Firmware_Info: PageEntities =
         {
-            "type": "cardEntities",
-            "heading": "Firmware-Updates",
-            "useColor": true,
-            "subPage": true,
-            "parent": Service,
-            "items": [
-                <PageItem>{ id: "alias.0.NSPanel_1.Tasmota_Version", name: "Tasmota Firmware", useColor: true},
-                <PageItem>{ id: "alias.0.NSPanel_1.TFT_Firmware", name: "TFT-Firmware", useColor: true},
-                <PageItem>{ navigate: true, id: "Subpage_Level2", icon: "wrench-outline", onColor: White, name: "Subpage Level 2"}
+            'type': 'cardEntities',
+            'heading': 'Firmware-Updates',
+            'useColor': true,
+            'subPage': true,
+            'parent': Service,
+            'items': [
+                <PageItem>{ id: AliasPath + 'Tasmota.Version', name: 'Tasmota Firmware', offColor: MSYellow, onColor: MSYellow, useColor: true},
+                <PageItem>{ id: AliasPath + 'Display.TFTVersion', name: 'TFT-Firmware', offColor: MSYellow, onColor: MSYellow, useColor: true},
+                <PageItem>{ id: AliasPath + 'Display.BerryDriver', name: 'Berry-Treiber', offColor: MSYellow, onColor: MSYellow, useColor: true},
+                <PageItem>{ id: AliasPath + 'Display.Model', name: 'NSPanel Version', offColor: MSYellow, onColor: MSYellow, useColor: true}
             ]
         };
-
-                //Subpage1 von Subpage3 von Subpages_2
-                let Subpage2_Level_2: PageEntities =
-                {
-                    "type": "cardEntities",
-                    "heading": "Firmware-Updates",
-                    "useColor": true,
-                    "subPage": true,
-                    "parent": NSPanel_Firmware_Updates,
-                    "items": [
-                        <PageItem>{ id: "alias.0.NSPanel_1.Tasmota_Version", name: "Tasmota Firmware", useColor: true},
-                        <PageItem>{ id: "alias.0.NSPanel_1.TFT_Firmware", name: "TFT-Firmware", useColor: true},
-                    ]
-                };
-
-let button1Page: PageGrid =
-{
-    "type": "cardGrid",
-    "heading": "Radio",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.FFN", icon: "radio", name: "FFN", onColor: colorRadio},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Antenne" , icon: "radio", name: "Antenne Nds.", onColor: colorRadio},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.NDR2", icon: "radio", name: "NDR2", onColor: colorRadio},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "radio", name: "Radio BOB", onColor: colorRadio},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Spotify", icon: "spotify", name: "Party Playlist", onColor: colorSpotify},
-        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Alexa", icon: "playlist-music", name: "Playlist 2021", onColor: colorAlexa}
-    ]
-};
-
-let button2Page: PageEntities =
-{
-    "type": "cardEntities",
-    "heading": "Büro",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.Schreibtischlampe"},
-        <PageItem>{ id: "alias.0.NSPanel_1.Deckenbeleuchtung"}
-    ]
-};
-
-//-- ENDE der Beispiele für Seitengestaltung -- Aliase erforderlich ------------------
 
 export const config: Config = {
     panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // anpassen
@@ -604,48 +612,50 @@ export const config: Config = {
     fourthScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
     alternativeScreensaverLayout: false,
     autoWeatherColorScreensaverLayout: true,
-    mrIcon1ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER1', ScreensaverEntityIcon: 'light-switch', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: Off  },
-    mrIcon2ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER2', ScreensaverEntityIcon: 'lightbulb', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: Off  },
+    mrIcon1ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER1', ScreensaverEntityIcon: 'light-switch', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: HMIOff  },
+    mrIcon2ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER2', ScreensaverEntityIcon: 'lightbulb', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: HMIOff  },
     timeoutScreensaver: 20,
     dimmode: 20,
     active: 100, //Standard-Brightness TFT
     screenSaverDoubleClick: true,
-    locale: 'de-DE',                    // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
-    timeFormat: '%H:%M',                // currently not used
-    dateFormat: '%A, %d. %B %Y',        // currently not used
-    weatherEntity: 'alias.0.Wetter',    // Dieser Alias muss erstellt werden, damit die 4 kleineren Icons (Wetter oder DP) angezeigt werden können
+    locale: 'de-DE',                                // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
+    timeFormat: '%H:%M',                            // currently not used 
+    dateFormat: '%A, %d. %B %Y',                    // currently not used 
+    weatherEntity: 'alias.0.Wetter',                // Dieser Alias muss erstellt werden, damit die 4 kleineren Icons (Wetter oder DP) angezeigt werden können --> oder autoCreateAlias auf true
     defaultOffColor: Off,
     defaultOnColor: On,
     defaultColor: Off,
     defaultBackgroundColor: Black,    //New Parameter
     temperatureUnit: '°C',
     pages: [
-            SqueezeboxRPC,      //Beispiel-Seite
+            //SqueezeboxRPC,    //Beispiel-Seite
             Buero_Seite_1,      //Beispiel-Seite
             CardPowerExample,   //Beispiel-Seite
+            Sonos,              //Beispiel-Seite
             SpotifyPremium,     //Beispiel-Seite
             Alexa,              //Beispiel-Seite
             Buero_Seite_2,      //Beispiel-Seite
-            Buero_Klimaanlage,  //Beispiel-Seite
+            Buero_Klimaanlage,  //Beispiel-Seite 
             Button_1,           //Beispiel-Seite
             Test_Licht1,        //Beispiel-Seite
             Test_Licht2,        //Beispiel-Seite
-            Test_Funktionen,    //Beispiel-Seite
+            Test_Funktionen,    //Beispiel-Seite    
             Fenster_1,          //Beispiel-Seite
             Subpages_1,         //Beispiel-Seite
             Buero_Themostat,    //Beispiel-Seite
             Buero_Alarm,        //Beispiel-Seite
-            Service             //Beispiel-Seite
+
+            Service             //Auto-Alias Service Page
     ],
     subPages: [
                 Abfall,                     //Beispiel-Unterseite
                 WLAN,                       //Beispiel-Unterseite
-                NSPanel_Infos,              //Beispiel-Unterseite
-                NSPanel_Einstellungen,      //Beispiel-Unterseite
-                NSPanel_Firmware_Updates,   //Beispiel-Unterseite
-                Subpage2_Level_2
+                
+                NSPanel_Infos,              //Auto-Alias Service Page
+                NSPanel_Einstellungen,      //Auto-Alias Service Page
+                NSPanel_Firmware_Info       //Auto-Alias Service Page
     ],
-    button1Page: button1Page,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
+    button1Page: button1Page,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
     button2Page: button2Page    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
 };
 
@@ -655,6 +665,27 @@ const request = require('request');
 
 let useMediaEvents: boolean = false;
 let timeoutMedia: any;
+
+// Create atomatically Wheather-Alias, if exists accuweather.0. and is not exists Config-Wheather-Alias
+async function CreateWeatherAlias () {
+    if (autoCreateAlias) {
+        try {
+            if (!existsState(config.weatherEntity + '.ICON') && existsState('accuweather.0.Current.WeatherIcon')) {
+                console.log('Wetter-Alias existiert noch nicht, wird jetzt angelegt'); 
+                setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
+                await createAliasAsync(config.weatherEntity + '.ICON', 'accuweather.0.Current.WeatherIcon', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
+                await createAliasAsync(config.weatherEntity + '.TEMP', 'accuweather.0.Current.Temperature', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
+                await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'accuweather.0.Daily.Day1.Temperature.Minimum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
+                await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'accuweather.0.Daily.Day1.Temperature.Maximum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
+            } else {
+                console.log('Wetter-Alias existiert bereits');
+            }
+        } catch (err) {
+            console.log('function InitPageNavi: ' + err.message);
+        }
+    }   
+}
+CreateWeatherAlias();
 
 //---------------------Begin PageNavi
 async function InitPageNavi() {
@@ -734,21 +765,33 @@ async function InitDimmode() {
         if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay')) {
             await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.StateCommon>{ type: 'number' });
             await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.State>{ val: 8, ack: true });
+            setObject(AliasPath + 'Dimmode.brightnessDay', {type: 'channel', common: {role: 'slider', name:'brightnessDay'}, native: {}});
+            await createAliasAsync(AliasPath + 'Dimmode.brightnessDay.ACTUAL', NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
+            await createAliasAsync(AliasPath + 'Dimmode.brightnessDay.SET', NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
         }
 
         if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_hourDay')) {
             await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourDay', <iobJS.StateCommon>{ type: 'number' });
             await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourDay', <iobJS.State>{ val: 7, ack: true });
+            setObject(AliasPath + 'Dimmode.hourDay', {type: 'channel', common: {role: 'slider', name:'hourDay'}, native: {}});
+            await createAliasAsync(AliasPath + 'Dimmode.hourDay.ACTUAL', NSPanel_Path + 'NSPanel_Dimmode_hourDay', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
+            await createAliasAsync(AliasPath + 'Dimmode.hourDay.SET', NSPanel_Path + 'NSPanel_Dimmode_hourDay', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
         }
 
         if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight')) {
             await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', <iobJS.StateCommon>{ type: 'number' });
             await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', <iobJS.State>{ val: 1, ack: true });
+            setObject(AliasPath + 'Dimmode.brightnessNight', {type: 'channel', common: {role: 'slider', name:'brightnessNight'}, native: {}});
+            await createAliasAsync(AliasPath + 'Dimmode.brightnessNight.ACTUAL', NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
+            await createAliasAsync(AliasPath + 'Dimmode.brightnessNight.SET', NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
         }
 
         if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_hourNight')) {
             await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourNight', <iobJS.StateCommon>{ type: 'number' });
             await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourNight', <iobJS.State>{ val: 22, ack: true });
+            setObject(AliasPath + 'Dimmode.hourNight', {type: 'channel', common: {role: 'slider', name:'hourNight'}, native: {}});
+            await createAliasAsync(AliasPath + 'Dimmode.hourNight.ACTUAL', NSPanel_Path + 'NSPanel_Dimmode_hourNight', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
+            await createAliasAsync(AliasPath + 'Dimmode.hourNight.SET', NSPanel_Path + 'NSPanel_Dimmode_hourNight', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
         }
 
         const vTimeDay = getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val;
@@ -1167,10 +1210,17 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
 async function get_panel_update_data() {
     try {
         await createStateAsync(NSPanel_Path + 'NSPanel_autoUpdate', false, <iobJS.StateCommon>{ read: true, write: true, name: 'Auto-Update', type: 'boolean', def: false });
-
+        if (autoCreateAlias) {
+            setObject(AliasPath + 'autoUpdate', {type: 'channel', common: {role: 'socket', name:'AutoUpdate'}, native: {}});
+            await createAliasAsync(AliasPath + 'autoUpdate.ACTUAL', NSPanel_Path + 'NSPanel_autoUpdate', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
+            await createAliasAsync(AliasPath + 'autoUpdate.SET', NSPanel_Path + 'NSPanel_autoUpdate', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
+        }
         await createStateAsync(NSPanel_Path + 'NSPanel_ipAddress', <iobJS.StateCommon>{ type: 'string' });
         await setStateAsync(NSPanel_Path + 'NSPanel_ipAddress', <iobJS.State>{ val: get_current_tasmota_ip_address(), ack: true });
-
+        if (autoCreateAlias) {
+            setObject(AliasPath + 'ipAddress', {type: 'channel', common: {role: 'info', name:'ipAddress'}, native: {}});
+            await createAliasAsync(AliasPath + 'ipAddress.ACTUAL', NSPanel_Path + 'NSPanel_ipAddress', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+        }
         get_online_tasmota_firmware_version();
         get_current_berry_driver_version();
         get_online_berry_driver_version();
@@ -1237,6 +1287,10 @@ function get_current_berry_driver_version() {
             try {
                 await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'number' });
                 await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: JSON.parse(result).nlui_driver_version, ack: true });
+                if (autoCreateAlias) {
+                    setObject(AliasPath + 'Display.BerryDriver', {type: 'channel', common: {role: 'info', name: 'Berry Driver'}, native: {}});
+                    await createAliasAsync(AliasPath + 'Display.BerryDriver.ACTUAL', NSPanel_Path + 'Berry_Driver.currentVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                }
             } catch (err) {
                 console.warn('get_current_berry_driver_version: ' + err.message);
             }
@@ -1286,6 +1340,28 @@ function get_tasmota_status0() {
                 await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Signal, ack: true });
             } catch (err) {
                 console.warn('get_tasmota_status0' + err.message);
+            }
+            if (autoCreateAlias) {
+                setObject(AliasPath + 'Tasmota.Uptime', {type: 'channel', common: {role: 'info', name: 'Uptime'}, native: {}});
+                setObject(AliasPath + 'Tasmota.Version', {type: 'channel', common: {role: 'info', name:'Version'}, native: {}});        
+                setObject(AliasPath + 'Tasmota.Hardware', {type: 'channel', common: {role: 'info', name: 'Hardware'}, native: {}});
+                setObject(AliasPath + 'Tasmota.Wifi.AP', {type: 'channel', common: {role: 'info', name:'AP'}, native: {}});        
+                setObject(AliasPath + 'Tasmota.Wifi.SSId', {type: 'channel', common: {role: 'info', name:'SSId'}, native: {}});
+                setObject(AliasPath + 'Tasmota.Wifi.BSSId', {type: 'channel', common: {role: 'info', name: 'BSSId'}, native: {}});
+                setObject(AliasPath + 'Tasmota.Wifi.Channel', {type: 'channel', common: {role: 'info', name:'Channel'}, native: {}});        
+                setObject(AliasPath + 'Tasmota.Wifi.Mode', {type: 'channel', common: {role: 'info', name: 'Mode'}, native: {}});
+                setObject(AliasPath + 'Tasmota.Wifi.RSSI', {type: 'channel', common: {role: 'info', name:'RSSI'}, native: {}});        
+                setObject(AliasPath + 'Tasmota.Wifi.Signal', {type: 'channel', common: {role: 'info', name:'Signal'}, native: {}});
+                await createAliasAsync(AliasPath + 'Tasmota.Uptime.ACTUAL', NSPanel_Path + 'Tasmota.Uptime', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Tasmota.Version.ACTUAL', NSPanel_Path + 'Tasmota.Version', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Tasmota.Hardware.ACTUAL', NSPanel_Path + 'Tasmota.Hardware', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Tasmota.Wifi.AP.ACTUAL', NSPanel_Path + 'Tasmota.Wifi.AP', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Tasmota.Wifi.SSId.ACTUAL', NSPanel_Path + 'Tasmota.Wifi.SSId', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Tasmota.Wifi.BSSId.ACTUAL', NSPanel_Path + 'Tasmota.Wifi.BSSId', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Tasmota.Wifi.Channel.ACTUAL', NSPanel_Path + 'Tasmota.Wifi.Channel', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Tasmota.Wifi.Mode.ACTUAL', NSPanel_Path + 'Tasmota.Wifi.Mode', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Tasmota.Wifi.RSSI.ACTUAL', NSPanel_Path + 'Tasmota.Wifi.RSSI', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Tasmota.Wifi.Signal.ACTUAL', NSPanel_Path + 'Tasmota.Wifi.Signal', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'ACTUAL' });
             }
         });
     } catch (err) {
@@ -1386,6 +1462,13 @@ on({ id: config.panelRecvTopic }, async (obj) => {
 
                 await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: split[2], ack: true });
                 await setStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.State>{ val: split[3], ack: true });
+                
+                if (autoCreateAlias) {
+                    setObject(AliasPath + 'Display.TFTVersion', {type: 'channel', common: {role: 'info', name:'Display.TFTVersion'}, native: {}});
+                    setObject(AliasPath + 'Display.Model', {type: 'channel', common: {role: 'info', name:'Display.Model'}, native: {}});
+                    await createAliasAsync(AliasPath + 'Display.TFTVersion.ACTUAL', NSPanel_Path + 'Display_Firmware.currentVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                    await createAliasAsync(AliasPath + 'Display.Model.ACTUAL', NSPanel_Path + 'NSPanel_Version', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                }
             }
         } catch (err) {
             console.warn('error rceiving CustomRecv: ' + err.message);
@@ -2485,6 +2568,16 @@ function unsubscribeMediaSubscriptions(): void {
             unsubscribe(mediaID + '.VOLUME')
         }
     }
+    for (let i = 0; i < config.subPages.length; i++) {
+        if (config.subPages[i].type == 'cardMedia') {
+            let mediaID = config.subPages[i].items[0].id;
+            unsubscribe(mediaID + '.STATE')
+            unsubscribe(mediaID + '.ARTIST')
+            unsubscribe(mediaID + '.TITLE')
+            unsubscribe(mediaID + '.ALBUM')
+            unsubscribe(mediaID + '.VOLUME')
+        }
+    }
 } 
 
 function subscribeMediaSubscriptions(id: string): void {
@@ -2498,6 +2591,91 @@ function subscribeMediaSubscriptions(id: string): void {
     });
 } 
 
+async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlayerInstance: string) {
+    if (autoCreateAlias) {
+
+        if (adapterPlayerInstance == 'alexa2.0.') {
+            if (existsObject(id) == false){
+                console.log('Alexa Alias ' + id + ' existiert nicht - wird jetzt angelegt')
+
+                let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
+                try {
+ 
+                    setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
+                    await createAliasAsync(id + '.ACTUAL', dpPath + '.Player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
+                    await createAliasAsync(id + '.ALBUM', dpPath + '.Player.currentAlbum', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
+                    await createAliasAsync(id + '.ARTIST', dpPath + '.Player.currentArtist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
+                    await createAliasAsync(id + '.TITLE', dpPath + '.Player.currentTitle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
+                    await createAliasAsync(id + '.NEXT', dpPath + '.Player.controlNext', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
+                    await createAliasAsync(id + '.PREV', dpPath + '.Player.controlPrevious', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
+                    await createAliasAsync(id + '.PLAY', dpPath + '.Player.controlPlay', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
+                    await createAliasAsync(id + '.PAUSE', dpPath + '.Player.controlPause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
+                    await createAliasAsync(id + '.STOP', dpPath + '.Commands.deviceStop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
+                    await createAliasAsync(id + '.STATE', dpPath + '.Player.currentState', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
+                    await createAliasAsync(id + '.VOLUME', dpPath + '.Player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
+        
+                } catch (err) {
+                    console.warn('function createAutoMediaAlias: ' + err.message);
+                }
+            }
+        }
+
+        if (adapterPlayerInstance == 'spotify-premium.0.') {
+            if (existsObject(id) == false){
+                console.log('Spotify Alias ' + id + ' existiert nicht - wird jetzt angelegt')
+
+                let dpPath: string = adapterPlayerInstance;
+                try {
+ 
+                    setObject(id, {_id: id + 'player', type: 'channel', common: {role: 'media', name:'media'}, native: {}});
+                    await createAliasAsync(id + '.ACTUAL', dpPath + 'player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
+                    await createAliasAsync(id + '.ALBUM', dpPath + 'player.album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
+                    await createAliasAsync(id + '.ARTIST', dpPath + 'player.artistName', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
+                    await createAliasAsync(id + '.TITLE', dpPath + 'player.trackName', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
+                    await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + 'player.contextDescription', true, <iobJS.StateCommon>{ type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION' });
+                    await createAliasAsync(id + '.NEXT', dpPath + 'player.skipPlus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
+                    await createAliasAsync(id + '.PREV', dpPath + 'player.skipMinus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
+                    await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
+                    await createAliasAsync(id + '.PAUSE', dpPath + 'player.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
+                    await createAliasAsync(id + '.STOP', dpPath + 'player.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
+                    await createAliasAsync(id + '.STATE', dpPath + 'player.isPlaying', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
+                    await createAliasAsync(id + '.VOLUME', dpPath + 'player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
+                
+                } catch (err) {
+                    console.warn('function createAutoMediaAlias: ' + err.message);
+                }
+            }
+        }
+
+        if (adapterPlayerInstance == 'sonos.0.') {
+            if (existsObject(id) == false){
+                console.log('Sonos Alias ' + id + ' existiert nicht - wird jetzt angelegt')
+
+                let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
+                try {
+ 
+                    setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
+                    await createAliasAsync(id + '.ACTUAL', dpPath + '.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
+                    await createAliasAsync(id + '.ALBUM', dpPath + '.current_album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
+                    await createAliasAsync(id + '.ARTIST', dpPath + '.current_artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
+                    await createAliasAsync(id + '.TITLE', dpPath + '.current_title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
+                    await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + '.current_station', true, <iobJS.StateCommon>{ type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION' });
+                    await createAliasAsync(id + '.NEXT', dpPath + '.next', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
+                    await createAliasAsync(id + '.PREV', dpPath + '.prev', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
+                    await createAliasAsync(id + '.PLAY', dpPath + '.play', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
+                    await createAliasAsync(id + '.PAUSE', dpPath + '.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
+                    await createAliasAsync(id + '.STOP', dpPath + '.stop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
+                    await createAliasAsync(id + '.STATE', dpPath + '.state_simple', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
+                    await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
+
+                } catch (err) {
+                    console.warn('function createAutoMediaAlias: ' + err.message);
+                }
+            }
+        }
+    }    
+}
+
 function GenerateMediaPage(page: PageMedia): Payload[] {
     try {
         let id = page.items[0].id
@@ -2507,6 +2685,11 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
         unsubscribeMediaSubscriptions();
         
         subscribeMediaSubscriptions(id);
+
+        if (page.items[0].autoCreateALias) {
+            let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
+            createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance);
+        }
 
         out_msgs.push({ payload: 'pageType~cardMedia' });
         if (existsObject(id)) {
@@ -3424,6 +3607,7 @@ function HandleButtonEvent(words): void {
     }
 }
 
+//Determination of page navigation (CustomSend-Payload)
 function GetNavigationString(pageId: number): string {
     try {
 
@@ -3431,14 +3615,20 @@ function GetNavigationString(pageId: number): string {
             console.log(pageId);
         }
 
+        // left navigation arrow | right navigation arrow
+        // X|X 
+        // 0 = no arrow
+        // 1 = right or left navigation arrow
+        // 2 = up navigation arrow
+
         if (activePage.subPage)
             return '1|0';
 
         switch (pageId) {
             case 0:
-                return '0|1';
+                return '1|1';
             case config.pages.length - 1:
-                return '1|0';
+                return '1|1';
             case -1:
                 return '2|0';
             case -2:
@@ -3446,6 +3636,7 @@ function GetNavigationString(pageId: number): string {
             default:
                 return '1|1';
         }
+
     } catch (err) {
         console.log('function GetNavigationString: ' + err.message);
     }
@@ -4564,6 +4755,13 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
         await setStateAsync(NSPanel_Path + 'Sensor.TempUnit', <iobJS.State>{ val: '°' + Tasmota_Sensor.TempUnit, ack: true });
         await setStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ANALOG.Temperature1), ack: true });
         await setStateAsync(NSPanel_Path + 'Sensor.ESP32.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ESP32.Temperature), ack: true });
+        
+        if (autoCreateAlias) {
+            setObject(AliasPath + 'Sensor.ANALOG.Temperature', {type: 'channel', common: {role: 'info', name: ''}, native: {}});
+            setObject(AliasPath + 'Sensor.ESP32.Temperature', {type: 'channel', common: {role: 'info', name:''}, native: {}});        
+            await createAliasAsync(AliasPath + 'Sensor.ANALOG.Temperature.ACTUAL', NSPanel_Path + 'Sensor.ANALOG.Temperature', true, <iobJS.StateCommon>{ type: 'number', 'unit': '°C' });
+            await createAliasAsync(AliasPath + 'Sensor.ESP32.Temperature.ACTUAL', NSPanel_Path + 'Sensor.ESP32.Temperature', true, <iobJS.StateCommon>{ type: 'number', 'unit': '°C' });
+        }
     } catch (err) {
         console.warn('error with reading senor-data: '+ err.message);
     }
@@ -4784,7 +4982,8 @@ type PageItem = {
     mediaDevice: (string | undefined),
     targetPage: (string | undefined),
     speakerList: (string[] | undefined),
-    hidePassword: (boolean | undefined)
+    hidePassword: (boolean | undefined),
+    autoCreateALias: (boolean | undefined)
 }
 
 type DimMode = {
