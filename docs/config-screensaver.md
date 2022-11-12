@@ -51,6 +51,7 @@ key | option | type | default | description
 `tMainTextAlt` | True | list | White | `[R, G, B]`
 `tMRIcon` | True | list | White | `[R, G, B]`
 `tMR` | True | list | White | `[R, G, B]`
+`tTimeAdd` | True | list | White | `[R, G, B]`
 `autoWeather` | True | boolean | false | Set to `true` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence.
 
 If `autoWeather: true` is set. You may also overwrite the default color mapping for any valid weather state provided by homeassistant e.g. `rainy: [50, 50, 255]` or `sunny: [255, 255, 0]`
@@ -138,7 +139,7 @@ Example for the theme config:
         #bar:              [220, 0, 255]
         #tMRIcon:          [220, 0, 255]
         #tMR:              [220, 0, 255]
-		#tTimeAdd:         [220, 0, 255]
+	#tTimeAdd:         [220, 0, 255]
 
         #autoWeather automatically colors the screensaver weather icons based upon weather. Uncomment the following line to enable.
         #autoWeather: true
