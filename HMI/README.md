@@ -123,6 +123,10 @@ The following message can be used to update the content on the cardEntities Page
 
 `exitPopup`
 
+### popupThermo Page
+
+`entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{heading}~{mode}~mode1~mode1?mode2?mode3~{heading}~{mode}~mode1~mode1?mode2?mode3~{heading}~{mode}~mode1~mode1?mode2?mode3~`
+
 ### popupInSel Page (input_select detail page)
 
 `entityUpdateDetail2~*entity_id*~~*icon_color*~*input_sel*~*state*~*options*
