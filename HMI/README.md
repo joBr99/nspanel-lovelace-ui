@@ -101,6 +101,8 @@ The following message can be used to update the content on the cardEntities Page
 
 `~number~input_number.entityName~4~17299~Number123~value|min|max`
 
+`~input_sel~input_select.entityName~3~17299~sel-name~sel-text`
+
 ### popupLight Page
 
 `entityUpdateDetail~entityName~*ignored*~*iconColor*~*buttonState*~*sliderBrightnessPos*~*sliderColorTempPos*~*colorMode*~*color_translation*~*color_temp_translation*~*brightness_translation*`
@@ -121,9 +123,19 @@ The following message can be used to update the content on the cardEntities Page
 
 `exitPopup`
 
+### popupThermo Page
+
+`entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{heading}~{mode}~mode1~mode1?mode2?mode3~{heading}~{mode}~mode1~mode1?mode2?mode3~{heading}~{mode}~mode1~mode1?mode2?mode3~`
+
+### popupInSel Page (input_select detail page)
+
+`entityUpdateDetail2~*entity_id*~~*icon_color*~*input_sel*~*state*~*options*
+
+options are ? seperated
+
 ### cardThermo Page
 
-`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*currentTemp*~*destTemp*~*status*~*minTemp*~*maxTemp*~*stepTemp*[[~*iconId*~*activeColor*~*state*~*hvac_action*]]~tCurTempLbl~tStateLbl~tALbl~iconTemperature~dstTempTwoTempMode`
+`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*currentTemp*~*destTemp*~*status*~*minTemp*~*maxTemp*~*stepTemp*[[~*iconId*~*activeColor*~*state*~*hvac_action*]]~tCurTempLbl~tStateLbl~tALbl~iconTemperature~dstTempTwoTempMode~btDetail`
 
 `[[]]` are not part of the command~ this part repeats 8 times for the buttons
 
