@@ -171,8 +171,8 @@ XFloat xTempDest
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 236
-        y coordinate                        : 119
+        x coordinate                        : 233
+        y coordinate                        : 133
         Width                               : 120
         Height                              : 60
         Effect                              : load
@@ -261,10 +261,10 @@ XFloat xTempMax1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 398
-        y coordinate                        : 93
-        Width                               : 45
-        Height                              : 20
+        x coordinate                        : 422
+        y coordinate                        : 70
+        Width                               : 23
+        Height                              : 23
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -293,7 +293,7 @@ XFloat xTempMin1
         Opacity                             : 127
         x coordinate                        : 398
         y coordinate                        : 71
-        Width                               : 50
+        Width                               : 24
         Height                              : 22
         Effect                              : load
         Effect Priority                     : 0
@@ -321,8 +321,8 @@ XFloat xTempStep1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 399
-        y coordinate                        : 181
+        x coordinate                        : 400
+        y coordinate                        : 91
         Width                               : 45
         Height                              : 20
         Effect                              : load
@@ -351,8 +351,8 @@ Text tCF
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 357
-        y coordinate                        : 116
+        x coordinate                        : 354
+        y coordinate                        : 132
         Width                               : 25
         Height                              : 30
         Effect                              : load
@@ -511,7 +511,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -838,8 +838,8 @@ Dual-state Button bt0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 18
-        y coordinate                        : 255
+        x coordinate                        : 27
+        y coordinate                        : 254
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -887,8 +887,8 @@ Dual-state Button bt1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 74
-        y coordinate                        : 255
+        x coordinate                        : 81
+        y coordinate                        : 254
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -936,8 +936,8 @@ Dual-state Button bt2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 130
-        y coordinate                        : 255
+        x coordinate                        : 135
+        y coordinate                        : 254
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -985,8 +985,8 @@ Dual-state Button bt3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 186
-        y coordinate                        : 255
+        x coordinate                        : 189
+        y coordinate                        : 254
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1034,8 +1034,8 @@ Dual-state Button bt4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 242
-        y coordinate                        : 255
+        x coordinate                        : 243
+        y coordinate                        : 254
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1083,8 +1083,8 @@ Dual-state Button bt5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 298
-        y coordinate                        : 255
+        x coordinate                        : 297
+        y coordinate                        : 254
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1132,8 +1132,8 @@ Dual-state Button bt6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 354
-        y coordinate                        : 255
+        x coordinate                        : 351
+        y coordinate                        : 254
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1181,8 +1181,8 @@ Dual-state Button bt7
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 410
-        y coordinate                        : 255
+        x coordinate                        : 405
+        y coordinate                        : 254
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1230,8 +1230,8 @@ Dual-state Button btDetail
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 409
-        y coordinate                        : 199
+        x coordinate                        : 270
+        y coordinate                        : 198
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1268,16 +1268,16 @@ Dual-state Button btDown
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 272
-        y coordinate                        : 180
-        Width                               : 50
-        Height                              : 50
+        x coordinate                        : 152
+        y coordinate                        : 132
+        Width                               : 75
+        Height                              : 75
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1387,16 +1387,16 @@ Dual-state Button btUp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 272
-        y coordinate                        : 68
-        Width                               : 50
-        Height                              : 50
+        x coordinate                        : 380
+        y coordinate                        : 129
+        Width                               : 75
+        Height                              : 75
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1528,7 +1528,7 @@ Hotspot mSwipePrev
         Opacity                             : 127
         x coordinate                        : 0
         y coordinate                        : 5
-        Width                               : 8
+        Width                               : 9
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
