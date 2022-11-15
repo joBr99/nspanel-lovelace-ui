@@ -6,10 +6,6 @@ pageIcons
 	7    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	172  Line(s) of event code
-	125  Unique line(s) of event code
 popupNotify
 	19   Component(s)
 	253  Line(s) of event code
@@ -22,6 +18,10 @@ cardPower
 	43   Component(s)
 	435  Line(s) of event code
 	297  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	172  Line(s) of event code
+	125  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	394  Line(s) of event code
