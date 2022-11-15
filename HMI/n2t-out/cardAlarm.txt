@@ -483,7 +483,7 @@ Button bNext
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,cardAlarm,"
-            if(bPrev.txt=="î")
+            if(bNext.txt=="î")
             {
                 tSend.txt+="bHome"
             }else
