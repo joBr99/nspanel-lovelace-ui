@@ -34,14 +34,14 @@ cardGrid
 	42   Component(s)
 	490  Line(s) of event code
 	286  Unique line(s) of event code
-cardThermo
-	53   Component(s)
-	608  Line(s) of event code
-	316  Unique line(s) of event code
 cardMedia
 	34   Component(s)
 	406  Line(s) of event code
 	216  Unique line(s) of event code
+cardThermo
+	53   Component(s)
+	608  Line(s) of event code
+	316  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	347  Line(s) of event code
