@@ -30,6 +30,71 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
+│ @@ -306,52 +306,47 @@
+│                                          spstr strCommand.txt,tTmp.txt,"~",2
+│                                          //save third arg if there's one
+│                                          spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
+│                                          spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
+│                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
+│                                          udelete payloadLength-1
+│                                          bufferPos=0
+│ -                                        if(tId.txt=="pageStartup")
+│ +                                        if(tId.txt=="cardThermo")
+│                                          {
+│ -                                            page pageStartup
+│ +                                            page cardThermo
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="cardEntities")
+│ -                                        {
+│ -                                            page cardEntities
+│ -                                        }
+│ -                                        if(tId.txt=="cardGrid")
+│ -                                        {
+│ -                                            page cardGrid
+│ -                                        }
+│                                          if(tId.txt=="popupLight")
+│                                          {
+│                                              pageIcons.tTmp1.txt=tTmp.txt
+│                                              page popupLight
+│                                          }
+│ -                                        if(tId.txt=="popupShutter")
+│ +                                        if(tId.txt=="cardEntities")
+│                                          {
+│ -                                            pageIcons.tTmp1.txt=tTmp.txt
+│ -                                            page popupShutter
+│ +                                            page cardEntities
+│                                          }
+│ -                                        if(tId.txt=="popupNotify")
+│ +                                        if(tId.txt=="pageStartup")
+│                                          {
+│ -                                            page popupNotify
+│ +                                            page pageStartup
+│                                          }
+│ -                                        if(tId.txt=="cardThermo")
+│ +                                        if(tId.txt=="popupNotify")
+│                                          {
+│ -                                            page cardThermo
+│ +                                            page popupNotify
+│                                          }
+│                                          if(tId.txt=="cardMedia")
+│                                          {
+│                                              page cardMedia
+│                                          }
+│ +                                        if(tId.txt=="cardGrid")
+│ +                                        {
+│ +                                            page cardGrid
+│ +                                        }
+│                                          if(tId.txt=="cardAlarm")
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
+│                                              page cardQR
 ├── screensaver.txt
 │ @@ -252,25 +252,25 @@
 │      Attributes
@@ -93,3 +158,73 @@
 │                                          spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
 │                                          tDate.txt=pageIcons.vaDate.txt
 │                                      }
+│ @@ -691,53 +689,48 @@
+│                                          spstr strCommand.txt,tId.txt,"~",1
+│                                          //save second arg if there's one
+│                                          spstr strCommand.txt,tTmp.txt,"~",2
+│                                          //save third arg if there's one
+│                                          spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
+│                                          spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
+│                                          //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
+│ -                                        udelete payloadLength-1
+│ +                                        udelete u[2]+3
+│                                          bufferPos=0
+│ -                                        if(tId.txt=="pageStartup")
+│ -                                        {
+│ -                                            page pageStartup
+│ -                                        }
+│ -                                        if(tId.txt=="screensaver")
+│ +                                        if(tId.txt=="popupLight")
+│                                          {
+│ -                                            page screensaver
+│ +                                            pageIcons.tTmp1.txt=tTmp.txt
+│ +                                            page popupLight
+│                                          }
+│ -                                        if(tId.txt=="cardEntities")
+│ +                                        if(tId.txt=="pageStartup")
+│                                          {
+│ -                                            page cardEntities
+│ +                                            page pageStartup
+│                                          }
+│ -                                        if(tId.txt=="cardGrid")
+│ +                                        if(tId.txt=="cardThermo")
+│                                          {
+│ -                                            page cardGrid
+│ +                                            page cardThermo
+│                                          }
+│ -                                        if(tId.txt=="popupLight")
+│ +                                        if(tId.txt=="cardMedia")
+│                                          {
+│ -                                            pageIcons.tTmp1.txt=tTmp.txt
+│ -                                            page popupLight
+│ +                                            page cardMedia
+│                                          }
+│ -                                        if(tId.txt=="popupShutter")
+│ +                                        if(tId.txt=="pageStartup")
+│                                          {
+│ -                                            pageIcons.tTmp1.txt=tTmp.txt
+│ -                                            page popupShutter
+│ +                                            page pageStartup
+│                                          }
+│                                          if(tId.txt=="popupNotify")
+│                                          {
+│                                              page popupNotify
+│                                          }
+│ -                                        if(tId.txt=="cardThermo")
+│ +                                        if(tId.txt=="cardGrid")
+│                                          {
+│ -                                            page cardThermo
+│ +                                            page cardGrid
+│                                          }
+│ -                                        if(tId.txt=="cardMedia")
+│ +                                        if(tId.txt=="cardEntities")
+│                                          {
+│ -                                            page cardMedia
+│ +                                            page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardAlarm")
+│                                          {
+│                                              page cardAlarm
+│                                          }
+│                                          if(tId.txt=="cardQR")
+│                                          {
