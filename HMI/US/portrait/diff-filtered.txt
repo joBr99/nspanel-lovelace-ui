@@ -1,0 +1,47 @@
++++ /dev/fd/62	2022-11-16 18:40:01.549752158 +0000
++reensaver.txt
++25 +252,25 @@
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++ Max. Text Size                      : 5
++
++con2
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++ Max. Text Size                      : 5
++
++R
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++16 +474,14 @@
++                                 spstr pageIcons.vaTime.txt,tTime.txt,"?",0
++                                 spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
++                                 if(tAMPM.txt=="")
++                                 {
++                                     vis tAMPM,0
++                                 }
++                                 spstr strCommand.txt,tTimeAdd.txt,"~",2
++                                 ref tIcon1
++                                 ref tIcon2
++                             }
++                             if(tInstruction.txt=="date")
++                             {
++                                 //get set date to global variable
++                                 spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
++                                 tDate.txt=pageIcons.vaDate.txt
++                             }
