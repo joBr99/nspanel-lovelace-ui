@@ -50,6 +50,10 @@ cardMedia
 	34   Component(s)
 	406  Line(s) of event code
 	216  Unique line(s) of event code
+cardThermo
+	53   Component(s)
+	608  Line(s) of event code
+	316  Unique line(s) of event code
 popupThermo
 	44   Component(s)
 	515  Line(s) of event code
@@ -62,10 +66,6 @@ popupInSel
 	34   Component(s)
 	529  Line(s) of event code
 	257  Unique line(s) of event code
-cardThermo
-	53   Component(s)
-	608  Line(s) of event code
-	316  Unique line(s) of event code
 cardEntities
 	65   Component(s)
 	1165 Line(s) of event code

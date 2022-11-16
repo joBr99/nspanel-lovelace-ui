@@ -129,7 +129,7 @@ The following message can be used to update the content on the cardEntities Page
 
 ### popupInSel Page (input_select detail page)
 
-`entityUpdateDetail2~*entity_id*~~*icon_color*~*input_sel*~*state*~*options*
+`entityUpdateDetail2~*entity_id*~~*icon_color*~*input_sel*~*state*~*options*`
 
 options are ? seperated
 
