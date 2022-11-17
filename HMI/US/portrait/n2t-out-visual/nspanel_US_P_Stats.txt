@@ -50,14 +50,14 @@ popupFan
 	27   Component(s)
 	347  Line(s) of event code
 	202  Unique line(s) of event code
-cardPower
-	43   Component(s)
-	435  Line(s) of event code
-	297  Unique line(s) of event code
 screensaver
 	45   Component(s)
 	389  Line(s) of event code
 	288  Unique line(s) of event code
+cardPower
+	43   Component(s)
+	435  Line(s) of event code
+	297  Unique line(s) of event code
 cardAlarm
 	40   Component(s)
 	439  Line(s) of event code
