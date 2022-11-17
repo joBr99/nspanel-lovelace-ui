@@ -156,9 +156,9 @@ Text tAMPM
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 105
+        x coordinate                        : 30
         y coordinate                        : 108
-        Width                               : 103
+        Width                               : 260
         Height                              : 57
         Effect                              : load
         Effect Priority                     : 0
