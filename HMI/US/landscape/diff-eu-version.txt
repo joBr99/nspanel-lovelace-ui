@@ -12,6 +12,329 @@
 │ -    // fix touch offset
 │ -    lcd_dev fffb 0002 0000 0020
 │ -    page pageStartup
+├── cardMedia.txt
+│ @@ -637,14 +637,276 @@
+│                                              vis bNext,1
+│                                              bNext.txt="î"
+│                                          }
+│                                          //entity name
+│                                          spstr strCommand.txt,entn.txt,"~",3
+│                                          //icon
+│                                          spstr strCommand.txt,tIcon.txt,"~",4
+│ +                                        //title
+│ +                                        spstr strCommand.txt,tTitle.txt,"~",5
+│ +                                        //author
+│ +                                        spstr strCommand.txt,tAuthor.txt,"~",6
+│ +                                        //volume
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",7
+│ +                                        covx tTmp.txt,sys0,0,0
+│ +                                        hVolume.val=sys0
+│ +                                        //icon
+│ +                                        spstr strCommand.txt,tPlayPause.txt,"~",8
+│ +                                        //speaker current
+│ +                                        spstr strCommand.txt,tSpeaker.txt,"~",9
+│ +                                        if(tSpeaker.txt!="")
+│ +                                        {
+│ +                                            tSpeaker.pco=1374
+│ +                                        }else
+│ +                                        {
+│ +                                            tSpeaker.pco=65535
+│ +                                        }
+│ +                                        //speaker list
+│ +                                        spstr strCommand.txt,vaSpeakerList.txt,"~",10
+│ +                                        if(vaSpeakerList.txt=="")
+│ +                                        {
+│ +                                            vis t6,0
+│ +                                        }
+│ +                                        vaSpeakerPos.val=0
+│ +                                        // on off button
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",11
+│ +                                        if(tTmp.txt=="disable")
+│ +                                        {
+│ +                                            vis t5,0
+│ +                                        }else
+│ +                                        {
+│ +                                            vis t5,1
+│ +                                            covx tTmp.txt,t5.pco,0,0
+│ +                                        }
+│ +                                        //tIconBtnEntityName
+│ +                                        spstr strCommand.txt,vaMenu.txt,"~",12
+│ +                                    }
+│ +                                    if(tInstruction.txt=="time")
+│ +                                    {
+│ +                                        // get set time to global variable
+│ +                                        spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│ +                                    }
+│ +                                    if(tInstruction.txt=="date")
+│ +                                    {
+│ +                                        // get set date to global variable
+│ +                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
+│ +                                    }
+│ +                                    if(tInstruction.txt=="dimmode")
+│ +                                    {
+│ +                                        // get value
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",1
+│ +                                        covx tTmp.txt,dimValue,0,0
+│ +                                        // get value normal
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ +                                        covx tTmp.txt,dimValueNormal,0,0
+│ +                                        dim=dimValueNormal
+│ +                                        // get background color
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",3
+│ +                                        if(tTmp.txt!="")
+│ +                                        {
+│ +                                            covx tTmp.txt,defaultBcoColor,0,0
+│ +                                        }
+│ +                                        // get font color
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",4
+│ +                                        if(tTmp.txt!="")
+│ +                                        {
+│ +                                            covx tTmp.txt,defaultFontColor,0,0
+│ +                                        }
+│ +                                    }
+│ +                                    if(tInstruction.txt=="timeout")
+│ +                                    {
+│ +                                        //set timeout to global var
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",1
+│ +                                        covx tTmp.txt,sleepTimeout,0,0
+│ +                                    }
+│ +                                    if(tInstruction.txt=="pageType")
+│ +                                    {
+│ +                                        sleepValue=0
+│ +                                        //command format pageType,specialPageName
+│ +                                        //write name of speical page to tId
+│ +                                        spstr strCommand.txt,tId.txt,"~",1
+│ +                                        //save second arg if there's one
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ +                                        //save third arg if there's one
+│ +                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
+│ +                                        spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
+│ +                                        //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
+│ +                                        udelete payloadLength-1
+│ +                                        bufferPos=0
+│ +                                        if(tId.txt=="pageStartup")
+│ +                                        {
+│ +                                            page pageStartup
+│ +                                        }
+│ +                                        if(tId.txt=="screensaver")
+│ +                                        {
+│ +                                            page screensaver
+│ +                                        }
+│ +                                        if(tId.txt=="cardEntities")
+│ +                                        {
+│ +                                            page cardEntities
+│ +                                        }
+│ +                                        if(tId.txt=="cardGrid")
+│ +                                        {
+│ +                                            page cardGrid
+│ +                                        }
+│ +                                        if(tId.txt=="popupLight")
+│ +                                        {
+│ +                                            pageIcons.tTmp1.txt=tTmp.txt
+│ +                                            page popupLight
+│ +                                        }
+│ +                                        if(tId.txt=="popupShutter")
+│ +                                        {
+│ +                                            pageIcons.tTmp1.txt=tTmp.txt
+│ +                                            page popupShutter
+│ +                                        }
+│ +                                        if(tId.txt=="popupNotify")
+│ +                                        {
+│ +                                            page popupNotify
+│ +                                        }
+│ +                                        if(tId.txt=="cardThermo")
+│ +                                        {
+│ +                                            page cardThermo
+│ +                                        }
+│ +                                        if(tId.txt=="cardMedia")
+│ +                                        {
+│ +                                            page cardMedia
+│ +                                        }
+│ +                                        if(tId.txt=="cardAlarm")
+│ +                                        {
+│ +                                            page cardAlarm
+│ +                                        }
+│ +                                        if(tId.txt=="cardQR")
+│ +                                        {
+│ +                                            page cardQR
+│ +                                        }
+│ +                                        if(tId.txt=="cardPower")
+│ +                                        {
+│ +                                            page cardPower
+│ +                                        }
+│ +                                    }
+│ +                                    // end of user code
+│ +                                    udelete payloadLength-1
+│ +                                    bufferPos=0
+│ +                                }
+│ +                            }
+│ +                        }
+│ +                    }
+│ +                    // next character
+│ +                    bufferPos++
+│ +                }
+│ +                if(bufferPos==usize)
+│ +                {
+│ +                    // copy whole buffer to t1.txt, for debugging
+│ +                    //ucopy t2.txt,0,usize,0
+│ +                    // ucopy n2.val,0,usize,0
+│ +                    // clear whole buffer
+│ +                    //code_c
+│ +                    //bufferPos=0
+│ +                }
+│ +            }
+│ +        
+│ +Timer tmSleep
+│ +    Attributes
+│ +        Scope      : local
+│ +        Period (ms): 1000
+│ +        Enabled    : yes
+│ +    
+│ +    Events
+│ +        Timer Event
+│ +            // data available
+│ +            if(usize>1)
+│ +            {
+│ +                bufferPos=0
+│ +                while(bufferPos<usize)
+│ +                {
+│ +                    // check for 0x55 0xBB - Command Init Secuence
+│ +                    if(u[bufferPos]==187&&u[bufferPos-1]==85)
+│ +                    {
+│ +                        //remove garbage at the start of the buffer if there's any to free buffer for command
+│ +                        if(u[bufferPos]!=1)
+│ +                        {
+│ +                            udelete bufferPos-1
+│ +                        }
+│ +                        //instruction is now aligned with buffer, because we deleted garbage before instrcution
+│ +                        //get length after init sequence (check if there are more than to bytes in buffer)
+│ +                        if(3<usize)
+│ +                        {
+│ +                            // check if serial buffer has reached the announced length
+│ +                            ucopy payloadLength,2,2,0
+│ +                            // we are only checking payload length so we have to skip first 3 bytes (init+payload length) (-1 because of < instead of <=)
+│ +                            payloadLength+=3
+│ +                            // payload length does also not contain crc, so we are adding another 2 bytes for crc
+│ +                            payloadLength+=2
+│ +                            if(payloadLength<usize)
+│ +                            {
+│ +                                // calculate crc
+│ +                                crcrest 1,0xFFFF
+│ +                                // u[2] contains payload legth at 3rd pos in buffer, we are calculating crc from 3rd pos with number of bytes from payload length
+│ +                                //crcputu 3,u[2]
+│ +                                // u[2] cotnains payload length, we are calculating a crc over the whole message, so we have to add 3 to the length from u[2]
+│ +                                crcputu 0,payloadLength-1
+│ +                                // get recived crc to be able to compare it
+│ +                                ucopy recvCrc,payloadLength-1,2,0
+│ +                                // compare crc with recived value
+│ +                                if(crcval==recvCrc)
+│ +                                {
+│ +                                    // crc is okay
+│ +                                    // here is the location where acual code should be
+│ +                                    // write command to variable strCommand
+│ +                                    ucopy strCommand.txt,4,payloadLength-5,0
+│ +                                    // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
+│ +                                    spstr strCommand.txt,tInstruction.txt,"~",0
+│ +                                    if(tInstruction.txt=="entityUpd")
+│ +                                    {
+│ +                                        //heading
+│ +                                        spstr strCommand.txt,tHeading.txt,"~",1
+│ +                                        // navigation icons
+│ +                                        spstr strCommand.txt,tId.txt,"~",2
+│ +                                        spstr tId.txt,tTmp.txt,"|",0
+│ +                                        if(tTmp.txt=="0")
+│ +                                        {
+│ +                                            vis bPrev,0
+│ +                                            tsw mSwipePrev,0
+│ +                                            tsw mSwipeUp,0
+│ +                                        }
+│ +                                        if(tTmp.txt=="1")
+│ +                                        {
+│ +                                            vis bPrev,1
+│ +                                            tsw mSwipePrev,1
+│ +                                            tsw mSwipeUp,0
+│ +                                            bPrev.txt="î°"
+│ +                                        }
+│ +                                        if(tTmp.txt=="2")
+│ +                                        {
+│ +                                            vis bPrev,1
+│ +                                            tsw mSwipePrev,0
+│ +                                            tsw mSwipeUp,1
+│ +                                            bPrev.txt="î¶"
+│ +                                        }
+│ +                                        spstr tId.txt,tTmp.txt,"|",1
+│ +                                        if(tTmp.txt=="0")
+│ +                                        {
+│ +                                            vis bNext,0
+│ +                                            tsw mSwipeNext,0
+│ +                                        }
+│ +                                        if(tTmp.txt=="1")
+│ +                                        {
+│ +                                            vis bNext,1
+│ +                                            tsw mSwipeNext,1
+│ +                                            bNext.txt="î³"
+│ +                                        }
+│ +                                        if(tTmp.txt=="2")
+│ +                                        {
+│ +                                            vis bNext,1
+│ +                                            bNext.txt="î"
+│ +                                        }
+│ +                                        //entity name
+│ +                                        spstr strCommand.txt,entn.txt,"~",3
+│ +                                        //icon
+│ +                                        spstr strCommand.txt,tIcon.txt,"~",4
+│                                          //icon farbe
+│                                          spstr strCommand.txt,tTmp.txt,"~",5
+│                                          if(tTmp.txt!="")
+│                                          {
+│                                              covx tTmp.txt,tIcon.pco,0,0
+│                                          }
+│                                          //title
+│ @@ -818,44 +1080,14 @@
+│                      // ucopy n2.val,0,usize,0
+│                      // clear whole buffer
+│                      //code_c
+│                      //bufferPos=0
+│                  }
+│              }
+│          
+│ -Timer tmSleep
+│ -    Attributes
+│ -        Scope      : local
+│ -        Period (ms): 1000
+│ -        Enabled    : yes
+│ -    
+│ -    Events
+│ -        Timer Event
+│ -            if(sleepTimeout!=0&&dimValue!=dim)
+│ -            {
+│ -                sleepValue+=1
+│ -                if(sleepTimeout<=sleepValue)
+│ -                {
+│ -                    sleepValue=0
+│ -                    dim=dimValue
+│ -                    tSend.txt="event,sleepReached,cardMedia"
+│ -                    //send calc crc
+│ -                    btlen tSend.txt,sys0
+│ -                    crcrest 1,0xffff // reset CRC
+│ -                    crcputh 55 bb
+│ -                    crcputs sys0,2
+│ -                    crcputs tSend.txt,0
+│ -                    //send cmd
+│ -                    printh 55 bb
+│ -                    prints sys0,2
+│ -                    prints tSend.txt,0
+│ -                    prints crcval,2
+│ -                }
+│ -            }
+│ -        
+│  TouchCap tc0
+│      Attributes
+│          Scope: local
+│          Value: 0
+│      
+│      Events
+│          Touch Press Event
 ├── pageStartup.txt
 │ @@ -173,15 +173,15 @@
 │          Max. Text Size                      : 10
