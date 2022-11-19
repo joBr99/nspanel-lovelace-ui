@@ -1,34 +1,60 @@
 # NSPanel Lovelance UI
 
-The general idea is that the Nextion Display cycles though a page counter and the esp32 tells the display what to do.
-If you are changeing the page the nextion display will send and event to the esp32 and it has to answer with the messages~ that will update the current page with it's desired components. This enables easy changes~ without touching the HMI Project.
+The HMI Project of this project is only used to display stuff, navigation ist mostly up to the backend. This allows to be way more flexible.
 
-# Message Flow
+Messages to the Panel can be send through the Command `CustomSend`, which is implemented in the berry driver.
+You can issue this command through MQTT by sending messages to the `cmnd/XXX/CustomSend` Topic.
+Messages from the Panel are send to the `tele/XXX/RESULT` Topic, encoded in json `{"CustomRecv":"message_from_screen"}`
 
-HomeAssistant / NodeRed -- MQTT -- Tasmota -- Nextion Screen
+## Startup
 
-See the following picture to get an Idea for the messages send and recived from the screen during cycling though pages. Please note that the messages in the picutre are outdated, but it is still useful to understand the concept.
-
-![message_flow](../doc-pics/message-flow.png)
-
-
-# Custom Protocol
+On startup the panel will send `{"CustomRecv":"event,startup,39,eu"}` every few seconds.
 ```
-55 BB [payload length] [payload length] [payload] [crc] [crc]
+event,   #Every message from the screen will start with `event`
+startup, #Startup Event
+39,      #Current HMI Project Version
+eu       #Current HMI Project Model
 ```
 
-Payload length contains the number of bytes of the payload.
+You can answer this message in many different ways, but in general the goal is to navigate way from the startup page. In the following example we will navigate to the screensaver page.
 
-CRC is "CRC-16 (MODBUS) Big Endian" calculated over the whole message
+Send the following messages to the CustomSend Topic. (You can also send them on tasmota console for testing)
 
-This protocol does not try to implement broken JSON Commands with a specified type (lol).
-Instead the commands are plain text commands with parameters.
 
-## Example for valid Message
-This message has to be generated for the Message "1337" (1337 is not a valid command~ this is just an example)
-```
-55 BB  04 00  31 33 33 37  5F 5B
-```
+
+### Some preperation before we are acually navigating away:
+
+`time~18:17`                       #Send this every minute
+
+`date~Donnerstag, 25. August 2022` #Send this at least once at midnight :)
+
+`timeout~20`                       # This the number of seconds after pages will try to enter the screensaver, you will see this later. Send this message once after receiving the startup event.
+
+`dimmode~10~100~6371` # This command sets the brightness of the screensaver, the normal brightness and the default background color. Send this message once after receiving the startup event
+
+### Navigate from the startup page to the screensaver, by sending this command to the CustomSend Topic.
+
+`pageType~screensaver` 
+
+After sending this command you should already see the time and date.
+To also show weather data you have to send them with weatherUpdate, but we will skip this for now.
+
+### Exit Screensaver
+
+Touching the panel on the screensaver will result in this MQTT Message on the result topic:
+
+`event,buttonPress2,screensaver,bExit,1`
+
+You can answer this by sending theese commands to the CustomSend Topic
+
+`pageType~cardEntities`
+
+`entityUpd~test~1|1~light~light.schreibtischlampe~X~17299~Schreibtischlampe~0~text~sensor.server_energy_power~Y~17299~Server ENERGY Power~155 W~shutter~cover.rolladenfenster_cover_1~Z~17299~Fenster Eingang~A|B|C|disable|enable|enable~switch~switch.bad~D~63142~Bad~1`
+
+
+
+
+
 ## Messages to Nextion Display
 
 The following message should be implemented on all pages
@@ -248,3 +274,23 @@ Background Color is
 
 Source for Icons is the Material Design Font, used by HASPone
 https://github.com/HASwitchPlate/HASPone
+
+
+# Custom Protocol
+```
+55 BB [payload length] [payload length] [payload] [crc] [crc]
+```
+
+Payload length contains the number of bytes of the payload.
+
+CRC is "CRC-16 (MODBUS) Big Endian" calculated over the whole message
+
+This protocol does not try to implement broken JSON Commands with a specified type (lol).
+Instead the commands are plain text commands with parameters.
+
+## Example for valid Message
+This message has to be generated for the Message "1337" (1337 is not a valid command~ this is just an example)
+```
+55 BB  04 00  31 33 33 37  5F 5B
+```
+
