@@ -165,7 +165,7 @@ options are ? seperated
 onoffbtn has to be`disable` to disable the on off btn
 tIconBtnEntityName is the entiy name used in the button event for pressing the upper left icon
 
-`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*icon*~*title*~*author*~*volume*~*playpauseicon*~currentSpeaker~speakerList-seperated-by-?~onoffbtn~tIconBtnEntityName`
+`entityUpd~*heading*~*navigation*~*internalNameEntiy*~*icon*~iconcolor~*title*~titlecolor~*author*~authorcolor~*volume*~*playpauseicon*~currentSpeaker~speakerList-seperated-by-?~onoffbtn~tIconBtnEntityName`
 
 ### cardAlarm Page
 
