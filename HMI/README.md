@@ -24,13 +24,14 @@ Send the following messages to the CustomSend Topic. (You can also send them on 
 
 ### Some preperation before we are acually navigating away:
 
-`time~18:17`                       #Send this every minute
+Send this every minute: `time~18:17`
 
-`date~Donnerstag, 25. August 2022` #Send this at least once at midnight :)
+Send this at least once at midnight: `date~Donnerstag, 25. August 2022`
 
-`timeout~20`                       # This the number of seconds after pages will try to enter the screensaver, you will see this later. Send this message once after receiving the startup event.
+Send theese message once after receiving the startup event (parameters will be explained later): 
 
-`dimmode~10~100~6371` # This command sets the brightness of the screensaver, the normal brightness and the default background color. Send this message once after receiving the startup event
+`timeout~20`
+`dimmode~10~100~6371`
 
 ### Navigate from the startup page to the screensaver, by sending this command to the CustomSend Topic.
 
@@ -45,23 +46,16 @@ Touching the panel on the screensaver will result in this MQTT Message on the re
 
 `event,buttonPress2,screensaver,bExit,1`
 
-You can answer this by sending theese commands to the CustomSend Topic
+You can answer this by sending theese commands to the CustomSend Topic.
 
 `pageType~cardEntities`
 
 `entityUpd~test~1|1~light~light.schreibtischlampe~X~17299~Schreibtischlampe~0~text~sensor.server_energy_power~Y~17299~Server ENERGY Power~155 W~shutter~cover.rolladenfenster_cover_1~Z~17299~Fenster Eingang~A|B|C|disable|enable|enable~switch~switch.bad~D~63142~Bad~1`
 
 
-
-
-
 ## Messages to Nextion Display
 
-The following message should be implemented on all pages
-
-wake screen:
-
-`wake`
+### General Commands, implemented on all pages
 
 set brightness of screensaver and active-brightness:
 
@@ -71,7 +65,7 @@ set brightness of screensaver and active-brightness:
 
 set current time:
 
-`time~22 : 26`
+`time~22:26`
 
 set current date:
 
