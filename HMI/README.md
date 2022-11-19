@@ -31,6 +31,7 @@ Send this at least once at midnight: `date~Donnerstag, 25. August 2022`
 Send theese message once after receiving the startup event (parameters will be explained later): 
 
 `timeout~20`
+
 `dimmode~10~100~6371`
 
 ### Navigate from the startup page to the screensaver, by sending this command to the CustomSend Topic.
