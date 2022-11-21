@@ -24,9 +24,9 @@ issueConfigs:
 - content:
 # template 1: bug report
   - "PROBLEM DESCRIPTION"
-  - "REQUESTED INFORMATION"
-  - "TO REPRODUCE"
-  - "EXPECTED BEHAVIOUR" 
+#  - "REQUESTED INFORMATION"
+#  - "TO REPRODUCE"
+#  - "EXPECTED BEHAVIOUR" 
 - content:
 # template 2: feature request
   - "FEATURE DESCRIPTION"
