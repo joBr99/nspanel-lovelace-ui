@@ -578,7 +578,7 @@ Text tIcon1
         Opacity                             : 127
         x coordinate                        : 16
         y coordinate                        : 0
-        Width                               : 38
+        Width                               : 85
         Height                              : 38
         Effect                              : load
         Effect Priority                     : 0
@@ -589,7 +589,7 @@ Text tIcon1
         Font ID                             : 1
         Back. Color                         : 0
         Font Color                          : 17299
-        Horizontal Alignment                : center
+        Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
@@ -606,9 +606,9 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 429
+        x coordinate                        : 393
         y coordinate                        : 0
-        Width                               : 38
+        Width                               : 85
         Height                              : 38
         Effect                              : load
         Effect Priority                     : 0
@@ -619,7 +619,7 @@ Text tIcon2
         Font ID                             : 1
         Back. Color                         : 0
         Font Color                          : 17299
-        Horizontal Alignment                : center
+        Horizontal Alignment                : right
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
@@ -1050,6 +1050,8 @@ Timer tmSerial
                                             vis tAMPM,0
                                         }
                                         spstr strCommand.txt,tTimeAdd.txt,"~",2
+                                        ref tIcon1
+                                        ref tIcon2
                                     }
                                     if(tInstruction.txt=="date")
                                     {
@@ -1265,16 +1267,37 @@ Timer tmSerial
                                         spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
                                         spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
                                         //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
-                                        udelete u[2]+3
+                                        udelete payloadLength-1
                                         bufferPos=0
+                                        if(tId.txt=="pageStartup")
+                                        {
+                                            page pageStartup
+                                        }
+                                        if(tId.txt=="screensaver")
+                                        {
+                                            page screensaver
+                                        }
+                                        if(tId.txt=="cardEntities")
+                                        {
+                                            page cardEntities
+                                        }
+                                        if(tId.txt=="cardGrid")
+                                        {
+                                            page cardGrid
+                                        }
                                         if(tId.txt=="popupLight")
                                         {
                                             pageIcons.tTmp1.txt=tTmp.txt
                                             page popupLight
                                         }
-                                        if(tId.txt=="pageStartup")
+                                        if(tId.txt=="popupShutter")
                                         {
-                                            page pageStartup
+                                            pageIcons.tTmp1.txt=tTmp.txt
+                                            page popupShutter
+                                        }
+                                        if(tId.txt=="popupNotify")
+                                        {
+                                            page popupNotify
                                         }
                                         if(tId.txt=="cardThermo")
                                         {
@@ -1283,22 +1306,6 @@ Timer tmSerial
                                         if(tId.txt=="cardMedia")
                                         {
                                             page cardMedia
-                                        }
-                                        if(tId.txt=="pageStartup")
-                                        {
-                                            page pageStartup
-                                        }
-                                        if(tId.txt=="popupNotify")
-                                        {
-                                            page popupNotify
-                                        }
-                                        if(tId.txt=="cardGrid")
-                                        {
-                                            page cardGrid
-                                        }
-                                        if(tId.txt=="cardEntities")
-                                        {
-                                            page cardEntities
                                         }
                                         if(tId.txt=="cardAlarm")
                                         {
