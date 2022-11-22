@@ -306,7 +306,7 @@ Button b13
     
     Events
         Touch Press Event
-            page popupInSel
+            page popupThermo
         
 Button b2
     Attributes

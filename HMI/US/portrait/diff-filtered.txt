@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-11-19 22:44:23.979739346 +0000
++++ /dev/fd/62	2022-11-22 17:23:14.264877564 +0000
 +52 +306,47 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",2
 +                                 //save third arg if there's one

@@ -14,14 +14,14 @@ popupNotify
 	19   Component(s)
 	253  Line(s) of event code
 	164  Unique line(s) of event code
-cardAlarm
-	40   Component(s)
-	439  Line(s) of event code
-	261  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	172  Line(s) of event code
 	125  Unique line(s) of event code
+cardAlarm
+	40   Component(s)
+	439  Line(s) of event code
+	261  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	394  Line(s) of event code
