@@ -233,12 +233,13 @@ class LuiPagesGen(object):
         if entityType == "iText":
             value   = entityId.split(".", 2)[1]
             name = name if name is not None else "conf name missing"
+            icon_color = icon_color = rgb_dec565(colorOverride) if colorOverride is not None and type(colorOverride) is list else 17299
             icon_res = get_icon_id(icon) if icon is not None else get_icon_id("alert-circle-outline")
-            return f"~text~{entityId}~{icon_res}~17299~{name}~{value}"
+            return f"~text~{entityId}~{icon_res}~{icon_color}~{name}~{value}"
         if entityType == "service":
             icon_id = get_icon("script", overwrite=icon)
             text = get_translation(self._locale, "frontend.ui.card.script.run")
-            icon_color = 17299
+            icon_color = icon_color = rgb_dec565(colorOverride) if colorOverride is not None and type(colorOverride) is list else 17299
             if item.status is not None and apis.ha_api.entity_exists(item.status):
                 status_entity = apis.ha_api.get_entity(item.status)
                 icon_id = get_icon(item.status.split(".")[0], state=status_entity.state, device_class=status_entity.attributes.get("device_class", "_"), overwrite=icon)
