@@ -10,6 +10,10 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	172  Line(s) of event code
+	125  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	490  Line(s) of event code
@@ -18,10 +22,6 @@ popupShutter
 	25   Component(s)
 	394  Line(s) of event code
 	216  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	172  Line(s) of event code
-	125  Unique line(s) of event code
 popupThermo
 	44   Component(s)
 	515  Line(s) of event code

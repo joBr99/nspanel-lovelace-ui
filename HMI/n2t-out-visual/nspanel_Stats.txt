@@ -14,18 +14,14 @@ popupLight
 	28   Component(s)
 	404  Line(s) of event code
 	223  Unique line(s) of event code
-popupNotify
-	19   Component(s)
-	253  Line(s) of event code
-	164  Unique line(s) of event code
 pageTest
 	21   Component(s)
 	66   Line(s) of event code
 	63   Unique line(s) of event code
-pageStartup
+popupNotify
 	19   Component(s)
-	177  Line(s) of event code
-	127  Unique line(s) of event code
+	253  Line(s) of event code
+	164  Unique line(s) of event code
 cardQR
 	32   Component(s)
 	421  Line(s) of event code
@@ -42,6 +38,10 @@ cardMedia
 	34   Component(s)
 	421  Line(s) of event code
 	222  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	177  Line(s) of event code
+	127  Unique line(s) of event code
 cardThermo
 	53   Component(s)
 	608  Line(s) of event code
