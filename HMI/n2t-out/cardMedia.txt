@@ -641,18 +641,36 @@ Timer tmSerial
                                         spstr strCommand.txt,entn.txt,"~",3
                                         //icon
                                         spstr strCommand.txt,tIcon.txt,"~",4
+                                        //icon farbe
+                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,tIcon.pco,0,0
+                                        }
                                         //title
-                                        spstr strCommand.txt,tTitle.txt,"~",5
-                                        //author
-                                        spstr strCommand.txt,tAuthor.txt,"~",6
-                                        //volume
+                                        spstr strCommand.txt,tTitle.txt,"~",6
+                                        //title farbe
                                         spstr strCommand.txt,tTmp.txt,"~",7
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,tTitle.pco,0,0
+                                        }
+                                        //author
+                                        spstr strCommand.txt,tAuthor.txt,"~",8
+                                        //author farbe
+                                        spstr strCommand.txt,tTmp.txt,"~",9
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,tAuthor.pco,0,0
+                                        }
+                                        //volume
+                                        spstr strCommand.txt,tTmp.txt,"~",10
                                         covx tTmp.txt,sys0,0,0
                                         hVolume.val=sys0
                                         //icon
-                                        spstr strCommand.txt,tPlayPause.txt,"~",8
+                                        spstr strCommand.txt,tPlayPause.txt,"~",11
                                         //speaker current
-                                        spstr strCommand.txt,tSpeaker.txt,"~",9
+                                        spstr strCommand.txt,tSpeaker.txt,"~",12
                                         if(tSpeaker.txt!="")
                                         {
                                             tSpeaker.pco=1374
@@ -661,14 +679,14 @@ Timer tmSerial
                                             tSpeaker.pco=65535
                                         }
                                         //speaker list
-                                        spstr strCommand.txt,vaSpeakerList.txt,"~",10
+                                        spstr strCommand.txt,vaSpeakerList.txt,"~",13
                                         if(vaSpeakerList.txt=="")
                                         {
                                             vis t6,0
                                         }
                                         vaSpeakerPos.val=0
                                         // on off button
-                                        spstr strCommand.txt,tTmp.txt,"~",11
+                                        spstr strCommand.txt,tTmp.txt,"~",14
                                         if(tTmp.txt=="disable")
                                         {
                                             vis t5,0
@@ -678,7 +696,7 @@ Timer tmSerial
                                             covx tTmp.txt,t5.pco,0,0
                                         }
                                         //tIconBtnEntityName
-                                        spstr strCommand.txt,vaMenu.txt,"~",12
+                                        spstr strCommand.txt,vaMenu.txt,"~",15
                                     }
                                     if(tInstruction.txt=="time")
                                     {

@@ -10,10 +10,6 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
-cardMedia
-	34   Component(s)
-	406  Line(s) of event code
-	216  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	490  Line(s) of event code
@@ -54,6 +50,10 @@ screensaver
 	45   Component(s)
 	389  Line(s) of event code
 	288  Unique line(s) of event code
+cardMedia
+	34   Component(s)
+	421  Line(s) of event code
+	222  Unique line(s) of event code
 cardPower
 	43   Component(s)
 	435  Line(s) of event code
@@ -74,5 +74,5 @@ cardEntities
 Total
 	17   Page(s)
 	583  Component(s)
-	7219 Line(s) of event code
-	1876 Unique line(s) of event code
+	7234 Line(s) of event code
+	1879 Unique line(s) of event code
