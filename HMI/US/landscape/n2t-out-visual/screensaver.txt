@@ -593,7 +593,7 @@ Text tIcon1
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 5
+        Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -623,7 +623,7 @@ Text tIcon2
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 5
+        Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0

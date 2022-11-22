@@ -646,32 +646,3 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-├── screensaver.txt
-│ @@ -252,25 +252,25 @@
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│ -        Max. Text Size                      : 10
-│ +        Max. Text Size                      : 5
-│      
-│  Text tIcon2
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│ -        Max. Text Size                      : 10
-│ +        Max. Text Size                      : 5
-│      
-│  Text tMR
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
