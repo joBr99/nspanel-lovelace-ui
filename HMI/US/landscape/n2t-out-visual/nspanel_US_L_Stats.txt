@@ -14,14 +14,14 @@ popupNotify
 	19   Component(s)
 	253  Line(s) of event code
 	164  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	172  Line(s) of event code
-	125  Unique line(s) of event code
 cardAlarm
 	40   Component(s)
 	439  Line(s) of event code
 	261  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	177  Line(s) of event code
+	127  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	394  Line(s) of event code
@@ -60,8 +60,8 @@ popupThermo
 	272  Unique line(s) of event code
 screensaver
 	45   Component(s)
-	389  Line(s) of event code
-	288  Unique line(s) of event code
+	396  Line(s) of event code
+	294  Unique line(s) of event code
 popupInSel
 	34   Component(s)
 	529  Line(s) of event code
@@ -74,5 +74,5 @@ cardEntities
 Total
 	17   Page(s)
 	571  Component(s)
-	7191 Line(s) of event code
-	1809 Unique line(s) of event code
+	7203 Line(s) of event code
+	1810 Unique line(s) of event code
