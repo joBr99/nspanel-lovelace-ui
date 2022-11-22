@@ -54,10 +54,6 @@ cardPower
 	43   Component(s)
 	435  Line(s) of event code
 	297  Unique line(s) of event code
-screensaver
-	45   Component(s)
-	396  Line(s) of event code
-	294  Unique line(s) of event code
 cardAlarm
 	40   Component(s)
 	439  Line(s) of event code
@@ -66,6 +62,10 @@ cardThermo
 	53   Component(s)
 	608  Line(s) of event code
 	316  Unique line(s) of event code
+screensaver
+	45   Component(s)
+	396  Line(s) of event code
+	294  Unique line(s) of event code
 cardEntities
 	77   Component(s)
 	1391 Line(s) of event code
