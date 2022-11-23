@@ -14,6 +14,194 @@
 │ +    // fix touch offset (Removed for US version)
 │ +    //lcd_dev fffb 0002 0000 0020
 │      page pageStartup
+├── cardAlarm.txt
+│ @@ -479,15 +479,15 @@
+│          State                               : unpressed
+│          Text                                : î³
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardAlarm,"
+│ -            if(bNext.txt=="?")
+│ +            if(bNext.txt=="î")
+│              {
+│                  tSend.txt+="bHome"
+│              }else
+│              {
+│                  tSend.txt+="bNext"
+│              }
+│              //send calc crc
+│ @@ -511,15 +511,15 @@
+│          State                               : unpressed
+│          Text                                : î°
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardAlarm,"
+│ -            if(bPrev.txt=="?")
+│ +            if(bPrev.txt=="î¶")
+│              {
+│                  tSend.txt+="bUp"
+│              }else
+│              {
+│                  tSend.txt+="bPrev"
+│              }
+│              //send calc crc
+│ @@ -650,39 +650,39 @@
+│                                              tsw mSwipeUp,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,1
+│                                              tsw mSwipeUp,0
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î°"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,0
+│                                              tsw mSwipeUp,1
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î¶"
+│                                          }
+│                                          spstr tId.txt,tTmp.txt,"|",1
+│                                          if(tTmp.txt=="0")
+│                                          {
+│                                              vis bNext,0
+│                                              tsw mSwipeNext,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bNext,1
+│                                              tsw mSwipeNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î³"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î"
+│                                          }
+│                                          //text arm1
+│                                          spstr strCommand.txt,arm1.txt,"~",3
+│                                          if(arm1.txt!="")
+│                                          {
+│                                              vis arm1,1
+│                                          }
+├── cardChart.txt
+│ @@ -175,16 +175,16 @@
+│          Send Component ID                   : disabled
+│          State                               : unpressed
+│          Text                                : î³
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│ -            tSend.txt="event,buttonPress2,cardChart,"
+│ -            if(bPrev.txt=="?")
+│ +            tSend.txt="event,buttonPress2,cardPower,"
+│ +            if(bNext.txt=="î")
+│              {
+│                  tSend.txt+="bHome"
+│              }else
+│              {
+│                  tSend.txt+="bNext"
+│              }
+│              //send calc crc
+│ @@ -207,16 +207,16 @@
+│          Send Component ID                   : disabled
+│          State                               : unpressed
+│          Text                                : î°
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│ -            tSend.txt="event,buttonPress2,cardChart,"
+│ -            if(bPrev.txt=="?")
+│ +            tSend.txt="event,buttonPress2,cardAlarm,"
+│ +            if(bPrev.txt=="î¶")
+│              {
+│                  tSend.txt+="bUp"
+│              }else
+│              {
+│                  tSend.txt+="bPrev"
+│              }
+│              //send calc crc
+│ @@ -309,14 +309,25 @@
+│                  }
+│              }else
+│              {
+│                  vis x0,0
+│                  vaLast.val=-1
+│              }
+│          
+│ +Hotspot m1
+│ +    Attributes
+│ +        Scope                               : local
+│ +        Dragging                            : 0
+│ +        Disable release event after dragging: 0
+│ +        Send Component ID                   : disabled
+│ +    
+│ +    Events
+│ +        Touch Press Event
+│ +            click bPrev,1
+│ +        
+│  Hotspot mSwipeNext
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│      
+│ @@ -409,39 +420,39 @@
+│                                              tsw mSwipeUp,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,1
+│                                              tsw mSwipeUp,0
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î°"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,0
+│                                              tsw mSwipeUp,1
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î¶"
+│                                          }
+│                                          spstr tId.txt,tTmp.txt,"|",1
+│                                          if(tTmp.txt=="0")
+│                                          {
+│                                              vis bNext,0
+│                                              tsw mSwipeNext,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bNext,1
+│                                              tsw mSwipeNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î³"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î"
+│                                          }
+│                                          // extract color
+│                                          spstr strCommand.txt,tTmp.txt,"~",3
+│                                          covx tTmp.txt,vaColorL.val,0,0
+│                                          // prepare dark color
+│                                          sys0=vaColorL.val>>11 // red
+│                                          vaColorD.val=sys0*8/10<<11 // store and shift
 ├── cardEntities.txt
 │ @@ -61,14 +61,24 @@
 │              vis tIcon4,0
@@ -199,7 +387,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          State                               : unpressed
-│ @@ -517,14 +596,39 @@
+│ @@ -517,28 +596,53 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -239,6 +427,38 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          State                               : unpressed
+│          Text                                : î³
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardEntities,"
+│ -            if(bNext.txt=="?")
+│ +            if(bNext.txt=="î")
+│              {
+│                  tSend.txt+="bHome"
+│              }else
+│              {
+│                  tSend.txt+="bNext"
+│              }
+│              //send calc crc
+│ @@ -562,15 +666,15 @@
+│          State                               : unpressed
+│          Text                                : î°
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardEntities,"
+│ -            if(bPrev.txt=="?")
+│ +            if(bPrev.txt=="î¶")
+│              {
+│                  tSend.txt+="bUp"
+│              }else
+│              {
+│                  tSend.txt+="bPrev"
+│              }
+│              //send calc crc
 │ @@ -681,14 +785,39 @@
 │              crcputs tSend.txt,0
 │              //send cmd
@@ -447,6 +667,50 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │      
+│ @@ -1232,39 +1469,39 @@
+│                                              tsw mSwipeUp,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,1
+│                                              tsw mSwipeUp,0
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î°"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,0
+│                                              tsw mSwipeUp,1
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î¶"
+│                                          }
+│                                          spstr tId.txt,tTmp.txt,"|",1
+│                                          if(tTmp.txt=="0")
+│                                          {
+│                                              vis bNext,0
+│                                              tsw mSwipeNext,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bNext,1
+│                                              tsw mSwipeNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î³"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î"
+│                                          }
+│                                          // get Type
+│                                          spstr strCommand.txt,type1.txt,"~",3
+│                                          // get internal name
+│                                          spstr strCommand.txt,entn1.txt,"~",4
+│                                          if(type1.txt=="delete"||type1.txt=="")
+│                                          {
 │ @@ -1854,14 +2091,163 @@
 │                                              covx tTmp.txt,sys0,0,0
 │                                              hSlider4.minval=sys0
@@ -611,6 +875,401 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
+├── cardGrid.txt
+│ @@ -468,15 +468,15 @@
+│          State                               : unpressed
+│          Text                                : î³
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardGrid,"
+│ -            if(bNext.txt=="?")
+│ +            if(bNext.txt=="î")
+│              {
+│                  tSend.txt+="bHome"
+│              }else
+│              {
+│                  tSend.txt+="bNext"
+│              }
+│              //send calc crc
+│ @@ -500,15 +500,15 @@
+│          State                               : unpressed
+│          Text                                : î°
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardGrid,"
+│ -            if(bPrev.txt=="?")
+│ +            if(bPrev.txt=="î¶")
+│              {
+│                  tSend.txt+="bUp"
+│              }else
+│              {
+│                  tSend.txt+="bPrev"
+│              }
+│              //send calc crc
+│ @@ -659,39 +659,39 @@
+│                                              tsw mSwipeUp,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,1
+│                                              tsw mSwipeUp,0
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î°"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,0
+│                                              tsw mSwipeUp,1
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î¶"
+│                                          }
+│                                          spstr tId.txt,tTmp.txt,"|",1
+│                                          if(tTmp.txt=="0")
+│                                          {
+│                                              vis bNext,0
+│                                              tsw mSwipeNext,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bNext,1
+│                                              tsw mSwipeNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î³"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î"
+│                                          }
+│                                          // get Type
+│                                          spstr strCommand.txt,type1.txt,"~",3
+│                                          // get internal name
+│                                          spstr strCommand.txt,entn1.txt,"~",4
+│                                          if(type1.txt=="delete"||type1.txt=="")
+│                                          {
+├── cardMedia.txt
+│ @@ -444,15 +444,15 @@
+│          State                               : unpressed
+│          Text                                : î³
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardMedia,"
+│ -            if(bNext.txt=="?")
+│ +            if(bNext.txt=="î")
+│              {
+│                  tSend.txt+="bHome"
+│              }else
+│              {
+│                  tSend.txt+="bNext"
+│              }
+│              //send calc crc
+│ @@ -476,15 +476,15 @@
+│          State                               : unpressed
+│          Text                                : î°
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardMedia,"
+│ -            if(bPrev.txt=="?")
+│ +            if(bPrev.txt=="î¶")
+│              {
+│                  tSend.txt+="bUp"
+│              }else
+│              {
+│                  tSend.txt+="bPrev"
+│              }
+│              //send calc crc
+│ @@ -607,39 +607,39 @@
+│                                              tsw mSwipeUp,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,1
+│                                              tsw mSwipeUp,0
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î°"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,0
+│                                              tsw mSwipeUp,1
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î¶"
+│                                          }
+│                                          spstr tId.txt,tTmp.txt,"|",1
+│                                          if(tTmp.txt=="0")
+│                                          {
+│                                              vis bNext,0
+│                                              tsw mSwipeNext,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bNext,1
+│                                              tsw mSwipeNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î³"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î"
+│                                          }
+│                                          //entity name
+│                                          spstr strCommand.txt,entn.txt,"~",3
+│                                          //icon
+│                                          spstr strCommand.txt,tIcon.txt,"~",4
+│                                          //icon farbe
+│                                          spstr strCommand.txt,tTmp.txt,"~",5
+├── cardPower.txt
+│ @@ -343,15 +343,15 @@
+│          State                               : unpressed
+│          Text                                : î³
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardPower,"
+│ -            if(bNext.txt=="?")
+│ +            if(bNext.txt=="î")
+│              {
+│                  tSend.txt+="bHome"
+│              }else
+│              {
+│                  tSend.txt+="bNext"
+│              }
+│              //send calc crc
+│ @@ -375,15 +375,15 @@
+│          State                               : unpressed
+│          Text                                : î°
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardAlarm,"
+│ -            if(bPrev.txt=="?")
+│ +            if(bPrev.txt=="î¶")
+│              {
+│                  tSend.txt+="bUp"
+│              }else
+│              {
+│                  tSend.txt+="bPrev"
+│              }
+│              //send calc crc
+│ @@ -565,39 +565,39 @@
+│                                              tsw mSwipeUp,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,1
+│                                              tsw mSwipeUp,0
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î°"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,0
+│                                              tsw mSwipeUp,1
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î¶"
+│                                          }
+│                                          spstr tId.txt,tTmp.txt,"|",1
+│                                          if(tTmp.txt=="0")
+│                                          {
+│                                              vis bNext,0
+│                                              tsw mSwipeNext,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bNext,1
+│                                              tsw mSwipeNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î³"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î"
+│                                          }
+│                                          // icon color home
+│                                          spstr strCommand.txt,tTmp.txt,"~",3
+│                                          covx tTmp.txt,t1.pco,0,0
+│                                          // icon home
+│                                          spstr strCommand.txt,t1.txt,"~",4
+│                                          // text home
+├── cardQR.txt
+│ @@ -184,15 +184,15 @@
+│          State                               : unpressed
+│          Text                                : î³
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardQR,"
+│ -            if(bNext.txt=="?")
+│ +            if(bNext.txt=="î")
+│              {
+│                  tSend.txt+="bHome"
+│              }else
+│              {
+│                  tSend.txt+="bNext"
+│              }
+│              //send calc crc
+│ @@ -216,15 +216,15 @@
+│          State                               : unpressed
+│          Text                                : î°
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardAlarm,"
+│ -            if(bPrev.txt=="?")
+│ +            if(bPrev.txt=="î¶")
+│              {
+│                  tSend.txt+="bUp"
+│              }else
+│              {
+│                  tSend.txt+="bPrev"
+│              }
+│              //send calc crc
+│ @@ -456,39 +456,39 @@
+│                                              tsw mSwipeUp,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,1
+│                                              tsw mSwipeUp,0
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î°"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,0
+│                                              tsw mSwipeUp,1
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î¶"
+│                                          }
+│                                          spstr tId.txt,tTmp.txt,"|",1
+│                                          if(tTmp.txt=="0")
+│                                          {
+│                                              vis bNext,0
+│                                              tsw mSwipeNext,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bNext,1
+│                                              tsw mSwipeNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î³"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î"
+│                                          }
+│                                          //text qrcode
+│                                          spstr strCommand.txt,vaQR.txt,"~",3
+│                                          // get Type
+│                                          spstr strCommand.txt,type1.txt,"~",4
+│                                          // get internal name
+│                                          spstr strCommand.txt,entn1.txt,"~",5
+├── cardThermo.txt
+│ @@ -291,15 +291,15 @@
+│          State                               : unpressed
+│          Text                                : î³
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardThermo,"
+│ -            if(bNext.txt=="?")
+│ +            if(bNext.txt=="î")
+│              {
+│                  tSend.txt+="bHome"
+│              }else
+│              {
+│                  tSend.txt+="bNext"
+│              }
+│              //send calc crc
+│ @@ -323,15 +323,15 @@
+│          State                               : unpressed
+│          Text                                : î°
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              tSend.txt="event,buttonPress2,cardThermo,"
+│ -            if(bPrev.txt=="?")
+│ +            if(bPrev.txt=="î¶")
+│              {
+│                  tSend.txt+="bUp"
+│              }else
+│              {
+│                  tSend.txt+="bPrev"
+│              }
+│              //send calc crc
+│ @@ -904,39 +904,39 @@
+│                                              tsw mSwipeUp,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,1
+│                                              tsw mSwipeUp,0
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î°"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bPrev,1
+│                                              tsw mSwipePrev,0
+│                                              tsw mSwipeUp,1
+│ -                                            bPrev.txt="?"
+│ +                                            bPrev.txt="î¶"
+│                                          }
+│                                          spstr tId.txt,tTmp.txt,"|",1
+│                                          if(tTmp.txt=="0")
+│                                          {
+│                                              vis bNext,0
+│                                              tsw mSwipeNext,0
+│                                          }
+│                                          if(tTmp.txt=="1")
+│                                          {
+│                                              vis bNext,1
+│                                              tsw mSwipeNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î³"
+│                                          }
+│                                          if(tTmp.txt=="2")
+│                                          {
+│                                              vis bNext,1
+│ -                                            bNext.txt="?"
+│ +                                            bNext.txt="î"
+│                                          }
+│                                          //entity name
+│                                          spstr strCommand.txt,entn.txt,"~",3
+│                                          //currentTemp
+│                                          spstr strCommand.txt,tCurTemp.txt,"~",4
+│                                          //dstTemp
+│                                          spstr strCommand.txt,tTmp.txt,"~",5
 ├── pageStartup.txt
 │ @@ -118,15 +118,15 @@
 │  Text tMsg3

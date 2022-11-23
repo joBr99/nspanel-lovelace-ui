@@ -1,4 +1,4 @@
-Page cardQR
+Page cardChart
     Attributes
         ID                                  : 0
         Scope                               : local
@@ -28,19 +28,10 @@ Page cardQR
             vis tId,0
             vis bPrev,0
             vis bNext,0
-            //ui e1
-            vis btOnOff1,0
-            vis tIcon1,0
-            vis tEntity1,0
-            vis bText1,0
-            //ui e2
-            vis btOnOff2,0
-            vis tIcon2,0
-            vis tEntity2,0
-            vis bText2,0
-            tsw m0,0
-            tsw m1,0
-            cardQR.bco=defaultBcoColor
+            cardChart.bco=defaultBcoColor
+            vis x0,0
+            x0.bco=defaultBcoColor
+            x0.borderc=defaultBcoColor
             for(sys0=0;sys0<32;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
@@ -62,150 +53,161 @@ Page cardQR
         
 Variable (string) entn
     Attributes
-        ID            : 7
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Variable (string) entn1
-    Attributes
-        ID            : 25
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Variable (string) entn2
-    Attributes
-        ID            : 26
+        ID            : 4
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) strCommand
     Attributes
-        ID            : 6
+        ID            : 3
         Scope         : local
         Text          : 
         Max. Text Size: 275
     
+Variable (string) strTmp
+    Attributes
+        ID            : 14
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
+    
 Variable (string) tId
     Attributes
-        ID            : 15
+        ID            : 11
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tInstruction
     Attributes
-        ID            : 16
+        ID            : 12
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tSend
     Attributes
-        ID            : 10
+        ID            : 7
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) tTmp
     Attributes
-        ID            : 14
+        ID            : 10
         Scope         : local
         Text          : 
-        Max. Text Size: 10
+        Max. Text Size: 20
     
-Variable (string) type1
+Variable (int32) vMax
     Attributes
-        ID            : 27
+        ID   : 25
+        Scope: local
+        Value: 0
+    
+Variable (int32) vNValues
+    Attributes
+        ID   : 13
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaBottom
+    Attributes
+        ID   : 18
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaColorD
+    Attributes
+        ID   : 24
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaColorL
+    Attributes
+        ID   : 23
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaLast
+    Attributes
+        ID   : 21
+        Scope: local
+        Value: 4294967295
+    
+Variable (int32) vaLeft
+    Attributes
+        ID   : 19
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaUnit
+    Attributes
+        ID   : 16
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaValue
+    Attributes
+        ID   : 17
+        Scope: local
+        Value: 0
+    
+Variable (string) vaValues
+    Attributes
+        ID            : 20
         Scope         : local
         Text          : 
-        Max. Text Size: 10
+        Max. Text Size: 100
     
-Variable (string) type2
+Variable (int32) vaYUnit
     Attributes
-        ID            : 28
-        Scope         : local
-        Text          : 
-        Max. Text Size: 10
+        ID   : 26
+        Scope: local
+        Value: 0
     
-Variable (string) vaQR
+XFloat x0
     Attributes
-        ID            : 31
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Text tEntity1
-    Attributes
-        ID                                  : 17
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 271
-        y coordinate                        : 97
-        Width                               : 170
+        x coordinate                        : 190
+        y coordinate                        : 84
+        Width                               : 100
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
-        Style                               : flat
+        Style                               : border
         Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 6371
-        Font Color                          : 65535
-        Horizontal Alignment                : left
+        Border Color                        : 0
+        Border Width                        : 2
+        Font ID                             : 1
+        Back. Color                         : 0
+        Font Color                          : 50712
+        Horizontal Alignment                : center
         Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : tEntity1
-        Max. Text Size                      : 30
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text tEntity2
-    Attributes
-        ID                                  : 21
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 272
-        y coordinate                        : 204
-        Width                               : 170
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 6371
-        Font Color                          : 65535
-        Horizontal Alignment                : left
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : tEntity1
-        Max. Text Size                      : 30
-        Word wrap                           : disabled
+        Value                               : 0
+        Significant digits left             : 0
+        Significant digits right            : 1
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
 Text tHeading
     Attributes
-        ID                                  : 24
+        ID                                  : 28
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 66
+        x coordinate                        : 81
         y coordinate                        : 26
         Width                               : 320
         Height                              : 30
@@ -215,7 +217,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -223,66 +225,6 @@ Text tHeading
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 40
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text tIcon1
-    Attributes
-        ID                                  : 18
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 219
-        y coordinate                        : 96
-        Width                               : 45
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 6371
-        Font Color                          : 17299
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : î°
-        Max. Text Size                      : 5
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text tIcon2
-    Attributes
-        ID                                  : 22
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 220
-        y coordinate                        : 203
-        Width                               : 45
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 6371
-        Font Color                          : 17299
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : î°
-        Max. Text Size                      : 5
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -306,13 +248,13 @@ Picture p0
     
 Button bNext
     Attributes
-        ID                                  : 3
+        ID                                  : 29
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 391
+        x coordinate                        : 406
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -338,8 +280,8 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardQR,"
-            if(bNext.txt=="?")
+            tSend.txt="event,buttonPress2,cardPower,"
+            if(bNext.txt=="î")
             {
                 tSend.txt+="bHome"
             }else
@@ -360,13 +302,13 @@ Button bNext
         
 Button bPrev
     Attributes
-        ID                                  : 4
+        ID                                  : 27
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 9
+        x coordinate                        : 24
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -393,7 +335,7 @@ Button bPrev
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,cardAlarm,"
-            if(bPrev.txt=="?")
+            if(bPrev.txt=="î¶")
             {
                 tSend.txt+="bUp"
             }else
@@ -412,207 +354,98 @@ Button bPrev
             prints tSend.txt,0
             prints crcval,2
         
-Button bText1
-    Attributes
-        ID                                  : 19
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 220
-        y coordinate                        : 146
-        Width                               : 214
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Font ID                             : 0
-        Back. Color                         : 6371
-        Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 14823
-        Font Color (Unpressed)              : 65535
-        Font Color (Pressed)                : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 30
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bText2
-    Attributes
-        ID                                  : 23
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 222
-        y coordinate                        : 253
-        Width                               : 213
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Font ID                             : 0
-        Back. Color                         : 6371
-        Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 14823
-        Font Color (Unpressed)              : 65535
-        Font Color (Pressed)                : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 30
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Dual-state Button btOnOff1
-    Attributes
-        ID                                  : 2
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 384
-        y coordinate                        : 137
-        Width                               : 50
-        Height                              : 50
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : image
-        Font ID                             : 0
-        Background Picture ID (Unpressed)   : 1
-        Back. Picture ID (Pressed)          : 2
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
-            covx btOnOff1.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Dual-state Button btOnOff2
-    Attributes
-        ID                                  : 20
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 385
-        y coordinate                        : 244
-        Width                               : 50
-        Height                              : 50
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : image
-        Font ID                             : 0
-        Background Picture ID (Unpressed)   : 1
-        Back. Picture ID (Pressed)          : 2
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn2.txt+",OnOff,"
-            covx btOnOff2.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
 Hotspot m0
     Attributes
-        ID                                  : 29
+        ID                                  : 15
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 13
-        y coordinate                        : 91
-        Width                               : 200
-        Height                              : 200
+        x coordinate                        : 20
+        y coordinate                        : 90
+        Width                               : 440
+        Height                              : 220
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
     
-Hotspot m1
+    Events
+        Touch Press Event
+            if(vaLast.val>=0)
+            {
+                //  spstr vaValues.txt,tTmp.txt,"~",vaLast.val
+                //  covx tTmp.txt,vaValue.val,0,0
+                sys1=vaLast.val*5*vaUnit.val
+                sys1+=vaLeft.val
+                sya0=sys1/100
+                sya1=vaUnit.val*4+sys1/100
+                if(vaValue.val==0)
+                {
+                    line sya0,vaBottom.val,sya1,vaBottom.val,vaColorD.val
+                }else
+                {
+                    sys0=0
+                    if(vaValue.val<0)
+                    {
+                        vaValue.val*=-1
+                        sys0=1
+                    }
+                    fill sya0+1,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4/100,vaYUnit.val*vaValue.val-1,vaColorD.val
+                    //    line sya0+1,-10*vaValue.val+vaBottom.val,sya1-1,-10*vaValue.val+vaBottom.val,vaColorL.val
+                    draw sya0,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,sya1,vaBottom.val,vaColorL.val
+                    if(sys0!=0)
+                    {
+                        sya1=-1*vaYUnit.val*vaValue.val+vaBottom.val
+                        for(sys0=vaBottom.val;sys0>=sya1;sys0-=10)
+                        {
+                            sys2=sys0-5
+                            if(sys2<sya1)
+                            {
+                                sys2=sya1
+                            }
+                            line vaUnit.val*2+sys1/100,sys0,vaUnit.val*2+sys1/100,sys2,vaColorL.val
+                        }
+                    }
+                }
+            }
+            sys0=tch0-m0.x-25-40*100/vaUnit.val
+            sys1=sys0%5
+            if(sys1<4&&sys0>=0)
+            {
+                vis x0,1
+                vaLast.val=sys0/5
+                // n0.val=sys0/5
+                spstr vaValues.txt,tTmp.txt,"~",vaLast.val
+                covx tTmp.txt,vaValue.val,0,0
+                // t0.txt=tTmp.txt
+                sys1=vaLast.val*5*vaUnit.val
+                sys1+=vaLeft.val
+                sya0=sys1/100
+                sya1=vaUnit.val*4+sys1/100
+                if(vaValue.val==0)
+                {
+                    line sya0,vaBottom.val,sya1,vaBottom.val,vaColorL.val
+                    x0.val=vaValue.val
+                }else
+                {
+                    if(vaValue.val<0)
+                    {
+                        fill sya0+1,vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4/100,-1*vaYUnit.val*vaValue.val-1,vaColorL.val
+                        x0.val=vaValue.val*-1
+                    }else
+                    {
+                        fill sya0+1,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4/100,vaYUnit.val*vaValue.val-1,vaColorL.val
+                        x0.val=vaValue.val
+                    }
+                }
+            }else
+            {
+                vis x0,0
+                vaLast.val=-1
+            }
+        
+Hotspot mSwipeNext
     Attributes
         ID                                  : 30
         Scope                               : local
@@ -620,25 +453,9 @@ Hotspot m1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 128
-        y coordinate                        : 91
-        Width                               : 200
-        Height                              : 200
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-    
-Hotspot mSwipeNext
-    Attributes
-        ID                                  : 11
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 440
+        x coordinate                        : 472
         y coordinate                        : 5
-        Width                               : 39
+        Width                               : 8
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
@@ -650,7 +467,7 @@ Hotspot mSwipeNext
         
 Hotspot mSwipePrev
     Attributes
-        ID                                  : 13
+        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -670,7 +487,7 @@ Hotspot mSwipePrev
         
 Hotspot mSwipeUp
     Attributes
-        ID                                  : 12
+        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -690,7 +507,7 @@ Hotspot mSwipeUp
         
 Timer tmSerial
     Attributes
-        ID         : 5
+        ID         : 2
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -736,14 +553,11 @@ Timer tmSerial
                                 {
                                     // crc is okay
                                     // here is the location where acual code should be
-                                    // write command to variable strCommand
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
                                     if(tInstruction.txt=="entityUpd")
                                     {
-                                        // command format: entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
-                                        //tHeading
                                         spstr strCommand.txt,tHeading.txt,"~",1
                                         // navigation icons
                                         spstr strCommand.txt,tId.txt,"~",2
@@ -759,14 +573,14 @@ Timer tmSerial
                                             vis bPrev,1
                                             tsw mSwipePrev,1
                                             tsw mSwipeUp,0
-                                            bPrev.txt="?"
+                                            bPrev.txt="î°"
                                         }
                                         if(tTmp.txt=="2")
                                         {
                                             vis bPrev,1
                                             tsw mSwipePrev,0
                                             tsw mSwipeUp,1
-                                            bPrev.txt="?"
+                                            bPrev.txt="î¶"
                                         }
                                         spstr tId.txt,tTmp.txt,"|",1
                                         if(tTmp.txt=="0")
@@ -778,146 +592,159 @@ Timer tmSerial
                                         {
                                             vis bNext,1
                                             tsw mSwipeNext,1
-                                            bNext.txt="?"
+                                            bNext.txt="î³"
                                         }
                                         if(tTmp.txt=="2")
                                         {
                                             vis bNext,1
-                                            bNext.txt="?"
+                                            bNext.txt="î"
                                         }
-                                        //text qrcode
-                                        spstr strCommand.txt,vaQR.txt,"~",3
-                                        // get Type
-                                        spstr strCommand.txt,type1.txt,"~",4
-                                        // get internal name
-                                        spstr strCommand.txt,entn1.txt,"~",5
-                                        if(type1.txt=="delete"||type1.txt=="")
+                                        // extract color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        covx tTmp.txt,vaColorL.val,0,0
+                                        // prepare dark color
+                                        sys0=vaColorL.val>>11 // red
+                                        vaColorD.val=sys0*8/10<<11 // store and shift
+                                        sys0=vaColorL.val>>5%64 // green
+                                        vaColorD.val=sys0*8/10<<5+vaColorD.val // store and shift
+                                        sys0=vaColorL.val%32
+                                        vaColorD.val=sys0*8/10+vaColorD.val // store and add
+                                        //
+                                        // detect nValues and maxValue
+                                        vNValues.val=0
+                                        spstr strCommand.txt,tTmp.txt,"~",vNValues.val+6
+                                        strlen tTmp.txt,sya0
+                                        while(sya0>0)
                                         {
-                                            vis btOnOff1,0
-                                            vis tEntity1,0
-                                            vis tIcon1,0
-                                            vis bText1,0
-                                        }else
-                                        {
-                                            // change icon
-                                            spstr strCommand.txt,tIcon1.txt,"~",6
-                                            vis tIcon1,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",7
-                                            covx tTmp.txt,sys0,0,0
-                                            tIcon1.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity1.txt,"~",8
-                                            vis tEntity1,1
-                                        }
-                                        if(type1.txt=="light")
-                                        {
-                                            vis btOnOff1,1
-                                            vis bText1,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",9
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff1.val=sys0
-                                        }
-                                        if(type1.txt=="switch")
-                                        {
-                                            vis btOnOff1,1
-                                            vis bText1,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",9
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff1.val=sys0
-                                        }
-                                        if(type1.txt=="text")
-                                        {
-                                            vis btOnOff1,0
-                                            vis bText1,1
-                                            tsw bText1,0
-                                            bText1.pco=65535
-                                            bText1.pco2=65535
-                                            // get Text (optional Value)
-                                            spstr strCommand.txt,bText1.txt,"~",9
-                                        }
-                                        if(type1.txt=="button")
-                                        {
-                                            vis btOnOff1,0
-                                            vis bText1,1
-                                            tsw bText1,1
-                                            bText1.pco=1374
-                                            bText1.pco2=1374
-                                            // get Text (optional Value)
-                                            spstr strCommand.txt,bText1.txt,"~",9
-                                        }
-                                        // get Type
-                                        spstr strCommand.txt,type2.txt,"~",10
-                                        // get internal name
-                                        spstr strCommand.txt,entn2.txt,"~",11
-                                        if(type2.txt=="delete"||type2.txt=="")
-                                        {
-                                            vis btOnOff2,0
-                                            vis tEntity2,0
-                                            vis tIcon2,0
-                                            vis bText2,0
-                                        }else
-                                        {
-                                            // change icon
-                                            spstr strCommand.txt,tIcon2.txt,"~",12
-                                            vis tIcon2,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",13
-                                            covx tTmp.txt,sys0,0,0
-                                            tIcon2.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity2.txt,"~",14
-                                            vis tEntity2,1
-                                        }
-                                        if(type2.txt=="light")
-                                        {
-                                            vis btOnOff2,1
-                                            vis bText2,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",15
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff2.val=sys0
-                                        }
-                                        if(type2.txt=="switch")
-                                        {
-                                            vis btOnOff2,1
-                                            vis bText2,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",15
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff2.val=sys0
-                                        }
-                                        if(type2.txt=="text")
-                                        {
-                                            vis btOnOff2,0
-                                            vis bText2,1
-                                            tsw bText2,0
-                                            bText2.pco=65535
-                                            bText2.pco2=65535
-                                            // get Text (optional Value)
-                                            spstr strCommand.txt,bText2.txt,"~",15
-                                        }
-                                        if(type2.txt=="button")
-                                        {
-                                            vis btOnOff2,0
-                                            vis bText2,1
-                                            tsw bText2,1
-                                            bText2.pco=1374
-                                            bText2.pco2=1374
-                                            // get Text (optional Value)
-                                            spstr strCommand.txt,bText2.txt,"~",15
-                                        }
-                                        if(type2.txt=="delete"||type2.txt=="")
-                                        {
-                                            if(type1.txt=="delete"||type1.txt=="")
+                                            covx tTmp.txt,sya1,0,0
+                                            if(sya1>vMax.val)
                                             {
-                                                qrcode m1.x,m1.y,200,6371,65535,-1,vaQR.txt
+                                                vMax.val=sya1
                                             }
-                                        }else
+                                            // next
+                                            vNValues.val++
+                                            spstr strCommand.txt,tTmp.txt,"~",vNValues.val+6
+                                            strlen tTmp.txt,sya0
+                                        }
+                                        //
+                                        // calculate unit width
+                                        sys0=vNValues.val*4
+                                        sys0+=vNValues.val-1
+                                        vaUnit.val=m0.w-25-40*100
+                                        vaUnit.val/=sys0
+                                        vaBottom.val=m0.y+m0.h-24
+                                        vaLeft.val=m0.x+25+40*100
+                                        vaYUnit.val=m0.h-24/vMax.val
+                                        //
+                                        line m0.x+25+40-10,m0.y,m0.x+25+40-10,vaBottom.val+10,14823
+                                        line m0.x+25+40-5,vaBottom.val,m0.x+25+40-15,vaBottom.val,14823
+                                        spstr strCommand.txt,strTmp.txt,"~",5
+                                        sya1=0
+                                        spstr strTmp.txt,tTmp.txt,":",sya1
+                                        strlen tTmp.txt,sya0
+                                        while(sya0>0)
                                         {
-                                            qrcode m0.x,m0.y,200,6371,65535,-1,vaQR.txt
+                                            covx tTmp.txt,sys1,0,0
+                                            if(sys1<=vMax.val)
+                                            {
+                                                line m0.x+25+40-5,-1*vaYUnit.val*sys1+vaBottom.val,m0.x+25+40-15,-1*vaYUnit.val*sys1+vaBottom.val,14823
+                                                sys2=sys1%10
+                                                sys1/=10
+                                                if(sys1>0)
+                                                {
+                                                    covx sys1,tTmp.txt,0,0
+                                                }else
+                                                {
+                                                    tTmp.txt=""
+                                                }
+                                                if(sys2!=0)
+                                                {
+                                                    covx sys2,tId.txt,0,0
+                                                    tTmp.txt=tTmp.txt+"."+tId.txt
+                                                }
+                                                xstr m0.x+28,sys1*10+sys2*-1*vaYUnit.val+vaBottom.val-10,20,20,0,defaultFontColor,RED,2,1,3,tTmp.txt
+                                            }
+                                            // next
+                                            sya1++
+                                            spstr strTmp.txt,tTmp.txt,":",sya1
+                                            strlen tTmp.txt,sya0
+                                        }
+                                        //
+                                        // y achis label
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        // tTmp.txt="Gas [kW]"
+                                        strlen tTmp.txt,sys1
+                                        sya1=sys1*12+m0.h-48/2
+                                        for(sys0=0;sys0<sys1;sys0++)
+                                        {
+                                            substr tTmp.txt,strTmp.txt,sys0,1
+                                            xstr m0.x,sys0*-12+m0.y+sya1,30,20,6,defaultFontColor,RED,2,1,3,strTmp.txt
+                                        }
+                                        for(sys0=0;sys0<vNValues.val;sys0++)
+                                        {
+                                            if(sys0>0)
+                                            {
+                                                vaValues.txt+="~"
+                                            }
+                                            // extract next entry
+                                            spstr strCommand.txt,tTmp.txt,"~",sys0+6
+                                            // calculate left
+                                            sys1=sys0*5*vaUnit.val
+                                            sys1+=vaLeft.val
+                                            // if there is a colon in the obtained value we have a label/and gridline
+                                            spstr tTmp.txt,strTmp.txt,"^",1
+                                            strlen strTmp.txt,sya0
+                                            if(sya0>0)
+                                            {
+                                                // we have a label!!!
+                                                // -> extract label
+                                                sys2=vaUnit.val*2+sys1/100
+                                                // draw label
+                                                xstr sya0*-6+sys2,vaBottom.val+2,sya0*12,22,0,defaultFontColor,defaultBcoColor,1,1,3,strTmp.txt
+                                                // draw line
+                                                // line sys2,vaBottom.val,sys2,m0.y,defaultFontColor
+                                                sya1=1
+                                                //spstr tTmp.txt,strTmp.txt,":",0
+                                                spstr tTmp.txt,tTmp.txt,":",0
+                                                vaValues.txt+="-"
+                                            }else
+                                            {
+                                                sya1=0
+                                            }
+                                            vaValues.txt+=tTmp.txt
+                                            covx tTmp.txt,vaValue.val,0,0
+                                            sya0=sys1/100
+                                            if(vaValue.val==0)
+                                            {
+                                                line sya0,vaBottom.val,vaUnit.val*4+sys1/100,vaBottom.val,vaColorD.val
+                                            }else
+                                            {
+                                                fill sya0+1,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4/100,vaYUnit.val*vaValue.val-1,vaColorD.val
+                                                line sya0+1,-1*vaYUnit.val*vaValue.val+vaBottom.val,vaUnit.val*4+sys1/100-1,-1*vaYUnit.val*vaValue.val+vaBottom.val,vaColorL.val
+                                                draw sya0,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4+sys1/100,vaBottom.val,vaColorL.val
+                                            }
+                                            if(sya1>0)
+                                            {
+                                                sya1=-1*vaYUnit.val*vaValue.val+vaBottom.val
+                                                for(sya0=vaBottom.val-5;sya0>m0.y;sya0-=10)
+                                                {
+                                                    sys1=sya0+5
+                                                    if(sya0>=sya1)
+                                                    {
+                                                        line sys2,sya0,sys2,sys1,vaColorL.val
+                                                    }else
+                                                    {
+                                                        if(sys1>=sya1)
+                                                        {
+                                                            line sys2,sya0,sys2,sya1-1,14823
+                                                            line sys2,sya1,sys2,sys1,vaColorL.val
+                                                        }else
+                                                        {
+                                                            line sys2,sya0,sys2,sys1,14823
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -1041,7 +868,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 8
+        ID         : 5
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -1072,7 +899,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 9
+        ID   : 6
         Scope: local
         Value: 0
     

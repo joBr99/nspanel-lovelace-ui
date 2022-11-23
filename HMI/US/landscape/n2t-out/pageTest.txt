@@ -77,6 +77,20 @@ Button b11
         Touch Press Event
             page cardGrid
         
+Button b12
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : chart
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            page cardChart
+        
 Button b2
     Attributes
         Scope                               : local
