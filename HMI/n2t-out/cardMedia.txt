@@ -448,7 +448,7 @@ Button bNext
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,cardMedia,"
-            if(bNext.txt=="î")
+            if(bNext.txt=="?")
             {
                 tSend.txt+="bHome"
             }else
@@ -480,7 +480,7 @@ Button bPrev
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,cardMedia,"
-            if(bPrev.txt=="î¶")
+            if(bPrev.txt=="?")
             {
                 tSend.txt+="bUp"
             }else
@@ -611,14 +611,14 @@ Timer tmSerial
                                             vis bPrev,1
                                             tsw mSwipePrev,1
                                             tsw mSwipeUp,0
-                                            bPrev.txt="î°"
+                                            bPrev.txt="?"
                                         }
                                         if(tTmp.txt=="2")
                                         {
                                             vis bPrev,1
                                             tsw mSwipePrev,0
                                             tsw mSwipeUp,1
-                                            bPrev.txt="î¶"
+                                            bPrev.txt="?"
                                         }
                                         spstr tId.txt,tTmp.txt,"|",1
                                         if(tTmp.txt=="0")
@@ -630,12 +630,12 @@ Timer tmSerial
                                         {
                                             vis bNext,1
                                             tsw mSwipeNext,1
-                                            bNext.txt="î³"
+                                            bNext.txt="?"
                                         }
                                         if(tTmp.txt=="2")
                                         {
                                             vis bNext,1
-                                            bNext.txt="î"
+                                            bNext.txt="?"
                                         }
                                         //entity name
                                         spstr strCommand.txt,entn.txt,"~",3
@@ -799,6 +799,10 @@ Timer tmSerial
                                         if(tId.txt=="cardPower")
                                         {
                                             page cardPower
+                                        }
+                                        if(tId.txt=="cardChart")
+                                        {
+                                            page cardChart
                                         }
                                     }
                                     // end of user code
