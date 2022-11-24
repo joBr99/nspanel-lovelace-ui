@@ -382,6 +382,18 @@ let Subpages_1: PageEntities =
             "items": [<PageItem>{ id: "alias.0.NSPanel_1.Guest_Wifi", hidePassword: true }]
         };
 
+let ChartDemo: PageChart =
+{
+    "type": "cardChart",
+    "heading": "ChartsDmo",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "yAxis": "Gas [kWh]",
+    "yAxisTicks": [2,4,6,8,10,12,14],
+    "items": [<PageItem>{ id: "0_userdata.0.NSPanel_1.TDSF.gas", onColor: {red:156, green:56, blue:86}}]
+};
+
 let Buero_Seite_2: PageGrid =
 {
     "type": "cardGrid",
@@ -644,7 +656,7 @@ export const config: Config = {
             Subpages_1,         //Beispiel-Seite
             Buero_Themostat,    //Beispiel-Seite
             Buero_Alarm,        //Beispiel-Seite
-
+			ChartDemo,			//Beispiel-Seite
             Service             //Auto-Alias Service Page
     ],
     subPages: [
@@ -1687,6 +1699,9 @@ function GeneratePage(page: Page): void {
                 break;
             case 'cardPower':
                 SendToPanel(GeneratePowerPage(<PagePower>page));
+                break;
+			case 'cardChart':
+                SendToPanel(GenerateChartPage(<PageChart>page));
                 break;
         }
     } catch (err) {
@@ -3098,6 +3113,36 @@ function GeneratePowerPage(page: PagePower): Payload[] {
 
     } catch (err) {
         console.warn('function GeneratePowerPage: ' + err.message);
+    }
+}
+
+function GenerateChartPage(page: PageChart): Payload[] {
+    try {
+        activePage = page;
+
+        let id = page.items[0].id
+        let out_msgs: Array<Payload> = [];
+        out_msgs.push({ payload: 'pageType~cardChart' });
+
+        let heading = page.heading !== undefined ? page.heading : "chart..."
+
+        let txt = getState(id).val
+
+        out_msgs.push({
+            payload: 'entityUpd~' +                     //entityUpd
+                heading + '~' +                         //heading
+                GetNavigationString(pageId) + '~' +     //navigation
+                rgb_dec565(page.items[0].onColor) + '~' +                      //color
+                page.yAxis + '~' +
+                page.yAxisTicks.join(':') + '~' +
+                txt
+        });     
+
+        //entityUpd,<heading>,<navigation>,<color>,<yAxisLabel>,<yAxisTic>:[<yAxisTic>]*[~<Value[:xAxisLabel]?>]*
+        return out_msgs
+
+    } catch (err) {
+        console.warn('function GenerateChartPage: ' + err.message);
     }
 }
 
@@ -5018,10 +5063,10 @@ type Config = {
     defaultOnColor: RGB,
     defaultOffColor: RGB,
     defaultBackgroundColor: RGB,
-    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower)[],
-    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower)[],
-    button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | null),
-    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | null),
+    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart)[],
+    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart)[],
+    button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null),
+    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null),
 }
 
 type ScreenSaverElement = {
