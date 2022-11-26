@@ -19,6 +19,7 @@ Page cardMedia
             vis tTmp,0
             vis tId,0
             vis t5,0
+            vis tShuffle,0
             vis bPrev,0
             vis bNext,0
             cardMedia.bco=defaultBcoColor
@@ -49,11 +50,23 @@ Variable (string) strCommand
         Text          : 
         Max. Text Size: 750
     
+Variable (string) tId
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
 Variable (string) tSend
     Attributes
         Scope         : local
         Text          : 
         Max. Text Size: 200
+    
+Variable (string) tTmp
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
     
 Variable (string) vaMenu
     Attributes
@@ -299,16 +312,6 @@ Text tIcon
                 prints crcval,2
             }
         
-Text tId
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
 Text tInstruction
     Attributes
         Scope                               : local
@@ -336,6 +339,35 @@ Text tPlayPause
             tSend.txt="event,buttonPress2,"
             tSend.txt+=entn.txt+","
             tSend.txt+="media-pause"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Text tShuffle
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : x
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,media-next
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="media-shuffle"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -386,16 +418,6 @@ Text tTitle
         Associated Keyboard                 : none
         Text                                : 
         Max. Text Size                      : 50
-    
-Text tTmp
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
     
 Picture p0
     Attributes
@@ -697,6 +719,16 @@ Timer tmSerial
                                         }
                                         //tIconBtnEntityName
                                         spstr strCommand.txt,vaMenu.txt,"~",15
+                                        // shuffel btn
+                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            vis tShuffle,0
+                                        }else
+                                        {
+                                            vis tShuffle,1
+                                            tShuffle.txt=tTmp.txt
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
