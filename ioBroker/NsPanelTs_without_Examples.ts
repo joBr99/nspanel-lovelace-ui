@@ -379,8 +379,8 @@ export const config: Config = {
                 NSPanel_Einstellungen,      //Auto-Alias Service Page
                 NSPanel_Firmware_Info       //Auto-Alias Service Page
     ],
-    button1Page: button1Page,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
-    button2Page: button2Page    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
+    button1Page: null,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
+    button2Page: null    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
 };
 
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
