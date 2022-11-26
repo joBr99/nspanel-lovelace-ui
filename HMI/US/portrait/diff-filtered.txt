@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-11-26 21:54:17.076103274 +0000
++++ /dev/fd/62	2022-11-26 23:19:41.401474138 +0000
 +rdChart.txt
 +16 +175,16 @@
 + Send Component ID                   : disabled
@@ -61,6 +61,195 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
++rdMedia.txt
++5 +15,14 @@
++     dim=dimValueNormal
++     vis p0,0
++     vis tSend,0
++     vis tInstruction,0
++     vis tTmp,0
++     vis tId,0
++     vis t5,0
++     vis tShuffle,0
++     vis bPrev,0
++     vis bNext,0
++     cardMedia.bco=defaultBcoColor
++     for(sys0=0;sys0<34;sys0++)
++     {
++         if(b[sys0].type==98||b[sys0].type==116)
++         {
++2 +45,20 @@
++
++e (string) strCommand
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 750
++
++e (string) tId
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 20
++
++e (string) tSend
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 200
++
++e (string) tTmp
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 10
++
++e (string) vaMenu
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 50
++
++e (string) vaSpeakerList
++14 +295,24 @@
++         //send cmd
++         printh 55 bb
++         prints sys0,2
++         prints tSend.txt,0
++         prints crcval,2
++     }
++ 
++d
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 20
++
++nstruction
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++81 +344,62 @@
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++huffle
++peaker
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : x
++ Max. Text Size                      : 10
++ Text                                : 
++ Max. Text Size                      : 50
++
++nts
++ Touch Press Event
++     // event,buttonPress2,entn,media-next
++     //craft command
++     tSend.txt="event,buttonPress2,"
++     tSend.txt+=entn.txt+","
++     tSend.txt+="media-shuffle"
++     tSend.txt+="speaker-sel,"+tSpeaker.txt
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++peaker
++itle
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 50
++
++nts
++ Touch Press Event
++     // event,buttonPress2,entn,media-next
++     //craft command
++     tSend.txt="event,buttonPress2,"
++     tSend.txt+=entn.txt+","
++     tSend.txt+="speaker-sel,"+tSpeaker.txt
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++itle
++mp
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 50
++ Max. Text Size                      : 10
++
++ p0
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++24 +693,14 @@
++                                 }else
++                                 {
++                                     vis t5,1
++                                     covx tTmp.txt,t5.pco,0,0
++                                 }
++                                 //tIconBtnEntityName
++                                 spstr strCommand.txt,vaMenu.txt,"~",15
++                                 // shuffel btn
++                                 spstr strCommand.txt,tTmp.txt,"~",16
++                                 if(tTmp.txt=="disable")
++                                 {
++                                     vis tShuffle,0
++                                 }else
++                                 {
++                                     vis tShuffle,1
++                                     tShuffle.txt=tTmp.txt
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
 +pupFan.txt
 +14 +619,18 @@
 +                                 {

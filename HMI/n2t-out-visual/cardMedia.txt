@@ -27,6 +27,7 @@ Page cardMedia
             vis tTmp,0
             vis tId,0
             vis t5,0
+            vis tShuffle,0
             vis bPrev,0
             vis bNext,0
             cardMedia.bco=defaultBcoColor
@@ -47,48 +48,62 @@ Page cardMedia
         
 Variable (string) entn
     Attributes
-        ID            : 17
+        ID            : 15
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) strCommand
     Attributes
-        ID            : 6
+        ID            : 5
         Scope         : local
         Text          : 
         Max. Text Size: 750
     
-Variable (string) tSend
+Variable (string) tId
     Attributes
         ID            : 33
         Scope         : local
         Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tSend
+    Attributes
+        ID            : 31
+        Scope         : local
+        Text          : 
         Max. Text Size: 200
+    
+Variable (string) tTmp
+    Attributes
+        ID            : 34
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
     
 Variable (string) vaMenu
     Attributes
-        ID            : 32
+        ID            : 30
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) vaSpeakerList
     Attributes
-        ID            : 26
+        ID            : 24
         Scope         : local
         Text          : 
         Max. Text Size: 400
     
 Variable (int32) vaSpeakerPos
     Attributes
-        ID   : 27
+        ID   : 25
         Scope: local
         Value: 0
     
 Text t0
     Attributes
-        ID                                  : 14
+        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -137,7 +152,7 @@ Text t0
         
 Text t1
     Attributes
-        ID                                  : 21
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -187,13 +202,13 @@ Text t1
         
 Text t2
     Attributes
-        ID                                  : 12
+        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 302
+        x coordinate                        : 306
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -236,7 +251,7 @@ Text t2
         
 Text t3
     Attributes
-        ID                                  : 22
+        ID                                  : 20
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -286,7 +301,7 @@ Text t3
         
 Text t4
     Attributes
-        ID                                  : 23
+        ID                                  : 21
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -316,7 +331,7 @@ Text t4
     
 Text t5
     Attributes
-        ID                                  : 28
+        ID                                  : 26
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -365,7 +380,7 @@ Text t5
         
 Text t6
     Attributes
-        ID                                  : 25
+        ID                                  : 23
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -407,7 +422,7 @@ Text t6
         
 Text tAuthor
     Attributes
-        ID                                  : 11
+        ID                                  : 9
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -437,7 +452,7 @@ Text tAuthor
     
 Text tHeading
     Attributes
-        ID                                  : 9
+        ID                                  : 7
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -467,7 +482,7 @@ Text tHeading
     
 Text tIcon
     Attributes
-        ID                                  : 16
+        ID                                  : 14
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -513,39 +528,9 @@ Text tIcon
                 prints crcval,2
             }
         
-Text tId
-    Attributes
-        ID                                  : 8
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 49
-        y coordinate                        : 159
-        Width                               : 30
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Text tInstruction
     Attributes
-        ID                                  : 7
+        ID                                  : 6
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -575,13 +560,13 @@ Text tInstruction
     
 Text tPlayPause
     Attributes
-        ID                                  : 13
+        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 199
+        x coordinate                        : 202
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -622,9 +607,58 @@ Text tPlayPause
             prints tSend.txt,0
             prints crcval,2
         
+Text tShuffle
+    Attributes
+        ID                                  : 32
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 11
+        y coordinate                        : 145
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Font Color                          : 50712
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : x
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            // event,buttonPress2,entn,media-next
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="media-shuffle"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Text tSpeaker
     Attributes
-        ID                                  : 24
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -673,7 +707,7 @@ Text tSpeaker
         
 Text tTitle
     Attributes
-        ID                                  : 10
+        ID                                  : 8
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -701,36 +735,6 @@ Text tTitle
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tTmp
-    Attributes
-        ID                                  : 2
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 14
-        y coordinate                        : 156
-        Width                               : 27
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Picture p0
     Attributes
         ID                                  : 1
@@ -750,7 +754,7 @@ Picture p0
     
 Slider hVolume
     Attributes
-        ID                                  : 15
+        ID                                  : 13
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -796,7 +800,7 @@ Slider hVolume
         
 Button bNext
     Attributes
-        ID                                  : 3
+        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -850,7 +854,7 @@ Button bNext
         
 Button bPrev
     Attributes
-        ID                                  : 4
+        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -904,7 +908,7 @@ Button bPrev
         
 Hotspot mSwipeNext
     Attributes
-        ID                                  : 29
+        ID                                  : 27
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -924,7 +928,7 @@ Hotspot mSwipeNext
         
 Hotspot mSwipePrev
     Attributes
-        ID                                  : 31
+        ID                                  : 29
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -944,7 +948,7 @@ Hotspot mSwipePrev
         
 Hotspot mSwipeUp
     Attributes
-        ID                                  : 30
+        ID                                  : 28
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -964,7 +968,7 @@ Hotspot mSwipeUp
         
 Timer tmCooldown
     Attributes
-        ID         : 20
+        ID         : 18
         Scope      : local
         Period (ms): 100
         Enabled    : no
@@ -975,7 +979,7 @@ Timer tmCooldown
         
 Timer tmSerial
     Attributes
-        ID         : 5
+        ID         : 4
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -1129,6 +1133,16 @@ Timer tmSerial
                                         }
                                         //tIconBtnEntityName
                                         spstr strCommand.txt,vaMenu.txt,"~",15
+                                        // shuffel btn
+                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            vis tShuffle,0
+                                        }else
+                                        {
+                                            vis tShuffle,1
+                                            tShuffle.txt=tTmp.txt
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {
@@ -1260,7 +1274,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 18
+        ID         : 16
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -1291,7 +1305,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 19
+        ID   : 17
         Scope: local
         Value: 0
     
