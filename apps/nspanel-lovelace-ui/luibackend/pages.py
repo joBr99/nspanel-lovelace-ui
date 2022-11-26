@@ -341,7 +341,7 @@ class LuiPagesGen(object):
         elif entityType == "input_text":
             entityTypePanel = "text"
             value = entity.state
-        elif entityType == "input_select":
+        elif entityType in [input_select", "select"]:
             entityTypePanel = "input_sel"
             value = entity.state
         elif entityType == "vacuum":
