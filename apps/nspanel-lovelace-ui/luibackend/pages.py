@@ -501,7 +501,14 @@ class LuiPagesGen(object):
                     onoffbutton = 1374
                 else:
                     onoffbutton = rgb_dec565([255,152,0])
-            command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~~{title}~~{author}~~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}~{mediaBtn}"
+            shuffleBtn = "disable"
+            if bits & 0b100000000000000:
+                shuffle = get_attr_safe(entity, "shuffle", "")
+                if shuffle == False:
+                    shuffleBtn = get_icon_id('shuffle-disabled')
+                elif shuffle == True:
+                    shuffleBtn = get_icon_id('shuffle')
+            command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~~{title}~~{author}~~{volume}~{iconplaypause}~{source}~{speakerlist[:200]}~{onoffbutton}~{mediaBtn}~{shuffleBtn}"
         self._send_mqtt_msg(command)
         
     def generate_alarm_page(self, navigation, entity, overwrite_supported_modes, alarmBtn):
