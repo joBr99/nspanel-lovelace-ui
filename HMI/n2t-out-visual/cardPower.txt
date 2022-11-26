@@ -802,7 +802,7 @@ Button bNext
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,cardPower,"
-            if(bNext.txt=="?")
+            if(bNext.txt=="î")
             {
                 tSend.txt+="bHome"
             }else
@@ -856,7 +856,7 @@ Button bPrev
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,cardAlarm,"
-            if(bPrev.txt=="?")
+            if(bPrev.txt=="î¶")
             {
                 tSend.txt+="bUp"
             }else
@@ -1075,14 +1075,14 @@ Timer tmSerial
                                             vis bPrev,1
                                             tsw mSwipePrev,1
                                             tsw mSwipeUp,0
-                                            bPrev.txt="?"
+                                            bPrev.txt="î°"
                                         }
                                         if(tTmp.txt=="2")
                                         {
                                             vis bPrev,1
                                             tsw mSwipePrev,0
                                             tsw mSwipeUp,1
-                                            bPrev.txt="?"
+                                            bPrev.txt="î¶"
                                         }
                                         spstr tId.txt,tTmp.txt,"|",1
                                         if(tTmp.txt=="0")
@@ -1094,12 +1094,12 @@ Timer tmSerial
                                         {
                                             vis bNext,1
                                             tsw mSwipeNext,1
-                                            bNext.txt="?"
+                                            bNext.txt="î³"
                                         }
                                         if(tTmp.txt=="2")
                                         {
                                             vis bNext,1
-                                            bNext.txt="?"
+                                            bNext.txt="î"
                                         }
                                         // icon color home
                                         spstr strCommand.txt,tTmp.txt,"~",3
