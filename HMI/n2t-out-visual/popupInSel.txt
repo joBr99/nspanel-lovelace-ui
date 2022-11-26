@@ -1277,10 +1277,6 @@ Timer tmSerial
                                         {
                                             page cardPower
                                         }
-                                        if(tId.txt=="cardChart")
-                                        {
-                                            page cardChart
-                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
