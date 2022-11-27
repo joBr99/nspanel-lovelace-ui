@@ -55,9 +55,9 @@ cardAlarm
 	443  Line(s) of event code
 	263  Unique line(s) of event code
 cardMedia
-	34   Component(s)
-	425  Line(s) of event code
-	224  Unique line(s) of event code
+	35   Component(s)
+	447  Line(s) of event code
+	230  Unique line(s) of event code
 popupThermo
 	44   Component(s)
 	515  Line(s) of event code
@@ -77,6 +77,6 @@ screensaver
 
 Total
 	18   Page(s)
-	609  Component(s)
-	7561 Line(s) of event code
-	1954 Unique line(s) of event code
+	610  Component(s)
+	7583 Line(s) of event code
+	1959 Unique line(s) of event code

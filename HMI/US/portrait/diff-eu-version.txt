@@ -673,6 +673,195 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
+├── cardMedia.txt
+│ @@ -15,15 +15,14 @@
+│              dim=dimValueNormal
+│              vis p0,0
+│              vis tSend,0
+│              vis tInstruction,0
+│              vis tTmp,0
+│              vis tId,0
+│              vis t5,0
+│ -            vis tShuffle,0
+│              vis bPrev,0
+│              vis bNext,0
+│              cardMedia.bco=defaultBcoColor
+│              for(sys0=0;sys0<34;sys0++)
+│              {
+│                  if(b[sys0].type==98||b[sys0].type==116)
+│                  {
+│ @@ -46,32 +45,20 @@
+│      
+│  Variable (string) strCommand
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 750
+│      
+│ -Variable (string) tId
+│ -    Attributes
+│ -        Scope         : local
+│ -        Text          : 
+│ -        Max. Text Size: 20
+│ -    
+│  Variable (string) tSend
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 200
+│      
+│ -Variable (string) tTmp
+│ -    Attributes
+│ -        Scope         : local
+│ -        Text          : 
+│ -        Max. Text Size: 10
+│ -    
+│  Variable (string) vaMenu
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 50
+│      
+│  Variable (string) vaSpeakerList
+│ @@ -308,14 +295,24 @@
+│                  //send cmd
+│                  printh 55 bb
+│                  prints sys0,2
+│                  prints tSend.txt,0
+│                  prints crcval,2
+│              }
+│          
+│ +Text tId
+│ +    Attributes
+│ +        Scope                               : local
+│ +        Dragging                            : 0
+│ +        Disable release event after dragging: 0
+│ +        Send Component ID                   : disabled
+│ +        Associated Keyboard                 : none
+│ +        Text                                : 
+│ +        Max. Text Size                      : 20
+│ +    
+│  Text tInstruction
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│ @@ -347,81 +344,62 @@
+│              crcputs tSend.txt,0
+│              //send cmd
+│              printh 55 bb
+│              prints sys0,2
+│              prints tSend.txt,0
+│              prints crcval,2
+│          
+│ -Text tShuffle
+│ +Text tSpeaker
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│ -        Text                                : x
+│ -        Max. Text Size                      : 10
+│ +        Text                                : 
+│ +        Max. Text Size                      : 50
+│      
+│      Events
+│          Touch Press Event
+│              // event,buttonPress2,entn,media-next
+│              //craft command
+│              tSend.txt="event,buttonPress2,"
+│              tSend.txt+=entn.txt+","
+│ -            tSend.txt+="media-shuffle"
+│ +            tSend.txt+="speaker-sel,"+tSpeaker.txt
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
+│              printh 55 bb
+│              prints sys0,2
+│              prints tSend.txt,0
+│              prints crcval,2
+│          
+│ -Text tSpeaker
+│ +Text tTitle
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : 
+│          Max. Text Size                      : 50
+│      
+│ -    Events
+│ -        Touch Press Event
+│ -            // event,buttonPress2,entn,media-next
+│ -            //craft command
+│ -            tSend.txt="event,buttonPress2,"
+│ -            tSend.txt+=entn.txt+","
+│ -            tSend.txt+="speaker-sel,"+tSpeaker.txt
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│ -        
+│ -Text tTitle
+│ +Text tTmp
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : 
+│ -        Max. Text Size                      : 50
+│ +        Max. Text Size                      : 10
+│      
+│  Picture p0
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ @@ -715,24 +693,14 @@
+│                                          }else
+│                                          {
+│                                              vis t5,1
+│                                              covx tTmp.txt,t5.pco,0,0
+│                                          }
+│                                          //tIconBtnEntityName
+│                                          spstr strCommand.txt,vaMenu.txt,"~",15
+│ -                                        // shuffel btn
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",16
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            vis tShuffle,0
+│ -                                        }else
+│ -                                        {
+│ -                                            vis tShuffle,1
+│ -                                            tShuffle.txt=tTmp.txt
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
 ├── pageStartup.txt
 │ @@ -118,15 +118,15 @@
 │  Text tMsg3
