@@ -383,6 +383,12 @@ def flash_nextion_adv(cmd, idx, payload, payload_json)
         elif idx==3
 			nextion.flash_proto_version = 0
 		    nextion.flash_proto_baud = 115200
+        elif idx==4
+			nextion.flash_proto_version = 1
+		    nextion.flash_proto_baud = 256000
+        elif idx==5
+			nextion.flash_proto_version = 0
+		    nextion.flash_proto_baud = 256000
         else
 			nextion.flash_proto_version = 0
 		    nextion.flash_proto_baud = 115200
