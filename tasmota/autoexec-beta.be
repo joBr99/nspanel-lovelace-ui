@@ -20,7 +20,8 @@ class Nextion : Driver
     var flash_written
     var flash_buff
     var flash_offset
-	var flash_fallback
+	var flash_proto_version
+	var flash_proto_baud
     var awaiting_offset
     var tcp
     var ser
@@ -156,11 +157,13 @@ class Nextion : Driver
                         log("FLH: Send (High Speed) flash start")
 						self.flash_start_millis = tasmota.millis()
                         #self.sendnx(string.format("whmi-wris %d,115200,res0",self.flash_size))
-						if self.flash_fallback == true
-							self.sendnx(string.format("whmi-wri %d,115200,res0",self.flash_size))
+						if self.flash_proto_version == 0
+							self.sendnx(string.format("whmi-wri %d,%d,res0",self.flash_size,self.flash_proto_baud))
 						else
-							self.sendnx(string.format("whmi-wris %d,921600,res0",self.flash_size))
-							self.ser = serial(17, 16, 921600, serial.SERIAL_8N1)
+							self.sendnx(string.format("whmi-wris %d,%d,res0",self.flash_size,self.flash_proto_baud))
+						end
+						if self.flash_proto_baud != 115200
+							self.ser = serial(17, 16, self.flash_proto_baud, serial.SERIAL_8N1)
 						end
                     elif size(msg)==1 && msg[0]==0x08
                         log("FLH: Waiting offset...",3)
@@ -304,7 +307,8 @@ class Nextion : Driver
         log("NXP: Initializing Driver")
         self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
         self.flash_mode = 0
-		self.flash_fallback = false
+		self.flash_proto_version = 1
+		self.flash_proto_baud = 921600
     end
 
 end
@@ -357,15 +361,33 @@ tasmota.add_cmd('UpdateDriverVersion', update_berry_driver)
 
 def flash_nextion(cmd, idx, payload, payload_json)
     def task()
+	    nextion.flash_proto_version = 1
+		nextion.flash_proto_baud = 921600
         nextion.flash_nextion(payload)
     end
     tasmota.set_timer(0,task)
     tasmota.resp_cmnd_done()
 end
 
-def flash_nextion_slow(cmd, idx, payload, payload_json)
-    def task()
-	    nextion.flash_fallback = true
+def flash_nextion_adv(cmd, idx, payload, payload_json)
+    def task()		
+		if idx==0
+			nextion.flash_proto_version = 1
+		    nextion.flash_proto_baud = 921600
+        elif idx==1
+			nextion.flash_proto_version = 0
+		    nextion.flash_proto_baud = 921600
+        elif idx==2
+			nextion.flash_proto_version = 1
+		    nextion.flash_proto_baud = 115200
+        elif idx==3
+			nextion.flash_proto_version = 0
+		    nextion.flash_proto_baud = 115200
+        else
+			nextion.flash_proto_version = 0
+		    nextion.flash_proto_baud = 115200
+        end
+		
         nextion.flash_nextion(payload)
     end
     tasmota.set_timer(0,task)
@@ -385,4 +407,4 @@ end
 tasmota.add_cmd('Nextion', send_cmd)
 tasmota.add_cmd('CustomSend', send_cmd2)
 tasmota.add_cmd('FlashNextion', flash_nextion)
-tasmota.add_cmd('FlashNextionSlow', flash_nextion_slow)
+tasmota.add_cmd('FlashNextionAdv', flash_nextion_adv)
