@@ -2363,7 +2363,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                     + findLocale('thermostat', 'State') + '~'           // Bezeichner vor State
                     + config.temperatureUnit + '~'                      // iconTemperature dstTempTwoTempMode
                     + destTemp2 + '~'                                   // dstTempTwoTempMode --> Wenn Wert, dann 2 Temp
-                    + thermoPopup                                                 // PopUp
+                    + thermoPopup                                       // PopUp
 
             });
 
@@ -3055,8 +3055,7 @@ function HandleButtonEvent(words): void {
                         if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null) {
                             GeneratePage(config.pages[getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val]);
                         } else {
-                            console.log('3')
-                            GeneratePage(config.pages[pageId]);
+                            GeneratePage(activePage);
                         }
                     }
                 } else {
@@ -3068,7 +3067,7 @@ function HandleButtonEvent(words): void {
                     if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null) {
                         GeneratePage(config.pages[getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val]);
                     } else {
-                        GeneratePage(config.pages[activePage]);
+                        GeneratePage(activePage);
                     }
                 }
                 break;
@@ -3399,17 +3398,14 @@ function HandleButtonEvent(words): void {
 
             case 'mode-modus1':
                 let pageItemT1 = findPageItem(id);
-                console.log(id + '.' + pageItemT1.setThermoAlias[0] + ' - ' + 'mode-modus1' + ' - ' + words[4]);
                 setIfExists(id + '.' + pageItemT1.setThermoAlias[0], pageItemT1.popupThermoMode1[parseInt(words[4])]);
                 break;
             case 'mode-modus2':
                 let pageItemT2 = findPageItem(id);
-                console.log(id + '.' + pageItemT2.setThermoAlias[1] + ' - ' + 'mode-modus2' + ' - ' + words[4]);
                 setIfExists(id + '.' + pageItemT2.setThermoAlias[1], pageItemT2.popupThermoMode2[parseInt(words[4])]);
                 break;
             case 'mode-modus3':
                 let pageItemT3 = findPageItem(id);
-                console.log(id + '.' + pageItemT3.setThermoAlias[2] + ' - ' + 'mode-modus3' + ' - ' + words[4])
                 setIfExists(id + '.' + pageItemT3.setThermoAlias[2], pageItemT3.popupThermoMode3[parseInt(words[4])]);
                 break;
             case 'number-set':
@@ -3958,7 +3954,6 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
             }
 
             if (type == 'popupThermo') {
-                console.log('popupThermo');
                 let vIcon = (pageItem.icon != undefined) ? pageItem.icon : 'fan';
                 let mode1 = (pageItem.popupThermoMode1 != undefined) ? pageItem.popupThermoMode1.join('?') : '';
                 let mode2 = (pageItem.popupThermoMode2 != undefined) ? pageItem.popupThermoMode2.join('?') : '';
@@ -4695,7 +4690,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 
         await setStateAsync(NSPanel_Path + 'Sensor.Time', <iobJS.State>{ val: Tasmota_Sensor.Time, ack: true });
         await setStateAsync(NSPanel_Path + 'Sensor.TempUnit', <iobJS.State>{ val: '°' + Tasmota_Sensor.TempUnit, ack: true });
-        //await setStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ANALOG.Temperature1), ack: true });
+        await setStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ANALOG.Temperature1), ack: true });
         await setStateAsync(NSPanel_Path + 'Sensor.ESP32.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ESP32.Temperature), ack: true });
         
         if (autoCreateAlias) {
