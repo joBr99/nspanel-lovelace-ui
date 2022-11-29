@@ -303,14 +303,6 @@ class Nextion : Driver
 
     end
 
-    def version_number(str)
-        import string
-        var i1 = string.find(str,".",0)
-        var i2 = string.find(str,".",i1+1)
-        var num = int(str[0..i1-1])*10000+int(str[i1+1..i2-1])*100+int(str[i2+1..])
-        return num
-    end
-
     def init()
         log("NXP: Initializing Driver")
         self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
