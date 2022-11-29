@@ -1,6 +1,6 @@
 # Nextion Berry Driver (autoexec.be)
 
-This berry driver is intended for the usage with a custom HMI/TFT firmware on nspanel and is a customisted version form [peepshow-21's ns-flash](https://github.com/peepshow-21/ns-flash)
+This berry driver is intended for the usage with a custom HMI/TFT firmware on nspanel and is based on the implementation of [peepshow-21's ns-flash](https://github.com/peepshow-21/ns-flash), but is has the ability to skip directly to the end of the file by using HTTP Range Headers and is able to use higher serial speeds during flashing, which both lead into hugely improved flashing times.
 
 It adds the following commands to Tasmota:
 
