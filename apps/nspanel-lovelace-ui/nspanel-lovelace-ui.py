@@ -34,7 +34,7 @@ class NsPanelLovelaceUIManager(hass.Hass):
             # eu version
             desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-{version}.tft"
         
-        desired_tasmota_driver_version   = 4
+        desired_tasmota_driver_version   = 6
         desired_tasmota_driver_url       = "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be"
         
         mode = cfg.get("updateMode")
