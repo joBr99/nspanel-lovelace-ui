@@ -138,8 +138,7 @@ class Nextion : Driver
         if (self.flash_written==self.flash_size)
             log("FLH: Flashing complete - Time elapsed: %d", (tasmota.millis()-self.flash_start_millis)/1000)
             self.flash_mode = 0
-			self.ser = nil
-			tasmota.gc()
+			self.ser.deinit()
 			self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
         end
 
@@ -163,6 +162,7 @@ class Nextion : Driver
 							self.sendnx(string.format("whmi-wris %d,%d,res0",self.flash_size,self.flash_proto_baud))
 						end
 						if self.flash_proto_baud != 115200
+						    self.ser.deinit()
 							self.ser = serial(17, 16, self.flash_proto_baud, serial.SERIAL_8N1)
 						end
                     elif size(msg)==1 && msg[0]==0x08
