@@ -819,7 +819,7 @@ class LuiPagesGen(object):
         icon_color = 0
         ha_type = entity_id.split(".")[0]
         icon_color = self.get_entity_color(entity, ha_type=ha_type)
-        if ha_type == "input_select":
+        if ha_type in ["input_select", "select"]:
             options = entity.attributes.get("options", [])
         if ha_type == "light":
             options = entity.attributes.get("effect_list", [])[:15]
