@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.6.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
-- abgestimmt auf TFT 45 / v3.6.0 / BerryDriver 4 / Tasmota 12.2.0
+TypeScript v3.6.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+- abgestimmt auf TFT 45 / v3.6.0 / BerryDriver 6 / Tasmota 12.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -77,11 +77,14 @@ ReleaseNotes:
         - 24.11.2022 - v3.6.0   Add Background Color Switch via DP
         - 26.11.2022 - v3.6.0   Add cardMedia Colors
         - 26.11.2022 - v3.6.0   Add cardThermostat Popup 
+        - 28.11.2022 - v3.6.0.1 Bugfix in bExit
+        - 29.11.2022 - v3.6.0.2 Update Berry Version 6
+        - XX.11.2022 - v3.6.1   Add cardChart on PROD (implemented but working with v3.6.1 --> next TFT)
+        - XX.11.2022 - v3.6.1   Add Shuffle to Media Player
 
         Todo's for 3.6.0.1
         - XX.11.2022 - v3.6.0.1 Add Fan
         - XX.11.2022 - v3.6.0.1 Add In_Sel PopUp
-        - 26.11.2022 - v3.6.0.1 Add cardChart on PROD (implemented but working with v3.6.1 --> next TFT)
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -1166,7 +1169,7 @@ function get_locales() {
 async function check_updates() {
     try {
         const desired_display_firmware_version = 45;
-        const berry_driver_version = 4;
+        const berry_driver_version = 6;
 
         if (Debug) {
             console.log('Check-Updates');
