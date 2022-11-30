@@ -25,7 +25,7 @@ Page cardEntities
             //remove background & activate reparse mode
             vis p0,0
             recmod=1
-            bauds=115200
+            baud=115200
             //debug stuff
             vis tTmp,0
             vis tSend,0

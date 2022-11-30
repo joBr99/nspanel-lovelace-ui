@@ -21,7 +21,7 @@ Page screensaver
     Events
         Preinitialize Event
             recmod=1
-            bauds=115200
+            baud=115200
             vis tInstruction,0
             vis tTmp,0
             vis p0,0
