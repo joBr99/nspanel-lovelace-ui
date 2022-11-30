@@ -1170,7 +1170,7 @@ function get_locales() {
 async function check_updates() {
     try {
         const desired_display_firmware_version = 45;
-        const berry_driver_version = 4;
+        const berry_driver_version = 6;
 
         if (Debug) {
             console.log('Check-Updates');
