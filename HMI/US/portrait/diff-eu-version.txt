@@ -1,6 +1,7 @@
 --- HMI/n2t-out
 +++ HMI/US/portrait/n2t-out
-├── Program.s.txt
+│   --- HMI/n2t-out/Program.s.txt
+├── +++ HMI/US/portrait/n2t-out/Program.s.txt
 │ @@ -10,10 +10,10 @@
 │      int sleepValue=0
 │      // dim value
@@ -14,7 +15,8 @@
 │ +    // fix touch offset (Removed for US version)
 │ +    //lcd_dev fffb 0002 0000 0020
 │      page pageStartup
-├── cardChart.txt
+│   --- HMI/n2t-out/cardChart.txt
+├── +++ HMI/US/portrait/n2t-out/cardChart.txt
 │ @@ -175,16 +175,16 @@
 │          Send Component ID                   : disabled
 │          State                               : unpressed
@@ -76,7 +78,8 @@
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
-├── cardEntities.txt
+│   --- HMI/n2t-out/cardEntities.txt
+├── +++ HMI/US/portrait/n2t-out/cardEntities.txt
 │ @@ -61,14 +61,24 @@
 │              vis tIcon4,0
 │              vis tEntity4,0
@@ -673,7 +676,28 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
-├── cardMedia.txt
+│   --- HMI/n2t-out/cardGrid.txt
+├── +++ HMI/US/portrait/n2t-out/cardGrid.txt
+│ @@ -609,14 +609,18 @@
+│              {
+│                  page popupLight
+│              }
+│              if(tTmp.txt=="fan")
+│              {
+│                  page popupFan
+│              }
+│ +            if(tTmp.txt=="input_sel")
+│ +            {
+│ +                page popupInSel
+│ +            }
+│          
+│  Timer tmSerial
+│      Attributes
+│          Scope      : local
+│          Period (ms): 50
+│          Enabled    : yes
+│   --- HMI/n2t-out/cardMedia.txt
+├── +++ HMI/US/portrait/n2t-out/cardMedia.txt
 │ @@ -15,15 +15,14 @@
 │              dim=dimValueNormal
 │              vis p0,0
@@ -862,7 +886,8 @@
 │                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 │                                      }
 │                                      if(tInstruction.txt=="date")
-├── pageStartup.txt
+│   --- HMI/n2t-out/pageStartup.txt
+├── +++ HMI/US/portrait/n2t-out/pageStartup.txt
 │ @@ -118,15 +118,15 @@
 │  Text tMsg3
 │      Attributes
@@ -897,7 +922,8 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-├── popupFan.txt
+│   --- HMI/n2t-out/popupFan.txt
+├── +++ HMI/US/portrait/n2t-out/popupFan.txt
 │ @@ -619,14 +619,18 @@
 │                                          {
 │                                              page cardQR
@@ -917,7 +943,8 @@
 │                                  }
 │                              }
 │                          }
-├── popupInSel.txt
+│   --- HMI/n2t-out/popupInSel.txt
+├── +++ HMI/US/portrait/n2t-out/popupInSel.txt
 │ @@ -893,14 +893,18 @@
 │                                          {
 │                                              page cardQR
@@ -937,7 +964,8 @@
 │                                  }
 │                              }
 │                          }
-├── popupLight.txt
+│   --- HMI/n2t-out/popupLight.txt
+├── +++ HMI/US/portrait/n2t-out/popupLight.txt
 │ @@ -682,14 +682,18 @@
 │                                          {
 │                                              page cardQR
@@ -957,7 +985,8 @@
 │                                  }
 │                              }
 │                          }
-├── popupNotify.txt
+│   --- HMI/n2t-out/popupNotify.txt
+├── +++ HMI/US/portrait/n2t-out/popupNotify.txt
 │ @@ -437,14 +437,18 @@
 │                                          {
 │                                              page cardQR
@@ -977,7 +1006,8 @@
 │                                  }
 │                              }
 │                          }
-├── popupShutter.txt
+│   --- HMI/n2t-out/popupShutter.txt
+├── +++ HMI/US/portrait/n2t-out/popupShutter.txt
 │ @@ -671,14 +671,18 @@
 │                                          {
 │                                              page cardQR
@@ -997,7 +1027,8 @@
 │                                  }
 │                              }
 │                          }
-├── popupThermo.txt
+│   --- HMI/n2t-out/popupThermo.txt
+├── +++ HMI/US/portrait/n2t-out/popupThermo.txt
 │ @@ -942,14 +942,18 @@
 │                                          {
 │                                              page cardQR

@@ -1,5 +1,8 @@
-+++ /dev/fd/62	2022-11-27 12:27:00.567901800 +0000
-+rdChart.txt
++++ /dev/fd/62	2022-11-30 16:01:08.850583062 +0000
++I/n2t-out/Program.s.txt
+++ HMI/US/portrait/n2t-out/Program.s.txt
++I/n2t-out/cardChart.txt
+++ HMI/US/portrait/n2t-out/cardChart.txt
 +16 +175,16 @@
 + Send Component ID                   : disabled
 + State                               : unpressed
@@ -61,7 +64,30 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
-+rdMedia.txt
++I/n2t-out/cardEntities.txt
+++ HMI/US/portrait/n2t-out/cardEntities.txt
++I/n2t-out/cardGrid.txt
+++ HMI/US/portrait/n2t-out/cardGrid.txt
++14 +609,18 @@
++     {
++         page popupLight
++     }
++     if(tTmp.txt=="fan")
++     {
++         page popupFan
++     }
++     if(tTmp.txt=="input_sel")
++     {
++         page popupInSel
++     }
++ 
++mSerial
++ributes
++ Scope      : local
++ Period (ms): 50
++ Enabled    : yes
++I/n2t-out/cardMedia.txt
+++ HMI/US/portrait/n2t-out/cardMedia.txt
 +5 +15,14 @@
 +     dim=dimValueNormal
 +     vis p0,0
@@ -250,7 +276,10 @@
 +                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 +                             }
 +                             if(tInstruction.txt=="date")
-+pupFan.txt
++I/n2t-out/pageStartup.txt
+++ HMI/US/portrait/n2t-out/pageStartup.txt
++I/n2t-out/popupFan.txt
+++ HMI/US/portrait/n2t-out/popupFan.txt
 +14 +619,18 @@
 +                                 {
 +                                     page cardQR
@@ -270,7 +299,8 @@
 +                         }
 +                     }
 +                 }
-+pupInSel.txt
++I/n2t-out/popupInSel.txt
+++ HMI/US/portrait/n2t-out/popupInSel.txt
 +14 +893,18 @@
 +                                 {
 +                                     page cardQR
@@ -290,7 +320,8 @@
 +                         }
 +                     }
 +                 }
-+pupLight.txt
++I/n2t-out/popupLight.txt
+++ HMI/US/portrait/n2t-out/popupLight.txt
 +14 +682,18 @@
 +                                 {
 +                                     page cardQR
@@ -310,7 +341,8 @@
 +                         }
 +                     }
 +                 }
-+pupNotify.txt
++I/n2t-out/popupNotify.txt
+++ HMI/US/portrait/n2t-out/popupNotify.txt
 +14 +437,18 @@
 +                                 {
 +                                     page cardQR
@@ -330,7 +362,8 @@
 +                         }
 +                     }
 +                 }
-+pupShutter.txt
++I/n2t-out/popupShutter.txt
+++ HMI/US/portrait/n2t-out/popupShutter.txt
 +14 +671,18 @@
 +                                 {
 +                                     page cardQR
@@ -350,7 +383,8 @@
 +                         }
 +                     }
 +                 }
-+pupThermo.txt
++I/n2t-out/popupThermo.txt
+++ HMI/US/portrait/n2t-out/popupThermo.txt
 +14 +942,18 @@
 +                                 {
 +                                     page cardQR

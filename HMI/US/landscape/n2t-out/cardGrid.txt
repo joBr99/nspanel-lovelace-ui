@@ -16,7 +16,7 @@ Page cardGrid
             //remove background & activate reparse mode
             vis p0,0
             recmod=1
-            bauds=115200
+            baud=115200
             //debug stuff
             vis tTmp,0
             vis tSend,0
@@ -258,6 +258,10 @@ Button bEntity1
             {
                 page popupShutter
             }
+            if(type1.txt=="input_sel")
+            {
+                page popupInSel
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -294,6 +298,10 @@ Button bEntity2
             if(type2.txt=="shutter")
             {
                 page popupShutter
+            }
+            if(type2.txt=="input_sel")
+            {
+                page popupInSel
             }
         
         Touch Release Event
@@ -332,6 +340,10 @@ Button bEntity3
             {
                 page popupShutter
             }
+            if(type3.txt=="input_sel")
+            {
+                page popupInSel
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -368,6 +380,10 @@ Button bEntity4
             if(type4.txt=="shutter")
             {
                 page popupShutter
+            }
+            if(type4.txt=="input_sel")
+            {
+                page popupInSel
             }
         
         Touch Release Event
@@ -406,6 +422,10 @@ Button bEntity5
             {
                 page popupShutter
             }
+            if(type5.txt=="input_sel")
+            {
+                page popupInSel
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -442,6 +462,10 @@ Button bEntity6
             if(type6.txt=="shutter")
             {
                 page popupShutter
+            }
+            if(type6.txt=="input_sel")
+            {
+                page popupInSel
             }
         
         Touch Release Event

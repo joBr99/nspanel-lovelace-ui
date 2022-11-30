@@ -14,7 +14,7 @@ Page pageTest
         Preinitialize Event
             vis p0,0
             recmod=1
-            bauds=115200
+            baud=115200
         
 Variable (string) strCommand
     Attributes
