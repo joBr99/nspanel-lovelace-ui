@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-11-30 18:11:43.676263963 +0000
++++ /dev/fd/62	2022-11-30 23:21:26.326817245 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardChart.txt
@@ -404,3 +404,90 @@
 +                         }
 +                     }
 +                 }
++I/n2t-out/screensaver.txt
+++ HMI/US/portrait/n2t-out/screensaver.txt
++9 +29,20 @@
++     }
++     tDate.txt=pageIcons.vaDate.txt
++     dim=dimValue
++     vis tSend,0
++     //page open event
++     // clear weather elements, to keep example content in HMI
++ 
++ Postinitialize Event
++     click m0,1
++ 
++e (string) strCommand
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 200
++
++e (string) strTmp
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 2
++
++e (string) tId
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 25
++
++e (string) tInstruction
++38 +94,14 @@
++ Value: 0
++
++e (int32) ycR
++ributes
++ Scope: local
++ Value: 0
++
++
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     if(tDate.x==0)
++     {
++         tTmp.txt="change model conf to us-l/p "
++         strlen tTmp.txt,sys1
++         sya1=sys1*11+m0.h-48/2
++         for(sys0=0;sys0<sys1;sys0++)
++         {
++             substr tTmp.txt,strTmp.txt,sys0,1
++             xstr m0.x,sys0*-11+m0.y+sya1,30,20,6,WHITE,RED,2,1,3,strTmp.txt
++         }
++     }
++ 
++0
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++15 +563,14 @@
++                                 spstr strCommand.txt,tIcon1.txt,"~",17
++                                 spstr strCommand.txt,tTmp.txt,"~",18
++                                 covx tTmp.txt,tIcon1.pco,0,0
++                                 //statusIcon2
++                                 spstr strCommand.txt,tIcon2.txt,"~",19
++                                 spstr strCommand.txt,tTmp.txt,"~",20
++                                 covx tTmp.txt,tIcon2.pco,0,0
++                                 click m0,1
++                             }
++                             if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
++                             {
++                                 spstr strCommand.txt,tTmp.txt,"~",1
++                                 covx tTmp.txt,tTime.bco,0,0
++                                 if(tTime.bco!=screensaver.bco)
++                                 {
