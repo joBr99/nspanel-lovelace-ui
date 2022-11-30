@@ -34,7 +34,7 @@ After a reboot of tasmota your screen will light up with the stock display firmw
 
 Due the limitations of Berry, it's not possible to download the tft file directly from github, so I'm also renting a small server where you can download the file via HTTP.
 
-Use the one following commands to flash the latest release from this repository, just execute the following Command in Tasmota:
+Use the one following commands in the tasmota console (not berry console) to flash the latest release from this repository:
 
 EU Version: `FlashNextion http://nspanel.pky.eu/lui-release.tft`
 
@@ -42,7 +42,7 @@ US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
 
 US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
-
+After sending the command, the screen should show a progress bar. The flashing progress takes around 5 minutes.
 
 Note: For the US Version Users - keep in mind that you need to add the model config option to your apps.yaml later, more details on config overview page
 
