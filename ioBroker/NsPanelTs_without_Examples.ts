@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.6.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+TypeScript v3.6.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 45 / v3.6.0 / BerryDriver 6 / Tasmota 12.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -7,6 +7,7 @@ icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroke
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
+
 *******************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
@@ -78,19 +79,25 @@ ReleaseNotes:
         - 26.11.2022 - v3.6.0   Add cardThermostat Popup 
         - 28.11.2022 - v3.6.0.1 Bugfix in bExit
         - 29.11.2022 - v3.6.0.2 Update Berry Version 6
+        - 30.11.2022 - v3.6.0.3 Bugfix string/number compare current BerryDriver (DP as string)
         - XX.11.2022 - v3.6.1   Add cardChart on PROD (implemented but working with v3.6.1 --> next TFT)
         - XX.11.2022 - v3.6.1   Add Shuffle to Media Player
-        Todo's for 3.6.0.1
-        - XX.11.2022 - v3.6.0.1 Add Fan
-        - XX.11.2022 - v3.6.0.1 Add In_Sel PopUp
+
+        Todo's for 3.6.1
+        - XX.11.2022 - v3.6.1 Add Fan
+        - XX.11.2022 - v3.6.1 Add In_Sel PopUp
+
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
 *****************************************************************************************************************
+
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
+
 Tasmota Konsole:
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
     Rule2 0 (Rule deaktivieren)
+
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
@@ -100,11 +107,13 @@ Mögliche Seiten-Ansichten:
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
     cardPower Page      - Energiefluss
+
 Popup-Pages:
     popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
     popupShutter Page   - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
+
 Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
@@ -129,6 +138,7 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, analog Info
     Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
+
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden --> SetOption146 1
     Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden
@@ -137,13 +147,16 @@ Interne Sonoff-Sensoren (über Tasmota):
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
 Tasmota-Status0 - (zyklische Ausführung)
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
+
 Erforderliche Adapter:
+
     AccuWeather:        - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten    - Für Erstellung der Aliase
     Alias-Manager       - !!! ausschließlich für MEDIA-Alias
     MQTT-Adapter        - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
+
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.6.0.tft
@@ -883,7 +896,7 @@ async function check_updates() {
 
         // Tasmota-Berry-Driver-Vergleich
         if (existsObject(NSPanel_Path + 'Berry_Driver.currentVersion')) {
-            if (getState(NSPanel_Path + 'Berry_Driver.currentVersion').val < berry_driver_version) {
+            if (parseFloat(getState(NSPanel_Path + 'Berry_Driver.currentVersion').val) < berry_driver_version) {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
                         // Tasmota Berry-Driver Update durchführen
@@ -1076,7 +1089,7 @@ function get_current_berry_driver_version() {
             }
         }, async (error, response, result) => {
             try {
-                await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'number' });
+                await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'string' });
                 await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: JSON.parse(result).nlui_driver_version, ack: true });
                 if (autoCreateAlias) {
                     setObject(AliasPath + 'Display.BerryDriver', {type: 'channel', common: {role: 'info', name: 'Berry Driver'}, native: {}});
