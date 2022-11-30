@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.6.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+TypeScript v3.6.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 45 / v3.6.0 / BerryDriver 6 / Tasmota 12.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -79,12 +79,13 @@ ReleaseNotes:
         - 26.11.2022 - v3.6.0   Add cardThermostat Popup 
         - 28.11.2022 - v3.6.0.1 Bugfix in bExit
         - 29.11.2022 - v3.6.0.2 Update Berry Version 6
+        - 30.11.2022 - v3.6.0.3 Bugfix string/number compare current BerryDriver (DP as string)
         - XX.11.2022 - v3.6.1   Add cardChart on PROD (implemented but working with v3.6.1 --> next TFT)
         - XX.11.2022 - v3.6.1   Add Shuffle to Media Player
 
-        Todo's for 3.6.0.1
-        - XX.11.2022 - v3.6.0.1 Add Fan
-        - XX.11.2022 - v3.6.0.1 Add In_Sel PopUp
+        Todo's for 3.6.1
+        - XX.11.2022 - v3.6.1 Add Fan
+        - XX.11.2022 - v3.6.1 Add In_Sel PopUp
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -1217,7 +1218,7 @@ async function check_updates() {
 
         // Tasmota-Berry-Driver-Vergleich
         if (existsObject(NSPanel_Path + 'Berry_Driver.currentVersion')) {
-            if (getState(NSPanel_Path + 'Berry_Driver.currentVersion').val < berry_driver_version) {
+            if (parseFloat(getState(NSPanel_Path + 'Berry_Driver.currentVersion').val) < berry_driver_version) {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
                         // Tasmota Berry-Driver Update durchführen
@@ -1410,7 +1411,7 @@ function get_current_berry_driver_version() {
             }
         }, async (error, response, result) => {
             try {
-                await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'number' });
+                await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'string' });
                 await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: JSON.parse(result).nlui_driver_version, ack: true });
                 if (autoCreateAlias) {
                     setObject(AliasPath + 'Display.BerryDriver', {type: 'channel', common: {role: 'info', name: 'Berry Driver'}, native: {}});
