@@ -9,38 +9,30 @@ print(head)
 print("""
               //entity name
               spstr strCommand.txt,entn.txt,"~",3
-              //icon
-              spstr strCommand.txt,tIcon.txt,"~",4
-              //icon farbe
-              spstr strCommand.txt,tTmp.txt,"~",5
-              if(tTmp.txt!="")
-              {
-                covx tTmp.txt,tIcon.pco,0,0
-              }
               //title
-              spstr strCommand.txt,tTitle.txt,"~",6
+              spstr strCommand.txt,tTitle.txt,"~",4
               //title farbe
-              spstr strCommand.txt,tTmp.txt,"~",7
+              spstr strCommand.txt,tTmp.txt,"~",5
               if(tTmp.txt!="")
               {
                 covx tTmp.txt,tTitle.pco,0,0
               }
               //author
-              spstr strCommand.txt,tAuthor.txt,"~",8
+              spstr strCommand.txt,tAuthor.txt,"~",6
               //author farbe
-              spstr strCommand.txt,tTmp.txt,"~",9
+              spstr strCommand.txt,tTmp.txt,"~",7
               if(tTmp.txt!="")
               {
                 covx tTmp.txt,tAuthor.pco,0,0
               }
               //volume
-              spstr strCommand.txt,tTmp.txt,"~",10
+              spstr strCommand.txt,tTmp.txt,"~",8
               covx tTmp.txt,sys0,0,0
               hVolume.val=sys0
               //icon
-              spstr strCommand.txt,tPlayPause.txt,"~",11
+              spstr strCommand.txt,tPlayPause.txt,"~",9
               // on off button
-              spstr strCommand.txt,tTmp.txt,"~",12
+              spstr strCommand.txt,tTmp.txt,"~",10
               if(tTmp.txt=="disable")
               {
                 vis t5,0
@@ -49,12 +41,8 @@ print("""
                 vis t5,1
                 covx tTmp.txt,t5.pco,0,0
               }
-              //tIconBtnEntityType
-              spstr strCommand.txt,vaMenu.txt,"~",13
-              //tIconBtnEntityName
-              spstr strCommand.txt,vaMenu.txt,"~",14
               // shuffel btn
-              spstr strCommand.txt,tTmp.txt,"~",15
+              spstr strCommand.txt,tTmp.txt,"~",11
               if(tTmp.txt=="disable")
               {
                 vis tShuffle,0
@@ -66,8 +54,8 @@ print("""
 """)
 
 
-start = 16
-for i in range(1,6):
+start = 12
+for i in range(1,7):
     idxstart = start + (i-1)*6
     item = f"""
               // get Type
