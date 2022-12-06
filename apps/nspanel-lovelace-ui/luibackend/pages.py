@@ -500,11 +500,15 @@ class LuiPagesGen(object):
                 elif shuffle == True:
                     shuffleBtn = get_icon_id('shuffle')
 
+            mediaBtnType = ""
+            if(mediaBtn.startswith('input_select')):
+                mediaBtnType = "input_sel"
+
             item_str = ""
             for item in entities:
                 item_str += self.generate_entities_item(item, "cardGrid")
 
-            command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~test~{mediaBtn}~{shuffleBtn}{item_str}"
+            command = f"entityUpd~{heading}~{navigation}~{item}~{icon}~~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{mediaBtnType}~{mediaBtn}~{shuffleBtn}{item_str}"
         self._send_mqtt_msg(command)
         
     def generate_alarm_page(self, navigation, entity, overwrite_supported_modes, alarmBtn):
