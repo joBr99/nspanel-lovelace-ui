@@ -355,10 +355,10 @@ class LuiPagesGen(object):
             value = get_translation(self._locale, f"frontend.state_badge.alarm_control_panel.{entity.state}")
         elif entityType == "media_player":
             entityTypePanel = "text"
-            icon = get_icon_id('speaker-off')
+            icon_id = get_icon_id('speaker-off')
             if "media_content_type" in entity.attributes:
                 if entity.attributes.media_content_type == "music":
-                    icon = get_icon_id("music")
+                    icon_id = get_icon_id("music")
             value = entity.state
         elif entityType == "sun":
             entityTypePanel = "text"
@@ -482,6 +482,7 @@ class LuiPagesGen(object):
         if not apis.ha_api.entity_exists(item):
             command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
         else:
+            media_icon = self.generate_entities_item(entity, "cardGrid")
             entity        = apis.ha_api.get_entity(item)
             heading       = title if title != "unknown" else entity.attributes.friendly_name
             title         = get_attr_safe(entity, "media_title", "")
@@ -502,8 +503,6 @@ class LuiPagesGen(object):
                     shuffleBtn = get_icon_id('shuffle-disabled')
                 elif shuffle == True:
                     shuffleBtn = get_icon_id('shuffle')
-
-            media_icon = self.generate_entities_item(item, "cardGrid")
 
             item_str = ""
             for item in entities:
