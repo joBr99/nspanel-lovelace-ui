@@ -136,9 +136,9 @@ Text m0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 456
+        x coordinate                        : 465
         y coordinate                        : 0
-        Width                               : 24
+        Width                               : 15
         Height                              : 320
         Effect                              : load
         Effect Priority                     : 0
@@ -158,20 +158,6 @@ Text m0
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-    Events
-        Touch Press Event
-            if(tDate.x==0)
-            {
-                tTmp.txt="change model conf to us-l/p "
-                strlen tTmp.txt,sys1
-                sya1=sys1*11+m0.h-48/2
-                for(sys0=0;sys0<sys1;sys0++)
-                {
-                    substr tTmp.txt,strTmp.txt,sys0,1
-                    xstr m0.x,sys0*-11+m0.y+sya1,25,20,6,WHITE,RED,2,1,3,strTmp.txt
-                }
-            }
-        
 Text t10
     Attributes
         ID                                  : 15
