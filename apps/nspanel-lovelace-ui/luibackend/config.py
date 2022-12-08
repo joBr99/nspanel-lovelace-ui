@@ -43,11 +43,10 @@ class Card(object):
             entityIds.append(self.entity.entityId)
             if self.entity.status is not None:
                 entityIds.append(self.entity.status)
-        else:
-            for e in self.entities:
-                entityIds.append(e.entityId)
-                if e.status is not None:
-                    entityIds.append(e.status)
+        for e in self.entities:
+            entityIds.append(e.entityId)
+            if e.status is not None:
+                entityIds.append(e.status)
 
         # additional keys to check
         add_ent_keys = ['weatherOverrideForecast1', 'weatherOverrideForecast2', 'weatherOverrideForecast3', 'weatherOverrideForecast4', 'statusIcon1', 'statusIcon2', 'alarmControl']
