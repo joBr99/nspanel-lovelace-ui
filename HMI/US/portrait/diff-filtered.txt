@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-12-06 21:19:22.503654117 +0000
++++ /dev/fd/62	2022-12-08 22:30:18.613127649 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardChart.txt
@@ -447,7 +447,7 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 +
-+260 +431,14 @@
++280 +431,14 @@
 +     crcputs tSend.txt,0
 +     //send cmd
 +     printh 55 bb
@@ -521,6 +521,10 @@
 +     {
 +         page popupInSel
 +     }
++     if(type2.txt=="media_pl")
++     {
++         page popupInSel
++     }
 + 
 + Touch Release Event
 +     tmLP.en=0
@@ -559,6 +563,10 @@
 +         page popupShutter
 +     }
 +     if(type3.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type3.txt=="media_pl")
 +     {
 +         page popupInSel
 +     }
@@ -603,6 +611,10 @@
 +     {
 +         page popupInSel
 +     }
++     if(type4.txt=="media_pl")
++     {
++         page popupInSel
++     }
 + 
 + Touch Release Event
 +     tmLP.en=0
@@ -644,6 +656,10 @@
 +     {
 +         page popupInSel
 +     }
++     if(type5.txt=="media_pl")
++     {
++         page popupInSel
++     }
 + 
 + Touch Release Event
 +     tmLP.en=0
@@ -681,7 +697,11 @@
 +     {
 +         page popupShutter
 +     }
-+     if(type6.txt=="input_sel")
++     if(entn.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type6.txt=="media_pl")
 +     {
 +         page popupInSel
 +     }
@@ -1039,13 +1059,13 @@
 +                                 // get background color
 +                                 spstr strCommand.txt,tTmp.txt,"~",3
 +                                 if(tTmp.txt!="")
++                                 if(tId.txt=="cardChart")
 +                                 {
 +                                     covx tTmp.txt,defaultBcoColor,0,0
 +                                 }
 +                                 // get font color
 +                                 spstr strCommand.txt,tTmp.txt,"~",4
 +                                 if(tTmp.txt!="")
-+                                 if(tId.txt=="cardChart")
 +                                 {
 +                                     covx tTmp.txt,defaultFontColor,0,0
 +                                     page cardChart
