@@ -354,7 +354,7 @@ class LuiPagesGen(object):
             entityTypePanel = "text"
             value = get_translation(self._locale, f"frontend.state_badge.alarm_control_panel.{entity.state}")
         elif entityType == "media_player":
-            entityTypePanel = "text"
+            entityTypePanel = "media_pl"
             value = entity.state
         elif entityType == "sun":
             entityTypePanel = "text"
@@ -481,22 +481,22 @@ class LuiPagesGen(object):
             command = f"entityUpd~Not found~{navigation}~{entityId}~{get_icon_id('alert-circle-outline')}~Please check your~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
         else:
             media_icon = self.generate_entities_item(entity, "cardGrid")
-            entity        = apis.ha_api.get_entity(entityId)
+            ha_entity     = apis.ha_api.get_entity(entityId)
             heading       = title if title != "unknown" else entity.attributes.friendly_name
-            title         = get_attr_safe(entity, "media_title", "")
-            author        = get_attr_safe(entity, "media_artist", "")
-            volume        = int(get_attr_safe(entity, "volume_level", 0)*100)
-            iconplaypause = get_icon_id("pause") if entity.state == "playing" else get_icon_id("play")
-            bits = entity.attributes.supported_features
+            title         = get_attr_safe(ha_entity, "media_title", "")
+            author        = get_attr_safe(ha_entity, "media_artist", "")
+            volume        = int(get_attr_safe(ha_entity, "volume_level", 0)*100)
+            iconplaypause = get_icon_id("pause") if ha_entity.state == "playing" else get_icon_id("play")
+            bits = ha_entity.attributes.supported_features
             onoffbutton = "disable"
             if bits & 0b10000000:
-                if entity.state == "off":
+                if ha_entity.state == "off":
                     onoffbutton = 1374
                 else:
                     onoffbutton = rgb_dec565([255,152,0])
             shuffleBtn = "disable"
             if bits & 0b100000000000000:
-                shuffle = get_attr_safe(entity, "shuffle", "")
+                shuffle = get_attr_safe(ha_entity, "shuffle", "")
                 if shuffle == False:
                     shuffleBtn = get_icon_id('shuffle-disabled')
                 elif shuffle == True:
@@ -505,6 +505,7 @@ class LuiPagesGen(object):
             item_str = ""
             for item in entities:
                 item_str += self.generate_entities_item(item, "cardGrid")
+            item_str += self.generate_entities_item(entity, "cardGrid")
 
             command = f"entityUpd~{heading}~{navigation}~{entityId}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{item_str}"
         self._send_mqtt_msg(command)
@@ -817,12 +818,17 @@ class LuiPagesGen(object):
         icon_color = 0
         ha_type = entity_id.split(".")[0]
         icon_color = self.get_entity_color(entity, ha_type=ha_type)
+        state = entity.state
         if ha_type in ["input_select", "select"]:
             options = entity.attributes.get("options", [])
-        if ha_type == "light":
+        elif ha_type == "light":
             options = entity.attributes.get("effect_list", [])[:15]
+        elif ha_type == "media_player":
+            state = entity.attributes.get("source", "")
+            options = entity.attributes.get("source_list", [])
         options = "?".join(options)
-        self._send_mqtt_msg(f"entityUpdateDetail2~{entity_id}~~{icon_color}~{ha_type}~{entity.state}~{options}~")
+        self._send_mqtt_msg(f"entityUpdateDetail2~{entity_id}~~{icon_color}~{ha_type}~{state}~{options}~")
+
         
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
