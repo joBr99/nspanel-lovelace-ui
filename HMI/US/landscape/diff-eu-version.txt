@@ -432,7 +432,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │      
-│ @@ -484,260 +431,14 @@
+│ @@ -484,280 +431,14 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -506,6 +506,10 @@
 │ -            {
 │ -                page popupInSel
 │ -            }
+│ -            if(type2.txt=="media_pl")
+│ -            {
+│ -                page popupInSel
+│ -            }
 │ -        
 │ -        Touch Release Event
 │ -            tmLP.en=0
@@ -544,6 +548,10 @@
 │ -                page popupShutter
 │ -            }
 │ -            if(type3.txt=="input_sel")
+│ -            {
+│ -                page popupInSel
+│ -            }
+│ -            if(type3.txt=="media_pl")
 │ -            {
 │ -                page popupInSel
 │ -            }
@@ -588,6 +596,10 @@
 │ -            {
 │ -                page popupInSel
 │ -            }
+│ -            if(type4.txt=="media_pl")
+│ -            {
+│ -                page popupInSel
+│ -            }
 │ -        
 │ -        Touch Release Event
 │ -            tmLP.en=0
@@ -629,6 +641,10 @@
 │ -            {
 │ -                page popupInSel
 │ -            }
+│ -            if(type5.txt=="media_pl")
+│ -            {
+│ -                page popupInSel
+│ -            }
 │ -        
 │ -        Touch Release Event
 │ -            tmLP.en=0
@@ -666,7 +682,11 @@
 │ -            {
 │ -                page popupShutter
 │ -            }
-│ -            if(type6.txt=="input_sel")
+│ -            if(entn.txt=="input_sel")
+│ -            {
+│ -                page popupInSel
+│ -            }
+│ -            if(type6.txt=="media_pl")
 │ -            {
 │ -                page popupInSel
 │ -            }
@@ -693,7 +713,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          State                               : unpressed
-│ @@ -837,31 +538,14 @@
+│ @@ -857,31 +538,14 @@
 │          Period (ms): 100
 │          Enabled    : no
 │      
@@ -725,7 +745,7 @@
 │          Enabled    : yes
 │      
 │      Events
-│ @@ -907,15 +591,15 @@
+│ @@ -927,15 +591,15 @@
 │                                      // here is the location where acual code should be
 │                                      // write command to variable strCommand
 │                                      ucopy strCommand.txt,4,payloadLength-5,0
@@ -742,7 +762,7 @@
 │                                          if(tTmp.txt=="0")
 │                                          {
 │                                              vis bPrev,0
-│ @@ -951,183 +635,111 @@
+│ @@ -971,183 +635,111 @@
 │                                          if(tTmp.txt=="2")
 │                                          {
 │                                              vis bNext,1
@@ -993,7 +1013,7 @@
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
 │                                          //save second arg if there's one
-│ @@ -1184,63 +796,38 @@
+│ @@ -1204,63 +796,38 @@
 │                                          {
 │                                              page cardQR
 │                                          }
@@ -1024,14 +1044,14 @@
 │ -                                        // get background color
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",3
 │ -                                        if(tTmp.txt!="")
-│ -                                        {
+│ +                                        if(tId.txt=="cardChart")
+│                                          {
 │ -                                            covx tTmp.txt,defaultBcoColor,0,0
 │ -                                        }
 │ -                                        // get font color
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",4
 │ -                                        if(tTmp.txt!="")
-│ +                                        if(tId.txt=="cardChart")
-│                                          {
+│ -                                        {
 │ -                                            covx tTmp.txt,defaultFontColor,0,0
 │ +                                            page cardChart
 │                                          }
