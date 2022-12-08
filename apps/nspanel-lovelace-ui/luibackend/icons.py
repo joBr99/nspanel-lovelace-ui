@@ -303,7 +303,7 @@ def get_icon_ha(entity_id, overwrite=None):
         state = entity.state
     # icons only based on state
     if ha_type in simple_type_mapping:
-        result_icon = get_icon_char(simple_type_mapping[ha_type])
+        result_icon = simple_type_mapping[ha_type]
     elif ha_type == "weather":
         result_icon = weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
     elif ha_type == "input_boolean":
