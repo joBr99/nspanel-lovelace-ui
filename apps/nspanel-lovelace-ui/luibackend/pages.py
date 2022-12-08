@@ -474,12 +474,14 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(command)
 
     def generate_media_page(self, navigation, title, entity, entities, mediaBtn):
-        item = entity.entityId
-        if not apis.ha_api.entity_exists(item):
-            command = f"entityUpd~Not found~{navigation}~{item}~{get_icon_id('alert-circle-outline')}~Please check your~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
+        entityId = entity.entityId
+        if entity.status is not None:
+            entityId = entity.status
+        if not apis.ha_api.entity_exists(entityId):
+            command = f"entityUpd~Not found~{navigation}~{entityId}~{get_icon_id('alert-circle-outline')}~Please check your~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
         else:
             media_icon = self.generate_entities_item(entity, "cardGrid")
-            entity        = apis.ha_api.get_entity(item)
+            entity        = apis.ha_api.get_entity(entityId)
             heading       = title if title != "unknown" else entity.attributes.friendly_name
             title         = get_attr_safe(entity, "media_title", "")
             author        = get_attr_safe(entity, "media_artist", "")
@@ -504,7 +506,7 @@ class LuiPagesGen(object):
             for item in entities:
                 item_str += self.generate_entities_item(item, "cardGrid")
 
-            command = f"entityUpd~{heading}~{navigation}~{item}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{item_str}"
+            command = f"entityUpd~{heading}~{navigation}~{entityId}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{item_str}"
         self._send_mqtt_msg(command)
         
     def generate_alarm_page(self, navigation, entity, overwrite_supported_modes, alarmBtn):
