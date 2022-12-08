@@ -5,7 +5,7 @@ import apis
 
 from theme import get_screensaver_color_output
 from icon_mapping import get_icon_id
-from icons import get_icon
+from icons import get_icon, get_icon_ha
 from icons import get_action_icon
 from helper import scale, rgb_dec565, rgb_brightness, get_attr_safe, convert_temperature
 from localization import get_translation
@@ -355,10 +355,7 @@ class LuiPagesGen(object):
             value = get_translation(self._locale, f"frontend.state_badge.alarm_control_panel.{entity.state}")
         elif entityType == "media_player":
             entityTypePanel = "text"
-            icon_id = get_icon_id('speaker-off')
-            if "media_content_type" in entity.attributes:
-                if entity.attributes.media_content_type == "music":
-                    icon_id = get_icon_id("music")
+            icon_id = get_icon_ha(entityId)
             value = entity.state
         elif entityType == "sun":
             entityTypePanel = "text"
@@ -791,7 +788,7 @@ class LuiPagesGen(object):
 
     def generate_thermo_detail_page(self, entity_id):
         entity = apis.ha_api.get_entity(entity_id)
-        icon_id = get_icon("climate", state=entity.state)
+        icon_id = get_icon_ha(entity_id)
         icon_color = self.get_entity_color(entity, ha_type="climate")
 
         modes_out = ""
