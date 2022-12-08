@@ -6909,4 +6909,6 @@ def get_icon_id(ma_name):
         return icons[ma_name]
     else:
         return icons["alert-circle-outline"]
-    
+   
+def get_icon_char(ma_name):
+    return get_icon_id(ma_name)

@@ -1,4 +1,5 @@
-from icon_mapping import get_icon_id
+from icon_mapping import get_icon_char
+import apis
 
 weather_mapping = {
     'clear-night': 'weather-night',
@@ -126,6 +127,53 @@ cover_mapping = {
     "window":        ("window-open",           "window-closed",  "arrow-up",                "stop",            "arrow-down"),
 }
 
+simple_type_mapping = {
+    'button':       'gesture-tap-button',
+    'navigate':     'gesture-tap-button',
+    'input_button': 'gesture-tap-button',
+    'input_select': 'gesture-tap-button',
+    'scene':        'palette',
+    'script':       'script-text',
+    'switch':       'light-switch',
+    'automation':   'robot',
+    'number':       'ray-vertex',
+    'input_number': 'ray-vertex',
+    'light':        'lightbulb',
+    'fan':          'fan',
+    'person':       'account',
+    'vacuum':       'robot-vacuum'
+}
+
+alarm_control_panel_mapping = {
+    'disarmed':       'shield-off',
+    'armed_home':     'shield-home',
+    'armed_away':     'shield-lock',
+    'armed_night':    'weather-night',
+    'armed_vacation': 'shield-airplane',
+    'arming':         'shield',
+    'pending':        'shield',
+    'triggered':      'bell-ring'
+}
+
+climate_mapping = {
+    'auto':       'calendar-sync',
+    'heat_cool':  'calendar-sync',
+    'heat':  'fire',
+    'off':  'power',
+    'cool':  'snowflake',
+    'dry':  'water-percent',
+    'fan_only':  'fan'
+}
+
+media_content_type_mapping = {
+    'music': 'music',
+    'tvshow': 'movie',
+    'video': 'video',
+    'episode': 'alert-circle-outline',
+    'channel': 'alert-circle-outline',
+    'playlist': 'alert-circle-outline'
+}
+
 def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
     if ha_type == "weather":
         return weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
@@ -215,16 +263,16 @@ def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
 def get_icon(ha_type, state=None, device_class=None, overwrite=None):
     if overwrite is not None:
         if type(overwrite) is str:
-            return get_icon_id(overwrite)
+            return get_icon_char(overwrite)
         if type(overwrite) is dict:
             for overwrite_state, overwrite_icon in overwrite.items():
                 if overwrite_state == state:
-                    return get_icon_id(overwrite_icon)
-    return get_icon_id(map_to_mdi_name(ha_type, state, device_class))
+                    return get_icon_char(overwrite_icon)
+    return get_icon_char(map_to_mdi_name(ha_type, state, device_class))
 
 def get_action_icon(ha_type, action, device_class=None, overwrite=None):
     if overwrite is not None:
-        return get_icon_id(overwrite)
+        return get_icon_char(overwrite)
     if ha_type == "cover":
         if action == "open":
             actionicon = cover_mapping[device_class][2] if device_class in cover_mapping else "alert-circle-outline"
@@ -236,4 +284,70 @@ def get_action_icon(ha_type, action, device_class=None, overwrite=None):
             actionicon = "alert-circle-outline"
     else:
         actionicon = "alert-circle-outline"
-    return get_icon_id(actionicon)
+    return get_icon_char(actionicon)
+
+def get_icon_ha(entity_id, overwrite=None):
+    if overwrite is not None:
+        if type(overwrite) is str:
+            return get_icon_char(overwrite)
+        if type(overwrite) is dict:
+            for overwrite_state, overwrite_icon in overwrite.items():
+                if overwrite_state == state:
+                    return get_icon_char(overwrite_icon)
+
+    result_icon = "alert-circle-outline"
+
+    ha_type = entity_id.split(".")[0]
+    if (apis.ha_api.entity_exists(entity_id)):
+        entity = apis.ha_api.get_entity(entity_id)
+        state = entity.state
+    # icons only based on state
+    if ha_type in simple_type_mapping:
+        result_icon = get_icon_char(simple_type_mapping[ha_type])
+    elif ha_type == "weather":
+        result_icon = weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
+    elif ha_type == "input_boolean":
+        result_icon = "check-circle-outline" if state == "on" else "close-circle-outline"
+    elif ha_type == "lock":
+        result_icon = "lock-open" if state == "unlocked" else "lock"
+    elif ha_type == "sun":
+        result_icon = "weather-sunset-up" if state == "above_horizon" else "weather-sunset-down"
+    elif ha_type == "alarm_control_panel":
+        if state in alarm_control_panel_mapping:
+            result_icon = alarm_control_panel_mapping[state]
+    elif ha_type == "climate":
+        if state in climate_mapping:
+            result_icon = climate_mapping[state]
+    # icons only based on state and device_class
+    elif ha_type == "cover":
+        device_class = get_attr_safe(entity, "device_class", "window")
+        if state == "closed":
+            result_icon = cover_mapping[device_class][1] if device_class in cover_mapping else "alert-circle-outline"
+        else:
+            result_icon = cover_mapping[device_class][0] if device_class in cover_mapping else "alert-circle-outline"
+    elif ha_type == "sensor":
+        device_class = get_attr_safe(entity, "device_class", "")
+        result_icon = sensor_mapping[device_class] if device_class in sensor_mapping else "alert-circle-outline"
+    elif ha_type == "binary_sensor":
+        device_class = get_attr_safe(entity, "device_class", "")
+        if state == "on":
+            result_icon = "checkbox-marked-circle"
+            if device_class in sensor_mapping_on:
+                result_icon = sensor_mapping_on[device_class]
+        else:
+            result_icon = "radiobox-blank"
+            if device_class in sensor_mapping_off:
+                result_icon = sensor_mapping_off[device_class]
+    # based on media_content_type
+    elif ha_type == "media_player":
+        result_icon = "speaker-off"
+        if "media_content_type" in entity.attributes:
+            if entity.attributes.media_content_type in media_content_type_mapping:
+                result_icon = media_content_type_mapping[entity.attributes.media_content_type]
+
+    # TODO: get rid of this one
+    elif ha_type == "alarm-arm-fail":
+        result_icon = "progress-alert"
+    else:
+        result_icon = "alert-circle-outline"
+    return get_icon_char(result_icon)
