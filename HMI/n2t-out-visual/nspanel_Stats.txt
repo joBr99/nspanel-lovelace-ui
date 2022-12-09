@@ -26,14 +26,14 @@ pageTest
 	23   Component(s)
 	73   Line(s) of event code
 	69   Unique line(s) of event code
-popupInSel
-	34   Component(s)
-	529  Line(s) of event code
-	257  Unique line(s) of event code
 cardChart
 	31   Component(s)
 	452  Line(s) of event code
 	296  Unique line(s) of event code
+popupInSel
+	34   Component(s)
+	613  Line(s) of event code
+	293  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	514  Line(s) of event code
@@ -78,5 +78,5 @@ cardEntities
 Total
 	18   Page(s)
 	636  Component(s)
-	7825 Line(s) of event code
-	1973 Unique line(s) of event code
+	7909 Line(s) of event code
+	2009 Unique line(s) of event code
