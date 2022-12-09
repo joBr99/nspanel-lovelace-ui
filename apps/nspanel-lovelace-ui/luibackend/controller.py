@@ -171,6 +171,8 @@ class LuiController(object):
                     self._pages_gen.generate_fan_detail_page(entity)
                 if entity.startswith("input_select"):
                     self._pages_gen.generate_input_select_detail_page(entity)
+                if entity.startswith("media_player"):
+                    self._pages_gen.generate_input_select_detail_page(entity)
             if self._current_card.cardType == "cardThermo":
                 if entity.startswith("climate"):
                     self._pages_gen.generate_thermo_detail_page(entity)
@@ -409,3 +411,7 @@ class LuiController(object):
             option = entity.attributes.effect_list[int(value)]
             entity.call_service("select_effect", option=option)
             
+        if button_type == "mode-media_player":
+            entity = apis.ha_api.get_entity(entity_id)
+            option = entity.attributes.source_list[int(value)]
+            entity.call_service("select_source", source=option)
