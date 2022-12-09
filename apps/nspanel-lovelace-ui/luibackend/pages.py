@@ -478,7 +478,7 @@ class LuiPagesGen(object):
         if entity.status is not None:
             entityId = entity.status
         if not apis.ha_api.entity_exists(entityId):
-            command = f"entityUpd~Not found~{navigation}~{entityId}~{get_icon_id('alert-circle-outline')}~Please check your~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~~disable"
+            command = f"entityUpd~Not found~{navigation}~{entityId}~Please check your~~apps.yaml in AppDaemon~~0~{get_icon_id('alert-circle-outline')}~~"
         else:
             media_icon = self.generate_entities_item(entity, "cardGrid")
             ha_entity     = apis.ha_api.get_entity(entityId)
@@ -505,6 +505,7 @@ class LuiPagesGen(object):
             item_str = ""
             for item in entities:
                 item_str += self.generate_entities_item(item, "cardGrid")
+            entity.iconOverride = "mdi:speaker"
             item_str += self.generate_entities_item(entity, "cardGrid")
 
             command = f"entityUpd~{heading}~{navigation}~{entityId}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{item_str}"
