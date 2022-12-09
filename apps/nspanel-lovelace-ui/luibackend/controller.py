@@ -228,7 +228,14 @@ class LuiController(object):
             else:
                 self._current_card = self._config.getCard(0)
             self._pages_gen.render_card(self._current_card)
-
+        if button_type == "bHome":
+            if self._previous_cards:
+                self._current_card = self._previous_cards[0]
+                self._previous_cards.clear()
+            else:
+                self._current_card = self._config.getCard(0)
+            self._pages_gen.render_card(self._current_card)
+            
         if button_type == "bNext":
             card = self._config.getCard(self._current_card.pos+1)
             self._current_card = card
