@@ -162,7 +162,7 @@ class LuiController(object):
             apis.ha_api.log(f"Callback Entity is on current page: {entity}", level="DEBUG")
             self._pages_gen.render_card(self._current_card, send_page_type=False)
             # send detail page update, just in case
-            if self._current_card.cardType in ["cardGrid", "cardEntities"]:
+            if self._current_card.cardType in ["cardGrid", "cardEntities", "cardMedia"]:
                 if entity.startswith("light"):
                     self._pages_gen.generate_light_detail_page(entity)
                 if entity.startswith("cover"):
