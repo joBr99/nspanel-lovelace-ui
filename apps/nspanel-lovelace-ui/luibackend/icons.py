@@ -1,5 +1,6 @@
 from icon_mapping import get_icon_char
 import apis
+from helper import get_attr_safe
 
 weather_mapping = {
     'clear-night': 'weather-night',
