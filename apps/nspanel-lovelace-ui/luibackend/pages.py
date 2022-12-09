@@ -505,8 +505,11 @@ class LuiPagesGen(object):
             item_str = ""
             for item in entities:
                 item_str += self.generate_entities_item(item, "cardGrid")
+               
+            bck_override = entity.iconOverride
             entity.iconOverride = "mdi:speaker"
             item_str += self.generate_entities_item(entity, "cardGrid")
+            entity.iconOverride = bck_override
 
             command = f"entityUpd~{heading}~{navigation}~{entityId}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{item_str}"
         self._send_mqtt_msg(command)
