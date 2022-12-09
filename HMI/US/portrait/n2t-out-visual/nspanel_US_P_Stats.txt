@@ -50,10 +50,6 @@ popupThermo
 	44   Component(s)
 	519  Line(s) of event code
 	274  Unique line(s) of event code
-cardMedia
-	34   Component(s)
-	425  Line(s) of event code
-	224  Unique line(s) of event code
 cardAlarm
 	40   Component(s)
 	443  Line(s) of event code
@@ -62,6 +58,10 @@ cardGrid
 	42   Component(s)
 	518  Line(s) of event code
 	294  Unique line(s) of event code
+cardMedia
+	57   Component(s)
+	660  Line(s) of event code
+	325  Unique line(s) of event code
 screensaver
 	45   Component(s)
 	400  Line(s) of event code
@@ -77,6 +77,6 @@ cardEntities
 
 Total
 	18   Page(s)
-	615  Component(s)
-	7783 Line(s) of event code
-	2014 Unique line(s) of event code
+	638  Component(s)
+	8018 Line(s) of event code
+	2023 Unique line(s) of event code
