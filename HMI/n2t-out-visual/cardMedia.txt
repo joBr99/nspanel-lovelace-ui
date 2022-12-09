@@ -878,6 +878,10 @@ Button bEntity2
             {
                 page popupInSel
             }
+            if(type2.txt=="media_pl")
+            {
+                page popupInSel
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -938,6 +942,10 @@ Button bEntity3
                 page popupShutter
             }
             if(type3.txt=="input_sel")
+            {
+                page popupInSel
+            }
+            if(type3.txt=="media_pl")
             {
                 page popupInSel
             }
@@ -1004,6 +1012,10 @@ Button bEntity4
             {
                 page popupInSel
             }
+            if(type4.txt=="media_pl")
+            {
+                page popupInSel
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -1067,6 +1079,10 @@ Button bEntity5
             {
                 page popupInSel
             }
+            if(type5.txt=="media_pl")
+            {
+                page popupInSel
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -1126,7 +1142,11 @@ Button bEntity6
             {
                 page popupShutter
             }
-            if(type6.txt=="input_sel")
+            if(entn.txt=="input_sel")
+            {
+                page popupInSel
+            }
+            if(type6.txt=="media_pl")
             {
                 page popupInSel
             }
