@@ -1058,10 +1058,6 @@ Timer tmLP
             {
                 page popupFan
             }
-            if(tTmp.txt=="input_sel")
-            {
-                page popupInSel
-            }
         
 Timer tmSerial
     Attributes
