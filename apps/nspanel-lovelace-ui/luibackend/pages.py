@@ -620,12 +620,17 @@ class LuiPagesGen(object):
     def render_card(self, card, send_page_type=True):    
         apis.ha_api.log(f"Started rendering of page {card.pos} with type {card.cardType}")
         
+        l = 1
+        r = 1
         if len(self._config._config_cards) == 1:
-            navigation = "0|0"
-        else:
-            navigation = "1|1"
+            l = 0
+            r = 0
         if card.pos is None:
-            navigation = "2|0"            
+            l = 2
+            r = 0
+            if self._config.get("homeButton"):
+                r = 2
+        navigation = f"{l}|{r}"         
 
         # Switch to page
         if send_page_type:

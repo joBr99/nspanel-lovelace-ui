@@ -101,6 +101,7 @@ class LuiBackendConfig(object):
             'dateAdditionalTemplate': "",
             'timeAdditionalTemplate': "",
             'dateFormat': "%A, %d. %B %Y",
+            'homeButton': False,
             'cards': [{
                 'type': 'cardEntities',
                 'entities': [{
