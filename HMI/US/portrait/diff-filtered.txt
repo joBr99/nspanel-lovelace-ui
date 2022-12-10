@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-12-10 08:03:16.022725697 +0000
++++ /dev/fd/62	2022-12-10 19:17:36.292152828 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardChart.txt
@@ -218,7 +218,7 @@
 + Max. Text Size: 25
 +
 +e (string) tInstruction
-+24 +94,14 @@
++34 +94,14 @@
 + Value: 0
 +
 +e (int32) ycR
@@ -236,6 +236,16 @@
 + Text                                : 
 + Max. Text Size                      : 10
 +
++nts
++ Touch Press Event
++     if(tDate.x==0)
++     {
++         vis m0,1
++     }else
++     {
++         vis m0,1
++     }
++ 
 +0
 +ributes
 + Scope                               : local

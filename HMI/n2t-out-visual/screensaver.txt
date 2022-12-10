@@ -136,9 +136,9 @@ Text m0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 465
+        x coordinate                        : 462
         y coordinate                        : 0
-        Width                               : 15
+        Width                               : 18
         Height                              : 320
         Effect                              : load
         Effect Priority                     : 0
@@ -158,6 +158,16 @@ Text m0
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+    Events
+        Touch Press Event
+            if(tDate.x==0)
+            {
+                vis m0,1
+            }else
+            {
+                vis m0,1
+            }
+        
 Text t10
     Attributes
         ID                                  : 15
@@ -903,8 +913,8 @@ Text tNotifyText
         Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 35
-        Word wrap                           : disabled
+        Max. Text Size                      : 80
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     

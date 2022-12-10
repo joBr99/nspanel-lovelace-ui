@@ -64,7 +64,7 @@
 │          Max. Text Size: 25
 │      
 │  Variable (string) tInstruction
-│ @@ -103,24 +94,14 @@
+│ @@ -103,34 +94,14 @@
 │          Value: 0
 │      
 │  Variable (int32) ycR
@@ -82,6 +82,16 @@
 │ -        Text                                : 
 │ -        Max. Text Size                      : 10
 │ -    
+│ -    Events
+│ -        Touch Press Event
+│ -            if(tDate.x==0)
+│ -            {
+│ -                vis m0,1
+│ -            }else
+│ -            {
+│ -                vis m0,1
+│ -            }
+│ -        
 │  Text t10
 │      Attributes
 │          Scope                               : local
@@ -89,7 +99,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
-│ @@ -370,15 +351,15 @@
+│ @@ -380,15 +351,15 @@
 │  Text tTime
 │      Attributes
 │          Scope                               : local
@@ -106,7 +116,7 @@
 │          Scope                               : local
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
-│ @@ -582,15 +563,14 @@
+│ @@ -592,15 +563,14 @@
 │                                          spstr strCommand.txt,tIcon1.txt,"~",17
 │                                          spstr strCommand.txt,tTmp.txt,"~",18
 │                                          covx tTmp.txt,tIcon1.pco,0,0
