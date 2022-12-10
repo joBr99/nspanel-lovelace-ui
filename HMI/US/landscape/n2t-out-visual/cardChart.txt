@@ -280,7 +280,7 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardPower,"
+            tSend.txt="event,buttonPress2,cardChart,"
             if(bNext.txt=="î")
             {
                 tSend.txt+="bHome"
@@ -334,7 +334,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,"
+            tSend.txt="event,buttonPress2,cardChart,"
             if(bPrev.txt=="î¶")
             {
                 tSend.txt+="bUp"
