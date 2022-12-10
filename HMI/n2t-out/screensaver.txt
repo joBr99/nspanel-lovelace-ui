@@ -117,6 +117,16 @@ Text m0
         Text                                : 
         Max. Text Size                      : 10
     
+    Events
+        Touch Press Event
+            if(tDate.x==0)
+            {
+                vis m0,1
+            }else
+            {
+                vis m0,1
+            }
+        
 Text t10
     Attributes
         Scope                               : local
@@ -365,7 +375,7 @@ Text tNotifyText
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 35
+        Max. Text Size                      : 80
     
 Text tTime
     Attributes

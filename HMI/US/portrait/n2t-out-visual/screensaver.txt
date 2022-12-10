@@ -863,8 +863,8 @@ Text tNotifyText
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 35
-        Word wrap                           : disabled
+        Max. Text Size                      : 80
+        Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
