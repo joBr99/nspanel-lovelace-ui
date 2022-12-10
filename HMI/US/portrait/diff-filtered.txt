@@ -1,9 +1,9 @@
-+++ /dev/fd/62	2022-12-09 23:39:29.754086326 +0000
++++ /dev/fd/62	2022-12-10 08:03:16.022725697 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardChart.txt
 ++ HMI/US/portrait/n2t-out/cardChart.txt
-+16 +175,16 @@
++15 +175,15 @@
 + Send Component ID                   : disabled
 + State                               : unpressed
 + Text                                : î³
@@ -12,7 +12,6 @@
 +nts
 + Touch Press Event
 +     tSend.txt="event,buttonPress2,cardChart,"
-+     if(bPrev.txt=="î")
 +     tSend.txt="event,buttonPress2,cardPower,"
 +     if(bNext.txt=="î")
 +     {
@@ -21,7 +20,6 @@
 +     {
 +         tSend.txt+="bNext"
 +     }
-+     //send calc crc
 +15 +207,15 @@
 + Send Component ID                   : disabled
 + State                               : unpressed
@@ -88,27 +86,6 @@
 + Enabled    : yes
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
-+I/n2t-out/popupFan.txt
-++ HMI/US/portrait/n2t-out/popupFan.txt
-+14 +619,18 @@
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
 +I/n2t-out/popupInSel.txt
 ++ HMI/US/portrait/n2t-out/popupInSel.txt
 +98 +632,14 @@
@@ -209,110 +186,6 @@
 + Scope      : local
 + Period (ms): 100
 + Enabled    : no
-+
-+14 +893,18 @@
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
-+I/n2t-out/popupLight.txt
-++ HMI/US/portrait/n2t-out/popupLight.txt
-+14 +682,18 @@
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
-+I/n2t-out/popupNotify.txt
-++ HMI/US/portrait/n2t-out/popupNotify.txt
-+14 +437,18 @@
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
-+I/n2t-out/popupShutter.txt
-++ HMI/US/portrait/n2t-out/popupShutter.txt
-+14 +671,18 @@
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
-+I/n2t-out/popupThermo.txt
-++ HMI/US/portrait/n2t-out/popupThermo.txt
-+14 +942,18 @@
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 +9 +29,20 @@
