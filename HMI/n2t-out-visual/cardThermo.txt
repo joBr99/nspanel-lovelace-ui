@@ -746,28 +746,7 @@ Dual-state Button bDown2
             {
                 xTempDest2.val=xTempDest2.val-xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHighLow,"
-            //convert temperature
-            covx xTempDest1.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            tSend.txt+="|"
-            covx xTempDest2.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendHighLow.en=1
         
 Dual-state Button bUp2
     Attributes
@@ -807,28 +786,7 @@ Dual-state Button bUp2
             {
                 xTempDest2.val=xTempDest2.val+xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHighLow,"
-            //convert temperature
-            covx xTempDest1.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            tSend.txt+="|"
-            covx xTempDest2.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendHighLow.en=1
         
 Dual-state Button bt0
     Attributes
@@ -1298,25 +1256,7 @@ Dual-state Button btDown
             {
                 xTempDest.val=xTempDest.val-xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd,"
-            //convert temperature
-            covx xTempDest.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendTemp.en=1
         
 Dual-state Button btDown1
     Attributes
@@ -1356,28 +1296,7 @@ Dual-state Button btDown1
             {
                 xTempDest1.val=xTempDest1.val-xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHighLow,"
-            //convert temperature
-            covx xTempDest1.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            tSend.txt+="|"
-            covx xTempDest2.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendHighLow.en=1
         
 Dual-state Button btUp
     Attributes
@@ -1417,25 +1336,7 @@ Dual-state Button btUp
             {
                 xTempDest.val=xTempDest.val+xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd,"
-            //convert temperature
-            covx xTempDest.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendTemp.en=1
         
 Dual-state Button btUp1
     Attributes
@@ -1475,28 +1376,7 @@ Dual-state Button btUp1
             {
                 xTempDest1.val=xTempDest1.val+xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHighLow,"
-            //convert temperature
-            covx xTempDest1.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            tSend.txt+="|"
-            covx xTempDest2.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendHighLow.en=1
         
 Hotspot mSwipeNext
     Attributes
@@ -1557,6 +1437,69 @@ Hotspot mSwipeUp
     Events
         Touch Press Event
             click bPrev,1
+        
+Timer tmSendHighLow
+    Attributes
+        ID         : 54
+        Scope      : local
+        Period (ms): 800
+        Enabled    : no
+    
+    Events
+        Timer Event
+            // event,buttonPress2,entn,tempUpd,X
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="tempUpdHighLow,"
+            //convert temperature
+            covx xTempDest1.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            tSend.txt+="|"
+            covx xTempDest2.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            tmSendHighLow.en=0
+        
+Timer tmSendTemp
+    Attributes
+        ID         : 53
+        Scope      : local
+        Period (ms): 800
+        Enabled    : no
+    
+    Events
+        Timer Event
+            // event,buttonPress2,entn,tempUpd,X
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="tempUpd,"
+            //convert temperature
+            covx xTempDest.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            tmSendTemp.en=0
         
 Timer tmSerial
     Attributes

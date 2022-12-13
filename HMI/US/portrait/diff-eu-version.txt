@@ -694,6 +694,306 @@
 │          Scope      : local
 │          Period (ms): 50
 │          Enabled    : yes
+│   --- HMI/n2t-out/cardThermo.txt
+├── +++ HMI/US/portrait/n2t-out/cardThermo.txt
+│ @@ -358,15 +358,36 @@
+│      
+│      Events
+│          Touch Press Event
+│              if(xTempDest2.val>xTempMin1.val)
+│              {
+│                  xTempDest2.val=xTempDest2.val-xTempStep1.val
+│              }
+│ -            tmSendHighLow.en=1
+│ +            // event,buttonPress2,entn,tempUpd,X
+│ +            //craft command
+│ +            tSend.txt="event,buttonPress2,"
+│ +            tSend.txt+=entn.txt+","
+│ +            tSend.txt+="tempUpdHighLow,"
+│ +            //convert temperature
+│ +            covx xTempDest1.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            tSend.txt+="|"
+│ +            covx xTempDest2.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            //send calc crc
+│ +            btlen tSend.txt,sys0
+│ +            crcrest 1,0xffff // reset CRC
+│ +            crcputh 55 bb
+│ +            crcputs sys0,2
+│ +            crcputs tSend.txt,0
+│ +            //send cmd
+│ +            printh 55 bb
+│ +            prints sys0,2
+│ +            prints tSend.txt,0
+│ +            prints crcval,2
+│          
+│  Dual-state Button bUp2
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ @@ -376,15 +397,36 @@
+│      
+│      Events
+│          Touch Press Event
+│              if(xTempDest2.val<xTempMax1.val)
+│              {
+│                  xTempDest2.val=xTempDest2.val+xTempStep1.val
+│              }
+│ -            tmSendHighLow.en=1
+│ +            // event,buttonPress2,entn,tempUpd,X
+│ +            //craft command
+│ +            tSend.txt="event,buttonPress2,"
+│ +            tSend.txt+=entn.txt+","
+│ +            tSend.txt+="tempUpdHighLow,"
+│ +            //convert temperature
+│ +            covx xTempDest1.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            tSend.txt+="|"
+│ +            covx xTempDest2.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            //send calc crc
+│ +            btlen tSend.txt,sys0
+│ +            crcrest 1,0xffff // reset CRC
+│ +            crcputh 55 bb
+│ +            crcputs sys0,2
+│ +            crcputs tSend.txt,0
+│ +            //send cmd
+│ +            printh 55 bb
+│ +            prints sys0,2
+│ +            prints tSend.txt,0
+│ +            prints crcval,2
+│          
+│  Dual-state Button bt0
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ @@ -626,15 +668,33 @@
+│      
+│      Events
+│          Touch Press Event
+│              if(xTempDest.val>xTempMin1.val)
+│              {
+│                  xTempDest.val=xTempDest.val-xTempStep1.val
+│              }
+│ -            tmSendTemp.en=1
+│ +            // event,buttonPress2,entn,tempUpd,X
+│ +            //craft command
+│ +            tSend.txt="event,buttonPress2,"
+│ +            tSend.txt+=entn.txt+","
+│ +            tSend.txt+="tempUpd,"
+│ +            //convert temperature
+│ +            covx xTempDest.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            //send calc crc
+│ +            btlen tSend.txt,sys0
+│ +            crcrest 1,0xffff // reset CRC
+│ +            crcputh 55 bb
+│ +            crcputs sys0,2
+│ +            crcputs tSend.txt,0
+│ +            //send cmd
+│ +            printh 55 bb
+│ +            prints sys0,2
+│ +            prints tSend.txt,0
+│ +            prints crcval,2
+│          
+│  Dual-state Button btDown1
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ @@ -644,15 +704,36 @@
+│      
+│      Events
+│          Touch Press Event
+│              if(xTempDest1.val>xTempMin1.val)
+│              {
+│                  xTempDest1.val=xTempDest1.val-xTempStep1.val
+│              }
+│ -            tmSendHighLow.en=1
+│ +            // event,buttonPress2,entn,tempUpd,X
+│ +            //craft command
+│ +            tSend.txt="event,buttonPress2,"
+│ +            tSend.txt+=entn.txt+","
+│ +            tSend.txt+="tempUpdHighLow,"
+│ +            //convert temperature
+│ +            covx xTempDest1.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            tSend.txt+="|"
+│ +            covx xTempDest2.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            //send calc crc
+│ +            btlen tSend.txt,sys0
+│ +            crcrest 1,0xffff // reset CRC
+│ +            crcputh 55 bb
+│ +            crcputs sys0,2
+│ +            crcputs tSend.txt,0
+│ +            //send cmd
+│ +            printh 55 bb
+│ +            prints sys0,2
+│ +            prints tSend.txt,0
+│ +            prints crcval,2
+│          
+│  Dual-state Button btUp
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ @@ -662,15 +743,33 @@
+│      
+│      Events
+│          Touch Press Event
+│              if(xTempDest.val<xTempMax1.val)
+│              {
+│                  xTempDest.val=xTempDest.val+xTempStep1.val
+│              }
+│ -            tmSendTemp.en=1
+│ +            // event,buttonPress2,entn,tempUpd,X
+│ +            //craft command
+│ +            tSend.txt="event,buttonPress2,"
+│ +            tSend.txt+=entn.txt+","
+│ +            tSend.txt+="tempUpd,"
+│ +            //convert temperature
+│ +            covx xTempDest.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            //send calc crc
+│ +            btlen tSend.txt,sys0
+│ +            crcrest 1,0xffff // reset CRC
+│ +            crcputh 55 bb
+│ +            crcputs sys0,2
+│ +            crcputs tSend.txt,0
+│ +            //send cmd
+│ +            printh 55 bb
+│ +            prints sys0,2
+│ +            prints tSend.txt,0
+│ +            prints crcval,2
+│          
+│  Dual-state Button btUp1
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ @@ -680,15 +779,36 @@
+│      
+│      Events
+│          Touch Press Event
+│              if(xTempDest1.val<xTempMax1.val)
+│              {
+│                  xTempDest1.val=xTempDest1.val+xTempStep1.val
+│              }
+│ -            tmSendHighLow.en=1
+│ +            // event,buttonPress2,entn,tempUpd,X
+│ +            //craft command
+│ +            tSend.txt="event,buttonPress2,"
+│ +            tSend.txt+=entn.txt+","
+│ +            tSend.txt+="tempUpdHighLow,"
+│ +            //convert temperature
+│ +            covx xTempDest1.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            tSend.txt+="|"
+│ +            covx xTempDest2.val,tTmp.txt,0,0
+│ +            tSend.txt+=tTmp.txt
+│ +            //send calc crc
+│ +            btlen tSend.txt,sys0
+│ +            crcrest 1,0xffff // reset CRC
+│ +            crcputh 55 bb
+│ +            crcputs sys0,2
+│ +            crcputs tSend.txt,0
+│ +            //send cmd
+│ +            printh 55 bb
+│ +            prints sys0,2
+│ +            prints tSend.txt,0
+│ +            prints crcval,2
+│          
+│  Hotspot mSwipeNext
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ @@ -715,75 +835,14 @@
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│      
+│      Events
+│          Touch Press Event
+│              click bPrev,1
+│          
+│ -Timer tmSendHighLow
+│ -    Attributes
+│ -        Scope      : local
+│ -        Period (ms): 800
+│ -        Enabled    : no
+│ -    
+│ -    Events
+│ -        Timer Event
+│ -            // event,buttonPress2,entn,tempUpd,X
+│ -            //craft command
+│ -            tSend.txt="event,buttonPress2,"
+│ -            tSend.txt+=entn.txt+","
+│ -            tSend.txt+="tempUpdHighLow,"
+│ -            //convert temperature
+│ -            covx xTempDest1.val,tTmp.txt,0,0
+│ -            tSend.txt+=tTmp.txt
+│ -            tSend.txt+="|"
+│ -            covx xTempDest2.val,tTmp.txt,0,0
+│ -            tSend.txt+=tTmp.txt
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│ -            tmSendHighLow.en=0
+│ -        
+│ -Timer tmSendTemp
+│ -    Attributes
+│ -        Scope      : local
+│ -        Period (ms): 800
+│ -        Enabled    : no
+│ -    
+│ -    Events
+│ -        Timer Event
+│ -            // event,buttonPress2,entn,tempUpd,X
+│ -            //craft command
+│ -            tSend.txt="event,buttonPress2,"
+│ -            tSend.txt+=entn.txt+","
+│ -            tSend.txt+="tempUpd,"
+│ -            //convert temperature
+│ -            covx xTempDest.val,tTmp.txt,0,0
+│ -            tSend.txt+=tTmp.txt
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│ -            tmSendTemp.en=0
+│ -        
+│  Timer tmSerial
+│      Attributes
+│          Scope      : local
+│          Period (ms): 50
+│          Enabled    : yes
+│      
+│      Events
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/portrait/n2t-out/pageStartup.txt
 │ @@ -118,15 +118,15 @@
