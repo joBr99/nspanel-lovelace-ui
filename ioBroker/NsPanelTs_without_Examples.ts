@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.6.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+TypeScript v3.6.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 45 / v3.6.0 / BerryDriver 6 / Tasmota 12.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -80,12 +80,20 @@ ReleaseNotes:
         - 28.11.2022 - v3.6.0.1 Bugfix in bExit
         - 29.11.2022 - v3.6.0.2 Update Berry Version 6
         - 30.11.2022 - v3.6.0.3 Bugfix string/number compare current BerryDriver (DP as string)
-        - XX.11.2022 - v3.6.1   Add cardChart on PROD (implemented but working with v3.6.1 --> next TFT)
-        - XX.11.2022 - v3.6.1   Add Shuffle to Media Player
+        - 05.12.2022 - v3.6.0.4 Add bHome to Navigation
+        - 05.12.2022 - v3.6.0.4 Add changeable Center-Icon in cardPower with Color and Value
+        - 08.12.2022 - v3.6.0.4 Bugfix - Use MRIcons in Screensaver with null
+        - 13.12.2022 - v3.6.0.4 Add Sensor-Values to cardGrid
+        - 13.12.2022 - v3.6.0.4 Hotfix - Update screensaver temperature without weather forecast
+
+        Implemented in 3.6.1 DEV
+        - XX.12.2022 - v3.6.1   Add cardChart on PROD (implemented but working with v3.6.1 --> next TFT)
+        - XX.12.2022 - v3.6.1   Add Shuffle to Media Player
+        - XX.12.2022 - v3.6.1   Remove Speakerlist and Add 5 GridCard PageItems
+        - XX.12.2022 - v3.6.1   Add In_Sel PopUp
 
         Todo's for 3.6.1
-        - XX.11.2022 - v3.6.1 Add Fan
-        - XX.11.2022 - v3.6.1 Add In_Sel PopUp
+        - XX.12.2022 - v3.6.1 Add Fan
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -179,6 +187,7 @@ const Debug = false;
 let weatherForecast: boolean; // Änderung zum Video --> Einstellung siehe Wiki
 
 const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blau-Off - Original Entity Off
+const HMIOn:            RGB = { red:   3, green: 169, blue: 244 };     // Blau-On
 const HMIDark:          RGB = { red:  29, green:  29, blue:  29 };     // Original Background Color
 const Off:              RGB = { red: 253, green: 128, blue:   0 };     // Orange-Off - schönere Farbübergänge
 const On:               RGB = { red: 253, green: 216, blue:  53 };
@@ -396,6 +405,16 @@ let timeoutMedia: any;
 var bgColorScrSaver: number = 0;
 
 //switch BackgroundColors for Screensaver Indicators
+async function Init_ActivePageData() {
+    if (existsState(NSPanel_Path + 'ActivePage.heading') == false ) { 
+        await createStateAsync(NSPanel_Path + 'ActivePage.heading', '', true, { type: 'string' });
+    }
+    if (existsState(NSPanel_Path + 'ActivePage.type') == false ) { 
+        await createStateAsync(NSPanel_Path + 'ActivePage.type', '', true, { type: 'string' });
+    }
+}
+Init_ActivePageData();
+//switch BackgroundColors for Screensaver Indicators
 async function Init_Screensaver_Backckground_Color_Switch() {
     if (existsState(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator') == false ) { 
         await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', 0, true, { type: 'number' });
@@ -461,15 +480,29 @@ on({id: [].concat(String(NSPanel_Path) + 'Relay.1').concat(String(NSPanel_Path) 
     }
 });
 
-on({id: [].concat(config.mrIcon1ScreensaverEntity.ScreensaverEntity).concat(config.mrIcon2ScreensaverEntity.ScreensaverEntity), change: "ne"}, async function (obj) {
-    if (obj.id.substring(0,4) == 'mqtt') {
-        let Button = obj.id.split('.'); 
-        if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
-            await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
-        }
+async function SubscribeMRIcons () { 
+    if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
+        on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+            if (obj.id.substring(0,4) == 'mqtt') {
+                let Button = obj.id.split('.'); 
+                if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
+                    await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
+                }
+            }
+        });
     }
-});
-
+    if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
+        on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+            if (obj.id.substring(0,4) == 'mqtt') {
+                let Button = obj.id.split('.'); 
+                if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
+                    await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
+                }
+            }
+        });
+    }
+}
+SubscribeMRIcons();
 // Create atomatically Wheather-Alias, if exists accuweather.0. and is not exists Config-Wheather-Alias
 async function CreateWeatherAlias () {
     if (autoCreateAlias) {
@@ -744,6 +777,7 @@ let activePage = undefined;
 schedule('* * * * *', () => {
     try {
         SendTime();
+        HandleScreensaverUpdate();
     } catch (err) {
         console.warn('schedule: ' + err.message);
     }
@@ -1419,9 +1453,11 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                 case 'pageOpenDetail':
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
-                    let pageItem = findPageItem(words[3]);
+                    let tempPageItem = words[3].split('?');
+                    let pageItem = findPageItem(tempPageItem[0]);
                     if (pageItem !== undefined) {
-                        SendToPanel(GenerateDetailPage(words[2], pageItem));
+                        //console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                        SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem));
                     }
                     break;
                 case 'buttonPress2':
@@ -1469,6 +1505,8 @@ function findPageItem(searching: String): PageItem {
 function GeneratePage(page: Page): void {
     try {
         activePage = page;
+        setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type);
+        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading);
         switch (page.type) {
             case 'cardEntities':
                 SendToPanel(GenerateEntitiesPage(<PageEntities>page));
@@ -1851,6 +1889,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
 
+                case 'motion': 
+
                 case 'info':
 
                 case 'humidity':
@@ -1886,6 +1926,10 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     }
 
                     iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
+
+                    if (pageItem.useValue) {
+                        iconId = optVal; 
+                    }
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
 
@@ -2076,7 +2120,7 @@ function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: strin
         }
 
         subscriptions[id] = (on({ id: id, change: 'any' }, () => {
-            SendToPanel(GenerateDetailPage(type, pageItem));
+            SendToPanel(GenerateDetailPage(type, undefined, pageItem));
         }))
     } catch (err) {
         console.warn('function RegisterDetailEntityWatcher: ' + err.message);
@@ -2391,6 +2435,8 @@ function unsubscribeMediaSubscriptions(): void {
             unsubscribe(mediaID + '.TITLE')
             unsubscribe(mediaID + '.ALBUM')
             unsubscribe(mediaID + '.VOLUME')
+            unsubscribe(mediaID + '.REPEAT')
+            unsubscribe(mediaID + '.SHUFFLE')
         }
     }
     for (let i = 0; i < config.subPages.length; i++) {
@@ -2401,18 +2447,20 @@ function unsubscribeMediaSubscriptions(): void {
             unsubscribe(mediaID + '.TITLE')
             unsubscribe(mediaID + '.ALBUM')
             unsubscribe(mediaID + '.VOLUME')
+            unsubscribe(mediaID + '.REPEAT')
+            unsubscribe(mediaID + '.SHUFFLE')
         }
     }
 } 
 
 function subscribeMediaSubscriptions(id: string): void {
-    on({id: [].concat([id + '.STATE']).concat([id + '.VOLUME']).concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']), change: "ne"}, async function () {
+    on({id: [].concat([id + '.STATE']).concat([id + '.VOLUME']).concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']).concat([id + '.SHUFFLE']).concat([id + '.REPEAT']), change: "ne"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
                 GeneratePage(activePage);
             }
-        },25)
+        },50)
     });
 } 
 
@@ -2465,6 +2513,8 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     await createAliasAsync(id + '.STOP', dpPath + 'player.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
                     await createAliasAsync(id + '.STATE', dpPath + 'player.isPlaying', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
                     await createAliasAsync(id + '.VOLUME', dpPath + 'player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
+                    await createAliasAsync(id + '.REPEAT', dpPath + 'player.repeat', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'REPEAT' });
+                    await createAliasAsync(id + '.SHUFFLE', dpPath + 'player.shuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'SHUFFLE' });
                 
                 } catch (err) {
                     console.warn('function createAutoMediaAlias: ' + err.message);
@@ -2862,13 +2912,14 @@ function GenerateQRPage(page: PageQR): Payload[] {
 function GeneratePowerPage(page: PagePower): Payload[] {
     try {
         activePage = page;
+        
+        let id = page.items[0].id;
 
         if (Debug) {
             console.log(page.items[0].id);
         }
-
+        
         let demoMode = false;
-        let id;
 
         try {
             id = page.items[0].id
@@ -2896,33 +2947,37 @@ function GeneratePowerPage(page: PagePower): Payload[] {
 
         let arrayColorScale = [colorScale0, colorScale1, colorScale2, colorScale3, colorScale4, colorScale5, colorScale6, colorScale7, colorScale8, colorScale9, colorScale10]
 
+        let homeIconColor = 0;
         if (!demoMode) {
-            for (let obji = 0; obji < 6; obji++) {
+            for (let obji = 0; obji < 7; obji++) {
                 array_icon_color[obji + 1] = arrayColorScale[obj[obji].iconColor];
                 array_icon[obji + 1] = obj[obji].icon;
                 array_powerspeed[obji + 1] = obj[obji].speed;
                 array_powerstate[obji + 1] = obj[obji].value + ' ' + obj[obji].unit ;
             }
+            array_icon[0] = obj[0].icon;
+            array_powerstate[0] = obj[0].value + ' ' + obj[0].unit;
+            homeIconColor = obj[0].iconColor;
         }
 
         let power_string : any = '';
 
         for (let i = 1; i < 7; i++ ) {
-            power_string = power_string + rgb_dec565(array_icon_color[i]) + '~';    // icon_color~
-            power_string = power_string + Icons.GetIcon(array_icon[i]) + '~';       // icon~
-            power_string = power_string + array_powerspeed[i] + '~';                // speed~
-            power_string = power_string + array_powerstate[i] + '~';                // entity.state~
+            power_string = power_string + rgb_dec565(array_icon_color[i+1]) + '~';    // icon_color~
+            power_string = power_string + Icons.GetIcon(array_icon[i+1]) + '~';       // icon~
+            power_string = power_string + array_powerspeed[i+1] + '~';                // speed~
+            power_string = power_string + array_powerstate[i+1] + '~';                // entity.state~
         }
 
         power_string = power_string.substring(0, power_string.length - 1);
 
         out_msgs.push({
-            payload: 'entityUpd~' +                         //entityUpd~*
-                heading                         + '~' +     //internalNameEntity*~*
-                GetNavigationString(pageId)     + '~' +     //navigation*~*
-                rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
-                Icons.GetIcon(array_icon[0])    + '~' +     // icon~            Mitte
-                array_powerspeed[0]             + '~' +     // entity.state~    Mitte
+            payload: 'entityUpd~' +                                 //entityUpd~*
+                heading                         + '~' +             //internalNameEntity*~*
+                GetNavigationString(pageId)     + '~' +             //navigation*~*
+                rgb_dec565(array_icon_color[homeIconColor]) + '~' + // icon_color~      Mitte
+                Icons.GetIcon(array_icon[0])    + '~' +             // icon~            Mitte
+                array_powerstate[0]             + '~' +             // entity.state~    Mitte
                 power_string
         });
 
@@ -2999,7 +3054,8 @@ function toggleState(id: string): boolean {
 
 function HandleButtonEvent(words): void {
     try {
-        let id = words[2]
+        let tempid = words[2].split('?');
+        let id = tempid[0];
         let buttonAction = words[3];
 
         if (Debug) {
@@ -3074,6 +3130,13 @@ function HandleButtonEvent(words): void {
                         GeneratePage(activePage);
                     }
                 }
+                break;
+            case 'bHome':
+                if (Debug) {
+                    console.log('bExit: ' + words[4] + ' - ' + pageId);
+                }
+                UnsubscribeWatcher();
+                GeneratePage(config.pages[0]);
                 break;
             case 'notifyAction':
                 if (words[4] == 'yes') {
@@ -3526,7 +3589,7 @@ function GetNavigationString(pageId: number): string {
     }
 }
 
-function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
+function GenerateDetailPage(type: string, optional: string, pageItem: PageItem): Payload[] {
     try {
         let out_msgs: Array<Payload> = [];
         let id = pageItem.id
@@ -3621,8 +3684,6 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                             + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
 
-                    console.log('light.' + id)
-
                 }
 
                 // HUE-Licht
@@ -3677,18 +3738,18 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     }
 
                     out_msgs.push({
-                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                        payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
-                            + icon + '~'   //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'   //sliderBrightnessPos
-                            + colorTemp + '~'   //sliderColorTempPos
-                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color'   + '~'   //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });         //Brightness-Bezeichnung
+                            + icon + '~'                                //iconId
+                            + iconColor + '~'                           //iconColor
+                            + switchVal + '~'                           //buttonState
+                            + brightness + '~'                          //sliderBrightnessPos
+                            + colorTemp + '~'                           //sliderColorTempPos
+                            + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color'   + '~'                           //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                    });
                 }
 
                 // RGB-Licht
@@ -3742,18 +3803,18 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     }
 
                     out_msgs.push({
-                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                        payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
-                            + icon + '~'   //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'   //sliderBrightnessPos
-                            + colorTemp + '~'   //sliderColorTempPos
-                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'   //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });         //Brightness-Bezeichnung
+                            + icon + '~'                                //iconId
+                            + iconColor + '~'                           //iconColor
+                            + switchVal + '~'                           //buttonState
+                            + brightness + '~'                          //sliderBrightnessPos
+                            + colorTemp + '~'                           //sliderColorTempPos
+                            + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'                             //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                    });
                 }
 
                 // RGB-Licht-einzeln (HEX)
@@ -3811,18 +3872,18 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     }
 
                     out_msgs.push({
-                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                        payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
-                            + icon + '~'        //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'  //sliderBrightnessPos
-                            + colorTemp + '~'   //sliderColorTempPos
-                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'     //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });         //Brightness-Bezeichnung
+                            + icon + '~'                                //iconId
+                            + iconColor + '~'                           //iconColor
+                            + switchVal + '~'                           //buttonState
+                            + brightness + '~'                          //sliderBrightnessPos
+                            + colorTemp + '~'                           //sliderColorTempPos
+                            + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'                             //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                    });
                 }
 
                 // Farbtemperatur
@@ -3878,8 +3939,8 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
                             + 'Color' + '~'                             //Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });       //Brightness-Bezeichnung
+                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                    });
                 }
             }
 
@@ -3946,7 +4007,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         + icon_up_status + '~'                    //{icon_up_status}~
                         + icon_stop_status + '~'                  //{icon_stop_status}~
                         + icon_down_status + '~'                  //{icon_down_status}~
-                        + textTilt + '~'                           //{textTilt}~
+                        + textTilt + '~'                          //{textTilt}~
                         + iconTiltLeft + '~'                      //{iconTiltLeft}~
                         + iconTiltStop + '~'                      //{iconTiltStop}~
                         + iconTiltRight + '~'                     //{iconTiltRight}~
@@ -4030,6 +4091,8 @@ function UnsubscribeWatcher(): void {
 }
 
 function HandleScreensaver(): void {
+    setIfExists(NSPanel_Path + 'ActivePage.type', 'screensaver');
+    setIfExists(NSPanel_Path + 'ActivePage.heading', 'Screensaver');
     SendToPanel({ payload: 'pageType~screensaver' });
     UnsubscribeWatcher();
     HandleScreensaverUpdate();
@@ -4928,6 +4991,9 @@ type PageItem = {
     mediaDevice: (string | undefined),
     targetPage: (string | undefined),
     speakerList: (string[] | undefined),
+    playList: (string[] | undefined),
+    equalizerList: (string[] | undefined),
+    repeatList: (string[] | undefined),
     hidePassword: (boolean | undefined),
     autoCreateALias: (boolean | undefined)
     colorMediaIcon: (RGB | undefined),
@@ -4941,6 +5007,9 @@ type PageItem = {
     setThermoDestTemp2: (string | undefined),
     yAxis: (string | undefined),
     yAxisTicks: (number[] | undefined),
+    popupType: (string | undefined),
+    popupOptions: (string[] | undefined),
+    useValue: (boolean | undefined)
 }
 
 type DimMode = {
@@ -4978,7 +5047,7 @@ type Config = {
     pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart)[],
     subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart)[],
     button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null),
-    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null),
+    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null)
 }
 
 type ScreenSaverElement = {
@@ -4986,12 +5055,12 @@ type ScreenSaverElement = {
     ScreensaverEntityIcon: string | null,
     ScreensaverEntityText: string | null,
     ScreensaverEntityUnitText: string | null,
-    ScreensaverEntityIconColor: any | null,
+    ScreensaverEntityIconColor: any | null
 }
 
 type ScreenSaverMRElement = {
     ScreensaverEntity: string | null,
     ScreensaverEntityIcon: string | null,
     ScreensaverEntityOnColor: RGB,
-    ScreensaverEntityOffColor: RGB,
+    ScreensaverEntityOffColor: RGB
 }
