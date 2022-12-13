@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.6.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+TypeScript v3.6.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 45 / v3.6.0 / BerryDriver 6 / Tasmota 12.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -7,7 +7,6 @@ icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroke
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
-
 *******************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
@@ -80,24 +79,27 @@ ReleaseNotes:
         - 28.11.2022 - v3.6.0.1 Bugfix in bExit
         - 29.11.2022 - v3.6.0.2 Update Berry Version 6
         - 30.11.2022 - v3.6.0.3 Bugfix string/number compare current BerryDriver (DP as string)
-        - XX.11.2022 - v3.6.1   Add cardChart on PROD (implemented but working with v3.6.1 --> next TFT)
-        - XX.11.2022 - v3.6.1   Add Shuffle to Media Player
-
+        - 05.12.2022 - v3.6.0.4 Add bHome to Navigation
+        - 05.12.2022 - v3.6.0.4 Add changeable Center-Icon in cardPower with Color and Value
+        - 08.12.2022 - v3.6.0.4 Bugfix - Use MRIcons in Screensaver with null
+        - 11.12.2022 - v3.6.0.4 Add new DP to show active page
+        - 13.12.2022 - v3.6.0.4 Add Sensor-Values to cardGrid
+        - 13.12.2022 - v3.6.0.4 Hotfix - Update screensaver temperature without weather forecast
+        Implemented in 3.6.1 DEV
+        - XX.12.2022 - v3.6.1   Add cardChart on PROD (implemented but working with v3.6.1 --> next TFT)
+        - XX.12.2022 - v3.6.1   Add Shuffle to Media Player
+        - XX.12.2022 - v3.6.1   Remove Speakerlist and Add 5 GridCard PageItems
+        - XX.12.2022 - v3.6.1   Add In_Sel PopUp
         Todo's for 3.6.1
-        - XX.11.2022 - v3.6.1 Add Fan
-        - XX.11.2022 - v3.6.1 Add In_Sel PopUp
-
+        - XX.12.2022 - v3.6.1 Add Fan
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
 *****************************************************************************************************************
-
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
-
 Tasmota Konsole:
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
     Rule2 0 (Rule deaktivieren)
-
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
@@ -107,13 +109,11 @@ Mögliche Seiten-Ansichten:
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
     cardPower Page      - Energiefluss
-
 Popup-Pages:
     popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
     popupShutter Page   - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
-
 Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
@@ -138,7 +138,6 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, analog Info
     Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
-
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden --> SetOption146 1
     Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden
@@ -147,16 +146,13 @@ Interne Sonoff-Sensoren (über Tasmota):
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
 Tasmota-Status0 - (zyklische Ausführung)
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
-
 Erforderliche Adapter:
-
     AccuWeather:        - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten    - Für Erstellung der Aliase
     Alias-Manager       - !!! ausschließlich für MEDIA-Alias
     MQTT-Adapter        - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
-
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.6.0.tft
@@ -167,7 +163,7 @@ let timeoutSlider: any;
 let manually_Update = false;
 const autoCreateAlias = true;  //Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.  
 
-const NSPanel_Path = '0_userdata.0.NSPanel.EMU.';
+const NSPanel_Path = '0_userdata.0.NSPanel.1.';
 const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.'; //Neuer Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm)
 
 let AliasPath: string = 'alias.0.' + NSPanel_Path.substring(13, NSPanel_Path.length);
@@ -179,6 +175,7 @@ const Debug = false;
 let weatherForecast: boolean; // Änderung zum Video --> Einstellung siehe Wiki
 
 const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blau-Off - Original Entity Off
+const HMIOn:            RGB = { red:   3, green: 169, blue: 244 };     // Blau-On
 const HMIDark:          RGB = { red:  29, green:  29, blue:  29 };     // Original Background Color
 const Off:              RGB = { red: 253, green: 128, blue:   0 };     // Orange-Off - schönere Farbübergänge
 const On:               RGB = { red: 253, green: 216, blue:  53 };
@@ -272,6 +269,23 @@ let Test_Licht1: PageEntities =
         <PageItem>{ id: "alias.0.NSPanel_1.TestRGBLicht", name: "RGB-Licht", minValueBrightness: 0, maxValueBrightness: 100, interpolateColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.TestCTmitHUE", name: "HUE-Licht-CT", minValueBrightness: 0, maxValueBrightness: 70, minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true},
         <PageItem>{ id: "alias.0.NSPanel_1.TestHUELicht", name: "HUE-Licht-Color", minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true}
+    ]
+};
+
+let SensorGrid: PageGrid =
+{
+    "type": "cardGrid",
+    "heading": "Sensor Werte",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.TestTemperatur", name: "Außentemp. °C", offColor: MSRed, onColor: MSGreen, useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.TestFeuchtigkeit", name: "Luftfeuchte %", offColor: MSYellow, onColor: MSYellow , useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.Taupunkt", name: "Taupunkt °C", offColor: MSRed, onColor: MSGreen, useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.UV_Index", name: "UV Index", offColor: White , onColor: White, useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.Windstaerke", name: "Windstärke bft", offColor: White , onColor: White, useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.Luftdruck", name: "Luftdruck hPa", offColor: White , onColor: White, useValue: true }
     ]
 };
 
@@ -679,9 +693,10 @@ export const config: Config = {
     temperatureUnit: '°C',
     pages: [
             Buero_Seite_1,      //Beispiel-Seite
-            CardPowerExample,   //Beispiel-Seite
+            SensorGrid,         //Beispiel-Seite
+            //CardPowerExample,   //Beispiel-Seite
             //SqueezeboxRPC,      //Beispiel-Seite
-            Sonos,              //Beispiel-Seite
+            //Sonos,              //Beispiel-Seite
             SpotifyPremium,     //Beispiel-Seite
             Alexa,              //Beispiel-Seite
             Buero_Seite_2,      //Beispiel-Seite
@@ -717,6 +732,16 @@ let useMediaEvents: boolean = false;
 let timeoutMedia: any;
 var bgColorScrSaver: number = 0;
 
+//Datapoints for active page
+async function Init_ActivePageData() {
+    if (existsState(NSPanel_Path + 'ActivePage.heading') == false ) { 
+        await createStateAsync(NSPanel_Path + 'ActivePage.heading', '', true, { type: 'string' });
+    }
+    if (existsState(NSPanel_Path + 'ActivePage.type') == false ) { 
+        await createStateAsync(NSPanel_Path + 'ActivePage.type', '', true, { type: 'string' });
+    }
+}
+Init_ActivePageData();
 //switch BackgroundColors for Screensaver Indicators
 async function Init_Screensaver_Backckground_Color_Switch() {
     if (existsState(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator') == false ) { 
@@ -783,15 +808,29 @@ on({id: [].concat(String(NSPanel_Path) + 'Relay.1').concat(String(NSPanel_Path) 
     }
 });
 
-on({id: [].concat(config.mrIcon1ScreensaverEntity.ScreensaverEntity).concat(config.mrIcon2ScreensaverEntity.ScreensaverEntity), change: "ne"}, async function (obj) {
-    if (obj.id.substring(0,4) == 'mqtt') {
-        let Button = obj.id.split('.'); 
-        if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
-            await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
-        }
+async function SubscribeMRIcons () { 
+    if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
+        on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+            if (obj.id.substring(0,4) == 'mqtt') {
+                let Button = obj.id.split('.'); 
+                if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
+                    await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
+                }
+            }
+        });
     }
-});
-
+    if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
+        on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+            if (obj.id.substring(0,4) == 'mqtt') {
+                let Button = obj.id.split('.'); 
+                if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
+                    await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
+                }
+            }
+        });
+    }
+}
+SubscribeMRIcons();
 // Create atomatically Wheather-Alias, if exists accuweather.0. and is not exists Config-Wheather-Alias
 async function CreateWeatherAlias () {
     if (autoCreateAlias) {
@@ -1066,6 +1105,7 @@ let activePage = undefined;
 schedule('* * * * *', () => {
     try {
         SendTime();
+        HandleScreensaverUpdate();
     } catch (err) {
         console.warn('schedule: ' + err.message);
     }
@@ -1741,9 +1781,11 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                 case 'pageOpenDetail':
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
-                    let pageItem = findPageItem(words[3]);
+                    let tempPageItem = words[3].split('?');
+                    let pageItem = findPageItem(tempPageItem[0]);
                     if (pageItem !== undefined) {
-                        SendToPanel(GenerateDetailPage(words[2], pageItem));
+                        //console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                        SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem));
                     }
                     break;
                 case 'buttonPress2':
@@ -1791,6 +1833,8 @@ function findPageItem(searching: String): PageItem {
 function GeneratePage(page: Page): void {
     try {
         activePage = page;
+        setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type);
+        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading);
         switch (page.type) {
             case 'cardEntities':
                 SendToPanel(GenerateEntitiesPage(<PageEntities>page));
@@ -2173,6 +2217,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
 
+                case 'motion': 
+
                 case 'info':
 
                 case 'humidity':
@@ -2208,6 +2254,10 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     }
 
                     iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
+
+                    if (pageItem.useValue) {
+                        iconId = optVal; 
+                    }
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
 
@@ -2398,7 +2448,7 @@ function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: strin
         }
 
         subscriptions[id] = (on({ id: id, change: 'any' }, () => {
-            SendToPanel(GenerateDetailPage(type, pageItem));
+            SendToPanel(GenerateDetailPage(type, undefined, pageItem));
         }))
     } catch (err) {
         console.warn('function RegisterDetailEntityWatcher: ' + err.message);
@@ -2713,6 +2763,8 @@ function unsubscribeMediaSubscriptions(): void {
             unsubscribe(mediaID + '.TITLE')
             unsubscribe(mediaID + '.ALBUM')
             unsubscribe(mediaID + '.VOLUME')
+            unsubscribe(mediaID + '.REPEAT')
+            unsubscribe(mediaID + '.SHUFFLE')
         }
     }
     for (let i = 0; i < config.subPages.length; i++) {
@@ -2723,18 +2775,20 @@ function unsubscribeMediaSubscriptions(): void {
             unsubscribe(mediaID + '.TITLE')
             unsubscribe(mediaID + '.ALBUM')
             unsubscribe(mediaID + '.VOLUME')
+            unsubscribe(mediaID + '.REPEAT')
+            unsubscribe(mediaID + '.SHUFFLE')
         }
     }
 } 
 
 function subscribeMediaSubscriptions(id: string): void {
-    on({id: [].concat([id + '.STATE']).concat([id + '.VOLUME']).concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']), change: "ne"}, async function () {
+    on({id: [].concat([id + '.STATE']).concat([id + '.VOLUME']).concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']).concat([id + '.SHUFFLE']).concat([id + '.REPEAT']), change: "ne"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
                 GeneratePage(activePage);
             }
-        },25)
+        },50)
     });
 } 
 
@@ -2787,6 +2841,8 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     await createAliasAsync(id + '.STOP', dpPath + 'player.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
                     await createAliasAsync(id + '.STATE', dpPath + 'player.isPlaying', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
                     await createAliasAsync(id + '.VOLUME', dpPath + 'player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
+                    await createAliasAsync(id + '.REPEAT', dpPath + 'player.repeat', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'REPEAT' });
+                    await createAliasAsync(id + '.SHUFFLE', dpPath + 'player.shuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'SHUFFLE' });
                 
                 } catch (err) {
                     console.warn('function createAutoMediaAlias: ' + err.message);
@@ -3184,13 +3240,14 @@ function GenerateQRPage(page: PageQR): Payload[] {
 function GeneratePowerPage(page: PagePower): Payload[] {
     try {
         activePage = page;
+        
+        let id = page.items[0].id;
 
         if (Debug) {
             console.log(page.items[0].id);
         }
-
+        
         let demoMode = false;
-        let id;
 
         try {
             id = page.items[0].id
@@ -3218,33 +3275,37 @@ function GeneratePowerPage(page: PagePower): Payload[] {
 
         let arrayColorScale = [colorScale0, colorScale1, colorScale2, colorScale3, colorScale4, colorScale5, colorScale6, colorScale7, colorScale8, colorScale9, colorScale10]
 
+        let homeIconColor = 0;
         if (!demoMode) {
-            for (let obji = 0; obji < 6; obji++) {
+            for (let obji = 0; obji < 7; obji++) {
                 array_icon_color[obji + 1] = arrayColorScale[obj[obji].iconColor];
                 array_icon[obji + 1] = obj[obji].icon;
                 array_powerspeed[obji + 1] = obj[obji].speed;
                 array_powerstate[obji + 1] = obj[obji].value + ' ' + obj[obji].unit ;
             }
+            array_icon[0] = obj[0].icon;
+            array_powerstate[0] = obj[0].value + ' ' + obj[0].unit;
+            homeIconColor = obj[0].iconColor;
         }
 
         let power_string : any = '';
 
         for (let i = 1; i < 7; i++ ) {
-            power_string = power_string + rgb_dec565(array_icon_color[i]) + '~';    // icon_color~
-            power_string = power_string + Icons.GetIcon(array_icon[i]) + '~';       // icon~
-            power_string = power_string + array_powerspeed[i] + '~';                // speed~
-            power_string = power_string + array_powerstate[i] + '~';                // entity.state~
+            power_string = power_string + rgb_dec565(array_icon_color[i+1]) + '~';    // icon_color~
+            power_string = power_string + Icons.GetIcon(array_icon[i+1]) + '~';       // icon~
+            power_string = power_string + array_powerspeed[i+1] + '~';                // speed~
+            power_string = power_string + array_powerstate[i+1] + '~';                // entity.state~
         }
 
         power_string = power_string.substring(0, power_string.length - 1);
 
         out_msgs.push({
-            payload: 'entityUpd~' +                         //entityUpd~*
-                heading                         + '~' +     //internalNameEntity*~*
-                GetNavigationString(pageId)     + '~' +     //navigation*~*
-                rgb_dec565(array_icon_color[0]) + '~' +     // icon_color~      Mitte
-                Icons.GetIcon(array_icon[0])    + '~' +     // icon~            Mitte
-                array_powerspeed[0]             + '~' +     // entity.state~    Mitte
+            payload: 'entityUpd~' +                                 //entityUpd~*
+                heading                         + '~' +             //internalNameEntity*~*
+                GetNavigationString(pageId)     + '~' +             //navigation*~*
+                rgb_dec565(array_icon_color[homeIconColor]) + '~' + // icon_color~      Mitte
+                Icons.GetIcon(array_icon[0])    + '~' +             // icon~            Mitte
+                array_powerstate[0]             + '~' +             // entity.state~    Mitte
                 power_string
         });
 
@@ -3321,7 +3382,8 @@ function toggleState(id: string): boolean {
 
 function HandleButtonEvent(words): void {
     try {
-        let id = words[2]
+        let tempid = words[2].split('?');
+        let id = tempid[0];
         let buttonAction = words[3];
 
         if (Debug) {
@@ -3396,6 +3458,13 @@ function HandleButtonEvent(words): void {
                         GeneratePage(activePage);
                     }
                 }
+                break;
+            case 'bHome':
+                if (Debug) {
+                    console.log('bExit: ' + words[4] + ' - ' + pageId);
+                }
+                UnsubscribeWatcher();
+                GeneratePage(config.pages[0]);
                 break;
             case 'notifyAction':
                 if (words[4] == 'yes') {
@@ -3848,7 +3917,7 @@ function GetNavigationString(pageId: number): string {
     }
 }
 
-function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
+function GenerateDetailPage(type: string, optional: string, pageItem: PageItem): Payload[] {
     try {
         let out_msgs: Array<Payload> = [];
         let id = pageItem.id
@@ -3943,8 +4012,6 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                             + findLocale('lights', 'Brightness')
                     });         //Brightness-Bezeichnung
 
-                    console.log('light.' + id)
-
                 }
 
                 // HUE-Licht
@@ -3999,18 +4066,18 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     }
 
                     out_msgs.push({
-                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                        payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
-                            + icon + '~'   //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'   //sliderBrightnessPos
-                            + colorTemp + '~'   //sliderColorTempPos
-                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color'   + '~'   //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });         //Brightness-Bezeichnung
+                            + icon + '~'                                //iconId
+                            + iconColor + '~'                           //iconColor
+                            + switchVal + '~'                           //buttonState
+                            + brightness + '~'                          //sliderBrightnessPos
+                            + colorTemp + '~'                           //sliderColorTempPos
+                            + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color'   + '~'                           //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                    });
                 }
 
                 // RGB-Licht
@@ -4064,18 +4131,18 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     }
 
                     out_msgs.push({
-                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                        payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
-                            + icon + '~'   //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'   //sliderBrightnessPos
-                            + colorTemp + '~'   //sliderColorTempPos
-                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'   //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });         //Brightness-Bezeichnung
+                            + icon + '~'                                //iconId
+                            + iconColor + '~'                           //iconColor
+                            + switchVal + '~'                           //buttonState
+                            + brightness + '~'                          //sliderBrightnessPos
+                            + colorTemp + '~'                           //sliderColorTempPos
+                            + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'                             //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                    });
                 }
 
                 // RGB-Licht-einzeln (HEX)
@@ -4133,18 +4200,18 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                     }
 
                     out_msgs.push({
-                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                        payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
-                            + icon + '~'        //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'  //sliderBrightnessPos
-                            + colorTemp + '~'   //sliderColorTempPos
-                            + colorMode + '~'   //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'     //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });         //Brightness-Bezeichnung
+                            + icon + '~'                                //iconId
+                            + iconColor + '~'                           //iconColor
+                            + switchVal + '~'                           //buttonState
+                            + brightness + '~'                          //sliderBrightnessPos
+                            + colorTemp + '~'                           //sliderColorTempPos
+                            + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
+                            + 'Color' + '~'                             //Color-Bezeichnung
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
+                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                    });
                 }
 
                 // Farbtemperatur
@@ -4200,8 +4267,8 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
                             + 'Color' + '~'                             //Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });       //Brightness-Bezeichnung
+                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                    });
                 }
             }
 
@@ -4268,7 +4335,7 @@ function GenerateDetailPage(type: string, pageItem: PageItem): Payload[] {
                         + icon_up_status + '~'                    //{icon_up_status}~
                         + icon_stop_status + '~'                  //{icon_stop_status}~
                         + icon_down_status + '~'                  //{icon_down_status}~
-                        + textTilt + '~'                           //{textTilt}~
+                        + textTilt + '~'                          //{textTilt}~
                         + iconTiltLeft + '~'                      //{iconTiltLeft}~
                         + iconTiltStop + '~'                      //{iconTiltStop}~
                         + iconTiltRight + '~'                     //{iconTiltRight}~
@@ -4352,6 +4419,8 @@ function UnsubscribeWatcher(): void {
 }
 
 function HandleScreensaver(): void {
+    setIfExists(NSPanel_Path + 'ActivePage.type', 'screensaver');
+    setIfExists(NSPanel_Path + 'ActivePage.heading', 'Screensaver');
     SendToPanel({ payload: 'pageType~screensaver' });
     UnsubscribeWatcher();
     HandleScreensaverUpdate();
@@ -5250,6 +5319,9 @@ type PageItem = {
     mediaDevice: (string | undefined),
     targetPage: (string | undefined),
     speakerList: (string[] | undefined),
+    playList: (string[] | undefined),
+    equalizerList: (string[] | undefined),
+    repeatList: (string[] | undefined),
     hidePassword: (boolean | undefined),
     autoCreateALias: (boolean | undefined)
     colorMediaIcon: (RGB | undefined),
@@ -5263,6 +5335,9 @@ type PageItem = {
     setThermoDestTemp2: (string | undefined),
     yAxis: (string | undefined),
     yAxisTicks: (number[] | undefined),
+    popupType: (string | undefined),
+    popupOptions: (string[] | undefined),
+    useValue: (boolean | undefined)
 }
 
 type DimMode = {
@@ -5300,7 +5375,7 @@ type Config = {
     pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart)[],
     subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart)[],
     button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null),
-    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null),
+    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null)
 }
 
 type ScreenSaverElement = {
@@ -5308,12 +5383,12 @@ type ScreenSaverElement = {
     ScreensaverEntityIcon: string | null,
     ScreensaverEntityText: string | null,
     ScreensaverEntityUnitText: string | null,
-    ScreensaverEntityIconColor: any | null,
+    ScreensaverEntityIconColor: any | null
 }
 
 type ScreenSaverMRElement = {
     ScreensaverEntity: string | null,
     ScreensaverEntityIcon: string | null,
     ScreensaverEntityOnColor: RGB,
-    ScreensaverEntityOffColor: RGB,
+    ScreensaverEntityOffColor: RGB
 }
