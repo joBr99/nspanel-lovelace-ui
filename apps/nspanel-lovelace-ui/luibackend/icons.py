@@ -175,93 +175,7 @@ media_content_type_mapping = {
     'playlist': 'alert-circle-outline'
 }
 
-def map_to_mdi_name(ha_type, state=None, device_class="_", cardType=None):
-    if ha_type == "weather":
-        return weather_mapping[state] if state in weather_mapping else "alert-circle-outline"
-    elif ha_type in ["button", "navigate", "input_button", "input_select"]:
-        return "gesture-tap-button"
-    elif ha_type == "scene":
-        return "palette"
-    elif ha_type == "script":
-        return "script-text"
-    elif ha_type == "switch":
-        return "light-switch"
-    elif ha_type == "automation":
-        return "robot"
-    elif ha_type in ["number", "input_number"]:
-        return "ray-vertex"
-    elif ha_type == "light":
-        return "lightbulb"
-    elif ha_type == "fan":
-        return "fan"
-    elif ha_type == "person":
-        return "account"
-    elif ha_type == "vacuum":
-        return "robot-vacuum"
-    elif ha_type == "input_boolean":
-        return "check-circle-outline" if state == "on" else "close-circle-outline"
-    elif ha_type == "cover":
-        if device_class is None:
-            device_class = "window"
-        if state == "closed":
-            return cover_mapping[device_class][1] if device_class in cover_mapping else "alert-circle-outline"
-        else:
-            return cover_mapping[device_class][0] if device_class in cover_mapping else "alert-circle-outline"
-    elif ha_type == "lock":
-        return "lock-open" if state == "unlocked" else "lock"
-    elif ha_type == "sensor":
-        return sensor_mapping[device_class] if device_class in sensor_mapping else "alert-circle-outline"
-    elif ha_type == "binary_sensor":
-        if state == "on":
-            if device_class in sensor_mapping_on:
-                return sensor_mapping_on[device_class]
-            else:
-                return "checkbox-marked-circle"
-        else:
-            if device_class in sensor_mapping_off:
-                return sensor_mapping_off[device_class]
-            else:
-                return "radiobox-blank"
-            
-    elif ha_type == "alarm-arm-fail":
-        return "progress-alert"
-    elif ha_type == "alarm_control_panel":
-        if state == "disarmed":
-            return "shield-off"
-        if state == "armed_home":
-            return "shield-home"
-        if state == "armed_away":
-            return "shield-lock"
-        if state == "armed_night":
-            return "weather-night"
-        if state == "armed_vacation":
-            return "shield-airplane"
-        if state in ["arming", "pending"]:
-            return "shield"
-        if state == "triggered":
-            return "bell-ring"
-    elif ha_type == "climate":
-        if state in ["auto", "heat_cool"]:
-            return "calendar-sync"
-        if state == "heat":
-            return "fire"
-        if state == "off":
-            return "power"
-        if state == "cool":
-            return "snowflake"
-        if state == "dry":
-            return "water-percent"
-        if state == "fan_only":
-            return "fan"
-    elif ha_type == "sun":
-        if state == "above_horizon":
-            return "weather-sunset-up"
-        if state == "below_horizon":
-            return "weather-sunset-down"
-    else:
-        return "alert-circle-outline"
-
-def get_icon(ha_type, state=None, device_class=None, overwrite=None):
+def get_icon(ha_type, overwrite=None):
     if overwrite is not None:
         if type(overwrite) is str:
             return get_icon_char(overwrite)
@@ -269,7 +183,14 @@ def get_icon(ha_type, state=None, device_class=None, overwrite=None):
             for overwrite_state, overwrite_icon in overwrite.items():
                 if overwrite_state == state:
                     return get_icon_char(overwrite_icon)
-    return get_icon_char(map_to_mdi_name(ha_type, state, device_class))
+    
+    result_icon = "alert-circle-outline"
+    if ha_type == "script":
+        result_icon = "script-text"
+    elif ha_type == "alarm-arm-fail":
+        result_icon = "progress-alert"
+
+    return get_icon_char(result_icon)
 
 def get_action_icon(ha_type, action, device_class=None, overwrite=None):
     if overwrite is not None:
@@ -287,7 +208,7 @@ def get_action_icon(ha_type, action, device_class=None, overwrite=None):
         actionicon = "alert-circle-outline"
     return get_icon_char(actionicon)
 
-def get_icon_ha(entity_id, overwrite=None):
+def get_icon_ha(entity_id, overwrite=None, stateOverwrite=None):
     if overwrite is not None:
         if type(overwrite) is str:
             return get_icon_char(overwrite)
@@ -301,7 +222,7 @@ def get_icon_ha(entity_id, overwrite=None):
     ha_type = entity_id.split(".")[0]
     if (apis.ha_api.entity_exists(entity_id)):
         entity = apis.ha_api.get_entity(entity_id)
-        state = entity.state
+        state = entity.state if stateOverwrite is None else stateOverwrite
     # icons only based on state
     if ha_type in simple_type_mapping:
         result_icon = simple_type_mapping[ha_type]
@@ -346,9 +267,4 @@ def get_icon_ha(entity_id, overwrite=None):
             if entity.attributes.media_content_type in media_content_type_mapping:
                 result_icon = media_content_type_mapping[entity.attributes.media_content_type]
 
-    # TODO: get rid of this one
-    elif ha_type == "alarm-arm-fail":
-        result_icon = "progress-alert"
-    else:
-        result_icon = "alert-circle-outline"
     return get_icon_char(result_icon)
