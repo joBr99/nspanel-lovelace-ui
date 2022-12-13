@@ -104,9 +104,9 @@ class LuiPagesGen(object):
             apis.ha_api.error(f"Skipping Weather Update, entity {we_name} not found")
             return
 
-        icon_cur        = get_icon("weather", state=we.state)
+        icon_cur           = get_icon_ha(we_name)
         state["tMainIcon"] = we.state
-        text_cur        = convert_temperature(we.attributes.temperature, unit)
+        text_cur           = convert_temperature(we.attributes.temperature, unit)
 
         forecastSkip = self._config._config_screensaver.raw_config.get(f"forecastSkip")+1
         # check if the difference between the first 2 forecast items is less than 24h
@@ -131,7 +131,7 @@ class LuiPagesGen(object):
                             up = up.strftime('%H:%M')
                         else:
                             up = up.strftime('%a')
-                    icon = get_icon("weather", state=we.attributes.forecast[fid]['condition'])
+                    icon = get_icon_ha(we_name, stateOverwrite=we.attributes.forecast[fid]['condition'])
                     if i == 1:
                         state["tF1Icon"] = we.attributes.forecast[fid]['condition']
                     elif i == 2:
@@ -151,7 +151,7 @@ class LuiPagesGen(object):
                 name = wOF.get("name")
                 entity = apis.ha_api.get_entity(wOF.get("entity"))
                 up = name if name is not None else entity.attributes.friendly_name
-                icon = get_icon("sensor", state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+                icon = get_icon_ha(wOF.get("entity"), overwrite=icon)
                 if "color" in wOF:
                     if theme is None:
                         theme = {}
@@ -185,7 +185,7 @@ class LuiPagesGen(object):
                 icon = statusIcon.get("icon")
                 entity = apis.ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
-                icon = get_icon(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+                icon = get_icon_ha(statusIcon.get("entity"), overwrite=icon)
                 color = self.get_entity_color(entity, ha_type=entityType, overwrite=statusIcon.get("color", None))
                 status_res += f"~{icon}~{color}"
 
@@ -429,7 +429,7 @@ class LuiPagesGen(object):
             if overwrite_supported_modes is not None:
                 hvac_modes = overwrite_supported_modes
             for mode in hvac_modes:
-                icon_id = get_icon("climate", state=mode)
+                icon_id = get_icon_ha(item, stateOverwrite=mode)
                 color_on = 64512
                 if mode in ["auto", "heat_cool"]:
                     color_on = 1024
@@ -714,7 +714,7 @@ class LuiPagesGen(object):
         entity       = apis.ha_api.get_entity(entity_id)
         entityType   = "cover"
         device_class = entity.attributes.get("device_class", "window")
-        icon_id      = get_icon(entityType, state=entity.state, device_class=device_class)
+        icon_id      = get_icon_ha(entity_id)
         
         pos = entity.attributes.get("current_position")
         if pos is None:
