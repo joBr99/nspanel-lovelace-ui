@@ -1147,7 +1147,7 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",22
                                         if(tTmp.txt!="")
                                         {
-                                            tIcon1.font=3
+                                            tIcon2.font=3
                                         }
                                     }
                                     if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")

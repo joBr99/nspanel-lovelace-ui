@@ -52,8 +52,8 @@ cardPower
 	299  Unique line(s) of event code
 screensaver
 	47   Component(s)
-	409  Line(s) of event code
-	301  Unique line(s) of event code
+	418  Line(s) of event code
+	302  Unique line(s) of event code
 cardQR
 	32   Component(s)
 	425  Line(s) of event code
@@ -78,5 +78,5 @@ cardEntities
 Total
 	18   Page(s)
 	635  Component(s)
-	7875 Line(s) of event code
-	2008 Unique line(s) of event code
+	7884 Line(s) of event code
+	2009 Unique line(s) of event code
