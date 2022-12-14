@@ -72,11 +72,11 @@ cardGrid
 	293  Unique line(s) of event code
 screensaver
 	45   Component(s)
-	400  Line(s) of event code
-	296  Unique line(s) of event code
+	410  Line(s) of event code
+	297  Unique line(s) of event code
 
 Total
 	18   Page(s)
 	626  Component(s)
-	7871 Line(s) of event code
-	1986 Unique line(s) of event code
+	7881 Line(s) of event code
+	1987 Unique line(s) of event code

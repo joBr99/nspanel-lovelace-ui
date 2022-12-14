@@ -576,10 +576,10 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 16
+        x coordinate                        : 0
         y coordinate                        : 0
         Width                               : 85
-        Height                              : 38
+        Height                              : 48
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -609,7 +609,7 @@ Text tIcon2
         x coordinate                        : 393
         y coordinate                        : 0
         Width                               : 85
-        Height                              : 38
+        Height                              : 48
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -1139,6 +1139,16 @@ Timer tmSerial
                                         spstr strCommand.txt,tIcon2.txt,"~",19
                                         spstr strCommand.txt,tTmp.txt,"~",20
                                         covx tTmp.txt,tIcon2.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",21
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon1.font=3
+                                        }
+                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon1.font=3
+                                        }
                                     }
                                     if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {

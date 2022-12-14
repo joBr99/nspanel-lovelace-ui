@@ -1197,7 +1197,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
-│ @@ -592,15 +563,14 @@
+│ @@ -592,15 +563,24 @@
 │                                          spstr strCommand.txt,tIcon1.txt,"~",17
 │                                          spstr strCommand.txt,tTmp.txt,"~",18
 │                                          covx tTmp.txt,tIcon1.pco,0,0
@@ -1206,6 +1206,16 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",20
 │                                          covx tTmp.txt,tIcon2.pco,0,0
 │ -                                        click m0,1
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",21
+│ +                                        if(tTmp.txt!="")
+│ +                                        {
+│ +                                            tIcon1.font=3
+│ +                                        }
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",22
+│ +                                        if(tTmp.txt!="")
+│ +                                        {
+│ +                                            tIcon1.font=3
+│ +                                        }
 │                                      }
 │                                      if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
 │                                      {
