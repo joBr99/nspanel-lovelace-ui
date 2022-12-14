@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-12-13 20:21:49.356087313 +0000
++++ /dev/fd/62	2022-12-14 22:34:40.980601919 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardChart.txt
@@ -553,7 +553,7 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+15 +563,14 @@
++15 +563,24 @@
 +                                 spstr strCommand.txt,tIcon1.txt,"~",17
 +                                 spstr strCommand.txt,tTmp.txt,"~",18
 +                                 covx tTmp.txt,tIcon1.pco,0,0
@@ -562,6 +562,16 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",20
 +                                 covx tTmp.txt,tIcon2.pco,0,0
 +                                 click m0,1
++                                 spstr strCommand.txt,tTmp.txt,"~",21
++                                 if(tTmp.txt!="")
++                                 {
++                                     tIcon1.font=3
++                                 }
++                                 spstr strCommand.txt,tTmp.txt,"~",22
++                                 if(tTmp.txt!="")
++                                 {
++                                     tIcon1.font=3
++                                 }
 +                             }
 +                             if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
 +                             {

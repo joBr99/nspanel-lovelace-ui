@@ -62,10 +62,6 @@ cardMedia
 	57   Component(s)
 	660  Line(s) of event code
 	325  Unique line(s) of event code
-screensaver
-	45   Component(s)
-	400  Line(s) of event code
-	296  Unique line(s) of event code
 cardQR
 	32   Component(s)
 	425  Line(s) of event code
@@ -74,9 +70,13 @@ cardEntities
 	77   Component(s)
 	1395 Line(s) of event code
 	619  Unique line(s) of event code
+screensaver
+	45   Component(s)
+	410  Line(s) of event code
+	297  Unique line(s) of event code
 
 Total
 	18   Page(s)
 	638  Component(s)
-	8018 Line(s) of event code
-	2023 Unique line(s) of event code
+	8028 Line(s) of event code
+	2024 Unique line(s) of event code
