@@ -179,18 +179,19 @@ class LuiPagesGen(object):
 
         # status icons
         status_res = ""
+        altfont = ""
         for i in range(1,3):
             statusIcon = self._config._config_screensaver.raw_config.get(f"statusIcon{i}")
             if statusIcon is not None and apis.ha_api.entity_exists(statusIcon.get("entity","")):
                 icon = statusIcon.get("icon")
                 entity = apis.ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
-                icon = get_icon_ha(statusIcon.get("entity"), overwrite=icon)
+                icon = get_icon(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
                 color = self.get_entity_color(entity, ha_type=entityType, overwrite=statusIcon.get("color", None))
                 status_res += f"~{icon}~{color}"
+                altfont += f'~{statusIcon.get("altFont", "")}'
 
-        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}{status_res}")
-        
+        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}{status_res}{altfont}")        
         # send color if configured in screensaver
         if theme is not None:
             if not ("autoWeather" in theme and theme["autoWeather"]):
