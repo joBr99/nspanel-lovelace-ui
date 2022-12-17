@@ -46,6 +46,8 @@ Nextion Upload Proto 1.2 with 256000 Baud: `FlashNextionAdv4 http://nspanel.pky.
 
 Nextion Upload Proto 1.1 with 256000 Baud: `FlashNextionAdv5 http://nspanel.pky.eu/lui.tft`
 
+Nextion Upload Proto 1.1 with 921600 Baud and communication init on 9600 Baud: `FlashNextionAdv6 http://nspanel.pky.eu/lui.tft`
+
 
 Besides the commands, serial input will be published on 'RESULT' Topic, depending on the input in one of the following formats:
 - `{"CustomRecv":%s}`
