@@ -44,7 +44,9 @@ US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
 After sending the command, the screen should show a progress bar. The flashing progress takes around 5 minutes.
 
-> ⚠️: **If you are getting an error message with `[bytes('8080808080808080808080000` please try to downgrade tasmota to 12.2.0 (http://ota.tasmota.com/tasmota32/release-12.2.0/tasmota32-nspanel.bin) and leave a comment on https://github.com/joBr99/nspanel-lovelace-ui/issues/601**
+> ⚠️: **If you are getting an error message with `[bytes('8080808080808080808080000` please try to downgrade tasmota to 12.2.0 (http://ota.tasmota.com/tasmota32/release-12.2.0/tasmota32-nspanel.bin).
+>
+>  Please leave a comment on the following issue in both cases (working or not), since this isn't reproducable at the moment :/ https://github.com/joBr99/nspanel-lovelace-ui/issues/601**
 
 Note: For the US Version Users - keep in mind that you need to add the model config option to your apps.yaml later, more details on config overview page
 
