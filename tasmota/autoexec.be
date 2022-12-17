@@ -389,8 +389,13 @@ def flash_nextion_adv(cmd, idx, payload, payload_json)
         elif idx==5
 			nextion.flash_proto_version = 0
 		    nextion.flash_proto_baud = 256000
+        elif idx==6
+		    nextion.ser.deinit()
+		    nextion.ser = serial(17, 16, 9600, serial.SERIAL_8N1)
+		    nextion.flash_proto_version = 0
+		    nextion.flash_proto_baud = 921600
         else
-			nextion.flash_proto_version = 0
+		    nextion.flash_proto_version = 0
 		    nextion.flash_proto_baud = 115200
         end
 		
