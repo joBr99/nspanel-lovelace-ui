@@ -116,16 +116,16 @@ sensor_mapping = {
 
 cover_mapping = {
     #"device_class": ("icon-open",             "icon-closed",    "icon-cover-open",         "icon-cover-stop", "icon-cover-close")
-    "awning":        ("window-open",           "window-closed",  "arrow-up",                "stop",            "arrow-down"),
-    "blind":         ("blinds-open",           "blinds",         "arrow-up",                "stop",            "arrow-down"),
-    "curtain":       ("curtains-closed",       "curtains",       "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
-    "damper":        ("checkbox-blank-circle", "circle-slice-8", "arrow-up",                "stop",            "arrow-down"),
-    "door":          ("door-open",             "door-closed",    "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
-    "garage":        ("garage-open",           "garage",         "arrow-up",                "stop",            "arrow-down"),
-    "gate":          ("gate-open",             "gate",           "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
-    "shade":         ("blinds-open",           "blinds",         "arrow-up",                "stop",            "arrow-down"),
-    "shutter":       ("window-shutter-open",   "window-shutter", "arrow-up",                "stop",            "arrow-down"),
-    "window":        ("window-open",           "window-closed",  "arrow-up",                "stop",            "arrow-down"),
+    "awning":        ("window-open",           "window-closed",   "arrow-up",                "stop",            "arrow-down"),
+    "blind":         ("blinds-open",           "blinds",          "arrow-up",                "stop",            "arrow-down"),
+    "curtain":       ("curtains",              "curtains-closed", "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "damper":        ("checkbox-blank-circle", "circle-slice-8",  "arrow-up",                "stop",            "arrow-down"),
+    "door":          ("door-open",             "door-closed",     "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "garage":        ("garage-open",           "garage",          "arrow-up",                "stop",            "arrow-down"),
+    "gate":          ("gate-open",             "gate",            "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "shade":         ("blinds-open",           "blinds",          "arrow-up",                "stop",            "arrow-down"),
+    "shutter":       ("window-shutter-open",   "window-shutter",  "arrow-up",                "stop",            "arrow-down"),
+    "window":        ("window-open",           "window-closed",   "arrow-up",                "stop",            "arrow-down"),
 }
 
 simple_type_mapping = {
