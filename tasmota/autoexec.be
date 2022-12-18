@@ -361,9 +361,9 @@ tasmota.add_cmd('UpdateDriverVersion', update_berry_driver)
 
 def flash_nextion(cmd, idx, payload, payload_json)
     def task()
-	nextion.flash_proto_version = 1
-	nextion.flash_proto_baud = 921600
 	#nextion.flash_proto_version = 1
+	nextion.flash_proto_baud = 921600
+	nextion.flash_proto_version = 0
 	#nextion.flash_proto_baud = 115200
         nextion.flash_nextion(payload)
     end
