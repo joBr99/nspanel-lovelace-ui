@@ -121,6 +121,20 @@ Button b12
         Touch Press Event
             page cardPower
         
+Button b13
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : newtxt
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            showqq
+        
 Button b2
     Attributes
         Scope                               : local
