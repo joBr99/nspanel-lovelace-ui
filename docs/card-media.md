@@ -44,3 +44,18 @@ key | optional | type | default | description
         status: media_player.kitchen
 ```
 </details>
+
+<details>
+<summary>Example with moved spaker selection</summary>
+<br>
+The icon for speaker selection is automatically appended to the end of the list and can be moved with entities in the list.
+With 6 entities it is possible to remove it entirely.
+```
+      - type: cardMedia
+        title: Kitchen
+        entity: media_player.kitchen
+        entities:
+          - entity: delete
+          - entity: delete
+```
+</details>
