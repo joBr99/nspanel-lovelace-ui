@@ -22,10 +22,6 @@ popupNotify
 	19   Component(s)
 	257  Line(s) of event code
 	166  Unique line(s) of event code
-screensaver
-	45   Component(s)
-	410  Line(s) of event code
-	298  Unique line(s) of event code
 popupLight
 	28   Component(s)
 	408  Line(s) of event code
@@ -46,6 +42,10 @@ cardQR
 	32   Component(s)
 	425  Line(s) of event code
 	244  Unique line(s) of event code
+screensaver
+	45   Component(s)
+	410  Line(s) of event code
+	298  Unique line(s) of event code
 cardEntities
 	65   Component(s)
 	1169 Line(s) of event code
