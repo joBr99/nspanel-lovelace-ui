@@ -105,10 +105,10 @@ Example for the theme config:
         entity: weather.k3ll3r
         statusIcon1:
           entity: switch.example_item
-	  altFont: True
+          altFont: True
         statusIcon2:
            entity: binary_sensor.example_item
-	   altFont: True
+           altFont: True
 ```
 </details>
 
