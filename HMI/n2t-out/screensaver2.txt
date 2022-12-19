@@ -1,4 +1,4 @@
-Page screensaver
+Page screensaver2
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -117,6 +117,16 @@ Text m0
         Text                                : 
         Max. Text Size                      : 10
     
+    Events
+        Touch Press Event
+            if(tDate.x==0)
+            {
+                vis m0,1
+            }else
+            {
+                vis m0,1
+            }
+        
 Text t10
     Attributes
         Scope                               : local
@@ -144,7 +154,7 @@ Text tDate
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : Tuesday, 08. March 2022
+        Text                                : Sat, 17. Dec
         Max. Text Size                      : 40
     
 Text tF1Icon
@@ -287,26 +297,6 @@ Text tIcon2
         Text                                : 
         Max. Text Size                      : 10
     
-Text tMR
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
-    
-Text tMRIcon
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
-    
 Text tMainIcon
     Attributes
         Scope                               : local
@@ -317,27 +307,7 @@ Text tMainIcon
         Text                                : 
         Max. Text Size                      : 10
     
-Text tMainIconAlt
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
-    
 Text tMainText
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
-    
-Text tMainTextAlt
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -374,7 +344,7 @@ Text tTime
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 21:32
+        Text                                : 21\r\n23
         Max. Text Size                      : 15
     
 Text tTimeAdd
@@ -515,17 +485,17 @@ Timer tmSerial
                                     if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {
                                         vis tMainIcon,1
-                                        vis tMainIconAlt,0
-                                        vis tMainText,1
-                                        vis tMainTextAlt,0
-                                        vis tMRIcon,0
-                                        vis tMR,0
+                                        //vis tMainIconAlt,0
+                                        //vis tMainText,1
+                                        //vis tMainTextAlt,0
+                                        //vis tMRIcon,0
+                                        //vis tMR,0
                                         //tMainIcon
                                         spstr strCommand.txt,tMainIcon.txt,"~",1
-                                        tMainIconAlt.txt=tMainIcon.txt
+                                        //tMainIconAlt.txt=tMainIcon.txt
                                         //tMainText
                                         spstr strCommand.txt,tMainText.txt,"~",2
-                                        tMainTextAlt.txt=tMainText.txt
+                                        //tMainTextAlt.txt=tMainText.txt
                                         //tForecast1
                                         spstr strCommand.txt,tForecast1.txt,"~",3
                                         //tF1Icon
@@ -552,32 +522,32 @@ Timer tmSerial
                                         spstr strCommand.txt,tForecast4Val.txt,"~",14
                                         //alternative layout
                                         //tMRIcon
-                                        spstr strCommand.txt,tMRIcon.txt,"~",15
-                                        if(tMRIcon.txt!=""&&p0.w!=320)
-                                        {
-                                            //value for tMRIcon, activate alternative layout
-                                            vis tMainIcon,0
-                                            vis tMainText,0
-                                            vis tMainTextAlt,1
-                                            vis tMainIconAlt,1
-                                            vis tMRIcon,1
-                                            vis tMR,1
-                                            vis tForecast1,0
-                                            vis tF1Icon,0
-                                            vis tForecast1Val,0
-                                            //move forecast values to the right
-                                            tForecast4.txt=tForecast3.txt
-                                            tForecast3.txt=tForecast2.txt
-                                            tForecast2.txt=tForecast1.txt
-                                            tForecast4Val.txt=tForecast3Val.txt
-                                            tForecast3Val.txt=tForecast2Val.txt
-                                            tForecast2Val.txt=tForecast1Val.txt
-                                            tF4Icon.txt=tF3Icon.txt
-                                            tF3Icon.txt=tF2Icon.txt
-                                            tF2Icon.txt=tF1Icon.txt
-                                        }
+                                        //spstr strCommand.txt,tMRIcon.txt,"~",15
+                                        //if(tMRIcon.txt!=""&&p0.w!=320)
+                                        //{
+                                        //  //value for tMRIcon, activate alternative layout
+                                        //  vis tMainIcon,0
+                                        //  vis tMainText,0
+                                        //  vis tMainTextAlt,1
+                                        //  vis tMainIconAlt,1
+                                        //  vis tMRIcon,1
+                                        //  vis tMR,1
+                                        //  vis tForecast1,0
+                                        //  vis tF1Icon,0
+                                        //  vis tForecast1Val,0
+                                        //  //move forecast values to the right
+                                        //  tForecast4.txt=tForecast3.txt
+                                        //  tForecast3.txt=tForecast2.txt
+                                        //  tForecast2.txt=tForecast1.txt
+                                        //  tForecast4Val.txt=tForecast3Val.txt
+                                        //  tForecast3Val.txt=tForecast2Val.txt
+                                        //  tForecast2Val.txt=tForecast1Val.txt
+                                        //  tF4Icon.txt=tF3Icon.txt
+                                        //  tF3Icon.txt=tF2Icon.txt
+                                        //  tF2Icon.txt=tF1Icon.txt
+                                        //}
                                         //tMR
-                                        spstr strCommand.txt,tMR.txt,"~",16
+                                        //spstr strCommand.txt,tMR.txt,"~",16
                                         //statusIcon1
                                         spstr strCommand.txt,tIcon1.txt,"~",17
                                         spstr strCommand.txt,tTmp.txt,"~",18
@@ -601,18 +571,18 @@ Timer tmSerial
                                     {
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,tTime.bco,0,0
-                                        if(tTime.bco!=screensaver.bco)
+                                        if(tTime.bco!=screensaver2.bco)
                                         {
-                                            screensaver.bco=tTime.bco
+                                            screensaver2.bco=tTime.bco
                                             tAMPM.bco=tTime.bco
                                             tDate.bco=tTime.bco
                                             tMainIcon.bco=tTime.bco
                                             tMainText.bco=tTime.bco
-                                            tMainIconAlt.bco=tTime.bco
-                                            tMainTextAlt.bco=tTime.bco
-                                            tMRIcon.bco=tTime.bco
-                                            tMR.bco=tTime.bco
-                                            tMRIcon.bco=tTime.bco
+                                            //tMainIconAlt.bco=tTime.bco
+                                            //tMainTextAlt.bco=tTime.bco
+                                            //tMRIcon.bco=tTime.bco
+                                            //tMR.bco=tTime.bco
+                                            //tMRIcon.bco=tTime.bco
                                             tIcon1.bco=tTime.bco
                                             tIcon2.bco=tTime.bco
                                             tForecast1.bco=tTime.bco
@@ -636,11 +606,11 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",4
                                         covx tTmp.txt,tDate.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",5
-                                        covx tTmp.txt,tMainIcon.pco,0,0
-                                        tMainIconAlt.pco=tMainIcon.pco
-                                        spstr strCommand.txt,tTmp.txt,"~",6
-                                        covx tTmp.txt,tMainText.pco,0,0
-                                        tMainTextAlt.pco=tMainText.pco
+                                        //covx tTmp.txt,tMainIcon.pco,0,0
+                                        //tMainIconAlt.pco=tMainIcon.pco
+                                        //spstr strCommand.txt,tTmp.txt,"~",6
+                                        //covx tTmp.txt,tMainText.pco,0,0
+                                        //tMainTextAlt.pco=tMainText.pco
                                         spstr strCommand.txt,tTmp.txt,"~",7
                                         covx tTmp.txt,tForecast1.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",8
@@ -667,24 +637,24 @@ Timer tmSerial
                                         covx tTmp.txt,tForecast4Val.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,t10.bco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",20
-                                        covx tTmp.txt,tMRIcon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",21
-                                        covx tTmp.txt,tMR.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",22
-                                        covx tTmp.txt,tTimeAdd.pco,0,0
-                                        if(tMRIcon.txt!=""&&p0.w!=320)
-                                        {
-                                            tF4Icon.pco=tF3Icon.pco
-                                            tF3Icon.pco=tF2Icon.pco
-                                            tF2Icon.pco=tF1Icon.pco
-                                            tForecast4Val.pco=tForecast3Val.pco
-                                            tForecast3Val.pco=tForecast2Val.pco
-                                            tForecast2Val.pco=tForecast1Val.pco
-                                            tForecast4.pco=tForecast3.pco
-                                            tForecast3.pco=tForecast2.pco
-                                            tForecast2.pco=tForecast1.pco
-                                        }
+                                        //spstr strCommand.txt,tTmp.txt,"~",20
+                                        //covx tTmp.txt,tMRIcon.pco,0,0
+                                        //spstr strCommand.txt,tTmp.txt,"~",21
+                                        //covx tTmp.txt,tMR.pco,0,0
+                                        //spstr strCommand.txt,tTmp.txt,"~",22
+                                        //covx tTmp.txt,tTimeAdd.pco,0,0
+                                        //if(tMRIcon.txt!=""&&p0.w!=320)
+                                        //{
+                                        //  tF4Icon.pco=tF3Icon.pco
+                                        //  tF3Icon.pco=tF2Icon.pco
+                                        //  tF2Icon.pco=tF1Icon.pco
+                                        //  tForecast4Val.pco=tForecast3Val.pco
+                                        //  tForecast3Val.pco=tForecast2Val.pco
+                                        //  tForecast2Val.pco=tForecast1Val.pco
+                                        //  tForecast4.pco=tForecast3.pco
+                                        //  tForecast3.pco=tForecast2.pco
+                                        //  tForecast2.pco=tForecast1.pco
+                                        //}
                                     }
                                     if(tInstruction.txt=="notify")
                                     {

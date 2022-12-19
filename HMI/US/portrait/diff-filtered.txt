@@ -1,4 +1,16 @@
-+++ /dev/fd/62	2022-12-14 23:02:23.381717287 +0000
++++ /dev/fd/62	2022-12-19 15:04:38.562549259 +0000
++le list
++ +12,8 @@
++t.txt
++n.txt
++Sel.txt
++ght.txt
++tify.txt
++utter.txt
++ermo.txt
++aver.txt
++aver2.txt
++aver.txt
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardChart.txt
@@ -84,308 +96,47 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
-+I/n2t-out/cardThermo.txt
-++ HMI/US/portrait/n2t-out/cardThermo.txt
-+15 +358,36 @@
 +
-+nts
-+ Touch Press Event
-+     if(xTempDest2.val>xTempMin1.val)
-+     {
-+         xTempDest2.val=xTempDest2.val-xTempStep1.val
-+     }
-+     tmSendHighLow.en=1
-+     // event,buttonPress2,entn,tempUpd,X
-+     //craft command
-+     tSend.txt="event,buttonPress2,"
-+     tSend.txt+=entn.txt+","
-+     tSend.txt+="tempUpdHighLow,"
-+     //convert temperature
-+     covx xTempDest1.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     tSend.txt+="|"
-+     covx xTempDest2.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+ate Button bUp2
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+15 +397,36 @@
-+
-+nts
-+ Touch Press Event
-+     if(xTempDest2.val<xTempMax1.val)
-+     {
-+         xTempDest2.val=xTempDest2.val+xTempStep1.val
-+     }
-+     tmSendHighLow.en=1
-+     // event,buttonPress2,entn,tempUpd,X
-+     //craft command
-+     tSend.txt="event,buttonPress2,"
-+     tSend.txt+=entn.txt+","
-+     tSend.txt+="tempUpdHighLow,"
-+     //convert temperature
-+     covx xTempDest1.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     tSend.txt+="|"
-+     covx xTempDest2.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+ate Button bt0
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+15 +668,33 @@
-+
-+nts
-+ Touch Press Event
-+     if(xTempDest.val>xTempMin1.val)
-+     {
-+         xTempDest.val=xTempDest.val-xTempStep1.val
-+     }
-+     tmSendTemp.en=1
-+     // event,buttonPress2,entn,tempUpd,X
-+     //craft command
-+     tSend.txt="event,buttonPress2,"
-+     tSend.txt+=entn.txt+","
-+     tSend.txt+="tempUpd,"
-+     //convert temperature
-+     covx xTempDest.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+ate Button btDown1
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+15 +704,36 @@
-+
-+nts
-+ Touch Press Event
-+     if(xTempDest1.val>xTempMin1.val)
-+     {
-+         xTempDest1.val=xTempDest1.val-xTempStep1.val
-+     }
-+     tmSendHighLow.en=1
-+     // event,buttonPress2,entn,tempUpd,X
-+     //craft command
-+     tSend.txt="event,buttonPress2,"
-+     tSend.txt+=entn.txt+","
-+     tSend.txt+="tempUpdHighLow,"
-+     //convert temperature
-+     covx xTempDest1.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     tSend.txt+="|"
-+     covx xTempDest2.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+ate Button btUp
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+15 +743,33 @@
-+
-+nts
-+ Touch Press Event
-+     if(xTempDest.val<xTempMax1.val)
-+     {
-+         xTempDest.val=xTempDest.val+xTempStep1.val
-+     }
-+     tmSendTemp.en=1
-+     // event,buttonPress2,entn,tempUpd,X
-+     //craft command
-+     tSend.txt="event,buttonPress2,"
-+     tSend.txt+=entn.txt+","
-+     tSend.txt+="tempUpd,"
-+     //convert temperature
-+     covx xTempDest.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+ate Button btUp1
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+15 +779,36 @@
-+
-+nts
-+ Touch Press Event
-+     if(xTempDest1.val<xTempMax1.val)
-+     {
-+         xTempDest1.val=xTempDest1.val+xTempStep1.val
-+     }
-+     tmSendHighLow.en=1
-+     // event,buttonPress2,entn,tempUpd,X
-+     //craft command
-+     tSend.txt="event,buttonPress2,"
-+     tSend.txt+=entn.txt+","
-+     tSend.txt+="tempUpdHighLow,"
-+     //convert temperature
-+     covx xTempDest1.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     tSend.txt+="|"
-+     covx xTempDest2.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+ mSwipeNext
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+75 +835,14 @@
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+
-+nts
-+ Touch Press Event
-+     click bPrev,1
-+ 
-+mSendHighLow
-+ributes
-+ Scope      : local
-+ Period (ms): 800
-+ Enabled    : no
-+
-+nts
-+ Timer Event
-+     // event,buttonPress2,entn,tempUpd,X
-+     //craft command
-+     tSend.txt="event,buttonPress2,"
-+     tSend.txt+=entn.txt+","
-+     tSend.txt+="tempUpdHighLow,"
-+     //convert temperature
-+     covx xTempDest1.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     tSend.txt+="|"
-+     covx xTempDest2.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     tmSendHighLow.en=0
-+ 
-+mSendTemp
-+ributes
-+ Scope      : local
-+ Period (ms): 800
-+ Enabled    : no
-+
-+nts
-+ Timer Event
-+     // event,buttonPress2,entn,tempUpd,X
-+     //craft command
-+     tSend.txt="event,buttonPress2,"
-+     tSend.txt+=entn.txt+","
-+     tSend.txt+="tempUpd,"
-+     //convert temperature
-+     covx xTempDest.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     tmSendTemp.en=0
-+ 
-+mSerial
-+ributes
-+ Scope      : local
-+ Period (ms): 50
-+ Enabled    : yes
-+
-+nts
++18 +858,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
++18 +314,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +I/n2t-out/popupInSel.txt
 ++ HMI/US/portrait/n2t-out/popupInSel.txt
 +98 +632,14 @@
@@ -518,7 +269,7 @@
 + Max. Text Size: 25
 +
 +e (string) tInstruction
-+34 +94,14 @@
++24 +94,14 @@
 + Value: 0
 +
 +e (int32) ycR
@@ -536,16 +287,6 @@
 + Text                                : 
 + Max. Text Size                      : 10
 +
-+nts
-+ Touch Press Event
-+     if(tDate.x==0)
-+     {
-+         vis m0,1
-+     }else
-+     {
-+         vis m0,1
-+     }
-+ 
 +0
 +ributes
 + Scope                               : local
