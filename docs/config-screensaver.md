@@ -96,6 +96,22 @@ Example for the theme config:
 ```
 </details>
 
+<details>
+<summary>Config Example for configured statusIcons with increased size of the icons</summary>
+<br>
+```
+  config:
+    screensaver:
+        entity: weather.k3ll3r
+        statusIcon1:
+          entity: switch.example_item
+	  altFont: True
+        statusIcon2:
+           entity: binary_sensor.example_item
+	   altFont: True
+```
+</details>
+
 It is possible to increase the size of the font used for the icons by adding `altFont: True` to the statusIcon configuration. Icon/Color Overrides are also possible like on any other Entity.
 
 <details>
@@ -106,7 +122,7 @@ It is possible to increase the size of the font used for the icons by adding `al
     screensaver:
         entity: weather.k3ll3r
         theme:
-			autoWeather: true
+          autoWeather: true
 ```
 </details>
 
