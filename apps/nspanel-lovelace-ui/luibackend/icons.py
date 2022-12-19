@@ -116,16 +116,16 @@ sensor_mapping = {
 
 cover_mapping = {
     #"device_class": ("icon-open",             "icon-closed",    "icon-cover-open",         "icon-cover-stop", "icon-cover-close")
-    "awning":        ("window-open",           "window-closed",  "arrow-up",                "stop",            "arrow-down"),
-    "blind":         ("blinds-open",           "blinds",         "arrow-up",                "stop",            "arrow-down"),
-    "curtain":       ("curtains-closed",       "curtains",       "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
-    "damper":        ("checkbox-blank-circle", "circle-slice-8", "arrow-up",                "stop",            "arrow-down"),
-    "door":          ("door-open",             "door-closed",    "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
-    "garage":        ("garage-open",           "garage",         "arrow-up",                "stop",            "arrow-down"),
-    "gate":          ("gate-open",             "gate",           "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
-    "shade":         ("blinds-open",           "blinds",         "arrow-up",                "stop",            "arrow-down"),
-    "shutter":       ("window-shutter-open",   "window-shutter", "arrow-up",                "stop",            "arrow-down"),
-    "window":        ("window-open",           "window-closed",  "arrow-up",                "stop",            "arrow-down"),
+    "awning":        ("window-open",           "window-closed",   "arrow-up",                "stop",            "arrow-down"),
+    "blind":         ("blinds-open",           "blinds",          "arrow-up",                "stop",            "arrow-down"),
+    "curtain":       ("curtains",              "curtains-closed", "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "damper":        ("checkbox-blank-circle", "circle-slice-8",  "arrow-up",                "stop",            "arrow-down"),
+    "door":          ("door-open",             "door-closed",     "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "garage":        ("garage-open",           "garage",          "arrow-up",                "stop",            "arrow-down"),
+    "gate":          ("gate-open",             "gate",            "arrow-expand-horizontal", "stop",            "arrow-collapse-horizontal"),
+    "shade":         ("blinds-open",           "blinds",          "arrow-up",                "stop",            "arrow-down"),
+    "shutter":       ("window-shutter-open",   "window-shutter",  "arrow-up",                "stop",            "arrow-down"),
+    "window":        ("window-open",           "window-closed",   "arrow-up",                "stop",            "arrow-down"),
 }
 
 simple_type_mapping = {
@@ -209,6 +209,12 @@ def get_action_icon(ha_type, action, device_class=None, overwrite=None):
     return get_icon_char(actionicon)
 
 def get_icon_ha(entity_id, overwrite=None, stateOverwrite=None):
+
+    ha_type = entity_id.split(".")[0]
+    if (apis.ha_api.entity_exists(entity_id)):
+        entity = apis.ha_api.get_entity(entity_id)
+        state = entity.state if stateOverwrite is None else stateOverwrite
+
     if overwrite is not None:
         if type(overwrite) is str:
             return get_icon_char(overwrite)
@@ -219,10 +225,6 @@ def get_icon_ha(entity_id, overwrite=None, stateOverwrite=None):
 
     result_icon = "alert-circle-outline"
 
-    ha_type = entity_id.split(".")[0]
-    if (apis.ha_api.entity_exists(entity_id)):
-        entity = apis.ha_api.get_entity(entity_id)
-        state = entity.state if stateOverwrite is None else stateOverwrite
     # icons only based on state
     if ha_type in simple_type_mapping:
         result_icon = simple_type_mapping[ha_type]

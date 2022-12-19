@@ -596,7 +596,16 @@ Timer tmSerial
                                         spstr strCommand.txt,tIcon2.txt,"~",19
                                         spstr strCommand.txt,tTmp.txt,"~",20
                                         covx tTmp.txt,tIcon2.pco,0,0
-                                        click m0,1
+                                        spstr strCommand.txt,tTmp.txt,"~",21
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon1.font=3
+                                        }
+                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon2.font=3
+                                        }
                                     }
                                     if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {
