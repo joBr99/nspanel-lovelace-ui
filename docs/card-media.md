@@ -15,5 +15,32 @@ key | optional | type | default | description
 `type` | False | string | `None` | Used by navigate items
 `title` | True | string | `None` | Title of the Page 
 `entity` | False | string | `None` | contains the entity of the current card
+`entities` | False | complex | `None` | contains a list of entities shown in the bottom row, supports all entities supported by cardGrid
 `key` | True | string | `None` | Used by navigate items
-`mediaControl` | True | complex | `None` | overwrites the action executed on pressing the left upper icon (red circle), icon is showing the current type of media and cannot be changed (configure it to a navigate entity; see subpages for more details `navigate.cardGrid_key`)
+
+<details>
+<summary>Example with configured Entities</summary>
+<br>
+```
+      - type: cardMedia
+        title: Kitchen
+        entity: media_player.kitchen
+        entities:
+          - entity: light.bed_light
+          - entity: light.ceiling_lights
+          - entity: light.entrance_color_white_lights
+          - entity: light.kitchen_lights
+          - entity: light.living_room_rgbww_lights
+```
+</details>
+
+<details>
+<summary>Example with action on upper left media icon</summary>
+<br>
+```
+      - type: cardMedia
+        title: Kitchen
+        entity: input_select.test123
+        status: media_player.kitchen
+```
+</details>
