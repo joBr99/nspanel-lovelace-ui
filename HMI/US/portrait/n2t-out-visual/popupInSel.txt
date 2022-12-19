@@ -1014,6 +1014,90 @@ Button bModeNext
             {
                 bMode12.pco=1374
             }
+            if(bMode1.txt=="")
+            {
+                vis bMode1,0
+            }else
+            {
+                vis bMode1,1
+            }
+            if(bMode2.txt=="")
+            {
+                vis bMode2,0
+            }else
+            {
+                vis bMode2,1
+            }
+            if(bMode3.txt=="")
+            {
+                vis bMode3,0
+            }else
+            {
+                vis bMode3,1
+            }
+            if(bMode4.txt=="")
+            {
+                vis bMode4,0
+            }else
+            {
+                vis bMode4,1
+            }
+            if(bMode5.txt=="")
+            {
+                vis bMode5,0
+            }else
+            {
+                vis bMode5,1
+            }
+            if(bMode6.txt=="")
+            {
+                vis bMode6,0
+            }else
+            {
+                vis bMode6,1
+            }
+            if(bMode7.txt=="")
+            {
+                vis bMode7,0
+            }else
+            {
+                vis bMode7,1
+            }
+            if(bMode8.txt=="")
+            {
+                vis bMode8,0
+            }else
+            {
+                vis bMode8,1
+            }
+            if(bMode9.txt=="")
+            {
+                vis bMode9,0
+            }else
+            {
+                vis bMode9,1
+            }
+            if(bMode10.txt=="")
+            {
+                vis bMode10,0
+            }else
+            {
+                vis bMode10,1
+            }
+            if(bMode11.txt=="")
+            {
+                vis bMode11,0
+            }else
+            {
+                vis bMode11,1
+            }
+            if(bMode12.txt=="")
+            {
+                vis bMode12,0
+            }else
+            {
+                vis bMode12,1
+            }
         
 Timer tmCooldown
     Attributes
