@@ -186,7 +186,7 @@ class LuiPagesGen(object):
                 icon = statusIcon.get("icon")
                 entity = apis.ha_api.get_entity(statusIcon.get("entity"))
                 entityType = statusIcon.get("entity").split(".")[0]
-                icon = get_icon(entityType, state=entity.state, device_class=entity.attributes.get("device_class", ""), overwrite=icon)
+                icon = get_icon_ha(statusIcon.get("entity"), overwrite=icon)
                 color = self.get_entity_color(entity, ha_type=entityType, overwrite=statusIcon.get("color", None))
                 status_res += f"~{icon}~{color}"
                 altfont += f'~{statusIcon.get("altFont", "")}'
