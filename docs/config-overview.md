@@ -72,7 +72,7 @@ key | optional | type | default | description
 `cards` | False | complex | | configuration for cards that are displayed on panel; see docs for cards
 `screensaver` | True | complex | | configuration for screensaver; see docs for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items; see docs for cards
-
+`homeButton` | True | boolean | False | show home button on subpages
 ## Details on sleepBrightness/screenBrightness and other configs related to screen brightness
 
 It is possible to schedule a brightness change for the screen at specific times.
