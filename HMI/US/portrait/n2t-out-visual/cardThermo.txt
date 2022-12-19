@@ -81,28 +81,28 @@ Variable (string) strCommand
     
 Variable (string) tId
     Attributes
-        ID            : 41
+        ID            : 44
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tInstruction
     Attributes
-        ID            : 40
+        ID            : 43
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tSend
     Attributes
-        ID            : 43
+        ID            : 46
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) tTmp
     Attributes
-        ID            : 42
+        ID            : 45
         Scope         : local
         Text          : 
         Max. Text Size: 10
@@ -165,14 +165,14 @@ Variable (string) va7
     
 XFloat xTempDest
     Attributes
-        ID                                  : 45
+        ID                                  : 48
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 100
-        y coordinate                        : 228
+        x coordinate                        : 89
+        y coordinate                        : 243
         Width                               : 120
         Height                              : 60
         Effect                              : load
@@ -201,8 +201,8 @@ XFloat xTempDest1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 174
-        y coordinate                        : 227
+        x coordinate                        : 166
+        y coordinate                        : 228
         Width                               : 120
         Height                              : 60
         Effect                              : load
@@ -225,14 +225,14 @@ XFloat xTempDest1
     
 XFloat xTempDest2
     Attributes
-        ID                                  : 38
+        ID                                  : 41
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 21
-        y coordinate                        : 227
+        x coordinate                        : 13
+        y coordinate                        : 228
         Width                               : 120
         Height                              : 60
         Effect                              : load
@@ -261,10 +261,10 @@ XFloat xTempMax1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 262
-        y coordinate                        : 202
-        Width                               : 45
-        Height                              : 20
+        x coordinate                        : 278
+        y coordinate                        : 180
+        Width                               : 23
+        Height                              : 23
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -291,9 +291,9 @@ XFloat xTempMin1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 262
-        y coordinate                        : 180
-        Width                               : 50
+        x coordinate                        : 254
+        y coordinate                        : 181
+        Width                               : 24
         Height                              : 22
         Effect                              : load
         Effect Priority                     : 0
@@ -321,8 +321,8 @@ XFloat xTempStep1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 263
-        y coordinate                        : 290
+        x coordinate                        : 256
+        y coordinate                        : 201
         Width                               : 45
         Height                              : 20
         Effect                              : load
@@ -345,14 +345,14 @@ XFloat xTempStep1
     
 Text tCF
     Attributes
-        ID                                  : 47
+        ID                                  : 50
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 221
-        y coordinate                        : 225
+        x coordinate                        : 210
+        y coordinate                        : 242
         Width                               : 25
         Height                              : 30
         Effect                              : load
@@ -381,8 +381,8 @@ Text tCF1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 295
-        y coordinate                        : 225
+        x coordinate                        : 287
+        y coordinate                        : 226
         Width                               : 25
         Height                              : 30
         Effect                              : load
@@ -405,14 +405,14 @@ Text tCF1
     
 Text tCF2
     Attributes
-        ID                                  : 37
+        ID                                  : 40
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 142
-        y coordinate                        : 225
+        x coordinate                        : 134
+        y coordinate                        : 226
         Width                               : 25
         Height                              : 30
         Effect                              : load
@@ -435,14 +435,14 @@ Text tCF2
     
 Text tCurTemp
     Attributes
-        ID                                  : 48
+        ID                                  : 51
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 30
-        y coordinate                        : 112
+        x coordinate                        : 37
+        y coordinate                        : 113
         Width                               : 115
         Height                              : 30
         Effect                              : load
@@ -465,14 +465,14 @@ Text tCurTemp
     
 Text tCurTempLbl
     Attributes
-        ID                                  : 34
+        ID                                  : 37
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 30
-        y coordinate                        : 76
+        x coordinate                        : 36
+        y coordinate                        : 79
         Width                               : 115
         Height                              : 30
         Effect                              : load
@@ -511,7 +511,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 2
+        Font ID                             : 1
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -525,14 +525,14 @@ Text tHeading
     
 Text tStateLbl
     Attributes
-        ID                                  : 35
+        ID                                  : 38
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 174
-        y coordinate                        : 75
+        x coordinate                        : 167
+        y coordinate                        : 79
         Width                               : 115
         Height                              : 30
         Effect                              : load
@@ -561,10 +561,10 @@ Text tStatus
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 174
-        y coordinate                        : 110
+        x coordinate                        : 166
+        y coordinate                        : 113
         Width                               : 115
-        Height                              : 56
+        Height                              : 54
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -575,7 +575,7 @@ Text tStatus
         Back. Color                         : 6371
         Font Color                          : 50712
         Horizontal Alignment                : center
-        Vertical Alignment                  : center
+        Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 40
@@ -710,14 +710,14 @@ Button bPrev
         
 Dual-state Button bDown2
     Attributes
-        ID                                  : 39
+        ID                                  : 42
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 57
-        y coordinate                        : 288
+        x coordinate                        : 49
+        y coordinate                        : 289
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -746,39 +746,18 @@ Dual-state Button bDown2
             {
                 xTempDest2.val=xTempDest2.val-xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHighLow,"
-            //convert temperature
-            covx xTempDest1.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            tSend.txt+="|"
-            covx xTempDest2.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendHighLow.en=1
         
 Dual-state Button bUp2
     Attributes
-        ID                                  : 36
+        ID                                  : 39
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 57
-        y coordinate                        : 176
+        x coordinate                        : 49
+        y coordinate                        : 177
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -791,7 +770,7 @@ Dual-state Button bUp2
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
         Font Color (Unpressed)              : 50712
-        Font Color (Pressed)                : 64512
+        Font Color (Pressed)                : 50712
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         State                               : unpressed
@@ -807,28 +786,7 @@ Dual-state Button bUp2
             {
                 xTempDest2.val=xTempDest2.val+xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHighLow,"
-            //convert temperature
-            covx xTempDest1.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            tSend.txt+="|"
-            covx xTempDest2.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendHighLow.en=1
         
 Dual-state Button bt0
     Attributes
@@ -838,8 +796,8 @@ Dual-state Button bt0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 36
-        y coordinate                        : 359
+        x coordinate                        : 32
+        y coordinate                        : 368
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -847,7 +805,7 @@ Dual-state Button bt0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -887,8 +845,8 @@ Dual-state Button bt1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 102
-        y coordinate                        : 359
+        x coordinate                        : 100
+        y coordinate                        : 368
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -896,7 +854,7 @@ Dual-state Button bt1
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -937,7 +895,7 @@ Dual-state Button bt2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 168
-        y coordinate                        : 359
+        y coordinate                        : 368
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -945,7 +903,7 @@ Dual-state Button bt2
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -985,8 +943,8 @@ Dual-state Button bt3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 234
-        y coordinate                        : 359
+        x coordinate                        : 236
+        y coordinate                        : 368
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -994,7 +952,7 @@ Dual-state Button bt3
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1034,8 +992,8 @@ Dual-state Button bt4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 36
-        y coordinate                        : 424
+        x coordinate                        : 32
+        y coordinate                        : 423
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1043,7 +1001,7 @@ Dual-state Button bt4
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1083,8 +1041,8 @@ Dual-state Button bt5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 102
-        y coordinate                        : 424
+        x coordinate                        : 100
+        y coordinate                        : 423
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1092,7 +1050,7 @@ Dual-state Button bt5
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1133,7 +1091,7 @@ Dual-state Button bt6
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 168
-        y coordinate                        : 424
+        y coordinate                        : 423
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1141,7 +1099,7 @@ Dual-state Button bt6
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1181,8 +1139,8 @@ Dual-state Button bt7
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 234
-        y coordinate                        : 424
+        x coordinate                        : 236
+        y coordinate                        : 423
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1190,7 +1148,7 @@ Dual-state Button bt7
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1230,8 +1188,8 @@ Dual-state Button btDetail
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 267
-        y coordinate                        : 306
+        x coordinate                        : 126
+        y coordinate                        : 308
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1239,12 +1197,12 @@ Dual-state Button btDetail
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 1
+        Font ID                             : 3
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
         Font Color (Unpressed)              : 50712
-        Font Color (Pressed)                : 64512
+        Font Color (Pressed)                : 50712
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         State                               : unpressed
@@ -1262,22 +1220,22 @@ Dual-state Button btDetail
         
 Dual-state Button btDown
     Attributes
-        ID                                  : 46
+        ID                                  : 49
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 136
-        y coordinate                        : 289
-        Width                               : 50
-        Height                              : 50
+        x coordinate                        : 16
+        y coordinate                        : 239
+        Width                               : 65
+        Height                              : 65
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1298,25 +1256,7 @@ Dual-state Button btDown
             {
                 xTempDest.val=xTempDest.val-xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd,"
-            //convert temperature
-            covx xTempDest.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendTemp.en=1
         
 Dual-state Button btDown1
     Attributes
@@ -1326,8 +1266,8 @@ Dual-state Button btDown1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 210
-        y coordinate                        : 288
+        x coordinate                        : 202
+        y coordinate                        : 289
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1356,47 +1296,26 @@ Dual-state Button btDown1
             {
                 xTempDest1.val=xTempDest1.val-xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpdHighLow,"
-            //convert temperature
-            covx xTempDest1.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            tSend.txt+="|"
-            covx xTempDest2.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendHighLow.en=1
         
 Dual-state Button btUp
     Attributes
-        ID                                  : 44
+        ID                                  : 47
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 136
-        y coordinate                        : 177
-        Width                               : 50
-        Height                              : 50
+        x coordinate                        : 239
+        y coordinate                        : 239
+        Width                               : 65
+        Height                              : 65
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
-        Font ID                             : 3
+        Font ID                             : 4
         Back. Color (Unpressed)             : 6371
         Back. Picture ID (Pressed)          : 65535
         Back. Color (Pressed)               : 6371
@@ -1417,25 +1336,7 @@ Dual-state Button btUp
             {
                 xTempDest.val=xTempDest.val+xTempStep1.val
             }
-            // event,buttonPress2,entn,tempUpd,X
-            //craft command
-            tSend.txt="event,buttonPress2,"
-            tSend.txt+=entn.txt+","
-            tSend.txt+="tempUpd,"
-            //convert temperature
-            covx xTempDest.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
+            tmSendTemp.en=1
         
 Dual-state Button btUp1
     Attributes
@@ -1445,8 +1346,8 @@ Dual-state Button btUp1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 210
-        y coordinate                        : 176
+        x coordinate                        : 202
+        y coordinate                        : 177
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -1475,6 +1376,77 @@ Dual-state Button btUp1
             {
                 xTempDest1.val=xTempDest1.val+xTempStep1.val
             }
+            tmSendHighLow.en=1
+        
+Hotspot mSwipeNext
+    Attributes
+        ID                                  : 34
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 312
+        y coordinate                        : 5
+        Width                               : 8
+        Height                              : 475
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+    Events
+        Touch Press Event
+            click bNext,1
+        
+Hotspot mSwipePrev
+    Attributes
+        ID                                  : 36
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 11
+        Width                               : 7
+        Height                              : 465
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+    Events
+        Touch Press Event
+            click bPrev,1
+        
+Hotspot mSwipeUp
+    Attributes
+        ID                                  : 35
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 12
+        y coordinate                        : 0
+        Width                               : 308
+        Height                              : 9
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+    
+    Events
+        Touch Press Event
+            click bPrev,1
+        
+Timer tmSendHighLow
+    Attributes
+        ID         : 54
+        Scope      : local
+        Period (ms): 800
+        Enabled    : no
+    
+    Events
+        Timer Event
             // event,buttonPress2,entn,tempUpd,X
             //craft command
             tSend.txt="event,buttonPress2,"
@@ -1497,66 +1469,37 @@ Dual-state Button btUp1
             prints sys0,2
             prints tSend.txt,0
             prints crcval,2
+            tmSendHighLow.en=0
         
-Hotspot mSwipeNext
+Timer tmSendTemp
     Attributes
-        ID                                  : 49
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 310
-        y coordinate                        : 5
-        Width                               : 8
-        Height                              : 470
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
+        ID         : 53
+        Scope      : local
+        Period (ms): 800
+        Enabled    : no
     
     Events
-        Touch Press Event
-            click bNext,1
-        
-Hotspot mSwipePrev
-    Attributes
-        ID                                  : 51
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 5
-        Width                               : 8
-        Height                              : 470
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-    
-    Events
-        Touch Press Event
-            click bPrev,1
-        
-Hotspot mSwipeUp
-    Attributes
-        ID                                  : 50
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 10
-        y coordinate                        : 0
-        Width                               : 300
-        Height                              : 9
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-    
-    Events
-        Touch Press Event
-            click bPrev,1
+        Timer Event
+            // event,buttonPress2,entn,tempUpd,X
+            //craft command
+            tSend.txt="event,buttonPress2,"
+            tSend.txt+=entn.txt+","
+            tSend.txt+="tempUpd,"
+            //convert temperature
+            covx xTempDest.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+            tmSendTemp.en=0
         
 Timer tmSerial
     Attributes
