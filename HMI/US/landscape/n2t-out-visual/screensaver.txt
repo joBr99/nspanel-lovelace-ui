@@ -157,7 +157,7 @@ Text tAMPM
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 359
-        y coordinate                        : 49
+        y coordinate                        : 56
         Width                               : 104
         Height                              : 57
         Effect                              : load
@@ -579,7 +579,7 @@ Text tIcon1
         x coordinate                        : 0
         y coordinate                        : 0
         Width                               : 85
-        Height                              : 48
+        Height                              : 45
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -609,7 +609,7 @@ Text tIcon2
         x coordinate                        : 393
         y coordinate                        : 0
         Width                               : 85
-        Height                              : 48
+        Height                              : 45
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -877,7 +877,7 @@ Text tTime
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 53
-        y coordinate                        : 18
+        y coordinate                        : 25
         Width                               : 376
         Height                              : 112
         Effect                              : load

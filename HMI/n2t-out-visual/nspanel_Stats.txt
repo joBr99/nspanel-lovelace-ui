@@ -18,10 +18,6 @@ cardChart
 	31   Component(s)
 	452  Line(s) of event code
 	296  Unique line(s) of event code
-screensaver
-	47   Component(s)
-	411  Line(s) of event code
-	299  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	351  Line(s) of event code
@@ -50,6 +46,10 @@ pageTest
 	21   Component(s)
 	66   Line(s) of event code
 	64   Unique line(s) of event code
+screensaver
+	47   Component(s)
+	411  Line(s) of event code
+	299  Unique line(s) of event code
 cardPower
 	43   Component(s)
 	439  Line(s) of event code

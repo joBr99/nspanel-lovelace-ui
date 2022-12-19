@@ -374,7 +374,7 @@ Text tTime
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 21:32
+        Text                                : 21:32PP
         Max. Text Size                      : 15
     
 Text tTimeAdd

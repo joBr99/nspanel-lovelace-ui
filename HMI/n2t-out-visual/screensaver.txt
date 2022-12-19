@@ -932,7 +932,7 @@ Text tTime
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 21:32
+        Text                                : 21:32PP
         Max. Text Size                      : 15
         Word wrap                           : disabled
         Horizontal Spacing                  : 0

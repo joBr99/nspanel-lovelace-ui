@@ -126,6 +126,12 @@ Variable (string) entn5
         Text          : 
         Max. Text Size: 80
     
+Variable (string) entn6
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
 Variable (string) strCommand
     Attributes
         Scope         : local
@@ -163,6 +169,12 @@ Variable (string) type4
         Max. Text Size: 10
     
 Variable (string) type5
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 10
+    
+Variable (string) type6
     Attributes
         Scope         : local
         Text          : 
@@ -213,6 +225,15 @@ Number nNum5
         Associated Keyboard                 : none
         Value                               : 0
     
+Number nNum6
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Value                               : 0
+    
 Text tEntity1
     Attributes
         Scope                               : local
@@ -254,6 +275,16 @@ Text tEntity4
         Max. Text Size                      : 30
     
 Text tEntity5
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : tEntity5
+        Max. Text Size                      : 30
+    
+Text tEntity6
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -314,6 +345,16 @@ Text tIcon4
         Max. Text Size                      : 5
     
 Text tIcon5
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : î°
+        Max. Text Size                      : 5
+    
+Text tIcon6
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -500,6 +541,34 @@ Slider hSlider5
             prints tSend.txt,0
             prints crcval,2
         
+Slider hSlider6
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Position                            : 50
+        Upper range limit                   : 100
+        Lower range limit                   : 0
+    
+    Events
+        Touch Release Event
+            nNum5.val=hSlider5.val
+            tSend.txt="event,buttonPress2,"+entn6.txt+",number-set,"
+            covx nNum5.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Button bDown1
     Attributes
         Scope                               : local
@@ -613,6 +682,31 @@ Button bDown5
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,"+entn5.txt+",down"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bDown6
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn6.txt+",down"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -814,6 +908,31 @@ Button bStop5
             prints tSend.txt,0
             prints crcval,2
         
+Button bStop6
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn6.txt+",stop"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Button bText1
     Attributes
         Scope                               : local
@@ -927,6 +1046,31 @@ Button bText5
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,"+entn5.txt+",button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Button bText6
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 45
+    
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn6.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1064,6 +1208,31 @@ Button bUp5
             prints tSend.txt,0
             prints crcval,2
         
+Button bUp6
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : î
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn6.txt+",up"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Dual-state Button btOnOff1
     Attributes
         Scope                               : local
@@ -1185,6 +1354,33 @@ Dual-state Button btOnOff5
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,"+entn5.txt+",OnOff,"
+            covx btOnOff5.val,tTmp.txt,0,0
+            tSend.txt+=tTmp.txt
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+Dual-state Button btOnOff6
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : 
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn6.txt+",OnOff,"
             covx btOnOff5.val,tTmp.txt,0,0
             tSend.txt+=tTmp.txt
             //send calc crc
@@ -1350,6 +1546,37 @@ Hotspot m4
                 page popupFan
             }
             if(type5.txt=="input_sel")
+            {
+                page popupInSel
+            }
+        
+Hotspot m5
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+    Events
+        Touch Press Event
+            pageIcons.tTmp1.txt=tEntity6.txt
+            pageIcons.tTmp2.txt=entn6.txt
+            pageIcons.tTmp3.txt=tIcon6.txt
+            if(type6.txt=="shutter")
+            {
+                //popupShutter.tHeading.txt=tEntity5.txt
+                page popupShutter
+            }
+            if(type6.txt=="light")
+            {
+                //popupLight.tEntity.txt=tEntity5.txt
+                page popupLight
+            }
+            if(type6.txt=="fan")
+            {
+                page popupFan
+            }
+            if(type6.txt=="input_sel")
             {
                 page popupInSel
             }
@@ -2244,6 +2471,155 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             hSlider5.maxval=sys0
                                         }
+                                        // get Type
+                                        spstr strCommand.txt,type6.txt,"~",33
+                                        // get internal name
+                                        spstr strCommand.txt,entn6.txt,"~",34
+                                        if(type6.txt=="delete"||type6.txt=="")
+                                        {
+                                            vis bUp6,0
+                                            vis bStop6,0
+                                            vis bDown6,0
+                                            vis btOnOff6,0
+                                            vis tEntity6,0
+                                            vis tIcon6,0
+                                            vis bText6,0
+                                            vis hSlider6,0
+                                            vis nNum6,0
+                                        }else
+                                        {
+                                            // change icon
+                                            spstr strCommand.txt,tIcon6.txt,"~",35
+                                            vis tIcon6,1
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",36
+                                            covx tTmp.txt,sys0,0,0
+                                            tIcon6.pco=sys0
+                                            // set name
+                                            spstr strCommand.txt,tEntity6.txt,"~",37
+                                            vis tEntity6,1
+                                        }
+                                        if(type6.txt=="shutter")
+                                        {
+                                            vis bUp6,1
+                                            vis bStop6,1
+                                            vis bDown6,1
+                                            vis btOnOff6,0
+                                            vis bText6,0
+                                            vis hSlider6,0
+                                            vis nNum6,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tId.txt,"~",38
+                                            // up button
+                                            spstr tId.txt,tTmp.txt,"|",3
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bUp6.pco=27501
+                                                spstr tId.txt,bUp6.txt,"|",0
+                                                tsw bUp6,0
+                                            }else if(tTmp.txt=="enable")
+                                            {
+                                                bUp6.pco=65535
+                                                spstr tId.txt,bUp6.txt,"|",0
+                                                tsw bUp6,1
+                                            }
+                                            // stop button
+                                            spstr tId.txt,tTmp.txt,"|",4
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bStop6.pco=27501
+                                                spstr tId.txt,bStop6.txt,"|",1
+                                                tsw bStop6,0
+                                            }else if(tTmp.txt=="enable")
+                                            {
+                                                bStop6.pco=65535
+                                                spstr tId.txt,bStop6.txt,"|",1
+                                                tsw bStop6,1
+                                            }
+                                            // down button
+                                            spstr tId.txt,tTmp.txt,"|",5
+                                            if(tTmp.txt=="disable")
+                                            {
+                                                bDown6.pco=27501
+                                                spstr tId.txt,bDown6.txt,"|",2
+                                                tsw bDown6,0
+                                            }else if(tTmp.txt=="enable")
+                                            {
+                                                bDown6.pco=65535
+                                                spstr tId.txt,bDown6.txt,"|",2
+                                                tsw bDown6,1
+                                            }
+                                        }
+                                        if(type6.txt=="light"||type6.txt=="switch"||type6.txt=="fan")
+                                        {
+                                            vis bUp6,0
+                                            vis bStop6,0
+                                            vis bDown6,0
+                                            vis btOnOff6,1
+                                            vis bText6,0
+                                            vis hSlider6,0
+                                            vis nNum6,0
+                                            // get Button State (optional Value)
+                                            spstr strCommand.txt,tTmp.txt,"~",38
+                                            covx tTmp.txt,sys0,0,0
+                                            btOnOff6.val=sys0
+                                        }
+                                        if(type6.txt=="text")
+                                        {
+                                            vis bUp6,0
+                                            vis bStop6,0
+                                            vis bDown6,0
+                                            vis btOnOff6,0
+                                            vis bText6,1
+                                            tsw bText6,0
+                                            vis hSlider6,0
+                                            vis nNum6,0
+                                            bText6.pco=65535
+                                            bText6.pco2=65535
+                                            // get Text (optional Value)
+                                            spstr strCommand.txt,bText6.txt,"~",38
+                                        }
+                                        if(type6.txt=="button"||type6.txt=="input_sel")
+                                        {
+                                            vis bUp6,0
+                                            vis bStop6,0
+                                            vis bDown6,0
+                                            vis btOnOff6,0
+                                            vis bText6,1
+                                            tsw bText6,1
+                                            vis hSlider6,0
+                                            vis nNum6,0
+                                            bText6.pco=1374
+                                            bText6.pco2=1374
+                                            // get Text (optional Value)
+                                            spstr strCommand.txt,bText6.txt,"~",38
+                                        }
+                                        if(type6.txt=="number")
+                                        {
+                                            vis bUp6,0
+                                            vis bStop6,0
+                                            vis bDown6,0
+                                            vis btOnOff6,0
+                                            vis bText6,0
+                                            tsw bText6,0
+                                            vis hSlider6,1
+                                            vis nNum6,1
+                                            // get config (optional Value) (use bText as variable)
+                                            spstr strCommand.txt,bText6.txt,"~",38
+                                            //first value is current value
+                                            spstr bText6.txt,tTmp.txt,"|",0
+                                            covx tTmp.txt,sys0,0,0
+                                            hSlider6.val=sys0
+                                            nNum6.val=sys0
+                                            //second value is min value
+                                            spstr bText6.txt,tTmp.txt,"|",1
+                                            covx tTmp.txt,sys0,0,0
+                                            hSlider6.minval=sys0
+                                            //third value is max value
+                                            spstr bText6.txt,tTmp.txt,"|",2
+                                            covx tTmp.txt,sys0,0,0
+                                            hSlider6.maxval=sys0
+                                        }
                                     }
                                     if(tInstruction.txt=="pageType")
                                     {
@@ -2308,10 +2684,6 @@ Timer tmSerial
                                         if(tId.txt=="cardPower")
                                         {
                                             page cardPower
-                                        }
-                                        if(tId.txt=="cardChart")
-                                        {
-                                            page cardChart
                                         }
                                     }
                                     if(tInstruction.txt=="time")
