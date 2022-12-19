@@ -1,16 +1,4 @@
-+++ /dev/fd/62	2022-12-19 15:52:45.018563481 +0000
-+le list
-+ +12,8 @@
-+t.txt
-+n.txt
-+Sel.txt
-+ght.txt
-+tify.txt
-+utter.txt
-+ermo.txt
-+aver.txt
-+aver2.txt
-+aver.txt
++++ /dev/fd/62	2022-12-19 21:57:51.229884209 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardChart.txt
@@ -96,47 +84,8 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
-+
-+18 +858,14 @@
-+                                 {
-+                                     page pageStartup
-+                                 }
-+                                 if(tId.txt=="screensaver")
-+                                 {
-+                                     page screensaver
-+                                 }
-+                                 if(tId.txt=="screensaver2")
-+                                 {
-+                                     page screensaver2
-+                                 }
-+                                 if(tId.txt=="cardEntities")
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
-+18 +314,14 @@
-+                                 {
-+                                     page pageStartup
-+                                 }
-+                                 if(tId.txt=="screensaver")
-+                                 {
-+                                     page screensaver
-+                                 }
-+                                 if(tId.txt=="screensaver2")
-+                                 {
-+                                     page screensaver2
-+                                 }
-+                                 if(tId.txt=="cardEntities")
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 +9 +29,20 @@
