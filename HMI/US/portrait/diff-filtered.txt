@@ -1,6 +1,36 @@
-+++ /dev/fd/62	2022-12-19 22:17:01.757088934 +0000
++++ /dev/fd/62	2022-12-20 19:29:52.155490204 +0000
++le list
++ +12,8 @@
++t.txt
++n.txt
++Sel.txt
++ght.txt
++tify.txt
++utter.txt
++ermo.txt
++mer.txt
++aver.txt
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
++I/n2t-out/cardAlarm.txt
+++ HMI/US/portrait/n2t-out/cardAlarm.txt
++5 +39,15 @@
++     vis bNext,0
++     cardAlarm.bco=defaultBcoColor
++     for(sys0=0;sys0<40;sys0++)
++     {
++         if(b[sys0].type==98||b[sys0].type==116)
++         {
++             b[sys0].bco=defaultBcoColor
++             //b[sys0].pco=defaultFontColor
++             b[sys0].pco=defaultFontColor
++         }
++     }
++     if(defaultBcoColor==0)
++     {
++         tCode.bco=6371
++         tCode.pco=40179
++     }
 +I/n2t-out/cardChart.txt
 ++ HMI/US/portrait/n2t-out/cardChart.txt
 +15 +175,15 @@
@@ -271,14 +301,68 @@
 +     prints tSend.txt,0
 +     prints crcval,2
 + 
-+,14 +1515,76 @@
-+ m5
++,18 +1421,14 @@
++     {
++         page popupFan
++     }
++     if(type1.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type1.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ m1
 +ributes
 + Scope                               : local
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
-+
++,18 +1452,14 @@
++     {
++         page popupFan
++     }
++     if(type2.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type2.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ m2
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++,18 +1483,14 @@
++     {
++         page popupFan
++     }
++     if(type3.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type3.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ m3
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++,17 +1514,75 @@
++     {
++     if(type4.txt=="timer")
++         page popupTimer
++ m5
 +nts
 + Touch Press Event
 +     pageIcons.tTmp1.txt=tEntity6.txt
@@ -303,6 +387,79 @@
 +         page popupInSel
 +     }
 + 
++ mSpecial
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++,15 +1830,15 @@
++                                     vis hSlider1,0
++                                     vis nNum1,0
++                                     bText1.pco=65535
++                                     bText1.pco2=65535
++                                     // get Text (optional Value)
++                                     spstr strCommand.txt,bText1.txt,"~",8
++                                 }
++                                 if(type1.txt=="button"||type1.txt=="input_sel"||type1.txt=="timer")
++                                 if(type1.txt=="button"||type1.txt=="input_sel")
++                                 {
++                                     vis bUp1,0
++                                     vis bStop1,0
++                                     vis bDown1,0
++                                     vis btOnOff1,0
++                                     vis bText1,1
++                                     tsw bText1,1
++,15 +1979,15 @@
++                                     vis hSlider2,0
++                                     vis nNum2,0
++                                     bText2.pco=65535
++                                     bText2.pco2=65535
++                                     // get Text (optional Value)
++                                     spstr strCommand.txt,bText2.txt,"~",14
++                                 }
++                                 if(type2.txt=="button"||type2.txt=="input_sel"||type2.txt=="timer")
++                                 if(type2.txt=="button"||type2.txt=="input_sel")
++                                 {
++                                     vis bUp2,0
++                                     vis bStop2,0
++                                     vis bDown2,0
++                                     vis btOnOff2,0
++                                     vis bText2,1
++                                     tsw bText2,1
++,15 +2128,15 @@
++                                     vis hSlider3,0
++                                     vis nNum3,0
++                                     bText3.pco=65535
++                                     bText3.pco2=65535
++                                     // get Text (optional Value)
++                                     spstr strCommand.txt,bText3.txt,"~",20
++                                 }
++                                 if(type3.txt=="button"||type3.txt=="input_sel"||type3.txt=="timer")
++                                 if(type3.txt=="button"||type3.txt=="input_sel")
++                                 {
++                                     vis bUp3,0
++                                     vis bStop3,0
++                                     vis bDown3,0
++                                     vis btOnOff3,0
++                                     vis bText3,1
++                                     tsw bText3,1
++,15 +2277,15 @@
++                                     vis hSlider4,0
++                                     vis nNum4,0
++                                     bText4.pco=65535
++                                     bText4.pco2=65535
++                                     // get Text (optional Value)
++                                     spstr strCommand.txt,bText4.txt,"~",26
++                                 }
++                                 if(type4.txt=="button"||type4.txt=="input_sel"||type4.txt=="timer")
++                                 if(type4.txt=="button"||type4.txt=="input_sel")
++                                 {
++                                     vis bUp4,0
++                                     vis bStop4,0
++                                     vis bDown4,0
++                                     vis btOnOff4,0
++                                     vis bText4,1
++                                     tsw bText4,1
 +,14 +2318,312 @@
 +                                 // get Type
 +                                 spstr strCommand.txt,type6.txt,"~",33
@@ -453,27 +610,122 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+,18 +2681,14 @@
-+                                 {
-+                                     page cardQR
-+                                 }
-+                                 if(tId.txt=="cardPower")
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 // get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                             }
-+                             if(tInstruction.txt=="date")
 +I/n2t-out/cardGrid.txt
 ++ HMI/US/portrait/n2t-out/cardGrid.txt
++18 +258,14 @@
++     {
++         page popupShutter
++     }
++     if(type1.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type1.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ Touch Release Event
++     tmLP.en=0
++     tSend.txt="event,buttonPress2,"+entn1.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++18 +299,14 @@
++     {
++         page popupShutter
++     }
++     if(type2.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type2.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ Touch Release Event
++     tmLP.en=0
++     tSend.txt="event,buttonPress2,"+entn2.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++18 +340,14 @@
++     {
++         page popupShutter
++     }
++     if(type3.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type3.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ Touch Release Event
++     tmLP.en=0
++     tSend.txt="event,buttonPress2,"+entn3.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++18 +381,14 @@
++     {
++         page popupShutter
++     }
++     if(type4.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type4.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ Touch Release Event
++     tmLP.en=0
++     tSend.txt="event,buttonPress2,"+entn4.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++18 +422,14 @@
++     {
++         page popupShutter
++     }
++     if(type5.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type5.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ Touch Release Event
++     tmLP.en=0
++     tSend.txt="event,buttonPress2,"+entn5.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++18 +463,14 @@
++     {
++         page popupShutter
++     }
++     if(type6.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type6.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ Touch Release Event
++     tmLP.en=0
++     tSend.txt="event,buttonPress2,"+entn6.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
 +14 +609,18 @@
 +     {
 +         page popupLight
@@ -551,20 +803,3 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+15 +351,15 @@
-+ime
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 21:32PP
-+ Text                                : 21:32
-+ Max. Text Size                      : 15
-+
-+imeAdd
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
