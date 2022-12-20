@@ -846,6 +846,41 @@ class LuiPagesGen(object):
         options = "?".join(options)
         self._send_mqtt_msg(f"entityUpdateDetail2~{entity_id}~~{icon_color}~{ha_type}~{state}~{options}~")
 
+    def generate_timer_detail_page(self, entity_id):
+        if isinstance(entity_id, dict):
+            entity_id = entity_id["entity_id"]
+        entity = apis.ha_api.get_entity(entity_id)
+        icon_color = 0
+        if entity.state in ["idle", "paused"]:
+            editable = 1
+            if entity.state == "paused":
+                time_remaining = entity.attributes.get("remaining")
+            else:
+                time_remaining = entity.attributes.get("duration")
+            min_remaining = time_remaining.split(":")[1]
+            sec_remaining = time_remaining.split(":")[2]
+            action1 = ""
+            action2 = "start"
+            action3 = ""
+            label1  = ""
+            label2  = "start"
+            label3  = ""
+        else: #active
+            editable = 0
+            apis.ha_api.run_in(self.generate_timer_detail_page, 1, entity_id=entity_id)
+            finishes_at = dp.parse(entity.attributes.get("finishes_at"))
+            delta = finishes_at - datetime.datetime.now(datetime.timezone.utc)
+            hours, remainder = divmod(delta.total_seconds(), 3600)
+            minutes, seconds = divmod(remainder, 60)
+            min_remaining = int(minutes)
+            sec_remaining = int(seconds)
+            action1 = "pause"
+            action2 = "cancel"
+            action3 = "finish"
+            label1  = "pause"
+            label2  = "cancel"
+            label3  = "finish"
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{entity_id}~{min_remaining}~{sec_remaining}~{editable}~{action1}~{action2}~{action3}~{label1}~{label2}~{label3}")
         
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
