@@ -154,6 +154,17 @@ The following message can be used to update the content on the cardEntities Page
 
 options are ? seperated
 
+### popupTimer
+
+editable is 0 or 1
+
+action fields are in the answer on the button press
+
+in case action is empty the button will be hidden
+
+`entityUpdateDetail~{entity_id}~~{icon_color}~{entity_id}~{min_remaining}~{sec_remaining}~{editable}~{action1}~{action2}~{action3}~{label1}~{label2}~{label3}`
+
+
 ### cardThermo Page
 
 `entityUpd~*heading*~*navigation*~*internalNameEntiy*~*currentTemp*~*destTemp*~*status*~*minTemp*~*maxTemp*~*stepTemp*[[~*iconId*~*activeColor*~*state*~*hvac_action*]]~tCurTempLbl~tStateLbl~tALbl~iconTemperature~dstTempTwoTempMode~btDetail`
