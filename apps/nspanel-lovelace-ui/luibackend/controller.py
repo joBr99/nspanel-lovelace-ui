@@ -173,6 +173,8 @@ class LuiController(object):
                     self._pages_gen.generate_input_select_detail_page(entity)
                 if entity.startswith("media_player"):
                     self._pages_gen.generate_input_select_detail_page(entity)
+                if entity.startswith("timer"):
+                    self._pages_gen.generate_timer_detail_page(entity)
             if self._current_card.cardType == "cardThermo":
                 if entity.startswith("climate"):
                     self._pages_gen.generate_thermo_detail_page(entity)
@@ -189,7 +191,8 @@ class LuiController(object):
             self._pages_gen.generate_thermo_detail_page(entity_id)
         if detail_type == "popupInSel":
             self._pages_gen.generate_input_select_detail_page(entity_id)
-            
+        if detail_type == "popupTimer":
+            self._pages_gen.generate_timer_detail_page(entity_id)   
     def button_press(self, entity_id, button_type, value):
         apis.ha_api.log(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
         # internal buttons
@@ -415,3 +418,16 @@ class LuiController(object):
             entity = apis.ha_api.get_entity(entity_id)
             option = entity.attributes.source_list[int(value)]
             entity.call_service("select_source", source=option)
+            
+        # timer detail page
+        if button_type == "timer-start":
+            if value is not None:
+                apis.ha_api.get_entity(entity_id).call_service("start", duration=value)
+            else:
+                apis.ha_api.get_entity(entity_id).call_service("start")
+        if button_type == "timer-cancel":
+            apis.ha_api.get_entity(entity_id).call_service("cancel")
+        if button_type == "timer-pause":
+            apis.ha_api.get_entity(entity_id).call_service("pause")
+        if button_type == "timer-finish":
+            apis.ha_api.get_entity(entity_id).call_service("finish")
