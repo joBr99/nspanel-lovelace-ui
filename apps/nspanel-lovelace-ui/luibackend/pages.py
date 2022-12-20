@@ -866,7 +866,7 @@ class LuiPagesGen(object):
             action2 = "start"
             action3 = ""
             label1  = ""
-            label2  = "start"
+            label2  = get_translation(self._locale, "frontend.ui.timer.actions.start")
             label3  = ""
         else: #active
             editable = 0
@@ -880,9 +880,9 @@ class LuiPagesGen(object):
             action1 = "pause"
             action2 = "cancel"
             action3 = "finish"
-            label1  = "pause"
-            label2  = "cancel"
-            label3  = "finish"
+            label1  = get_translation(self._locale, "frontend.ui.timer.actions.pause")
+            label2  = get_translation(self._locale, "frontend.ui.timer.actions.cancel")
+            label3  = get_translation(self._locale, "frontend.ui.timer.actions.finish")
         self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{entity_id}~{min_remaining}~{sec_remaining}~{editable}~{action1}~{action2}~{action3}~{label1}~{label2}~{label3}")
         
     def send_message_page(self, ident, heading, msg, b1, b2):
