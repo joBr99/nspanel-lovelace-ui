@@ -42,6 +42,10 @@ pageStartup
 	19   Component(s)
 	181  Line(s) of event code
 	129  Unique line(s) of event code
+popupTimer
+	42   Component(s)
+	512  Line(s) of event code
+	255  Unique line(s) of event code
 pageTest
 	21   Component(s)
 	66   Line(s) of event code
@@ -62,10 +66,6 @@ cardQR
 	32   Component(s)
 	425  Line(s) of event code
 	244  Unique line(s) of event code
-popupTimer
-	42   Component(s)
-	508  Line(s) of event code
-	247  Unique line(s) of event code
 cardThermo
 	55   Component(s)
 	555  Line(s) of event code
@@ -82,5 +82,5 @@ cardEntities
 Total
 	19   Page(s)
 	678  Component(s)
-	8421 Line(s) of event code
-	2126 Unique line(s) of event code
+	8425 Line(s) of event code
+	2130 Unique line(s) of event code
