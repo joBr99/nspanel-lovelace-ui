@@ -42,6 +42,9 @@ Page popupTimer
             vis bZ4M,0
             vis t0,0
             vis fToggleEdit,0
+            vis b0,0
+            vis b1,0
+            vis b2,0
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
@@ -713,9 +716,9 @@ Button bZ1M
             if(n2.pco==63488)
             {
                 n2.val=n2.val-1
-                if(n1.val<0)
+                if(n2.val<0)
                 {
-                    n1.val=0
+                    n2.val=0
                 }
             }
         
@@ -756,17 +759,17 @@ Button bZ1P
             if(n1.pco==63488)
             {
                 n1.val=n1.val+1
-                if(n1.val>60)
+                if(n1.val>59)
                 {
-                    n1.val=60
+                    n1.val=59
                 }
             }
             if(n2.pco==63488)
             {
                 n2.val=n2.val+1
-                if(n1.val>60)
+                if(n2.val>59)
                 {
-                    n1.val=60
+                    n2.val=59
                 }
             }
         
@@ -815,9 +818,9 @@ Button bZ2M
             if(n2.pco==63488)
             {
                 n2.val=n2.val-5
-                if(n1.val<0)
+                if(n2.val<0)
                 {
-                    n1.val=0
+                    n2.val=0
                 }
             }
         
@@ -858,17 +861,17 @@ Button bZ2P
             if(n1.pco==63488)
             {
                 n1.val=n1.val+5
-                if(n1.val>60)
+                if(n1.val>59)
                 {
-                    n1.val=60
+                    n1.val=59
                 }
             }
             if(n2.pco==63488)
             {
                 n2.val=n2.val+5
-                if(n1.val>60)
+                if(n2.val>59)
                 {
-                    n1.val=60
+                    n2.val=59
                 }
             }
         
@@ -917,9 +920,9 @@ Button bZ3M
             if(n2.pco==63488)
             {
                 n2.val=n2.val-10
-                if(n1.val<0)
+                if(n2.val<0)
                 {
-                    n1.val=0
+                    n2.val=0
                 }
             }
         
@@ -960,17 +963,17 @@ Button bZ3P
             if(n1.pco==63488)
             {
                 n1.val=n1.val+10
-                if(n1.val>60)
+                if(n1.val>59)
                 {
-                    n1.val=60
+                    n1.val=59
                 }
             }
             if(n2.pco==63488)
             {
                 n2.val=n2.val+10
-                if(n1.val>60)
+                if(n2.val>59)
                 {
-                    n1.val=60
+                    n2.val=59
                 }
             }
         
@@ -1019,9 +1022,9 @@ Button bZ4M
             if(n2.pco==63488)
             {
                 n2.val=n2.val-15
-                if(n1.val<0)
+                if(n2.val<0)
                 {
-                    n1.val=0
+                    n2.val=0
                 }
             }
         
@@ -1062,17 +1065,17 @@ Button bZ4P
             if(n1.pco==63488)
             {
                 n1.val=n1.val+15
-                if(n1.val>60)
+                if(n1.val>59)
                 {
-                    n1.val=60
+                    n1.val=59
                 }
             }
             if(n2.pco==63488)
             {
                 n2.val=n2.val+15
-                if(n1.val>60)
+                if(n2.val>59)
                 {
-                    n1.val=60
+                    n2.val=59
                 }
             }
         
@@ -1084,9 +1087,9 @@ Button fToggleEdit
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 398
+        x coordinate                        : 386
         y coordinate                        : 108
-        Width                               : 80
+        Width                               : 64
         Height                              : 37
         Effect                              : load
         Effect Priority                     : 0
@@ -1274,6 +1277,7 @@ Timer tmSerial
                                         spstr strCommand.txt,b2.txt,"~",12
                                         //label b3
                                         spstr strCommand.txt,b3.txt,"~",13
+                                        sleepValue=0
                                     }
                                     if(tInstruction.txt=="time")
                                     {
