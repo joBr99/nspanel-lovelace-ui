@@ -372,6 +372,9 @@ class LuiPagesGen(object):
             currently_tanslation = get_translation(self._locale, f"frontend.ui.card.climate.currently")
             current_temperature = get_attr_safe(entity, "current_temperature", "")
             value += f"\r\n{currently_tanslation}: {current_temperature}{temperature_unit}"
+        elif entityType == "timer":
+            entityTypePanel = "timer"
+            value = entity.state
         else:
             name = "unsupported"
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
