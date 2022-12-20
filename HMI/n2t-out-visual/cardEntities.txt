@@ -1912,6 +1912,10 @@ Hotspot m0
             {
                 page popupInSel
             }
+            if(type1.txt=="timer")
+            {
+                page popupTimer
+            }
         
 Hotspot m1
     Attributes
@@ -1951,6 +1955,10 @@ Hotspot m1
             if(type2.txt=="input_sel")
             {
                 page popupInSel
+            }
+            if(type2.txt=="timer")
+            {
+                page popupTimer
             }
         
 Hotspot m2
@@ -1992,6 +2000,10 @@ Hotspot m2
             {
                 page popupInSel
             }
+            if(type3.txt=="timer")
+            {
+                page popupTimer
+            }
         
 Hotspot m3
     Attributes
@@ -2031,6 +2043,10 @@ Hotspot m3
             if(type4.txt=="input_sel")
             {
                 page popupInSel
+            }
+            if(type4.txt=="timer")
+            {
+                page popupTimer
             }
         
 Hotspot mSpecial
@@ -2323,7 +2339,7 @@ Timer tmSerial
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText1.txt,"~",8
                                         }
-                                        if(type1.txt=="button"||type1.txt=="input_sel")
+                                        if(type1.txt=="button"||type1.txt=="input_sel"||type1.txt=="timer")
                                         {
                                             vis bUp1,0
                                             vis bStop1,0
@@ -2472,7 +2488,7 @@ Timer tmSerial
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText2.txt,"~",14
                                         }
-                                        if(type2.txt=="button"||type2.txt=="input_sel")
+                                        if(type2.txt=="button"||type2.txt=="input_sel"||type2.txt=="timer")
                                         {
                                             vis bUp2,0
                                             vis bStop2,0
@@ -2621,7 +2637,7 @@ Timer tmSerial
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText3.txt,"~",20
                                         }
-                                        if(type3.txt=="button"||type3.txt=="input_sel")
+                                        if(type3.txt=="button"||type3.txt=="input_sel"||type3.txt=="timer")
                                         {
                                             vis bUp3,0
                                             vis bStop3,0
@@ -2770,7 +2786,7 @@ Timer tmSerial
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText4.txt,"~",26
                                         }
-                                        if(type4.txt=="button"||type4.txt=="input_sel")
+                                        if(type4.txt=="button"||type4.txt=="input_sel"||type4.txt=="timer")
                                         {
                                             vis bUp4,0
                                             vis bStop4,0
@@ -2875,10 +2891,6 @@ Timer tmSerial
                                         if(tId.txt=="cardPower")
                                         {
                                             page cardPower
-                                        }
-                                        if(tId.txt=="cardChart")
-                                        {
-                                            page cardChart
                                         }
                                     }
                                     if(tInstruction.txt=="time")
