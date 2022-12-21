@@ -1912,6 +1912,10 @@ Hotspot m0
             {
                 page popupInSel
             }
+            if(type1.txt=="timer")
+            {
+                page popupTimer
+            }
         
 Hotspot m1
     Attributes
@@ -1951,6 +1955,10 @@ Hotspot m1
             if(type2.txt=="input_sel")
             {
                 page popupInSel
+            }
+            if(type2.txt=="timer")
+            {
+                page popupTimer
             }
         
 Hotspot m2
@@ -1992,6 +2000,10 @@ Hotspot m2
             {
                 page popupInSel
             }
+            if(type3.txt=="timer")
+            {
+                page popupTimer
+            }
         
 Hotspot m3
     Attributes
@@ -2031,6 +2043,10 @@ Hotspot m3
             if(type4.txt=="input_sel")
             {
                 page popupInSel
+            }
+            if(type4.txt=="timer")
+            {
+                page popupTimer
             }
         
 Hotspot mSpecial
@@ -2875,6 +2891,10 @@ Timer tmSerial
                                         if(tId.txt=="cardPower")
                                         {
                                             page cardPower
+                                        }
+                                        if(tId.txt=="cardChart")
+                                        {
+                                            page cardChart
                                         }
                                     }
                                     if(tInstruction.txt=="time")
