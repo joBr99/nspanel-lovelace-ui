@@ -15,25 +15,6 @@
 │ +    // fix touch offset (Removed for US version)
 │ +    //lcd_dev fffb 0002 0000 0020
 │      page pageStartup
-│   --- HMI/n2t-out/cardChart.txt
-├── +++ HMI/US/portrait/n2t-out/cardChart.txt
-│ @@ -168,15 +168,15 @@
-│          Send Component ID                   : disabled
-│      
-│  Button bNext
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ +        Send Component ID                   : on press
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│              tSend.txt="event,buttonPress2,cardChart,"
 │   --- HMI/n2t-out/cardEntities.txt
 ├── +++ HMI/US/portrait/n2t-out/cardEntities.txt
 │ @@ -61,14 +61,24 @@
@@ -1016,23 +997,6 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
-│ @@ -2005,15 +2775,15 @@
-│              if(sleepTimeout!=0&&dimValue!=dim)
-│              {
-│                  sleepValue+=1
-│                  if(sleepTimeout<=sleepValue)
-│                  {
-│                      sleepValue=0
-│                      dim=dimValue
-│ -                    tSend.txt="event,sleepReached,cardEntities"
-│ +                    tSend.txt="event,sleepReached,cardAlarm"
-│                      //send calc crc
-│                      btlen tSend.txt,sys0
-│                      crcrest 1,0xffff // reset CRC
-│                      crcputh 55 bb
-│                      crcputs sys0,2
-│                      crcputs tSend.txt,0
-│                      //send cmd
 │   --- HMI/n2t-out/cardGrid.txt
 ├── +++ HMI/US/portrait/n2t-out/cardGrid.txt
 │ @@ -258,18 +258,14 @@
