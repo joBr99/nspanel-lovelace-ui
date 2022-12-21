@@ -516,6 +516,10 @@ Button bEntity1
             {
                 page popupInSel
             }
+            if(type1.txt=="timer")
+            {
+                page popupTimer
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -578,6 +582,10 @@ Button bEntity2
             if(type2.txt=="input_sel")
             {
                 page popupInSel
+            }
+            if(type2.txt=="timer")
+            {
+                page popupTimer
             }
         
         Touch Release Event
@@ -642,6 +650,10 @@ Button bEntity3
             {
                 page popupInSel
             }
+            if(type3.txt=="timer")
+            {
+                page popupTimer
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -704,6 +716,10 @@ Button bEntity4
             if(type4.txt=="input_sel")
             {
                 page popupInSel
+            }
+            if(type4.txt=="timer")
+            {
+                page popupTimer
             }
         
         Touch Release Event
@@ -768,6 +784,10 @@ Button bEntity5
             {
                 page popupInSel
             }
+            if(type5.txt=="timer")
+            {
+                page popupTimer
+            }
         
         Touch Release Event
             tmLP.en=0
@@ -830,6 +850,10 @@ Button bEntity6
             if(type6.txt=="input_sel")
             {
                 page popupInSel
+            }
+            if(type6.txt=="timer")
+            {
+                page popupTimer
             }
         
         Touch Release Event
