@@ -1,4 +1,4 @@
-# Sonoff NSPanel Tasmota Lovelace UI Berry Driver | code by joBr99
+# Sonoff NSPanel Tasmota Lovelace UI Berry Driver (Extended Flashing to faster speeds; improved Error Handling)| code by joBr99
 # based on;
 # Sonoff NSPanel Tasmota (Nextion with Flashing) driver | code by peepshow-21
 # based on;
