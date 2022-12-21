@@ -109,6 +109,10 @@ sharedfoot = """
               {
                 page cardPower
               }
+              if(tId.txt=="cardChart")
+              {
+                page cardChart
+              }
             }
             if(tInstruction.txt=="time")
             {
