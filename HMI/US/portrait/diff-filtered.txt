@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-12-21 20:02:53.423928525 +0000
++++ /dev/fd/62	2022-12-21 20:15:25.252534958 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardEntities.txt
@@ -406,121 +406,7 @@
 +                                 }
 +I/n2t-out/cardGrid.txt
 ++ HMI/US/portrait/n2t-out/cardGrid.txt
-+18 +258,14 @@
-+     {
-+         page popupShutter
-+     }
-+     if(type1.txt=="input_sel")
-+     {
-+         page popupInSel
-+     }
-+     if(type1.txt=="timer")
-+     {
-+         page popupTimer
-+     }
-+ 
-+ Touch Release Event
-+     tmLP.en=0
-+     tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+18 +299,14 @@
-+     {
-+         page popupShutter
-+     }
-+     if(type2.txt=="input_sel")
-+     {
-+         page popupInSel
-+     }
-+     if(type2.txt=="timer")
-+     {
-+         page popupTimer
-+     }
-+ 
-+ Touch Release Event
-+     tmLP.en=0
-+     tSend.txt="event,buttonPress2,"+entn2.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+18 +340,14 @@
-+     {
-+         page popupShutter
-+     }
-+     if(type3.txt=="input_sel")
-+     {
-+         page popupInSel
-+     }
-+     if(type3.txt=="timer")
-+     {
-+         page popupTimer
-+     }
-+ 
-+ Touch Release Event
-+     tmLP.en=0
-+     tSend.txt="event,buttonPress2,"+entn3.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+18 +381,14 @@
-+     {
-+         page popupShutter
-+     }
-+     if(type4.txt=="input_sel")
-+     {
-+         page popupInSel
-+     }
-+     if(type4.txt=="timer")
-+     {
-+         page popupTimer
-+     }
-+ 
-+ Touch Release Event
-+     tmLP.en=0
-+     tSend.txt="event,buttonPress2,"+entn4.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+18 +422,14 @@
-+     {
-+         page popupShutter
-+     }
-+     if(type5.txt=="input_sel")
-+     {
-+         page popupInSel
-+     }
-+     if(type5.txt=="timer")
-+     {
-+         page popupTimer
-+     }
-+ 
-+ Touch Release Event
-+     tmLP.en=0
-+     tSend.txt="event,buttonPress2,"+entn5.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+18 +463,14 @@
-+     {
-+         page popupShutter
-+     }
-+     if(type6.txt=="input_sel")
-+     {
-+         page popupInSel
-+     }
-+     if(type6.txt=="timer")
-+     {
-+         page popupTimer
-+     }
-+ 
-+ Touch Release Event
-+     tmLP.en=0
-+     tSend.txt="event,buttonPress2,"+entn6.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+14 +609,18 @@
++14 +633,18 @@
 +     {
 +         page popupLight
 +     }
