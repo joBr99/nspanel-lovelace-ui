@@ -42,10 +42,6 @@ popupThermo
 	44   Component(s)
 	519  Line(s) of event code
 	274  Unique line(s) of event code
-cardAlarm
-	40   Component(s)
-	443  Line(s) of event code
-	263  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	518  Line(s) of event code
@@ -62,6 +58,10 @@ cardQR
 	32   Component(s)
 	425  Line(s) of event code
 	244  Unique line(s) of event code
+popupTimer
+	42   Component(s)
+	512  Line(s) of event code
+	255  Unique line(s) of event code
 cardThermo
 	55   Component(s)
 	555  Line(s) of event code
@@ -70,13 +70,17 @@ popupInSel
 	34   Component(s)
 	617  Line(s) of event code
 	295  Unique line(s) of event code
+cardAlarm
+	40   Component(s)
+	442  Line(s) of event code
+	262  Unique line(s) of event code
 cardEntities
 	89   Component(s)
-	1608 Line(s) of event code
+	2583 Line(s) of event code
 	692  Unique line(s) of event code
 
 Total
-	18   Page(s)
-	652  Component(s)
-	8268 Line(s) of event code
-	2128 Unique line(s) of event code
+	19   Page(s)
+	694  Component(s)
+	9754 Line(s) of event code
+	2255 Unique line(s) of event code
