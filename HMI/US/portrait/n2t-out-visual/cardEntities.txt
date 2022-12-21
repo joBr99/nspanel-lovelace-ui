@@ -4119,7 +4119,7 @@ Timer tmSleep
                 {
                     sleepValue=0
                     dim=dimValue
-                    tSend.txt="event,sleepReached,cardAlarm"
+                    tSend.txt="event,sleepReached,cardEntities"
                     //send calc crc
                     btlen tSend.txt,sys0
                     crcrest 1,0xffff // reset CRC

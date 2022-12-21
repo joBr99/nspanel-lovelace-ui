@@ -1,25 +1,6 @@
-+++ /dev/fd/62	2022-12-21 19:52:24.482417329 +0000
++++ /dev/fd/62	2022-12-21 20:02:53.423928525 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
-+I/n2t-out/cardChart.txt
-++ HMI/US/portrait/n2t-out/cardChart.txt
-+15 +168,15 @@
-+ Send Component ID                   : disabled
-+
-+bNext
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Send Component ID                   : on press
-+ State                               : unpressed
-+ Text                                : î³
-+ Max. Text Size                      : 10
-+
-+nts
-+ Touch Press Event
-+     tSend.txt="event,buttonPress2,cardChart,"
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
 +14 +116,26 @@
@@ -423,23 +404,6 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+,15 +2775,15 @@
-+     if(sleepTimeout!=0&&dimValue!=dim)
-+     {
-+         sleepValue+=1
-+         if(sleepTimeout<=sleepValue)
-+         {
-+             sleepValue=0
-+             dim=dimValue
-+             tSend.txt="event,sleepReached,cardEntities"
-+             tSend.txt="event,sleepReached,cardAlarm"
-+             //send calc crc
-+             btlen tSend.txt,sys0
-+             crcrest 1,0xffff // reset CRC
-+             crcputh 55 bb
-+             crcputs sys0,2
-+             crcputs tSend.txt,0
-+             //send cmd
 +I/n2t-out/cardGrid.txt
 ++ HMI/US/portrait/n2t-out/cardGrid.txt
 +18 +258,14 @@
