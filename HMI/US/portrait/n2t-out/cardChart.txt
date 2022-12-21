@@ -172,14 +172,14 @@ Button bNext
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Send Component ID                   : on press
         State                               : unpressed
         Text                                : î³
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardPower,"
+            tSend.txt="event,buttonPress2,cardChart,"
             if(bNext.txt=="î")
             {
                 tSend.txt+="bHome"
@@ -211,7 +211,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,"
+            tSend.txt="event,buttonPress2,cardChart,"
             if(bPrev.txt=="î¶")
             {
                 tSend.txt+="bUp"
@@ -312,17 +312,6 @@ Hotspot m0
                 vis x0,0
                 vaLast.val=-1
             }
-        
-Hotspot m1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-    
-    Events
-        Touch Press Event
-            click bPrev,1
         
 Hotspot mSwipeNext
     Attributes
