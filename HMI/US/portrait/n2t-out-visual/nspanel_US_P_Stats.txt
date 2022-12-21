@@ -23,17 +23,13 @@ popupFan
 	351  Line(s) of event code
 	204  Unique line(s) of event code
 cardChart
-	32   Component(s)
-	453  Line(s) of event code
-	297  Unique line(s) of event code
+	31   Component(s)
+	452  Line(s) of event code
+	296  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	181  Line(s) of event code
 	129  Unique line(s) of event code
-cardPower
-	43   Component(s)
-	439  Line(s) of event code
-	299  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	398  Line(s) of event code
@@ -42,6 +38,10 @@ popupThermo
 	44   Component(s)
 	519  Line(s) of event code
 	274  Unique line(s) of event code
+cardPower
+	43   Component(s)
+	439  Line(s) of event code
+	299  Unique line(s) of event code
 cardGrid
 	42   Component(s)
 	518  Line(s) of event code
@@ -76,11 +76,11 @@ cardAlarm
 	262  Unique line(s) of event code
 cardEntities
 	89   Component(s)
-	2583 Line(s) of event code
-	692  Unique line(s) of event code
+	1636 Line(s) of event code
+	701  Unique line(s) of event code
 
 Total
 	19   Page(s)
-	694  Component(s)
-	9754 Line(s) of event code
-	2255 Unique line(s) of event code
+	693  Component(s)
+	8806 Line(s) of event code
+	2252 Unique line(s) of event code
