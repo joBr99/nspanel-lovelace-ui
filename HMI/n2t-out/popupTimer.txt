@@ -34,9 +34,9 @@ Page popupTimer
             vis bZ4M,0
             vis t0,0
             vis fToggleEdit,0
-            vis b0,0
             vis b1,0
             vis b2,0
+            vis b3,0
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
