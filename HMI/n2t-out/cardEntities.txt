@@ -1371,7 +1371,7 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff1.val=sys0
                                         }
-                                        if(type1.txt=="text")
+                                        if(type1.txt=="text"||type1.txt=="timer")
                                         {
                                             vis bUp1,0
                                             vis bStop1,0
@@ -1386,7 +1386,7 @@ Timer tmSerial
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText1.txt,"~",8
                                         }
-                                        if(type1.txt=="button"||type1.txt=="input_sel"||type1.txt=="timer")
+                                        if(type1.txt=="button"||type1.txt=="input_sel")
                                         {
                                             vis bUp1,0
                                             vis bStop1,0
@@ -1520,7 +1520,7 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff2.val=sys0
                                         }
-                                        if(type2.txt=="text")
+                                        if(type2.txt=="text"||type2.txt=="timer")
                                         {
                                             vis bUp2,0
                                             vis bStop2,0
@@ -1535,7 +1535,7 @@ Timer tmSerial
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText2.txt,"~",14
                                         }
-                                        if(type2.txt=="button"||type2.txt=="input_sel"||type2.txt=="timer")
+                                        if(type2.txt=="button"||type2.txt=="input_sel")
                                         {
                                             vis bUp2,0
                                             vis bStop2,0
@@ -1669,7 +1669,7 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff3.val=sys0
                                         }
-                                        if(type3.txt=="text")
+                                        if(type3.txt=="text"||type3.txt=="timer")
                                         {
                                             vis bUp3,0
                                             vis bStop3,0
@@ -1684,7 +1684,7 @@ Timer tmSerial
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText3.txt,"~",20
                                         }
-                                        if(type3.txt=="button"||type3.txt=="input_sel"||type3.txt=="timer")
+                                        if(type3.txt=="button"||type3.txt=="input_sel")
                                         {
                                             vis bUp3,0
                                             vis bStop3,0
@@ -1818,7 +1818,7 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff4.val=sys0
                                         }
-                                        if(type4.txt=="text")
+                                        if(type4.txt=="text"||type4.txt=="timer")
                                         {
                                             vis bUp4,0
                                             vis bStop4,0
@@ -1833,7 +1833,7 @@ Timer tmSerial
                                             // get Text (optional Value)
                                             spstr strCommand.txt,bText4.txt,"~",26
                                         }
-                                        if(type4.txt=="button"||type4.txt=="input_sel"||type4.txt=="timer")
+                                        if(type4.txt=="button"||type4.txt=="input_sel")
                                         {
                                             vis bUp4,0
                                             vis bStop4,0
