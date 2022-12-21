@@ -142,7 +142,9 @@ simple_type_mapping = {
     'light':        'lightbulb',
     'fan':          'fan',
     'person':       'account',
-    'vacuum':       'robot-vacuum'
+    'vacuum':       'robot-vacuum',
+    'timer':        'timer-outline'
+
 }
 
 alarm_control_panel_mapping = {
