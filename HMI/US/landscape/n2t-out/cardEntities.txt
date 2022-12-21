@@ -1355,7 +1355,7 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff1.val=sys0
                                         }
-                                        if(type1.txt=="text")
+                                        if(type1.txt=="text"||type1.txt=="timer")
                                         {
                                             vis bUp1,0
                                             vis bStop1,0
@@ -1504,7 +1504,7 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff2.val=sys0
                                         }
-                                        if(type2.txt=="text")
+                                        if(type2.txt=="text"||type2.txt=="timer")
                                         {
                                             vis bUp2,0
                                             vis bStop2,0
@@ -1653,7 +1653,7 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff3.val=sys0
                                         }
-                                        if(type3.txt=="text")
+                                        if(type3.txt=="text"||type3.txt=="timer")
                                         {
                                             vis bUp3,0
                                             vis bStop3,0
@@ -1802,7 +1802,7 @@ Timer tmSerial
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff4.val=sys0
                                         }
-                                        if(type4.txt=="text")
+                                        if(type4.txt=="text"||type4.txt=="timer")
                                         {
                                             vis bUp4,0
                                             vis bStop4,0
@@ -1922,10 +1922,6 @@ Timer tmSerial
                                         if(tId.txt=="cardPower")
                                         {
                                             page cardPower
-                                        }
-                                        if(tId.txt=="cardChart")
-                                        {
-                                            page cardChart
                                         }
                                     }
                                     if(tInstruction.txt=="time")
