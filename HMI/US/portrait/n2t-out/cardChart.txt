@@ -172,7 +172,7 @@ Button bNext
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
-        Send Component ID                   : on press
+        Send Component ID                   : disabled
         State                               : unpressed
         Text                                : î³
         Max. Text Size                      : 10

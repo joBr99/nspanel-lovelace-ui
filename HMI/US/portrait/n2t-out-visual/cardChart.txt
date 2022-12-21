@@ -252,7 +252,7 @@ Button bNext
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
-        Send Component ID                   : on press
+        Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 262
         y coordinate                        : 16
