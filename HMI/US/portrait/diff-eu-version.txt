@@ -825,74 +825,74 @@
 │          Scope                               : local
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
-│ @@ -1382,15 +1830,15 @@
+│ @@ -1367,15 +1815,15 @@
 │                                              vis hSlider1,0
 │                                              vis nNum1,0
-│                                              bText1.pco=65535
-│                                              bText1.pco2=65535
-│                                              // get Text (optional Value)
-│                                              spstr strCommand.txt,bText1.txt,"~",8
+│                                              // get Button State (optional Value)
+│                                              spstr strCommand.txt,tTmp.txt,"~",8
+│                                              covx tTmp.txt,sys0,0,0
+│                                              btOnOff1.val=sys0
 │                                          }
-│ -                                        if(type1.txt=="button"||type1.txt=="input_sel"||type1.txt=="timer")
-│ +                                        if(type1.txt=="button"||type1.txt=="input_sel")
+│ -                                        if(type1.txt=="text"||type1.txt=="timer")
+│ +                                        if(type1.txt=="text")
 │                                          {
 │                                              vis bUp1,0
 │                                              vis bStop1,0
 │                                              vis bDown1,0
 │                                              vis btOnOff1,0
 │                                              vis bText1,1
-│                                              tsw bText1,1
-│ @@ -1531,15 +1979,15 @@
+│                                              tsw bText1,0
+│ @@ -1516,15 +1964,15 @@
 │                                              vis hSlider2,0
 │                                              vis nNum2,0
-│                                              bText2.pco=65535
-│                                              bText2.pco2=65535
-│                                              // get Text (optional Value)
-│                                              spstr strCommand.txt,bText2.txt,"~",14
+│                                              // get Button State (optional Value)
+│                                              spstr strCommand.txt,tTmp.txt,"~",14
+│                                              covx tTmp.txt,sys0,0,0
+│                                              btOnOff2.val=sys0
 │                                          }
-│ -                                        if(type2.txt=="button"||type2.txt=="input_sel"||type2.txt=="timer")
-│ +                                        if(type2.txt=="button"||type2.txt=="input_sel")
+│ -                                        if(type2.txt=="text"||type2.txt=="timer")
+│ +                                        if(type2.txt=="text")
 │                                          {
 │                                              vis bUp2,0
 │                                              vis bStop2,0
 │                                              vis bDown2,0
 │                                              vis btOnOff2,0
 │                                              vis bText2,1
-│                                              tsw bText2,1
-│ @@ -1680,15 +2128,15 @@
+│                                              tsw bText2,0
+│ @@ -1665,15 +2113,15 @@
 │                                              vis hSlider3,0
 │                                              vis nNum3,0
-│                                              bText3.pco=65535
-│                                              bText3.pco2=65535
-│                                              // get Text (optional Value)
-│                                              spstr strCommand.txt,bText3.txt,"~",20
+│                                              // get Button State (optional Value)
+│                                              spstr strCommand.txt,tTmp.txt,"~",20
+│                                              covx tTmp.txt,sys0,0,0
+│                                              btOnOff3.val=sys0
 │                                          }
-│ -                                        if(type3.txt=="button"||type3.txt=="input_sel"||type3.txt=="timer")
-│ +                                        if(type3.txt=="button"||type3.txt=="input_sel")
+│ -                                        if(type3.txt=="text"||type3.txt=="timer")
+│ +                                        if(type3.txt=="text")
 │                                          {
 │                                              vis bUp3,0
 │                                              vis bStop3,0
 │                                              vis bDown3,0
 │                                              vis btOnOff3,0
 │                                              vis bText3,1
-│                                              tsw bText3,1
-│ @@ -1829,15 +2277,15 @@
+│                                              tsw bText3,0
+│ @@ -1814,15 +2262,15 @@
 │                                              vis hSlider4,0
 │                                              vis nNum4,0
-│                                              bText4.pco=65535
-│                                              bText4.pco2=65535
-│                                              // get Text (optional Value)
-│                                              spstr strCommand.txt,bText4.txt,"~",26
+│                                              // get Button State (optional Value)
+│                                              spstr strCommand.txt,tTmp.txt,"~",26
+│                                              covx tTmp.txt,sys0,0,0
+│                                              btOnOff4.val=sys0
 │                                          }
-│ -                                        if(type4.txt=="button"||type4.txt=="input_sel"||type4.txt=="timer")
-│ +                                        if(type4.txt=="button"||type4.txt=="input_sel")
+│ -                                        if(type4.txt=="text"||type4.txt=="timer")
+│ +                                        if(type4.txt=="text")
 │                                          {
 │                                              vis bUp4,0
 │                                              vis bStop4,0
 │                                              vis bDown4,0
 │                                              vis btOnOff4,0
 │                                              vis bText4,1
-│                                              tsw bText4,1
+│                                              tsw bText4,0
 │ @@ -1870,14 +2318,312 @@
 │                                              covx tTmp.txt,sys0,0,0
 │                                              hSlider4.minval=sys0
