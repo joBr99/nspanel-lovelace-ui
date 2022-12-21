@@ -36,7 +36,7 @@ class LuiPagesGen(object):
         attr = entity.attributes
         default_color_on  = rgb_dec565([253, 216, 53])
         default_color_off = rgb_dec565([68, 115, 158])
-        icon_color = default_color_on if entity.state in ["on", "unlocked", "above_horizon", "home"] else default_color_off
+        icon_color = default_color_on if entity.state in ["on", "unlocked", "above_horizon", "home", "active"] else default_color_off
 
         if ha_type == "alarm_control_panel":
             if entity.state == "disarmed":
@@ -374,7 +374,7 @@ class LuiPagesGen(object):
             value += f"\r\n{currently_tanslation}: {current_temperature}{temperature_unit}"
         elif entityType == "timer":
             entityTypePanel = "timer"
-            value = entity.state
+            value = get_translation(self._locale, f"backend.component.timer.state._.{entity.state}")
         else:
             name = "unsupported"
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
@@ -853,7 +853,7 @@ class LuiPagesGen(object):
         if isinstance(entity_id, dict):
             entity_id = entity_id["entity_id"]
         entity = apis.ha_api.get_entity(entity_id)
-        icon_color = 0
+        icon_color = self.get_entity_color(entity)
         if entity.state in ["idle", "paused"]:
             editable = 1
             if entity.state == "paused":

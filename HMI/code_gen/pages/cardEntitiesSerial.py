@@ -110,7 +110,7 @@ for i in range(1,5):
                 covx tTmp.txt,sys0,0,0
                 btOnOff{i}.val=sys0
               }}
-              if(type{i}.txt=="text")
+              if(type{i}.txt=="text"||type{i}.txt=="timer")
               {{
                 vis bUp{i},0
                 vis bStop{i},0
@@ -125,7 +125,7 @@ for i in range(1,5):
                 // get Text (optional Value)
                 spstr strCommand.txt,bText{i}.txt,"~",{idxstart+5}
               }}
-              if(type{i}.txt=="button"||type{i}.txt=="input_sel"||type{i}.txt=="timer")
+              if(type{i}.txt=="button"||type{i}.txt=="input_sel")
               {{
                 vis bUp{i},0
                 vis bStop{i},0
