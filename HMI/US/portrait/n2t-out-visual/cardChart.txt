@@ -252,7 +252,7 @@ Button bNext
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Send Component ID                   : on press
         Opacity                             : 127
         x coordinate                        : 262
         y coordinate                        : 16
@@ -280,7 +280,7 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardPower,"
+            tSend.txt="event,buttonPress2,cardChart,"
             if(bNext.txt=="î")
             {
                 tSend.txt+="bHome"
@@ -334,7 +334,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,"
+            tSend.txt="event,buttonPress2,cardChart,"
             if(bPrev.txt=="î¶")
             {
                 tSend.txt+="bUp"
@@ -445,26 +445,6 @@ Hotspot m0
                 vaLast.val=-1
             }
         
-Hotspot m1
-    Attributes
-        ID                                  : 30
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 5
-        Width                               : 9
-        Height                              : 310
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-    
-    Events
-        Touch Press Event
-            click bPrev,1
-        
 Hotspot mSwipeNext
     Attributes
         ID                                  : 29
@@ -507,7 +487,7 @@ Hotspot mSwipePrev
         
 Hotspot mSwipeUp
     Attributes
-        ID                                  : 31
+        ID                                  : 30
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
