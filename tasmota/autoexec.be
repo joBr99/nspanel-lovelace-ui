@@ -153,6 +153,7 @@ class Nextion : Driver
                 if (self.flash_mode==1)
                     var strv = msg[0..-4].asstring()
                     if string.find(strv,"comok 2")>=0
+						tasmota.delay(50)
                         log("FLH: Send (High Speed) flash start")
 						self.flash_start_millis = tasmota.millis()
                         #self.sendnx(string.format("whmi-wris %d,115200,res0",self.flash_size))
@@ -162,6 +163,7 @@ class Nextion : Driver
 							self.sendnx(string.format("whmi-wris %d,%d,res0",self.flash_size,self.flash_proto_baud))
 						end
 						if self.flash_proto_baud != 115200
+						    tasmota.delay(50)
 						    self.ser.deinit()
 							self.ser = serial(17, 16, self.flash_proto_baud, serial.SERIAL_8N1)
 						end
