@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-12-21 20:15:25.252534958 +0000
++++ /dev/fd/62	2022-12-23 15:58:39.712878570 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardEntities.txt
