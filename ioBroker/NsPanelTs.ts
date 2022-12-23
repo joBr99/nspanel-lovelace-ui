@@ -1,16 +1,22 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.6.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
-- abgestimmt auf TFT 45 / v3.6.0 / BerryDriver 6 / Tasmota 12.2.0
+TypeScript v3.7.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+- abgestimmt auf TFT 46 / v3.7.0 / BerryDriver 6 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
+
 *******************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
 *******************************************************************************
+In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
+unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Dowengrade 
+durchführen und FlashNextion wiederholen.
+*******************************************************************************
+
 ReleaseNotes:
     Bugfixes und Erweiterungen:
         - cardQR (für Gäste WLAN)
@@ -82,24 +88,31 @@ ReleaseNotes:
         - 05.12.2022 - v3.6.0.4 Add bHome to Navigation
         - 05.12.2022 - v3.6.0.4 Add changeable Center-Icon in cardPower with Color and Value
         - 08.12.2022 - v3.6.0.4 Bugfix - Use MRIcons in Screensaver with null
-        - 11.12.2022 - v3.6.0.4 Add new DP to show active page
         - 13.12.2022 - v3.6.0.4 Add Sensor-Values to cardGrid
         - 13.12.2022 - v3.6.0.4 Hotfix - Update screensaver temperature without weather forecast
-        Implemented in 3.6.1 DEV
-        - XX.12.2022 - v3.6.1   Add cardChart on PROD (implemented but working with v3.6.1 --> next TFT)
-        - XX.12.2022 - v3.6.1   Add Shuffle to Media Player
-        - XX.12.2022 - v3.6.1   Remove Speakerlist and Add 5 GridCard PageItems
-        - XX.12.2022 - v3.6.1   Add In_Sel PopUp
-        Todo's for 3.6.1
-        - XX.12.2022 - v3.6.1 Add Fan
+        - 14.12.2022 - v3.7.0   Move Config "active" to DP activeBrightness and add DP activeDimmodeBrightness
+        - 19.12.2022 - v3.7.0   Change weather icons for exceptional (window-close)
+        - 19.12.2022 - v3.7.0   Add DasWetter / Add DasWetter in create AutoAlias / Const MinMax
+        - 19.11.2022 - v3.7.0   Add cardChart on PROD (implemented but working with v3.7.0 --> next TFT)
+        - 10.12.2022 - v3.7.0   Add Shuffle to Media Player
+        - 10.12.2022 - v3.7.0   Remove Old Speakerlist and Add 5 GridCard Control PageItems
+        - 10.12.2022 - v3.7.0   Add In_Sel PopUp to cardMedia
+        - 15.12.2022 - v3.7.0   Add alternate MRIcon Size
+        - 20.12.2022 - v3.7.0   Add popUpTimer / New ALIAS Type level.timer
+        - 21.12.2022 - v3.7.0   Add Fan / New ALIAS Type level.mode.fan
+        - 22.12.2022 - v3.7.0   Add InSel - InputSelector with Alias Type buttonSensor (DP .VALUE)
+
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
 *****************************************************************************************************************
+
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
+
 Tasmota Konsole:
     Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
     Rule2 0 (Rule deaktivieren)
+
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
@@ -109,11 +122,13 @@ Mögliche Seiten-Ansichten:
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
     cardPower Page      - Energiefluss
+
 Popup-Pages:
     popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
     popupShutter Page   - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
+
 Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
@@ -138,6 +153,7 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, analog Info
     Medien              - Steuerung von Alexa - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
+
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden --> SetOption146 1
     Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden
@@ -146,22 +162,27 @@ Interne Sonoff-Sensoren (über Tasmota):
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
 Tasmota-Status0 - (zyklische Ausführung)
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
+
 Erforderliche Adapter:
+
     AccuWeather:        - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten    - Für Erstellung der Aliase
     Alias-Manager       - !!! ausschließlich für MEDIA-Alias
     MQTT-Adapter        - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
+
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.6.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.7.0.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
 let timeoutSlider: any;
 let manually_Update = false;
-const autoCreateAlias = true;  //Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.  
+const autoCreateAlias = true;                   //Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.  
+const weatherAdapterInstance: string = 'accuweather.0.';  //Möglich 'accuweather.0.' oder 'daswetter.0.'
+const weatherScreensaverTempMinMax: string = 'MinMax';      // Mögliche Werte: 'Min', 'Max' oder 'MinMax'
 
 const NSPanel_Path = '0_userdata.0.NSPanel.1.';
 const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.'; //Neuer Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm)
@@ -272,35 +293,18 @@ let Test_Licht1: PageEntities =
     ]
 };
 
-let SensorGrid: PageGrid =
-{
-    "type": "cardGrid",
-    "heading": "Sensor Werte",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined,
-    "items": [
-        <PageItem>{ id: "alias.0.NSPanel_1.TestTemperatur", name: "Außentemp. °C", offColor: MSRed, onColor: MSGreen, useValue: true },
-        <PageItem>{ id: "alias.0.NSPanel_1.TestFeuchtigkeit", name: "Luftfeuchte %", offColor: MSYellow, onColor: MSYellow , useValue: true },
-        <PageItem>{ id: "alias.0.NSPanel_1.Taupunkt", name: "Taupunkt °C", offColor: MSRed, onColor: MSGreen, useValue: true },
-        <PageItem>{ id: "alias.0.NSPanel_1.UV_Index", name: "UV Index", offColor: White , onColor: White, useValue: true },
-        <PageItem>{ id: "alias.0.NSPanel_1.Windstaerke", name: "Windstärke bft", offColor: White , onColor: White, useValue: true },
-        <PageItem>{ id: "alias.0.NSPanel_1.Luftdruck", name: "Luftdruck hPa", offColor: White , onColor: White, useValue: true }
-    ]
-};
-
 //Only DEV --> Test
-let ChartDemo: PageChart =
+let CardChartExample: PageChart =
 {
     "type": "cardChart",
-    "heading": "Charts Demo",
+    "heading": "Stromzähler L1+L2+L3",
     "useColor": true,
     "subPage": false,
     "parent": undefined,
     "items": [<PageItem>{ 
                 id: 'alias.0.NSPanel_1.cardChart', 
-                yAxis: 'Gas [kWh]', 
-                yAxisTicks: [2,4,6,8,10,12,14], 
+                yAxis: 'Leistung [kW]', 
+                yAxisTicks: [2,4,6,8,10,2,4,6,8,20,2], 
                 onColor: Yellow
              }]
 };
@@ -343,7 +347,8 @@ let Test_Funktionen: PageEntities =
         <PageItem>{ id: "alias.0.NSPanel_1.TestLautstärke", offColor: MSRed, onColor: MSGreen, name: "Echo Spot Büro", minValue: 0, maxValue: 100 },
         <PageItem>{ id: "alias.0.NSPanel_1.TestTemperatur",name: "Temperatur außen", icon: "thermometer", onColor: White },
         <PageItem>{ id: "alias.0.NSPanel_1.TestFeuchtigkeit", name: "Luftfeuchte außen", icon: "water-percent", unit: "%H", onColor: White },
-        <PageItem>{ id: "alias.0.NSPanel_1.TestInfo", name: "Windstärke", icon: "wind-power-outline", offColor: MSRed, onColor: MSGreen, unit: "bft", minValue: 0, maxValue: 12, interpolateColor: true, useColor: true }
+        //<PageItem>{ id: "alias.0.NSPanel_1.TestInfo", name: "Windstärke", icon: "wind-power-outline", offColor: MSRed, onColor: MSGreen, unit: "bft", minValue: 0, maxValue: 12, interpolateColor: true, useColor: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.Ventilator.Fan_1",name: "Ventilator", icon: "fan", onColor: On, offColor: HMIOff, modeList: ['Low', 'Medium', 'High', 'Move', 'Sleep', 'Auto', 'Manual']},
     ]
 };
 
@@ -456,12 +461,56 @@ let Radiosender: PageGrid =
     "useColor": true,
     "subPage": false,
     "parent": undefined,
-    "items": [<PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "radio", name: "Radio BOB", onColor: colorRadio}]
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.Radio.Bob", icon: "radio", name: "Radio BOB", onColor: colorRadio},
+        <PageItem>{ id: "alias.0.NSPanel_1.Countdown", icon: "timer-outline", name: "Timer", onColor: White}
+    ]
+};
+
+let WLED: PageGrid =
+{
+    "type": "cardGrid",
+    "heading": "WLED Stripes WZ",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.WLED.Example.On", name: "Power", icon: "power", onColor: HMIOn, offColor: HMIOff},
+        <PageItem>{ id: "alias.0.NSPanel_1.WLED.Example.Sync", name: "Sync", icon: "sync", onColor: HMIOn, offColor: White},
+        <PageItem>{ id: "alias.0.NSPanel_1.WLED.Example.Segments", icon: "heart-outline", name: "Presets", onColor: White, modeList: ['Preset 0', 'Add Preset']},
+        <PageItem>{ id: "alias.0.NSPanel_1.WLED.Example.Colors", icon: "palette", name: "Colors", onColor: White, 
+                    modeList: ['Default', '* Color 1', '* Color Gradient', '* Colors 1&2', '* Colors Only', '* Random Cycle', 'Analogus','April Night', 'Aqua Flash', 'Atlantica', 'Aurora', 
+                               'Beach', 'Beech', 'Blink Red', 'Breeze', 'C9', 'C9 New', 'Candy', 'Candy2', 'Cloud', 
+                               'Cyane', 'Departure', 'Drywet', 'Fairy Reaf', 'Fire', 'Forest', 'etc'
+                              ]},
+        <PageItem>{ id: "alias.0.NSPanel_1.WLED.Example.Effects", icon: "emoticon-outline", name: "Effects", onColor: White, 
+                    modeList: ['Solid', 'Android', 'Aurora', 'Blends', 'Blink', 'Blink Rainbow', 'Bouncing Balls','Bpm', 'Breathe', 'Candle', 'Candle Multi', 
+                               'Candy Cane', 'Chase', 'Chase 1', 'Chase 2', 'Chase 3', 'Chase Flash', 'Chase Flash Rnd', 'Chase Rainbow', 'Chase Random', 
+                               'Chunchun', 'Colorful', 'Colorloop', 'Colortwinkles', 'Colorwaves', 'Dancing Shadows', 'etc'
+                              ]},
+        <PageItem>{ id: "alias.0.NSPanel_1.WLED.Example.Segments", icon: "layers", name: "Segments", onColor: White, modeList: ['Segment 0', 'Add Segment']},
+    ]
+};
+
+let SensorGrid: PageGrid =
+{
+    "type": "cardGrid",
+    "heading": "Sensor Werte",
+    "useColor": true,
+    "subPage": false,
+    "parent": undefined,
+    "items": [
+        <PageItem>{ id: "alias.0.NSPanel_1.TestTemperatur", name: "Außentemp. °C", offColor: MSRed, onColor: MSGreen, useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.TestFeuchtigkeit", name: "Luftfeuchte %", offColor: MSYellow, onColor: MSYellow , useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.Taupunkt", name: "Taupunkt °C", offColor: MSRed, onColor: MSGreen, useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.UV_Index", name: "UV Index", offColor: White , onColor: White, useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.Windstaerke", name: "Windstärke bft", offColor: White , onColor: White, useValue: true },
+        <PageItem>{ id: "alias.0.NSPanel_1.Luftdruck", name: "Luftdruck hPa", offColor: White , onColor: White, useValue: true }
+    ]
 };
 
 // NEW: Neue Definition von Medien-Aliasen
 // adapterPlayerInstance = alexa2.0. or spotify-premium.0. or sonos.0. or chromecast.0.
-// MEDIA ALIASE können auch per JS-Script erstellt werden https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-ALIAS-Definitionen#medien---cardmedia
 let Alexa: PageMedia = 
 {
     'type': 'cardMedia',
@@ -472,8 +521,24 @@ let Alexa: PageMedia =
     'items': [<PageItem>{   
                 id: AliasPath + 'Media.PlayerAlexa', 
                 adapterPlayerInstance: 'alexa2.0.',
-                mediaDevice: 'G0XXXXXXXXXXXXXX', 
+                mediaDevice: 'G0XXXXXXXXXXXXXX', //Eigene Seriennummer des primären Alexa-Device einstellen
                 speakerList: ['Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero'],
+                //analog alexa2 Music-Provider
+                playList: ['Spotify-Playlist.PartyPlaylist',
+                           'Amazon-Music-Playlist.Mein Discovery Mix',
+                           'My-Library-Playlist.2020',
+                           'My-Library-Playlist.2021',
+                           'TuneIn.Radio Bob Rock',
+                           'TuneIn.NDR2',
+                           'Spotify-Playlist.Sabaton Radio',
+                           'Spotify-Playlist.Rock Party',
+                           'Spotify-Playlist.This Is Nightwish',
+                           'Spotify-Playlist.Metal Christmas'],
+                equalizerList: ['Bassboost','Klassik','Dance', 'Deep', 'Electronic', 'Flat', 'Hip-Hop', 'Rock', 
+                                'Metal', 'Jazz', 'Latin', 'Tonstärke', 'Lounge', 'Piano'],
+                colorMediaIcon: colorAlexa,
+                colorMediaArtist: Yellow,
+                colorMediaTitle: Yellow,
                 autoCreateALias : true
              }]
 };
@@ -490,6 +555,9 @@ let Sonos: PageMedia =
                 adapterPlayerInstance: "sonos.0.",
                 mediaDevice: "192_168_1_212",
                 speakerList: ['Terrasse'],
+                colorMediaIcon: colorSpotify,
+                colorMediaArtist: Yellow,
+                colorMediaTitle: Yellow,
                 autoCreateALias : true
              }]
 };
@@ -504,12 +572,17 @@ let SpotifyPremium: PageMedia =
     "items": [<PageItem>{ 
                 id: AliasPath + 'Media.PlayerSpotifyPremium', 
                 adapterPlayerInstance: "spotify-premium.0.",
-                speakerList: ['LENOVO-W11-01','Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero'],
+                speakerList: ['LOGINT-W11-JB', 'Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche',
+                              'Echo Spot Buero'],
+                playList: ['PartyPlaylist','Sabaton Radio','Rock Party','This Is Nightwish','Metal Christmas'],
+                repeatList: ['off','context','track'],
+                equalizerList: ['Bassboost','Klassik','Dance', 'Deep', 'Electronic', 'Flat', 'Hip-Hop', 'Rock', 
+                                'Metal', 'Jazz', 'Latin', 'Tonstärke', 'Lounge', 'Piano'],
                 colorMediaIcon: colorSpotify,
                 colorMediaArtist: Yellow,
                 colorMediaTitle: Yellow,
                 autoCreateALias : true
-             }] 
+             }]
 };
 
 let SqueezeboxRPC: PageMedia = 
@@ -523,7 +596,7 @@ let SqueezeboxRPC: PageMedia =
                 id: "alias.0.Media.LMS.SqueezePlay", 
                 adapterPlayerInstance: "squeezeboxrpc.0.Players.SqueezePlay.",
                 speakerList: ['SqueezePlay']
-             }] 
+             }]
 };
 
 let Buero_Themostat: PageThermo = 
@@ -553,7 +626,7 @@ let Buero_Klimaanlage: PageThermo =
                 popUpThermoName: ["Schwenk-Modus", 'Speed', 'Temperatur'],
                 icon: 'fan',
                 setThermoAlias: ['MODE1','MODE2','MODE3'],
-                //setThermoDestTemp2: 'ACTUAL2'
+                setThermoDestTemp2: 'ACTUAL2'
              }]
 };
 
@@ -668,10 +741,11 @@ let Service: PageEntities =
         };
 
 export const config: Config = {
-    panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_EMU.tele.RESULT',       // anpassen
-    panelSendTopic: 'mqtt.0.SmartHome.NSPanel_EMU.cmnd.CustomSend',   // anpassen
+    panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // anpassen
+    panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
     firstScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Hourly.h0.PrecipitationProbability', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
     secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
+    //secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
     thirdScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.UVIndex', ScreensaverEntityIcon: 'solar-power', ScreensaverEntityText: 'UV', ScreensaverEntityUnitText: '', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} },
     fourthScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
     alternativeScreensaverLayout: false,
@@ -679,24 +753,23 @@ export const config: Config = {
     mrIcon1ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER1', ScreensaverEntityIcon: 'light-switch', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: HMIOff  },
     mrIcon2ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER2', ScreensaverEntityIcon: 'lightbulb', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: HMIOff  },
     timeoutScreensaver: 20,
-    dimmode: 20,
-    active: 100, //Standard-Brightness TFT
     screenSaverDoubleClick: true,
     locale: 'de-DE',                    // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
-    timeFormat: '%H:%M',                // currently not used 
-    dateFormat: '%A, %d. %B %Y',        // currently not used 
     weatherEntity: 'alias.0.Wetter',    // Dieser Alias muss erstellt werden, damit die 4 kleineren Icons (Wetter oder DP) angezeigt werden können
     defaultOffColor: Off,
     defaultOnColor: On,
     defaultColor: Off,
-    defaultBackgroundColor: Black,    //New Parameter
+    defaultBackgroundColor: HMIDark,    //New Parameter
     temperatureUnit: '°C',
     pages: [
             Buero_Seite_1,      //Beispiel-Seite
+            WLED,               //Beispiel-Seite
+            Radiosender,        //Beispiel-Seite
             SensorGrid,         //Beispiel-Seite
+            //CardChartExample,   //Beispiel-Seite
             //CardPowerExample,   //Beispiel-Seite
-            //SqueezeboxRPC,      //Beispiel-Seite
-            //Sonos,              //Beispiel-Seite
+            //SqueezeboxRPC,    //Beispiel-Seite
+            //Sonos,            //Beispiel-Seite
             SpotifyPremium,     //Beispiel-Seite
             Alexa,              //Beispiel-Seite
             Buero_Seite_2,      //Beispiel-Seite
@@ -730,9 +803,10 @@ const request = require('request');
 
 let useMediaEvents: boolean = false;
 let timeoutMedia: any;
-var bgColorScrSaver: number = 0;
-
-//Datapoints for active page
+let timeoutPower: any;
+let bgColorScrSaver: number = 0;
+let globalTracklist: any;
+//switch BackgroundColors for Screensaver Indicators
 async function Init_ActivePageData() {
     if (existsState(NSPanel_Path + 'ActivePage.heading') == false ) { 
         await createStateAsync(NSPanel_Path + 'ActivePage.heading', '', true, { type: 'string' });
@@ -742,6 +816,7 @@ async function Init_ActivePageData() {
     }
 }
 Init_ActivePageData();
+
 //switch BackgroundColors for Screensaver Indicators
 async function Init_Screensaver_Backckground_Color_Switch() {
     if (existsState(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator') == false ) { 
@@ -777,10 +852,39 @@ async function Init_Dimmode_Trigger() {
 }
 Init_Dimmode_Trigger();
 
+async function InitActiveBrightness() {
+    try {
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.activeBrightness') == false ||
+            existsState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness') == false) {
+            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.activeBrightness', 100, { type: 'number' });
+            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness', null, { type: 'number' });
+        }
+    } catch (err) {
+        console.warn('function InitActiveBrightness: ' + err.message);
+    }
+}
+InitActiveBrightness();
+
+on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightness'), change: "ne"}, async function (obj) {
+    try {
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
+
+        if (obj.state.val != null) {
+            console.log(obj.state.val + ' - ' + active)
+            SendToPanel({ payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+        } else {
+            InitDimmode();
+        }
+     } catch (err) { 
+        console.warn(err.message); 
+    }
+});
+
 on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode'), change: "ne"}, async function (obj) {
     try {
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val
         if (obj.state.val) {
-            SendToPanel({ payload: 'dimmode~' + 100 + '~' + config.active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+            SendToPanel({ payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
         } else {
             InitDimmode();
         }
@@ -798,6 +902,16 @@ async function Init_Relays() {
     }
 }
 Init_Relays();
+
+//Change MRIconsFont small/large
+async function InitAlternateMRIconsSize() {
+    if (existsState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1') == false ||
+        existsState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2') == false) {
+        await createStateAsync(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1', false, { type: 'boolean' });
+        await createStateAsync(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2', false, { type: 'boolean' });
+    }
+}
+InitAlternateMRIconsSize();
 
 on({id: [].concat(String(NSPanel_Path) + 'Relay.1').concat(String(NSPanel_Path) + 'Relay.2'), change: "ne"}, async function (obj) {
     try {
@@ -831,22 +945,40 @@ async function SubscribeMRIcons () {
     }
 }
 SubscribeMRIcons();
+
 // Create atomatically Wheather-Alias, if exists accuweather.0. and is not exists Config-Wheather-Alias
 async function CreateWeatherAlias () {
     if (autoCreateAlias) {
-        try {
-            if (!existsState(config.weatherEntity + '.ICON') && existsState('accuweather.0.Current.WeatherIcon')) {
-                console.log('Wetter-Alias existiert noch nicht, wird jetzt angelegt'); 
-                setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
-                await createAliasAsync(config.weatherEntity + '.ICON', 'accuweather.0.Current.WeatherIcon', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
-                await createAliasAsync(config.weatherEntity + '.TEMP', 'accuweather.0.Current.Temperature', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
-                await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'accuweather.0.Daily.Day1.Temperature.Minimum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
-                await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'accuweather.0.Daily.Day1.Temperature.Maximum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
-            } else {
-                console.log('Wetter-Alias existiert bereits');
+        if (weatherAdapterInstance == 'daswetter.0.') {
+            try {
+                if (!existsState(config.weatherEntity + '.ICON') && existsState('accuweather.0.Current.WeatherIcon')) {
+                    console.log('Wetter-Alias existiert noch nicht, wird jetzt angelegt'); 
+                    setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
+                    await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.0.NextHours.Location_1.Day_1.current.symbol_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
+                    await createAliasAsync(config.weatherEntity + '.TEMP', 'daswetter.0.NextHours.Location_1.Day_1.current.temp_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
+                    await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'daswetter.0.NextDays.Location_1.Day_1.Minimale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
+                    await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'daswetter.0.NextDays.Location_1.Day_1.Maximale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
+                } else {
+                    console.log('Wetter-Alias existiert bereits');
+                }
+            } catch (err) {
+                console.log('function InitPageNavi: ' + err.message);
             }
-        } catch (err) {
-            console.log('function InitPageNavi: ' + err.message);
+        } else if (weatherAdapterInstance == 'accuweather.0.') {
+            try {
+                if (!existsState(config.weatherEntity + '.ICON') && existsState('accuweather.0.Current.WeatherIcon')) {
+                    console.log('Wetter-Alias existiert noch nicht, wird jetzt angelegt'); 
+                    setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
+                    await createAliasAsync(config.weatherEntity + '.ICON', 'accuweather.0.Current.WeatherIcon', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
+                    await createAliasAsync(config.weatherEntity + '.TEMP', 'accuweather.0.Current.Temperature', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
+                    await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'accuweather.0.Daily.Day1.Temperature.Minimum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
+                    await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'accuweather.0.Daily.Day1.Temperature.Maximum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
+                } else {
+                    console.log('Wetter-Alias existiert bereits');
+                }
+            } catch (err) {
+                console.log('function InitPageNavi: ' + err.message);
+            }
         }
     }   
 }
@@ -878,9 +1010,10 @@ on({id: [].concat([NSPanel_Path + 'PageNavi']), change: "any"}, async function (
 });
 
 //----------------------Begin Dimmode
-
 function ScreensaverDimmode(timeDimMode: DimMode) {
     try {
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val
+        let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val
         if (Debug) {
             console.log(rgb_dec565(HMIDark))
         }
@@ -889,18 +1022,18 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
         }
         if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
             if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
-                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
                 if (Debug) {
-                    console.log('Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + config.active)
+                    console.log('Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active)
                 }
             } else {
-                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
                 if (Debug) {
-                    console.log('Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + config.active)
+                    console.log('Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active)
                 }
             }
         } else {
-            SendToPanel({ payload: 'dimmode~' + config.dimmode + '~' + config.active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+            SendToPanel({ payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
         }
     } catch (err) {
         console.warn('function ScreensaverDimmode: ' + err.message);
@@ -1209,7 +1342,7 @@ function get_locales() {
 
 async function check_updates() {
     try {
-        const desired_display_firmware_version = 45;
+        const desired_display_firmware_version = 46;
         const berry_driver_version = 6;
 
         if (Debug) {
@@ -1658,7 +1791,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.6.0';
+    const tft_version: string = 'v3.7.0';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
     try {
         request({
@@ -2262,6 +2395,14 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
 
                 case 'buttonSensor':
+
+                    type = 'input_sel';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
+                    iconColor = GetIconColor(pageItem, true, useColors);
+                    let inSelText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText;
+
                 case 'button':
                     type = 'button';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
@@ -2270,6 +2411,44 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
 
+                case 'level.timer':
+                    type = 'timer';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
+                    iconColor = GetIconColor(pageItem, true, useColors);
+                    let timerText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+
+                    if (existsState(pageItem.id + '.STATE')) {
+                        val = getState(pageItem.id + '.STATE').val;
+                        RegisterEntityWatcher(pageItem.id + '.STATE');
+                    }
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText;
+
+                case 'level.mode.fan':
+
+                    type = 'fan';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('fan');
+                    optVal = '0';
+
+                    if (val === true || val === 'true') {
+                        optVal = '1';
+                        iconColor = GetIconColor(pageItem, true, useColors);
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                        if (pageItem.icon !== undefined) {
+                            if (pageItem.icon2 !== undefined) {
+                                iconId = iconId2;
+                            }
+                        }
+                    }
+
+                    if (existsState(pageItem.id + '.SET')) {
+                        val = getState(pageItem.id + '.SET').val;
+                        RegisterEntityWatcher(pageItem.id + '.SET');
+                    }
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;                
+                    
                 case 'lock':
                     type = 'button';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lock');
@@ -2801,7 +2980,6 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
 
                 let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
                 try {
- 
                     setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
                     await createAliasAsync(id + '.ACTUAL', dpPath + '.Player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
                     await createAliasAsync(id + '.ALBUM', dpPath + '.Player.currentAlbum', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
@@ -2814,7 +2992,8 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     await createAliasAsync(id + '.STOP', dpPath + '.Commands.deviceStop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
                     await createAliasAsync(id + '.STATE', dpPath + '.Player.currentState', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
                     await createAliasAsync(id + '.VOLUME', dpPath + '.Player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-        
+                    await createAliasAsync(id + '.REPEAT', dpPath + '.Player.controlRepeat', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT' });
+                    await createAliasAsync(id + '.SHUFFLE', dpPath + '.Player.controlShuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });        
                 } catch (err) {
                     console.warn('function createAutoMediaAlias: ' + err.message);
                 }
@@ -2827,7 +3006,6 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
 
                 let dpPath: string = adapterPlayerInstance;
                 try {
- 
                     setObject(id, {_id: id + 'player', type: 'channel', common: {role: 'media', name:'media'}, native: {}});
                     await createAliasAsync(id + '.ACTUAL', dpPath + 'player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
                     await createAliasAsync(id + '.ALBUM', dpPath + 'player.album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
@@ -2856,7 +3034,6 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
 
                 let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
                 try {
- 
                     setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
                     await createAliasAsync(id + '.ACTUAL', dpPath + '.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
                     await createAliasAsync(id + '.ALBUM', dpPath + '.current_album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
@@ -2870,7 +3047,8 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     await createAliasAsync(id + '.STOP', dpPath + '.stop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
                     await createAliasAsync(id + '.STATE', dpPath + '.state_simple', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
                     await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-
+                    await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
+                    await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
                 } catch (err) {
                     console.warn('function createAutoMediaAlias: ' + err.message);
                 }
@@ -2899,12 +3077,13 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
             let author = getState(id + '.ARTIST').val;
+            let shuffle = getState(id + '.SHUFFLE').val;
 
             let vInstance = page.items[0].adapterPlayerInstance;
             let v1Adapter = vInstance.split('.');
             let v2Adapter = v1Adapter[0];
 
-            //Alexa + neue Adapter/Player
+            //Neue Adapter/Player
             let media_icon = Icons.GetIcon('playlist-music');
 
             //Spotify-Premium
@@ -2957,17 +3136,36 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
             //Alexa2
             if (v2Adapter == 'alexa2') {
-                media_icon = Icons.GetIcon('playlist-music');
+                media_icon = Icons.GetIcon('music-circle');
+                name = getState(id + '.ALBUM').val;
                 let nameLength = name.length;
+                if (name.substring(0,9) == 'Playlist:') {
+                    name = name.slice(10, 26) + '...';
+                } else if (name.substring(0,6) == 'Album:') {
+                    name = name.slice(7, 23) + '...';
+                } else if (name.substring(0,6) == 'Track') {
+                    name = 'Alexa Player';
+                }
                 if (nameLength == 0) {
                     name = 'Alexa Player';
+                }
+                author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
+                if (author.length > 30) {
+                    author = getState(id + '.ARTIST').val;
+                }
+                if ((getState(id + '.ARTIST').val).length == 0) {
                     author = 'no music to control';
                 }
             }
 
             let volume = getState(id + '.VOLUME').val;
             let iconplaypause = Icons.GetIcon('pause'); //pause
+            let shuffle_icon = Icons.GetIcon('shuffle-variant'); //shuffle
             let onoffbutton = 1374;
+
+            if (shuffle == 'off' || shuffle == false || shuffle == 0) {
+                shuffle_icon = Icons.GetIcon('shuffle-disabled'); //shuffle
+            }
 
             //Für alle Player
             if (getState(id + '.STATE').val) {
@@ -2985,10 +3183,6 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 } else {
                     iconplaypause = Icons.GetIcon('play'); //play
                 }
-            }
-
-            if (Debug) {
-                console.log(v2Adapter);
             }
 
             let currentSpeaker = 'kein Speaker gefunden';
@@ -3032,22 +3226,127 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let colMediaTitle = (page.items[0].colorMediaTitle != undefined) ? page.items[0].colorMediaTitle : White;
             let colMediaArtist = (page.items[0].colorMediaArtist != undefined) ? page.items[0].colorMediaArtist : White;
 
+            //InSel Speaker
+            let speakerListString: string = '~~~~~~'
+            let speakerListIconCol = rgb_dec565(HMIOff);
+            if (page.items[0].speakerList != undefined) {
+                speakerListIconCol = rgb_dec565(HMIOn);
+                speakerListString = 'input_sel' + '~' + 
+                                    id + '?speakerlist' + '~' + 
+                                    Icons.GetIcon('speaker') + '~' + 
+                                    speakerListIconCol + '~' + 
+                                    'Speaker' + '~' + 
+                                    'media0~'
+            }
+
+            //InSel Playlist
+            let playListString: string = '~~~~~~'
+            let playListIconCol = rgb_dec565(HMIOff);
+            if (page.items[0].playList != undefined) {
+                playListIconCol = rgb_dec565(HMIOn);
+                playListString =    'input_sel' + '~' + 
+                                    id + '?playlist' + '~' + 
+                                    Icons.GetIcon('playlist-play') + '~' + 
+                                    playListIconCol + '~' + 
+                                    'Playlist' + '~' + 
+                                    'media1~'
+            } 
+
+            //Testvariable ********************
+
+            //InSel Playlist
+            let trackListString: string = '~~~~~~'
+            let trackListIconCol = rgb_dec565(HMIOff);
+            if (globalTracklist!= null && globalTracklist.length != 0) {
+                trackListIconCol = rgb_dec565(HMIOn);
+                trackListString =   'input_sel' + '~' + 
+                                    id + '?tracklist' + '~' + 
+                                    Icons.GetIcon('animation-play-outline') + '~' + 
+                                    trackListIconCol + '~' + 
+                                    'Tracklist' + '~' + 
+                                    'media2~'
+            }
+
+            //InSel EQ
+            let equalizerListString: string = '~~~~~~'
+            let equalizerListIconCol = rgb_dec565(HMIOff);
+            if (page.items[0].equalizerList != undefined) {
+                equalizerListIconCol = rgb_dec565(HMIOn);
+                equalizerListString =   'input_sel' + '~' + 
+                                        id + '?equalizer' + '~' + 
+                                        Icons.GetIcon('equalizer-outline') + '~' + 
+                                        equalizerListIconCol + '~' + 
+                                        'Equalizer' + '~' + 
+                                        'media3~'
+            }
+
+            //Repeat Control Button
+            let repeatIcon = Icons.GetIcon('repeat-variant');
+            let repeatIconCol = rgb_dec565(HMIOff);
+            let repeatButtonString: string = '~~~~~~'
+
+            if (v2Adapter == 'spotify-premium') {
+                if (getState(id + '.REPEAT').val == 'context') {
+                    repeatIcon = Icons.GetIcon('repeat-variant');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                } else if (getState(id + '.REPEAT').val == 'track') {
+                    repeatIcon = Icons.GetIcon('repeat-once');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                }
+            } else if (v2Adapter == 'alexa2') {
+                if (getState(id + '.REPEAT').val == true) {
+                    repeatIcon = Icons.GetIcon('repeat-variant');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                }
+            } else if (v2Adapter == 'sonos') {
+                if (getState(id + '.REPEAT').val == 'all') {
+                    repeatIcon = Icons.GetIcon('repeat-variant');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                } else if (getState(id + '.REPEAT').val == 'one') {
+                    repeatIcon = Icons.GetIcon('repeat-once');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                }
+            } else if (v2Adapter == 'squeezeboxrpc') {
+                if (getState(id + '.REPEAT').val == 1) {
+                    repeatIcon = Icons.GetIcon('repeat-variant');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                } else if (getState(id + '.REPEAT').val == 2) {
+                    repeatIcon = Icons.GetIcon('repeat-once');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                }
+            }
+
+            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos') {
+                repeatButtonString =    'button' + '~' + 
+                                        id + '?repeat' + '~' + 
+                                        repeatIcon + '~' + 
+                                        repeatIconCol + '~' + 
+                                        'Repeat' + '~' + 
+                                        'media4'
+            }
+
             out_msgs.push({
                 payload: 'entityUpd~' +                   //entityUpd
                     name + '~' +                          //heading
                     GetNavigationString(pageId) + '~' +   //navigation
                     id + '~' +                            //internalNameEntiy
-                    media_icon + '~' +                    //icon
-                    rgb_dec565(colMediaIcon) + '~' +      //iconColor
                     title + '~' +                         //title
                     rgb_dec565(colMediaTitle) + '~' +     //titleColor
                     author + '~' +                        //author
                     rgb_dec565(colMediaArtist) + '~' +    //authorColor
                     volume + '~' +                        //volume
                     iconplaypause + '~' +                 //playpauseicon
-                    currentSpeaker + '~' +                //currentSpeaker
-                    speakerList + '~' +                   //speakerList-seperated-by-?
-                    onoffbutton                           //On/Off Button Color
+                    onoffbutton + '~' +                   //On/Off Button Color
+                    shuffle_icon + '~' +                  //iconShuffle                     --> Code
+                    'button' + '~' +                      //type                MediaIcon   --> Code
+                    id + '~' +                            //internalNameEntity  MediaIcon   --> Code
+                    media_icon + '~' +                    //icon                MediaIcon
+                    rgb_dec565(colMediaIcon) + '~~~' +    //iconColor           MediaIcon
+                    speakerListString +
+                    playListString +
+                    trackListString +
+                    equalizerListString +
+                    repeatButtonString
             });
         }
         if (Debug) {
@@ -3237,6 +3536,32 @@ function GenerateQRPage(page: PageQR): Payload[] {
     }
 }
 
+function unsubscribePowerSubscriptions(): void {
+    for (let i = 0; i < config.pages.length; i++) {
+        if (config.pages[i].type == 'cardPower') {
+            let powerID = config.pages[i].items[0].id;
+            unsubscribe(powerID + '.ACTUAL')
+        }
+    }
+    for (let i = 0; i < config.subPages.length; i++) {
+        if (config.subPages[i].type == 'cardPower') {
+            let powerID = config.subPages[i].items[0].id;
+            unsubscribe(powerID + '.ACTUAL')
+        }
+    }
+} 
+
+function subscribePowerSubscriptions(id: string): void {
+    on({id: id + '.ACTUAL', change: "ne"}, async function () {
+        (function () { if (timeoutPower) { clearTimeout(timeoutPower); timeoutPower = null; } })();
+        timeoutPower = setTimeout(async function () {
+            if (useMediaEvents) {
+                GeneratePage(activePage);
+            }
+        },25)
+    });
+} 
+
 function GeneratePowerPage(page: PagePower): Payload[] {
     try {
         activePage = page;
@@ -3246,6 +3571,9 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         if (Debug) {
             console.log(page.items[0].id);
         }
+        
+        unsubscribePowerSubscriptions();
+        subscribePowerSubscriptions(id);
         
         let demoMode = false;
 
@@ -3485,6 +3813,7 @@ function HandleButtonEvent(words): void {
                         action = true;
                     let o = getObject(id);
                     switch (o.common.role) {
+                        case 'level.mode.fan':
                         case 'socket':
                         case 'light':
                             setIfExists(id + '.SET', action);
@@ -3512,9 +3841,11 @@ function HandleButtonEvent(words): void {
                         case 'lock':
                         case 'button':
                             toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
-                            break;
+                            break; 
                         case 'buttonSensor':
-                            toggleState(id + '.ACTUAL');
+                            if (existsObject(id + '.ACTUAL')) {
+                                toggleState(id + '.ACTUAL');
+                            }
                             break;
                         case 'socket':
                         case 'light':
@@ -3530,6 +3861,38 @@ function HandleButtonEvent(words): void {
                         case 'rgbSingle':
                         case 'hue': // Armilar
                             toggleState(id + '.ON_ACTUAL');
+                        case 'media':
+                            if (tempid[1] == 'repeat') {
+                                let pageItemRepeat = findPageItem(id);
+                                let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance;
+                                let adapterRepeat = adapterInstanceRepeat.split('.')
+                                let deviceAdapterRP = adapterRepeat[0];
+
+                                switch (deviceAdapterRP) {
+                                    case 'spotify-premium':
+                                        let stateSpotifyRepeat = getState(id + '.REPEAT').val
+                                        if (stateSpotifyRepeat == 'off') {
+                                            setIfExists(id + '.REPEAT', 'context');
+                                        } else if (stateSpotifyRepeat == 'context') {
+                                            setIfExists(id + '.REPEAT', 'track');
+                                        } else if (stateSpotifyRepeat == 'track') {
+                                            setIfExists(id + '.REPEAT', 'off');
+                                        }
+                                        break;
+                                    case 'alexa2':
+                                        try {
+                                            if (getState(id + '.REPEAT').val == 'false') {
+                                                setIfExists(id + '.REPEAT', true);
+                                            } else {
+                                                setIfExists(id + '.REPEAT', false);
+                                            }
+                                        } catch (err) {
+                                            console.log('Repeat kann nicht verändert werden');
+                                        }
+                                        break;
+                                }
+
+                            }
                     }
                 }
                 break;
@@ -3670,10 +4033,17 @@ function HandleButtonEvent(words): void {
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
                 break;
+            case 'media-shuffle':
+                if (getState(id + '.SHUFFLE').val == 'off') {
+                    setIfExists(id + '.SHUFFLE', 'on');
+                } else {
+                    setIfExists(id + '.SHUFFLE', 'off');
+                }
+                break;
             case 'volumeSlider':
                 setIfExists(id + '.VOLUME', parseInt(words[4]))
                 break;
-            case 'speaker-sel':
+            case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
                 let adapterInstance = pageItem.adapterPlayerInstance;
                 let adapter = adapterInstance.split('.')
@@ -3681,19 +4051,21 @@ function HandleButtonEvent(words): void {
 
                 switch (deviceAdapter) {
                     case 'spotify-premium':
-                        let strDeviceID = spotifyGetDeviceID(words[4]);
+                        let strDevicePI = pageItem.speakerList[words[4]]
+                        let strDeviceID = spotifyGetDeviceID(strDevicePI);
                         setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
                         break;
                     case 'alexa2':
                         let i_list = Array.prototype.slice.apply($('[state.id="' + adapterInstance + 'Echo-Devices.*.Info.name"]'));
                         for (let i_index in i_list) {
                             let i = i_list[i_index];
-                            if ((getState(i).val) === words[4]) {
+                            if ((getState(i).val) === pageItem.speakerList[words[4]]) {
+                                console.log(getState(i).val + ' - ' + pageItem.speakerList[words[4]]);
                                 let deviceId = i;
                                 deviceId = deviceId.split('.');
-                                setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + words[4]);
+                                setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + pageItem.speakerList[words[4]]);
                                 pageItem.mediaDevice = deviceId[3];
-                            }
+                            } 
                         }
                         break;
                     case 'sonos':
@@ -3701,6 +4073,71 @@ function HandleButtonEvent(words): void {
                     case 'chromecast':
                         break;
                 }
+                break;
+            case 'mode-playlist':
+                let pageItemPL = findPageItem(id);
+                let adapterInstancePL = pageItemPL.adapterPlayerInstance;
+                let adapterPL = adapterInstancePL.split('.')
+                let deviceAdapterPL = adapterPL[0];
+
+                switch (deviceAdapterPL) {
+                    case 'spotify-premium':
+                        let strDevicePI = pageItemPL.playList[words[4]]
+                        let playlistListString = (getState(adapterInstancePL + 'playlists.playlistListString').val).split(';');
+                        let playlistListIds = (getState(adapterInstancePL + 'playlists.playlistListIds').val).split(';');
+                        let playlistIndex = playlistListString.indexOf(strDevicePI);
+                        setState(adapterInstancePL + 'playlists.playlistList', playlistListIds[playlistIndex]);
+                        setTimeout(async function () {
+                            globalTracklist = (function () { try {return JSON.parse(getState(adapterInstancePL + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
+                        }, 2000);
+                        break;
+                    case 'alexa2':
+                        let tempListItem = pageItemPL.playList[words[4]].split('.');
+                        setState(adapterInstancePL + 'Echo-Devices.' + pageItemPL.mediaDevice + '.Music-Provider.' + tempListItem[0], tempListItem[1]);
+                        break;
+                }
+                break;
+            case 'mode-tracklist':
+                let pageItemTL = findPageItem(id);
+                let adapterInstanceTL = pageItemTL.adapterPlayerInstance;
+                let adapterTL = adapterInstanceTL.split('.')
+                let deviceAdapterTL = adapterTL[0];
+
+                switch (deviceAdapterTL) {
+                    case 'spotify-premium':
+                        let trackArray = (function () { try {return JSON.parse(getState(pageItemTL.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
+                        setState(adapterInstanceTL + 'player.trackId', getAttr(trackArray, words[4] + '.id'));
+                        break;
+                    case 'alexa2':
+                        console.log('Aktuell hat alexa2 keine Tracklist')
+                        break;
+                }
+                break;
+            case 'mode-repeat':
+                let pageItemRP = findPageItem(id);
+                let adapterInstanceRP = pageItemRP.adapterPlayerInstance;
+                let adapterRP = adapterInstanceRP.split('.')
+                let deviceAdapterRP = adapterRP[0];
+
+                switch (deviceAdapterRP) {
+                    case 'spotify-premium':
+                        setIfExists(id + '.REPEAT', pageItemRP.repeatList[words[4]]);
+                        break;
+                    case 'alexa2':
+                        break;
+                }
+                break;
+            case 'mode-equalizer':
+                let pageItemEQ = findPageItem(id);
+                console.log(id) 
+                let lastIndex = (id.split('.')).pop();
+                setState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', pageItemEQ.equalizerList[words[4]]);
+                setTimeout(async function () {
+                    GenerateDetailPage('popupInSel','equalizer', pageItemEQ)
+                }, 2000);
+                break;
+            case 'mode-insel':
+                setIfExists(id + '.VALUE', parseInt(words[4]));
                 break;
             case 'media-OnOff':
                 let pageItemTem = findPageItem(id);
@@ -3719,6 +4156,24 @@ function HandleButtonEvent(words): void {
                 } else {
                     setIfExists(id + '.STOP', true)
                 }
+                break;
+            case 'timer-start':
+                if (words[4] != undefined) {
+                    let timer_panel = words[4].split(':');
+                    setIfExists(id + '.ACTUAL', (parseInt(timer_panel[1]) * 60) + parseInt(timer_panel[2]));
+                }
+                setIfExists(id + '.STATE', 'active');
+                break;
+            case 'timer-pause':
+                setIfExists(id + '.STATE', 'paused');
+                break;
+            case 'timer-cancle':
+                setIfExists(id + '.STATE', 'idle');
+                setIfExists(id + '.ACTUAL', 0);
+                break;
+            case 'timer-finish':
+                setIfExists(id + '.STATE', 'idle');
+                setIfExists(id + '.ACTUAL', 0);
                 break;
             case 'hvac_action':
                 if (words[4] == 'BOOT' || words[4] == 'PART' || words[4] == 'AUTT' || words[4] == 'MANT' || words[4] == 'VACT') {
@@ -3804,8 +4259,19 @@ function HandleButtonEvent(words): void {
                 setIfExists(id + '.' + pageItemT3.setThermoAlias[2], pageItemT3.popupThermoMode3[parseInt(words[4])]);
                 break;
             case 'number-set':
-                setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                let nobj = getObject(id);
+                switch (nobj.common.role) {
+                    case 'level.mode.fan':
+                        setIfExists(id + '.SPEED', parseInt(words[4]));
+                        break;
+                    default:    
+                        setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                        break;
+                }
                 break;
+            case 'mode-preset_modes':
+                setIfExists(id + '.MODE', parseInt(words[4]));
+                break; 
             case 'A1': // Alarm-Page Alarm 1 aktivieren
                 if (words[4] != '') {
                     setIfExists(id + '.TYPE', 'A1');
@@ -3918,6 +4384,7 @@ function GetNavigationString(pageId: number): string {
 }
 
 function GenerateDetailPage(type: string, optional: string, pageItem: PageItem): Payload[] {
+    //console.log(type + ' - ' + optional + ' - ' + pageItem.id)
     try {
         let out_msgs: Array<Payload> = [];
         let id = pageItem.id
@@ -4390,8 +4857,252 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 });
             }
 
-        }
+            if (type == 'popupTimer') {
 
+                let timer_actual: number = 0;
+
+                if (existsState(id + '.ACTUAL')) {
+                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
+                    timer_actual = getState(id + '.ACTUAL').val;
+                } 
+
+                if (existsState(id + '.STATE')) {
+                    RegisterDetailEntityWatcher(id + '.STATE', pageItem, type);
+                } 
+
+                let editable = 1;
+                let action1 = '';
+                let action2 = '';
+                let action3 = '';
+                let label1  = '';
+                let label2  = '';
+                let label3  = '';
+                let min_remaining = 0;
+                let sec_remaining = 0;
+                if (existsState(id + '.STATE')) {
+                    if (getState(id + '.STATE').val == 'idle' || getState(id + '.STATE').val == 'paused') {
+                        min_remaining = Math.floor(timer_actual / 60);;
+                        sec_remaining = timer_actual % 60;
+                        editable = 1;
+                        action2 = 'start';
+                        label2 = 'START';
+                    } else {
+                        min_remaining = Math.floor(timer_actual / 60);;
+                        sec_remaining = timer_actual % 60;
+                        editable = 0;
+                        action1 = 'pause';
+                        action2 = 'cancle';
+                        action3 = 'finish';
+                        label1  = 'PAUSE';
+                        label2  = 'CANCLE';
+                        label3  = 'FINISH';
+                    }
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail' + '~'  //entityUpdateDetail
+                            + id + '~~'                      //{entity_id}
+                            + rgb_dec565(White) + '~'        //{icon_color}~
+                            + id + '~' 
+                            + min_remaining + '~'
+                            + sec_remaining + '~'
+                            + editable + '~'
+                            + action1 + '~'
+                            + action2 + '~'
+                            + action3 + '~'
+                            + label1 + '~'
+                            + label2 + '~'
+                            + label3
+                    });
+                }
+            }    
+
+            if (type == 'popupFan') {
+
+                let switchVal = '0';
+                if (o.common.role == 'level.mode.fan') {
+                    if (existsState(id + '.SET')) {
+                        val = getState(id + '.SET').val;
+                        RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
+                    }
+                    if (existsState(id + '.MODE')) {
+                        RegisterDetailEntityWatcher(id + '.MODE', pageItem, type);
+                    }
+
+                    icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : 'fan';
+
+                    if (val) {
+                        switchVal = '1';
+                        iconColor = GetIconColor(pageItem, true, true);
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, true);
+                    }
+
+                    let actualSpeed = getState(id + '.SPEED').val
+                    let maxSpeed = (pageItem.maxValue != undefined) ? pageItem.maxValue : 100; 
+                    
+                    let modeList = pageItem.modeList.join('?')
+                    let actualMode = pageItem.modeList[getState(id + '.MODE').val];
+                    
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail' + '~'   // entityUpdateDetail
+                            + id + '~'
+                            + icon + '~'   // iconId
+                            + iconColor + '~'   // iconColor
+                            + switchVal + '~'   // buttonState
+                            + actualSpeed + '~'   
+                            + maxSpeed + '~'   
+                            + 'Speed' + '~'   
+                            + actualMode + '~'   
+                            + modeList    
+                    });
+                }
+            }
+
+            if (type == 'popupInSel') {
+                if (o.common.role == 'media') {
+                    let actualState: any = '';
+                    let optionalString: string = 'Kein Eintrag'
+                    let mode: string = '';
+
+                    let vTempAdapter = (pageItem.adapterPlayerInstance).split('.');
+                    let vAdapter = vTempAdapter[0];
+
+                    if (optional == 'speakerlist') {
+                        if (vAdapter == 'spotify-premium') {
+                            if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.device.name').val);
+                            }
+                        } else if (vAdapter == 'alexa2') {
+                            if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                                //Todo Richtiges Device finden
+                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
+                            }
+                        }
+                        let tempSpeakerList = [];
+                        for (let i = 0; i < pageItem.speakerList.length; i++) {
+                            tempSpeakerList[i] = formatInSelText(pageItem.speakerList[i]);
+                        }
+                        optionalString = pageItem.speakerList != undefined ? tempSpeakerList.join('?') : ''
+                        mode = 'speakerlist';
+                    } else if (optional == 'playlist') {
+                        if (vAdapter == 'spotify-premium') {
+                            if (existsObject(pageItem.adapterPlayerInstance + 'player.playlist.name')) {
+                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.playlist.name').val);
+                            }
+                            let tempPlayList = [];
+                            for (let i = 0; i < pageItem.playList.length; i++) {
+                                tempPlayList[i] = formatInSelText(pageItem.playList[i]);
+                            }
+                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                        } else if (vAdapter == 'alexa2') {
+                            //Todo Richtiges Device finden
+                            actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Player.currentAlbum').val);
+            
+                            let tPlayList: any = []
+                            for (let i = 0; i < pageItem.playList.length; i++) {
+                                console.log(pageItem.playList[i]);
+                                let tempItem = pageItem.playList[i].split('.');
+                                tPlayList[i] = tempItem[1];
+                            }
+
+                            let tempPlayList = [];
+                            for (let i = 0; i < tPlayList.length; i++) {
+                                tempPlayList[i] = formatInSelText(tPlayList[i]);
+                            }
+                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                        }
+                        mode = 'playlist';
+                    } else if (optional == 'tracklist') {
+                        actualState = ''
+                        actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
+                        actualState = (actualState.replace('?','')).split(' -');
+                        actualState = actualState[0].split(" (");
+                        actualState = formatInSelText(actualState[0]);
+                        //Limit 900 Zeichen, danach Speicherüberlauf --> Soweit kürzen wie möglich
+                        let temp_array = [];
+                        //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
+                        for (let track_index=0; track_index < 45; track_index++) {
+                            let temp_cut_array = getAttr(globalTracklist, track_index + '.title');
+                            if (temp_cut_array != undefined) {
+                                temp_cut_array = (temp_cut_array.replace('?','')).split(' -');
+                                temp_cut_array = temp_cut_array[0].split(" (");
+                                temp_cut_array = temp_cut_array[0];
+                                if (String(temp_cut_array[0]).length >= 22) {
+                                    temp_array[track_index] = temp_cut_array.substring(0,20) + '..';
+                                } else {
+                                    temp_array[track_index] = temp_cut_array.substring(0,23);
+                                }
+                            }
+                        }
+                        let tempTrackList = [];
+                        for (let i = 0; i < temp_array.length; i++) {
+                            tempTrackList[i] = formatInSelText(temp_array[i]);
+                        }
+                        optionalString = pageItem.playList != undefined ? tempTrackList.join('?') : ''
+                        mode = 'tracklist';
+                    } else if (optional == 'equalizer') {
+                    
+                        let lastIndex = (pageItem.id.split('.')).pop();
+
+                        if (existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode') == false || 
+                            existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker') == false) {
+                            createState(NSPanel_Path  + 'Media.Player.' + lastIndex + '.EQ.activeMode', <iobJS.StateCommon>{ type: 'string' })
+                            createState(NSPanel_Path  + 'Media.Player.' + lastIndex + '.Speaker', <iobJS.StateCommon>{ type: 'string' })
+                        }
+                        
+                        actualState = ''
+                        if (getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val != null) {
+                            actualState = formatInSelText(getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val);
+                        }
+                        
+                        let tempEQList = [];
+                        for (let i = 0; i < pageItem.equalizerList.length; i++) {
+                            tempEQList[i] = formatInSelText(pageItem.equalizerList[i]);
+                        }
+                        optionalString = pageItem.equalizerList != undefined ? tempEQList.join('?') : '';
+
+                        //optionalString = pageItem.equalizerList.join('?');
+                        mode = 'equalizer';
+                    } else if (optional == 'repeat') {
+                        actualState = getState(pageItem.adapterPlayerInstance + 'player.repeat').val;
+                        optionalString = pageItem.repeatList.join('?');
+                        mode = 'repeat';
+                    }
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail
+                            + id + '?' + optional + '~~'         //{entity_id}
+                            + rgb_dec565(HMIOn) + '~'            //{icon_color}~
+                            + mode + '~'
+                            + actualState + '~'
+                            + optionalString
+                    });
+                } else if (o.common.role == 'buttonSensor') {
+
+                    let actualValue: string = '';
+                    if (existsObject(pageItem.id + '.VALUE')) {
+                        actualValue = formatInSelText(pageItem.modeList[getState(pageItem.id + '.VALUE').val]);
+                        RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type);
+                    }
+
+                    let tempModeList = [];
+                    for (let i = 0; i < pageItem.modeList.length; i++) {
+                        tempModeList[i] = formatInSelText(pageItem.modeList[i]);
+                    }
+                    let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
+                    //let valueList = pageItem.modeList.join('?');
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
+                            + id + '~~'                          //{entity_id}
+                            + rgb_dec565(White) + '~'            //{icon_color}~
+                            + 'insel' + '~'
+                            + actualValue + '~'
+                            + valueList
+                    });
+                }
+            }
+        }
         return out_msgs;
 
     } catch (err) {
@@ -4440,26 +5151,59 @@ function HandleScreensaverUpdate(): void {
                 temperature = parseInt(Math.round(temperature).toFixed());
             }
 
-            let payloadString =
-                'weatherUpdate~' + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + '~'
-                + temperature + ' ' + config.temperatureUnit + '~';
+            let payloadString = ''
 
-            vwIconColor[0] = GetAccuWeatherIconColor(parseInt(icon));
-            if (Debug) {
-                console.log(GetAccuWeatherIconColor(parseInt(icon)));
+            if (weatherAdapterInstance == 'daswetter.0.') {
+                payloadString =
+                    'weatherUpdate~' + Icons.GetIcon(GetDasWetterIcon(parseInt(icon))) + '~'
+                    + temperature + ' ' + config.temperatureUnit + '~';
+            } else if (weatherAdapterInstance == 'accuweather.0.') {
+                payloadString =
+                    'weatherUpdate~' + Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon))) + '~'
+                    + temperature + ' ' + config.temperatureUnit + '~';
+            }
+
+            //vwIconColor[0] = GetAccuWeatherIconColor(parseInt(icon));
+            if (weatherAdapterInstance == 'daswetter.0.') {
+                vwIconColor[0] = GetDasWetterIconColor(parseInt(icon));
+            } else if (weatherAdapterInstance == 'accuweather.0.') {
+                vwIconColor[0] = GetAccuWeatherIconColor(parseInt(icon));
             }
 
             if (weatherForecast) {
                 // AccuWeather Forecast Tag 2 - Tag 5 -- Wenn weatherForecast = true
                 for (let i = 2; i < 6; i++) {
-                    let TempMax = getState('accuweather.0.Summary.TempMax_d' + i).val;
-                    let DayOfWeek = getState('accuweather.0.Summary.DayOfWeek_d' + i).val;
-                    let WeatherIcon = GetAccuWeatherIcon(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
-                    vwIconColor[i-1] = GetAccuWeatherIconColor(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
-                    if (Debug) {
-                        console.log(vwIconColor[i - 1]);
+
+                    let TempMin = 0;
+                    let TempMax = 0;
+                    let DayOfWeek = 0;
+                    let WeatherIcon = '0';
+
+                    if (weatherAdapterInstance == 'daswetter.0.') {
+                        TempMin = getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value').val;
+                        TempMax = getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value').val;
+                        DayOfWeek = (getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Tag_value').val).substring(0,2);
+                        WeatherIcon = GetDasWetterIcon(getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
+                        vwIconColor[i-1] = GetDasWetterIconColor(getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
+                    } else if (weatherAdapterInstance == 'accuweather.0.') {
+                        TempMin = getState('accuweather.0.Summary.TempMin_d' + i).val;
+                        TempMax = getState('accuweather.0.Summary.TempMax_d' + i).val;
+                        DayOfWeek = getState('accuweather.0.Summary.DayOfWeek_d' + i).val;
+                        WeatherIcon = GetAccuWeatherIcon(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
+                        vwIconColor[i-1] = GetAccuWeatherIconColor(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
+                    } 
+
+                    let tempMinMaxString: string = '' 
+                    if (weatherScreensaverTempMinMax == 'Min') {
+                        tempMinMaxString = TempMin + config.temperatureUnit;
+                    } else if (weatherScreensaverTempMinMax == 'Max') {
+                        tempMinMaxString = TempMax + config.temperatureUnit;
+                    } else if (weatherScreensaverTempMinMax == 'MinMax') {
+                        tempMinMaxString = Math.round(TempMin) + '° ' + Math.round(TempMax) + '°';
                     }
-                    payloadString += DayOfWeek + '~' + Icons.GetIcon(WeatherIcon) + '~' + TempMax + ' ' + config.temperatureUnit + '~';
+
+                    payloadString += DayOfWeek + '~' + Icons.GetIcon(WeatherIcon) + '~' + tempMinMaxString + '~';
+                    
                 }
             } else {
                 payloadString += GetScreenSaverEntityString(config.firstScreensaverEntity);
@@ -4824,6 +5568,21 @@ function HandleScreensaverUpdate(): void {
             }
             HandleScreensaverColors();
 
+            let alternateScreensaverMFRIcon1Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1').val
+            let alternateScreensaverMFRIcon2Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2').val
+
+            //Alternate MRIcon Size
+            if (alternateScreensaverMFRIcon1Size) {
+                payloadString += '1~';
+            } else {
+                payloadString += '~';
+            }
+            if (alternateScreensaverMFRIcon2Size) {
+                payloadString += '1~';
+            } else {
+                payloadString += '~';
+            }
+
             SendToPanel(<Payload>{ payload: payloadString });
 
         }
@@ -4918,10 +5677,12 @@ function GetScreenSaverEntityString(configElement: ScreenSaverElement | null): s
 function GetAccuWeatherIcon(icon: number): string {
     try {
         switch (icon) {
-            case 24:        // Ice
             case 30:        // Hot
+                return 'weather-sunny-alert'; // exceptional
+
+            case 24:        // Ice
             case 31:        // Cold
-                return 'window-open';  // exceptional
+                return 'snowflake-alert';  // exceptional
 
             case 7:         // Cloudy
             case 8:         // Dreary (Overcast)
@@ -5073,6 +5834,124 @@ function GetAccuWeatherIconColor(icon: number): number {
     }
 }
 
+function GetDasWetterIcon(icon: number): string {
+    try {
+        switch (icon) {
+		    case 1:         // Sonnig
+                 return 'weather-sunny';  // sunny
+ 
+			case 2:         // Teils bewölkt
+            case 3:         // Bewölkt
+                return 'weather-partly-cloudy';  // partlycloudy
+				
+            case 4:         // Bedeckt
+                return 'weather-cloudy';  // cloudy
+				
+            case 5:        // Teils bewölkt mit leichtem Regen
+            case 6:        // Bewölkt mit leichtem Regen
+            case 8:        // Teils bewölkt mit mäßigem Regen
+            case 9:        // Bewölkt mit mäßigem Regen
+                return 'weather-partly-rainy';  // partly-rainy
+				
+            case 7:        // Bedeckt mit leichtem Regen
+                return 'weather-rainy';  // rainy
+				
+		    case 10:        // Bedeckt mit mäßigem Regen
+                return 'weather-pouring';  // pouring
+				
+            case 11:        // Teils bewölkt mit starken Regenschauern
+            case 12:        // Bewölkt mit stürmischen Regenschauern
+                return 'weather-partly-lightning';  // partlylightning
+				
+            case 13:        // Bedeckt mit stürmischen Regenschauern
+                return 'weather-lightning';  // lightning
+				
+            case 14:        // Teils bewölkt mit stürmischen Regenschauern und Hagel
+			case 15:        // Bewölkt mit stürmischen Regenschauern und Hagel
+			case 16:        // Bedeckt mit stürmischen Regenschauern und Hagel
+                return 'weather-hail';  // Hail
+ 
+            case 17:        // Teils bewölkt mit Schnee
+            case 18:        // Bewölkt mit Schnee
+                return 'weather-partly-snowy';  // partlysnowy
+				
+			case 19:        // Bedeckt mit Schneeschauern
+                return 'weather-snowy';  // snowy
+ 
+            case 20:        // Teils bewölkt mit Schneeregen
+            case 21:        // Bewölkt mit Schneeregen
+                return 'weather-partly-snowy-rainy';
+ 
+            case 22:        // Bedeckt mit Schneeregen
+                return 'weather-snowy-rainy';  // snowy-rainy
+ 
+            default:
+                return 'alert-circle-outline';
+        }
+    } catch (err) {
+        console.warn('GetDasWetterIcon: '+ err.message);
+    }
+}
+ 
+function GetDasWetterIconColor(icon: number): number {
+    try{
+        switch (icon) {
+            case 1:         // Sonnig
+                return rgb_dec565(swSunny);
+ 
+            case 2:         // Teils bewölkt
+            case 3:         // Bewölkt
+                return rgb_dec565(swPartlycloudy);
+ 
+            case 4:         // Bedeckt
+                return rgb_dec565(swCloudy);
+ 
+            case 5:        // Teils bewölkt mit leichtem Regen
+            case 6:        // Bewölkt mit leichtem Regen
+            case 8:        // Teils bewölkt mit mäßigem Regen
+            case 9:        // Bewölkt mit mäßigem Regen
+                return rgb_dec565(swRainy);
+ 
+            case 7:        // Bedeckt mit leichtem Regen
+                return rgb_dec565(swRainy);
+ 
+            case 10:        // Bedeckt mit mäßigem Regen
+                return rgb_dec565(swPouring);
+ 
+            case 11:        // Teils bewölkt mit starken Regenschauern
+            case 12:        // Bewölkt mit stürmischen Regenschauern
+                return rgb_dec565(swLightningRainy);
+ 
+            case 13:        // Bedeckt mit stürmischen Regenschauern
+                return rgb_dec565(swLightning);
+ 
+            case 14:        // Teils bewölkt mit stürmischen Regenschauern und Hagel
+			case 15:        // Bewölkt mit stürmischen Regenschauern und Hagel
+			case 16:        // Bedeckt mit stürmischen Regenschauern und Hagel
+                return rgb_dec565(swHail);
+ 
+            case 17:        // Teils bewölkt mit Schnee
+            case 18:        // Bewölkt mit Schnee
+                return rgb_dec565(swSnowy);
+ 
+            case 19:        // Bedeckt mit Schneeschauern
+                return rgb_dec565(swSnowy);
+ 
+            case 20:        // Teils bewölkt mit Schneeregen
+            case 21:        // Bewölkt mit Schneeregen
+                return rgb_dec565(swSnowyRainy);  // snowy-rainy
+ 
+            case 22:        // Bedeckt mit Schneeregen
+                return rgb_dec565(swSnowyRainy);
+ 
+            default:
+                return rgb_dec565(White);
+        }
+    } catch (err) {
+        console.warn('GetDasWetterIconColor: '+ err.message);
+    }
+}
+
 //------------------Begin Read Internal Sensor Data
 on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESULT'.length) + 'SENSOR' }, async (obj) => {
     try {
@@ -5099,6 +5978,34 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
     }
 });
 //------------------End Read Internal Sensor Data
+
+function formatInSelText(Text: string ) : string { 
+    let splitText = Text.split(' ');
+    let lengthLineOne = 0
+    let arrayLineOne = []
+    for (let i = 0; i < splitText.length; i++) {
+        lengthLineOne = lengthLineOne + splitText[i].length + 1;
+        if (lengthLineOne > 12) {
+            break;        
+        } else {
+            arrayLineOne[i] = splitText[i];
+        }
+    }
+    let textLineOne = arrayLineOne.join(' ');
+    let arrayLineTwo = []
+    for (let i = arrayLineOne.length; i < splitText.length; i++) {
+            arrayLineTwo[i] = splitText[i];
+    }
+    let textLineTwo = arrayLineTwo.join(' ');
+    if (textLineTwo.length > 12) {
+        textLineTwo = textLineTwo.substring(0,9) + '...';
+    }
+    if (textLineOne.length != 0) {
+        return textLineOne + '\r\n' + textLineTwo.trim();
+    } else {
+        return textLineTwo.trim();
+    }
+}
 
 function GetBlendedColor(percentage: number): RGB {
     if (percentage < 50) {
@@ -5322,6 +6229,7 @@ type PageItem = {
     playList: (string[] | undefined),
     equalizerList: (string[] | undefined),
     repeatList: (string[] | undefined),
+    modeList: (string[] | undefined),
     hidePassword: (boolean | undefined),
     autoCreateALias: (boolean | undefined)
     colorMediaIcon: (RGB | undefined),
@@ -5352,11 +6260,7 @@ type Config = {
     panelRecvTopic: string,
     panelSendTopic: string,
     timeoutScreensaver: number,
-    dimmode: number,
-    active: number,
     locale: string,
-    timeFormat: string,
-    dateFormat: string,
     weatherEntity: string | null,
     screenSaverDoubleClick: boolean,
     temperatureUnit: string,
