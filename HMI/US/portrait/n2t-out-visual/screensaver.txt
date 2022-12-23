@@ -126,9 +126,9 @@ Text t10
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 49
-        y coordinate                        : 240
-        Width                               : 225
+        x coordinate                        : 53
+        y coordinate                        : 245
+        Width                               : 215
         Height                              : 2
         Effect                              : load
         Effect Priority                     : 0
@@ -576,10 +576,10 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 8
+        x coordinate                        : 0
         y coordinate                        : 227
-        Width                               : 33
-        Height                              : 30
+        Width                               : 45
+        Height                              : 45
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -589,7 +589,7 @@ Text tIcon1
         Font ID                             : 1
         Back. Color                         : 0
         Font Color                          : 17299
-        Horizontal Alignment                : center
+        Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
@@ -606,10 +606,10 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 282
+        x coordinate                        : 275
         y coordinate                        : 227
-        Width                               : 33
-        Height                              : 30
+        Width                               : 45
+        Height                              : 45
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -619,7 +619,7 @@ Text tIcon2
         Font ID                             : 1
         Back. Color                         : 0
         Font Color                          : 17299
-        Horizontal Alignment                : center
+        Horizontal Alignment                : right
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
@@ -817,7 +817,7 @@ Text tNotifyHead
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 257
+        y coordinate                        : 272
         Width                               : 320
         Height                              : 58
         Effect                              : load
@@ -847,7 +847,7 @@ Text tNotifyText
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 315
+        y coordinate                        : 330
         Width                               : 320
         Height                              : 58
         Effect                              : load
