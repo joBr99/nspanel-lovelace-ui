@@ -486,7 +486,7 @@ class LuiPagesGen(object):
         else:
             media_icon = self.generate_entities_item(entity, "cardGrid")
             ha_entity     = apis.ha_api.get_entity(entityId)
-            heading       = title if title != "unknown" else entity.attributes.friendly_name
+            heading       = title if title != "unknown" else ha_entity.attributes.friendly_name
             title         = get_attr_safe(ha_entity, "media_title", "")
             author        = get_attr_safe(ha_entity, "media_artist", "")
             volume        = int(get_attr_safe(ha_entity, "volume_level", 0)*100)
