@@ -5,10 +5,10 @@
 
 # Comment that will be sent if an issue is judged to be closed.
 comment: >-
-  This issue has been automatically closed because the TEMPLATE is missing or incomplete.
+  This issue has been automatically closed because the TEMPLATE (it's the stuff you deleted from the issue while opening) is missing or incomplete.
   
   Filling the template is required so standard questions don't need to be asked again each time.
-  THe ability to provide assistance is greatly hampered if few minutes are not taken to complete the issue template
+  The ability to provide assistance is greatly hampered if few minutes are not taken to complete the issue template
   with the requested information. The details requested potentially affect which options to pursue. The small amount
   of time you will spend completing the template will also help the volunteers, providing assistance to you, to reduce
   the time required to help you.
@@ -19,14 +19,16 @@ comment: >-
   
   [Docs](https://docs.nspanel.pky.eu) for more information.
   
+  IF YOU THINK THIS IS WAS CLOSED AS A FALSE POSITIVE or you just didn't find a template that matches your request, please do not open another issue, closed issues will also be monitored.
+  
 issueConfigs:
 # There can be several configs for different kind of issues.
 - content:
 # template 1: bug report
   - "PROBLEM DESCRIPTION"
-#  - "REQUESTED INFORMATION"
-#  - "TO REPRODUCE"
-#  - "EXPECTED BEHAVIOUR" 
+  - "REQUESTED INFORMATION"
+  - "TO REPRODUCE"
+  - "EXPECTED BEHAVIOUR" 
 - content:
 # template 2: feature request
   - "FEATURE DESCRIPTION"
