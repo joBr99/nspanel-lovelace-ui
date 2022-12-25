@@ -1,5 +1,6 @@
 import colorsys
 import math
+import apis
 
 def scale(val, src, dst):
     """
@@ -37,6 +38,8 @@ def rgb_brightness(rgb_color, brightness):
     return [int(red), int(green), int(blue)]
 
 def rgb_dec565(rgb_color):
+    if type(rgb_color) is str:
+        rgb_color = apis.ha_api.render_template(rgb_color)
     red = rgb_color[0]
     green = rgb_color[1]
     blue = rgb_color[2]

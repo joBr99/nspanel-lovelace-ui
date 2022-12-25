@@ -25,7 +25,7 @@ class LuiPagesGen(object):
     
     def get_entity_color(self, entity, ha_type=None, overwrite=None):
         if overwrite is not None:
-            if type(overwrite) is list:
+            if type(overwrite) in [str, list]:
                 return rgb_dec565(overwrite)
             if type(overwrite) is dict:
                 state = entity.state

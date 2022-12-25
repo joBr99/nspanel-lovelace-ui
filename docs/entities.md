@@ -45,6 +45,11 @@ It is also possible to configure different color overwrites per state:
                 "on": [255,0,0]
                 "off": [0,0,255]
 ```
+Dynamic color overwrites using homeassistant templates:
+
+```yaml
+            color: '{{iif(states("binary_sensor.test")=="on", "[0,255,0]", "[255,165,0]")}}'
+```
 
 It is also possible to use text instead of icons with `text:X`
 
