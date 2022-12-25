@@ -455,16 +455,16 @@ class LuiPagesGen(object):
 
             icon_res = "".join(icon_res_list)
 
-            if len(icon_res_list) == 1:
+            if len(icon_res_list) == 1 and not self._config.get("model") == "us-p":
                 icon_res = "~"*4 + icon_res_list[0] + "~"*4*6
-            elif len(icon_res_list) == 2:
+            elif len(icon_res_list) == 2 and not self._config.get("model") == "us-p":
                 icon_res = "~"*4*2 + icon_res_list[0] + "~"*4*2 + icon_res_list[1] + "~"*4*2
-            elif len(icon_res_list) == 3:
+            elif len(icon_res_list) == 3 and not self._config.get("model") == "us-p":
                 icon_res = "~"*4*2 + icon_res_list[0] + "~"*4 + icon_res_list[1] + "~"*4 + icon_res_list[2] + "~"*4
-            elif len(icon_res_list) == 4:
+            elif len(icon_res_list) == 4 and not self._config.get("model") == "us-p":
                 icon_res = "~"*4 + icon_res_list[0] + "~"*4 + icon_res_list[1] + "~"*4 + icon_res_list[2] + "~"*4 + icon_res_list[3]
-            elif len(icon_res_list) >= 5:
-                icon_res = "~"*4 + "".join(icon_res_list) + "~"*4*(7-len(icon_res_list))
+            elif len(icon_res_list) >= 5 or self._config.get("model") == "us-p":
+                icon_res = "".join(icon_res_list) + "~"*4*(8-len(icon_res_list))
             
             currently_translation = get_translation(self._locale, "frontend.ui.card.climate.currently")
             state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
