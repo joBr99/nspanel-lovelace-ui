@@ -15,18 +15,18 @@ class Nextion : Driver
     static flash_block_size = 4096
 
     var flash_mode
-	var flash_start_millis
+    var flash_start_millis
     var flash_size
     var flash_written
     var flash_buff
     var flash_offset
-	var flash_proto_version
-	var flash_proto_baud
+    var flash_proto_version
+    var flash_proto_baud
     var awaiting_offset
     var tcp
     var ser
     var last_per
-	var url
+    var url
 
     def split_55(b)
       var ret = []
@@ -60,7 +60,7 @@ class Nextion : Driver
       return crc
     end
 
-	# encode using custom protocol 55 BB [payload length] [payload length] [payload] [crc] [crc]
+    # encode using custom protocol 55 BB [payload length] [payload length] [payload] [crc] [crc]
     def encode(payload)
       var b = bytes()
       b += self.header
@@ -100,7 +100,7 @@ class Nextion : Driver
 
     def screeninit()
         log("NXP: Screen Initialized")
-		self.sendnx("recmod=1")		
+        self.sendnx("recmod=1")        
     end
 
     def write_block()
@@ -138,8 +138,8 @@ class Nextion : Driver
         if (self.flash_written==self.flash_size)
             log("FLH: Flashing complete - Time elapsed: %d", (tasmota.millis()-self.flash_start_millis)/1000)
             self.flash_mode = 0
-			self.ser.deinit()
-			self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
+            self.ser.deinit()
+            self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
         end
 
     end
@@ -153,20 +153,20 @@ class Nextion : Driver
                 if (self.flash_mode==1)
                     var strv = msg[0..-4].asstring()
                     if string.find(strv,"comok 2")>=0
-						tasmota.delay(50)
+                        tasmota.delay(50)
                         log("FLH: Send (High Speed) flash start")
-						self.flash_start_millis = tasmota.millis()
+                        self.flash_start_millis = tasmota.millis()
                         #self.sendnx(string.format("whmi-wris %d,115200,res0",self.flash_size))
-						if self.flash_proto_version == 0
-							self.sendnx(string.format("whmi-wri %d,%d,res0",self.flash_size,self.flash_proto_baud))
-						else
-							self.sendnx(string.format("whmi-wris %d,%d,res0",self.flash_size,self.flash_proto_baud))
-						end
-						if self.flash_proto_baud != 115200
-						    tasmota.delay(50)
-						    self.ser.deinit()
-							self.ser = serial(17, 16, self.flash_proto_baud, serial.SERIAL_8N1)
-						end
+                        if self.flash_proto_version == 0
+                            self.sendnx(string.format("whmi-wri %d,%d,res0",self.flash_size,self.flash_proto_baud))
+                        else
+                            self.sendnx(string.format("whmi-wris %d,%d,res0",self.flash_size,self.flash_proto_baud))
+                        end
+                        if self.flash_proto_baud != 115200
+                            tasmota.delay(50)
+                            self.ser.deinit()
+                            self.ser = serial(17, 16, self.flash_proto_baud, serial.SERIAL_8N1)
+                        end
                     elif size(msg)==1 && msg[0]==0x08
                         log("FLH: Waiting offset...",3)
                         self.awaiting_offset = 1
@@ -174,10 +174,10 @@ class Nextion : Driver
                         self.awaiting_offset = 0
                         self.flash_offset = msg.get(0,4)
                         log("FLH: Flash offset marker "+str(self.flash_offset),3)
-						if self.flash_offset != 0
-							self.open_url_at(self.url, self.flash_offset)
-							self.flash_written = self.flash_offset
-						end
+                        if self.flash_offset != 0
+                            self.open_url_at(self.url, self.flash_offset)
+                            self.flash_written = self.flash_offset
+                        end
                         self.write_block()
                     elif size(msg)==1 && msg[0]==0x05
                         self.write_block()
@@ -219,7 +219,7 @@ class Nextion : Driver
     end
     
     def open_url_at(url, pos)
-		self.url = url
+        self.url = url
         import string
         var host
         var port
@@ -245,8 +245,8 @@ class Nextion : Driver
         self.tcp.connect(host,port)
         log("FLH: Connected:"+str(self.tcp.connected()),3)
         var get_req = "GET "+get+" HTTP/1.0\r\n"
-		get_req += string.format("Range: bytes=%d-\r\n", pos)
-		get_req += string.format("HOST: %s:%s\r\n\r\n",host,port)
+        get_req += string.format("Range: bytes=%d-\r\n", pos)
+        get_req += string.format("HOST: %s:%s\r\n\r\n",host,port)
         self.tcp.write(get_req)
         var a = self.tcp.available()
         i = 1
@@ -274,43 +274,43 @@ class Nextion : Driver
             end
         end
         #print(headers)
-		# check http respose for code 200/206
+        # check http respose for code 200/206
         if string.find(headers,"200 OK")>0 || string.find(headers,"206 Partial Content")>0
             log("FLH: HTTP Respose is 200 OK or 206 Partial Content",3)
-		else
+        else
             log("FLH: HTTP Respose is not 200 OK or 206 Partial Content",3)
-			print(headers)
-			return -1
+            print(headers)
+            return -1
         end
-		# only set flash size if pos is zero
-		if pos == 0
-			# check http respose for content-length
-			var tag = "Content-Length: "
-			i = string.find(headers,tag)
-			if (i>0) 
-				var i2 = string.find(headers,"\r\n",i)
-				var s = headers[i+size(tag)..i2-1]
-				self.flash_size=int(s)
-			end
-			log("FLH: Flash file size: "+str(self.flash_size),3)
-		end
+        # only set flash size if pos is zero
+        if pos == 0
+            # check http respose for content-length
+            var tag = "Content-Length: "
+            i = string.find(headers,tag)
+            if (i>0) 
+                var i2 = string.find(headers,"\r\n",i)
+                var s = headers[i+size(tag)..i2-1]
+                self.flash_size=int(s)
+            end
+            log("FLH: Flash file size: "+str(self.flash_size),3)
+        end
 
     end
 
     def flash_nextion(url)
         self.flash_size = 0
         var res = self.open_url_at(url, 0)
-		if res != -1
-			self.begin_nextion_flash()
-		end
+        if res != -1
+            self.begin_nextion_flash()
+        end
     end
 
     def init()
         log("NXP: Initializing Driver")
         self.ser = serial(17, 16, 115200, serial.SERIAL_8N1)
         self.flash_mode = 0
-		self.flash_proto_version = 1
-		self.flash_proto_baud = 921600
+        self.flash_proto_version = 1
+        self.flash_proto_baud = 921600
     end
 
 end
@@ -320,51 +320,63 @@ var nextion = Nextion()
 tasmota.add_driver(nextion)
 
 def get_current_version(cmd, idx, payload, payload_json)
-	import string
-	var version_of_this_script = 7
-	var jm = string.format("{\"nlui_driver_version\":\"%s\"}", version_of_this_script)
-	tasmota.publish_result(jm, "RESULT")
+    import string
+    var version_of_this_script = 8
+    var jm = string.format("{\"nlui_driver_version\":\"%s\"}", version_of_this_script)
+    tasmota.publish_result(jm, "RESULT")
 end
 
 tasmota.add_cmd('GetDriverVersion', get_current_version)
 
 def update_berry_driver(cmd, idx, payload, payload_json)
-	def task()
-		import string
-		var cl = webclient()
-		cl.begin(payload)
-		var r = cl.GET()
-		if r == 200
-			print("Sucessfully downloaded nspanel-lovelace-ui berry driver")
-		else
-			print("Error while downloading nspanel-lovelace-ui berry driver")
-		end
-		r = cl.write_file("autoexec.be")
-		if r < 0
-			print("Error while writeing nspanel-lovelace-ui berry driver")
-		else
-			print("Sucessfully written nspanel-lovelace-ui berry driver")
-			var s = load('autoexec.be')
-			if s == true
-				var jm = string.format("{\"nlui_driver_update\":\"%s\"}", "succeeded")
-				tasmota.publish_result(jm, "RESULT")
-			else 
-				var jm = string.format("{\"nlui_driver_update\":\"%s\"}", "failed")
-				tasmota.publish_result(jm, "RESULT")
-			end
-			
-		end
-	end
-	tasmota.set_timer(0,task)
-	tasmota.resp_cmnd_done()
+    def task()
+        import path
+        import string
+        if path.exists("nsp-lovelace-driver.tapp")
+            var r = string.find(payload, ".tapp")
+            if r < 0
+                print("URL doesn't contain .tapp skipping update")
+            else
+                r = tasmota.urlfetch(payload, "nsp-lovelace-driver.tapp")
+                if r < 0
+                    print("Update failed")
+                else
+                    tasmota.cmd("Restart 1")
+                end
+            end
+        else
+            var r = string.find(payload, ".be")
+            if r < 0
+                print("URL doesn't contain .be skipping update")
+            else
+                var cl = webclient()
+                cl.begin(payload)
+                r = cl.GET()
+                if r == 200
+                    print("Sucessfully downloaded nspanel-lovelace-ui berry driver")
+                else
+                    print("Error while downloading nspanel-lovelace-ui berry driver")
+                end
+                r = cl.write_file("autoexec.be")
+                if r < 0
+                    print("Error while writeing nspanel-lovelace-ui berry driver")
+                else
+                    print("Sucessfully written nspanel-lovelace-ui berry driver")
+                    tasmota.cmd("Restart 1")
+                end        
+            end                
+        end
+    end
+    tasmota.set_timer(0,task)
+    tasmota.resp_cmnd_done()
 end
 
 tasmota.add_cmd('UpdateDriverVersion', update_berry_driver)
 
 def flash_nextion(cmd, idx, payload, payload_json)
     def task()
-	nextion.flash_proto_version = 1
-	nextion.flash_proto_baud = 921600
+    nextion.flash_proto_version = 1
+    nextion.flash_proto_baud = 921600
         nextion.flash_nextion(payload)
     end
     tasmota.set_timer(0,task)
@@ -372,35 +384,35 @@ def flash_nextion(cmd, idx, payload, payload_json)
 end
 
 def flash_nextion_adv(cmd, idx, payload, payload_json)
-    def task()		
-		if idx==0
-			nextion.flash_proto_version = 1
-		    nextion.flash_proto_baud = 921600
+    def task()        
+        if idx==0
+            nextion.flash_proto_version = 1
+            nextion.flash_proto_baud = 921600
         elif idx==1
-			nextion.flash_proto_version = 0
-		    nextion.flash_proto_baud = 921600
+            nextion.flash_proto_version = 0
+            nextion.flash_proto_baud = 921600
         elif idx==2
-			nextion.flash_proto_version = 1
-		    nextion.flash_proto_baud = 115200
+            nextion.flash_proto_version = 1
+            nextion.flash_proto_baud = 115200
         elif idx==3
-			nextion.flash_proto_version = 0
-		    nextion.flash_proto_baud = 115200
+            nextion.flash_proto_version = 0
+            nextion.flash_proto_baud = 115200
         elif idx==4
-			nextion.flash_proto_version = 1
-		    nextion.flash_proto_baud = 256000
+            nextion.flash_proto_version = 1
+            nextion.flash_proto_baud = 256000
         elif idx==5
-			nextion.flash_proto_version = 0
-		    nextion.flash_proto_baud = 256000
+            nextion.flash_proto_version = 0
+            nextion.flash_proto_baud = 256000
         elif idx==6
-		    nextion.ser.deinit()
-		    nextion.ser = serial(17, 16, 9600, serial.SERIAL_8N1)
-		    nextion.flash_proto_version = 0
-		    nextion.flash_proto_baud = 921600
+            nextion.ser.deinit()
+            nextion.ser = serial(17, 16, 9600, serial.SERIAL_8N1)
+            nextion.flash_proto_version = 0
+            nextion.flash_proto_baud = 921600
         else
-		    nextion.flash_proto_version = 0
-		    nextion.flash_proto_baud = 115200
+            nextion.flash_proto_version = 0
+            nextion.flash_proto_baud = 115200
         end
-		
+        
         nextion.flash_nextion(payload)
     end
     tasmota.set_timer(0,task)
