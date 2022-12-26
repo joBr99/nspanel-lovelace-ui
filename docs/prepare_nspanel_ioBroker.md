@@ -24,11 +24,12 @@ After a reboot of tasmota your screen will light up with the stock display firmw
 
 ## Upload Berry Driver to Tasmota
 
-1. Download the autoexec.be from the repository: [Berry Driver](https://github.com/joBr99/nspanel-lovelace-ui/blob/main/tasmota/autoexec.be)
+Go to `Consoles` > `Console` in Tasmota and execute the following command:
 
-2. Go to `Consoles` > `Manage File System` in Tasmota and upload the previously downloaded file.
+```
+Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
+```
 
-3. Restart your NSPanel
 
 ## Flash Firmware to Nextion Screen
 
