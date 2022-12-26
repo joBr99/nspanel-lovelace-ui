@@ -332,26 +332,36 @@ def update_berry_driver(cmd, idx, payload, payload_json)
     def task()
         import path
         import string
-        if path.exists("nsp-lovelace-driver.tapp")
-            var r = string.find(payload, ".tapp")
+		if string.find(payload, ".tapp") > 0
+		    print("tapp in URL; will do .tapp update and migration if necessary")
+			
+			if path.exists("autoexec.be")
+			    print("autoexec.be found; will check for migration")
+				var autoexecfile = open('autoexec.be')
+				var line = autoexecfile.readline()
+				autoexecfile.close()
+				if string.find(line, "NSPanel Tasmota Lovelace UI Berry Driver") > 0
+			        print("found lovelace berry driver, going to delete autoexec.be and .bec")
+					path.remove("autoexec.be")
+					path.remove("autoexec.bec")
+				end
+			end
+			
+			var r = tasmota.urlfetch(payload, "nsp-lovelace-driver.tapp")
             if r < 0
-                print("URL doesn't contain .tapp skipping update")
+                print("Update failed")
             else
-                r = tasmota.urlfetch(payload, "nsp-lovelace-driver.tapp")
-                if r < 0
-                    print("Update failed")
-                else
-                    tasmota.cmd("Restart 1")
-                end
+                tasmota.cmd("Restart 1")
             end
-        else
-            var r = string.find(payload, ".be")
-            if r < 0
-                print("URL doesn't contain .be skipping update")
-            else
+			
+		elif string.find(payload, ".be") > 0
+		    print("be in URL; will do .be update")
+			if path.exists("nsp-lovelace-driver.tapp")
+			    print("Error: there is the tapp version of the berry driver installed; cannot do .be update.")
+			else
                 var cl = webclient()
                 cl.begin(payload)
-                r = cl.GET()
+                var r = cl.GET()
                 if r == 200
                     print("Sucessfully downloaded nspanel-lovelace-ui berry driver")
                 else
@@ -363,7 +373,27 @@ def update_berry_driver(cmd, idx, payload, payload_json)
                 else
                     print("Sucessfully written nspanel-lovelace-ui berry driver")
                     tasmota.cmd("Restart 1")
-                end        
+                end
+			end
+		else
+			print("invalid url filetype")
+		end
+		
+		
+		
+        if path.exists("nsp-lovelace-driver.tapp")
+            var r = string.find(payload, ".tapp")
+            if r < 0
+                print("URL doesn't contain .tapp skipping update")
+            else
+
+            end
+        else
+            var r = string.find(payload, ".be")
+            if r < 0
+                print("URL doesn't contain .be skipping update")
+            else
+        
             end                
         end
     end
