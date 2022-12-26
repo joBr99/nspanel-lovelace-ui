@@ -24,11 +24,13 @@ After a reboot of tasmota your screen will light up with the stock display firmw
 
 ## Upload Berry Driver to Tasmota
 
-1. Download the autoexec.be from the repository: [Berry Driver](https://github.com/joBr99/nspanel-lovelace-ui/blob/main/tasmota/autoexec.be)
+Go to `Consoles` > `Console` in Tasmota and execute the following command:
 
-2. Go to `Consoles` > `Manage File System` in Tasmota and upload the previously downloaded file.
+```
+Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
+```
 
-3. Restart your NSPanel
+This will download the autoexec.be file from the repository and restart tasmota.
 
 ## Flash Firmware to Nextion Screen
 
@@ -43,10 +45,6 @@ US Version Portrait: `FlashNextion http://nspanel.pky.eu/lui-us-p-release.tft`
 US Version Landscape: `FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft`
 
 After sending the command, the screen should show a progress bar. The flashing progress takes around 5 minutes.
-
-> ⚠️: **If you are getting an error message with `[bytes('8080808080808080808080000` please try to downgrade tasmota to 12.2.0 (http://ota.tasmota.com/tasmota32/release-12.2.0/tasmota32-nspanel.bin).
->
->  Please leave a comment on the following issue in both cases (working or not), since this isn't reproducable at the moment :/ https://github.com/joBr99/nspanel-lovelace-ui/issues/601**
 
 Note: For the US Version Users - keep in mind that you need to add the model config option to your apps.yaml later, more details on config overview page
 
