@@ -1,0 +1,1181 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="V^}bTjic-qB=}R30,AU7">ArlamPIN</variable>
+    <variable id="z21BCrAcSmJl;/ADq)~[">NotifyText</variable>
+    <variable id="MeI_x!lr~]|C?%wcOHNE">von_NSP</variable>
+    <variable id="#td|(KTY]s^*yaPWKs8v">i</variable>
+    <variable id="P,ZB-6|3PMPw0?#JVodG">bis_NSP</variable>
+    <variable id=":X)h@$QHfe%dTO-$EY#G">Notify_OnOff</variable>
+    <variable id="f9QWZ*Bv.y1Kj#nA`o{1">Anzahl_NSPanels</variable>
+    <variable id="{t%:hZxc;c[vb3rv$kJk">Notify_Interaktion</variable>
+    <variable id="eY_f#*}D+!2^%Orz$wy%">Notify_Event</variable>
+  </variables>
+  <block type="procedures_defnoreturn" id="k-sWDzSc5$UR}]Z@B._M" x="-2288" y="-512">
+    <field name="NAME">Basissettings</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+    <statement name="STACK">
+      <block type="comment" id="F(ZHFr!Y$VGSMN`Ip)Lw">
+        <field name="COMMENT">Bitte den Pfad zum Datenpunkt angeben:</field>
+        <next>
+          <block type="variables_set" id="v_e7~Lk7$*5noE:kN4:%">
+            <field name="VAR" id="V^}bTjic-qB=}R30,AU7">ArlamPIN</field>
+            <value name="VALUE">
+              <block type="get_value" id="8AR)w}^B+x{yq1Ip.:,e">
+                <field name="ATTR">val</field>
+                <field name="OID">0_userdata.0.NSPanelOwn.Alarm_PIN</field>
+              </block>
+            </value>
+            <next>
+              <block type="comment" id=")86]5@KK{%rsD)5?~5UQ">
+                <field name="COMMENT">Bitte geben Sie die Anzahl der Panels ein:</field>
+                <next>
+                  <block type="variables_set" id="g-N~0E%i@sR/wu-:e7Yy">
+                    <field name="VAR" id="f9QWZ*Bv.y1Kj#nA`o{1">Anzahl_NSPanels</field>
+                    <value name="VALUE">
+                      <block type="math_number" id="OhIPwDGN_e?w61~~m=vY">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="comment" id=";0KFXJCNw439T.yy1I]w">
+                        <field name="COMMENT">Soll es Popup Informationen geben?</field>
+                        <next>
+                          <block type="variables_set" id="}]iUGVAnHY;z={:Hse`(">
+                            <field name="VAR" id=":X)h@$QHfe%dTO-$EY#G">Notify_OnOff</field>
+                            <value name="VALUE">
+                              <block type="logic_boolean" id="|V~EHSUO,[Hx;coEFdq$">
+                                <field name="BOOL">TRUE</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="comment" id="fauBuepr!3pC,k5ODL!O">
+                                <field name="COMMENT">Wer soll alarmiert werden wenn jemand am Panel</field>
+                                <next>
+                                  <block type="comment" id="!1lo#]1V0/]^^KhccRyy">
+                                    <field name="COMMENT">eigaben macht? (alle / jeweils)</field>
+                                    <next>
+                                      <block type="variables_set" id="XTuZYnfXSvGWfxOM9m1C">
+                                        <field name="VAR" id="{t%:hZxc;c[vb3rv$kJk">Notify_Interaktion</field>
+                                        <value name="VALUE">
+                                          <block type="text" id="$Ib^BiL([$4?-}SKDU#)">
+                                            <field name="TEXT">jeweils</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="comment" id="#lIE}k||EIWU`_{{l)ix">
+                                            <field name="COMMENT">Wer soll bei einem Ereigniss alarmiet werden?</field>
+                                            <next>
+                                              <block type="comment" id="Lq023,%.WU6mN?BDsph_">
+                                                <field name="COMMENT">(alle / jeweils)</field>
+                                                <next>
+                                                  <block type="variables_set" id="DG8bVK-r#`$?.;eeb2:f">
+                                                    <field name="VAR" id="eY_f#*}D+!2^%Orz$wy%">Notify_Event</field>
+                                                    <value name="VALUE">
+                                                      <block type="text" id="yt38Oa1=[`3|-VYUc[$m">
+                                                        <field name="TEXT">alle</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_callnoreturn" id="$].n(^os*LrsQ+O6On([" x="-1237" y="-437">
+    <mutation name="Basissettings"></mutation>
+    <next>
+      <block type="on_ext" id="q!?(x}z/f~TClQnNmbyU">
+        <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+        <field name="CONDITION">ne</field>
+        <field name="ACK_CONDITION"></field>
+        <value name="OID0">
+          <shadow type="field_oid" id="]~f@4kO$zmxdg=}/810C">
+            <field name="oid">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+          </shadow>
+        </value>
+        <statement name="STATEMENT">
+          <block type="variables_set" id="!bn8_fHJcG_-fzc_Ka)2">
+            <field name="VAR" id="z21BCrAcSmJl;/ADq)~[">NotifyText</field>
+            <value name="VALUE">
+              <block type="text" id="EM3|V^QO@NfUB8s6?5G9">
+                <field name="TEXT">.</field>
+              </block>
+            </value>
+            <next>
+              <block type="debug" id="PK!LWn;hH~-~0Voq?[E[">
+                <field name="Severity">log</field>
+                <value name="TEXT">
+                  <shadow type="text" id="$AGq9V4ieV+V{sJ:xme?">
+                    <field name="TEXT">Logpunkt: EOS</field>
+                  </shadow>
+                  <block type="get_value" id="shNE,X8dZ#|#JuUo0]XY">
+                    <field name="ATTR">val</field>
+                    <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="timeouts_wait" id=")UmGSw@Q(`%k^S+:-a_0">
+                    <field name="DELAY">300</field>
+                    <field name="UNIT">ms</field>
+                    <next>
+                      <block type="controls_if" id="9q977cS+cyMEB$/*D*ul">
+                        <mutation elseif="3"></mutation>
+                        <value name="IF0">
+                          <block type="logic_operation" id="Qi_-nMKc~w;D=t4;6Mtb" inline="false">
+                            <field name="OP">AND</field>
+                            <value name="A">
+                              <block type="logic_compare" id="aepYG60!2x|-)FcICpF8">
+                                <field name="OP">EQ</field>
+                                <value name="A">
+                                  <block type="get_value" id="IBI6^,tt6bxnkvh2Mo@H">
+                                    <field name="ATTR">val</field>
+                                    <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="text" id="W9Z5@]@$8wlW}J`R3ni~">
+                                    <field name="TEXT">arming</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="logic_compare" id="z9hpZKtoM^70A7Sr;8WU" inline="false">
+                                <field name="OP">NEQ</field>
+                                <value name="A">
+                                  <block type="get_value" id="XW/dC_x+g}-MzNT9TISq">
+                                    <field name="ATTR">val</field>
+                                    <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmPin</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="variables_get" id="1vuNE@|Dx](KsJ%MFZ~E">
+                                    <field name="VAR" id="V^}bTjic-qB=}R30,AU7">ArlamPIN</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO0">
+                          <block type="variables_set" id=")gJKgRZ*j$=rS?u)NBo0">
+                            <field name="VAR" id="z21BCrAcSmJl;/ADq)~[">NotifyText</field>
+                            <value name="VALUE">
+                              <block type="text_join" id="1]U2/5i@v%[sDn,EF_@A">
+                                <mutation items="7"></mutation>
+                                <value name="ADD0">
+                                  <block type="text_multiline" id="VXJAm_V+(9+L5M6Ya!LX">
+                                    <field name="TEXT">PIN-Prüfung für die Alarm Aktivierung ist fehl-geschlagen. </field>
+                                  </block>
+                                </value>
+                                <value name="ADD1">
+                                  <block type="text_newline" id="wt/QLG4y`?2L6d1w-$gW">
+                                    <field name="Type">\r\n</field>
+                                  </block>
+                                </value>
+                                <value name="ADD2">
+                                  <block type="text_newline" id="j$DlHivy}5A#z%lQNZ1p">
+                                    <field name="Type">\r\n</field>
+                                  </block>
+                                </value>
+                                <value name="ADD3">
+                                  <block type="text" id="p3(R.$]@}P,2`RI$^S]7">
+                                    <field name="TEXT">Bitte geben Sie die richtige PIN ein. </field>
+                                  </block>
+                                </value>
+                                <value name="ADD4">
+                                  <block type="text_newline" id="byjnvx;%?[O,^6l:PH;I">
+                                    <field name="Type">\r\n</field>
+                                  </block>
+                                </value>
+                                <value name="ADD5">
+                                  <block type="text_newline" id="Tq`46BlXWH/k_xjWp%+u">
+                                    <field name="Type">\r\n</field>
+                                  </block>
+                                </value>
+                                <value name="ADD6">
+                                  <block type="text" id="gf_|G?Y]T)my1-+U-_cg">
+                                    <field name="TEXT">Die Alarm-Funktion wird nicht aktiviert!!!</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="debug" id=";K,gLAfyec`Hk!yt=3oI">
+                                <field name="Severity">log</field>
+                                <value name="TEXT">
+                                  <shadow type="text" id=",Y8hu}9qWKZ$]^B7A^.Y">
+                                    <field name="TEXT">Logpunkt: EOS</field>
+                                  </shadow>
+                                </value>
+                                <next>
+                                  <block type="control" id="rY{t}:)PL;jRe2{BFjqN">
+                                    <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="true"></mutation>
+                                    <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                                    <field name="WITH_DELAY">TRUE</field>
+                                    <field name="DELAY_MS">1000</field>
+                                    <field name="UNIT">ms</field>
+                                    <field name="CLEAR_RUNNING">TRUE</field>
+                                    <value name="VALUE">
+                                      <block type="text" id="@w%s+j7C27NHj)7)PTi{">
+                                        <field name="TEXT">disarmed</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="procedures_callnoreturn" id="finSt)zuwe0gk[/xTWis">
+                                        <mutation name="Define_Notify_jeweils"></mutation>
+                                        <next>
+                                          <block type="timeouts_wait" id="cqF_/Gv6}_Ja:kn$,TgI">
+                                            <field name="DELAY">1000</field>
+                                            <field name="UNIT">ms</field>
+                                            <next>
+                                              <block type="procedures_callnoreturn" id="8Wz)b{s9GWBk8phr_v?+">
+                                                <mutation name="PopupNotifyPage"></mutation>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <value name="IF1">
+                          <block type="logic_operation" id="rac/`EKn}ES5217UOdNj" inline="false">
+                            <field name="OP">AND</field>
+                            <value name="A">
+                              <block type="logic_compare" id=":FH~8jpIy^[Wq5m7I2#i">
+                                <field name="OP">EQ</field>
+                                <value name="A">
+                                  <block type="get_value" id="R3_D.M$myMPZXOQKc*93">
+                                    <field name="ATTR">val</field>
+                                    <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="text" id="grZhueq]1YSoGF}Q#4|B">
+                                    <field name="TEXT">arming</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="logic_compare" id="08(3wUt:|2D6[BkR!nDO" inline="false">
+                                <field name="OP">EQ</field>
+                                <value name="A">
+                                  <block type="get_value" id="]t28}qbL1);v`*zw2|Tg">
+                                    <field name="ATTR">val</field>
+                                    <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmPin</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="variables_get" id="{VF5vN3n~XLz|I`eC#uX">
+                                    <field name="VAR" id="V^}bTjic-qB=}R30,AU7">ArlamPIN</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO1">
+                          <block type="variables_set" id="^C=Fv%^sId|JDUb?m_|%">
+                            <field name="VAR" id="z21BCrAcSmJl;/ADq)~[">NotifyText</field>
+                            <value name="VALUE">
+                              <block type="text_join" id="v?{;Awxx;^IMifLi35fy">
+                                <mutation items="4"></mutation>
+                                <value name="ADD0">
+                                  <block type="text_multiline" id="k.E$_-{Bi_c9(bA)^/Y;">
+                                    <field name="TEXT">PIN-Prüfung für die Alarm Aktivierung war erfolgreich.</field>
+                                  </block>
+                                </value>
+                                <value name="ADD1">
+                                  <block type="text_newline" id="2,BRyz!Jl.zt^7vzlK3L">
+                                    <field name="Type">\r\n</field>
+                                  </block>
+                                </value>
+                                <value name="ADD2">
+                                  <block type="text_newline" id="N^Z_EAaBtkiwyaSJmLfG">
+                                    <field name="Type">\r\n</field>
+                                  </block>
+                                </value>
+                                <value name="ADD3">
+                                  <block type="text" id="e%:caDOXegY.yG0Hw(xm">
+                                    <field name="TEXT">Die Alarm-Funktion wird aktiviert!!!</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="debug" id="c@wu^=Q4}`{8k1{DJaGH">
+                                <field name="Severity">log</field>
+                                <value name="TEXT">
+                                  <shadow type="text" id="B}H;fXknaEp0U`,R@%$T">
+                                    <field name="TEXT">Logpunkt: PIN OK</field>
+                                  </shadow>
+                                </value>
+                                <next>
+                                  <block type="controls_if" id="=_e7bf!`Q]$tg*0U1_2F">
+                                    <mutation elseif="1"></mutation>
+                                    <value name="IF0">
+                                      <block type="logic_compare" id="0_9gv(MmSSJ{2a$j{}(P">
+                                        <field name="OP">EQ</field>
+                                        <value name="A">
+                                          <block type="on_source" id="H$WWrxxX|NaWkT%W]g!Z">
+                                            <field name="ATTR">state.val</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="text" id="_TnyjJ5x!)JY~rQ:Opj)">
+                                            <field name="TEXT">arming</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <statement name="DO0">
+                                      <block type="control" id="eO}0c$0s~08Di)?sMM0(">
+                                        <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="true"></mutation>
+                                        <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                                        <field name="WITH_DELAY">TRUE</field>
+                                        <field name="DELAY_MS">1000</field>
+                                        <field name="UNIT">ms</field>
+                                        <field name="CLEAR_RUNNING">TRUE</field>
+                                        <value name="VALUE">
+                                          <block type="text" id="J(va8~n[/dogNBn!W].I">
+                                            <field name="TEXT">armed</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </statement>
+                                    <value name="IF1">
+                                      <block type="logic_compare" id="]p3s+ouB~BJkfd:e)G:(">
+                                        <field name="OP">EQ</field>
+                                        <value name="A">
+                                          <block type="on_source" id=":n]Z,t6+q#-l_hP+MEI@">
+                                            <field name="ATTR">state.val</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="text" id="([Ep{MPBu5s.C-lOdHgr">
+                                            <field name="TEXT">pending</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <statement name="DO1">
+                                      <block type="control" id="s77gpG^9o0A)T{f}{#,c">
+                                        <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="true"></mutation>
+                                        <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                                        <field name="WITH_DELAY">TRUE</field>
+                                        <field name="DELAY_MS">1000</field>
+                                        <field name="UNIT">ms</field>
+                                        <field name="CLEAR_RUNNING">TRUE</field>
+                                        <value name="VALUE">
+                                          <block type="text" id="4DC5l(?mcdlhZ/jIumty">
+                                            <field name="TEXT">disarmed</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </statement>
+                                    <next>
+                                      <block type="procedures_callnoreturn" id="*N7CkM)1$0rW^r(fDp*`">
+                                        <mutation name="Define_Notify_alle"></mutation>
+                                        <next>
+                                          <block type="timeouts_wait" id="bQ.:4P}@:,=bW3yP)wmF">
+                                            <field name="DELAY">1000</field>
+                                            <field name="UNIT">ms</field>
+                                            <next>
+                                              <block type="procedures_callnoreturn" id="q|j}Y|dPB1vuaMb1:Qeq">
+                                                <mutation name="PopupNotifyPage"></mutation>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <value name="IF2">
+                          <block type="logic_compare" id="83@!o]ZfR%d/+HrM:?Px">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                              <block type="get_value" id="Z3#uE]AwqWO+@u!)RIjk">
+                                <field name="ATTR">val</field>
+                                <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="text" id="2~~va?/IDi^Ypc,}KiuX">
+                                <field name="TEXT">pending</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO2">
+                          <block type="variables_set" id=")P;l6HQGS6E,,{DcCmDH">
+                            <field name="VAR" id="z21BCrAcSmJl;/ADq)~[">NotifyText</field>
+                            <value name="VALUE">
+                              <block type="text_join" id="C`~=:fBHFHPTK$5!Do?Y">
+                                <mutation items="4"></mutation>
+                                <value name="ADD0">
+                                  <block type="text_multiline" id="`8(`S*ZU#er6xK.uSyQy">
+                                    <field name="TEXT">PIN-Prüfung für die Alarm Deaktivierung war erfolgreich.</field>
+                                  </block>
+                                </value>
+                                <value name="ADD1">
+                                  <block type="text_newline" id="N$9=1_Y_d`jG}z_ezHDw">
+                                    <field name="Type">\r\n</field>
+                                  </block>
+                                </value>
+                                <value name="ADD2">
+                                  <block type="text_newline" id="aa+.*ucZi~n./QFb[Q6E">
+                                    <field name="Type">\r\n</field>
+                                  </block>
+                                </value>
+                                <value name="ADD3">
+                                  <block type="text" id="HG6r-m8hCZn+m{Q#roy/">
+                                    <field name="TEXT">Die Alarm-Funktion wird deaktiviert!!!</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="debug" id="LD5HfUw{K0zCgSC$5~Ar">
+                                <field name="Severity">log</field>
+                                <value name="TEXT">
+                                  <shadow type="text" id="h|bFzIP|UcnWd`9c*5K!">
+                                    <field name="TEXT">Logpunkt: Alarm AUS</field>
+                                  </shadow>
+                                </value>
+                                <next>
+                                  <block type="controls_if" id="dFwBp8[eCMd(@G1,T4.y">
+                                    <mutation elseif="1"></mutation>
+                                    <value name="IF0">
+                                      <block type="logic_compare" id="=8kjS[uW}NL);z}QvB^g">
+                                        <field name="OP">EQ</field>
+                                        <value name="A">
+                                          <block type="on_source" id="2SA1/;Y5^hEGyqGJP_d(">
+                                            <field name="ATTR">state.val</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="text" id="T:dwGd$$/2a0dyOohVx%">
+                                            <field name="TEXT">arming</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <statement name="DO0">
+                                      <block type="control" id="Ja${;k%.vJPh2q+:kynt">
+                                        <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="true"></mutation>
+                                        <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                                        <field name="WITH_DELAY">TRUE</field>
+                                        <field name="DELAY_MS">1000</field>
+                                        <field name="UNIT">ms</field>
+                                        <field name="CLEAR_RUNNING">TRUE</field>
+                                        <value name="VALUE">
+                                          <block type="text" id="rkhkv?PiK-=:z?VZ1lmo">
+                                            <field name="TEXT">armed</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </statement>
+                                    <value name="IF1">
+                                      <block type="logic_compare" id="7qD(L!UIQAXA/Ob)gaC.">
+                                        <field name="OP">EQ</field>
+                                        <value name="A">
+                                          <block type="on_source" id="18v(}qF.UI}t]J[*]1dD">
+                                            <field name="ATTR">state.val</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="text" id="lj/OD_Bw;l3n?}OTYkA.">
+                                            <field name="TEXT">pending</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <statement name="DO1">
+                                      <block type="control" id="|:m({E)piC98ogW[zzv(">
+                                        <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="true"></mutation>
+                                        <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                                        <field name="WITH_DELAY">TRUE</field>
+                                        <field name="DELAY_MS">1000</field>
+                                        <field name="UNIT">ms</field>
+                                        <field name="CLEAR_RUNNING">TRUE</field>
+                                        <value name="VALUE">
+                                          <block type="text" id="dv6kxsV6jco(_c1UhG,Z">
+                                            <field name="TEXT">disarmed</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </statement>
+                                    <next>
+                                      <block type="procedures_callnoreturn" id="$fp1xO#t#{)iiA@l30{k">
+                                        <mutation name="Define_Notify_alle"></mutation>
+                                        <next>
+                                          <block type="timeouts_wait" id="{mk+%a]D|4}``9ka#(Mf">
+                                            <field name="DELAY">1000</field>
+                                            <field name="UNIT">ms</field>
+                                            <next>
+                                              <block type="procedures_callnoreturn" id="0V:m,*]:gbCAxBt:^={C">
+                                                <mutation name="PopupNotifyPage"></mutation>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <value name="IF3">
+                          <block type="logic_compare" id="g!1Zc_+uo4!B%%PopX/_">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                              <block type="get_value" id="4)_D9M*J]kYbaD%+)OVA">
+                                <field name="ATTR">val</field>
+                                <field name="OID">0_userdata.0.NSPanel.Alarm.AlarmState</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="text" id="Zh(;x:*Au`j93^f~F/)V">
+                                <field name="TEXT">triggered</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO3">
+                          <block type="debug" id="-n`b@$}Fb8%n9;Z7[pbW">
+                            <field name="Severity">log</field>
+                            <value name="TEXT">
+                              <shadow type="text" id="[^))u|]1{g5PG0K..rR9">
+                                <field name="TEXT">Logpunkt: Alarm Deaktivierung failed</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="variables_set" id="QKRrSppBo.n7ouVDEJbv">
+                                <field name="VAR" id="z21BCrAcSmJl;/ADq)~[">NotifyText</field>
+                                <value name="VALUE">
+                                  <block type="text_join" id="9O](,e_+R-W@5/qfJz.:">
+                                    <mutation items="7"></mutation>
+                                    <value name="ADD0">
+                                      <block type="text_multiline" id="lS--}tPmt+B|]kPIjQ|b">
+                                        <field name="TEXT">PIN-Prüfung für die Alarm De-Aktivierung ist fehlgeschlagen. </field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD1">
+                                      <block type="text_newline" id="49JpPPr_tw80M+F1b5j5">
+                                        <field name="Type">\r\n</field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD2">
+                                      <block type="text_newline" id="Z/)?eTtW)rr(tVW[+{4S">
+                                        <field name="Type">\r\n</field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD3">
+                                      <block type="text" id="-Xyr?gxErWcW}K*g!-)t">
+                                        <field name="TEXT">Bitte geben Sie die richtige PIN ein. </field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD4">
+                                      <block type="text_newline" id="=+)Q$ly4X~/]]Y_|~H0_">
+                                        <field name="Type">\r\n</field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD5">
+                                      <block type="text_newline" id="?fO|6mUc|Phf].lPTj!T">
+                                        <field name="Type">\r\n</field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD6">
+                                      <block type="text" id="0cR|bU.~7Jv2ZSp,mQSu">
+                                        <field name="TEXT">Die Alarm-Funktion bleibt aktiviert!!!</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="procedures_callnoreturn" id="5F:91409H8F_BQT:J]n9">
+                                    <mutation name="Define_Notify_jeweils"></mutation>
+                                    <next>
+                                      <block type="timeouts_wait" id="KJu72f^CD7p3|TR:k,Kd">
+                                        <field name="DELAY">1000</field>
+                                        <field name="UNIT">ms</field>
+                                        <next>
+                                          <block type="procedures_callnoreturn" id="F*/F}`N`[3Oi$vHFmsRp">
+                                            <mutation name="PopupNotifyPage"></mutation>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </next>
+  </block>
+  <block type="procedures_defnoreturn" id="Xd+cmfHTG`d$dB[4jSsv" x="-2287" y="-62">
+    <field name="NAME">Define_Notify_jeweils</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+    <statement name="STACK">
+      <block type="controls_if" id="yeOz*:rj%ziH+6sD0_PQ">
+        <value name="IF0">
+          <block type="logic_operation" id="pXbO/EN-|qJ%_[|a369J" inline="false">
+            <field name="OP">OR</field>
+            <value name="A">
+              <block type="logic_compare" id="?;B0m3{TYTVQKx8e`hk_">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="kyvyO^CLozO1ln-4iKG|">
+                    <field name="VAR" id="{t%:hZxc;c[vb3rv$kJk">Notify_Interaktion</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="text" id="uYwk;$%uv9Iz;zdK9MhP">
+                    <field name="TEXT">jeweils</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_compare" id="v=$w[o)sTMh,X7?*Ed5p">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="A[ru[]3EOo]|~UW)8(#Y">
+                    <field name="VAR" id="eY_f#*}D+!2^%Orz$wy%">Notify_Event</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="text" id="Nar}c$ZKP:=fZkx![l`9">
+                    <field name="TEXT">jeweils</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="variables_set" id="9(Js/pa+cy*@Oj$%dWs|">
+            <field name="VAR" id="MeI_x!lr~]|C?%wcOHNE">von_NSP</field>
+            <value name="VALUE">
+              <block type="text_charAt" id="e)3;e0XQJCd,[+BvUpDS" inline="false">
+                <mutation at="true"></mutation>
+                <field name="WHERE">FROM_END</field>
+                <value name="VALUE">
+                  <block type="get_value" id="?m+eOB!MslRD`Vre6TeJ">
+                    <field name="ATTR">val</field>
+                    <field name="OID">0_userdata.0.NSPanel.Alarm.PANEL</field>
+                  </block>
+                </value>
+                <value name="AT">
+                  <block type="math_number" id="?|[u@KOd4mF/0IdmEfY|">
+                    <field name="NUM">2</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="xMT}9v0/_JeYrfbmZg0(">
+                <field name="VAR" id="P,ZB-6|3PMPw0?#JVodG">bis_NSP</field>
+                <value name="VALUE">
+                  <block type="text_charAt" id="m17$HL~,=+^LeLf5Iycg" inline="false">
+                    <mutation at="true"></mutation>
+                    <field name="WHERE">FROM_END</field>
+                    <value name="VALUE">
+                      <block type="get_value" id="x[1q8.|XAvC/iz_|QjSC">
+                        <field name="ATTR">val</field>
+                        <field name="OID">0_userdata.0.NSPanel.Alarm.PANEL</field>
+                      </block>
+                    </value>
+                    <value name="AT">
+                      <block type="math_number" id="V/I@Cc`$(jMInmN19XH;">
+                        <field name="NUM">2</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="lH#8*[d@k%$BgU%8XV]U" x="-2287" y="363">
+    <field name="NAME">Define_Notify_alle</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+    <statement name="STACK">
+      <block type="controls_if" id="!wi6cs;rP*q:=Hf4Wx1z">
+        <value name="IF0">
+          <block type="logic_operation" id="-3JhDry!`O,~yTug?QwG" inline="false">
+            <field name="OP">OR</field>
+            <value name="A">
+              <block type="logic_compare" id="vJ!t,E$iFdxIT%CRe@Pa">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="3izSk]Dyd`#W.vN-kcF{">
+                    <field name="VAR" id="{t%:hZxc;c[vb3rv$kJk">Notify_Interaktion</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="text" id="zDJuQ!z?$xT^*I}F[@G$">
+                    <field name="TEXT">alle</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_compare" id="JYaI:[3du21WaVf5Rh+e">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="ukrgMPx0xYX=#Zz66FI#">
+                    <field name="VAR" id="eY_f#*}D+!2^%Orz$wy%">Notify_Event</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="text" id="xVu+!M,rR[4m9BLzQ$(x">
+                    <field name="TEXT">alle</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="variables_set" id=".jNoC73XV7W!`{n5oT5y">
+            <field name="VAR" id="MeI_x!lr~]|C?%wcOHNE">von_NSP</field>
+            <value name="VALUE">
+              <block type="math_number" id=")8`6(NG;YRqXTGvI9gcJ">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="M#@2U_+@xP^P[K#5n^x:">
+                <field name="VAR" id="P,ZB-6|3PMPw0?#JVodG">bis_NSP</field>
+                <value name="VALUE">
+                  <block type="variables_get" id="q+)Ad7%:m7(pJL18%U%C">
+                    <field name="VAR" id="f9QWZ*Bv.y1Kj#nA`o{1">Anzahl_NSPanels</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="d@]*oWnF~Qy+?%ICZT60" x="-2288" y="562">
+    <field name="NAME">PopupNotifyPage</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+    <statement name="STACK">
+      <block type="controls_if" id="0$T/J1pQ0Bu|l_r-eiT7">
+        <value name="IF0">
+          <block type="logic_compare" id="t00`dP]4!xU.mx!09Emk">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="variables_get" id="iF@W)OFbwsFP8c/wZ0qz">
+                <field name="VAR" id=":X)h@$QHfe%dTO-$EY#G">Notify_OnOff</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_boolean" id="-Kd$a%1~)%hjgzRiDhOZ">
+                <field name="BOOL">TRUE</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="controls_for" id=")svr8HYs)cRokOHJwSnp">
+            <field name="VAR" id="#td|(KTY]s^*yaPWKs8v">i</field>
+            <value name="FROM">
+              <shadow type="math_number" id="T5dgh=caUCsv}qcKoRPo">
+                <field name="NUM">1</field>
+              </shadow>
+              <block type="variables_get" id="nM-cXh4F|y=#ppGw;^#3">
+                <field name="VAR" id="MeI_x!lr~]|C?%wcOHNE">von_NSP</field>
+              </block>
+            </value>
+            <value name="TO">
+              <shadow type="math_number" id="[Pr}%moU|NGz_~ly#*mv">
+                <field name="NUM">1</field>
+              </shadow>
+              <block type="variables_get" id="qSHt+sYSu3Dg`Y6?Kq}{">
+                <field name="VAR" id="P,ZB-6|3PMPw0?#JVodG">bis_NSP</field>
+              </block>
+            </value>
+            <value name="BY">
+              <shadow type="math_number" id="=*`$tg+B@.kmh=x%A`:m">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <statement name="DO">
+              <block type="control_ex" id="%ixt}0-_BS8RK/E*j9=l">
+                <field name="TYPE">true</field>
+                <field name="CLEAR_RUNNING">FALSE</field>
+                <value name="OID">
+                  <shadow type="field_oid" id="_]Nw+No=[IC(]-nTYRzC">
+                    <field name="oid">Object ID</field>
+                  </shadow>
+                  <block type="text_join" id="bQheA_|HSN{kpOuizb[L" inline="false">
+                    <mutation items="4"></mutation>
+                    <value name="ADD0">
+                      <block type="text" id="pL:i[^RQk,8N%q`@XJ4Y">
+                        <field name="TEXT">0_userdata.0.NSPanel.</field>
+                      </block>
+                    </value>
+                    <value name="ADD1">
+                      <block type="variables_get" id="?$$3nXw50U${I_kpwQP*">
+                        <field name="VAR" id="#td|(KTY]s^*yaPWKs8v">i</field>
+                      </block>
+                    </value>
+                    <value name="ADD2">
+                      <block type="text" id="fBT}2zaC$?bKMD8hpwxP">
+                        <field name="TEXT">.popupNotify.</field>
+                      </block>
+                    </value>
+                    <value name="ADD3">
+                      <block type="text" id="vydvDzB8l{!gF5!E[#|u">
+                        <field name="TEXT">popupNotifyHeading</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="VALUE">
+                  <shadow type="logic_boolean" id="iPo49!.y!/8BvEp0_f(i">
+                    <field name="BOOL">TRUE</field>
+                  </shadow>
+                  <block type="text" id="PWqQYl^EYacUuX5fM^Z#">
+                    <field name="TEXT">PIN Prüfung</field>
+                  </block>
+                </value>
+                <value name="DELAY_MS">
+                  <shadow type="math_number" id="I{[WgP6u8x)};8lQvfUG">
+                    <field name="NUM">0</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="control_ex" id="2V`@aoNscFi*ag?|~ih3">
+                    <field name="TYPE">true</field>
+                    <field name="CLEAR_RUNNING">FALSE</field>
+                    <value name="OID">
+                      <shadow type="field_oid" id="ZZ(Sf2Zus6q!zIaO_:(4">
+                        <field name="oid">Object ID</field>
+                      </shadow>
+                      <block type="text_join" id="Fb!8XI^(8NY#hDmr:6-z" inline="false">
+                        <mutation items="4"></mutation>
+                        <value name="ADD0">
+                          <block type="text" id="JeiGE7Gi|f$x2C?07%,h">
+                            <field name="TEXT">0_userdata.0.NSPanel.</field>
+                          </block>
+                        </value>
+                        <value name="ADD1">
+                          <block type="variables_get" id="0lj^,2[$|2X,4r1N-$iU">
+                            <field name="VAR" id="#td|(KTY]s^*yaPWKs8v">i</field>
+                          </block>
+                        </value>
+                        <value name="ADD2">
+                          <block type="text" id="0zug@aeCaimUqBz|I^mM">
+                            <field name="TEXT">.popupNotify.</field>
+                          </block>
+                        </value>
+                        <value name="ADD3">
+                          <block type="text" id="oR12T83doJ5^gO/.J~r/">
+                            <field name="TEXT">popupNotifyText</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="VALUE">
+                      <shadow type="logic_boolean" id="]z?R/Sen^TgiWnNF8#wY">
+                        <field name="BOOL">TRUE</field>
+                      </shadow>
+                      <block type="variables_get" id="C7$#ZI-Mb2uSKQX:r$JB">
+                        <field name="VAR" id="z21BCrAcSmJl;/ADq)~[">NotifyText</field>
+                      </block>
+                    </value>
+                    <value name="DELAY_MS">
+                      <shadow type="math_number" id="639Gs09jN8*8Z$p!,b?N">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="control_ex" id="}FY*}#^,k*gw8T#EW^nM">
+                        <field name="TYPE">true</field>
+                        <field name="CLEAR_RUNNING">FALSE</field>
+                        <value name="OID">
+                          <shadow type="field_oid" id="7qxmx0%[Pmg.O{3hvAo3">
+                            <field name="oid">Object ID</field>
+                          </shadow>
+                          <block type="text_join" id="46blI{i^JHCi/3#{KpH2" inline="false">
+                            <mutation items="4"></mutation>
+                            <value name="ADD0">
+                              <block type="text" id="T**;n.-OQ})wjL_F^Fnb">
+                                <field name="TEXT">0_userdata.0.NSPanel.</field>
+                              </block>
+                            </value>
+                            <value name="ADD1">
+                              <block type="variables_get" id="faC`%lJS~OWARmB0JboO">
+                                <field name="VAR" id="#td|(KTY]s^*yaPWKs8v">i</field>
+                              </block>
+                            </value>
+                            <value name="ADD2">
+                              <block type="text" id="~d/4?qF,K-a+,`)g9Yq2">
+                                <field name="TEXT">.popupNotify.</field>
+                              </block>
+                            </value>
+                            <value name="ADD3">
+                              <block type="text" id="!9R@]Skk9v8G)cs#%(Si">
+                                <field name="TEXT">popupNotifyInternalName</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="VALUE">
+                          <shadow type="logic_boolean" id="I4PsJQb;6k+70^g*Xt/}">
+                            <field name="BOOL">TRUE</field>
+                          </shadow>
+                          <block type="math_random_float" id="C5/h)jq=yPM?,9J=(w65"></block>
+                        </value>
+                        <value name="DELAY_MS">
+                          <shadow type="math_number" id="+6#n%fO}e4h%;FhKPV0c">
+                            <field name="NUM">0</field>
+                          </shadow>
+                        </value>
+                        <next>
+                          <block type="control_ex" id="eW#GY^jo23l+eN#CoT$M">
+                            <field name="TYPE">true</field>
+                            <field name="CLEAR_RUNNING">FALSE</field>
+                            <value name="OID">
+                              <shadow type="field_oid" id="3o8k@mP?7Ywt6*jB!,8]">
+                                <field name="oid">Object ID</field>
+                              </shadow>
+                              <block type="text_join" id="=Jbr9H[#fd:BXDJE;!~g" inline="false">
+                                <mutation items="4"></mutation>
+                                <value name="ADD0">
+                                  <block type="text" id="Dkw9*R%h3UC@_6JdEoou">
+                                    <field name="TEXT">0_userdata.0.NSPanel.</field>
+                                  </block>
+                                </value>
+                                <value name="ADD1">
+                                  <block type="variables_get" id="{b_,T@_J-F1^#Q:nUV!$">
+                                    <field name="VAR" id="#td|(KTY]s^*yaPWKs8v">i</field>
+                                  </block>
+                                </value>
+                                <value name="ADD2">
+                                  <block type="text" id="YR.Hj!%h7S+~o,)`a47l">
+                                    <field name="TEXT">.popupNotify.</field>
+                                  </block>
+                                </value>
+                                <value name="ADD3">
+                                  <block type="text" id="vDwU)eC8@zGy`HbGhs`9">
+                                    <field name="TEXT">popupNotifyButton1Text</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="VALUE">
+                              <shadow type="logic_boolean" id=",+yQK0~%FlOBhJOW`}c;">
+                                <field name="BOOL">TRUE</field>
+                              </shadow>
+                              <block type="text" id="kkpU;l:U$Q!c1.sZGGn0">
+                                <field name="TEXT"></field>
+                              </block>
+                            </value>
+                            <value name="DELAY_MS">
+                              <shadow type="math_number" id="4kn(ykK1x^=+f^[6?eL.">
+                                <field name="NUM">0</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="control_ex" id="srm~vP#V^(_NS+Z5!586">
+                                <field name="TYPE">true</field>
+                                <field name="CLEAR_RUNNING">FALSE</field>
+                                <value name="OID">
+                                  <shadow type="field_oid" id="B9$OLw-N4tH^.U[@6^MG">
+                                    <field name="oid">Object ID</field>
+                                  </shadow>
+                                  <block type="text_join" id="0;/IVbs0HM0%B3,Szv=p" inline="false">
+                                    <mutation items="4"></mutation>
+                                    <value name="ADD0">
+                                      <block type="text" id="Ru|Wv=5Z0tRBZHi!:)*p">
+                                        <field name="TEXT">0_userdata.0.NSPanel.</field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD1">
+                                      <block type="variables_get" id="Sm-s5MM(b]yKxJ.Q9r$@">
+                                        <field name="VAR" id="#td|(KTY]s^*yaPWKs8v">i</field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD2">
+                                      <block type="text" id="[`o53K4sK^WeMg7WTg:o">
+                                        <field name="TEXT">.popupNotify.</field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD3">
+                                      <block type="text" id="PdMpY!OV[.4HbO#HaF?q">
+                                        <field name="TEXT">popupNotifyButton2Text</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <value name="VALUE">
+                                  <shadow type="logic_boolean" id="m@1+5uV%afa{==^;ZiJW">
+                                    <field name="BOOL">TRUE</field>
+                                  </shadow>
+                                  <block type="text" id="azRNP@I}sP9P$[xv!(V=">
+                                    <field name="TEXT">OK</field>
+                                  </block>
+                                </value>
+                                <value name="DELAY_MS">
+                                  <shadow type="math_number" id=":3mTg{8T3T`fE#+dN;mU">
+                                    <field name="NUM">0</field>
+                                  </shadow>
+                                </value>
+                                <next>
+                                  <block type="control_ex" id="s/?G;GJ?v*M`uM8rRH`b">
+                                    <field name="TYPE">true</field>
+                                    <field name="CLEAR_RUNNING">FALSE</field>
+                                    <value name="OID">
+                                      <shadow type="field_oid" id="]1i8~,0zj|KA/,gG@;@q">
+                                        <field name="oid">Object ID</field>
+                                      </shadow>
+                                      <block type="text_join" id="2Kb}#zGe_]w|2fAP+m-)" inline="false">
+                                        <mutation items="4"></mutation>
+                                        <value name="ADD0">
+                                          <block type="text" id="U+f.W80f^rZrb6ZG[Ls)">
+                                            <field name="TEXT">0_userdata.0.NSPanel.</field>
+                                          </block>
+                                        </value>
+                                        <value name="ADD1">
+                                          <block type="variables_get" id="+Wj{ik8}5Es3R1CZ+HR+">
+                                            <field name="VAR" id="#td|(KTY]s^*yaPWKs8v">i</field>
+                                          </block>
+                                        </value>
+                                        <value name="ADD2">
+                                          <block type="text" id="|EccNLcd6iBLEIAr/]?)">
+                                            <field name="TEXT">.popupNotify.</field>
+                                          </block>
+                                        </value>
+                                        <value name="ADD3">
+                                          <block type="text" id="q0{i6PD]jyrAI1XBmu.c">
+                                            <field name="TEXT">popupNotifySleepTimeout</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <value name="VALUE">
+                                      <shadow type="logic_boolean" id="!xR.7uuf7p}qgw/}r/.c">
+                                        <field name="BOOL">TRUE</field>
+                                      </shadow>
+                                      <block type="math_number" id="VH-ysksu6V8,2E#pI~~#">
+                                        <field name="NUM">0</field>
+                                      </block>
+                                    </value>
+                                    <value name="DELAY_MS">
+                                      <shadow type="math_number" id="f4i[r~rI4+/!%szgP=xz">
+                                        <field name="NUM">0</field>
+                                      </shadow>
+                                    </value>
+                                    <next>
+                                      <block type="control_ex" id="P/H8{MR@:scdemX?(6x4">
+                                        <field name="TYPE">true</field>
+                                        <field name="CLEAR_RUNNING">FALSE</field>
+                                        <value name="OID">
+                                          <shadow type="field_oid" id=")SxK}$m:CoWOV!.|1r$n">
+                                            <field name="oid">Object ID</field>
+                                          </shadow>
+                                          <block type="text_join" id="8OpvNb(tX).Liui9s~tO" inline="false">
+                                            <mutation items="4"></mutation>
+                                            <value name="ADD0">
+                                              <block type="text" id="=7plLs/vl;1(TVF1s2S4">
+                                                <field name="TEXT">0_userdata.0.NSPanel.</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD1">
+                                              <block type="variables_get" id="XZm]p,d-`^CbrUzwJur5">
+                                                <field name="VAR" id="#td|(KTY]s^*yaPWKs8v">i</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD2">
+                                              <block type="text" id="IBcU;^bN+J9yQ:%.astu">
+                                                <field name="TEXT">.popupNotify.</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD3">
+                                              <block type="text" id="o(%lzZ@76pI^|5N,oRJ#">
+                                                <field name="TEXT">popupNotifyAction</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <value name="VALUE">
+                                          <shadow type="logic_boolean" id="`5lH.U,vv{X)?c%w_OlQ">
+                                            <field name="BOOL">TRUE</field>
+                                          </shadow>
+                                        </value>
+                                        <value name="DELAY_MS">
+                                          <shadow type="math_number" id="{-`eG8LdS_9GTK)Z*w~:">
+                                            <field name="NUM">0</field>
+                                          </shadow>
+                                        </value>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml> 
