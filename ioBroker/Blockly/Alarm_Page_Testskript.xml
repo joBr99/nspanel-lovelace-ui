@@ -1,0 +1,65 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+<variables>
+<variable id="LwJJoNeQC4K?A;BW5:o">nspanelAlarmPath</variable>
+<variable id=".d{cc!R.4y2U9N+gLY1K">dpAlarmState</variable>
+</variables>
+<block type="comment" id="I^BpP.H=p^7Vj|-sy!%" x="-937" y="-162"> <field name="COMMENT">Bitte nspanelAlarmPath anpassen</field> <next> <block type="comment" id="JL[C{;Q}PF[TQ_BfpN$c"> <field name="COMMENT">Der Rest wird dynamisch für das jeweilige Panel ermittelt</field> <next> <block type="variables_set" id="2}X9[s}b1IDUV{6QPzh?"> <field name="VAR" id="LwJJoNeQC4K?A;BW5:_o">nspanelAlarmPath</field> <value name="VALUE"> <block type="text" id="in2z;TR0jhq1QI85qO8">
+<field name="TEXT">0_userdata.0.NSPanel.Alarm.</field>
+</block>
+</value>
+<next>
+<block type="variables_set" id="+tlGEcYI17~KL5S%%1O">
+<field name="VAR" id=".d{cc!R.4y2U9N+gLY1K">dpAlarmState</field>
+<value name="VALUE">
+<block type="text_join" id="PWihVQn3v+ef7aPA%zyx">
+<mutation items="2"></mutation>
+<value name="ADD0">
+<block type="variables_get" id="v2AT~!{!0Qc0BI2!SgN"> <field name="VAR" id="LwJJoNeQC4K?A;BW5:_o">nspanelAlarmPath</field> </block> </value> <value name="ADD1"> <block type="text" id="78{g[~wI2yQXnYZvL4}t"> <field name="TEXT">AlarmState</field> </block> </value> </block> </value> <next> <block type="on_ext" id="q!?(x}z/f~TClQnNmbyU"> <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation> <field name="CONDITION">ne</field> <field name="ACK_CONDITION"></field> <value name="OID0"> <shadow type="field_oid" id="]~f@4kO$zmxdg=}/810C"> <field name="oid">0_userdata.0.NSPanel.Alarm.AlarmState</field> </shadow> <block type="variables_get" id="vCPAx:V[ZG~6IkkFu/r">
+<field name="VAR" id=".d{cc!R.4y2U9N+gLY1K">dpAlarmState</field>
+</block>
+</value>
+<statement name="STATEMENT">
+<block type="controls_if" id="=e7bf!Q]$tg*0U1_2F"> <mutation elseif="2"></mutation> <value name="IF0"> <block type="logic_compare" id="0_9gv(MmSSJ{2a$j{}(P"> <field name="OP">EQ</field> <value name="A"> <block type="on_source" id="H$WWrxxX|NaWkT%W]g!Z"> <field name="ATTR">state.val</field> </block> </value> <value name="B"> <block type="text" id="_TnyjJ5x!)JY~rQ:Opj)"> <field name="TEXT">arming</field> </block> </value> </block> </value> <statement name="DO0"> <block type="comment" id="=w_/N]5Tu)B)NwyTbxSp"> <field name="COMMENT">weitere ioBroker-Überprüfung - z.B. Fenster offen</field> <next> <block type="control_ex" id="FGZ}]#=@X?IJ3ddc[9rP" inline="true"> <field name="TYPE">false</field> <field name="CLEAR_RUNNING">TRUE</field> <value name="OID"> <shadow type="field_oid" id="=EKIKVg=5v+fyd:5J3]B"> <field name="oid">Object ID</field> </shadow> <block type="variables_get" id="Y,]v4(aeLZ~(@alJ-8;D"> <field name="VAR" id=".d{cc!R.4y2U9N+gLY1K">dpAlarmState</field> </block> </value> <value name="VALUE"> <shadow type="logic_boolean" id="2A;g]]ox]cFCoGeBOge">
+<field name="BOOL">TRUE</field>
+</shadow>
+<block type="text" id="WOt(NkkB-R9/-Xho,6}-">
+<field name="TEXT">armed</field>
+</block>
+</value>
+<value name="DELAY_MS">
+<shadow type="math_number" id="M@|2SGg8%@2nZdqU51f">
+<field name="NUM">0</field>
+</shadow>
+<block type="math_number" id=".e9qh.?F@m)/t(HM7|M"> <field name="NUM">1000</field> </block> </value> </block> </next> </block> </statement> <value name="IF1"> <block type="logic_compare" id="]p3s+ouB~BJkfd:e)G:("> <field name="OP">EQ</field> <value name="A"> <block type="on_source" id=":n]Z,t6+q#-l_hP+MEI@"> <field name="ATTR">state.val</field> </block> </value> <value name="B"> <block type="text" id="([Ep{MPBu5s.C-lOdHgr"> <field name="TEXT">pending</field> </block> </value> </block> </value> <statement name="DO1"> <block type="control_ex" id="FI3q9?nQ|FDT]dY;djZz" inline="true"> <field name="TYPE">false</field> <field name="CLEAR_RUNNING">TRUE</field> <value name="OID"> <shadow type="field_oid"> <field name="oid">Object ID</field> </shadow> <block type="variables_get" id=":8ls:Akgxi%bWPgrIJT}"> <field name="VAR" id=".d{cc!R.4y2U9N+gLY1K">dpAlarmState</field> </block> </value> <value name="VALUE"> <shadow type="logic_boolean"> <field name="BOOL">TRUE</field> </shadow> <block type="text" id="MH!9j:G.S:mOaq31i!aM"> <field name="TEXT">disarmed</field> </block> </value> <value name="DELAY_MS"> <shadow type="math_number"> <field name="NUM">0</field> </shadow> <block type="math_number" id="zO=:KFH/FH-zc4ob5b7^"> <field name="NUM">1000</field> </block> </value> </block> </statement> <value name="IF2"> <block type="logic_compare" id="pHUmm^o8GqFji*VULm*Z"> <field name="OP">EQ</field> <value name="A"> <block type="on_source" id="ques8D:5Hge-)^s,XBR!"> <field name="ATTR">state.val</field> </block> </value> <value name="B"> <block type="text" id="3Hd)Fn4g#;XPXSWwe-$">
+<field name="TEXT">triggered</field>
+</block>
+</value>
+</block>
+</value>
+<statement name="DO2">
+<block type="comment" id="c%VR#jE+K$AoZ2m%HuY_">
+<field name="COMMENT">Wenn der PIN bei der Deaktivierung falsch war</field>
+<next>
+<block type="comment" id="I-Iasuh.K$wmTE`(e!;K">
+<field name="COMMENT">Zum Beispiel MEldung an Telegram oder popupNotify </field>
+<next>
+<block type="comment" id="j_U/cfS;e3c]-j}Bie,7">
+<field name="COMMENT">an Panel senden</field>
+</block>
+</next>
+</block>
+</next>
+</block>
+</statement>
+</block>
+</statement>
+</block>
+</next>
+</block>
+</next>
+</block>
+</next>
+</block>
+</next>
+</block>
+</xml>  
