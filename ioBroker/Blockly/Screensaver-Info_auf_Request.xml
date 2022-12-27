@@ -1,0 +1,94 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+ <block type="on" id="^D-c/jQ8.N);=7Ic~rAw" x="-238" y="-237">
+   <field name="OID">0_userdata.0.NSPanel.1.DP_RQ.NSPanel_InfoRQ</field>
+   <field name="CONDITION">ne</field>
+   <field name="ACK_CONDITION"></field>
+   <statement name="STATEMENT">
+     <block type="controls_if" id="NA-Iy%xl.-1qP}_ntm-K">
+       <value name="IF0">
+         <block type="logic_compare" id="xU6_pkIHp:+an:llYxO7">
+           <field name="OP">EQ</field>
+           <value name="A">
+             <block type="get_value" id="zt-oj}9|^lz$y0Y+uX{z">
+               <field name="ATTR">val</field>
+               <field name="OID">0_userdata.0.NSPanel.1.DP_RQ.NSPanel_InfoRQ</field>
+             </block>
+           </value>
+           <value name="B">
+             <block type="logic_boolean" id="W*,0+F8r{1lGvOZRLqR!">
+               <field name="BOOL">TRUE</field>
+             </block>
+           </value>
+         </block>
+       </value>
+       <statement name="DO0">
+         <block type="timeouts_wait" id="PWh;}}r)zb#ugpv6*sj|">
+           <field name="DELAY">20</field>
+           <field name="UNIT">sec</field>
+           <next>
+             <block type="control" id="oiUfnP)ms6:HeZU2e|;u">
+               <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="false"></mutation>
+               <field name="OID">0_userdata.0.NSPanel.1.ScreensaverInfo.popupNotifyHeading</field>
+               <field name="WITH_DELAY">FALSE</field>
+               <value name="VALUE">
+                 <block type="text" id="k:,q%UL1r6loKc@D}r+(">
+                   <field name="TEXT">INFO</field>
+                 </block>
+               </value>
+               <next>
+                 <block type="control" id="Ma4m/8_a28*A7/`%`*0X">
+                   <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="false"></mutation>
+                   <field name="OID">0_userdata.0.NSPanel.1.ScreensaverInfo.popupNotifyText</field>
+                   <field name="WITH_DELAY">FALSE</field>
+                   <value name="VALUE">
+                     <block type="text" id="ng-xB),UUycdg4GI2|K{">
+                       <field name="TEXT">Heute ist es ganz schön heiß!</field>
+                     </block>
+                   </value>
+                   <next>
+                     <block type="toggle" id="qUH1D!wwJXiYr[KQ,.}A">
+                       <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="false"></mutation>
+                       <field name="OID">0_userdata.0.NSPanel.1.DP_RQ.NSPanel_InfoRQ</field>
+                       <field name="WITH_DELAY">FALSE</field>
+                       <next>
+                         <block type="timeouts_wait" id=";93SSUfV69!-h_CWkA.@">
+                           <field name="DELAY">20</field>
+                           <field name="UNIT">sec</field>
+                           <next>
+                             <block type="control" id="}fxN7f3*x$HF9#ePhL3i">
+                               <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="false"></mutation>
+                               <field name="OID">0_userdata.0.NSPanel.1.ScreensaverInfo.popupNotifyHeading</field>
+                               <field name="WITH_DELAY">FALSE</field>
+                               <value name="VALUE">
+                                 <block type="text" id="b0jBsnk@!YwX~cuxkgOi">
+                                   <field name="TEXT"></field>
+                                 </block>
+                               </value>
+                               <next>
+                                 <block type="control" id="C}QMk;?Qtx^ZviUKh-}9">
+                                   <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="false"></mutation>
+                                   <field name="OID">0_userdata.0.NSPanel.1.ScreensaverInfo.popupNotifyText</field>
+                                   <field name="WITH_DELAY">FALSE</field>
+                                   <value name="VALUE">
+                                     <block type="text" id="m;bIZ!Y7H`e|BikGQ$%S">
+                                       <field name="TEXT"></field>
+                                     </block>
+                                   </value>
+                                 </block>
+                               </next>
+                             </block>
+                           </next>
+                         </block>
+                       </next>
+                     </block>
+                   </next>
+                 </block>
+               </next>
+             </block>
+           </next>
+         </block>
+       </statement>
+     </block>
+   </statement>
+ </block>
+</xml>

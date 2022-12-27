@@ -1,0 +1,486 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+ <variables>
+   <variable id="$%h)IyP*A]i!w|o;@^u~">PanelResult</variable>
+   <variable id="iG,DhTT3ntIL)6jkdBSx">Action</variable>
+ </variables>
+ <block type="on_ext" id="Z*WW:Hq=V/0/+D.7sBGj" x="88" y="63">
+   <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+   <field name="CONDITION">any</field>
+   <field name="ACK_CONDITION"></field>
+   <value name="OID0">
+     <shadow type="field_oid" id="s?5LPlVoKvrW,Gf/,d6(">
+       <field name="oid">default</field>
+     </shadow>
+     <block type="field_oid" id=";VZs-nq`+#GL`5jVspo^">
+       <field name="oid">mqtt.0.SmartHome.NSPanel_1.stat.RESULT</field>
+     </block>
+   </value>
+   <statement name="STATEMENT">
+     <block type="variables_set" id="W*-eYA4LLj$WMX1vlx9+">
+       <field name="VAR" id="$%h)IyP*A]i!w|o;@^u~">PanelResult</field>
+       <value name="VALUE">
+         <block type="convert_json2object" id="H}rYz*|_N_r:7lN6kRq)">
+           <value name="VALUE">
+             <block type="on_source" id="ks};I#sE9{y$Os12X3%`">
+               <field name="ATTR">state.val</field>
+             </block>
+           </value>
+         </block>
+       </value>
+       <next>
+         <block type="controls_if" id="|e+,CBW1}SywJvnEFroP">
+           <mutation elseif="1"></mutation>
+           <value name="IF0">
+             <block type="logic_compare" id="tkA^fRI!3FU^2Tiqlahc">
+               <field name="OP">EQ</field>
+               <value name="A">
+                 <block type="text_getSubstring" id="k}-`K]@kua~8fg*?I[t#">
+                   <mutation at1="true" at2="true"></mutation>
+                   <field name="WHERE1">FROM_START</field>
+                   <field name="WHERE2">FROM_START</field>
+                   <value name="STRING">
+                     <block type="on_source" id="qCOa@52xDIv4(R#:]Yzp">
+                       <field name="ATTR">state.val</field>
+                     </block>
+                   </value>
+                   <value name="AT1">
+                     <block type="math_number" id="Ncm@lgRgVYVBF~^yWKRE">
+                       <field name="NUM">3</field>
+                     </block>
+                   </value>
+                   <value name="AT2">
+                     <block type="math_number" id="Gov$3|Qrd91N~RUzWea=">
+                       <field name="NUM">9</field>
+                     </block>
+                   </value>
+                 </block>
+               </value>
+               <value name="B">
+                 <block type="text" id="2~EGhvBs4KIPXXMcNVkx">
+                   <field name="TEXT">Button1</field>
+                 </block>
+               </value>
+             </block>
+           </value>
+           <statement name="DO0">
+             <block type="variables_set" id="G!Z=C5KTj-Nl+XFa0RU_">
+               <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+               <value name="VALUE">
+                 <block type="get_attr" id="Ed}{-}B{X+obkb^Mmk8O">
+                   <value name="PATH">
+                     <shadow type="text">
+                       <field name="TEXT">Button2.Action</field>
+                     </shadow>
+                     <block type="text" id="-XSmbNSLD2q^JU.3)[(^">
+                       <field name="TEXT">Button1.Action</field>
+                     </block>
+                   </value>
+                   <value name="OBJECT">
+                     <block type="variables_get" id="-%8e}:rqW1kj_iUDQyyf">
+                       <field name="VAR" id="$%h)IyP*A]i!w|o;@^u~">PanelResult</field>
+                     </block>
+                   </value>
+                 </block>
+               </value>
+               <next>
+                 <block type="controls_if" id="729?J2a__sAP*2PmMN2%">
+                   <mutation elseif="4"></mutation>
+                   <value name="IF0">
+                     <block type="logic_compare" id="u9lV/l]c1,yVRl3(21(L">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id="kG0ARQ1j%HKz(I=l}`:P">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="v?m}nM1~E8zR0,Ja+if+">
+                           <field name="TEXT">SINGLE</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO0">
+                     <block type="comment" id="iqFwhe!^P0z9-W9D[tyh">
+                       <field name="COMMENT">Schalte etwas: Button1 1x gedrückt</field>
+                       <next>
+                         <block type="debug" id="F22M/f@lJ_xQ$t2#QW[#">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="?r3.Wy5c@$3DxmvbIGr}">
+                               <field name="TEXT">Button1 SINGLE wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                   <value name="IF1">
+                     <block type="logic_compare" id="[Vpq7B,RWb4k)Bhwq{nh">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id="|Whz!$I5#Iym52Pg8N?p">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="~f_cI8hrs;I)wJ-S.G3r">
+                           <field name="TEXT">DOUBLE</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO1">
+                     <block type="comment" id="D;PPB54t87N)%F{.hQAx">
+                       <field name="COMMENT">Schalte etwas: Button1 2x gedrückt</field>
+                       <next>
+                         <block type="debug" id="xoG/r3;33`8/j$QeZHW5">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="9PgW|#6f8``brbWQM9q7">
+                               <field name="TEXT">Button1 DOUBLE wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                   <value name="IF2">
+                     <block type="logic_compare" id="t)8drGw=u/q0Pl+ul^43">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id="-lf~?Q^H8o}J:cf@I5aN">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="Z!={5~.hF?V-NFw73|BL">
+                           <field name="TEXT">TRIPLE</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO2">
+                     <block type="comment" id="xjdh~X8eM8ab/a/JuIM/">
+                       <field name="COMMENT">Schalte etwas: Button1 3x gedrückt</field>
+                       <next>
+                         <block type="debug" id="n$kU%^k3$wHN/L**K=jA">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="SA^R/OJX#a7JDhE7LwL[">
+                               <field name="TEXT">Button1 TRIPLE wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                   <value name="IF3">
+                     <block type="logic_compare" id="ZCUeBK[Sc08KKQVMF)tC">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id=":Jlhv9(rM!D5H*eM|Gw-">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="6NH!g[HN7f=7_q%U10M!">
+                           <field name="TEXT">QUAD</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO3">
+                     <block type="comment" id="77*X9-*|mO]|P0$Jw=K`">
+                       <field name="COMMENT">Schalte etwas: Button1 4x gedrückt</field>
+                       <next>
+                         <block type="debug" id="qE@`G.#9s!UAtrlMJ/yi">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="G:19{lKn)m`B!x(NUx5S">
+                               <field name="TEXT">Button1 QUAD wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                   <value name="IF4">
+                     <block type="logic_compare" id="fz#2[~sK=iF%wd=4`hB,">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id="ROFyrrPZn5KJg7?Hs),Z">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="a]-o=$vOr9JDr(T!#SmL">
+                           <field name="TEXT">PENTA</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO4">
+                     <block type="comment" id="fxPE82.Ci3L`ME=X3nl|">
+                       <field name="COMMENT">Schalte etwas: Button1 5x gedrückt</field>
+                       <next>
+                         <block type="debug" id="7GbZ650het?k*+CCO:nr">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="*[}-a1hl?2pc^*@4E*hI">
+                               <field name="TEXT">Button1 PENTA wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                 </block>
+               </next>
+             </block>
+           </statement>
+           <value name="IF1">
+             <block type="logic_compare" id="8Ev:iPPfN3B?L^Q]oOIc">
+               <field name="OP">EQ</field>
+               <value name="A">
+                 <block type="text_getSubstring" id="xx:q0nC7,q8A8~v?PC#s">
+                   <mutation at1="true" at2="true"></mutation>
+                   <field name="WHERE1">FROM_START</field>
+                   <field name="WHERE2">FROM_START</field>
+                   <value name="STRING">
+                     <block type="on_source" id="JWC4m9/7dS^!]+xQ-I0Y">
+                       <field name="ATTR">state.val</field>
+                     </block>
+                   </value>
+                   <value name="AT1">
+                     <block type="math_number" id="k7=j)18I6TmB%)upvAVJ">
+                       <field name="NUM">3</field>
+                     </block>
+                   </value>
+                   <value name="AT2">
+                     <block type="math_number" id=",EKn%h/uX3}ZjCvmW1KE">
+                       <field name="NUM">9</field>
+                     </block>
+                   </value>
+                 </block>
+               </value>
+               <value name="B">
+                 <block type="text" id="Uuj{UrX@-3nNjw{n!H/@">
+                   <field name="TEXT">Button2</field>
+                 </block>
+               </value>
+             </block>
+           </value>
+           <statement name="DO1">
+             <block type="variables_set" id="U~1k_f;62_-QkRvGZz=)">
+               <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+               <value name="VALUE">
+                 <block type="get_attr" id="izCz6K1Y;L.7M7MlHA$c">
+                   <value name="PATH">
+                     <shadow type="text">
+                       <field name="TEXT">Button2.Action</field>
+                     </shadow>
+                     <block type="text" id="y1)^1#)QjYVVA7)mWdvM">
+                       <field name="TEXT">Button2.Action</field>
+                     </block>
+                   </value>
+                   <value name="OBJECT">
+                     <block type="variables_get" id="TIg$Lr%^Fuk`fxDLC:,^">
+                       <field name="VAR" id="$%h)IyP*A]i!w|o;@^u~">PanelResult</field>
+                     </block>
+                   </value>
+                 </block>
+               </value>
+               <next>
+                 <block type="controls_if" id="tC_APU:6jW5063/l=sR1">
+                   <mutation elseif="4"></mutation>
+                   <value name="IF0">
+                     <block type="logic_compare" id="P9XXNXzc+3H{*^w1P_@q">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id="sua/L8[qi8e:U#m}d^pi">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="E^e9/nh{n@)S6e:4q3_h">
+                           <field name="TEXT">SINGLE</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO0">
+                     <block type="comment" id="qoOw*}O|E06w[5[cXWLo">
+                       <field name="COMMENT">Schalte etwas: Button2 1x gedrückt</field>
+                       <next>
+                         <block type="debug" id=",tE:-UWz(0Zqlc8KBLqO">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text" id="!waPZV$J9fR+dq462%h+">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="{3#KVO|*86E:3pR/!%WP">
+                               <field name="TEXT">Button2 SINGLE wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                   <value name="IF1">
+                     <block type="logic_compare" id="_Z+eBL!Zj.|LQL+_s|Ld">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id="15Tx7/a!(wJ;FO+x!4JW">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="}l%?@L+:Ma!=:d2Ky/%*">
+                           <field name="TEXT">DOUBLE</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO1">
+                     <block type="comment" id="~72fN$sZV!.O{%*0+awy">
+                       <field name="COMMENT">Schalte etwas: Button2 2x gedrückt</field>
+                       <next>
+                         <block type="debug" id="-T4*$n8-_X_{@6!Ga5FQ">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="LFX2j}Pr:o,{$YxQVcp2">
+                               <field name="TEXT">Button2 DOUBLE wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                   <value name="IF2">
+                     <block type="logic_compare" id="6-2Eew1,aoyC]Th*AaJ5">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id="4Nl6[tYm2pL@rL7v8vLI">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="zthA#*kib2r|xv+,A{Sh">
+                           <field name="TEXT">TRIPLE</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO2">
+                     <block type="comment" id="?OI)q#8XL#1)x.E=*m~~">
+                       <field name="COMMENT">Schalte etwas: Button2 3x gedrückt</field>
+                       <next>
+                         <block type="debug" id="%6ZLfC`!6?Z%jXlF:mFa">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="eh|tY,l}uz:WTx}4_G_E">
+                               <field name="TEXT">Button2 TRIPLE wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                   <value name="IF3">
+                     <block type="logic_compare" id="*~f.cy|6d8U0s?|^%:8R">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id="tiZ6%x5iuvhh:Yi*9qB9">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="I|K0m__6/:.kuBtYQE5l">
+                           <field name="TEXT">QUAD</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO3">
+                     <block type="comment" id="ToQ_dt~n$Ef|8-fb|__O">
+                       <field name="COMMENT">Schalte etwas: Button2 4x gedrückt</field>
+                       <next>
+                         <block type="debug" id="qyb7DL~:^6|r@9~KOb+A">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="tb4wo7_n@J)Q9$FLf|rV">
+                               <field name="TEXT">Button2 QUAD wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                   <value name="IF4">
+                     <block type="logic_compare" id="M:x`b;I}a8;jJU=g}u)[">
+                       <field name="OP">EQ</field>
+                       <value name="A">
+                         <block type="variables_get" id="Yh,)fk$+WmVXS=iwbzK{">
+                           <field name="VAR" id="iG,DhTT3ntIL)6jkdBSx">Action</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <block type="text" id="1FMk3I`mfaAfEhMd$D#e">
+                           <field name="TEXT">PENTA</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <statement name="DO4">
+                     <block type="comment" id="5+tVGCf{MdkG(OBDmuy|">
+                       <field name="COMMENT">Schalte etwas: Button2 5x gedrückt</field>
+                       <next>
+                         <block type="debug" id="}{-PVi#AL#[EGD,eb?M#">
+                           <field name="Severity">log</field>
+                           <value name="TEXT">
+                             <shadow type="text">
+                               <field name="TEXT">Button</field>
+                             </shadow>
+                             <block type="text" id="HuBkD3zi|o@.S3w.Qh7n">
+                               <field name="TEXT">Button2 PENTA wurde gedrückt</field>
+                             </block>
+                           </value>
+                         </block>
+                       </next>
+                     </block>
+                   </statement>
+                 </block>
+               </next>
+             </block>
+           </statement>
+         </block>
+       </next>
+     </block>
+   </statement>
+ </block>
+</xml>
