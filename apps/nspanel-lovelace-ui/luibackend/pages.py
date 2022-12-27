@@ -256,9 +256,9 @@ class LuiPagesGen(object):
         # HA Entities
         entity = apis.ha_api.get_entity(entityId)
         # check state for if a condition is defined
-        if item.condState is not None and item.condState == entity.state:
+        if item.condState is not None and item.condState != entity.state:
             return ""
-        if item.condStateNot is not None and item.condStateNot != entity.state:
+        if item.condStateNot is not None and item.condStateNot == entity.state:
             return ""
         
         # common res vars
