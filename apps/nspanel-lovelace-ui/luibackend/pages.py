@@ -190,6 +190,9 @@ class LuiPagesGen(object):
                 color = self.get_entity_color(entity, ha_type=entityType, overwrite=statusIcon.get("color", None))
                 status_res += f"~{icon}~{color}"
                 altfont += f'~{statusIcon.get("altFont", "")}'
+            else:
+                status_res += "~~"
+                altfont += "~"
 
         self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}{status_res}{altfont}")        
         # send color if configured in screensaver
