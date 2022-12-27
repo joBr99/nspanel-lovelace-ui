@@ -1,0 +1,236 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="QPiqoyWT$%Cp)OZ=|`*W">vSTATE</variable>
+    <variable id="!E]!o]+#iwtI}R=X+,zV">vACTUAL</variable>
+    <variable id="#BYGZV@hvwAL/]L2%/8w">sec_timer</variable>
+    <variable type="interval" id="Intervall">Intervall</variable>
+  </variables>
+  <block type="variables_set" id="XV2H4i,jWn`z+)|k#NJw" x="38" y="-263">
+    <field name="VAR" id="QPiqoyWT$%Cp)OZ=|`*W">vSTATE</field>
+    <value name="VALUE">
+      <block type="text" id="r,7fA;o:e.|28/,@0]JH">
+        <field name="TEXT">0_userdata.0.Timer.NSPanel.1.Countdown.Zustand</field>
+      </block>
+    </value>
+    <next>
+      <block type="variables_set" id="r4Cw8qj}45yA4j7D(^B-">
+        <field name="VAR" id="!E]!o]+#iwtI}R=X+,zV">vACTUAL</field>
+        <value name="VALUE">
+          <block type="text" id="nRXWb#VRyJS5cXNbhq0y">
+            <field name="TEXT">0_userdata.0.Timer.NSPanel.1.Countdown.Sekunden</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="57{xGHam)5G*~)???W)5">
+            <field name="VAR" id="#BYGZV@hvwAL/]L2%/8w">sec_timer</field>
+            <value name="VALUE">
+              <block type="get_value_var" id="s9stp?b253SRZwZo*b`t">
+                <field name="ATTR">val</field>
+                <value name="OID">
+                  <shadow type="text" id="K,Lb1bBP41R.OE[NS)i1">
+                    <field name="TEXT"></field>
+                  </shadow>
+                  <block type="variables_get" id="uqn`Azeg-~BoGAP`6l7c">
+                    <field name="VAR" id="!E]!o]+#iwtI}R=X+,zV">vACTUAL</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="on_ext" id="KTTXX_aR/l#vo.Oy!god">
+                <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+                <field name="CONDITION">ne</field>
+                <field name="ACK_CONDITION"></field>
+                <value name="OID0">
+                  <shadow type="field_oid" id="[~]6MakRk81y;6T=D#E1">
+                    <field name="oid">default</field>
+                  </shadow>
+                  <block type="text" id="99{OsQ*le2{H2clp=,[^">
+                    <field name="TEXT">0_userdata.0.Timer.NSPanel.1.Countdown.Zustand</field>
+                  </block>
+                </value>
+                <statement name="STATEMENT">
+                  <block type="logic_switch_case" id="*DcmKGH^MzH`@|}$)`Vi">
+                    <mutation xmlns="http://www.w3.org/1999/xhtml" default="1"></mutation>
+                    <value name="CONDITION">
+                      <block type="on_source" id="Kv#`7##ZlSfAaV9U*YlU">
+                        <field name="ATTR">state.val</field>
+                      </block>
+                    </value>
+                    <value name="CASECONDITION0">
+                      <block type="text" id="jSK+-X9^LZ52;FZkF{N@">
+                        <field name="TEXT">active</field>
+                      </block>
+                    </value>
+                    <statement name="CASE0">
+                      <block type="timeouts_clearinterval" id="H1?KT2GS=;m|lB4B[d9{">
+                        <field name="NAME">Intervall</field>
+                        <next>
+                          <block type="timeouts_setinterval" id="OCAffLYx5xl2^)mb:1ON">
+                            <field name="NAME">Intervall</field>
+                            <field name="INTERVAL">1000</field>
+                            <field name="UNIT">ms</field>
+                            <statement name="STATEMENT">
+                              <block type="controls_if" id="M:$D10b:c^VB7N-[zAAs">
+                                <mutation else="1"></mutation>
+                                <value name="IF0">
+                                  <block type="logic_compare" id="Y%K:Fww+C*D)mW_pAvb5" inline="false">
+                                    <field name="OP">GT</field>
+                                    <value name="A">
+                                      <block type="get_value_var" id="AkNnDdzS;{lm8`UsDA$a">
+                                        <field name="ATTR">val</field>
+                                        <value name="OID">
+                                          <shadow type="text" id="jvzl]}[mrPTl0ev@@~.i">
+                                            <field name="TEXT"></field>
+                                          </shadow>
+                                          <block type="variables_get" id="0}HonAc*HO)G!?xMBnx]">
+                                            <field name="VAR" id="!E]!o]+#iwtI}R=X+,zV">vACTUAL</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <value name="B">
+                                      <block type="math_number" id="E}Xx=@{9XDIhj5($(DXz">
+                                        <field name="NUM">0</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <statement name="DO0">
+                                  <block type="variables_set" id="[lc#LS]+_y3JU6;*iy/;">
+                                    <field name="VAR" id="#BYGZV@hvwAL/]L2%/8w">sec_timer</field>
+                                    <value name="VALUE">
+                                      <block type="get_value_var" id="()czu@y9l5__t%_~guQ4">
+                                        <field name="ATTR">val</field>
+                                        <value name="OID">
+                                          <shadow type="text" id="O~#Pq`;j8,}OcT/IMc2|">
+                                            <field name="TEXT"></field>
+                                          </shadow>
+                                          <block type="variables_get" id="B0a}HDdI9+PoN,71,$tV">
+                                            <field name="VAR" id="!E]!o]+#iwtI}R=X+,zV">vACTUAL</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="control_ex" id="3I8#ZkQ(OTw*^t6-dpu6" inline="true">
+                                        <field name="TYPE">false</field>
+                                        <field name="CLEAR_RUNNING">FALSE</field>
+                                        <value name="OID">
+                                          <shadow type="field_oid" id="YjjD8L[b+^gS7jV^+[Y~">
+                                            <field name="oid">Object ID</field>
+                                          </shadow>
+                                          <block type="variables_get" id="?r6MSEFq,iv61OR]$K6R">
+                                            <field name="VAR" id="!E]!o]+#iwtI}R=X+,zV">vACTUAL</field>
+                                          </block>
+                                        </value>
+                                        <value name="VALUE">
+                                          <shadow type="logic_boolean" id="G4EZc5H)j2Zdg:=;eu%n">
+                                            <field name="BOOL">TRUE</field>
+                                          </shadow>
+                                          <block type="math_arithmetic" id="0178UKVA@dcT|$46OmJx">
+                                            <field name="OP">MINUS</field>
+                                            <value name="A">
+                                              <shadow type="math_number" id="8Ymex9XyD-+Ouo]MD`8d">
+                                                <field name="NUM">1</field>
+                                              </shadow>
+                                              <block type="variables_get" id="RHFea=Bu!IabYuXBG:EX">
+                                                <field name="VAR" id="#BYGZV@hvwAL/]L2%/8w">sec_timer</field>
+                                              </block>
+                                            </value>
+                                            <value name="B">
+                                              <shadow type="math_number" id="sejG{?~!bE6~.u.4td%|">
+                                                <field name="NUM">1</field>
+                                              </shadow>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <value name="DELAY_MS">
+                                          <shadow type="math_number" id="k:`kho).[#@/%ye+g.u?">
+                                            <field name="NUM">0</field>
+                                          </shadow>
+                                        </value>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </statement>
+                                <statement name="ELSE">
+                                  <block type="control_ex" id="QsmpsLDys?p|Hy=+M`nA" inline="true">
+                                    <field name="TYPE">false</field>
+                                    <field name="CLEAR_RUNNING">FALSE</field>
+                                    <value name="OID">
+                                      <shadow type="field_oid" id=".74}mEqIO9M~:ek5U;R(">
+                                        <field name="oid">Object ID</field>
+                                      </shadow>
+                                      <block type="variables_get" id="f`@kho?65GVY~$;xysw3">
+                                        <field name="VAR" id="!E]!o]+#iwtI}R=X+,zV">vACTUAL</field>
+                                      </block>
+                                    </value>
+                                    <value name="VALUE">
+                                      <shadow type="logic_boolean" id="hkR7Dc_[$;{L`+JxicRa">
+                                        <field name="BOOL">TRUE</field>
+                                      </shadow>
+                                      <block type="math_number" id="4u6KIhWH@!VZ0*$MD;u7">
+                                        <field name="NUM">0</field>
+                                      </block>
+                                    </value>
+                                    <value name="DELAY_MS">
+                                      <shadow type="math_number" id="g]^hfC+$vJu[_o`O!8c1">
+                                        <field name="NUM">0</field>
+                                      </shadow>
+                                    </value>
+                                    <next>
+                                      <block type="control_ex" id="Bk@3kjR?T{Px,8U!3]{w" inline="true">
+                                        <field name="TYPE">false</field>
+                                        <field name="CLEAR_RUNNING">FALSE</field>
+                                        <value name="OID">
+                                          <shadow type="field_oid" id="#GVc9+G/u85]l_vcm;zH">
+                                            <field name="oid">Object ID</field>
+                                          </shadow>
+                                          <block type="variables_get" id=":,.Z}O;]8X=;wj%SxO5w">
+                                            <field name="VAR" id="QPiqoyWT$%Cp)OZ=|`*W">vSTATE</field>
+                                          </block>
+                                        </value>
+                                        <value name="VALUE">
+                                          <shadow type="logic_boolean" id="5ne=aTSnU@7c$CGM9EUC">
+                                            <field name="BOOL">TRUE</field>
+                                          </shadow>
+                                          <block type="text" id="mm{`e;eblljVtUBz2(_!">
+                                            <field name="TEXT">idle</field>
+                                          </block>
+                                        </value>
+                                        <value name="DELAY_MS">
+                                          <shadow type="math_number" id="/.0#c4XU-@]c!Q{onR2T">
+                                            <field name="NUM">0</field>
+                                          </shadow>
+                                        </value>
+                                        <next>
+                                          <block type="comment" id="Uvi2,2[ruXRlYD.4c(=^">
+                                            <field name="COMMENT">An dieser Stelle kann auch noch eine Meldung an Alexa oder Telegram, etc. erfolgen</field>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </statement>
+                              </block>
+                            </statement>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <statement name="ONDEFAULT">
+                      <block type="timeouts_clearinterval" id="t*fh0y@^c/W:T/x#PS!g">
+                        <field name="NAME">Intervall</field>
+                      </block>
+                    </statement>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>
