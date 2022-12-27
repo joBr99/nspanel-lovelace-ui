@@ -1,0 +1,131 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+<variables>
+<variable id="VC{%szTBZ]@G*_Z1kd=p">NSPanel_Path</variable>
+<variable id="7-~%q%O+i,p)gd]2E]u%">i</variable>
+</variables>
+<block type="comment" id=".H8cu)X4;0/ELXg0~!2" x="-212" y="-137"> <field name="COMMENT">1.) DWD-Adapter muss installiert sein!</field> <next> <block type="comment" id="cMAJA*6Mucx!}~#*FItV"> <field name="COMMENT">2.) Anpassen: Pfade deiner NSPanel 1-n</field> <next> <block type="comment" id="I,l}p*+|7)O*7iDhs{C{"> <field name="COMMENT">wenn mehr NSPanel dann Liste erweitern</field> <next> <block type="comment" id="z#bI#s:k[=wnRjs?t=M">
+<field name="COMMENT">wenn weniger NSPanel dann Liste verkürzen</field>
+<next>
+<block type="variables_set" id="IZv),n_W8%BJqvjwFH60">
+<field name="VAR" id="VC{%szTBZ]@G*Z1kd=p">NSPanel_Path</field>
+<value name="VALUE">
+<block type="lists_create_with" id="hbVUA-n,wK$8EN8v9M2x">
+<mutation items="3"></mutation>
+<value name="ADD0">
+<block type="text" id="^nQ3=mooLvr$lZ;cPu!t">
+<field name="TEXT">0.userdata.0.NSPanel.1.</field>
+</block>
+</value>
+<value name="ADD1">
+<block type="text" id="X!Pp5k{{2N5^~VZ24!X{">
+<field name="TEXT">0.userdata.0.NSPanel.2.</field>
+</block>
+</value>
+<value name="ADD2">
+<block type="text" id="htgZqn!7]yOK?I%{#m9D">
+<field name="TEXT">0.userdata.0.NSPanel.EMU.</field>
+</block>
+</value>
+</block>
+</value>
+<next>
+<block type="comment" id="}C)!uPDDrlP+Z_ZZxCTP">
+<field name="COMMENT">Trigger auf dwd.0.warning.headline</field>
+<next>
+<block type="on_ext" id="?o?W:(X@bTJ~te|=L*A"> <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation> <field name="CONDITION">any</field> <field name="ACK_CONDITION"></field> <value name="OID0"> <shadow type="field_oid" id="o;@Yb+8-u0:)}3FV/ayZ"> <field name="oid">default</field> </shadow> <block type="field_oid" id="en?eq5J4w5-U^CGl=+Iq"> <field name="oid">dwd.0.warning.headline</field> </block> </value> <statement name="STATEMENT"> <block type="controls_forEach" id="cY44Jgg1PYPJ54ee{d2t"> <field name="VAR" id="7-~%q%O+i,p)gd]2E]u%">i</field> <value name="LIST"> <block type="variables_get" id="g.tPwvave?zcNnhoj#.o"> <field name="VAR" id="VC{%szTBZ]@G*_Z1kd=p">NSPanel_Path</field> </block> </value> <statement name="DO"> <block type="controls_if" id="QPGGF3MVC*NdY!,Moey?"> <value name="IF0"> <block type="logic_compare" id="}r2=99u*N|9-V+V=o?E">
+<field name="OP">GT</field>
+<value name="A">
+<block type="text_length" id="(TJ!yd2sS0(/Sk_iE1;">
+<value name="VALUE">
+<shadow type="text" id="ynMYy4ITGRb%9Q-7A6^n">
+<field name="TEXT">abc</field>
+</shadow>
+<block type="on_source" id=";)N~d3E+|T|z{Fyxp%#">
+<field name="ATTR">state.val</field>
+</block>
+</value>
+</block>
+</value>
+<value name="B">
+<block type="math_number" id="Vw,J0v/)7719Hc@+Fi=x">
+<field name="NUM">0</field>
+</block>
+</value>
+</block>
+</value>
+<statement name="DO0">
+<block type="comment" id="PX+4_x%y+g1GWg+Ug6R">
+<field name="COMMENT">ScreensaverInfo.popupNotifyHeading</field>
+<next>
+<block type="control_ex" id="o7P*;1Ttxs*C/e.0Pn88" inline="true">
+<field name="TYPE">false</field>
+<field name="CLEAR_RUNNING">FALSE</field>
+<value name="OID">
+<shadow type="field_oid" id="@?zbekjnHNiqZ.?:UZ,"> <field name="oid">Object ID</field> </shadow> <block type="text_join" id="VAdQl$ZWG@WOy_,rcu6%"> <mutation items="2"></mutation> <value name="ADD0"> <block type="variables_get" id="YT;mRR_H6+t{J~}QU_E/"> <field name="VAR" id="7-~%q%O+i,p)gd]2E]u%">i</field> </block> </value> <value name="ADD1"> <block type="text" id="^7!wIf6=?EvYr$SoR^P">
+<field name="TEXT">ScreensaverInfo.popupNotifyHeading</field>
+</block>
+</value>
+</block>
+</value>
+<value name="VALUE">
+<shadow type="logic_boolean" id="4]C|sQYZbuEUMP]xH-Ab">
+<field name="BOOL">TRUE</field>
+</shadow>
+<block type="text" id="+(i@.kA,fI(I2w-ZHuo">
+<field name="TEXT">Deutscher Wetterdienst</field>
+</block>
+</value>
+<value name="DELAY_MS">
+<shadow type="math_number" id="rDN^aNATSKF-a=?gO?Ww">
+<field name="NUM">0</field>
+</shadow>
+</value>
+<next>
+<block type="comment" id="TG}L5iTO?~|;AN-yf?NV">
+<field name="COMMENT">ScreensaverInfo.popupNotifyText</field>
+<next>
+<block type="control_ex" id="q/ci(sG(Vxs+s07bvr]b" inline="true">
+<field name="TYPE">false</field>
+<field name="CLEAR_RUNNING">FALSE</field>
+<value name="OID">
+<shadow type="field_oid">
+<field name="oid">Object ID</field>
+</shadow>
+<block type="text_join" id="IoU]L/3.jrEgMe=(I)K">
+<mutation items="2"></mutation>
+<value name="ADD0">
+<block type="variables_get" id="EXcC{bR:k@EwC!QkJ)YQ">
+<field name="VAR" id="7-~%q%O+i,p)gd]2E]u%">i</field>
+</block>
+</value>
+<value name="ADD1">
+<block type="text" id="+Zex[j7epd,T21~*k6-"> <field name="TEXT">ScreensaverInfo.popupNotifyText</field> </block> </value> </block> </value> <value name="VALUE"> <shadow type="logic_boolean" id="0{J_-SZvB.zu]ETOXlH/"> <field name="BOOL">TRUE</field> </shadow> <block type="on_source" id="5?IF}*4XhhK0PN3[wD!z"> <field name="ATTR">state.val</field> </block> </value> <value name="DELAY_MS"> <shadow type="math_number" id="pJ2jr~?.G0YB;6r]?S=">
+<field name="NUM">0</field>
+</shadow>
+</value>
+</block>
+</next>
+</block>
+</next>
+</block>
+</next>
+</block>
+</statement>
+</block>
+</statement>
+</block>
+</statement>
+</block>
+</next>
+</block>
+</next>
+</block>
+</next>
+</block>
+</next>
+</block>
+</next>
+</block>
+</next>
+</block>
+</xml>
