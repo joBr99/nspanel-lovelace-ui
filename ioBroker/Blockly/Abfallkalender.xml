@@ -1,0 +1,385 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+ <variables>
+   <variable id="h}CE-n1l`S|gRf(0K%./">i</variable>
+   <variable id="j5C=K+Z.E:im1#q:;A=6">Muell_JSON</variable>
+   <variable id="^:v=Yb?;aM;Z[}4jCF3-">Event</variable>
+   <variable id="9^)S?J=tLkC7cUWc-u9w">Color</variable>
+ </variables>
+ <block type="on_ext" id="aFeZac36,?)=rfMg%3T|" x="38" y="-287">
+   <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+   <field name="CONDITION">ne</field>
+   <field name="ACK_CONDITION"></field>
+   <value name="OID0">
+     <shadow type="field_oid" id="GSzQ}epUa))me3m8yyuD">
+       <field name="oid">ical.1.data.table</field>
+     </shadow>
+   </value>
+   <statement name="STATEMENT">
+     <block type="controls_for" id="wduAM(OBPzLJ@bfYAK5%">
+       <field name="VAR" id="h}CE-n1l`S|gRf(0K%./">i</field>
+       <value name="FROM">
+         <shadow type="math_number" id="HK~R2U|`xb$U5W+tsHpN">
+           <field name="NUM">0</field>
+         </shadow>
+       </value>
+       <value name="TO">
+         <shadow type="math_number" id="Ed[L/:1e9-cwxrRaZiIv">
+           <field name="NUM">3</field>
+         </shadow>
+       </value>
+       <value name="BY">
+         <shadow type="math_number" id="o@5kngFiPpvl5dGo@Q$9">
+           <field name="NUM">1</field>
+         </shadow>
+       </value>
+       <statement name="DO">
+         <block type="variables_set" id="0T)vK0k8aikvg7mF6XHo">
+           <field name="VAR" id="j5C=K+Z.E:im1#q:;A=6">Muell_JSON</field>
+           <value name="VALUE">
+             <block type="get_value" id="1~kG;UHn$nw2zzbfOIT]">
+               <field name="ATTR">val</field>
+               <field name="OID">ical.1.data.table</field>
+             </block>
+           </value>
+           <next>
+             <block type="control_ex" id="UAu,2OBRJp9~Nzyxouyu">
+               <field name="TYPE">false</field>
+               <field name="CLEAR_RUNNING">FALSE</field>
+               <value name="OID">
+                 <shadow type="field_oid" id="J_|uu;{e44n5Z-;qE+hP">
+                   <field name="oid">Object ID</field>
+                 </shadow>
+                 <block type="text_join" id="8/|eHqk))j9Po-O*mK`e">
+                   <mutation items="3"></mutation>
+                   <value name="ADD0">
+                     <block type="text" id="Zp8GRfdfXujkeM41=PeZ">
+                       <field name="TEXT">0_userdata.0.Abfallkalender.</field>
+                     </block>
+                   </value>
+                   <value name="ADD1">
+                     <block type="math_arithmetic" id="$!!l@[eJ~4Kdb5/Imo.X">
+                       <field name="OP">ADD</field>
+                       <value name="A">
+                         <shadow type="math_number" id="zaU15{yD43xkuY@?)RY(">
+                           <field name="NUM">1</field>
+                         </shadow>
+                         <block type="variables_get" id="o3pJ(+3KE~Co%u-dy.:W">
+                           <field name="VAR" id="h}CE-n1l`S|gRf(0K%./">i</field>
+                         </block>
+                       </value>
+                       <value name="B">
+                         <shadow type="math_number" id="_LBb[#z%M$n0~1Y}~8w+">
+                           <field name="NUM">1</field>
+                         </shadow>
+                       </value>
+                     </block>
+                   </value>
+                   <value name="ADD2">
+                     <block type="text" id="Vt#-b{iDzusQQx]#0%0,">
+                       <field name="TEXT">.date</field>
+                     </block>
+                   </value>
+                 </block>
+               </value>
+               <value name="VALUE">
+                 <shadow type="logic_boolean" id="/y1w}eely@o.gl$]#)o=">
+                   <field name="BOOL">TRUE</field>
+                 </shadow>
+                 <block type="get_attr" id="p~0A1{eb$lD~.9`9R4K)">
+                   <value name="PATH">
+                     <shadow type="text">
+                       <field name="TEXT">0.date</field>
+                     </shadow>
+                     <block type="text_join" id="DDs!.^n(V7=A_TK}DFQt">
+                       <mutation items="2"></mutation>
+                       <value name="ADD0">
+                         <block type="variables_get" id="k1+Dybgb:u2y9v57OrCg">
+                           <field name="VAR" id="h}CE-n1l`S|gRf(0K%./">i</field>
+                         </block>
+                       </value>
+                       <value name="ADD1">
+                         <block type="text" id="EXgB=?B}IKiUdQ.2tKoa">
+                           <field name="TEXT">.date</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <value name="OBJECT">
+                     <block type="variables_get" id="dzLb1f^T!(MM,d=cYU9y">
+                       <field name="VAR" id="j5C=K+Z.E:im1#q:;A=6">Muell_JSON</field>
+                     </block>
+                   </value>
+                 </block>
+               </value>
+               <value name="DELAY_MS">
+                 <shadow type="math_number" id="f8q~r@+q|8Kov#3EufsI">
+                   <field name="NUM">0</field>
+                 </shadow>
+               </value>
+               <next>
+                 <block type="variables_set" id="E[W-)N[vKeufX{v$B[]p">
+                   <field name="VAR" id="^:v=Yb?;aM;Z[}4jCF3-">Event</field>
+                   <value name="VALUE">
+                     <block type="text_getSubstring" id="YU_Q05y^+I.IzV[c9h9B" inline="false">
+                       <mutation at1="true" at2="false"></mutation>
+                       <field name="WHERE1">FROM_START</field>
+                       <field name="WHERE2">LAST</field>
+                       <value name="STRING">
+                         <block type="get_attr" id=":/^m9o]3:=L%$4[9$f]7">
+                           <value name="PATH">
+                             <shadow type="text">
+                               <field name="TEXT">0.event</field>
+                             </shadow>
+                             <block type="text_join" id="*MaT-W83R/Y5`?QCQNec">
+                               <mutation items="2"></mutation>
+                               <value name="ADD0">
+                                 <block type="variables_get" id="l5d$/glqMm3~+YA`5]wg">
+                                   <field name="VAR" id="h}CE-n1l`S|gRf(0K%./">i</field>
+                                 </block>
+                               </value>
+                               <value name="ADD1">
+                                 <block type="text" id="$+g0XH}$`2`+{B}s3ID@">
+                                   <field name="TEXT">.event</field>
+                                 </block>
+                               </value>
+                             </block>
+                           </value>
+                           <value name="OBJECT">
+                             <block type="variables_get" id="nSDdx_!gO45lc4.$`wI`">
+                               <field name="VAR" id="j5C=K+Z.E:im1#q:;A=6">Muell_JSON</field>
+                             </block>
+                           </value>
+                         </block>
+                       </value>
+                       <value name="AT1">
+                         <block type="math_number" id="ic:P:#_w68q^w]#/;w+K">
+                           <field name="NUM">9</field>
+                         </block>
+                       </value>
+                     </block>
+                   </value>
+                   <next>
+                     <block type="control_ex" id="^[032{A//-EpUE6lh7ml">
+                       <field name="TYPE">false</field>
+                       <field name="CLEAR_RUNNING">FALSE</field>
+                       <value name="OID">
+                         <shadow type="field_oid">
+                           <field name="oid">Object ID</field>
+                         </shadow>
+                         <block type="text_join" id="`@U%x4KdNV~Y0I`#+,BB">
+                           <mutation items="3"></mutation>
+                           <value name="ADD0">
+                             <block type="text" id="Rk[N`gae|lr/9FXmY!no">
+                               <field name="TEXT">0_userdata.0.Abfallkalender.</field>
+                             </block>
+                           </value>
+                           <value name="ADD1">
+                             <block type="math_arithmetic" id="=RY5pU%/0M!J;{^z81qr">
+                               <field name="OP">ADD</field>
+                               <value name="A">
+                                 <shadow type="math_number">
+                                   <field name="NUM">1</field>
+                                 </shadow>
+                                 <block type="variables_get" id="TbkkwM2BKh^+;KTQY3C]">
+                                   <field name="VAR" id="h}CE-n1l`S|gRf(0K%./">i</field>
+                                 </block>
+                               </value>
+                               <value name="B">
+                                 <shadow type="math_number" id="e,-Pz1Hy!V:=8S,tHo`:">
+                                   <field name="NUM">1</field>
+                                 </shadow>
+                               </value>
+                             </block>
+                           </value>
+                           <value name="ADD2">
+                             <block type="text" id="SApnes6}k9wDi243W2xp">
+                               <field name="TEXT">.event</field>
+                             </block>
+                           </value>
+                         </block>
+                       </value>
+                       <value name="VALUE">
+                         <shadow type="logic_boolean" id="70uxCt~?y`hOTCs:tJ^~">
+                           <field name="BOOL">TRUE</field>
+                         </shadow>
+                         <block type="variables_get" id="}@7(YP=fmA0l@:FJS$v#">
+                           <field name="VAR" id="^:v=Yb?;aM;Z[}4jCF3-">Event</field>
+                         </block>
+                       </value>
+                       <value name="DELAY_MS">
+                         <shadow type="math_number" id="@JEhP_3fysDQ6a_x:ILm">
+                           <field name="NUM">0</field>
+                         </shadow>
+                       </value>
+                       <next>
+                         <block type="controls_if" id="r,.`4GPI|(([[.76Cft~">
+                           <mutation elseif="3"></mutation>
+                           <value name="IF0">
+                             <block type="logic_compare" id="d4g.Ts.`^;_R!bu)T_~|">
+                               <field name="OP">EQ</field>
+                               <value name="A">
+                                 <block type="variables_get" id="tC!eDI_BV-hGgDc@kuPc">
+                                   <field name="VAR" id="^:v=Yb?;aM;Z[}4jCF3-">Event</field>
+                                 </block>
+                               </value>
+                               <value name="B">
+                                 <block type="text" id="?3tZotX[hHq9HGFsA(x|">
+                                   <field name="TEXT">Reststoff</field>
+                                 </block>
+                               </value>
+                             </block>
+                           </value>
+                           <statement name="DO0">
+                             <block type="variables_set" id="FXPSk]#;ZliNOBw7bVC8">
+                               <field name="VAR" id="9^)S?J=tLkC7cUWc-u9w">Color</field>
+                               <value name="VALUE">
+                                 <block type="math_number" id="-6AJ8U932(j5LuWN@Sp,">
+                                   <field name="NUM">33840</field>
+                                 </block>
+                               </value>
+                             </block>
+                           </statement>
+                           <value name="IF1">
+                             <block type="logic_compare" id=":{8uXg8tzuFNCxedDJ:F">
+                               <field name="OP">EQ</field>
+                               <value name="A">
+                                 <block type="variables_get" id="0A}m@W~711B2u){_B8uP">
+                                   <field name="VAR" id="^:v=Yb?;aM;Z[}4jCF3-">Event</field>
+                                 </block>
+                               </value>
+                               <value name="B">
+                                 <block type="text" id="x,Cz(O2e|co^a7rJEdO7">
+                                   <field name="TEXT">Biotonne</field>
+                                 </block>
+                               </value>
+                             </block>
+                           </value>
+                           <statement name="DO1">
+                             <block type="variables_set" id="Y#|WXlt|w+`5h3B`VI]*">
+                               <field name="VAR" id="9^)S?J=tLkC7cUWc-u9w">Color</field>
+                               <value name="VALUE">
+                                 <block type="math_number" id="BVnWo|iSfirB?Vw*M7;o">
+                                   <field name="NUM">2016</field>
+                                 </block>
+                               </value>
+                             </block>
+                           </statement>
+                           <value name="IF2">
+                             <block type="logic_compare" id="Q0ejJ+ovU#35l7SaPd`7">
+                               <field name="OP">EQ</field>
+                               <value name="A">
+                                 <block type="variables_get" id="/EhoIt{trOOc3*+k5m4C">
+                                   <field name="VAR" id="^:v=Yb?;aM;Z[}4jCF3-">Event</field>
+                                 </block>
+                               </value>
+                               <value name="B">
+                                 <block type="text" id="BVzI8#S#S*Yqk5v;$?kD">
+                                   <field name="TEXT">Blaue Tonne</field>
+                                 </block>
+                               </value>
+                             </block>
+                           </value>
+                           <statement name="DO2">
+                             <block type="variables_set" id="R7DF(c~|*~pR_D]JqW7c">
+                               <field name="VAR" id="9^)S?J=tLkC7cUWc-u9w">Color</field>
+                               <value name="VALUE">
+                                 <block type="math_number" id="#A]b|UX(@QPk*SM_q)RZ">
+                                   <field name="NUM">31</field>
+                                 </block>
+                               </value>
+                             </block>
+                           </statement>
+                           <value name="IF3">
+                             <block type="logic_compare" id="MjEHt,7LG#}DST*Iuc.R">
+                               <field name="OP">EQ</field>
+                               <value name="A">
+                                 <block type="variables_get" id="(WzO?43I0:YSK;VgFmnX">
+                                   <field name="VAR" id="^:v=Yb?;aM;Z[}4jCF3-">Event</field>
+                                 </block>
+                               </value>
+                               <value name="B">
+                                 <block type="text" id="![3nA.95iLG[3]m5%GYS">
+                                   <field name="TEXT">Gelbe Tonne</field>
+                                 </block>
+                               </value>
+                             </block>
+                           </value>
+                           <statement name="DO3">
+                             <block type="variables_set" id="959t9eG^*uj2c;pF^HGP">
+                               <field name="VAR" id="9^)S?J=tLkC7cUWc-u9w">Color</field>
+                               <value name="VALUE">
+                                 <block type="math_number" id="{*68t/i/Q7}6cb+0$`6Y">
+                                   <field name="NUM">65504</field>
+                                 </block>
+                               </value>
+                             </block>
+                           </statement>
+                           <next>
+                             <block type="control_ex" id="^c0LOh0WChe-1QNTGVAy">
+                               <field name="TYPE">false</field>
+                               <field name="CLEAR_RUNNING">FALSE</field>
+                               <value name="OID">
+                                 <shadow type="field_oid" id="7gi,zaI;54L/Ek{e9,I@">
+                                   <field name="oid">Object ID</field>
+                                 </shadow>
+                                 <block type="text_join" id="J|nD$KZ,I6q=mt,xW@:X">
+                                   <mutation items="3"></mutation>
+                                   <value name="ADD0">
+                                     <block type="text" id="kwm[DP}25YD]Te=}p`S0">
+                                       <field name="TEXT">0_userdata.0.Abfallkalender.</field>
+                                     </block>
+                                   </value>
+                                   <value name="ADD1">
+                                     <block type="math_arithmetic" id="pj~|`_~%6}=?B^fK4@;L">
+                                       <field name="OP">ADD</field>
+                                       <value name="A">
+                                         <shadow type="math_number">
+                                           <field name="NUM">1</field>
+                                         </shadow>
+                                         <block type="variables_get" id="To0?Cg*f2pZ(Z`zK|=?M">
+                                           <field name="VAR" id="h}CE-n1l`S|gRf(0K%./">i</field>
+                                         </block>
+                                       </value>
+                                       <value name="B">
+                                         <shadow type="math_number" id="=Q|k5qeOIy1ya}{CVNF@">
+                                           <field name="NUM">1</field>
+                                         </shadow>
+                                       </value>
+                                     </block>
+                                   </value>
+                                   <value name="ADD2">
+                                     <block type="text" id="If6$$63npGW3OazEE^46">
+                                       <field name="TEXT">.color</field>
+                                     </block>
+                                   </value>
+                                 </block>
+                               </value>
+                               <value name="VALUE">
+                                 <shadow type="logic_boolean" id=")+b01E8B2-c#vcsGmA+Y">
+                                   <field name="BOOL">TRUE</field>
+                                 </shadow>
+                                 <block type="variables_get" id="/5*6z@-R5w^1i2*XphN|">
+                                   <field name="VAR" id="9^)S?J=tLkC7cUWc-u9w">Color</field>
+                                 </block>
+                               </value>
+                               <value name="DELAY_MS">
+                                 <shadow type="math_number" id="79qt?j;aoK%i)roQkfoE">
+                                   <field name="NUM">0</field>
+                                 </shadow>
+                               </value>
+                             </block>
+                           </next>
+                         </block>
+                       </next>
+                     </block>
+                   </next>
+                 </block>
+               </next>
+             </block>
+           </next>
+         </block>
+       </statement>
+     </block>
+   </statement>
+ </block>
+</xml>
