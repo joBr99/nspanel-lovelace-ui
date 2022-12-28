@@ -166,44 +166,39 @@ sharedfoot = """
 """
 
 navigation = """
-              // navigation icons
-              spstr strCommand.txt,tId.txt,"~",2
-              spstr tId.txt,tTmp.txt,"|",0
-              if(tTmp.txt=="0")
+              // navigation icon left
+              spstr strCommand.txt,tTmp.txt,"~",2 //type
+              if(tTmp.txt=="delete"||tTmp.txt=="")
               {
                 vis bPrev,0
-                tsw mSwipePrev,0
-                tsw mSwipeUp,0
-              }
-              if(tTmp.txt=="1")
+              }else
               {
+                // get internal name
+                spstr strCommand.txt,nent1.txt,"~",3
+                // change icon
+                spstr strCommand.txt,bPrev.txt,"~",4
+                // change icon color
+                spstr strCommand.txt,tTmp.txt,"~",5
+                covx tTmp.txt,sys0,0,0
+                bPrev.pco=sys0
                 vis bPrev,1
-                tsw mSwipePrev,1
-                tsw mSwipeUp,0
-                bPrev.txt=""
               }
-              if(tTmp.txt=="2")
-              {
-                vis bPrev,1
-                tsw mSwipePrev,0
-                tsw mSwipeUp,1
-                bPrev.txt=""
-              }       
-              spstr tId.txt,tTmp.txt,"|",1
-              if(tTmp.txt=="0")
+              
+              // navigation icon right
+              spstr strCommand.txt,tTmp.txt,"~",8 //type
+              if(tTmp.txt=="delete"||tTmp.txt=="")
               {
                 vis bNext,0
-                tsw mSwipeNext,0
-              }
-              if(tTmp.txt=="1")
+              }else
               {
+                // get internal name
+                spstr strCommand.txt,nent1.txt,"~",9
+                // change icon
+                spstr strCommand.txt,bNext.txt,"~",10
+                // change icon color
+                spstr strCommand.txt,tTmp.txt,"~",11
+                covx tTmp.txt,sys0,0,0
+                bNext.pco=sys0
                 vis bNext,1
-                tsw mSwipeNext,1
-                bNext.txt=""
-              }
-              if(tTmp.txt=="2")
-              {
-                vis bNext,1
-                bNext.txt=""
               }
 """
