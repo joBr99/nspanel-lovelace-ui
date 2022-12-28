@@ -1,0 +1,39 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="Uw.Jx`*MQ7d]N=k6_hef">red</variable>
+    <variable id="l/tKh!CxVZ8MaUD8]4BC">green</variable>
+    <variable id="W+I@m/~8~V?qYW18MFf;">blue</variable>
+  </variables>
+  <block type="procedures_callcustomnoreturn" id="Q,IVDSL4b@cXsV7yc{3]" x="163" y="-462">
+    <mutation name="rgb_dec565">
+      <arg name="red"></arg>
+      <arg name="green"></arg>
+      <arg name="blue"></arg>
+    </mutation>
+    <value name="ARG0">
+      <block type="math_number" id="^yjvoCmYPYdayZ,S?8m@">
+        <field name="NUM">255</field>
+      </block>
+    </value>
+    <value name="ARG1">
+      <block type="math_number" id="|-SI7Y?An]a$M^UJTXf@">
+        <field name="NUM">255</field>
+      </block>
+    </value>
+    <value name="ARG2">
+      <block type="math_number" id="|qlCesDW{Y%4-P%nJ0@D">
+        <field name="NUM">255</field>
+      </block>
+    </value>
+  </block>
+  <block type="procedures_defcustomnoreturn" id="+p_U;y%).og3oh3En}~T" x="163" y="-337">
+    <mutation statements="false">
+      <arg name="red" varid="Uw.Jx`*MQ7d]N=k6_hef"></arg>
+      <arg name="green" varid="l/tKh!CxVZ8MaUD8]4BC"></arg>
+      <arg name="blue" varid="W+I@m/~8~V?qYW18MFf;"></arg>
+    </mutation>
+    <field name="NAME">rgb_dec565</field>
+    <field name="SCRIPT">Y29uc29sZS53YXJuKCgoTWF0aC5mbG9vcihyZWQgLyAyNTUgKiAzMSkgPDwgMTEpIHwgKE1hdGguZmxvb3IoZ3JlZW4gLyAyNTUgKiA2MykgPDwgNSkgfCAoTWF0aC5mbG9vcihibHVlIC8gMjU1ICogMzEpKSkpOw0K</field>
+    <comment pinned="false" h="80" w="160">Beschreibe diese Funktion …</comment>
+  </block>
+</xml>
