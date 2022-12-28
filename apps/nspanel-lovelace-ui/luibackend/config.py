@@ -166,8 +166,10 @@ class LuiBackendConfig(object):
             last_card = next
             cur.uuid_next = next.uuid
             next.uuid_prev = cur.uuid
-        first_card.uuid_prev = last_card.uuid
-        last_card.uuid_next  = first_card.uuid
+        # if there is only one top level card first and last card will be none
+        if first_card and last_card:
+            first_card.uuid_prev = last_card.uuid
+            last_card.uuid_next  = first_card.uuid
 
         # parse screensaver
         self._config_screensaver = Card(self.get("screensaver"))
