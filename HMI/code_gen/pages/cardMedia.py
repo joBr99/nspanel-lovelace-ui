@@ -8,31 +8,31 @@ head = sharedhead + """
 print(head)
 print("""
               //entity name
-              spstr strCommand.txt,entn.txt,"~",3
+              spstr strCommand.txt,entn.txt,"~",14
               //title
-              spstr strCommand.txt,tTitle.txt,"~",4
+              spstr strCommand.txt,tTitle.txt,"~",15
               //title farbe
-              spstr strCommand.txt,tTmp.txt,"~",5
+              spstr strCommand.txt,tTmp.txt,"~",16
               if(tTmp.txt!="")
               {
                 covx tTmp.txt,tTitle.pco,0,0
               }
               //author
-              spstr strCommand.txt,tAuthor.txt,"~",6
+              spstr strCommand.txt,tAuthor.txt,"~",17
               //author farbe
-              spstr strCommand.txt,tTmp.txt,"~",7
+              spstr strCommand.txt,tTmp.txt,"~",18
               if(tTmp.txt!="")
               {
                 covx tTmp.txt,tAuthor.pco,0,0
               }
               //volume
-              spstr strCommand.txt,tTmp.txt,"~",8
+              spstr strCommand.txt,tTmp.txt,"~",19
               covx tTmp.txt,sys0,0,0
               hVolume.val=sys0
               //icon
-              spstr strCommand.txt,tPlayPause.txt,"~",9
+              spstr strCommand.txt,tPlayPause.txt,"~",20
               // on off button
-              spstr strCommand.txt,tTmp.txt,"~",10
+              spstr strCommand.txt,tTmp.txt,"~",21
               if(tTmp.txt=="disable")
               {
                 vis t5,0
@@ -42,7 +42,7 @@ print("""
                 covx tTmp.txt,t5.pco,0,0
               }
               // shuffel btn
-              spstr strCommand.txt,tTmp.txt,"~",11
+              spstr strCommand.txt,tTmp.txt,"~",22
               if(tTmp.txt=="disable")
               {
                 vis tShuffle,0
@@ -54,7 +54,7 @@ print("""
 """)
 
 
-start = 12
+start = 23
 for i in range(1,7):
     idxstart = start + (i-1)*6
     item = f"""

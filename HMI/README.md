@@ -102,7 +102,11 @@ change the page type:
 
 ### cardEntities Page
 
-`entityUpd~title~[navigation]~[entity_information]`
+Structure (Category): `entityUpd~title~[navigation]~[entity_information]`
+Example with 4 Entities: 
+```
+entityUpd~LightTest~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~light~light.bed_light~A~17299~Bed Light~0~light~light.ceiling_lights~B~52231~Ceiling Lights~1~switch~switch.ac~C~17299~AC~0~switch~switch.decorative_lights~D~65222~Decorative Lights~1
+```
 
 <table>
 <thead>
@@ -663,6 +667,1433 @@ cardGrid is using the exact same message cardEntities is using; it ignores the i
   </tr>
 </tbody>
 </table>
+
+### cardMedia
+
+Example without icons in bottom row: `entityUpd~Kitchen~button~navigation.up~U~65535~~~delete~~~~~~media_player.kitchen~I'm a Hurricane~~Wellmess~~100~A~64704~B~media_pl~media_player.kitchen~C~17299~Kitchen~`
+
+<table>
+<thead>
+  <tr>
+    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td rowspan="9">cardMedia specific</td>
+    <td></td>
+    <td rowspan="9">cardMedia specific</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td rowspan="2">1st text row</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>titleColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td rowspan="2">2nd text row</td>
+    <td>author</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>authorColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>slider</td>
+    <td>volume</td>
+    <td>0-100</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>icon middle</td>
+    <td>playPauseIcon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>icon right side</td>
+    <td>onOffBtn</td>
+    <td>"disable" or color</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>icon left side</td>
+    <td>iconShuffle</td>
+    <td>"disable" or icon</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td rowspan="36">Entities</td>
+    <td rowspan="6">upper left corner media&nbsp;&nbsp;&nbsp;icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td rowspan="6">First Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td rowspan="6">Second Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td rowspan="6">Thrid Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td rowspan="6">Forth Entiry</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td rowspan="6">Fifth Entiy</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>54</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>58</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+</tbody>
+</table>
+
+### cardThermo
+
+Serial Protocol of cardThermo is about to change; table will be completed later
+
+<table>
+<thead>
+  <tr>
+    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td rowspan="7">cardThermo specific</td>
+    <td></td>
+    <td rowspan="7">cardThermo specific</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td rowspan="2"></td>
+    <td>currentTemp</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>dstTemp</td>
+    <td>current temp; multiplied by 10</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td rowspan="2">4th Text Box Left Side</td>
+    <td>status</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>minTemp</td>
+    <td>min temp; multiplied by 10</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td></td>
+    <td>maxTemp</td>
+    <td>max temp; multiplied by 10</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td></td>
+    <td>tempStep</td>
+    <td>temp adj per step; multiplied by 10</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td rowspan="36"></td>
+    <td rowspan="6"></td>
+    <td rowspan="6"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td rowspan="6"></td>
+    <td rowspan="6"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td rowspan="6"></td>
+    <td rowspan="6"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td rowspan="6"></td>
+    <td rowspan="6"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td rowspan="6"></td>
+    <td rowspan="6"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td rowspan="6"></td>
+    <td rowspan="6"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>54</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>58</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>59</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>61</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>62</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>63</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>64</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>65</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>66</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>67</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>68</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>69</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>70</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>71</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>72</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>73</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+### cardAlarm
+
+<table>
+<thead>
+  <tr>
+    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td rowspan="15">cardAlarm specific</td>
+    <td colspan="2" rowspan="2">1st button&nbsp;&nbsp;&nbsp;right side</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>intId</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td colspan="2" rowspan="2">2nd button&nbsp;&nbsp;&nbsp;right side</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>intId</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td colspan="2" rowspan="2">3rd button&nbsp;&nbsp;&nbsp;right side</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>intId</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td colspan="2" rowspan="2">4th button&nbsp;&nbsp;&nbsp;right side</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>intId</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td colspan="2" rowspan="2">icon next to code display</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td colspan="2">numpad</td>
+    <td>numpadStatus</td>
+    <td>"disable" or "enable"</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td colspan="2">flashing of icon next to code</td>
+    <td>flashing status</td>
+    <td>"enable" or "disable"</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td colspan="2" rowspan="3">button bottom left corner</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+### cardQR
+
+Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~~WIFI:S:test_ssid;T:WPA;P:test_pw;;~text~iText.test_ssid~���~17299~Name~test_ssid~text~iText.test_pw~���~17299~Password~test_pw`
+
+<table>
+<thead>
+  <tr>
+    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td colspan="3">cardQR specific</td>
+    <td>qrcode text</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td rowspan="12">Entities</td>
+    <td rowspan="6">1st Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td rowspan="6">2nd Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+
+### cardPower (in development)
+
+<table>
+<thead>
+  <tr>
+    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td rowspan="27">cardPower specific</td>
+    <td rowspan="3">Home Icon Middle</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td></td>
+    <td>text</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td rowspan="4">1st Item Upper Left</td>
+    <td rowspan="4">Power Entity Definition</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>speed</td>
+    <td>numbers (-2,-1,0,1,2)</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>text</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td rowspan="4">2nd Item Middle Left</td>
+    <td rowspan="4">Power Entity Definition</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>speed</td>
+    <td>numbers (-2,-1,0,1,2)</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>text</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td rowspan="4">3rd Item Bottom Left</td>
+    <td rowspan="4">Power Entity Definition</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>speed</td>
+    <td>numbers (-2,-1,0,1,2)</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>text</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td rowspan="4">4th Item Upper Right</td>
+    <td rowspan="4">Power Entity Definition</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>speed</td>
+    <td>numbers (-2,-1,0,1,2)</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>text</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td rowspan="4">5thItem Middle Right</td>
+    <td rowspan="4">Power Entity Definition</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td>speed</td>
+    <td>numbers (-2,-1,0,1,2)</td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>text</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td rowspan="4">6th Item Bottom Right</td>
+    <td rowspan="4">Power Entity Definition</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td>speed</td>
+    <td>numbers (-2,-1,0,1,2)</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>text</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+# cardChart
+
+TODO
+
 
 # Custom Protocol
 

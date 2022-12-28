@@ -5,16 +5,16 @@ head = sharedhead + """
             // command format: entityUpd,heading,navigation,colorHome,iconHome[,iconColor,icon,speed,valueUp,valueDown]x6
             spstr strCommand.txt,tHeading.txt,"~",1
 """ + navigation + """
-			        // icon color home
-              spstr strCommand.txt,tTmp.txt,"~",3
+			  // icon color home
+              spstr strCommand.txt,tTmp.txt,"~",14
               covx tTmp.txt,t1.pco,0,0
 			        // icon home
-              spstr strCommand.txt,t1.txt,"~",4
+              spstr strCommand.txt,t1.txt,"~",15
 			        // text home
-              spstr strCommand.txt,tHome.txt,"~",5
+              spstr strCommand.txt,tHome.txt,"~",16
 """
 print(head)
-start = 6
+start = 17
 for i in range(0,6):
     idxstart = start + (i)*4
     item = f"""
