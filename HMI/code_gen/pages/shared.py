@@ -192,7 +192,7 @@ navigation = """
               }else
               {
                 // get internal name
-                spstr strCommand.txt,nent1.txt,"~",9
+                spstr strCommand.txt,nent2.txt,"~",9
                 // change icon
                 spstr strCommand.txt,bNext.txt,"~",10
                 // change icon color
