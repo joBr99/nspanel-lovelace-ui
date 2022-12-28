@@ -1,4 +1,6 @@
+from itertools import pairwise
 import uuid
+
 import apis
 
 class Entity(object):
@@ -20,8 +22,11 @@ class Entity(object):
         self.entity_input_config = entity_input_config
 
 class Card(object):
-    def __init__(self, card_input_config, pos=None):
-        self.pos = pos
+    def __init__(self, card_input_config, hidden=False):
+        self.uuid = f"uuid.{uuid.uuid4().hex}"
+        self.uuid_prev = None
+        self.uuid_next = None
+        self.hidden = hidden
         self.raw_config = card_input_config
         self.cardType = card_input_config.get("type", "unknown")
         self.title =  card_input_config.get("title", "unknown")
@@ -35,7 +40,7 @@ class Card(object):
         for e in card_input_config.get("entities", []):
             self.entities.append(Entity(e))
         self.id = f"{self.cardType}_{self.key}".replace(".","_").replace("~","_").replace(" ","_")
-        #self._ha_api.log(f"Created Card {self.cardType} with pos {pos} and id {self.id}")
+        #self._ha_api.log(f"Created Card {self.cardType} and id {self.id}")
     
     def get_entity_names(self):
         entityIds = []
@@ -81,7 +86,6 @@ class LuiBackendConfig(object):
         self._config = {}
         self._config_cards = []
         self._config_screensaver = None
-        self._config_hidden_cards = []
 
         self._DEFAULT_CONFIG = {
             'panelRecvTopic': "tele/tasmota_your_mqtt_topic/RESULT",
@@ -148,20 +152,33 @@ class LuiBackendConfig(object):
         self._config = self.dict_recursive_update(inconfig, self._DEFAULT_CONFIG)
         apis.ha_api.log("Loaded config: %s", self._config)
         
-        # parse cards displayed on panel
-        pos = 0
+        # parse cards
         for card in self.get("cards"):
-            self._config_cards.append(Card(card, pos))
-            pos = pos + 1
+            self._config_cards.append(Card(card))
+
+        # setup prev and next uuids
+        top_level_cards = filter(lambda card: not card.hidden, self._config_cards)
+        first_card = None
+        last_card  = None
+        for cur, next in pairwise(top_level_cards):
+            if first_card is None:
+                first_card = cur
+            last_card = next
+            cur.uuid_next = next.uuid
+            next.uuid_prev = cur.uuid
+        first_card.uuid_prev = last_card.uuid
+        last_card.uuid_next  = first_card.uuid
+
         # parse screensaver
         self._config_screensaver = Card(self.get("screensaver"))
 
-        # parse hidden pages that can be accessed through navigate
+        # parse hidden cards
         for card in self.get("hiddenCards"):
-            self._config_hidden_cards.append(Card(card))
+            self._config_cards.append(Card(card, hidden=True))
 
         # all entites sorted by generated key, to be able to use short identifiers
         self._config_entites_table = {x.uuid: x for x in self.get_all_entitys()}
+        self._config_card_table = {x.uuid: x for x in self._config_cards}
 
     def get(self, name):
         path = name.split(".")
@@ -182,8 +199,6 @@ class LuiBackendConfig(object):
         entities = []
         for card in self._config_cards:
             entities.extend(card.get_entity_names())
-        for card in self._config_hidden_cards:
-            entities.extend(card.get_entity_names())
         entities.extend(self._config_screensaver.get_entity_names())
         return entities
 
@@ -191,21 +206,35 @@ class LuiBackendConfig(object):
         entities = []
         for card in self._config_cards:
             entities.extend(card.get_entity_list())
-        for card in self._config_hidden_cards:
-            entities.extend(card.get_entity_list())
         return entities
-
-    def getCard(self, pos):
-        card = self._config_cards[pos%len(self._config_cards)]
-        return card
 
     def searchCard(self, id):
         id = id.replace("navigate.", "")
+        if id.startswith("uuid"):
+            return self.get_card_by_uuid(id)
+        # legacy type_key
         for card in self._config_cards:
             if card.id == id:
                 return card
         if self._config_screensaver.id == id:
             return self._config_screensaver
-        for card in self._config_hidden_cards:
-            if card.id == id:
+
+        # just search for key
+        for card in self._config_cards:
+            if card.key == id:
                 return card
+        if self._config_screensaver.key == id:
+            return self._config_screensaver
+
+    def get_default_card(self):
+        defaultCard = self._config.get("screensaver.defaultCard")
+        defaultCard = apis.ha_api.render_template(defaultCard)
+        if defaultCard is not None:
+            defaultCard = self.search_card(defaultCard)
+        if defaultCard is not None:
+            return defaultCard
+        else:
+            return self._config_cards[0]
+
+    def get_card_by_uuid(self, uuid):
+        return self._config_card_table.get(uuid)

@@ -9,6 +9,7 @@ from icons import get_icon, get_icon_ha
 from icons import get_action_icon
 from helper import scale, rgb_dec565, rgb_brightness, get_attr_safe, convert_temperature
 from localization import get_translation
+from config import Entity
 
 # check Babel
 import importlib
@@ -32,43 +33,46 @@ class LuiPagesGen(object):
                 for overwrite_state, overwrite_val in overwrite.items():
                     if overwrite_state == state:
                         return rgb_dec565(overwrite_val)
+        if isinstance(entity, str):
+            default_color = rgb_dec565([68, 115, 158])
+            return default_color
+        else:
+            attr = entity.attributes
+            default_color_on  = rgb_dec565([253, 216, 53])
+            default_color_off = rgb_dec565([68, 115, 158])
+            icon_color = default_color_on if entity.state in ["on", "unlocked", "above_horizon", "home", "active"] else default_color_off
 
-        attr = entity.attributes
-        default_color_on  = rgb_dec565([253, 216, 53])
-        default_color_off = rgb_dec565([68, 115, 158])
-        icon_color = default_color_on if entity.state in ["on", "unlocked", "above_horizon", "home", "active"] else default_color_off
+            if ha_type == "alarm_control_panel":
+                if entity.state == "disarmed":
+                    icon_color = rgb_dec565([13,160,53])
+                if entity.state == "arming":
+                    icon_color = rgb_dec565([244,180,0])
+                if entity.state in ["armed_home", "armed_away", "armed_night", "armed_vacation", "pending", "triggered"]:
+                    icon_color = rgb_dec565([223,76,30])
 
-        if ha_type == "alarm_control_panel":
-            if entity.state == "disarmed":
-                icon_color = rgb_dec565([13,160,53])
-            if entity.state == "arming":
-                icon_color = rgb_dec565([244,180,0])
-            if entity.state in ["armed_home", "armed_away", "armed_night", "armed_vacation", "pending", "triggered"]:
-                icon_color = rgb_dec565([223,76,30])
+            if ha_type == "climate":
+                if entity.state in ["auto", "heat_cool"]:
+                    icon_color = 1024
+                if entity.state == "heat":
+                    icon_color = 64512
+                if entity.state == "off":
+                    icon_color = 35921
+                if entity.state == "cool":
+                    icon_color = 11487
+                if entity.state == "dry":
+                    icon_color = 60897
+                if entity.state == "fan_only":
+                    icon_color = 35921
 
-        if ha_type == "climate":
-            if entity.state in ["auto", "heat_cool"]:
-                icon_color = 1024
-            if entity.state == "heat":
-                icon_color = 64512
-            if entity.state == "off":
-                icon_color = 35921
-            if entity.state == "cool":
-                icon_color = 11487
-            if entity.state == "dry":
-                icon_color = 60897
-            if entity.state == "fan_only":
-                icon_color = 35921
-
-        if "rgb_color" in attr:
-            color = attr.rgb_color
-            if "brightness" in attr:
-                color = rgb_brightness(color, attr.brightness)
-            icon_color = rgb_dec565(color)
-        elif "brightness" in attr:
-            color = rgb_brightness([253, 216, 53], attr.brightness)
-            icon_color = rgb_dec565(color)
-        return icon_color
+            if "rgb_color" in attr:
+                color = attr.rgb_color
+                if "brightness" in attr:
+                    color = rgb_brightness(color, attr.brightness)
+                icon_color = rgb_dec565(color)
+            elif "brightness" in attr:
+                color = rgb_brightness([253, 216, 53], attr.brightness)
+                icon_color = rgb_dec565(color)
+            return icon_color
 
     def update_time(self, kwargs):
         time = datetime.datetime.now().strftime(self._config.get("timeFormat"))
@@ -201,7 +205,7 @@ class LuiPagesGen(object):
                 state = None
             self._send_mqtt_msg(get_screensaver_color_output(theme=theme, state=state))
 
-    def generate_entities_item(self, item, cardType, temp_unit=""):
+    def generate_entities_item(self, item, cardType="cardGrid", temp_unit=""):
         entityId = item.entityId
         icon = item.iconOverride
         colorOverride = item.colorOverride
@@ -230,7 +234,8 @@ class LuiPagesGen(object):
                         if icon_res[-1] == ".":
                             icon_res = icon_res[:-1]
                 else:
-                    icon_color = rgb_dec565(colorOverride) if colorOverride is not None and type(colorOverride) is list else 17299
+                    #icon_color = rgb_dec565(colorOverride) if colorOverride is not None and type(colorOverride) is list else 17299
+                    icon_color = self.get_entity_color(entityId, overwrite=colorOverride)
                 return f"~button~{entityId}~{icon_res}~{icon_color}~{name}~{text}"
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
@@ -631,20 +636,34 @@ class LuiPagesGen(object):
                 command += f"~{icon_color}~{icon}~{speed}~{entity.state}"
         self._send_mqtt_msg(command)
 
-    def render_card(self, card, send_page_type=True):    
-        apis.ha_api.log(f"Started rendering of page {card.pos} with type {card.cardType}")
-        
-        l = 1
-        r = 1
+    def render_card(self, card, send_page_type=True):
+
+        l = self.generate_entities_item(Entity(
+            {
+                'entity': f'navigate.{card.uuid_prev}',
+                'icon': 'mdi:arrow-left-bold',
+                'color': [255, 255, 255],
+            }
+        ))[1:]
+        r = self.generate_entities_item(Entity(
+            {
+                'entity': f'navigate.{card.uuid_next}',
+                'icon': 'mdi:arrow-right-bold',
+                'color': [255, 255, 255],
+            }
+        ))[1:]
+
         if len(self._config._config_cards) == 1:
-            l = 0
-            r = 0
-        if card.pos is None:
-            l = 2
-            r = 0
-            if self._config.get("homeButton"):
-                r = 2
-        navigation = f"{l}|{r}"         
+            l = "delete~~~~~"
+            r = "delete~~~~~"
+
+        if card.hidden:
+            l = f"x~navUp~{get_icon_id('mdi:arrow-up-bold')}~65535~~"
+            r = "delete~~~~~"
+        #    r = 0
+        #    if self._config.get("homeButton"):
+        #        r = 2
+        navigation = f"{l}~{r}"         
 
         # Switch to page
         if send_page_type:
