@@ -216,11 +216,13 @@ class LuiPagesGen(object):
 
         apis.ha_api.log(f"Generating item for {entityId} with type {entityType}", level="DEBUG")
 
-        status_entity = (item.status and apis.ha_api.entity_exists(item.status) and apis.ha_api.get_entity(item.status)) or None
-        status_state = status_entity and status_entity.state
+        status_entity = apis.ha_api.get_entity(item.status) if item.status and apis.ha_api.entity_exists(item.status) else None
+        status_state = status_entity.state if status_entity is not None else None
 
-        entity = (apis.ha_api.entity_exists(entityId) and apis.ha_api.get_entity(entityId)) or None
-        state = status_state or (entity and entity.state)
+        entity = apis.ha_api.get_entity(entityId) if apis.ha_api.entity_exists(entityId) else None
+        entity_state = entity.state if entity is not None else None
+
+        state = status_state if status_state is not None else entity_state
 
         if state is not None:
             if item.condState is not None and item.condState != state:
