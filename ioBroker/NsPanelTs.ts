@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.7.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
-- abgestimmt auf TFT 46 / v3.7.0 / BerryDriver 6 / Tasmota 12.3.1
+TypeScript v3.7.3.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+- abgestimmt auf TFT 46 / v3.7.3 / BerryDriver 8 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -101,6 +101,9 @@ ReleaseNotes:
         - 20.12.2022 - v3.7.0   Add popUpTimer / New ALIAS Type level.timer
         - 21.12.2022 - v3.7.0   Add Fan / New ALIAS Type level.mode.fan
         - 22.12.2022 - v3.7.0   Add InSel - InputSelector with Alias Type buttonSensor (DP .VALUE)
+	- 23.10.2022 - v3.7.0   Upgrade TFT 46
+        - 28.12.2022 - v3.7.3.0 Hotfix - bUp case
+	- 28.12.2022 - v3.7.3.0 Update Berry Version 8
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -174,7 +177,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.7.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.7.3.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
@@ -1343,7 +1346,7 @@ function get_locales() {
 async function check_updates() {
     try {
         const desired_display_firmware_version = 46;
-        const berry_driver_version = 6;
+        const berry_driver_version = 8;
 
         if (Debug) {
             console.log('Check-Updates');
@@ -1791,7 +1794,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.7.0';
+    const tft_version: string = 'v3.7.3';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
     try {
         request({
@@ -3733,11 +3736,27 @@ function HandleButtonEvent(words): void {
             case 'bUp':
                 if (pageId < 0) { // Prüfen, ob button1page oder button2page
                     pageId = 0;
+                    UnsubscribeWatcher();
+                    GeneratePage(config.pages[pageId]);
                 } else {
-                    pageId = Math.abs(pageNum);
+                    pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
+                    pageId = pageNum;
+                    UnsubscribeWatcher();
+                    if (activePage != undefined && activePage.parent != undefined) {
+                        //update pageID
+                        for (let i = 0; i < config.pages.length; i++) {
+                            if (config.pages[i] == activePage.parent) {
+                                pageId = i;
+                                break;
+                            }
+                        }
+                        GeneratePage(activePage.parent);
+                    }
+                    else {
+                        GeneratePage(config.pages[pageId]);
+                    }
+                    break;
                 }
-                UnsubscribeWatcher();
-                GeneratePage(config.pages[pageId]);
                 break;
             case 'bNext':
                 pageNum = (((pageId + 1) % config.pages.length) + config.pages.length) % config.pages.length;
