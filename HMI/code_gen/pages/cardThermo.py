@@ -8,23 +8,23 @@ text = sharedhead + """
 
 text += """
               //entity name
-              spstr strCommand.txt,entn.txt,"~",3
+              spstr strCommand.txt,entn.txt,"~",14
               //currentTemp
-              spstr strCommand.txt,tCurTemp.txt,"~",4
+              spstr strCommand.txt,tCurTemp.txt,"~",15
               //dstTemp
-              spstr strCommand.txt,tTmp.txt,"~",5
+              spstr strCommand.txt,tTmp.txt,"~",16
               covx tTmp.txt,xTempDest1.val,0,0
               xTempDest.val=xTempDest1.val
               //status
-              spstr strCommand.txt,tStatus.txt,"~",6
+              spstr strCommand.txt,tStatus.txt,"~",17
               //minTemp
-              spstr strCommand.txt,tTmp.txt,"~",7
+              spstr strCommand.txt,tTmp.txt,"~",18
               covx tTmp.txt,xTempMin1.val,0,0
               //maxTemp
-              spstr strCommand.txt,tTmp.txt,"~",8
+              spstr strCommand.txt,tTmp.txt,"~",19
               covx tTmp.txt,xTempMax1.val,0,0
               //tempStep
-              spstr strCommand.txt,tTmp.txt,"~",9
+              spstr strCommand.txt,tTmp.txt,"~",20
               covx tTmp.txt,xTempStep1.val,0,0
               // disable all buttons
               vis bt0,0
@@ -37,7 +37,7 @@ text += """
               vis bt7,0
 """
 
-start = 10
+start = 21
 for i in range(0,8):
     idxstart = start + i*4
     text += f"""
@@ -59,17 +59,17 @@ for i in range(0,8):
 
 text += """
               //Text tCurTempLbl
-              spstr strCommand.txt,tCurTempLbl.txt,"~",42
+              spstr strCommand.txt,tCurTempLbl.txt,"~",53
               //Text tStateLbl
-              spstr strCommand.txt,tStateLbl.txt,"~",43
+              spstr strCommand.txt,tStateLbl.txt,"~",54
               //Text tALbl
-              spstr strCommand.txt,tALbl.txt,"~",44
+              spstr strCommand.txt,tALbl.txt,"~",55
               //Text tCF
-              spstr strCommand.txt,tCF.txt,"~",45
+              spstr strCommand.txt,tCF.txt,"~",56
               tCF1.txt=tCF.txt
               tCF2.txt=tCF.txt
               //Second Temperature
-              spstr strCommand.txt,tTmp.txt,"~",46
+              spstr strCommand.txt,tTmp.txt,"~",57
               if(tTmp.txt!="")
               {
                 covx tTmp.txt,xTempDest2.val,0,0
@@ -87,7 +87,7 @@ text += """
                 vis tCF2,1
               }
               //Show btDetail
-              spstr strCommand.txt,tTmp.txt,"~",47
+              spstr strCommand.txt,tTmp.txt,"~",58
               if(tTmp.txt!="1")
               {
                 vis btDetail,1
