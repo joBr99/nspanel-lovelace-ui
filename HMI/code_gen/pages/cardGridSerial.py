@@ -6,7 +6,7 @@ head = sharedhead + """
               spstr strCommand.txt,tHeading.txt,"~",1
 """ + navigation
 print(head)
-start = 3
+start = 14
 for i in range(1,7):
     idxstart = start + (i-1)*6
     item = f"""
