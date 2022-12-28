@@ -63,6 +63,18 @@ Variable (string) entn
         Text          : 
         Max. Text Size: 80
     
+Variable (string) nent1
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
+Variable (string) nent2
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
 Variable (string) strCommand
     Attributes
         Scope         : local
@@ -294,14 +306,7 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardThermo,"
-            if(bNext.txt=="î")
-            {
-                tSend.txt+="bHome"
-            }else
-            {
-                tSend.txt+="bNext"
-            }
+            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -326,14 +331,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardThermo,"
-            if(bPrev.txt=="î¶")
-            {
-                tSend.txt+="bUp"
-            }else
-            {
-                tSend.txt+="bPrev"
-            }
+            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -835,64 +833,58 @@ Timer tmSerial
                                     {
                                         //heading
                                         spstr strCommand.txt,tHeading.txt,"~",1
-                                        // navigation icons
-                                        spstr strCommand.txt,tId.txt,"~",2
-                                        spstr tId.txt,tTmp.txt,"|",0
-                                        if(tTmp.txt=="0")
+                                        // navigation icon left
+                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bPrev,0
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent1.txt,"~",3
+                                            // change icon
+                                            spstr strCommand.txt,bPrev.txt,"~",4
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",5
+                                            covx tTmp.txt,sys0,0,0
+                                            bPrev.pco=sys0
                                             vis bPrev,1
-                                            tsw mSwipePrev,1
-                                            tsw mSwipeUp,0
-                                            bPrev.txt="î°"
                                         }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bPrev,1
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,1
-                                            bPrev.txt="î¶"
-                                        }
-                                        spstr tId.txt,tTmp.txt,"|",1
-                                        if(tTmp.txt=="0")
+                                        // navigation icon right
+                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bNext,0
-                                            tsw mSwipeNext,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent2.txt,"~",9
+                                            // change icon
+                                            spstr strCommand.txt,bNext.txt,"~",10
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",11
+                                            covx tTmp.txt,sys0,0,0
+                                            bNext.pco=sys0
                                             vis bNext,1
-                                            tsw mSwipeNext,1
-                                            bNext.txt="î³"
-                                        }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bNext,1
-                                            bNext.txt="î"
                                         }
                                         //entity name
-                                        spstr strCommand.txt,entn.txt,"~",3
+                                        spstr strCommand.txt,entn.txt,"~",14
                                         //currentTemp
-                                        spstr strCommand.txt,tCurTemp.txt,"~",4
+                                        spstr strCommand.txt,tCurTemp.txt,"~",15
                                         //dstTemp
-                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        spstr strCommand.txt,tTmp.txt,"~",16
                                         covx tTmp.txt,xTempDest1.val,0,0
                                         xTempDest.val=xTempDest1.val
                                         //status
-                                        spstr strCommand.txt,tStatus.txt,"~",6
+                                        spstr strCommand.txt,tStatus.txt,"~",17
                                         //minTemp
-                                        spstr strCommand.txt,tTmp.txt,"~",7
+                                        spstr strCommand.txt,tTmp.txt,"~",18
                                         covx tTmp.txt,xTempMin1.val,0,0
                                         //maxTemp
-                                        spstr strCommand.txt,tTmp.txt,"~",8
+                                        spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,xTempMax1.val,0,0
                                         //tempStep
-                                        spstr strCommand.txt,tTmp.txt,"~",9
+                                        spstr strCommand.txt,tTmp.txt,"~",20
                                         covx tTmp.txt,xTempStep1.val,0,0
                                         // disable all buttons
                                         vis bt0,0
@@ -904,137 +896,137 @@ Timer tmSerial
                                         vis bt6,0
                                         vis bt7,0
                                         //bt0
-                                        spstr strCommand.txt,bt0.txt,"~",10
+                                        spstr strCommand.txt,bt0.txt,"~",21
                                         if(bt0.txt!="")
                                         {
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,"~",11
+                                            spstr strCommand.txt,tTmp.txt,"~",22
                                             covx tTmp.txt,bt0.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,"~",12
+                                            spstr strCommand.txt,tTmp.txt,"~",23
                                             covx tTmp.txt,bt0.val,0,0
                                             // save action
-                                            spstr strCommand.txt,va0.txt,"~",13
+                                            spstr strCommand.txt,va0.txt,"~",24
                                             //enable
                                             vis bt0,1
                                         }
                                         //bt1
-                                        spstr strCommand.txt,bt1.txt,"~",14
+                                        spstr strCommand.txt,bt1.txt,"~",25
                                         if(bt1.txt!="")
                                         {
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,"~",15
+                                            spstr strCommand.txt,tTmp.txt,"~",26
                                             covx tTmp.txt,bt1.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,"~",16
+                                            spstr strCommand.txt,tTmp.txt,"~",27
                                             covx tTmp.txt,bt1.val,0,0
                                             // save action
-                                            spstr strCommand.txt,va1.txt,"~",17
+                                            spstr strCommand.txt,va1.txt,"~",28
                                             //enable
                                             vis bt1,1
                                         }
                                         //bt2
-                                        spstr strCommand.txt,bt2.txt,"~",18
+                                        spstr strCommand.txt,bt2.txt,"~",29
                                         if(bt2.txt!="")
                                         {
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,"~",19
+                                            spstr strCommand.txt,tTmp.txt,"~",30
                                             covx tTmp.txt,bt2.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,"~",20
+                                            spstr strCommand.txt,tTmp.txt,"~",31
                                             covx tTmp.txt,bt2.val,0,0
                                             // save action
-                                            spstr strCommand.txt,va2.txt,"~",21
+                                            spstr strCommand.txt,va2.txt,"~",32
                                             //enable
                                             vis bt2,1
                                         }
                                         //bt3
-                                        spstr strCommand.txt,bt3.txt,"~",22
+                                        spstr strCommand.txt,bt3.txt,"~",33
                                         if(bt3.txt!="")
                                         {
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,"~",23
+                                            spstr strCommand.txt,tTmp.txt,"~",34
                                             covx tTmp.txt,bt3.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,"~",24
+                                            spstr strCommand.txt,tTmp.txt,"~",35
                                             covx tTmp.txt,bt3.val,0,0
                                             // save action
-                                            spstr strCommand.txt,va3.txt,"~",25
+                                            spstr strCommand.txt,va3.txt,"~",36
                                             //enable
                                             vis bt3,1
                                         }
                                         //bt4
-                                        spstr strCommand.txt,bt4.txt,"~",26
+                                        spstr strCommand.txt,bt4.txt,"~",37
                                         if(bt4.txt!="")
                                         {
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,"~",27
+                                            spstr strCommand.txt,tTmp.txt,"~",38
                                             covx tTmp.txt,bt4.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,"~",28
+                                            spstr strCommand.txt,tTmp.txt,"~",39
                                             covx tTmp.txt,bt4.val,0,0
                                             // save action
-                                            spstr strCommand.txt,va4.txt,"~",29
+                                            spstr strCommand.txt,va4.txt,"~",40
                                             //enable
                                             vis bt4,1
                                         }
                                         //bt5
-                                        spstr strCommand.txt,bt5.txt,"~",30
+                                        spstr strCommand.txt,bt5.txt,"~",41
                                         if(bt5.txt!="")
                                         {
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,"~",31
+                                            spstr strCommand.txt,tTmp.txt,"~",42
                                             covx tTmp.txt,bt5.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,"~",32
+                                            spstr strCommand.txt,tTmp.txt,"~",43
                                             covx tTmp.txt,bt5.val,0,0
                                             // save action
-                                            spstr strCommand.txt,va5.txt,"~",33
+                                            spstr strCommand.txt,va5.txt,"~",44
                                             //enable
                                             vis bt5,1
                                         }
                                         //bt6
-                                        spstr strCommand.txt,bt6.txt,"~",34
+                                        spstr strCommand.txt,bt6.txt,"~",45
                                         if(bt6.txt!="")
                                         {
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,"~",35
+                                            spstr strCommand.txt,tTmp.txt,"~",46
                                             covx tTmp.txt,bt6.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,"~",36
+                                            spstr strCommand.txt,tTmp.txt,"~",47
                                             covx tTmp.txt,bt6.val,0,0
                                             // save action
-                                            spstr strCommand.txt,va6.txt,"~",37
+                                            spstr strCommand.txt,va6.txt,"~",48
                                             //enable
                                             vis bt6,1
                                         }
                                         //bt7
-                                        spstr strCommand.txt,bt7.txt,"~",38
+                                        spstr strCommand.txt,bt7.txt,"~",49
                                         if(bt7.txt!="")
                                         {
                                             // set text color on active state
-                                            spstr strCommand.txt,tTmp.txt,"~",39
+                                            spstr strCommand.txt,tTmp.txt,"~",50
                                             covx tTmp.txt,bt7.pco2,0,0
                                             // set state
-                                            spstr strCommand.txt,tTmp.txt,"~",40
+                                            spstr strCommand.txt,tTmp.txt,"~",51
                                             covx tTmp.txt,bt7.val,0,0
                                             // save action
-                                            spstr strCommand.txt,va7.txt,"~",41
+                                            spstr strCommand.txt,va7.txt,"~",52
                                             //enable
                                             vis bt7,1
                                         }
                                         //Text tCurTempLbl
-                                        spstr strCommand.txt,tCurTempLbl.txt,"~",42
+                                        spstr strCommand.txt,tCurTempLbl.txt,"~",53
                                         //Text tStateLbl
-                                        spstr strCommand.txt,tStateLbl.txt,"~",43
+                                        spstr strCommand.txt,tStateLbl.txt,"~",54
                                         //Text tALbl
-                                        //spstr strCommand.txt,tALbl.txt,"~",44
+                                        //spstr strCommand.txt,tALbl.txt,"~",55
                                         //Text tCF
-                                        spstr strCommand.txt,tCF.txt,"~",45
+                                        spstr strCommand.txt,tCF.txt,"~",56
                                         tCF1.txt=tCF.txt
                                         tCF2.txt=tCF.txt
                                         //Second Temperature
-                                        spstr strCommand.txt,tTmp.txt,"~",46
+                                        spstr strCommand.txt,tTmp.txt,"~",57
                                         if(tTmp.txt!="")
                                         {
                                             covx tTmp.txt,xTempDest2.val,0,0
@@ -1052,8 +1044,8 @@ Timer tmSerial
                                             vis tCF2,1
                                         }
                                         //Show btDetail
-                                        spstr strCommand.txt,tTmp.txt,"~",47
-                                        if(tTmp.txt=="1")
+                                        spstr strCommand.txt,tTmp.txt,"~",58
+                                        if(tTmp.txt!="1")
                                         {
                                             vis btDetail,1
                                         }else
