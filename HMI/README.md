@@ -2090,9 +2090,91 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
 </tbody>
 </table>
 
-# cardChart
+### cardChart Page
+`entityUpd~heading~navigation~color~yAxisLabel~yAxisTick:[yAxisTick]*[~value[:xAxisLabel]?]*`  
 
-TODO
+`entityUpd~Chart Demo~1|1~6666~Gas [kWh]~20:40:60:80:100~10~7^2:00~7~6^4:00~6~7^6:00~0~7^8:00~5~1^10:00~1~10^12:00~5~6^14:00~8`
+
+
+## Messages from Nextion Display
+
+`event,buttonPress2,pageName,bNext`
+
+`event,buttonPress2,pageName,bPrev`
+
+`event,buttonPress2,pageName,bExit,number_of_taps`
+
+`event,buttonPress2,pageName,sleepReached`
+
+
+### startup page
+
+`event,startup,version,model`
+
+### screensaver page
+
+`event,buttonPress2,screensaver,exit` - Touch Event on Screensaver
+
+`event,screensaverOpen` - Screensaver has opened
+
+
+### cardEntities Page
+
+`event,*eventName*,*entityName*,*actionName*,*optionalValue*`
+
+`event,buttonPress2,internalNameEntity,up`
+
+`event,buttonPress2,internalNameEntity,down`
+
+`event,buttonPress2,internalNameEntity,stop`
+
+`event,buttonPress2,internalNameEntity,OnOff,1`
+
+`event,buttonPress2,internalNameEntity,button`
+
+### popupLight Page
+
+`event,pageOpenDetail,popupLight,internalNameEntity`
+
+`event,buttonPress2,internalNameEntity,OnOff,1`
+
+`event,buttonPress2,internalNameEntity,brightnessSlider,50`
+
+`event,buttonPress2,internalNameEntity,colorTempSlider,50`
+
+`event,buttonPress2,internalNameEntity,colorWheel,x|y|wh`
+
+### popupShutter Page
+
+`event,pageOpenDetail,popupShutter,internalNameEntity`
+
+`event,buttonPress2,internalNameEntity,positionSlider,50`
+
+### popupNotify Page
+
+`event,buttonPress2,*internalName*,notifyAction,yes`
+
+`event,buttonPress2,*internalName*,notifyAction,no`
+
+### cardThermo Page
+
+`event,buttonPress2,*entityName*,tempUpd,*temperature*`
+
+`event,buttonPress2,*entityName*,hvac_action,*hvac_action*`
+
+### cardMedia Page
+
+`event,buttonPress2,internalNameEntity,media-back`
+
+`event,buttonPress2,internalNameEntity,media-pause`
+
+`event,buttonPress2,internalNameEntity,media-next`
+
+`event,buttonPress2,internalNameEntity,volumeSlider,75`
+
+### cardAlarm Page
+
+`event,buttonPress2,internalNameEntity,actionName,code`
 
 
 # Custom Protocol
