@@ -1,9 +1,7 @@
 import datetime
 
 import apis
-
 from helper import scale, pos_to_color, rgb_dec565
-
 from pages import LuiPagesGen
 
 class LuiController(object):
@@ -15,7 +13,7 @@ class LuiController(object):
         self._current_card = self._config._config_screensaver
         self._previous_cards = []
         # first card (default, after startup)
-        self._previous_cards.append(self._config.getCard(0))
+        self._previous_cards.append(self._config.get_default_card())
         
         self._pages_gen = LuiPagesGen(config, send_mqtt_msg)
 
@@ -207,9 +205,9 @@ class LuiController(object):
                 if dstCard is not None:
                     self._previous_cards = []
                     self._previous_cards.append(dstCard)
-            # set _previous_cards to first page in case it's empty
+            # set _previous_cards to default page in case it's empty
             if len(self._previous_cards) == 0:
-                self._previous_cards.append(self._config.getCard(0))
+                self._previous_cards.append(self._config.get_default_card())
             # check for double tap if configured and render current page
             if self._config.get("screensaver.doubleTapToUnlock") and int(value) >= 2:
                 self._current_card = self._previous_cards.pop()
@@ -227,28 +225,14 @@ class LuiController(object):
 
         if button_type == "bExit":
             self._pages_gen.render_card(self._current_card)
-        if button_type == "bUp":
-            if self._previous_cards:
-                self._current_card = self._previous_cards.pop()
-            else:
-                self._current_card = self._config.getCard(0)
-            self._pages_gen.render_card(self._current_card)
-        if button_type == "bHome":
-            if self._previous_cards:
-                self._current_card = self._previous_cards[0]
-                self._previous_cards.clear()
-            else:
-                self._current_card = self._config.getCard(0)
-            self._pages_gen.render_card(self._current_card)
-            
-        if button_type == "bNext":
-            card = self._config.getCard(self._current_card.pos+1)
-            self._current_card = card
-            self._pages_gen.render_card(card)
-        if button_type == "bPrev":
-            card = self._config.getCard(self._current_card.pos-1)
-            self._current_card = card
-            self._pages_gen.render_card(card)
+        #if button_type == "bHome":
+        #    if self._previous_cards:
+        #        self._current_card = self._previous_cards[0]
+        #        self._previous_cards.clear()
+        #    else:
+        #        self._current_card = self._config.getCard(0)
+        #    self._pages_gen.render_card(self._current_card)
+
         
         elif entity_id == "updateDisplayNoYes" and value == "no":
             self._pages_gen.render_card(self._current_card)
@@ -295,14 +279,25 @@ class LuiController(object):
                 entity_id = le.entityId
 
             if entity_id.startswith('navigate'):
+                # internal navigation for next/prev
+                if entity_id.startswith('navigate.uuid'):
+                    dstCard = self._config.get_card_by_uuid(entity_id.replace('navigate.',''))
                 # internal for navigation to nested pages
-                dstCard = self._config.searchCard(entity_id)
+                else:
+                    dstCard = self._config.searchCard(entity_id)
                 if dstCard is not None:
-                    self._previous_cards.append(self._current_card)
+                    if dstCard.hidden:
+                        self._previous_cards.append(self._current_card)
                     self._current_card = dstCard
                     self._pages_gen.render_card(self._current_card)
                 else:
                     apis.ha_api.log(f"No page with key {entity_id} found")
+            if entity_id.startswith('navUp'):
+                if self._previous_cards:
+                    self._current_card = self._previous_cards.pop()
+                else:
+                    self._current_card = self._config.get_default_card()
+                self._pages_gen.render_card(self._current_card)
             elif entity_id.startswith('scene'):
                 apis.ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('script'):
