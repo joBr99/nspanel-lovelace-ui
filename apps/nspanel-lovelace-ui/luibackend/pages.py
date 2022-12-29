@@ -401,13 +401,12 @@ class LuiPagesGen(object):
             command += self.generate_entities_item(item, cardType, tempUnit)
         self._send_mqtt_msg(command)
 
-    def generate_thermo_page(self, navigation, title, entity, temp_unit, overwrite_supported_modes):
+    def generate_thermo_page(self, navigation, title, entity, temp_unit, entities, overwrite_supported_modes):
         item = entity.entityId
 
         if(temp_unit == "celsius"):
             temperature_unit_icon = get_icon_id("temperature-celsius")
             temperature_unit = "°C"
-
         else:
             temperature_unit_icon = get_icon_id("temperature-fahrenheit")
             temperature_unit = "°F"
@@ -415,82 +414,77 @@ class LuiPagesGen(object):
         if not apis.ha_api.entity_exists(item):
             command = f"entityUpd~Not found~{navigation}~{item}~check~220~apps.yaml~150~300~5~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Please~your~~"
         else:
-            entity       = apis.ha_api.get_entity(item)
-            heading      = title if title != "unknown" else entity.attributes.friendly_name
-            current_temp = get_attr_safe(entity, "current_temperature", "")
-            dest_temp    = get_attr_safe(entity, "temperature", None)
+            ha_entity       = apis.ha_api.get_entity(item)
+            heading      = title if title != "unknown" else ha_entity.attributes.friendly_name
+            current_temp = get_attr_safe(ha_entity, "current_temperature", "")
+            dest_temp    = get_attr_safe(ha_entity, "temperature", None)
             dest_temp2   = ""
             if dest_temp is None:
-                dest_temp    = get_attr_safe(entity, "target_temp_high", 0)
-                dest_temp2   = get_attr_safe(entity, "target_temp_low", None)
+                dest_temp    = get_attr_safe(ha_entity, "target_temp_high", 0)
+                dest_temp2   = get_attr_safe(ha_entity, "target_temp_low", None)
                 if dest_temp2 != None and dest_temp2 != "null":
                     dest_temp2   = int(dest_temp2*10)
                 else:
                     dest_temp2 = ""
             dest_temp    = int(dest_temp*10)
 
-            hvac_action  = get_attr_safe(entity, "hvac_action", "")
+            hvac_action  = get_attr_safe(ha_entity, "hvac_action", "")
             state_value  = ""
             if hvac_action != "":
                 state_value = get_translation(self._locale, f"frontend.state_attributes.climate.hvac_action.{hvac_action}")
                 state_value += "\r\n("
-            state_value += get_translation(self._locale, f"backend.component.climate.state._.{entity.state}")
+            state_value += get_translation(self._locale, f"backend.component.climate.state._.{ha_entity.state}")
             if hvac_action != "":
                 state_value += ")"
             
-            min_temp     = int(get_attr_safe(entity, "min_temp", 0)*10)
-            max_temp     = int(get_attr_safe(entity, "max_temp", 0)*10)
-            step_temp    = int(get_attr_safe(entity, "target_temp_step", 0.5)*10) 
+            min_temp     = int(get_attr_safe(ha_entity, "min_temp", 0)*10)
+            max_temp     = int(get_attr_safe(ha_entity, "max_temp", 0)*10)
+            step_temp    = int(get_attr_safe(ha_entity, "target_temp_step", 0.5)*10) 
             icon_res_list = []
             icon_res = ""
 
-            hvac_modes = get_attr_safe(entity, "hvac_modes", [])
+            currently_translation = get_translation(self._locale, "frontend.ui.card.climate.currently")
+            state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
+            
+            detailPage = ""
+            if any(x in ["preset_modes", "swing_modes", "fan_modes"] for x in ha_entity.attributes):
+                detailPage = "enable"
+
+            #hvac_modes = get_attr_safe(ha_entity, "hvac_modes", [])
+            #if overwrite_supported_modes is not None:
+            #    hvac_modes = overwrite_supported_modes
+            #for mode in hvac_modes:
+            #    icon_id = get_icon_ha(item, stateOverwrite=mode)
+            #    color_on = 64512
+            #    if mode in ["auto", "heat_cool"]:
+            #        color_on = 1024
+            #    if mode == "heat":
+            #        color_on = 64512
+            #    if mode == "off":
+            #        color_on = 35921
+            #    if mode == "cool":
+            #        color_on = 11487
+            #    if mode == "dry":
+            #        color_on = 60897
+            #    if mode == "fan_only":
+            #        color_on = 35921
+            #    state = 0
+            #    if(mode == ha_entity.state):
+            #        state = 1
+
+            item_str = ""
+            for eitem in entities:
+                item_str += self.generate_entities_item(eitem, "cardGrid")
+
+            hvac_modes = get_attr_safe(ha_entity, "hvac_modes", [])
             if overwrite_supported_modes is not None:
                 hvac_modes = overwrite_supported_modes
             for mode in hvac_modes:
-                icon_id = get_icon_ha(item, stateOverwrite=mode)
-                color_on = 64512
-                if mode in ["auto", "heat_cool"]:
-                    color_on = 1024
-                if mode == "heat":
-                    color_on = 64512
-                if mode == "off":
-                    color_on = 35921
-                if mode == "cool":
-                    color_on = 11487
-                if mode == "dry":
-                    color_on = 60897
-                if mode == "fan_only":
-                    color_on = 35921
-                state = 0
-                if(mode == entity.state):
-                    state = 1
-                
-                icon_res_list.append(f"~{icon_id}~{color_on}~{state}~{mode}")
+                item_str += self.generate_entities_item(entity, "cardGrid")
 
-            icon_res = "".join(icon_res_list)
-
-            if len(icon_res_list) == 1 and not self._config.get("model") == "us-p":
-                icon_res = "~"*4 + icon_res_list[0] + "~"*4*6
-            elif len(icon_res_list) == 2 and not self._config.get("model") == "us-p":
-                icon_res = "~"*4*2 + icon_res_list[0] + "~"*4*2 + icon_res_list[1] + "~"*4*2
-            elif len(icon_res_list) == 3 and not self._config.get("model") == "us-p":
-                icon_res = "~"*4*2 + icon_res_list[0] + "~"*4 + icon_res_list[1] + "~"*4 + icon_res_list[2] + "~"*4
-            elif len(icon_res_list) == 4 and not self._config.get("model") == "us-p":
-                icon_res = "~"*4 + icon_res_list[0] + "~"*4 + icon_res_list[1] + "~"*4 + icon_res_list[2] + "~"*4 + icon_res_list[3]
-            elif len(icon_res_list) >= 5 or self._config.get("model") == "us-p":
-                icon_res = "".join(icon_res_list) + "~"*4*(8-len(icon_res_list))
-            
-            currently_translation = get_translation(self._locale, "frontend.ui.card.climate.currently")
-            state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
-            action_translation = get_translation(self._locale, "frontend.ui.card.climate.operation").replace(' ','\r\n')
-            
-            detailPage = ""
-            if any(x in ["preset_modes", "swing_modes", "fan_modes"] for x in entity.attributes):
-                detailPage = "1"
-
-            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
+            command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}~{currently_translation}~{state_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}{item_str}"
         self._send_mqtt_msg(command)
+
 
     def generate_media_page(self, navigation, title, entity, entities, mediaBtn):
         entityId = entity.entityId
