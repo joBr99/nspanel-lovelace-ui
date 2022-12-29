@@ -105,7 +105,7 @@ ReleaseNotes:
         - 28.12.2022 - v3.7.3.0 Hotfix - bUp case
         - 28.12.2022 - v3.7.3.0 Update Berry Version 8
         - 29.12.2022 - v3.7.3.1 Hotfix - us-p - DateString - Use long/short Weekday and long/short Month
-        - 29.12.2022 - v3.7.3.1 Add pageItem.id to Submenu; New Parameter targetPage by TT-TOM / @tt-tom17
+        - 29.12.2022 - v3.7.3.2 Add pageItem.id to Submenu; New Parameter targetPage by TT-TOM / @tt-tom17
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
