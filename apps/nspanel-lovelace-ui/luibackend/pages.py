@@ -236,7 +236,6 @@ class LuiPagesGen(object):
         if entityType == "navigate":
             page_search_res = self._config.searchCard(entityId)
             if page_search_res is not None:
-                icon_res = get_icon_ha(entityId, overwrite=icon)
                 name = name if name is not None else page_search_res.title
                 text = get_translation(self._locale, "frontend.ui.card.button.press")
                 if status_entity:
@@ -249,6 +248,7 @@ class LuiPagesGen(object):
                 else:
                     #icon_color = rgb_dec565(colorOverride) if colorOverride is not None and type(colorOverride) is list else 17299
                     icon_color = self.get_entity_color(entityId, overwrite=colorOverride)
+                    icon_res = get_icon_ha(entityId, overwrite=icon)
                 return f"~button~{entityId}~{icon_res}~{icon_color}~{name}~{text}"
             else:
                 return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~page not found~"
