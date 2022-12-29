@@ -213,8 +213,23 @@ class LuiPagesGen(object):
         uuid = item.uuid
         # type of the item is the string before the "." in the entityId
         entityType = entityId.split(".")[0]
-        
+
         apis.ha_api.log(f"Generating item for {entityId} with type {entityType}", level="DEBUG")
+
+        status_entity = apis.ha_api.get_entity(item.status) if item.status and apis.ha_api.entity_exists(item.status) else None
+        status_state = status_entity.state if status_entity is not None else None
+
+        entity = apis.ha_api.get_entity(entityId) if apis.ha_api.entity_exists(entityId) else None
+        entity_state = entity.state if entity is not None else None
+
+        state = status_state if status_state is not None else entity_state
+
+        if state is not None:
+            if item.condState is not None and item.condState != state:
+                return ""
+            if item.condStateNot is not None and item.condStateNot == state:
+                return ""
+
         # Internal types
         if entityType == "delete":
             return f"~{entityType}~~~~~"
@@ -222,11 +237,9 @@ class LuiPagesGen(object):
             page_search_res = self._config.searchCard(entityId)
             if page_search_res is not None:
                 icon_res = get_icon_ha(entityId, overwrite=icon)
-                status_entity = None
                 name = name if name is not None else page_search_res.title
                 text = get_translation(self._locale, "frontend.ui.card.button.press")
-                if item.status is not None and apis.ha_api.entity_exists(item.status):
-                    status_entity = apis.ha_api.get_entity(item.status)
+                if status_entity:
                     icon_res = get_icon_ha(item.status, overwrite=icon)
                     icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
                     if item.status.startswith("sensor") and cardType == "cardGrid":
@@ -249,8 +262,7 @@ class LuiPagesGen(object):
             icon_id = get_icon("script", overwrite=icon)
             text = get_translation(self._locale, "frontend.ui.card.script.run")
             icon_color = icon_color = rgb_dec565(colorOverride) if colorOverride is not None and type(colorOverride) is list else 17299
-            if item.status is not None and apis.ha_api.entity_exists(item.status):
-                status_entity = apis.ha_api.get_entity(item.status)
+            if status_entity:
                 icon_id = get_icon_ha(item.status, overwrite=icon)
                 icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
                 if item.status.startswith("sensor") and cardType == "cardGrid":
@@ -258,17 +270,12 @@ class LuiPagesGen(object):
                     if icon_id[-1] == ".":
                         icon_id = icon_id[:-1]
             return f"~button~{uuid}~{icon_id}~{icon_color}~{name}~{text}"
-        if not apis.ha_api.entity_exists(entityId):
+
+        if entity is None:
             return f"~text~{entityId}~{get_icon_id('alert-circle-outline')}~17299~Not found check~ apps.yaml"
+
         
         # HA Entities
-        entity = apis.ha_api.get_entity(entityId)
-        # check state for if a condition is defined
-        if item.condState is not None and item.condState != entity.state:
-            return ""
-        if item.condStateNot is not None and item.condStateNot == entity.state:
-            return ""
-        
         # common res vars
         entityTypePanel = "text"
         icon_id = get_icon_ha(entityId, overwrite=icon)
