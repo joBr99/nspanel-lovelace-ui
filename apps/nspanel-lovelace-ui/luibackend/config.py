@@ -65,7 +65,7 @@ class Card(object):
         entitys = []
         if self.entity is not None:
             entitys.append(self.entity)
-        else:
+        if self.entities:
             for e in self.entities:
                 entitys.append(e)
         return entitys
