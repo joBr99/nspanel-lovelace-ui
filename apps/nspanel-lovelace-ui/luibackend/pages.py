@@ -645,32 +645,33 @@ class LuiPagesGen(object):
 
     def render_card(self, card, send_page_type=True):
 
-        l = self.generate_entities_item(Entity(
-            {
-                'entity': f'navigate.{card.uuid_prev}',
-                'icon': 'mdi:arrow-left-bold',
-                'color': [255, 255, 255],
-            }
-        ))[1:]
-        r = self.generate_entities_item(Entity(
-            {
-                'entity': f'navigate.{card.uuid_next}',
-                'icon': 'mdi:arrow-right-bold',
-                'color': [255, 255, 255],
-            }
-        ))[1:]
+        leftBtn = "delete~~~~~"
+        if card.uuid_prev is not None:
+            leftBtn = self.generate_entities_item(Entity(
+                {
+                    'entity': f'navigate.{card.uuid_prev}',
+                    'icon': 'mdi:arrow-left-bold',
+                    'color': [255, 255, 255],
+                }
+            ))[1:]
 
-        if len(self._config._config_cards) == 1:
-            l = "delete~~~~~"
-            r = "delete~~~~~"
+        rightBtn = "delete~~~~~"
+        if card.uuid_prev is not None:
+            rightBtn = self.generate_entities_item(Entity(
+                {
+                    'entity': f'navigate.{card.uuid_next}',
+                    'icon': 'mdi:arrow-right-bold',
+                    'color': [255, 255, 255],
+                }
+            ))[1:]
 
         if card.hidden:
-            l = f"x~navUp~{get_icon_id('mdi:arrow-up-bold')}~65535~~"
-            r = "delete~~~~~"
+            leftBtn = f"x~navUp~{get_icon_id('mdi:arrow-up-bold')}~65535~~"
+            rightBtn = "delete~~~~~"
         #    r = 0
         #    if self._config.get("homeButton"):
         #        r = 2
-        navigation = f"{l}~{r}"         
+        navigation = f"{leftBtn}~{rightBtn}"
 
         # Switch to page
         if send_page_type:
