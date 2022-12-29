@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.7.3.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+TypeScript v3.7.3.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 46 / v3.7.3 / BerryDriver 8 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -101,10 +101,11 @@ ReleaseNotes:
         - 20.12.2022 - v3.7.0   Add popUpTimer / New ALIAS Type level.timer
         - 21.12.2022 - v3.7.0   Add Fan / New ALIAS Type level.mode.fan
         - 22.12.2022 - v3.7.0   Add InSel - InputSelector with Alias Type buttonSensor (DP .VALUE)
-	    - 23.10.2022 - v3.7.0   Upgrade TFT 46
+        - 23.10.2022 - v3.7.0   Upgrade TFT 46
         - 28.12.2022 - v3.7.3.0 Hotfix - bUp case
-	    - 28.12.2022 - v3.7.3.0 Update Berry Version 8
+        - 28.12.2022 - v3.7.3.0 Update Berry Version 8
         - 29.12.2022 - v3.7.3.1 Hotfix - us-p - DateString - Use long/short Weekday and long/short Month
+        - 29.12.2022 - v3.7.3.1 Add pageItem.id to Submenu; New Parameter targetPage by TT-TOM / @tt-tom17
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -1725,6 +1726,7 @@ function GeneratePageElements(page: Page): string {
 function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = false): string {
     try {
         let iconId = '0';
+        let iconId2 = '0';
         if (pageItem.id == 'delete') {
             return '~delete~~~~~';
         }
@@ -1734,38 +1736,127 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
         // ioBroker
         if (existsObject(pageItem.id) || pageItem.navigate === true) {
+
             let iconColor = rgb_dec565(config.defaultColor);
-
-            if (pageItem.navigate) {
-                type = 'button';
-                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
-                iconColor = GetIconColor(pageItem, true, useColors);
-                let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
-                return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;
-            }
-
-            let o = getObject(pageItem.id)
+            let optVal = '0';
             let val = null;
 
-            if (existsState(pageItem.id + '.GET')) {
-                val = getState(pageItem.id + '.GET').val;
-                RegisterEntityWatcher(pageItem.id + '.GET');
-            } else if (existsState(pageItem.id + '.SET')) {
-                val = getState(pageItem.id + '.SET').val;
-                RegisterEntityWatcher(pageItem.id + '.SET');
-            }
+            let o:any
+            if (pageItem.id != null && existsObject(pageItem.id)) {
+                o = getObject(pageItem.id);
+            } 
 
             // Fallback if no name is given
             name = pageItem.name !== undefined ? pageItem.name : o.common.name.de;
+                    
+            if (existsState(pageItem.id + '.GET')) {
+                val = getState(pageItem.id + '.GET').val;
+                RegisterEntityWatcher(pageItem.id + '.GET');
+            } 
+            if (existsState(pageItem.id + '.SET')) {
+                val = getState(pageItem.id + '.SET').val;
+                RegisterEntityWatcher(pageItem.id + '.SET');
+            } 
+            if (existsState(pageItem.id + '.ACTUAL')) {
+                val = getState(pageItem.id + '.ACTUAL').val;
+                RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+            }
+            if (existsState(pageItem.id + '.ON_ACTUAL')) {
+                val = getState(pageItem.id + '.ON_ACTUAL').val;
+                RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
+            } 
+            if (existsState(pageItem.id + '.ON_SET')) {
+                val = getState(pageItem.id + '.ON_SET').val;
+                RegisterEntityWatcher(pageItem.id + '.ON_SET');
+            }
+            if (existsState(pageItem.id + '.ON')) {
+                val = getState(pageItem.id + '.ON').val;
+                RegisterEntityWatcher(pageItem.id + '.ON');
+            }
 
-            let optVal = '0';
+            if (pageItem.navigate) {
+
+                if (pageItem.id == null && pageItem.targetPage != undefined){
+                    let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+                    type = 'button';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
+                    iconColor = GetIconColor(pageItem, true, useColors);
+
+                    return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;
+                } else if (pageItem.id != null && pageItem.targetPage != undefined){
+                    let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+                    type = 'button';
+                    
+                    switch (o.common.role) {
+                        case 'socket':
+                        case 'light':
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                            optVal = '0';
+
+                            if (val === true || val === 'true') {
+                                optVal = '1';
+                                iconColor = GetIconColor(pageItem, true, useColors);
+                            } else {
+                                iconColor = GetIconColor(pageItem, false, useColors);
+                                if (pageItem.icon !== undefined) {
+                                    if (pageItem.icon2 !== undefined) {
+                                        iconId = iconId2;
+                                    }
+                                }
+                            }
+                            break;                   
+                        case 'blind':
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
+                            iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
+                            break;
+                        case 'door':
+                        case 'window':
+                            if (existsState(pageItem.id + '.ACTUAL')) {
+                                if (getState(pageItem.id + '.ACTUAL').val) {
+                                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
+                                    iconColor = GetIconColor(pageItem, false, useColors);
+                                } else {
+                                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
+                                    iconColor = GetIconColor(pageItem, true, useColors);
+                                }
+                            }
+                            break;
+                        case 'info':
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
+                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('gesture-tap-button');
+                            iconColor = GetIconColor(pageItem, true, useColors);
+                            if (val === true || val === 'true') {
+                                iconColor = GetIconColor(pageItem, true, useColors);
+                            } else {
+                                iconColor = GetIconColor(pageItem, false, useColors);
+                                if (pageItem.icon !== undefined) {
+                                    if (pageItem.icon2 !== undefined) {
+                                        iconId = iconId2;
+                                    }
+                                }
+                            };
+                            break;
+                        default:
+                            return '~delete~~~~~';
+                    }
+                    return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;   
+                } else {
+                    type = 'button';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
+                    iconColor = GetIconColor(pageItem, true, useColors);
+                    let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+
+                    return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;                    
+                } 
+            } 
 
             switch (o.common.role) {
                 case 'socket':
                 case 'light':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-                    let iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
                     optVal = '0';
 
                     if (val === true || val === 'true') {
@@ -1787,11 +1878,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     optVal = '0';
 
-                    if (existsState(pageItem.id + '.ON_ACTUAL')) {
-                        val = getState(pageItem.id + '.ON_ACTUAL').val;
-                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
-                    }
-
                     if (val === true || val === 'true') {
                         optVal = '1';
                         iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
@@ -1803,7 +1889,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                 let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
                                 let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) };
                                 iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                                // RegisterDetailEntityWatcher(id + '.HUE');
                             }
                         }
                     }
@@ -1814,11 +1899,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     optVal = '0';
-
-                    if (existsState(pageItem.id + '.ON')) {
-                        val = getState(pageItem.id + '.ON').val;
-                        RegisterEntityWatcher(pageItem.id + '.ON');
-                    }
 
                     if (val === true || val === 'true') {
                         optVal = '1';
@@ -1831,11 +1911,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     optVal = '0';
-
-                    if (existsState(pageItem.id + '.ON_ACTUAL')) {
-                        val = getState(pageItem.id + '.ON_ACTUAL').val;
-                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
-                    }
 
                     if (val === true || val === 'true') {
                         optVal = '1';
@@ -1860,11 +1935,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     optVal = '0';
 
-                    if (existsState(pageItem.id + '.ON_ACTUAL')) {
-                        val = getState(pageItem.id + '.ON_ACTUAL').val;
-                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
-                    }
-
                     if (val === true || val === 'true') {
                         optVal = '1'
                         iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
@@ -1887,14 +1957,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     optVal = '0';
-
-                    if (existsState(pageItem.id + '.ON_ACTUAL')) {
-                        val = getState(pageItem.id + '.ON_ACTUAL').val;
-                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
-                    } else if (existsState(pageItem.id + '.ON_SET')) {
-                        val = getState(pageItem.id + '.ON_SET').val;
-                        RegisterEntityWatcher(pageItem.id + '.ON_SET');
-                    }
 
                     if (val === true || val === 'true') {
                         optVal = '1';
@@ -1926,8 +1988,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             gateState = findLocale('window', 'opened');
                         }
 
-                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
-
                     }
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
@@ -1944,12 +2004,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             windowState = findLocale('window', 'opened');
                         } else {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
-                            //iconId = Icons.GetIcon('window-closed-variant');
                             iconColor = GetIconColor(pageItem, true, useColors);
                             windowState = findLocale('window', 'closed');
                         }
-
-                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
                     }
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
@@ -1979,11 +2036,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (existsState(pageItem.id + '.ON_ACTUAL')) {
                         optVal = getState(pageItem.id + '.ON_ACTUAL').val;
                         unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ON_ACTUAL');
-                        RegisterEntityWatcher(pageItem.id + '.ON_ACTUAL');
                     } else if (existsState(pageItem.id + '.ACTUAL')) {
                         optVal = getState(pageItem.id + '.ACTUAL').val;
                         unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ACTUAL');
-                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
                     }
 
                     if (o.common.role == 'value.temperature') {
@@ -2046,11 +2101,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
 
-                    if (existsState(pageItem.id + '.SET')) {
-                        val = getState(pageItem.id + '.SET').val;
-                        RegisterEntityWatcher(pageItem.id + '.SET');
-                    }
-
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;                
                     
                 case 'lock':
@@ -2070,7 +2120,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             lockState = findLocale('lock', 'LOCK');
                         }
                         lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
-                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
                     }
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState;
@@ -2079,16 +2128,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     type = 'number';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('plus-minus-variant');
 
-                    if (existsState(pageItem.id + '.SET')) {
-                        val = getState(pageItem.id + '.SET').val;
-                        RegisterEntityWatcher(pageItem.id + '.SET');
-                    }
-
-                    if (existsState(pageItem.id + '.ACTUAL')) {
-                        val = getState(pageItem.id + '.ACTUAL').val;
-                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
-                    }
-
                     iconColor = GetIconColor(pageItem, false, useColors)
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
@@ -2096,15 +2135,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 case 'volumeGroup':
                 case 'volume':
                     type = 'number';
-                    if (existsState(pageItem.id + '.SET')) {
-                        val = getState(pageItem.id + '.SET').val;
-                        RegisterEntityWatcher(pageItem.id + '.SET');
-                    }
-                    if (existsState(pageItem.id + '.ACTUAL')) {
-                        val = getState(pageItem.id + '.ACTUAL').val;
-                        RegisterEntityWatcher(pageItem.id + '.ACTUAL');
-                    }
-
                     iconColor = GetIconColor(pageItem, false, useColors)
                     if (existsState(pageItem.id + '.MUTE')) {
                         getState(pageItem.id + '.MUTE').val ? iconColor = GetIconColor(pageItem, false, useColors) : iconColor = GetIconColor(pageItem, true, useColors);
