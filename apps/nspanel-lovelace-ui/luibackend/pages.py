@@ -242,7 +242,7 @@ class LuiPagesGen(object):
                 if status_entity:
                     icon_res = get_icon_ha(item.status, overwrite=icon)
                     icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
-                    if item.status.startswith("sensor") and cardType == "cardGrid":
+                    if item.status.startswith("sensor") and cardType == "cardGrid" and item.iconOverride is None:
                         icon_res = status_entity.state[:4]
                         if icon_res[-1] == ".":
                             icon_res = icon_res[:-1]
@@ -265,7 +265,7 @@ class LuiPagesGen(object):
             if status_entity:
                 icon_id = get_icon_ha(item.status, overwrite=icon)
                 icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
-                if item.status.startswith("sensor") and cardType == "cardGrid":
+                if item.status.startswith("sensor") and cardType == "cardGrid" and item.iconOverride is None:
                     icon_id = status_entity.state[:4]
                     if icon_id[-1] == ".":
                         icon_id = icon_id[:-1]
