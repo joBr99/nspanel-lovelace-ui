@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.7.3.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+TypeScript v3.7.3.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 46 / v3.7.3 / BerryDriver 8 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -104,6 +104,7 @@ ReleaseNotes:
 	- 23.10.2022 - v3.7.0   Upgrade TFT 46
         - 28.12.2022 - v3.7.3.0 Hotfix - bUp case
 	- 28.12.2022 - v3.7.3.0 Update Berry Version 8
+        - 29.12.2022 - v3.7.3.1 Hotfix - us-p - DateString - Use long/short Weekday and long/short Month
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -915,6 +916,16 @@ async function InitAlternateMRIconsSize() {
     }
 }
 InitAlternateMRIconsSize();
+
+//DateString short/long
+async function InitDateformat() {
+    if (existsState(NSPanel_Path + 'Config.Dateformat.weekday') == false ||
+        existsState(NSPanel_Path + 'Config.Dateformat.month') == false) {
+        await createStateAsync(NSPanel_Path + 'Config.Dateformat.weekday', 'long', { type: 'string' });
+        await createStateAsync(NSPanel_Path + 'Config.Dateformat.month', 'long', { type: 'string' });
+    }
+}
+InitDateformat();
 
 on({id: [].concat(String(NSPanel_Path) + 'Relay.1').concat(String(NSPanel_Path) + 'Relay.2'), change: "ne"}, async function (obj) {
     try {
@@ -2030,8 +2041,11 @@ function HandleStartupProcess(): void {
 
 function SendDate(): void {
     try {
+        let dpWeekday = existsObject(NSPanel_Path + 'Config.Dateformat.weekday') ? getState(NSPanel_Path + 'Config.Dateformat.weekday').val : 'short'
+        let dpMonth = existsObject(NSPanel_Path + 'Config.Dateformat.month') ? getState(NSPanel_Path + 'Config.Dateformat.month').val : 'short'
+
         const date = new Date();
-        const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const options: any = { weekday: dpWeekday, year: 'numeric', month: dpMonth, day: 'numeric' };
         const _SendDate = date.toLocaleDateString(config.locale, options);
 
         SendToPanel(<Payload>{ payload: 'date~' + _SendDate });
