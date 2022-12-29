@@ -26,50 +26,16 @@ text += """
               //tempStep
               spstr strCommand.txt,tTmp.txt,"~",20
               covx tTmp.txt,xTempStep1.val,0,0
-              // disable all buttons
-              vis bt0,0
-              vis bt1,0
-              vis bt2,0
-              vis bt3,0
-              vis bt4,0
-              vis bt5,0
-              vis bt6,0
-              vis bt7,0
-"""
-
-start = 21
-for i in range(0,8):
-    idxstart = start + i*4
-    text += f"""
-              //bt{i}
-              spstr strCommand.txt,bt{i}.txt,"~",{idxstart}
-              if(bt{i}.txt!="")
-              {{
-                // set text color on active state
-                spstr strCommand.txt,tTmp.txt,"~",{idxstart+1}
-                covx tTmp.txt,bt{i}.pco2,0,0
-                // set state
-                spstr strCommand.txt,tTmp.txt,"~",{idxstart+2}
-                covx tTmp.txt,bt{i}.val,0,0
-                // save action
-                spstr strCommand.txt,va{i}.txt,"~",{idxstart+3}
-                //enable
-                vis bt{i},1
-              }}"""
-
-text += """
               //Text tCurTempLbl
-              spstr strCommand.txt,tCurTempLbl.txt,"~",53
+              spstr strCommand.txt,tCurTempLbl.txt,"~",21
               //Text tStateLbl
-              spstr strCommand.txt,tStateLbl.txt,"~",54
-              //Text tALbl
-              spstr strCommand.txt,tALbl.txt,"~",55
+              spstr strCommand.txt,tStateLbl.txt,"~",22
               //Text tCF
-              spstr strCommand.txt,tCF.txt,"~",56
+              spstr strCommand.txt,tCF.txt,"~",23
               tCF1.txt=tCF.txt
               tCF2.txt=tCF.txt
               //Second Temperature
-              spstr strCommand.txt,tTmp.txt,"~",57
+              spstr strCommand.txt,tTmp.txt,"~",24
               if(tTmp.txt!="")
               {
                 covx tTmp.txt,xTempDest2.val,0,0
@@ -87,15 +53,46 @@ text += """
                 vis tCF2,1
               }
               //Show btDetail
-              spstr strCommand.txt,tTmp.txt,"~",58
-              if(tTmp.txt!="1")
+              spstr strCommand.txt,tTmp.txt,"~",25
+              if(tTmp.txt=="enable")
               {
                 vis btDetail,1
               }else
               {
                 vis btDetail,0
               }
+"""
+print(text)
+
+
+start = 26
+for i in range(1,9):
+    idxstart = start + (i-1)*6
+    item = f"""
+              // get Type
+              spstr strCommand.txt,tTmp.txt,"~",{idxstart}
+              if(tTmp.txt=="delete"||tTmp.txt=="")
+              {{
+                vis bEntity{i},0
+              }}else
+              {{
+                // get internal name
+                spstr strCommand.txt,entn{i}.txt,"~",{idxstart+1}
+                // change icon
+                spstr strCommand.txt,bEntity{i}.txt,"~",{idxstart+2}
+                vis bEntity{i},1
+                // change icon color
+                spstr strCommand.txt,tTmp.txt,"~",{idxstart+3}
+                covx tTmp.txt,sys0,0,0
+                bEntity{i}.pco=sys0
+              }}
+    """
+    print(item)
+
+
+
+print("""
             }
 """ + sharedfoot
-print(text)
+)
 
