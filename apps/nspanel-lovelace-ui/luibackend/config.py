@@ -17,6 +17,7 @@ class Entity(object):
         self.status        = entity_input_config.get("status")
         self.condState     = entity_input_config.get("state")
         self.condStateNot  = entity_input_config.get("state_not")
+        self.condTemplate  = entity_input_config.get("state_template")
         self.assumedState  = entity_input_config.get("assumed_state", False)
         self.data  = entity_input_config.get("data", {})
         self.entity_input_config = entity_input_config

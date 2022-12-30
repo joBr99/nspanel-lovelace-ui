@@ -88,6 +88,15 @@ This sensor will only be shown on the card if it's state is not equal to `on`
         state_not: "on"
 ```
 
+## Hide item based on HA Template
+
+The template must evaluate to `true` for the entity to hide.
+
+```yaml
+      - entity: binary_sensor.sensor_kueche_contact
+        state_template: '{{ state_attr("sun.sun","azimuth") < 200 }}'
+```
+
 ## Calling service directly as button
 
 The following example shows how to call services directly, this enables you to call services on entities not (yet) supported by the backend and also to pass data to services.
