@@ -18,10 +18,6 @@ cardChart
 	33   Component(s)
 	425  Line(s) of event code
 	290  Unique line(s) of event code
-screensaver
-	47   Component(s)
-	411  Line(s) of event code
-	299  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	351  Line(s) of event code
@@ -78,6 +74,10 @@ cardThermo
 	57   Component(s)
 	528  Line(s) of event code
 	313  Unique line(s) of event code
+screensaver
+	47   Component(s)
+	411  Line(s) of event code
+	299  Unique line(s) of event code
 
 Total
 	19   Page(s)

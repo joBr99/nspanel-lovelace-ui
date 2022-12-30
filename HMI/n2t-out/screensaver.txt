@@ -365,7 +365,7 @@ Text tNotifyText
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 80
+        Max. Text Size                      : 120
     
 Text tTime
     Attributes
