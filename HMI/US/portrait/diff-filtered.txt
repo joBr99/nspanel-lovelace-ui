@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-12-28 19:03:47.763413658 +0000
++++ /dev/fd/62	2022-12-30 20:03:39.501663832 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardAlarm.txt
@@ -3245,3 +3245,20 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
++15 +342,15 @@
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 120
++ Max. Text Size                      : 80
++
++ime
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled

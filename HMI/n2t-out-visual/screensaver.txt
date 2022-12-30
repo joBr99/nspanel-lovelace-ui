@@ -903,7 +903,7 @@ Text tNotifyText
         Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 80
+        Max. Text Size                      : 120
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
