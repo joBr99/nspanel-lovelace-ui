@@ -76,11 +76,11 @@ cardThermo
 	313  Unique line(s) of event code
 screensaver
 	47   Component(s)
-	411  Line(s) of event code
-	299  Unique line(s) of event code
+	430  Line(s) of event code
+	302  Unique line(s) of event code
 
 Total
 	19   Page(s)
 	694  Component(s)
-	8217 Line(s) of event code
-	2124 Unique line(s) of event code
+	8236 Line(s) of event code
+	2127 Unique line(s) of event code
