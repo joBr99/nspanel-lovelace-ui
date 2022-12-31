@@ -115,7 +115,7 @@ Variable (string) strCommand
         ID            : 4
         Scope         : local
         Text          : 
-        Max. Text Size: 500
+        Max. Text Size: 700
     
 Variable (string) tSend
     Attributes
