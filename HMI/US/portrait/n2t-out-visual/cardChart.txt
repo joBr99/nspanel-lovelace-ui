@@ -559,48 +559,42 @@ Timer tmSerial
                                     if(tInstruction.txt=="entityUpd")
                                     {
                                         spstr strCommand.txt,tHeading.txt,"~",1
-                                        // navigation icons
-                                        spstr strCommand.txt,tId.txt,"~",2
-                                        spstr tId.txt,tTmp.txt,"|",0
-                                        if(tTmp.txt=="0")
+                                        // navigation icon left
+                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bPrev,0
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent1.txt,"~",3
+                                            // change icon
+                                            spstr strCommand.txt,bPrev.txt,"~",4
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",5
+                                            covx tTmp.txt,sys0,0,0
+                                            bPrev.pco=sys0
                                             vis bPrev,1
-                                            tsw mSwipePrev,1
-                                            tsw mSwipeUp,0
-                                            bPrev.txt="î°"
                                         }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bPrev,1
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,1
-                                            bPrev.txt="î¶"
-                                        }
-                                        spstr tId.txt,tTmp.txt,"|",1
-                                        if(tTmp.txt=="0")
+                                        // navigation icon right
+                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bNext,0
-                                            tsw mSwipeNext,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent2.txt,"~",9
+                                            // change icon
+                                            spstr strCommand.txt,bNext.txt,"~",10
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",11
+                                            covx tTmp.txt,sys0,0,0
+                                            bNext.pco=sys0
                                             vis bNext,1
-                                            tsw mSwipeNext,1
-                                            bNext.txt="î³"
-                                        }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bNext,1
-                                            bNext.txt="î"
                                         }
                                         // extract color
-                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        spstr strCommand.txt,tTmp.txt,"~",14
                                         covx tTmp.txt,vaColorL.val,0,0
                                         // prepare dark color
                                         sys0=vaColorL.val>>11 // red
@@ -612,7 +606,7 @@ Timer tmSerial
                                         //
                                         // detect nValues and maxValue
                                         vNValues.val=0
-                                        spstr strCommand.txt,tTmp.txt,"~",vNValues.val+6
+                                        spstr strCommand.txt,tTmp.txt,"~",vNValues.val+17
                                         strlen tTmp.txt,sya0
                                         while(sya0>0)
                                         {
@@ -623,7 +617,7 @@ Timer tmSerial
                                             }
                                             // next
                                             vNValues.val++
-                                            spstr strCommand.txt,tTmp.txt,"~",vNValues.val+6
+                                            spstr strCommand.txt,tTmp.txt,"~",vNValues.val+17
                                             strlen tTmp.txt,sya0
                                         }
                                         //
@@ -638,7 +632,7 @@ Timer tmSerial
                                         //
                                         line m0.x+25+40-10,m0.y,m0.x+25+40-10,vaBottom.val+10,14823
                                         line m0.x+25+40-5,vaBottom.val,m0.x+25+40-15,vaBottom.val,14823
-                                        spstr strCommand.txt,strTmp.txt,"~",5
+                                        spstr strCommand.txt,strTmp.txt,"~",16
                                         sya1=0
                                         spstr strTmp.txt,tTmp.txt,":",sya1
                                         strlen tTmp.txt,sya0
@@ -671,7 +665,7 @@ Timer tmSerial
                                         }
                                         //
                                         // y achis label
-                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        spstr strCommand.txt,tTmp.txt,"~",15
                                         // tTmp.txt="Gas [kW]"
                                         strlen tTmp.txt,sys1
                                         sya1=sys1*12+m0.h-48/2
@@ -687,7 +681,7 @@ Timer tmSerial
                                                 vaValues.txt+="~"
                                             }
                                             // extract next entry
-                                            spstr strCommand.txt,tTmp.txt,"~",sys0+6
+                                            spstr strCommand.txt,tTmp.txt,"~",sys0+17
                                             // calculate left
                                             sys1=sys0*5*vaUnit.val
                                             sys1+=vaLeft.val
