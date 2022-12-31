@@ -105,7 +105,7 @@ change the page type:
 Structure (Category): `entityUpd~title~[navigation]~[entity_information]`
 Example with 4 Entities: 
 ```
-entityUpd~LightTest~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~light~light.bed_light~A~17299~Bed Light~0~light~light.ceiling_lights~B~52231~Ceiling Lights~1~switch~switch.ac~C~17299~AC~0~switch~switch.decorative_lights~D~65222~Decorative Lights~1
+entityUpd~LightTest~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~~light~light.bed_light~A~17299~Bed Light~0~light~light.ceiling_lights~B~52231~Ceiling Lights~1~switch~switch.ac~C~17299~AC~0~switch~switch.decorative_lights~D~65222~Decorative Lights~1
 ```
 
 <table>
