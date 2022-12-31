@@ -74,14 +74,14 @@ There probably not much cases where this is needed, but here is an exmaple to sh
 
 ## Hide item based on state
 
-This sensor will only be shown on the card if it's state is equal to `off`
+This sensor will be hidden on the card if its state is equal to `off` (entity is only shown if its state is **not** `off`):
 
 ```yaml
       - entity: binary_sensor.sensor_bad_contact
         state: "off"
 ```
 
-This sensor will only be shown on the card if it's state is not equal to `on`
+This sensor will be hidden on the card if its state is not equal to `on` (entity is only shown if its state **is** `on`):
 
 ```yaml
       - entity: binary_sensor.sensor_kueche_contact
@@ -90,7 +90,9 @@ This sensor will only be shown on the card if it's state is not equal to `on`
 
 ## Hide item based on HA Template
 
-The template must evaluate to `true` for the entity to hide.
+*Available in version 3.8 and above.*
+
+[Home Assistant templating](https://www.home-assistant.io/docs/configuration/templating/) can be used to hide entities. The template must evaluate to `true` for the entity to hide, otherwise it will be shown.
 
 ```yaml
       - entity: binary_sensor.sensor_kueche_contact
