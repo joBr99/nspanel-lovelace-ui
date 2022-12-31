@@ -86,21 +86,21 @@ Variable (string) nent1
         ID            : 33
         Scope         : local
         Text          : 
-        Max. Text Size: 80
+        Max. Text Size: 50
     
 Variable (string) nent2
     Attributes
         ID            : 32
         Scope         : local
         Text          : 
-        Max. Text Size: 80
+        Max. Text Size: 50
     
 Variable (string) strCommand
     Attributes
         ID            : 6
         Scope         : local
         Text          : 
-        Max. Text Size: 275
+        Max. Text Size: 400
     
 Variable (string) tId
     Attributes
