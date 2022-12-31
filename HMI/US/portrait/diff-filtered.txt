@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2022-12-31 00:54:59.785437486 +0000
++++ /dev/fd/62	2022-12-31 14:00:50.738431612 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardAlarm.txt
@@ -366,13 +366,13 @@
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +176,26 @@
 +e (string) type6
@@ -1449,3 +1449,39 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
++35 +489,14 @@
++                             }
++                             if(tInstruction.txt=="timeout")
++                             {
++                                 //set timeout to global var
++                                 spstr strCommand.txt,tTmp.txt,"~",1
++                                 covx tTmp.txt,sleepTimeout,0,0
++                             }
++                             if(tInstruction.txt=="statusUpdate")
++                             {
++                                 //statusIcon1
++                                 spstr strCommand.txt,tIcon1.txt,"~",1
++                                 spstr strCommand.txt,tTmp.txt,"~",2
++                                 covx tTmp.txt,tIcon1.pco,0,0
++                                 //statusIcon2
++                                 spstr strCommand.txt,tIcon2.txt,"~",3
++                                 spstr strCommand.txt,tTmp.txt,"~",4
++                                 covx tTmp.txt,tIcon2.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",5
++                                 if(tTmp.txt!="")
++                                 {
++                                     tIcon1.font=3
++                                 }
++                                 spstr strCommand.txt,tTmp.txt,"~",6
++                                 if(tTmp.txt!="")
++                                 {
++                                     tIcon2.font=3
++                                 }
++                             }
++                             if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
++                             {
++                                 vis tMainIcon,1
++                                 vis tMainIconAlt,0
++                                 vis tMainText,1
++                                 vis tMainTextAlt,0
++                                 vis tMRIcon,0
