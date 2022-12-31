@@ -100,6 +100,8 @@ change the page type:
 
 `notify~heading~text`
 
+`statusUpdate~icon1~icon1Color~icon2~icon2~icon2color~icon1font~icon2font`
+
 ### cardEntities Page
 
 Structure (Category): `entityUpd~title~[navigation]~[entity_information]`
