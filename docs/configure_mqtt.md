@@ -30,7 +30,8 @@ appdaemon:
       type: mqtt
       namespace: mqtt
       client_id: "appdaemon"
-      client_host: 192.168.75.30
+      client_host: core-mosquitto.local.hass.io # This should work if you are using supervised HomeAssistant; if not use the IP Address instead.
+      #client_host: 192.168.75.30
       client_port: 1883
       client_user: "mqttuser"
       client_password: "mqttpassword"
