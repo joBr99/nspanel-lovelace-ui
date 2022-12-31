@@ -57,6 +57,18 @@ Page cardPower
                 }
             }
         
+Variable (string) nent1
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
+Variable (string) nent2
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
 Variable (string) strCommand
     Attributes
         Scope         : local
@@ -346,14 +358,7 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardPower,"
-            if(bNext.txt=="î")
-            {
-                tSend.txt+="bHome"
-            }else
-            {
-                tSend.txt+="bNext"
-            }
+            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -378,14 +383,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardAlarm,"
-            if(bPrev.txt=="î¶")
-            {
-                tSend.txt+="bUp"
-            }else
-            {
-                tSend.txt+="bPrev"
-            }
+            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -555,63 +553,57 @@ Timer tmSerial
                                     {
                                         // command format: entityUpd,heading,navigation,colorHome,iconHome[,iconColor,icon,speed,valueUp,valueDown]x6
                                         spstr strCommand.txt,tHeading.txt,"~",1
-                                        // navigation icons
-                                        spstr strCommand.txt,tId.txt,"~",2
-                                        spstr tId.txt,tTmp.txt,"|",0
-                                        if(tTmp.txt=="0")
+                                        // navigation icon left
+                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bPrev,0
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent1.txt,"~",3
+                                            // change icon
+                                            spstr strCommand.txt,bPrev.txt,"~",4
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",5
+                                            covx tTmp.txt,sys0,0,0
+                                            bPrev.pco=sys0
                                             vis bPrev,1
-                                            tsw mSwipePrev,1
-                                            tsw mSwipeUp,0
-                                            bPrev.txt="î°"
                                         }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bPrev,1
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,1
-                                            bPrev.txt="î¶"
-                                        }
-                                        spstr tId.txt,tTmp.txt,"|",1
-                                        if(tTmp.txt=="0")
+                                        // navigation icon right
+                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bNext,0
-                                            tsw mSwipeNext,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent2.txt,"~",9
+                                            // change icon
+                                            spstr strCommand.txt,bNext.txt,"~",10
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",11
+                                            covx tTmp.txt,sys0,0,0
+                                            bNext.pco=sys0
                                             vis bNext,1
-                                            tsw mSwipeNext,1
-                                            bNext.txt="î³"
-                                        }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bNext,1
-                                            bNext.txt="î"
                                         }
                                         // icon color home
-                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        spstr strCommand.txt,tTmp.txt,"~",14
                                         covx tTmp.txt,t1.pco,0,0
                                         // icon home
-                                        spstr strCommand.txt,t1.txt,"~",4
+                                        spstr strCommand.txt,t1.txt,"~",15
                                         // text home
-                                        spstr strCommand.txt,tHome.txt,"~",5
+                                        spstr strCommand.txt,tHome.txt,"~",16
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        spstr strCommand.txt,tTmp.txt,"~",17
                                         covx tTmp.txt,t0Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t0Icon.txt,"~",7
+                                        spstr strCommand.txt,t0Icon.txt,"~",18
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",8
+                                        spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,t0Speed.val,0,0
                                         // lower text
-                                        spstr strCommand.txt,t0u.txt,"~",9
+                                        spstr strCommand.txt,t0u.txt,"~",20
                                         if(t0Icon.txt!="")
                                         {
                                             vis t0Icon,1
@@ -624,15 +616,15 @@ Timer tmSerial
                                             vis h0,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        spstr strCommand.txt,tTmp.txt,"~",21
                                         covx tTmp.txt,t1Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t1Icon.txt,"~",11
+                                        spstr strCommand.txt,t1Icon.txt,"~",22
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",12
+                                        spstr strCommand.txt,tTmp.txt,"~",23
                                         covx tTmp.txt,t1Speed.val,0,0
                                         // lower text
-                                        spstr strCommand.txt,t1u.txt,"~",13
+                                        spstr strCommand.txt,t1u.txt,"~",24
                                         if(t1Icon.txt!="")
                                         {
                                             vis t1Icon,1
@@ -645,15 +637,15 @@ Timer tmSerial
                                             vis h1,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",14
+                                        spstr strCommand.txt,tTmp.txt,"~",25
                                         covx tTmp.txt,t2Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t2Icon.txt,"~",15
+                                        spstr strCommand.txt,t2Icon.txt,"~",26
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        spstr strCommand.txt,tTmp.txt,"~",27
                                         covx tTmp.txt,t2Speed.val,0,0
                                         // lower text
-                                        spstr strCommand.txt,t2u.txt,"~",17
+                                        spstr strCommand.txt,t2u.txt,"~",28
                                         if(t2Icon.txt!="")
                                         {
                                             vis t2Icon,1
@@ -666,15 +658,15 @@ Timer tmSerial
                                             vis h2,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",18
+                                        spstr strCommand.txt,tTmp.txt,"~",29
                                         covx tTmp.txt,t3Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t3Icon.txt,"~",19
+                                        spstr strCommand.txt,t3Icon.txt,"~",30
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",20
+                                        spstr strCommand.txt,tTmp.txt,"~",31
                                         covx tTmp.txt,t3Speed.val,0,0
                                         // lower text
-                                        spstr strCommand.txt,t3u.txt,"~",21
+                                        spstr strCommand.txt,t3u.txt,"~",32
                                         if(t3Icon.txt!="")
                                         {
                                             vis t3Icon,1
@@ -687,15 +679,15 @@ Timer tmSerial
                                             vis h3,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        spstr strCommand.txt,tTmp.txt,"~",33
                                         covx tTmp.txt,t4Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t4Icon.txt,"~",23
+                                        spstr strCommand.txt,t4Icon.txt,"~",34
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",24
+                                        spstr strCommand.txt,tTmp.txt,"~",35
                                         covx tTmp.txt,t4Speed.val,0,0
                                         // lower text
-                                        spstr strCommand.txt,t4u.txt,"~",25
+                                        spstr strCommand.txt,t4u.txt,"~",36
                                         if(t4Icon.txt!="")
                                         {
                                             vis t4Icon,1
@@ -708,15 +700,15 @@ Timer tmSerial
                                             vis h4,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",26
+                                        spstr strCommand.txt,tTmp.txt,"~",37
                                         covx tTmp.txt,t5Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t5Icon.txt,"~",27
+                                        spstr strCommand.txt,t5Icon.txt,"~",38
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",28
+                                        spstr strCommand.txt,tTmp.txt,"~",39
                                         covx tTmp.txt,t5Speed.val,0,0
                                         // lower text
-                                        spstr strCommand.txt,t5u.txt,"~",29
+                                        spstr strCommand.txt,t5u.txt,"~",40
                                         if(t5Icon.txt!="")
                                         {
                                             vis t5Icon,1

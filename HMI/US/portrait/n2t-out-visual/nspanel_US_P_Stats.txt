@@ -22,14 +22,22 @@ popupFan
 	27   Component(s)
 	351  Line(s) of event code
 	204  Unique line(s) of event code
+cardQR
+	34   Component(s)
+	411  Line(s) of event code
+	237  Unique line(s) of event code
 cardChart
-	31   Component(s)
-	452  Line(s) of event code
-	296  Unique line(s) of event code
+	33   Component(s)
+	438  Line(s) of event code
+	291  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	181  Line(s) of event code
 	129  Unique line(s) of event code
+cardAlarm
+	42   Component(s)
+	428  Line(s) of event code
+	257  Unique line(s) of event code
 screensaver
 	45   Component(s)
 	410  Line(s) of event code
@@ -42,45 +50,37 @@ popupThermo
 	44   Component(s)
 	519  Line(s) of event code
 	274  Unique line(s) of event code
-cardPower
-	43   Component(s)
-	439  Line(s) of event code
-	299  Unique line(s) of event code
 cardGrid
-	42   Component(s)
-	542  Line(s) of event code
-	301  Unique line(s) of event code
+	44   Component(s)
+	515  Line(s) of event code
+	290  Unique line(s) of event code
+cardPower
+	45   Component(s)
+	412  Line(s) of event code
+	289  Unique line(s) of event code
 cardMedia
+	59   Component(s)
+	637  Line(s) of event code
+	316  Unique line(s) of event code
+cardThermo
 	57   Component(s)
-	660  Line(s) of event code
-	325  Unique line(s) of event code
-cardQR
-	32   Component(s)
-	425  Line(s) of event code
-	244  Unique line(s) of event code
+	541  Line(s) of event code
+	316  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	512  Line(s) of event code
 	255  Unique line(s) of event code
-cardThermo
-	55   Component(s)
-	555  Line(s) of event code
-	322  Unique line(s) of event code
 popupInSel
 	34   Component(s)
 	617  Line(s) of event code
 	295  Unique line(s) of event code
-cardAlarm
-	40   Component(s)
-	442  Line(s) of event code
-	262  Unique line(s) of event code
 cardEntities
-	89   Component(s)
-	1636 Line(s) of event code
-	701  Unique line(s) of event code
+	91   Component(s)
+	1609 Line(s) of event code
+	690  Unique line(s) of event code
 
 Total
 	19   Page(s)
-	693  Component(s)
-	8830 Line(s) of event code
-	2253 Unique line(s) of event code
+	709  Component(s)
+	8670 Line(s) of event code
+	2261 Unique line(s) of event code
