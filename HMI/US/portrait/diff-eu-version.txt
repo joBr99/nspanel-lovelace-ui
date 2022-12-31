@@ -17,82 +17,7 @@
 │      page pageStartup
 │   --- HMI/n2t-out/cardAlarm.txt
 ├── +++ HMI/US/portrait/n2t-out/cardAlarm.txt
-│ @@ -59,26 +59,14 @@
-│          
-│  Variable (string) entn
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│ -Variable (string) nent1
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│ -Variable (string) nent2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 200
-│      
-│  Variable (string) tSend
-│ @@ -490,15 +478,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardAlarm,"
-│ +            if(bNext.txt=="î")
-│ +            {
-│ +                tSend.txt+="bHome"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bNext"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -515,15 +510,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î°
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardAlarm,"
-│ +            if(bPrev.txt=="î¶")
-│ +            {
-│ +                tSend.txt+="bUp"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bPrev"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -634,88 +636,94 @@
+│ @@ -634,88 +634,94 @@
 │                                      ucopy strCommand.txt,4,payloadLength-5,0
 │                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
 │                                      spstr strCommand.txt,tInstruction.txt,"~",0
@@ -222,7 +147,7 @@
 │                                              vis b2,1
 │                                              vis b3,1
 │                                              vis b4,1
-│ @@ -740,30 +748,30 @@
+│ @@ -740,30 +746,30 @@
 │                                              vis b8,0
 │                                              vis b9,0
 │                                              vis b10,0
@@ -259,82 +184,7 @@
 │                                      }
 │   --- HMI/n2t-out/cardChart.txt
 ├── +++ HMI/US/portrait/n2t-out/cardChart.txt
-│ @@ -45,26 +45,14 @@
-│          
-│  Variable (string) entn
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│ -Variable (string) nent1
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│ -Variable (string) nent2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 275
-│      
-│  Variable (string) strTmp
-│ @@ -187,15 +175,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardChart,"
-│ +            if(bNext.txt=="î")
-│ +            {
-│ +                tSend.txt+="bHome"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bNext"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -212,15 +207,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î°
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardChart,"
-│ +            if(bPrev.txt=="î¶")
-│ +            {
-│ +                tSend.txt+="bUp"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bPrev"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -393,88 +395,94 @@
+│ @@ -393,88 +393,94 @@
 │                                      // here is the location where acual code should be
 │                                      ucopy strCommand.txt,4,payloadLength-5,0
 │                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
@@ -356,6 +206,13 @@
 │ +                                            tsw mSwipeUp,0
 │ +                                        }
 │ +                                        if(tTmp.txt=="1")
+│ +                                        {
+│ +                                            vis bPrev,1
+│ +                                            tsw mSwipePrev,1
+│ +                                            tsw mSwipeUp,0
+│ +                                            bPrev.txt="î°"
+│ +                                        }
+│ +                                        if(tTmp.txt=="2")
 │                                          {
 │ -                                            // get internal name
 │ -                                            spstr strCommand.txt,nent1.txt,"~",3
@@ -366,20 +223,13 @@
 │ -                                            covx tTmp.txt,sys0,0,0
 │ -                                            bPrev.pco=sys0
 │                                              vis bPrev,1
-│ +                                            tsw mSwipePrev,1
-│ +                                            tsw mSwipeUp,0
-│ +                                            bPrev.txt="î°"
+│ +                                            tsw mSwipePrev,0
+│ +                                            tsw mSwipeUp,1
+│ +                                            bPrev.txt="î¶"
 │                                          }
 │ -                                        // navigation icon right
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
 │ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        if(tTmp.txt=="2")
-│ +                                        {
-│ +                                            vis bPrev,1
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,1
-│ +                                            bPrev.txt="î¶"
-│ +                                        }
 │ +                                        spstr tId.txt,tTmp.txt,"|",1
 │ +                                        if(tTmp.txt=="0")
 │                                          {
@@ -457,7 +307,7 @@
 │                                          {
 │                                              covx tTmp.txt,sys1,0,0
 │                                              if(sys1<=vMax.val)
-│ @@ -499,15 +507,15 @@
+│ @@ -499,15 +505,15 @@
 │                                              // next
 │                                              sya1++
 │                                              spstr strTmp.txt,tTmp.txt,":",sya1
@@ -474,7 +324,7 @@
 │                                          {
 │                                              substr tTmp.txt,strTmp.txt,sys0,1
 │                                              xstr m0.x,sys0*-12+m0.y+sya1,30,20,6,defaultFontColor,RED,2,1,3,strTmp.txt
-│ @@ -515,15 +523,15 @@
+│ @@ -515,15 +521,15 @@
 │                                          for(sys0=0;sys0<vNValues.val;sys0++)
 │                                          {
 │                                              if(sys0>0)
@@ -518,31 +368,71 @@
 │                  {
 │                      b[sys0].bco=defaultBcoColor
 │                      b[sys0].pco=defaultFontColor
-│ @@ -106,21 +116,21 @@
+│ @@ -86,45 +96,57 @@
+│                  }
+│              }
+│          
+│  Variable (string) entn1
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│ -        Max. Text Size: 80
+│ +        Max. Text Size: 65
+│      
+│  Variable (string) entn2
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│ -        Max. Text Size: 80
+│ +        Max. Text Size: 65
+│      
+│  Variable (string) entn3
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│ -        Max. Text Size: 80
+│ +        Max. Text Size: 65
 │      
 │  Variable (string) entn4
 │      Attributes
 │          Scope         : local
 │          Text          : 
-│          Max. Text Size: 80
-│      
-│ -Variable (string) nent1
+│ -        Max. Text Size: 80
+│ +        Max. Text Size: 65
+│ +    
 │ +Variable (string) entn5
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│ -Variable (string) nent2
+│ +    Attributes
+│ +        Scope         : local
+│ +        Text          : 
+│ +        Max. Text Size: 65
+│ +    
 │ +Variable (string) entn6
+│ +    Attributes
+│ +        Scope         : local
+│ +        Text          : 
+│ +        Max. Text Size: 65
+│      
+│  Variable (string) nent1
 │      Attributes
 │          Scope         : local
 │          Text          : 
-│          Max. Text Size: 80
+│ -        Max. Text Size: 80
+│ +        Max. Text Size: 40
+│      
+│  Variable (string) nent2
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│ -        Max. Text Size: 80
+│ +        Max. Text Size: 40
 │      
 │  Variable (string) strCommand
 │      Attributes
-│ @@ -154,14 +164,26 @@
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 500
+│      
+│ @@ -154,14 +176,26 @@
 │      
 │  Variable (string) type4
 │      Attributes
@@ -569,7 +459,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
-│ @@ -190,14 +212,32 @@
+│ @@ -190,14 +224,32 @@
 │          Scope                               : local
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
@@ -602,7 +492,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
-│ @@ -230,14 +270,34 @@
+│ @@ -230,14 +282,34 @@
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
@@ -637,7 +527,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
-│ @@ -280,14 +340,34 @@
+│ @@ -280,14 +352,34 @@
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
@@ -672,7 +562,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
-│ @@ -429,14 +509,70 @@
+│ @@ -429,14 +521,70 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -743,7 +633,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          State                               : unpressed
-│ @@ -529,27 +665,84 @@
+│ @@ -529,14 +677,64 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -808,52 +698,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardEntities,"
-│ +            if(bNext.txt=="î")
-│ +            {
-│ +                tSend.txt+="bHome"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bNext"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -566,15 +759,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î°
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardEntities,"
-│ +            if(bPrev.txt=="î¶")
-│ +            {
-│ +                tSend.txt+="bUp"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bPrev"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -679,14 +879,64 @@
+│ @@ -679,14 +877,64 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -918,7 +763,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          State                               : unpressed
-│ @@ -779,14 +1029,64 @@
+│ @@ -779,14 +1027,64 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -983,7 +828,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          State                               : unpressed
-│ @@ -879,14 +1179,64 @@
+│ @@ -879,14 +1177,64 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -1048,7 +893,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          State                               : unpressed
-│ @@ -987,14 +1337,68 @@
+│ @@ -987,14 +1335,68 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -1117,7 +962,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │      
-│ @@ -1127,14 +1531,84 @@
+│ @@ -1127,14 +1529,84 @@
 │                  page popupInSel
 │              }
 │              if(type4.txt=="timer")
@@ -1202,563 +1047,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │      
-│ @@ -1232,87 +1706,93 @@
-│                                      ucopy strCommand.txt,4,payloadLength-5,0
-│                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-│                                      spstr strCommand.txt,tInstruction.txt,"~",0
-│                                      if(tInstruction.txt=="entityUpd")
-│                                      {
-│                                          // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
-│                                          spstr strCommand.txt,tHeading.txt,"~",1
-│ -                                        // navigation icon left
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
-│ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        // navigation icons
-│ +                                        spstr strCommand.txt,tId.txt,"~",2
-│ +                                        spstr tId.txt,tTmp.txt,"|",0
-│ +                                        if(tTmp.txt=="0")
-│                                          {
-│                                              vis bPrev,0
-│ -                                        }else
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,0
-│ +                                        }
-│ +                                        if(tTmp.txt=="1")
-│ +                                        {
-│ +                                            vis bPrev,1
-│ +                                            tsw mSwipePrev,1
-│ +                                            tsw mSwipeUp,0
-│ +                                            bPrev.txt="î°"
-│ +                                        }
-│ +                                        if(tTmp.txt=="2")
-│                                          {
-│ -                                            // get internal name
-│ -                                            spstr strCommand.txt,nent1.txt,"~",3
-│ -                                            // change icon
-│ -                                            spstr strCommand.txt,bPrev.txt,"~",4
-│ -                                            // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",5
-│ -                                            covx tTmp.txt,sys0,0,0
-│ -                                            bPrev.pco=sys0
-│                                              vis bPrev,1
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,1
-│ +                                            bPrev.txt="î¶"
-│                                          }
-│ -                                        // navigation icon right
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
-│ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        spstr tId.txt,tTmp.txt,"|",1
-│ +                                        if(tTmp.txt=="0")
-│                                          {
-│                                              vis bNext,0
-│ -                                        }else
-│ +                                            tsw mSwipeNext,0
-│ +                                        }
-│ +                                        if(tTmp.txt=="1")
-│ +                                        {
-│ +                                            vis bNext,1
-│ +                                            tsw mSwipeNext,1
-│ +                                            bNext.txt="î³"
-│ +                                        }
-│ +                                        if(tTmp.txt=="2")
-│                                          {
-│ -                                            // get internal name
-│ -                                            spstr strCommand.txt,nent2.txt,"~",9
-│ -                                            // change icon
-│ -                                            spstr strCommand.txt,bNext.txt,"~",10
-│ -                                            // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",11
-│ -                                            covx tTmp.txt,sys0,0,0
-│ -                                            bNext.pco=sys0
-│                                              vis bNext,1
-│ +                                            bNext.txt="î"
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type1.txt,"~",14
-│ +                                        spstr strCommand.txt,type1.txt,"~",3
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn1.txt,"~",15
-│ +                                        spstr strCommand.txt,entn1.txt,"~",4
-│                                          if(type1.txt=="delete"||type1.txt=="")
-│                                          {
-│                                              vis bUp1,0
-│                                              vis bStop1,0
-│                                              vis bDown1,0
-│                                              vis btOnOff1,0
-│                                              vis tEntity1,0
-│                                              vis tIcon1,0
-│                                              vis bText1,0
-│                                              vis hSlider1,0
-│                                              vis nNum1,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,tIcon1.txt,"~",16
-│ +                                            spstr strCommand.txt,tIcon1.txt,"~",5
-│                                              vis tIcon1,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",17
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",6
-│                                              covx tTmp.txt,sys0,0,0
-│                                              tIcon1.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity1.txt,"~",18
-│ +                                            spstr strCommand.txt,tEntity1.txt,"~",7
-│                                              vis tEntity1,1
-│                                          }
-│                                          if(type1.txt=="shutter")
-│                                          {
-│                                              vis bUp1,1
-│                                              vis bStop1,1
-│                                              vis bDown1,1
-│                                              vis btOnOff1,0
-│                                              vis bText1,0
-│                                              vis hSlider1,0
-│                                              vis nNum1,0
-│                                              // get Button State (optional Value)
-│ -                                            spstr strCommand.txt,tId.txt,"~",19
-│ +                                            spstr strCommand.txt,tId.txt,"~",8
-│                                              // up button
-│                                              spstr tId.txt,tTmp.txt,"|",3
-│                                              if(tTmp.txt=="disable")
-│                                              {
-│                                                  bUp1.pco=27501
-│                                                  spstr tId.txt,bUp1.txt,"|",0
-│                                                  tsw bUp1,0
-│ @@ -1355,15 +1835,15 @@
-│                                              vis bStop1,0
-│                                              vis bDown1,0
-│                                              vis btOnOff1,1
-│                                              vis bText1,0
-│                                              vis hSlider1,0
-│                                              vis nNum1,0
-│                                              // get Button State (optional Value)
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",19
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",8
-│                                              covx tTmp.txt,sys0,0,0
-│                                              btOnOff1.val=sys0
-│                                          }
-│                                          if(type1.txt=="text"||type1.txt=="timer")
-│                                          {
-│                                              vis bUp1,0
-│                                              vis bStop1,0
-│ @@ -1372,43 +1852,43 @@
-│                                              vis bText1,1
-│                                              tsw bText1,0
-│                                              vis hSlider1,0
-│                                              vis nNum1,0
-│                                              bText1.pco=65535
-│                                              bText1.pco2=65535
-│                                              // get Text (optional Value)
-│ -                                            spstr strCommand.txt,bText1.txt,"~",19
-│ +                                            spstr strCommand.txt,bText1.txt,"~",8
-│                                          }
-│                                          if(type1.txt=="button"||type1.txt=="input_sel")
-│                                          {
-│                                              vis bUp1,0
-│                                              vis bStop1,0
-│                                              vis bDown1,0
-│                                              vis btOnOff1,0
-│                                              vis bText1,1
-│                                              tsw bText1,1
-│                                              vis hSlider1,0
-│                                              vis nNum1,0
-│                                              bText1.pco=1374
-│                                              bText1.pco2=1374
-│                                              // get Text (optional Value)
-│ -                                            spstr strCommand.txt,bText1.txt,"~",19
-│ +                                            spstr strCommand.txt,bText1.txt,"~",8
-│                                          }
-│                                          if(type1.txt=="number")
-│                                          {
-│                                              vis bUp1,0
-│                                              vis bStop1,0
-│                                              vis bDown1,0
-│                                              vis btOnOff1,0
-│                                              vis bText1,0
-│                                              tsw bText1,0
-│                                              vis hSlider1,1
-│                                              vis nNum1,1
-│                                              // get config (optional Value) (use bText as variable)
-│ -                                            spstr strCommand.txt,bText1.txt,"~",19
-│ +                                            spstr strCommand.txt,bText1.txt,"~",8
-│                                              //first value is current value
-│                                              spstr bText1.txt,tTmp.txt,"|",0
-│                                              covx tTmp.txt,sys0,0,0
-│                                              hSlider1.val=sys0
-│                                              nNum1.val=sys0
-│                                              //second value is min value
-│                                              spstr bText1.txt,tTmp.txt,"|",1
-│ @@ -1416,52 +1896,52 @@
-│                                              hSlider1.minval=sys0
-│                                              //third value is max value
-│                                              spstr bText1.txt,tTmp.txt,"|",2
-│                                              covx tTmp.txt,sys0,0,0
-│                                              hSlider1.maxval=sys0
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type2.txt,"~",20
-│ +                                        spstr strCommand.txt,type2.txt,"~",9
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn2.txt,"~",21
-│ +                                        spstr strCommand.txt,entn2.txt,"~",10
-│                                          if(type2.txt=="delete"||type2.txt=="")
-│                                          {
-│                                              vis bUp2,0
-│                                              vis bStop2,0
-│                                              vis bDown2,0
-│                                              vis btOnOff2,0
-│                                              vis tEntity2,0
-│                                              vis tIcon2,0
-│                                              vis bText2,0
-│                                              vis hSlider2,0
-│                                              vis nNum2,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,tIcon2.txt,"~",22
-│ +                                            spstr strCommand.txt,tIcon2.txt,"~",11
-│                                              vis tIcon2,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",23
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",12
-│                                              covx tTmp.txt,sys0,0,0
-│                                              tIcon2.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity2.txt,"~",24
-│ +                                            spstr strCommand.txt,tEntity2.txt,"~",13
-│                                              vis tEntity2,1
-│                                          }
-│                                          if(type2.txt=="shutter")
-│                                          {
-│                                              vis bUp2,1
-│                                              vis bStop2,1
-│                                              vis bDown2,1
-│                                              vis btOnOff2,0
-│                                              vis bText2,0
-│                                              vis hSlider2,0
-│                                              vis nNum2,0
-│                                              // get Button State (optional Value)
-│ -                                            spstr strCommand.txt,tId.txt,"~",25
-│ +                                            spstr strCommand.txt,tId.txt,"~",14
-│                                              // up button
-│                                              spstr tId.txt,tTmp.txt,"|",3
-│                                              if(tTmp.txt=="disable")
-│                                              {
-│                                                  bUp2.pco=27501
-│                                                  spstr tId.txt,bUp2.txt,"|",0
-│                                                  tsw bUp2,0
-│ @@ -1504,15 +1984,15 @@
-│                                              vis bStop2,0
-│                                              vis bDown2,0
-│                                              vis btOnOff2,1
-│                                              vis bText2,0
-│                                              vis hSlider2,0
-│                                              vis nNum2,0
-│                                              // get Button State (optional Value)
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",25
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",14
-│                                              covx tTmp.txt,sys0,0,0
-│                                              btOnOff2.val=sys0
-│                                          }
-│                                          if(type2.txt=="text"||type2.txt=="timer")
-│                                          {
-│                                              vis bUp2,0
-│                                              vis bStop2,0
-│ @@ -1521,43 +2001,43 @@
-│                                              vis bText2,1
-│                                              tsw bText2,0
-│                                              vis hSlider2,0
-│                                              vis nNum2,0
-│                                              bText2.pco=65535
-│                                              bText2.pco2=65535
-│                                              // get Text (optional Value)
-│ -                                            spstr strCommand.txt,bText2.txt,"~",25
-│ +                                            spstr strCommand.txt,bText2.txt,"~",14
-│                                          }
-│                                          if(type2.txt=="button"||type2.txt=="input_sel")
-│                                          {
-│                                              vis bUp2,0
-│                                              vis bStop2,0
-│                                              vis bDown2,0
-│                                              vis btOnOff2,0
-│                                              vis bText2,1
-│                                              tsw bText2,1
-│                                              vis hSlider2,0
-│                                              vis nNum2,0
-│                                              bText2.pco=1374
-│                                              bText2.pco2=1374
-│                                              // get Text (optional Value)
-│ -                                            spstr strCommand.txt,bText2.txt,"~",25
-│ +                                            spstr strCommand.txt,bText2.txt,"~",14
-│                                          }
-│                                          if(type2.txt=="number")
-│                                          {
-│                                              vis bUp2,0
-│                                              vis bStop2,0
-│                                              vis bDown2,0
-│                                              vis btOnOff2,0
-│                                              vis bText2,0
-│                                              tsw bText2,0
-│                                              vis hSlider2,1
-│                                              vis nNum2,1
-│                                              // get config (optional Value) (use bText as variable)
-│ -                                            spstr strCommand.txt,bText2.txt,"~",25
-│ +                                            spstr strCommand.txt,bText2.txt,"~",14
-│                                              //first value is current value
-│                                              spstr bText2.txt,tTmp.txt,"|",0
-│                                              covx tTmp.txt,sys0,0,0
-│                                              hSlider2.val=sys0
-│                                              nNum2.val=sys0
-│                                              //second value is min value
-│                                              spstr bText2.txt,tTmp.txt,"|",1
-│ @@ -1565,52 +2045,52 @@
-│                                              hSlider2.minval=sys0
-│                                              //third value is max value
-│                                              spstr bText2.txt,tTmp.txt,"|",2
-│                                              covx tTmp.txt,sys0,0,0
-│                                              hSlider2.maxval=sys0
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type3.txt,"~",26
-│ +                                        spstr strCommand.txt,type3.txt,"~",15
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn3.txt,"~",27
-│ +                                        spstr strCommand.txt,entn3.txt,"~",16
-│                                          if(type3.txt=="delete"||type3.txt=="")
-│                                          {
-│                                              vis bUp3,0
-│                                              vis bStop3,0
-│                                              vis bDown3,0
-│                                              vis btOnOff3,0
-│                                              vis tEntity3,0
-│                                              vis tIcon3,0
-│                                              vis bText3,0
-│                                              vis hSlider3,0
-│                                              vis nNum3,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,tIcon3.txt,"~",28
-│ +                                            spstr strCommand.txt,tIcon3.txt,"~",17
-│                                              vis tIcon3,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",29
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",18
-│                                              covx tTmp.txt,sys0,0,0
-│                                              tIcon3.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity3.txt,"~",30
-│ +                                            spstr strCommand.txt,tEntity3.txt,"~",19
-│                                              vis tEntity3,1
-│                                          }
-│                                          if(type3.txt=="shutter")
-│                                          {
-│                                              vis bUp3,1
-│                                              vis bStop3,1
-│                                              vis bDown3,1
-│                                              vis btOnOff3,0
-│                                              vis bText3,0
-│                                              vis hSlider3,0
-│                                              vis nNum3,0
-│                                              // get Button State (optional Value)
-│ -                                            spstr strCommand.txt,tId.txt,"~",31
-│ +                                            spstr strCommand.txt,tId.txt,"~",20
-│                                              // up button
-│                                              spstr tId.txt,tTmp.txt,"|",3
-│                                              if(tTmp.txt=="disable")
-│                                              {
-│                                                  bUp3.pco=27501
-│                                                  spstr tId.txt,bUp3.txt,"|",0
-│                                                  tsw bUp3,0
-│ @@ -1653,15 +2133,15 @@
-│                                              vis bStop3,0
-│                                              vis bDown3,0
-│                                              vis btOnOff3,1
-│                                              vis bText3,0
-│                                              vis hSlider3,0
-│                                              vis nNum3,0
-│                                              // get Button State (optional Value)
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",31
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",20
-│                                              covx tTmp.txt,sys0,0,0
-│                                              btOnOff3.val=sys0
-│                                          }
-│                                          if(type3.txt=="text"||type3.txt=="timer")
-│                                          {
-│                                              vis bUp3,0
-│                                              vis bStop3,0
-│ @@ -1670,43 +2150,43 @@
-│                                              vis bText3,1
-│                                              tsw bText3,0
-│                                              vis hSlider3,0
-│                                              vis nNum3,0
-│                                              bText3.pco=65535
-│                                              bText3.pco2=65535
-│                                              // get Text (optional Value)
-│ -                                            spstr strCommand.txt,bText3.txt,"~",31
-│ +                                            spstr strCommand.txt,bText3.txt,"~",20
-│                                          }
-│                                          if(type3.txt=="button"||type3.txt=="input_sel")
-│                                          {
-│                                              vis bUp3,0
-│                                              vis bStop3,0
-│                                              vis bDown3,0
-│                                              vis btOnOff3,0
-│                                              vis bText3,1
-│                                              tsw bText3,1
-│                                              vis hSlider3,0
-│                                              vis nNum3,0
-│                                              bText3.pco=1374
-│                                              bText3.pco2=1374
-│                                              // get Text (optional Value)
-│ -                                            spstr strCommand.txt,bText3.txt,"~",31
-│ +                                            spstr strCommand.txt,bText3.txt,"~",20
-│                                          }
-│                                          if(type3.txt=="number")
-│                                          {
-│                                              vis bUp3,0
-│                                              vis bStop3,0
-│                                              vis bDown3,0
-│                                              vis btOnOff3,0
-│                                              vis bText3,0
-│                                              tsw bText3,0
-│                                              vis hSlider3,1
-│                                              vis nNum3,1
-│                                              // get config (optional Value) (use bText as variable)
-│ -                                            spstr strCommand.txt,bText3.txt,"~",31
-│ +                                            spstr strCommand.txt,bText3.txt,"~",20
-│                                              //first value is current value
-│                                              spstr bText3.txt,tTmp.txt,"|",0
-│                                              covx tTmp.txt,sys0,0,0
-│                                              hSlider3.val=sys0
-│                                              nNum3.val=sys0
-│                                              //second value is min value
-│                                              spstr bText3.txt,tTmp.txt,"|",1
-│ @@ -1714,52 +2194,52 @@
-│                                              hSlider3.minval=sys0
-│                                              //third value is max value
-│                                              spstr bText3.txt,tTmp.txt,"|",2
-│                                              covx tTmp.txt,sys0,0,0
-│                                              hSlider3.maxval=sys0
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type4.txt,"~",32
-│ +                                        spstr strCommand.txt,type4.txt,"~",21
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn4.txt,"~",33
-│ +                                        spstr strCommand.txt,entn4.txt,"~",22
-│                                          if(type4.txt=="delete"||type4.txt=="")
-│                                          {
-│                                              vis bUp4,0
-│                                              vis bStop4,0
-│                                              vis bDown4,0
-│                                              vis btOnOff4,0
-│                                              vis tEntity4,0
-│                                              vis tIcon4,0
-│                                              vis bText4,0
-│                                              vis hSlider4,0
-│                                              vis nNum4,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,tIcon4.txt,"~",34
-│ +                                            spstr strCommand.txt,tIcon4.txt,"~",23
-│                                              vis tIcon4,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",35
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",24
-│                                              covx tTmp.txt,sys0,0,0
-│                                              tIcon4.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity4.txt,"~",36
-│ +                                            spstr strCommand.txt,tEntity4.txt,"~",25
-│                                              vis tEntity4,1
-│                                          }
-│                                          if(type4.txt=="shutter")
-│                                          {
-│                                              vis bUp4,1
-│                                              vis bStop4,1
-│                                              vis bDown4,1
-│                                              vis btOnOff4,0
-│                                              vis bText4,0
-│                                              vis hSlider4,0
-│                                              vis nNum4,0
-│                                              // get Button State (optional Value)
-│ -                                            spstr strCommand.txt,tId.txt,"~",37
-│ +                                            spstr strCommand.txt,tId.txt,"~",26
-│                                              // up button
-│                                              spstr tId.txt,tTmp.txt,"|",3
-│                                              if(tTmp.txt=="disable")
-│                                              {
-│                                                  bUp4.pco=27501
-│                                                  spstr tId.txt,bUp4.txt,"|",0
-│                                                  tsw bUp4,0
-│ @@ -1802,15 +2282,15 @@
-│                                              vis bStop4,0
-│                                              vis bDown4,0
-│                                              vis btOnOff4,1
-│                                              vis bText4,0
-│                                              vis hSlider4,0
-│                                              vis nNum4,0
-│                                              // get Button State (optional Value)
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",37
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",26
-│                                              covx tTmp.txt,sys0,0,0
-│                                              btOnOff4.val=sys0
-│                                          }
-│                                          if(type4.txt=="text"||type4.txt=="timer")
-│                                          {
-│                                              vis bUp4,0
-│                                              vis bStop4,0
-│ @@ -1819,57 +2299,355 @@
-│                                              vis bText4,1
-│                                              tsw bText4,0
-│                                              vis hSlider4,0
-│                                              vis nNum4,0
-│                                              bText4.pco=65535
-│                                              bText4.pco2=65535
-│                                              // get Text (optional Value)
-│ -                                            spstr strCommand.txt,bText4.txt,"~",37
-│ +                                            spstr strCommand.txt,bText4.txt,"~",26
-│                                          }
-│                                          if(type4.txt=="button"||type4.txt=="input_sel")
-│                                          {
-│                                              vis bUp4,0
-│                                              vis bStop4,0
-│                                              vis bDown4,0
-│                                              vis btOnOff4,0
-│                                              vis bText4,1
-│                                              tsw bText4,1
-│                                              vis hSlider4,0
-│                                              vis nNum4,0
-│                                              bText4.pco=1374
-│                                              bText4.pco2=1374
-│                                              // get Text (optional Value)
-│ -                                            spstr strCommand.txt,bText4.txt,"~",37
-│ +                                            spstr strCommand.txt,bText4.txt,"~",26
-│                                          }
-│                                          if(type4.txt=="number")
-│                                          {
-│                                              vis bUp4,0
-│                                              vis bStop4,0
-│                                              vis bDown4,0
-│                                              vis btOnOff4,0
-│                                              vis bText4,0
-│                                              tsw bText4,0
-│                                              vis hSlider4,1
-│                                              vis nNum4,1
-│                                              // get config (optional Value) (use bText as variable)
-│ -                                            spstr strCommand.txt,bText4.txt,"~",37
-│ +                                            spstr strCommand.txt,bText4.txt,"~",26
-│                                              //first value is current value
-│                                              spstr bText4.txt,tTmp.txt,"|",0
-│                                              covx tTmp.txt,sys0,0,0
-│                                              hSlider4.val=sys0
-│                                              nNum4.val=sys0
-│                                              //second value is min value
-│                                              spstr bText4.txt,tTmp.txt,"|",1
+│ @@ -1862,14 +2334,312 @@
 │                                              covx tTmp.txt,sys0,0,0
 │                                              hSlider4.minval=sys0
 │                                              //third value is max value
@@ -1767,9 +1056,9 @@
 │                                              hSlider4.maxval=sys0
 │                                          }
 │ +                                        // get Type
-│ +                                        spstr strCommand.txt,type5.txt,"~",27
+│ +                                        spstr strCommand.txt,type5.txt,"~",38
 │ +                                        // get internal name
-│ +                                        spstr strCommand.txt,entn5.txt,"~",28
+│ +                                        spstr strCommand.txt,entn5.txt,"~",39
 │ +                                        if(type5.txt=="delete"||type5.txt=="")
 │ +                                        {
 │ +                                            vis bUp5,0
@@ -1784,14 +1073,14 @@
 │ +                                        }else
 │ +                                        {
 │ +                                            // change icon
-│ +                                            spstr strCommand.txt,tIcon5.txt,"~",29
+│ +                                            spstr strCommand.txt,tIcon5.txt,"~",40
 │ +                                            vis tIcon5,1
 │ +                                            // change icon color
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",30
+│ +                                            spstr strCommand.txt,tTmp.txt,"~",41
 │ +                                            covx tTmp.txt,sys0,0,0
 │ +                                            tIcon5.pco=sys0
 │ +                                            // set name
-│ +                                            spstr strCommand.txt,tEntity5.txt,"~",31
+│ +                                            spstr strCommand.txt,tEntity5.txt,"~",42
 │ +                                            vis tEntity5,1
 │ +                                        }
 │ +                                        if(type5.txt=="shutter")
@@ -1804,7 +1093,7 @@
 │ +                                            vis hSlider5,0
 │ +                                            vis nNum5,0
 │ +                                            // get Button State (optional Value)
-│ +                                            spstr strCommand.txt,tId.txt,"~",32
+│ +                                            spstr strCommand.txt,tId.txt,"~",43
 │ +                                            // up button
 │ +                                            spstr tId.txt,tTmp.txt,"|",3
 │ +                                            if(tTmp.txt=="disable")
@@ -1855,7 +1144,7 @@
 │ +                                            vis hSlider5,0
 │ +                                            vis nNum5,0
 │ +                                            // get Button State (optional Value)
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",32
+│ +                                            spstr strCommand.txt,tTmp.txt,"~",43
 │ +                                            covx tTmp.txt,sys0,0,0
 │ +                                            btOnOff5.val=sys0
 │ +                                        }
@@ -1872,7 +1161,7 @@
 │ +                                            bText5.pco=65535
 │ +                                            bText5.pco2=65535
 │ +                                            // get Text (optional Value)
-│ +                                            spstr strCommand.txt,bText5.txt,"~",32
+│ +                                            spstr strCommand.txt,bText5.txt,"~",43
 │ +                                        }
 │ +                                        if(type5.txt=="button"||type5.txt=="input_sel")
 │ +                                        {
@@ -1887,7 +1176,7 @@
 │ +                                            bText5.pco=1374
 │ +                                            bText5.pco2=1374
 │ +                                            // get Text (optional Value)
-│ +                                            spstr strCommand.txt,bText5.txt,"~",32
+│ +                                            spstr strCommand.txt,bText5.txt,"~",43
 │ +                                        }
 │ +                                        if(type5.txt=="number")
 │ +                                        {
@@ -1900,7 +1189,7 @@
 │ +                                            vis hSlider5,1
 │ +                                            vis nNum5,1
 │ +                                            // get config (optional Value) (use bText as variable)
-│ +                                            spstr strCommand.txt,bText5.txt,"~",32
+│ +                                            spstr strCommand.txt,bText5.txt,"~",43
 │ +                                            //first value is current value
 │ +                                            spstr bText5.txt,tTmp.txt,"|",0
 │ +                                            covx tTmp.txt,sys0,0,0
@@ -1916,9 +1205,9 @@
 │ +                                            hSlider5.maxval=sys0
 │ +                                        }
 │ +                                        // get Type
-│ +                                        spstr strCommand.txt,type6.txt,"~",33
+│ +                                        spstr strCommand.txt,type6.txt,"~",44
 │ +                                        // get internal name
-│ +                                        spstr strCommand.txt,entn6.txt,"~",34
+│ +                                        spstr strCommand.txt,entn6.txt,"~",45
 │ +                                        if(type6.txt=="delete"||type6.txt=="")
 │ +                                        {
 │ +                                            vis bUp6,0
@@ -1933,14 +1222,14 @@
 │ +                                        }else
 │ +                                        {
 │ +                                            // change icon
-│ +                                            spstr strCommand.txt,tIcon6.txt,"~",35
+│ +                                            spstr strCommand.txt,tIcon6.txt,"~",46
 │ +                                            vis tIcon6,1
 │ +                                            // change icon color
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",36
+│ +                                            spstr strCommand.txt,tTmp.txt,"~",47
 │ +                                            covx tTmp.txt,sys0,0,0
 │ +                                            tIcon6.pco=sys0
 │ +                                            // set name
-│ +                                            spstr strCommand.txt,tEntity6.txt,"~",37
+│ +                                            spstr strCommand.txt,tEntity6.txt,"~",48
 │ +                                            vis tEntity6,1
 │ +                                        }
 │ +                                        if(type6.txt=="shutter")
@@ -1953,7 +1242,7 @@
 │ +                                            vis hSlider6,0
 │ +                                            vis nNum6,0
 │ +                                            // get Button State (optional Value)
-│ +                                            spstr strCommand.txt,tId.txt,"~",38
+│ +                                            spstr strCommand.txt,tId.txt,"~",49
 │ +                                            // up button
 │ +                                            spstr tId.txt,tTmp.txt,"|",3
 │ +                                            if(tTmp.txt=="disable")
@@ -2004,7 +1293,7 @@
 │ +                                            vis hSlider6,0
 │ +                                            vis nNum6,0
 │ +                                            // get Button State (optional Value)
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",38
+│ +                                            spstr strCommand.txt,tTmp.txt,"~",49
 │ +                                            covx tTmp.txt,sys0,0,0
 │ +                                            btOnOff6.val=sys0
 │ +                                        }
@@ -2021,7 +1310,7 @@
 │ +                                            bText6.pco=65535
 │ +                                            bText6.pco2=65535
 │ +                                            // get Text (optional Value)
-│ +                                            spstr strCommand.txt,bText6.txt,"~",38
+│ +                                            spstr strCommand.txt,bText6.txt,"~",49
 │ +                                        }
 │ +                                        if(type6.txt=="button"||type6.txt=="input_sel")
 │ +                                        {
@@ -2036,7 +1325,7 @@
 │ +                                            bText6.pco=1374
 │ +                                            bText6.pco2=1374
 │ +                                            // get Text (optional Value)
-│ +                                            spstr strCommand.txt,bText6.txt,"~",38
+│ +                                            spstr strCommand.txt,bText6.txt,"~",49
 │ +                                        }
 │ +                                        if(type6.txt=="number")
 │ +                                        {
@@ -2049,7 +1338,7 @@
 │ +                                            vis hSlider6,1
 │ +                                            vis nNum6,1
 │ +                                            // get config (optional Value) (use bText as variable)
-│ +                                            spstr strCommand.txt,bText6.txt,"~",38
+│ +                                            spstr strCommand.txt,bText6.txt,"~",49
 │ +                                            //first value is current value
 │ +                                            spstr bText6.txt,tTmp.txt,"|",0
 │ +                                            covx tTmp.txt,sys0,0,0
@@ -2073,26 +1362,10 @@
 │                                          spstr strCommand.txt,tId.txt,"~",1
 │   --- HMI/n2t-out/cardGrid.txt
 ├── +++ HMI/US/portrait/n2t-out/cardGrid.txt
-│ @@ -78,31 +78,19 @@
-│      
-│  Variable (string) entn6
-│      Attributes
-│          Scope         : local
+│ @@ -94,15 +94,15 @@
 │          Text          : 
 │          Max. Text Size: 80
 │      
-│ -Variable (string) nent1
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│ -Variable (string) nent2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
 │  Variable (string) strCommand
 │      Attributes
 │          Scope         : local
@@ -2106,55 +1379,7 @@
 │          Text          : 
 │          Max. Text Size: 200
 │      
-│ @@ -527,15 +515,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardGrid,"
-│ +            if(bNext.txt=="î")
-│ +            {
-│ +                tSend.txt+="bHome"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bNext"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -552,15 +547,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î°
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardGrid,"
-│ +            if(bPrev.txt=="î¶")
-│ +            {
-│ +                tSend.txt+="bUp"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bPrev"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -631,14 +633,18 @@
+│ @@ -631,14 +631,18 @@
 │              {
 │                  page popupLight
 │              }
@@ -2172,949 +1397,26 @@
 │          Scope      : local
 │          Period (ms): 50
 │          Enabled    : yes
-│      
-│ @@ -687,172 +693,178 @@
-│                                      ucopy strCommand.txt,4,payloadLength-5,0
-│                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-│                                      spstr strCommand.txt,tInstruction.txt,"~",0
-│                                      if(tInstruction.txt=="entityUpd")
-│                                      {
-│                                          // command format: entityUpd,heading,navigation,[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
-│                                          spstr strCommand.txt,tHeading.txt,"~",1
-│ -                                        // navigation icon left
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
-│ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        // navigation icons
-│ +                                        spstr strCommand.txt,tId.txt,"~",2
-│ +                                        spstr tId.txt,tTmp.txt,"|",0
-│ +                                        if(tTmp.txt=="0")
-│                                          {
-│                                              vis bPrev,0
-│ -                                        }else
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,0
-│ +                                        }
-│ +                                        if(tTmp.txt=="1")
-│ +                                        {
-│ +                                            vis bPrev,1
-│ +                                            tsw mSwipePrev,1
-│ +                                            tsw mSwipeUp,0
-│ +                                            bPrev.txt="î°"
-│ +                                        }
-│ +                                        if(tTmp.txt=="2")
-│                                          {
-│ -                                            // get internal name
-│ -                                            spstr strCommand.txt,nent1.txt,"~",3
-│ -                                            // change icon
-│ -                                            spstr strCommand.txt,bPrev.txt,"~",4
-│ -                                            // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",5
-│ -                                            covx tTmp.txt,sys0,0,0
-│ -                                            bPrev.pco=sys0
-│                                              vis bPrev,1
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,1
-│ +                                            bPrev.txt="î¶"
-│                                          }
-│ -                                        // navigation icon right
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
-│ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        spstr tId.txt,tTmp.txt,"|",1
-│ +                                        if(tTmp.txt=="0")
-│                                          {
-│                                              vis bNext,0
-│ -                                        }else
-│ +                                            tsw mSwipeNext,0
-│ +                                        }
-│ +                                        if(tTmp.txt=="1")
-│ +                                        {
-│ +                                            vis bNext,1
-│ +                                            tsw mSwipeNext,1
-│ +                                            bNext.txt="î³"
-│ +                                        }
-│ +                                        if(tTmp.txt=="2")
-│                                          {
-│ -                                            // get internal name
-│ -                                            spstr strCommand.txt,nent2.txt,"~",9
-│ -                                            // change icon
-│ -                                            spstr strCommand.txt,bNext.txt,"~",10
-│ -                                            // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",11
-│ -                                            covx tTmp.txt,sys0,0,0
-│ -                                            bNext.pco=sys0
-│                                              vis bNext,1
-│ +                                            bNext.txt="î"
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type1.txt,"~",14
-│ +                                        spstr strCommand.txt,type1.txt,"~",3
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn1.txt,"~",15
-│ +                                        spstr strCommand.txt,entn1.txt,"~",4
-│                                          if(type1.txt=="delete"||type1.txt=="")
-│                                          {
-│                                              vis tEntity1,0
-│                                              vis bEntity1,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity1.txt,"~",16
-│ +                                            spstr strCommand.txt,bEntity1.txt,"~",5
-│                                              vis bEntity1,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",17
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",6
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity1.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity1.txt,"~",18
-│ +                                            spstr strCommand.txt,tEntity1.txt,"~",7
-│                                              vis tEntity1,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type2.txt,"~",20
-│ +                                        spstr strCommand.txt,type2.txt,"~",9
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn2.txt,"~",21
-│ +                                        spstr strCommand.txt,entn2.txt,"~",10
-│                                          if(type2.txt=="delete"||type2.txt=="")
-│                                          {
-│                                              vis tEntity2,0
-│                                              vis bEntity2,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity2.txt,"~",22
-│ +                                            spstr strCommand.txt,bEntity2.txt,"~",11
-│                                              vis bEntity2,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",23
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",12
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity2.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity2.txt,"~",24
-│ +                                            spstr strCommand.txt,tEntity2.txt,"~",13
-│                                              vis tEntity2,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type3.txt,"~",26
-│ +                                        spstr strCommand.txt,type3.txt,"~",15
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn3.txt,"~",27
-│ +                                        spstr strCommand.txt,entn3.txt,"~",16
-│                                          if(type3.txt=="delete"||type3.txt=="")
-│                                          {
-│                                              vis tEntity3,0
-│                                              vis bEntity3,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity3.txt,"~",28
-│ +                                            spstr strCommand.txt,bEntity3.txt,"~",17
-│                                              vis bEntity3,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",29
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",18
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity3.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity3.txt,"~",30
-│ +                                            spstr strCommand.txt,tEntity3.txt,"~",19
-│                                              vis tEntity3,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type4.txt,"~",32
-│ +                                        spstr strCommand.txt,type4.txt,"~",21
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn4.txt,"~",33
-│ +                                        spstr strCommand.txt,entn4.txt,"~",22
-│                                          if(type4.txt=="delete"||type4.txt=="")
-│                                          {
-│                                              vis tEntity4,0
-│                                              vis bEntity4,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity4.txt,"~",34
-│ +                                            spstr strCommand.txt,bEntity4.txt,"~",23
-│                                              vis bEntity4,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",35
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",24
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity4.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity4.txt,"~",36
-│ +                                            spstr strCommand.txt,tEntity4.txt,"~",25
-│                                              vis tEntity4,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type5.txt,"~",38
-│ +                                        spstr strCommand.txt,type5.txt,"~",27
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn5.txt,"~",39
-│ +                                        spstr strCommand.txt,entn5.txt,"~",28
-│                                          if(type5.txt=="delete"||type5.txt=="")
-│                                          {
-│                                              vis tEntity5,0
-│                                              vis bEntity5,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity5.txt,"~",40
-│ +                                            spstr strCommand.txt,bEntity5.txt,"~",29
-│                                              vis bEntity5,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",41
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",30
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity5.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity5.txt,"~",42
-│ +                                            spstr strCommand.txt,tEntity5.txt,"~",31
-│                                              vis tEntity5,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type6.txt,"~",44
-│ +                                        spstr strCommand.txt,type6.txt,"~",33
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn6.txt,"~",45
-│ +                                        spstr strCommand.txt,entn6.txt,"~",34
-│                                          if(type6.txt=="delete"||type6.txt=="")
-│                                          {
-│                                              vis tEntity6,0
-│                                              vis bEntity6,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity6.txt,"~",46
-│ +                                            spstr strCommand.txt,bEntity6.txt,"~",35
-│                                              vis bEntity6,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",47
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",36
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity6.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity6.txt,"~",48
-│ +                                            spstr strCommand.txt,tEntity6.txt,"~",37
-│                                              vis tEntity6,1
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="pageType")
-│                                      {
-│                                          sleepValue=0
-│                                          //command format pageType,specialPageName
-│   --- HMI/n2t-out/cardMedia.txt
-├── +++ HMI/US/portrait/n2t-out/cardMedia.txt
-│ @@ -82,26 +82,14 @@
-│      
-│  Variable (string) entn6
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│ -Variable (string) nent1
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│ -Variable (string) nent2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 750
-│      
-│  Variable (string) tEntity1
-│ @@ -774,15 +762,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardMedia,"
-│ +            if(bNext.txt=="î")
-│ +            {
-│ +                tSend.txt+="bHome"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bNext"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -799,15 +794,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î°
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardMedia,"
-│ +            if(bPrev.txt=="î¶")
-│ +            {
-│ +                tSend.txt+="bUp"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bPrev"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -927,216 +929,222 @@
-│                                      ucopy strCommand.txt,4,payloadLength-5,0
-│                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-│                                      spstr strCommand.txt,tInstruction.txt,"~",0
-│                                      if(tInstruction.txt=="entityUpd")
-│                                      {
-│                                          // command format: entityUpd,heading,navigation,[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
-│                                          spstr strCommand.txt,tHeading.txt,"~",1
-│ -                                        // navigation icon left
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
-│ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        // navigation icons
-│ +                                        spstr strCommand.txt,tId.txt,"~",2
-│ +                                        spstr tId.txt,tTmp.txt,"|",0
-│ +                                        if(tTmp.txt=="0")
-│                                          {
-│                                              vis bPrev,0
-│ -                                        }else
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,0
-│ +                                        }
-│ +                                        if(tTmp.txt=="1")
-│                                          {
-│ -                                            // get internal name
-│ -                                            spstr strCommand.txt,nent1.txt,"~",3
-│ -                                            // change icon
-│ -                                            spstr strCommand.txt,bPrev.txt,"~",4
-│ -                                            // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",5
-│ -                                            covx tTmp.txt,sys0,0,0
-│ -                                            bPrev.pco=sys0
-│                                              vis bPrev,1
-│ +                                            tsw mSwipePrev,1
-│ +                                            tsw mSwipeUp,0
-│ +                                            bPrev.txt="î°"
-│                                          }
-│ -                                        // navigation icon right
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
-│ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        if(tTmp.txt=="2")
-│ +                                        {
-│ +                                            vis bPrev,1
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,1
-│ +                                            bPrev.txt="î¶"
-│ +                                        }
-│ +                                        spstr tId.txt,tTmp.txt,"|",1
-│ +                                        if(tTmp.txt=="0")
-│                                          {
-│                                              vis bNext,0
-│ -                                        }else
-│ +                                            tsw mSwipeNext,0
-│ +                                        }
-│ +                                        if(tTmp.txt=="1")
-│ +                                        {
-│ +                                            vis bNext,1
-│ +                                            tsw mSwipeNext,1
-│ +                                            bNext.txt="î³"
-│ +                                        }
-│ +                                        if(tTmp.txt=="2")
-│                                          {
-│ -                                            // get internal name
-│ -                                            spstr strCommand.txt,nent2.txt,"~",9
-│ -                                            // change icon
-│ -                                            spstr strCommand.txt,bNext.txt,"~",10
-│ -                                            // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",11
-│ -                                            covx tTmp.txt,sys0,0,0
-│ -                                            bNext.pco=sys0
-│                                              vis bNext,1
-│ +                                            bNext.txt="î"
-│                                          }
-│                                          //entity name
-│ -                                        spstr strCommand.txt,entn.txt,"~",14
-│ +                                        spstr strCommand.txt,entn.txt,"~",3
-│                                          //title
-│ -                                        spstr strCommand.txt,tTitle.txt,"~",15
-│ +                                        spstr strCommand.txt,tTitle.txt,"~",4
-│                                          //title farbe
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",16
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",5
-│                                          if(tTmp.txt!="")
-│                                          {
-│                                              covx tTmp.txt,tTitle.pco,0,0
-│                                          }
-│                                          //author
-│ -                                        spstr strCommand.txt,tAuthor.txt,"~",17
-│ +                                        spstr strCommand.txt,tAuthor.txt,"~",6
-│                                          //author farbe
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",18
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",7
-│                                          if(tTmp.txt!="")
-│                                          {
-│                                              covx tTmp.txt,tAuthor.pco,0,0
-│                                          }
-│                                          //volume
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",19
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",8
-│                                          covx tTmp.txt,sys0,0,0
-│                                          hVolume.val=sys0
-│                                          //icon
-│ -                                        spstr strCommand.txt,tPlayPause.txt,"~",20
-│ +                                        spstr strCommand.txt,tPlayPause.txt,"~",9
-│                                          // on off button
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",21
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",10
-│                                          if(tTmp.txt=="disable")
-│                                          {
-│                                              vis t5,0
-│                                          }else
-│                                          {
-│                                              vis t5,1
-│                                              covx tTmp.txt,t5.pco,0,0
-│                                          }
-│                                          // shuffel btn
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",22
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",11
-│                                          if(tTmp.txt=="disable")
-│                                          {
-│                                              vis tShuffle,0
-│                                          }else
-│                                          {
-│                                              vis tShuffle,1
-│                                              tShuffle.txt=tTmp.txt
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type1.txt,"~",23
-│ +                                        spstr strCommand.txt,type1.txt,"~",12
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn1.txt,"~",24
-│ +                                        spstr strCommand.txt,entn1.txt,"~",13
-│                                          if(type1.txt=="delete"||type1.txt=="")
-│                                          {
-│                                              vis tEntity1,0
-│                                              vis bEntity1,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity1.txt,"~",25
-│ +                                            spstr strCommand.txt,bEntity1.txt,"~",14
-│                                              vis bEntity1,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",26
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",15
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity1.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity1.txt,"~",27
-│ +                                            spstr strCommand.txt,tEntity1.txt,"~",16
-│                                              vis tEntity1,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type2.txt,"~",29
-│ +                                        spstr strCommand.txt,type2.txt,"~",18
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn2.txt,"~",30
-│ +                                        spstr strCommand.txt,entn2.txt,"~",19
-│                                          if(type2.txt=="delete"||type2.txt=="")
-│                                          {
-│                                              vis tEntity2,0
-│                                              vis bEntity2,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity2.txt,"~",31
-│ +                                            spstr strCommand.txt,bEntity2.txt,"~",20
-│                                              vis bEntity2,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",32
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",21
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity2.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity2.txt,"~",33
-│ +                                            spstr strCommand.txt,tEntity2.txt,"~",22
-│                                              vis tEntity2,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type3.txt,"~",35
-│ +                                        spstr strCommand.txt,type3.txt,"~",24
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn3.txt,"~",36
-│ +                                        spstr strCommand.txt,entn3.txt,"~",25
-│                                          if(type3.txt=="delete"||type3.txt=="")
-│                                          {
-│                                              vis tEntity3,0
-│                                              vis bEntity3,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity3.txt,"~",37
-│ +                                            spstr strCommand.txt,bEntity3.txt,"~",26
-│                                              vis bEntity3,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",38
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",27
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity3.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity3.txt,"~",39
-│ +                                            spstr strCommand.txt,tEntity3.txt,"~",28
-│                                              vis tEntity3,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type4.txt,"~",41
-│ +                                        spstr strCommand.txt,type4.txt,"~",30
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn4.txt,"~",42
-│ +                                        spstr strCommand.txt,entn4.txt,"~",31
-│                                          if(type4.txt=="delete"||type4.txt=="")
-│                                          {
-│                                              vis tEntity4,0
-│                                              vis bEntity4,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity4.txt,"~",43
-│ +                                            spstr strCommand.txt,bEntity4.txt,"~",32
-│                                              vis bEntity4,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",44
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",33
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity4.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity4.txt,"~",45
-│ +                                            spstr strCommand.txt,tEntity4.txt,"~",34
-│                                              vis tEntity4,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type5.txt,"~",47
-│ +                                        spstr strCommand.txt,type5.txt,"~",36
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn5.txt,"~",48
-│ +                                        spstr strCommand.txt,entn5.txt,"~",37
-│                                          if(type5.txt=="delete"||type5.txt=="")
-│                                          {
-│                                              vis tEntity5,0
-│                                              vis bEntity5,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity5.txt,"~",49
-│ +                                            spstr strCommand.txt,bEntity5.txt,"~",38
-│                                              vis bEntity5,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",50
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",39
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity5.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity5.txt,"~",51
-│ +                                            spstr strCommand.txt,tEntity5.txt,"~",40
-│                                              vis tEntity5,1
-│                                          }
-│                                          // get Type
-│ -                                        spstr strCommand.txt,type6.txt,"~",53
-│ +                                        spstr strCommand.txt,type6.txt,"~",42
-│                                          // get internal name
-│ -                                        spstr strCommand.txt,entn6.txt,"~",54
-│ +                                        spstr strCommand.txt,entn6.txt,"~",43
-│                                          if(type6.txt=="delete"||type6.txt=="")
-│                                          {
-│                                              vis tEntity6,0
-│                                              vis bEntity6,0
-│                                          }else
-│                                          {
-│                                              // change icon
-│ -                                            spstr strCommand.txt,bEntity6.txt,"~",55
-│ +                                            spstr strCommand.txt,bEntity6.txt,"~",44
-│                                              vis bEntity6,1
-│                                              // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",56
-│ +                                            spstr strCommand.txt,tTmp.txt,"~",45
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bEntity6.pco=sys0
-│                                              // set name
-│ -                                            spstr strCommand.txt,tEntity6.txt,"~",57
-│ +                                            spstr strCommand.txt,tEntity6.txt,"~",46
-│                                              vis tEntity6,1
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="pageType")
-│                                      {
-│                                          sleepValue=0
-│                                          //command format pageType,specialPageName
-│ @@ -1196,18 +1204,14 @@
-│                                          {
-│                                              page cardQR
-│                                          }
-│                                          if(tId.txt=="cardPower")
-│                                          {
-│                                              page cardPower
-│                                          }
-│ -                                        if(tId.txt=="cardChart")
-│ -                                        {
-│ -                                            page cardChart
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="time")
-│                                      {
-│                                          // get set time to global variable
-│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-│                                      }
-│                                      if(tInstruction.txt=="date")
-│   --- HMI/n2t-out/cardPower.txt
-├── +++ HMI/US/portrait/n2t-out/cardPower.txt
-│ @@ -53,26 +53,14 @@
-│                          b[sys0].pic=19
-│                          b[sys0].pic1=19
-│                          b[sys0].pic2=15
-│                      }
-│                  }
-│              }
-│          
-│ -Variable (string) nent1
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│ -Variable (string) nent2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 275
-│      
-│  Variable (int32) t0Speed
-│ @@ -354,15 +342,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardPower,"
-│ +            if(bNext.txt=="î")
-│ +            {
-│ +                tSend.txt+="bHome"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bNext"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -379,15 +374,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î°
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardAlarm,"
-│ +            if(bPrev.txt=="î¶")
-│ +            {
-│ +                tSend.txt+="bUp"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bPrev"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -549,170 +551,176 @@
-│                                      ucopy strCommand.txt,4,payloadLength-5,0
-│                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-│                                      spstr strCommand.txt,tInstruction.txt,"~",0
-│                                      if(tInstruction.txt=="entityUpd")
-│                                      {
-│                                          // command format: entityUpd,heading,navigation,colorHome,iconHome[,iconColor,icon,speed,valueUp,valueDown]x6
-│                                          spstr strCommand.txt,tHeading.txt,"~",1
-│ -                                        // navigation icon left
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
-│ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        // navigation icons
-│ +                                        spstr strCommand.txt,tId.txt,"~",2
-│ +                                        spstr tId.txt,tTmp.txt,"|",0
-│ +                                        if(tTmp.txt=="0")
-│                                          {
-│                                              vis bPrev,0
-│ -                                        }else
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,0
-│ +                                        }
-│ +                                        if(tTmp.txt=="1")
-│                                          {
-│ -                                            // get internal name
-│ -                                            spstr strCommand.txt,nent1.txt,"~",3
-│ -                                            // change icon
-│ -                                            spstr strCommand.txt,bPrev.txt,"~",4
-│ -                                            // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",5
-│ -                                            covx tTmp.txt,sys0,0,0
-│ -                                            bPrev.pco=sys0
-│                                              vis bPrev,1
-│ +                                            tsw mSwipePrev,1
-│ +                                            tsw mSwipeUp,0
-│ +                                            bPrev.txt="î°"
-│                                          }
-│ -                                        // navigation icon right
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
-│ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        if(tTmp.txt=="2")
-│ +                                        {
-│ +                                            vis bPrev,1
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,1
-│ +                                            bPrev.txt="î¶"
-│ +                                        }
-│ +                                        spstr tId.txt,tTmp.txt,"|",1
-│ +                                        if(tTmp.txt=="0")
-│                                          {
-│                                              vis bNext,0
-│ -                                        }else
-│ +                                            tsw mSwipeNext,0
-│ +                                        }
-│ +                                        if(tTmp.txt=="1")
-│ +                                        {
-│ +                                            vis bNext,1
-│ +                                            tsw mSwipeNext,1
-│ +                                            bNext.txt="î³"
-│ +                                        }
-│ +                                        if(tTmp.txt=="2")
-│                                          {
-│ -                                            // get internal name
-│ -                                            spstr strCommand.txt,nent2.txt,"~",9
-│ -                                            // change icon
-│ -                                            spstr strCommand.txt,bNext.txt,"~",10
-│ -                                            // change icon color
-│ -                                            spstr strCommand.txt,tTmp.txt,"~",11
-│ -                                            covx tTmp.txt,sys0,0,0
-│ -                                            bNext.pco=sys0
-│                                              vis bNext,1
-│ +                                            bNext.txt="î"
-│                                          }
-│                                          // icon color home
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",14
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",3
-│                                          covx tTmp.txt,t1.pco,0,0
-│                                          // icon home
-│ -                                        spstr strCommand.txt,t1.txt,"~",15
-│ +                                        spstr strCommand.txt,t1.txt,"~",4
-│                                          // text home
-│ -                                        spstr strCommand.txt,tHome.txt,"~",16
-│ +                                        spstr strCommand.txt,tHome.txt,"~",5
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",17
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",6
-│                                          covx tTmp.txt,t0Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t0Icon.txt,"~",18
-│ +                                        spstr strCommand.txt,t0Icon.txt,"~",7
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",19
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",8
-│                                          covx tTmp.txt,t0Speed.val,0,0
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t0u.txt,"~",20
-│ +                                        spstr strCommand.txt,t0u.txt,"~",9
-│                                          if(t0Icon.txt!="")
-│                                          {
-│                                              vis t0Icon,1
-│                                              vis t0u,1
-│                                              vis h0,1
-│                                          }else
-│                                          {
-│                                              vis t0Icon,0
-│                                              vis t0u,0
-│                                              vis h0,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",21
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",10
-│                                          covx tTmp.txt,t1Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t1Icon.txt,"~",22
-│ +                                        spstr strCommand.txt,t1Icon.txt,"~",11
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",23
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",12
-│                                          covx tTmp.txt,t1Speed.val,0,0
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t1u.txt,"~",24
-│ +                                        spstr strCommand.txt,t1u.txt,"~",13
-│                                          if(t1Icon.txt!="")
-│                                          {
-│                                              vis t1Icon,1
-│                                              vis t1u,1
-│                                              vis h1,1
-│                                          }else
-│                                          {
-│                                              vis t1Icon,0
-│                                              vis t1u,0
-│                                              vis h1,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",25
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",14
-│                                          covx tTmp.txt,t2Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t2Icon.txt,"~",26
-│ +                                        spstr strCommand.txt,t2Icon.txt,"~",15
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",27
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",16
-│                                          covx tTmp.txt,t2Speed.val,0,0
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t2u.txt,"~",28
-│ +                                        spstr strCommand.txt,t2u.txt,"~",17
-│                                          if(t2Icon.txt!="")
-│                                          {
-│                                              vis t2Icon,1
-│                                              vis t2u,1
-│                                              vis h2,1
-│                                          }else
-│                                          {
-│                                              vis t2Icon,0
-│                                              vis t2u,0
-│                                              vis h2,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",29
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",18
-│                                          covx tTmp.txt,t3Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t3Icon.txt,"~",30
-│ +                                        spstr strCommand.txt,t3Icon.txt,"~",19
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",31
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",20
-│                                          covx tTmp.txt,t3Speed.val,0,0
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t3u.txt,"~",32
-│ +                                        spstr strCommand.txt,t3u.txt,"~",21
-│                                          if(t3Icon.txt!="")
-│                                          {
-│                                              vis t3Icon,1
-│                                              vis t3u,1
-│                                              vis h3,1
-│                                          }else
-│                                          {
-│                                              vis t3Icon,0
-│                                              vis t3u,0
-│                                              vis h3,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",33
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",22
-│                                          covx tTmp.txt,t4Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t4Icon.txt,"~",34
-│ +                                        spstr strCommand.txt,t4Icon.txt,"~",23
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",35
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",24
-│                                          covx tTmp.txt,t4Speed.val,0,0
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t4u.txt,"~",36
-│ +                                        spstr strCommand.txt,t4u.txt,"~",25
-│                                          if(t4Icon.txt!="")
-│                                          {
-│                                              vis t4Icon,1
-│                                              vis t4u,1
-│                                              vis h4,1
-│                                          }else
-│                                          {
-│                                              vis t4Icon,0
-│                                              vis t4u,0
-│                                              vis h4,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",37
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",26
-│                                          covx tTmp.txt,t5Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t5Icon.txt,"~",38
-│ +                                        spstr strCommand.txt,t5Icon.txt,"~",27
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",39
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",28
-│                                          covx tTmp.txt,t5Speed.val,0,0
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t5u.txt,"~",40
-│ +                                        spstr strCommand.txt,t5u.txt,"~",29
-│                                          if(t5Icon.txt!="")
-│                                          {
-│                                              vis t5Icon,1
-│                                              vis t5u,1
-│                                              vis h5,1
-│                                          }else
-│                                          {
 │   --- HMI/n2t-out/cardQR.txt
 ├── +++ HMI/US/portrait/n2t-out/cardQR.txt
-│ @@ -66,31 +66,19 @@
-│      
-│  Variable (string) entn2
-│      Attributes
-│          Scope         : local
+│ @@ -70,27 +70,27 @@
 │          Text          : 
 │          Max. Text Size: 80
 │      
-│ -Variable (string) nent1
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
+│  Variable (string) nent1
+│      Attributes
+│          Scope         : local
+│          Text          : 
 │ -        Max. Text Size: 50
-│ -    
-│ -Variable (string) nent2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
+│ +        Max. Text Size: 80
+│      
+│  Variable (string) nent2
+│      Attributes
+│          Scope         : local
+│          Text          : 
 │ -        Max. Text Size: 50
-│ -    
+│ +        Max. Text Size: 80
+│      
 │  Variable (string) strCommand
 │      Attributes
 │          Scope         : local
@@ -3128,55 +1430,7 @@
 │          Text          : 
 │          Max. Text Size: 20
 │      
-│ @@ -195,15 +183,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardQR,"
-│ +            if(bNext.txt=="î")
-│ +            {
-│ +                tSend.txt+="bHome"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bNext"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -220,15 +215,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î°
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardAlarm,"
-│ +            if(bPrev.txt=="î¶")
-│ +            {
-│ +                tSend.txt+="bUp"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bPrev"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -440,171 +442,177 @@
+│ @@ -440,171 +440,177 @@
 │                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
 │                                      spstr strCommand.txt,tInstruction.txt,"~",0
 │                                      if(tInstruction.txt=="entityUpd")
@@ -3198,6 +1452,13 @@
 │ +                                            tsw mSwipeUp,0
 │ +                                        }
 │ +                                        if(tTmp.txt=="1")
+│ +                                        {
+│ +                                            vis bPrev,1
+│ +                                            tsw mSwipePrev,1
+│ +                                            tsw mSwipeUp,0
+│ +                                            bPrev.txt="î°"
+│ +                                        }
+│ +                                        if(tTmp.txt=="2")
 │                                          {
 │ -                                            // get internal name
 │ -                                            spstr strCommand.txt,nent1.txt,"~",3
@@ -3208,20 +1469,13 @@
 │ -                                            covx tTmp.txt,sys0,0,0
 │ -                                            bPrev.pco=sys0
 │                                              vis bPrev,1
-│ +                                            tsw mSwipePrev,1
-│ +                                            tsw mSwipeUp,0
-│ +                                            bPrev.txt="î°"
+│ +                                            tsw mSwipePrev,0
+│ +                                            tsw mSwipeUp,1
+│ +                                            bPrev.txt="î¶"
 │                                          }
 │ -                                        // navigation icon right
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
 │ -                                        if(tTmp.txt=="delete"||tTmp.txt=="")
-│ +                                        if(tTmp.txt=="2")
-│ +                                        {
-│ +                                            vis bPrev,1
-│ +                                            tsw mSwipePrev,0
-│ +                                            tsw mSwipeUp,1
-│ +                                            bPrev.txt="î¶"
-│ +                                        }
 │ +                                        spstr tId.txt,tTmp.txt,"|",1
 │ +                                        if(tTmp.txt=="0")
 │                                          {
@@ -3399,82 +1653,7 @@
 │                                              }
 │   --- HMI/n2t-out/cardThermo.txt
 ├── +++ HMI/US/portrait/n2t-out/cardThermo.txt
-│ @@ -59,26 +59,14 @@
-│          
-│  Variable (string) entn
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│ -Variable (string) nent1
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│ -Variable (string) nent2
-│ -    Attributes
-│ -        Scope         : local
-│ -        Text          : 
-│ -        Max. Text Size: 80
-│ -    
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 250
-│      
-│  Variable (string) tId
-│ @@ -302,15 +290,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î³
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardThermo,"
-│ +            if(bNext.txt=="î")
-│ +            {
-│ +                tSend.txt+="bHome"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bNext"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -327,15 +322,22 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î°
-│          Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-│ +            tSend.txt="event,buttonPress2,cardThermo,"
-│ +            if(bPrev.txt=="î¶")
-│ +            {
-│ +                tSend.txt+="bUp"
-│ +            }else
-│ +            {
-│ +                tSend.txt+="bPrev"
-│ +            }
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│ @@ -829,208 +831,214 @@
+│ @@ -829,208 +829,214 @@
 │                                      ucopy strCommand.txt,4,payloadLength-5,0
 │                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
 │                                      spstr strCommand.txt,tInstruction.txt,"~",0
@@ -3528,6 +1707,12 @@
 │ +                                            tsw mSwipeNext,0
 │ +                                        }
 │ +                                        if(tTmp.txt=="1")
+│ +                                        {
+│ +                                            vis bNext,1
+│ +                                            tsw mSwipeNext,1
+│ +                                            bNext.txt="î³"
+│ +                                        }
+│ +                                        if(tTmp.txt=="2")
 │                                          {
 │ -                                            // get internal name
 │ -                                            spstr strCommand.txt,nent2.txt,"~",9
@@ -3538,12 +1723,6 @@
 │ -                                            covx tTmp.txt,sys0,0,0
 │ -                                            bNext.pco=sys0
 │                                              vis bNext,1
-│ +                                            tsw mSwipeNext,1
-│ +                                            bNext.txt="î³"
-│ +                                        }
-│ +                                        if(tTmp.txt=="2")
-│ +                                        {
-│ +                                            vis bNext,1
 │ +                                            bNext.txt="î"
 │                                          }
 │                                          //entity name
@@ -3757,7 +1936,7 @@
 │                                              vis xTempDest,0
 │                                              vis btDown,0
 │                                              vis tCF,0
-│ @@ -1040,16 +1048,16 @@
+│ @@ -1040,16 +1046,16 @@
 │                                              vis tCF1,1
 │                                              vis bUp2,1
 │                                              vis xTempDest2,1

@@ -100,37 +100,49 @@ Variable (string) entn1
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 80
+        Max. Text Size: 65
     
 Variable (string) entn2
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 80
+        Max. Text Size: 65
     
 Variable (string) entn3
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 80
+        Max. Text Size: 65
     
 Variable (string) entn4
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 80
+        Max. Text Size: 65
     
 Variable (string) entn5
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 80
+        Max. Text Size: 65
     
 Variable (string) entn6
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 80
+        Max. Text Size: 65
+    
+Variable (string) nent1
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 40
+    
+Variable (string) nent2
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 40
     
 Variable (string) strCommand
     Attributes
@@ -731,14 +743,7 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardEntities,"
-            if(bNext.txt=="î")
-            {
-                tSend.txt+="bHome"
-            }else
-            {
-                tSend.txt+="bNext"
-            }
+            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -763,14 +768,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardEntities,"
-            if(bPrev.txt=="î¶")
-            {
-                tSend.txt+="bUp"
-            }else
-            {
-                tSend.txt+="bPrev"
-            }
+            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1710,50 +1708,44 @@ Timer tmSerial
                                     {
                                         // command format: entityUpd,heading,navigation,[,type,internalName,iconId,displayName,optionalValue]x4
                                         spstr strCommand.txt,tHeading.txt,"~",1
-                                        // navigation icons
-                                        spstr strCommand.txt,tId.txt,"~",2
-                                        spstr tId.txt,tTmp.txt,"|",0
-                                        if(tTmp.txt=="0")
+                                        // navigation icon left
+                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bPrev,0
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent1.txt,"~",3
+                                            // change icon
+                                            spstr strCommand.txt,bPrev.txt,"~",4
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",5
+                                            covx tTmp.txt,sys0,0,0
+                                            bPrev.pco=sys0
                                             vis bPrev,1
-                                            tsw mSwipePrev,1
-                                            tsw mSwipeUp,0
-                                            bPrev.txt="î°"
                                         }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bPrev,1
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,1
-                                            bPrev.txt="î¶"
-                                        }
-                                        spstr tId.txt,tTmp.txt,"|",1
-                                        if(tTmp.txt=="0")
+                                        // navigation icon right
+                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bNext,0
-                                            tsw mSwipeNext,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent2.txt,"~",9
+                                            // change icon
+                                            spstr strCommand.txt,bNext.txt,"~",10
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",11
+                                            covx tTmp.txt,sys0,0,0
+                                            bNext.pco=sys0
                                             vis bNext,1
-                                            tsw mSwipeNext,1
-                                            bNext.txt="î³"
-                                        }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bNext,1
-                                            bNext.txt="î"
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type1.txt,"~",3
+                                        spstr strCommand.txt,type1.txt,"~",14
                                         // get internal name
-                                        spstr strCommand.txt,entn1.txt,"~",4
+                                        spstr strCommand.txt,entn1.txt,"~",15
                                         if(type1.txt=="delete"||type1.txt=="")
                                         {
                                             vis bUp1,0
@@ -1768,14 +1760,14 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tIcon1.txt,"~",5
+                                            spstr strCommand.txt,tIcon1.txt,"~",16
                                             vis tIcon1,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",6
+                                            spstr strCommand.txt,tTmp.txt,"~",17
                                             covx tTmp.txt,sys0,0,0
                                             tIcon1.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity1.txt,"~",7
+                                            spstr strCommand.txt,tEntity1.txt,"~",18
                                             vis tEntity1,1
                                         }
                                         if(type1.txt=="shutter")
@@ -1788,7 +1780,7 @@ Timer tmSerial
                                             vis hSlider1,0
                                             vis nNum1,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tId.txt,"~",8
+                                            spstr strCommand.txt,tId.txt,"~",19
                                             // up button
                                             spstr tId.txt,tTmp.txt,"|",3
                                             if(tTmp.txt=="disable")
@@ -1839,7 +1831,7 @@ Timer tmSerial
                                             vis hSlider1,0
                                             vis nNum1,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",8
+                                            spstr strCommand.txt,tTmp.txt,"~",19
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff1.val=sys0
                                         }
@@ -1856,7 +1848,7 @@ Timer tmSerial
                                             bText1.pco=65535
                                             bText1.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText1.txt,"~",8
+                                            spstr strCommand.txt,bText1.txt,"~",19
                                         }
                                         if(type1.txt=="button"||type1.txt=="input_sel")
                                         {
@@ -1871,7 +1863,7 @@ Timer tmSerial
                                             bText1.pco=1374
                                             bText1.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText1.txt,"~",8
+                                            spstr strCommand.txt,bText1.txt,"~",19
                                         }
                                         if(type1.txt=="number")
                                         {
@@ -1884,7 +1876,7 @@ Timer tmSerial
                                             vis hSlider1,1
                                             vis nNum1,1
                                             // get config (optional Value) (use bText as variable)
-                                            spstr strCommand.txt,bText1.txt,"~",8
+                                            spstr strCommand.txt,bText1.txt,"~",19
                                             //first value is current value
                                             spstr bText1.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
@@ -1900,9 +1892,9 @@ Timer tmSerial
                                             hSlider1.maxval=sys0
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type2.txt,"~",9
+                                        spstr strCommand.txt,type2.txt,"~",20
                                         // get internal name
-                                        spstr strCommand.txt,entn2.txt,"~",10
+                                        spstr strCommand.txt,entn2.txt,"~",21
                                         if(type2.txt=="delete"||type2.txt=="")
                                         {
                                             vis bUp2,0
@@ -1917,14 +1909,14 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tIcon2.txt,"~",11
+                                            spstr strCommand.txt,tIcon2.txt,"~",22
                                             vis tIcon2,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",12
+                                            spstr strCommand.txt,tTmp.txt,"~",23
                                             covx tTmp.txt,sys0,0,0
                                             tIcon2.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity2.txt,"~",13
+                                            spstr strCommand.txt,tEntity2.txt,"~",24
                                             vis tEntity2,1
                                         }
                                         if(type2.txt=="shutter")
@@ -1937,7 +1929,7 @@ Timer tmSerial
                                             vis hSlider2,0
                                             vis nNum2,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tId.txt,"~",14
+                                            spstr strCommand.txt,tId.txt,"~",25
                                             // up button
                                             spstr tId.txt,tTmp.txt,"|",3
                                             if(tTmp.txt=="disable")
@@ -1988,7 +1980,7 @@ Timer tmSerial
                                             vis hSlider2,0
                                             vis nNum2,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",14
+                                            spstr strCommand.txt,tTmp.txt,"~",25
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff2.val=sys0
                                         }
@@ -2005,7 +1997,7 @@ Timer tmSerial
                                             bText2.pco=65535
                                             bText2.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText2.txt,"~",14
+                                            spstr strCommand.txt,bText2.txt,"~",25
                                         }
                                         if(type2.txt=="button"||type2.txt=="input_sel")
                                         {
@@ -2020,7 +2012,7 @@ Timer tmSerial
                                             bText2.pco=1374
                                             bText2.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText2.txt,"~",14
+                                            spstr strCommand.txt,bText2.txt,"~",25
                                         }
                                         if(type2.txt=="number")
                                         {
@@ -2033,7 +2025,7 @@ Timer tmSerial
                                             vis hSlider2,1
                                             vis nNum2,1
                                             // get config (optional Value) (use bText as variable)
-                                            spstr strCommand.txt,bText2.txt,"~",14
+                                            spstr strCommand.txt,bText2.txt,"~",25
                                             //first value is current value
                                             spstr bText2.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
@@ -2049,9 +2041,9 @@ Timer tmSerial
                                             hSlider2.maxval=sys0
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type3.txt,"~",15
+                                        spstr strCommand.txt,type3.txt,"~",26
                                         // get internal name
-                                        spstr strCommand.txt,entn3.txt,"~",16
+                                        spstr strCommand.txt,entn3.txt,"~",27
                                         if(type3.txt=="delete"||type3.txt=="")
                                         {
                                             vis bUp3,0
@@ -2066,14 +2058,14 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tIcon3.txt,"~",17
+                                            spstr strCommand.txt,tIcon3.txt,"~",28
                                             vis tIcon3,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",18
+                                            spstr strCommand.txt,tTmp.txt,"~",29
                                             covx tTmp.txt,sys0,0,0
                                             tIcon3.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity3.txt,"~",19
+                                            spstr strCommand.txt,tEntity3.txt,"~",30
                                             vis tEntity3,1
                                         }
                                         if(type3.txt=="shutter")
@@ -2086,7 +2078,7 @@ Timer tmSerial
                                             vis hSlider3,0
                                             vis nNum3,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tId.txt,"~",20
+                                            spstr strCommand.txt,tId.txt,"~",31
                                             // up button
                                             spstr tId.txt,tTmp.txt,"|",3
                                             if(tTmp.txt=="disable")
@@ -2137,7 +2129,7 @@ Timer tmSerial
                                             vis hSlider3,0
                                             vis nNum3,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",20
+                                            spstr strCommand.txt,tTmp.txt,"~",31
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff3.val=sys0
                                         }
@@ -2154,7 +2146,7 @@ Timer tmSerial
                                             bText3.pco=65535
                                             bText3.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText3.txt,"~",20
+                                            spstr strCommand.txt,bText3.txt,"~",31
                                         }
                                         if(type3.txt=="button"||type3.txt=="input_sel")
                                         {
@@ -2169,7 +2161,7 @@ Timer tmSerial
                                             bText3.pco=1374
                                             bText3.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText3.txt,"~",20
+                                            spstr strCommand.txt,bText3.txt,"~",31
                                         }
                                         if(type3.txt=="number")
                                         {
@@ -2182,7 +2174,7 @@ Timer tmSerial
                                             vis hSlider3,1
                                             vis nNum3,1
                                             // get config (optional Value) (use bText as variable)
-                                            spstr strCommand.txt,bText3.txt,"~",20
+                                            spstr strCommand.txt,bText3.txt,"~",31
                                             //first value is current value
                                             spstr bText3.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
@@ -2198,9 +2190,9 @@ Timer tmSerial
                                             hSlider3.maxval=sys0
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type4.txt,"~",21
+                                        spstr strCommand.txt,type4.txt,"~",32
                                         // get internal name
-                                        spstr strCommand.txt,entn4.txt,"~",22
+                                        spstr strCommand.txt,entn4.txt,"~",33
                                         if(type4.txt=="delete"||type4.txt=="")
                                         {
                                             vis bUp4,0
@@ -2215,14 +2207,14 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tIcon4.txt,"~",23
+                                            spstr strCommand.txt,tIcon4.txt,"~",34
                                             vis tIcon4,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",24
+                                            spstr strCommand.txt,tTmp.txt,"~",35
                                             covx tTmp.txt,sys0,0,0
                                             tIcon4.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity4.txt,"~",25
+                                            spstr strCommand.txt,tEntity4.txt,"~",36
                                             vis tEntity4,1
                                         }
                                         if(type4.txt=="shutter")
@@ -2235,7 +2227,7 @@ Timer tmSerial
                                             vis hSlider4,0
                                             vis nNum4,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tId.txt,"~",26
+                                            spstr strCommand.txt,tId.txt,"~",37
                                             // up button
                                             spstr tId.txt,tTmp.txt,"|",3
                                             if(tTmp.txt=="disable")
@@ -2286,7 +2278,7 @@ Timer tmSerial
                                             vis hSlider4,0
                                             vis nNum4,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",26
+                                            spstr strCommand.txt,tTmp.txt,"~",37
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff4.val=sys0
                                         }
@@ -2303,7 +2295,7 @@ Timer tmSerial
                                             bText4.pco=65535
                                             bText4.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText4.txt,"~",26
+                                            spstr strCommand.txt,bText4.txt,"~",37
                                         }
                                         if(type4.txt=="button"||type4.txt=="input_sel")
                                         {
@@ -2318,7 +2310,7 @@ Timer tmSerial
                                             bText4.pco=1374
                                             bText4.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText4.txt,"~",26
+                                            spstr strCommand.txt,bText4.txt,"~",37
                                         }
                                         if(type4.txt=="number")
                                         {
@@ -2331,7 +2323,7 @@ Timer tmSerial
                                             vis hSlider4,1
                                             vis nNum4,1
                                             // get config (optional Value) (use bText as variable)
-                                            spstr strCommand.txt,bText4.txt,"~",26
+                                            spstr strCommand.txt,bText4.txt,"~",37
                                             //first value is current value
                                             spstr bText4.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
@@ -2347,9 +2339,9 @@ Timer tmSerial
                                             hSlider4.maxval=sys0
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type5.txt,"~",27
+                                        spstr strCommand.txt,type5.txt,"~",38
                                         // get internal name
-                                        spstr strCommand.txt,entn5.txt,"~",28
+                                        spstr strCommand.txt,entn5.txt,"~",39
                                         if(type5.txt=="delete"||type5.txt=="")
                                         {
                                             vis bUp5,0
@@ -2364,14 +2356,14 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tIcon5.txt,"~",29
+                                            spstr strCommand.txt,tIcon5.txt,"~",40
                                             vis tIcon5,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",30
+                                            spstr strCommand.txt,tTmp.txt,"~",41
                                             covx tTmp.txt,sys0,0,0
                                             tIcon5.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity5.txt,"~",31
+                                            spstr strCommand.txt,tEntity5.txt,"~",42
                                             vis tEntity5,1
                                         }
                                         if(type5.txt=="shutter")
@@ -2384,7 +2376,7 @@ Timer tmSerial
                                             vis hSlider5,0
                                             vis nNum5,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tId.txt,"~",32
+                                            spstr strCommand.txt,tId.txt,"~",43
                                             // up button
                                             spstr tId.txt,tTmp.txt,"|",3
                                             if(tTmp.txt=="disable")
@@ -2435,7 +2427,7 @@ Timer tmSerial
                                             vis hSlider5,0
                                             vis nNum5,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",32
+                                            spstr strCommand.txt,tTmp.txt,"~",43
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff5.val=sys0
                                         }
@@ -2452,7 +2444,7 @@ Timer tmSerial
                                             bText5.pco=65535
                                             bText5.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText5.txt,"~",32
+                                            spstr strCommand.txt,bText5.txt,"~",43
                                         }
                                         if(type5.txt=="button"||type5.txt=="input_sel")
                                         {
@@ -2467,7 +2459,7 @@ Timer tmSerial
                                             bText5.pco=1374
                                             bText5.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText5.txt,"~",32
+                                            spstr strCommand.txt,bText5.txt,"~",43
                                         }
                                         if(type5.txt=="number")
                                         {
@@ -2480,7 +2472,7 @@ Timer tmSerial
                                             vis hSlider5,1
                                             vis nNum5,1
                                             // get config (optional Value) (use bText as variable)
-                                            spstr strCommand.txt,bText5.txt,"~",32
+                                            spstr strCommand.txt,bText5.txt,"~",43
                                             //first value is current value
                                             spstr bText5.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
@@ -2496,9 +2488,9 @@ Timer tmSerial
                                             hSlider5.maxval=sys0
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type6.txt,"~",33
+                                        spstr strCommand.txt,type6.txt,"~",44
                                         // get internal name
-                                        spstr strCommand.txt,entn6.txt,"~",34
+                                        spstr strCommand.txt,entn6.txt,"~",45
                                         if(type6.txt=="delete"||type6.txt=="")
                                         {
                                             vis bUp6,0
@@ -2513,14 +2505,14 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,tIcon6.txt,"~",35
+                                            spstr strCommand.txt,tIcon6.txt,"~",46
                                             vis tIcon6,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",36
+                                            spstr strCommand.txt,tTmp.txt,"~",47
                                             covx tTmp.txt,sys0,0,0
                                             tIcon6.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity6.txt,"~",37
+                                            spstr strCommand.txt,tEntity6.txt,"~",48
                                             vis tEntity6,1
                                         }
                                         if(type6.txt=="shutter")
@@ -2533,7 +2525,7 @@ Timer tmSerial
                                             vis hSlider6,0
                                             vis nNum6,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tId.txt,"~",38
+                                            spstr strCommand.txt,tId.txt,"~",49
                                             // up button
                                             spstr tId.txt,tTmp.txt,"|",3
                                             if(tTmp.txt=="disable")
@@ -2584,7 +2576,7 @@ Timer tmSerial
                                             vis hSlider6,0
                                             vis nNum6,0
                                             // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",38
+                                            spstr strCommand.txt,tTmp.txt,"~",49
                                             covx tTmp.txt,sys0,0,0
                                             btOnOff6.val=sys0
                                         }
@@ -2601,7 +2593,7 @@ Timer tmSerial
                                             bText6.pco=65535
                                             bText6.pco2=65535
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText6.txt,"~",38
+                                            spstr strCommand.txt,bText6.txt,"~",49
                                         }
                                         if(type6.txt=="button"||type6.txt=="input_sel")
                                         {
@@ -2616,7 +2608,7 @@ Timer tmSerial
                                             bText6.pco=1374
                                             bText6.pco2=1374
                                             // get Text (optional Value)
-                                            spstr strCommand.txt,bText6.txt,"~",38
+                                            spstr strCommand.txt,bText6.txt,"~",49
                                         }
                                         if(type6.txt=="number")
                                         {
@@ -2629,7 +2621,7 @@ Timer tmSerial
                                             vis hSlider6,1
                                             vis nNum6,1
                                             // get config (optional Value) (use bText as variable)
-                                            spstr strCommand.txt,bText6.txt,"~",38
+                                            spstr strCommand.txt,bText6.txt,"~",49
                                             //first value is current value
                                             spstr bText6.txt,tTmp.txt,"|",0
                                             covx tTmp.txt,sys0,0,0
