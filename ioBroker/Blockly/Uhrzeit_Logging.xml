@@ -1,0 +1,19 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="schedule" id="6Yu`)QwfE4qpNfmr268P" x="87" y="37">
+    <field name="SCHEDULE">* * * * * *</field>
+    <statement name="STATEMENT">
+      <block type="debug" id="l?5O/}11]yr#/m#;`2FP">
+        <field name="Severity">log</field>
+        <value name="TEXT">
+          <shadow type="text" id=";K3bqfLSLWG6r5B(k/C{">
+            <field name="TEXT">test</field>
+          </shadow>
+          <block type="time_get" id="(NH7-ko5K-Lstw6QrhtK">
+            <mutation xmlns="http://www.w3.org/1999/xhtml" format="false" language="false"></mutation>
+            <field name="OPTION">hh:mm:ss.sss</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+</xml>
