@@ -64,8 +64,9 @@ class LuiMqttSender(object):
         self._topic_send = topic_send
         self._prev_msg = ""
 
-    def send_mqtt_msg(self, msg, topic=None):
-        if self._prev_msg == msg:
+    def send_mqtt_msg(self, msg, topic=None, force=False):
+        if not force and self._prev_msg == msg:
+            self._ha_api.log(f"Dropping identical consecutive message: {msg}")
             return
         self._prev_msg = msg
         if topic is None:
