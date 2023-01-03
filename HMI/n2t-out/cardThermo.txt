@@ -79,7 +79,7 @@ Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 250
+        Max. Text Size: 750
     
 Variable (string) tId
     Attributes

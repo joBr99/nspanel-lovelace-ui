@@ -2432,7 +2432,7 @@
 │                                              }
 │   --- HMI/n2t-out/cardThermo.txt
 ├── +++ HMI/US/landscape/n2t-out/cardThermo.txt
-│ @@ -59,26 +59,14 @@
+│ @@ -59,31 +59,19 @@
 │          
 │  Variable (string) entn
 │      Attributes
@@ -2456,9 +2456,15 @@
 │      Attributes
 │          Scope         : local
 │          Text          : 
-│          Max. Text Size: 250
+│ -        Max. Text Size: 750
+│ +        Max. Text Size: 250
 │      
 │  Variable (string) tId
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 20
+│      
 │ @@ -302,15 +290,22 @@
 │          Send Component ID                   : disabled
 │          State                               : unpressed
