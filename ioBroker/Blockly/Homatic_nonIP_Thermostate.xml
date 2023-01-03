@@ -1,0 +1,533 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="%/xR(^)g5^9E^=:iOg`*">userdataPath</variable>
+  </variables>
+  <block type="variables_set" id="X-j`W}}BF!)o-3+*efc-" x="-138" y="-462">
+    <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+    <value name="VALUE">
+      <block type="text" id="27EXAifV@j[WLi|X89v}">
+        <field name="TEXT">0_userdata.0.Homatic.Thermostate.OEQ0667828.4.</field>
+      </block>
+    </value>
+    <next>
+      <block type="comment" id=",uvQcLX`j6C.AA75DrZW">
+        <field name="COMMENT">Am NSPanel wird auf Auto geschaltet </field>
+        <next>
+          <block type="on_ext" id="j{K~|bW6;I@lofgT4vd$">
+            <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+            <field name="CONDITION">ne</field>
+            <field name="ACK_CONDITION"></field>
+            <value name="OID0">
+              <shadow type="field_oid" id="UL3m@7$weS]7=yq(I?P0">
+                <field name="oid">default</field>
+              </shadow>
+              <block type="text_join" id="Gys1,yJgxvc6*zDXIGVA">
+                <mutation items="2"></mutation>
+                <value name="ADD0">
+                  <block type="variables_get" id="[8diiUW8Ym4)4=KQ$s=H">
+                    <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="text" id="[)sRA~!%$1n=Fz#{QE:O">
+                    <field name="TEXT">Automatic</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="STATEMENT">
+              <block type="control_ex" id="rHON.R*}k%w0VO)Q@U5," inline="true">
+                <field name="TYPE">false</field>
+                <field name="CLEAR_RUNNING">FALSE</field>
+                <value name="OID">
+                  <shadow type="field_oid" id="-2GGVvyn8C)-7s]y!iFC">
+                    <field name="oid">Object ID</field>
+                  </shadow>
+                  <block type="text" id="5+BLW_qM@Lr+~7M[@#L-">
+                    <field name="TEXT">hm-rpc.0.OEQ0667828.4.AUTO_MODE</field>
+                  </block>
+                </value>
+                <value name="VALUE">
+                  <shadow type="logic_boolean" id="`naj-n,uyc0.)vdOJ$rH">
+                    <field name="BOOL">TRUE</field>
+                  </shadow>
+                  <block type="logic_boolean" id="9jTx$$DZvix^u]0-#_C(">
+                    <field name="BOOL">TRUE</field>
+                  </block>
+                </value>
+                <value name="DELAY_MS">
+                  <shadow type="math_number" id="CU}e7)/uBktOHiK/i^}r">
+                    <field name="NUM">0</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="control_ex" id="A=8psqHjhHW$);in.k0O" inline="true">
+                    <field name="TYPE">false</field>
+                    <field name="CLEAR_RUNNING">FALSE</field>
+                    <value name="OID">
+                      <shadow type="field_oid">
+                        <field name="oid">Object ID</field>
+                      </shadow>
+                      <block type="text_join" id="LmoSZw/CjrQed[4-l=bN">
+                        <mutation items="2"></mutation>
+                        <value name="ADD0">
+                          <block type="variables_get" id="f]x+|[f!W}GNzf0KVu}f">
+                            <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                          </block>
+                        </value>
+                        <value name="ADD1">
+                          <block type="text" id="GzG^:cECXD^-jPam+|Cm">
+                            <field name="TEXT">Manual</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="VALUE">
+                      <shadow type="logic_boolean">
+                        <field name="BOOL">TRUE</field>
+                      </shadow>
+                      <block type="logic_boolean" id="eKG~%BD/0r3!hGgZ?4H/">
+                        <field name="BOOL">FALSE</field>
+                      </block>
+                    </value>
+                    <value name="DELAY_MS">
+                      <shadow type="math_number" id="/xUS7X!_0tHjQ/lYYlj9">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="comment" id=".^0uHrUM+21EPMnW@/Aa">
+                <field name="COMMENT">Am NSPanel wird auf Temperatur geändert</field>
+                <next>
+                  <block type="on_ext" id="rnf$MuxnU`senfY-F8SM">
+                    <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+                    <field name="CONDITION">ne</field>
+                    <field name="ACK_CONDITION"></field>
+                    <value name="OID0">
+                      <shadow type="field_oid" id="rJx5Vxq(4|Y~.;2F6D!)">
+                        <field name="oid">default</field>
+                      </shadow>
+                      <block type="text_join" id="Ec_?0i@=m]@]L5gEjOi?">
+                        <mutation items="2"></mutation>
+                        <value name="ADD0">
+                          <block type="variables_get" id=".LVxszhxY,x/Y[ht(2Dk">
+                            <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                          </block>
+                        </value>
+                        <value name="ADD1">
+                          <block type="text" id="qIz$pgvJ|fZU}eKV%H@;">
+                            <field name="TEXT">Setpoint</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <statement name="STATEMENT">
+                      <block type="control_ex" id="VAa5[r[!O|XD?h2zs4.L" inline="true">
+                        <field name="TYPE">false</field>
+                        <field name="CLEAR_RUNNING">FALSE</field>
+                        <value name="OID">
+                          <shadow type="field_oid" id="vteW+w!_2:C,eGV!!1De">
+                            <field name="oid">Object ID</field>
+                          </shadow>
+                          <block type="text_join" id="P:53ISJM8Wt12`LLp5C?">
+                            <mutation items="2"></mutation>
+                            <value name="ADD0">
+                              <block type="variables_get" id="^8EdIaZlvDJ`Z:PxenQJ">
+                                <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                              </block>
+                            </value>
+                            <value name="ADD1">
+                              <block type="text" id="rpq:atBJz,=pL/Tpfk?j">
+                                <field name="TEXT">Manual</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="VALUE">
+                          <shadow type="logic_boolean">
+                            <field name="BOOL">TRUE</field>
+                          </shadow>
+                          <block type="logic_boolean" id="l1zqaM6/jSPS#ZF2YQT]">
+                            <field name="BOOL">TRUE</field>
+                          </block>
+                        </value>
+                        <value name="DELAY_MS">
+                          <shadow type="math_number" id="gzX:oq*R46?@J;sEN^Y{">
+                            <field name="NUM">0</field>
+                          </shadow>
+                        </value>
+                        <next>
+                          <block type="control_ex" id="a!%A#%_448?cbF0#E20I" inline="true">
+                            <field name="TYPE">false</field>
+                            <field name="CLEAR_RUNNING">FALSE</field>
+                            <value name="OID">
+                              <shadow type="field_oid">
+                                <field name="oid">Object ID</field>
+                              </shadow>
+                              <block type="text_join" id="Z=X7ZS=5{oFLhPFl$6J*">
+                                <mutation items="2"></mutation>
+                                <value name="ADD0">
+                                  <block type="variables_get" id="LNZ/Yu]eOv*pYj!.D^Hp">
+                                    <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                                  </block>
+                                </value>
+                                <value name="ADD1">
+                                  <block type="text" id="f(?W0s5a%=`*e.bl+U;j">
+                                    <field name="TEXT">Automatic</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="VALUE">
+                              <shadow type="logic_boolean">
+                                <field name="BOOL">TRUE</field>
+                              </shadow>
+                              <block type="logic_boolean" id="C;jj4,F7s4Dh0_q^GJ(p">
+                                <field name="BOOL">FALSE</field>
+                              </block>
+                            </value>
+                            <value name="DELAY_MS">
+                              <shadow type="math_number" id="cY5}Nl-3}~q8av0Z,^:%">
+                                <field name="NUM">0</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="control_ex" id="vOC7f,;-wN|E6q66A#y5" inline="true">
+                                <field name="TYPE">false</field>
+                                <field name="CLEAR_RUNNING">FALSE</field>
+                                <value name="OID">
+                                  <shadow type="field_oid" id="33Vhu-2{oMtX)_7C5xNJ">
+                                    <field name="oid">Object ID</field>
+                                  </shadow>
+                                  <block type="text" id="cwRLYaGfnesiWV4ME~02">
+                                    <field name="TEXT">hm-rpc.0.OEQ0667828.4.SET_TEMPERATUR</field>
+                                  </block>
+                                </value>
+                                <value name="VALUE">
+                                  <shadow type="logic_boolean" id="R6~2VB4nRpE-=epf^!.2">
+                                    <field name="BOOL">TRUE</field>
+                                  </shadow>
+                                  <block type="on_source" id="{iIWE58cs91`J:+%zsHP">
+                                    <field name="ATTR">state.val</field>
+                                  </block>
+                                </value>
+                                <value name="DELAY_MS">
+                                  <shadow type="math_number" id="IX574hj%MQ)uiFy(QXfC">
+                                    <field name="NUM">0</field>
+                                  </shadow>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="comment" id="~k%4o/5,IR_W}Vo9z5E5">
+                        <field name="COMMENT">Am NSPanel wird auf Boost geschaltet</field>
+                        <next>
+                          <block type="on_ext" id="$[COE^lL{IylevSK@r$N">
+                            <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+                            <field name="CONDITION">ne</field>
+                            <field name="ACK_CONDITION"></field>
+                            <value name="OID0">
+                              <shadow type="field_oid">
+                                <field name="oid">default</field>
+                              </shadow>
+                              <block type="text_join" id="2E}4*|Pr_c6QxjZlXL#4">
+                                <mutation items="2"></mutation>
+                                <value name="ADD0">
+                                  <block type="variables_get" id="H{sw([OtBhyRLVy[WQ?@">
+                                    <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                                  </block>
+                                </value>
+                                <value name="ADD1">
+                                  <block type="text" id="ae-^6mBM`wUFkV9]!SUJ">
+                                    <field name="TEXT">Boost</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <statement name="STATEMENT">
+                              <block type="control_ex" id="t6(RKz=ul#7hL#Yd2xW?" inline="true">
+                                <field name="TYPE">false</field>
+                                <field name="CLEAR_RUNNING">FALSE</field>
+                                <value name="OID">
+                                  <shadow type="field_oid">
+                                    <field name="oid">Object ID</field>
+                                  </shadow>
+                                  <block type="text" id="?Z[Yyrpj|OUCHpbA[r2b">
+                                    <field name="TEXT">hm-rpc.0.OEQ0667828.4.BOOST_MODE</field>
+                                  </block>
+                                </value>
+                                <value name="VALUE">
+                                  <shadow type="logic_boolean">
+                                    <field name="BOOL">TRUE</field>
+                                  </shadow>
+                                  <block type="logic_boolean" id="ILc-KKS#II*=$?-)1@5;">
+                                    <field name="BOOL">TRUE</field>
+                                  </block>
+                                </value>
+                                <value name="DELAY_MS">
+                                  <shadow type="math_number" id="b*rW5=g.eIn$UGCXpk{)">
+                                    <field name="NUM">0</field>
+                                  </shadow>
+                                </value>
+                              </block>
+                            </statement>
+                            <next>
+                              <block type="comment" id="pq{0z}/,!fFo[r=xL?3^">
+                                <field name="COMMENT">BATTERY_STATE im Adapter ändert sich</field>
+                                <next>
+                                  <block type="on_ext" id="2!C]E4+ZovPwb#O![]o0">
+                                    <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+                                    <field name="CONDITION">ne</field>
+                                    <field name="ACK_CONDITION"></field>
+                                    <value name="OID0">
+                                      <shadow type="field_oid" id="v%SYL`)0SR7QG+O,}p:}">
+                                        <field name="oid">default</field>
+                                      </shadow>
+                                      <block type="text" id="@*2/Gs5Z=d`=xtxpdg9l">
+                                        <field name="TEXT">hm-rpc.0.OEQ0667828.4.BATTERY_STATE</field>
+                                      </block>
+                                    </value>
+                                    <statement name="STATEMENT">
+                                      <block type="comment" id="7aIa7fh7F8,20!qIV:aN">
+                                        <field name="COMMENT">Wert 2,5 ist ausgedacht.</field>
+                                        <next>
+                                          <block type="comment" id="E{Eyaw120U8hRFMQTPP)">
+                                            <field name="COMMENT">Keine Ahnung wann die Batterie wirklich leer ist</field>
+                                            <next>
+                                              <block type="controls_if" id="Bx%+dY))9YYdkklHAAqI">
+                                                <mutation else="1"></mutation>
+                                                <value name="IF0">
+                                                  <block type="logic_compare" id="THZ:h0AIFqeS8a4Q^/o^">
+                                                    <field name="OP">LT</field>
+                                                    <value name="A">
+                                                      <block type="on_source" id="duq;S)%o5XaWTSmW}n}y">
+                                                        <field name="ATTR">state.val</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="math_number" id="ie`:G}d9,(LC{q[i_J4h">
+                                                        <field name="NUM">2.5</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <statement name="DO0">
+                                                  <block type="control_ex" id="LClKu=C?jxEn~Ee]Wzc5" inline="true">
+                                                    <field name="TYPE">false</field>
+                                                    <field name="CLEAR_RUNNING">FALSE</field>
+                                                    <value name="OID">
+                                                      <shadow type="field_oid" id="Nw]~t%7!gKT6i=E)Map8">
+                                                        <field name="oid">Object ID</field>
+                                                      </shadow>
+                                                      <block type="text_join" id="Q!0.BP9.%/0bX%]!wNfV">
+                                                        <mutation items="2"></mutation>
+                                                        <value name="ADD0">
+                                                          <block type="variables_get" id="Tz3eTQdyBs9l;(pW(]]8">
+                                                            <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="ADD1">
+                                                          <block type="text" id="VmE~0^%|++P{ynPp?AHc">
+                                                            <field name="TEXT">Lowbat</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <value name="VALUE">
+                                                      <shadow type="logic_boolean">
+                                                        <field name="BOOL">TRUE</field>
+                                                      </shadow>
+                                                      <block type="logic_boolean" id="Y}ZJdf5QlTB0=@nDq(%;">
+                                                        <field name="BOOL">TRUE</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="DELAY_MS">
+                                                      <shadow type="math_number" id="a!J*o-:pD($Y=(^YE_{K">
+                                                        <field name="NUM">0</field>
+                                                      </shadow>
+                                                    </value>
+                                                  </block>
+                                                </statement>
+                                                <statement name="ELSE">
+                                                  <block type="control_ex" id=":s;z=CrWiuSM}Cs,l3*z" inline="true">
+                                                    <field name="TYPE">false</field>
+                                                    <field name="CLEAR_RUNNING">FALSE</field>
+                                                    <value name="OID">
+                                                      <shadow type="field_oid">
+                                                        <field name="oid">Object ID</field>
+                                                      </shadow>
+                                                      <block type="text_join" id="]c1m)N,]xKl.D]m+I9*w">
+                                                        <mutation items="2"></mutation>
+                                                        <value name="ADD0">
+                                                          <block type="variables_get" id="4!qxcx`M[}GZ)~@7_a9Q">
+                                                            <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="ADD1">
+                                                          <block type="text" id="lYU+fpFo*l7D0xn;oqp^">
+                                                            <field name="TEXT">Lowbat</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <value name="VALUE">
+                                                      <shadow type="logic_boolean">
+                                                        <field name="BOOL">TRUE</field>
+                                                      </shadow>
+                                                      <block type="logic_boolean" id="8RyZCBo`8%N/(/cJq@c@">
+                                                        <field name="BOOL">FALSE</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="DELAY_MS">
+                                                      <shadow type="math_number" id="U=O6uX|-`QW%X}YaBD5]">
+                                                        <field name="NUM">0</field>
+                                                      </shadow>
+                                                    </value>
+                                                  </block>
+                                                </statement>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </statement>
+                                    <next>
+                                      <block type="comment" id="n`y@58sQ`+Ip[R!kBjk-">
+                                        <field name="COMMENT">FAULT_REPORTING im Adapter ändert sich</field>
+                                        <next>
+                                          <block type="on_ext" id="f,5_N)xx_4E,RbWQiq-I">
+                                            <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+                                            <field name="CONDITION">ne</field>
+                                            <field name="ACK_CONDITION"></field>
+                                            <value name="OID0">
+                                              <shadow type="field_oid">
+                                                <field name="oid">default</field>
+                                              </shadow>
+                                              <block type="text" id="wO|:^@umOB:5.+=xrC:T">
+                                                <field name="TEXT">hm-rpc.0.OEQ0667828.4.FAULT_REPORTING</field>
+                                              </block>
+                                            </value>
+                                            <statement name="STATEMENT">
+                                              <block type="controls_if" id="^Lti.NU)S9tV^JvxY#|V">
+                                                <mutation else="1"></mutation>
+                                                <value name="IF0">
+                                                  <block type="logic_compare" id="twb2_~HKNJLw*t~iei7*">
+                                                    <field name="OP">NEQ</field>
+                                                    <value name="A">
+                                                      <block type="on_source" id="q;QmlW4j0L@[8SiNG(}!">
+                                                        <field name="ATTR">state.val</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="math_number" id="P}F@tPT`pXxiD2`1ik,`">
+                                                        <field name="NUM">0</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <statement name="DO0">
+                                                  <block type="control_ex" id="lb15K]4z_=8NE6}RgxvS" inline="true">
+                                                    <field name="TYPE">false</field>
+                                                    <field name="CLEAR_RUNNING">FALSE</field>
+                                                    <value name="OID">
+                                                      <shadow type="field_oid">
+                                                        <field name="oid">Object ID</field>
+                                                      </shadow>
+                                                      <block type="text_join" id="Yy}ZGz$j4Xx;mzJEgM/*">
+                                                        <mutation items="2"></mutation>
+                                                        <value name="ADD0">
+                                                          <block type="variables_get" id="#/N|`jy=,]jS#IOHI=F;">
+                                                            <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="ADD1">
+                                                          <block type="text" id="TQ?,RMkzfr{;,2bsh[=H">
+                                                            <field name="TEXT">Maintain</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <value name="VALUE">
+                                                      <shadow type="logic_boolean">
+                                                        <field name="BOOL">TRUE</field>
+                                                      </shadow>
+                                                      <block type="logic_boolean" id="l;aa[h.esax%Z[EZy-|`">
+                                                        <field name="BOOL">TRUE</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="DELAY_MS">
+                                                      <shadow type="math_number" id="hN}}Siq_!z-@{iHHt-Do">
+                                                        <field name="NUM">0</field>
+                                                      </shadow>
+                                                    </value>
+                                                  </block>
+                                                </statement>
+                                                <statement name="ELSE">
+                                                  <block type="control_ex" id="8=!5C.CtxhZqLmN=dqOs" inline="true">
+                                                    <field name="TYPE">false</field>
+                                                    <field name="CLEAR_RUNNING">FALSE</field>
+                                                    <value name="OID">
+                                                      <shadow type="field_oid">
+                                                        <field name="oid">Object ID</field>
+                                                      </shadow>
+                                                      <block type="text_join" id="q~qtEzni;`24R0C%!2ck">
+                                                        <mutation items="2"></mutation>
+                                                        <value name="ADD0">
+                                                          <block type="variables_get" id="$f.qJVIwYLj4nvyEMxAB">
+                                                            <field name="VAR" id="%/xR(^)g5^9E^=:iOg`*">userdataPath</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="ADD1">
+                                                          <block type="text" id="[WKkJ8E,SMv|]t_Su1:~">
+                                                            <field name="TEXT">Maintain</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <value name="VALUE">
+                                                      <shadow type="logic_boolean">
+                                                        <field name="BOOL">TRUE</field>
+                                                      </shadow>
+                                                      <block type="logic_boolean" id="^GMa:eYG*G{gdNUyOK2t">
+                                                        <field name="BOOL">FALSE</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="DELAY_MS">
+                                                      <shadow type="math_number" id="p#O@u,+TIl4_)K|MmXI-">
+                                                        <field name="NUM">0</field>
+                                                      </shadow>
+                                                    </value>
+                                                  </block>
+                                                </statement>
+                                              </block>
+                                            </statement>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>
