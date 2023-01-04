@@ -1,11 +1,16 @@
 from itertools import pairwise
-import uuid
+import secrets
+import string
 
 import apis
 
+def uuid():
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for _ in range(10))
+
 class Entity(object):
     def __init__(self, entity_input_config):
-        self.uuid = f"uuid.{uuid.uuid4().hex}"
+        self.uuid = f"uuid.{uuid()}"
         if type(entity_input_config) is not dict:
             #self._ha_api.log("Config error, not a dict check your entity configs")
             self.entityId = "error"
@@ -24,7 +29,7 @@ class Entity(object):
 
 class Card(object):
     def __init__(self, card_input_config, hidden=False):
-        self.uuid = f"uuid.{uuid.uuid4().hex}"
+        self.uuid = f"uuid.{uuid()}"
         self.uuid_prev = None
         self.uuid_next = None
         self.hidden = hidden
