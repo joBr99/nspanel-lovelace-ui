@@ -159,11 +159,10 @@ class LuiBackendConfig(object):
         apis.ha_api.log("Input config: %s", inconfig)
         self._config = self.dict_recursive_update(inconfig, self._DEFAULT_CONFIG)
         apis.ha_api.log("Loaded config: %s", self._config)
-        
+
         # parse cards
         for card in self.get("cards"):
             self._config_cards.append(Card(card))
-
         # setup prev and next uuids
         top_level_cards = filter(lambda card: not card.hidden, self._config_cards)
         first_card = None
@@ -178,14 +177,12 @@ class LuiBackendConfig(object):
         if first_card and last_card:
             first_card.uuid_prev = last_card.uuid
             last_card.uuid_next  = first_card.uuid
-
         # parse screensaver
         self._config_screensaver = Card(self.get("screensaver"))
 
         # parse hidden cards
         for card in self.get("hiddenCards"):
             self._config_cards.append(Card(card, hidden=True))
-
         # all entites sorted by generated key, to be able to use short identifiers
         self._config_entites_table = {x.uuid: x for x in self.get_all_entitys()}
         self._config_card_table = {x.uuid: x for x in self._config_cards}
@@ -218,7 +215,7 @@ class LuiBackendConfig(object):
             entities.extend(card.get_entity_list())
         return entities
 
-    def searchCard(self, id):
+    def search_card(self, id):
         id = id.replace("navigate.", "")
         if id.startswith("uuid"):
             return self.get_card_by_uuid(id)
@@ -238,11 +235,11 @@ class LuiBackendConfig(object):
 
     def get_default_card(self):
         defaultCard = self._config.get("screensaver.defaultCard")
-        defaultCard = apis.ha_api.render_template(defaultCard)
         if defaultCard is not None:
+            defaultCard = apis.ha_api.render_template(defaultCard)
             defaultCard = self.search_card(defaultCard)
-        if defaultCard is not None:
-            return defaultCard
+            if defaultCard is not None:
+                return defaultCard
         else:
             return self._config_cards[0]
 
