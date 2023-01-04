@@ -236,7 +236,7 @@ class LuiPagesGen(object):
         if entityType == "delete":
             return f"~{entityType}~~~~~"
         if entityType == "navigate":
-            page_search_res = self._config.searchCard(entityId)
+            page_search_res = self._config.search_card(entityId)
             if page_search_res is not None:
                 name = name if name is not None else page_search_res.title
                 text = get_translation(self._locale, "frontend.ui.card.button.press")

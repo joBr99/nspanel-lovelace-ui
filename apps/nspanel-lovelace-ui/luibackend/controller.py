@@ -11,21 +11,21 @@ class LuiController(object):
         self._send_mqtt_msg = send_mqtt_msg
 
         self._current_card = self._config._config_screensaver
+
         self._previous_cards = []
         # first card (default, after startup)
         self._previous_cards.append(self._config.get_default_card())
-        
         self._pages_gen = LuiPagesGen(config, send_mqtt_msg)
 
         # send panel back to startup page on restart of this script
         self._pages_gen.page_type("pageStartup")
-       
+
         # calculate current brightness
         self.current_screensaver_brightness = self.calc_current_brightness(self._config.get("sleepBrightness"))
         self.current_screen_brightness      = self.calc_current_brightness(self._config.get("screenBrightness"))
-       
         # register callbacks
-        self.register_callbacks()     
+        self.register_callbacks()
+
 
     def startup(self):
         apis.ha_api.log(f"Startup Event")
@@ -201,7 +201,7 @@ class LuiController(object):
             if defaultCard is not None:
                 defaultCard = apis.ha_api.render_template(defaultCard)
                 apis.ha_api.log(f"Searching for the following page as defaultPage: {defaultCard}")
-                dstCard = self._config.searchCard(defaultCard)
+                dstCard = self._config.search_card(defaultCard)
                 apis.ha_api.log(f"Result for the following page as defaultPage: {dstCard}")
                 if dstCard is not None:
                     self._previous_cards = []
@@ -285,7 +285,7 @@ class LuiController(object):
                     dstCard = self._config.get_card_by_uuid(entity_id.replace('navigate.',''))
                 # internal for navigation to nested pages
                 else:
-                    dstCard = self._config.searchCard(entity_id)
+                    dstCard = self._config.search_card(entity_id)
                 if dstCard is not None:
                     if dstCard.hidden:
                         self._previous_cards.append(self._current_card)
