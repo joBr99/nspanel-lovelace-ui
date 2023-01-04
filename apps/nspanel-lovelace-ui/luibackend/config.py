@@ -1,4 +1,3 @@
-from itertools import pairwise
 import secrets
 import string
 
@@ -165,19 +164,15 @@ class LuiBackendConfig(object):
             self._config_cards.append(Card(card))
 
         # setup prev and next uuids
-        top_level_cards = filter(lambda card: not card.hidden, self._config_cards)
-        first_card = None
-        last_card  = None
-        for cur, next in pairwise(top_level_cards):
-            if first_card is None:
-                first_card = cur
-            last_card = next
-            cur.uuid_next = next.uuid
-            next.uuid_prev = cur.uuid
-        # if there is only one top level card first and last card will be none
-        if first_card and last_card:
-            first_card.uuid_prev = last_card.uuid
-            last_card.uuid_next  = first_card.uuid
+        top_level_cards = list(filter(lambda card: not card.hidden, self._config_cards))
+        card_ids = [card.id for card in top_level_cards]
+
+        prev_ids = card_ids[-1:] + card_ids[:-1]
+        next_ids = card_ids[ 1:] + card_ids[: 1]
+
+        if len(card_ids) > 1:
+            for prev_id, card, next_id in zip(prev_ids, top_level_cards, next_ids):
+                (card.uuid_prev, card.uuid_next) = (prev_id, next_id)
 
         # parse screensaver
         self._config_screensaver = Card(self.get("screensaver"))
