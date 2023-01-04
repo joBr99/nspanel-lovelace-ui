@@ -670,9 +670,13 @@ class LuiPagesGen(object):
         if card.hidden:
             leftBtn = f"x~navUp~{get_icon_id('mdi:arrow-up-bold')}~65535~~"
             rightBtn = "delete~~~~~"
-        #    r = 0
-        #    if self._config.get("homeButton"):
-        #        r = 2
+
+        if card.nav1Override is not None:
+            leftBtn = self.generate_entities_item(Entity(card.nav1Override))[1:]
+
+        if card.nav2Override is not None:
+            rightBtn = self.generate_entities_item(Entity(card.nav2Override))[1:]
+
         navigation = f"{leftBtn}~{rightBtn}"
 
         # Switch to page

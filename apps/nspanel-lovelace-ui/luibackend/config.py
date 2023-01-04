@@ -32,6 +32,8 @@ class Card(object):
         self.cardType = card_input_config.get("type", "unknown")
         self.title =  card_input_config.get("title", "unknown")
         self.key = card_input_config.get("key", "unknown")
+        self.nav1Override = card_input_config.get("navItem1")
+        self.nav2Override = card_input_config.get("navItem2")
         # for single entity card like climate or media
         self.entity = None
         if card_input_config.get("entity") is not None:
