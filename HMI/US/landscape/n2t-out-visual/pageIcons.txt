@@ -101,7 +101,7 @@ Text tTmp3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 302
-        y coordinate                        : 152
+        y coordinate                        : 154
         Width                               : 146
         Height                              : 69
         Effect                              : load

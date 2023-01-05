@@ -21,7 +21,60 @@ Page pageTest
     Events
         Preinitialize Event
             vis p0,0
+            recmod=1
+            baud=115200
         
+Variable (string) strCommand
+    Attributes
+        ID            : 17
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tInstruction
+    Attributes
+        ID            : 16
+        Scope         : local
+        Text          : 
+        Max. Text Size: 30
+    
+Variable (string) tSend
+    Attributes
+        ID            : 18
+        Scope         : local
+        Text          : 
+        Max. Text Size: 40
+    
+Text tBench
+    Attributes
+        ID                                  : 15
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 288
+        y coordinate                        : 90
+        Width                               : 152
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 65535
+        Font Color                          : 0
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
 Picture p0
     Attributes
         ID                                  : 1
@@ -47,8 +100,8 @@ Button b0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 5
-        y coordinate                        : 12
+        x coordinate                        : 0
+        y coordinate                        : 0
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -119,8 +172,8 @@ Button b10
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 115
-        y coordinate                        : 128
+        x coordinate                        : 100
+        y coordinate                        : 98
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -155,8 +208,8 @@ Button b11
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 117
-        y coordinate                        : 184
+        x coordinate                        : 100
+        y coordinate                        : 145
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -185,14 +238,14 @@ Button b11
         
 Button b12
     Attributes
-        ID                                  : 14
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 115
-        y coordinate                        : 244
+        x coordinate                        : 0
+        y coordinate                        : 242
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -209,7 +262,7 @@ Button b12
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         State                               : unpressed
-        Text                                : chart
+        Text                                : power
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -217,7 +270,43 @@ Button b12
     
     Events
         Touch Press Event
-            page cardChart
+            page cardPower
+        
+Button b13
+    Attributes
+        ID                                  : 20
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 152
+        y coordinate                        : 245
+        Width                               : 100
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : 3D auto
+        Font ID                             : 0
+        Back. Color                         : 50712
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 1024
+        Font Color (Unpressed)              : 0
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        State                               : unpressed
+        Text                                : newtxt
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+    Events
+        Touch Press Event
+            showqq
         
 Button b2
     Attributes
@@ -228,7 +317,7 @@ Button b2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 244
+        y coordinate                        : 195
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -299,8 +388,8 @@ Button b4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 7
-        y coordinate                        : 120
+        x coordinate                        : 0
+        y coordinate                        : 96
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -335,8 +424,8 @@ Button b5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 111
-        y coordinate                        : 12
+        x coordinate                        : 100
+        y coordinate                        : 0
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -371,8 +460,8 @@ Button b6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 5
-        y coordinate                        : 64
+        x coordinate                        : 0
+        y coordinate                        : 49
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -407,8 +496,8 @@ Button b7
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 113
-        y coordinate                        : 72
+        x coordinate                        : 100
+        y coordinate                        : 49
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -480,8 +569,8 @@ Button b9
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 6
-        y coordinate                        : 175
+        x coordinate                        : 0
+        y coordinate                        : 146
         Width                               : 100
         Height                              : 50
         Effect                              : load
@@ -507,4 +596,84 @@ Button b9
     Events
         Touch Press Event
             page popupNotify
+        
+Timer tmSerial
+    Attributes
+        ID         : 14
+        Scope      : local
+        Period (ms): 50
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            // data available
+            if(usize>1)
+            {
+                bufferPos=0
+                while(bufferPos<usize)
+                {
+                    // check for 0x55 0xBB - Command Init Secuence
+                    if(u[bufferPos]==187&&u[bufferPos-1]==85)
+                    {
+                        //remove garbage at the start of the buffer if there's any to free buffer for command
+                        if(u[bufferPos]!=1)
+                        {
+                            udelete bufferPos-1
+                        }
+                        //instruction is now aligned with buffer, because we deleted garbage before instrcution
+                        //get length after init sequence (check if there are more than to bytes in buffer)
+                        if(3<usize)
+                        {
+                            // check if serial buffer has reached the announced length
+                            ucopy payloadLength,2,2,0
+                            // we are only checking payload length so we have to skip first 3 bytes (init+payload length) (-1 because of < instead of <=)
+                            payloadLength+=3
+                            // payload length does also not contain crc, so we are adding another 2 bytes for crc
+                            payloadLength+=2
+                            if(payloadLength<usize)
+                            {
+                                // calculate crc
+                                crcrest 1,0xFFFF
+                                // u[2] contains payload legth at 3rd pos in buffer, we are calculating crc from 3rd pos with number of bytes from payload length
+                                //crcputu 3,u[2]
+                                // u[2] cotnains payload length, we are calculating a crc over the whole message, so we have to add 3 to the length from u[2]
+                                crcputu 0,payloadLength-1
+                                // get recived crc to be able to compare it
+                                ucopy recvCrc,payloadLength-1,2,0
+                                // compare crc with recived value
+                                if(crcval==recvCrc)
+                                {
+                                    // crc is okay
+                                    // here is the location where acual code should be
+                                    // write command to variable strCommand
+                                    ucopy strCommand.txt,4,payloadLength-5,0
+                                    // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
+                                    spstr strCommand.txt,tInstruction.txt,"~",0
+                                    if(tInstruction.txt=="ping")
+                                    {
+                                        spstr strCommand.txt,tBench.txt,"~",1
+                                        tSend.txt="pong,"+tBench.txt
+                                        //send calc crc
+                                        btlen tSend.txt,sys0
+                                        crcrest 1,0xffff // reset CRC
+                                        crcputh 55 bb
+                                        crcputs sys0,2
+                                        crcputs tSend.txt,0
+                                        //send cmd
+                                        printh 55 bb
+                                        prints sys0,2
+                                        prints tSend.txt,0
+                                        prints crcval,2
+                                    }
+                                    // end of user code
+                                    udelete payloadLength-1
+                                    bufferPos=0
+                                }
+                            }
+                        }
+                    }
+                    // next character
+                    bufferPos++
+                }
+            }
         

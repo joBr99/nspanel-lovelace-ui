@@ -101,6 +101,20 @@ Variable (string) entn6
         Text          : 
         Max. Text Size: 80
     
+Variable (string) nent1
+    Attributes
+        ID            : 58
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
+Variable (string) nent2
+    Attributes
+        ID            : 57
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
 Variable (string) strCommand
     Attributes
         ID            : 5
@@ -248,7 +262,7 @@ Text t0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 126
+        x coordinate                        : 123
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -297,7 +311,7 @@ Text t1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 22
         y coordinate                        : 201
         Width                               : 50
         Height                              : 50
@@ -347,7 +361,7 @@ Text t2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 316
+        x coordinate                        : 313
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -396,7 +410,7 @@ Text t3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 411
+        x coordinate                        : 408
         y coordinate                        : 201
         Width                               : 50
         Height                              : 50
@@ -446,7 +460,7 @@ Text t5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 411
+        x coordinate                        : 408
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -495,7 +509,7 @@ Text tAuthor
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 103
+        x coordinate                        : 100
         y coordinate                        : 108
         Width                               : 358
         Height                              : 25
@@ -525,7 +539,7 @@ Text tHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 129
+        x coordinate                        : 126
         y coordinate                        : 26
         Width                               : 228
         Height                              : 30
@@ -535,7 +549,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 1
+        Font ID                             : 2
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -555,7 +569,7 @@ Text tInstruction
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 296
+        x coordinate                        : 311
         y coordinate                        : 0
         Width                               : 100
         Height                              : 20
@@ -585,7 +599,7 @@ Text tPlayPause
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 221
+        x coordinate                        : 218
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -634,7 +648,7 @@ Text tShuffle
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 31
+        x coordinate                        : 28
         y coordinate                        : 145
         Width                               : 50
         Height                              : 50
@@ -683,7 +697,7 @@ Text tTitle
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 102
+        x coordinate                        : 99
         y coordinate                        : 78
         Width                               : 358
         Height                              : 25
@@ -730,7 +744,7 @@ Slider hVolume
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 79
+        x coordinate                        : 76
         y coordinate                        : 206
         Width                               : 328
         Height                              : 43
@@ -776,7 +790,7 @@ Button bEntity1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 29
+        x coordinate                        : 26
         y coordinate                        : 75
         Width                               : 71
         Height                              : 62
@@ -839,7 +853,7 @@ Button bEntity2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 31
+        x coordinate                        : 28
         y coordinate                        : 257
         Width                               : 55
         Height                              : 55
@@ -906,7 +920,7 @@ Button bEntity3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 122
+        x coordinate                        : 119
         y coordinate                        : 257
         Width                               : 55
         Height                              : 55
@@ -973,7 +987,7 @@ Button bEntity4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 213
+        x coordinate                        : 210
         y coordinate                        : 257
         Width                               : 55
         Height                              : 55
@@ -1040,7 +1054,7 @@ Button bEntity5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 304
+        x coordinate                        : 301
         y coordinate                        : 257
         Width                               : 55
         Height                              : 55
@@ -1107,7 +1121,7 @@ Button bEntity6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 400
+        x coordinate                        : 397
         y coordinate                        : 257
         Width                               : 55
         Height                              : 55
@@ -1174,7 +1188,7 @@ Button bNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 409
+        x coordinate                        : 406
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -1200,14 +1214,7 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardMedia,"
-            if(bNext.txt=="î")
-            {
-                tSend.txt+="bHome"
-            }else
-            {
-                tSend.txt+="bNext"
-            }
+            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1228,7 +1235,7 @@ Button bPrev
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 27
+        x coordinate                        : 24
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -1254,14 +1261,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardMedia,"
-            if(bPrev.txt=="î¶")
-            {
-                tSend.txt+="bUp"
-            }else
-            {
-                tSend.txt+="bPrev"
-            }
+            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -1282,9 +1282,9 @@ Hotspot mSwipeNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 472
+        x coordinate                        : 471
         y coordinate                        : 5
-        Width                               : 8
+        Width                               : 9
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
@@ -1322,7 +1322,7 @@ Hotspot mSwipeUp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 12
+        x coordinate                        : 27
         y coordinate                        : 0
         Width                               : 426
         Height                              : 9
@@ -1419,72 +1419,66 @@ Timer tmSerial
                                     {
                                         // command format: entityUpd,heading,navigation,[,type,internalName,iconId,iconColor,displayName,optionalValue]x6
                                         spstr strCommand.txt,tHeading.txt,"~",1
-                                        // navigation icons
-                                        spstr strCommand.txt,tId.txt,"~",2
-                                        spstr tId.txt,tTmp.txt,"|",0
-                                        if(tTmp.txt=="0")
+                                        // navigation icon left
+                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bPrev,0
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent1.txt,"~",3
+                                            // change icon
+                                            spstr strCommand.txt,bPrev.txt,"~",4
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",5
+                                            covx tTmp.txt,sys0,0,0
+                                            bPrev.pco=sys0
                                             vis bPrev,1
-                                            tsw mSwipePrev,1
-                                            tsw mSwipeUp,0
-                                            bPrev.txt="î°"
                                         }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bPrev,1
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,1
-                                            bPrev.txt="î¶"
-                                        }
-                                        spstr tId.txt,tTmp.txt,"|",1
-                                        if(tTmp.txt=="0")
+                                        // navigation icon right
+                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bNext,0
-                                            tsw mSwipeNext,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent2.txt,"~",9
+                                            // change icon
+                                            spstr strCommand.txt,bNext.txt,"~",10
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",11
+                                            covx tTmp.txt,sys0,0,0
+                                            bNext.pco=sys0
                                             vis bNext,1
-                                            tsw mSwipeNext,1
-                                            bNext.txt="î³"
-                                        }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bNext,1
-                                            bNext.txt="î"
                                         }
                                         //entity name
-                                        spstr strCommand.txt,entn.txt,"~",3
+                                        spstr strCommand.txt,entn.txt,"~",14
                                         //title
-                                        spstr strCommand.txt,tTitle.txt,"~",4
+                                        spstr strCommand.txt,tTitle.txt,"~",15
                                         //title farbe
-                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        spstr strCommand.txt,tTmp.txt,"~",16
                                         if(tTmp.txt!="")
                                         {
                                             covx tTmp.txt,tTitle.pco,0,0
                                         }
                                         //author
-                                        spstr strCommand.txt,tAuthor.txt,"~",6
+                                        spstr strCommand.txt,tAuthor.txt,"~",17
                                         //author farbe
-                                        spstr strCommand.txt,tTmp.txt,"~",7
+                                        spstr strCommand.txt,tTmp.txt,"~",18
                                         if(tTmp.txt!="")
                                         {
                                             covx tTmp.txt,tAuthor.pco,0,0
                                         }
                                         //volume
-                                        spstr strCommand.txt,tTmp.txt,"~",8
+                                        spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,sys0,0,0
                                         hVolume.val=sys0
                                         //icon
-                                        spstr strCommand.txt,tPlayPause.txt,"~",9
+                                        spstr strCommand.txt,tPlayPause.txt,"~",20
                                         // on off button
-                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        spstr strCommand.txt,tTmp.txt,"~",21
                                         if(tTmp.txt=="disable")
                                         {
                                             vis t5,0
@@ -1494,7 +1488,7 @@ Timer tmSerial
                                             covx tTmp.txt,t5.pco,0,0
                                         }
                                         // shuffel btn
-                                        spstr strCommand.txt,tTmp.txt,"~",11
+                                        spstr strCommand.txt,tTmp.txt,"~",22
                                         if(tTmp.txt=="disable")
                                         {
                                             vis tShuffle,0
@@ -1504,9 +1498,9 @@ Timer tmSerial
                                             tShuffle.txt=tTmp.txt
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type1.txt,"~",12
+                                        spstr strCommand.txt,type1.txt,"~",23
                                         // get internal name
-                                        spstr strCommand.txt,entn1.txt,"~",13
+                                        spstr strCommand.txt,entn1.txt,"~",24
                                         if(type1.txt=="delete"||type1.txt=="")
                                         {
                                             vis tEntity1,0
@@ -1514,20 +1508,20 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,bEntity1.txt,"~",14
+                                            spstr strCommand.txt,bEntity1.txt,"~",25
                                             vis bEntity1,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",15
+                                            spstr strCommand.txt,tTmp.txt,"~",26
                                             covx tTmp.txt,sys0,0,0
                                             bEntity1.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity1.txt,"~",16
+                                            spstr strCommand.txt,tEntity1.txt,"~",27
                                             vis tEntity1,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type2.txt,"~",18
+                                        spstr strCommand.txt,type2.txt,"~",29
                                         // get internal name
-                                        spstr strCommand.txt,entn2.txt,"~",19
+                                        spstr strCommand.txt,entn2.txt,"~",30
                                         if(type2.txt=="delete"||type2.txt=="")
                                         {
                                             vis tEntity2,0
@@ -1535,20 +1529,20 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,bEntity2.txt,"~",20
+                                            spstr strCommand.txt,bEntity2.txt,"~",31
                                             vis bEntity2,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",21
+                                            spstr strCommand.txt,tTmp.txt,"~",32
                                             covx tTmp.txt,sys0,0,0
                                             bEntity2.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity2.txt,"~",22
+                                            spstr strCommand.txt,tEntity2.txt,"~",33
                                             vis tEntity2,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type3.txt,"~",24
+                                        spstr strCommand.txt,type3.txt,"~",35
                                         // get internal name
-                                        spstr strCommand.txt,entn3.txt,"~",25
+                                        spstr strCommand.txt,entn3.txt,"~",36
                                         if(type3.txt=="delete"||type3.txt=="")
                                         {
                                             vis tEntity3,0
@@ -1556,20 +1550,20 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,bEntity3.txt,"~",26
+                                            spstr strCommand.txt,bEntity3.txt,"~",37
                                             vis bEntity3,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",27
+                                            spstr strCommand.txt,tTmp.txt,"~",38
                                             covx tTmp.txt,sys0,0,0
                                             bEntity3.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity3.txt,"~",28
+                                            spstr strCommand.txt,tEntity3.txt,"~",39
                                             vis tEntity3,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type4.txt,"~",30
+                                        spstr strCommand.txt,type4.txt,"~",41
                                         // get internal name
-                                        spstr strCommand.txt,entn4.txt,"~",31
+                                        spstr strCommand.txt,entn4.txt,"~",42
                                         if(type4.txt=="delete"||type4.txt=="")
                                         {
                                             vis tEntity4,0
@@ -1577,20 +1571,20 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,bEntity4.txt,"~",32
+                                            spstr strCommand.txt,bEntity4.txt,"~",43
                                             vis bEntity4,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",33
+                                            spstr strCommand.txt,tTmp.txt,"~",44
                                             covx tTmp.txt,sys0,0,0
                                             bEntity4.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity4.txt,"~",34
+                                            spstr strCommand.txt,tEntity4.txt,"~",45
                                             vis tEntity4,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type5.txt,"~",36
+                                        spstr strCommand.txt,type5.txt,"~",47
                                         // get internal name
-                                        spstr strCommand.txt,entn5.txt,"~",37
+                                        spstr strCommand.txt,entn5.txt,"~",48
                                         if(type5.txt=="delete"||type5.txt=="")
                                         {
                                             vis tEntity5,0
@@ -1598,20 +1592,20 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,bEntity5.txt,"~",38
+                                            spstr strCommand.txt,bEntity5.txt,"~",49
                                             vis bEntity5,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",39
+                                            spstr strCommand.txt,tTmp.txt,"~",50
                                             covx tTmp.txt,sys0,0,0
                                             bEntity5.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity5.txt,"~",40
+                                            spstr strCommand.txt,tEntity5.txt,"~",51
                                             vis tEntity5,1
                                         }
                                         // get Type
-                                        spstr strCommand.txt,type6.txt,"~",42
+                                        spstr strCommand.txt,type6.txt,"~",53
                                         // get internal name
-                                        spstr strCommand.txt,entn6.txt,"~",43
+                                        spstr strCommand.txt,entn6.txt,"~",54
                                         if(type6.txt=="delete"||type6.txt=="")
                                         {
                                             vis tEntity6,0
@@ -1619,14 +1613,14 @@ Timer tmSerial
                                         }else
                                         {
                                             // change icon
-                                            spstr strCommand.txt,bEntity6.txt,"~",44
+                                            spstr strCommand.txt,bEntity6.txt,"~",55
                                             vis bEntity6,1
                                             // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",45
+                                            spstr strCommand.txt,tTmp.txt,"~",56
                                             covx tTmp.txt,sys0,0,0
                                             bEntity6.pco=sys0
                                             // set name
-                                            spstr strCommand.txt,tEntity6.txt,"~",46
+                                            spstr strCommand.txt,tEntity6.txt,"~",57
                                             vis tEntity6,1
                                         }
                                     }
@@ -1693,6 +1687,10 @@ Timer tmSerial
                                         if(tId.txt=="cardPower")
                                         {
                                             page cardPower
+                                        }
+                                        if(tId.txt=="cardChart")
+                                        {
+                                            page cardChart
                                         }
                                     }
                                     if(tInstruction.txt=="time")

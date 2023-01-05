@@ -18,6 +18,10 @@ cardChart
 	33   Component(s)
 	425  Line(s) of event code
 	290  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	181  Line(s) of event code
+	129  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	351  Line(s) of event code
@@ -34,10 +38,6 @@ popupShutter
 	25   Component(s)
 	398  Line(s) of event code
 	218  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	181  Line(s) of event code
-	129  Unique line(s) of event code
 cardQR
 	34   Component(s)
 	398  Line(s) of event code
