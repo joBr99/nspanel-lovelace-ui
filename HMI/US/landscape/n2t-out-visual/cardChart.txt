@@ -53,129 +53,143 @@ Page cardChart
         
 Variable (string) entn
     Attributes
-        ID            : 4
+        ID            : 6
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
+Variable (string) nent1
+    Attributes
+        ID            : 32
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
+    
+Variable (string) nent2
+    Attributes
+        ID            : 31
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) strCommand
     Attributes
-        ID            : 3
+        ID            : 5
         Scope         : local
         Text          : 
         Max. Text Size: 275
     
 Variable (string) strTmp
     Attributes
-        ID            : 14
+        ID            : 18
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) tId
     Attributes
-        ID            : 11
+        ID            : 14
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tInstruction
     Attributes
-        ID            : 12
+        ID            : 15
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tSend
     Attributes
-        ID            : 7
+        ID            : 9
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) tTmp
     Attributes
-        ID            : 10
+        ID            : 13
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (int32) vMax
     Attributes
-        ID   : 25
+        ID   : 29
         Scope: local
         Value: 0
     
 Variable (int32) vNValues
     Attributes
-        ID   : 13
+        ID   : 17
         Scope: local
         Value: 0
     
 Variable (int32) vaBottom
     Attributes
-        ID   : 18
+        ID   : 22
         Scope: local
         Value: 0
     
 Variable (int32) vaColorD
     Attributes
-        ID   : 24
+        ID   : 28
         Scope: local
         Value: 0
     
 Variable (int32) vaColorL
     Attributes
-        ID   : 23
+        ID   : 27
         Scope: local
         Value: 0
     
 Variable (int32) vaLast
     Attributes
-        ID   : 21
+        ID   : 25
         Scope: local
         Value: 4294967295
     
 Variable (int32) vaLeft
     Attributes
-        ID   : 19
+        ID   : 23
         Scope: local
         Value: 0
     
 Variable (int32) vaUnit
     Attributes
-        ID   : 16
+        ID   : 20
         Scope: local
         Value: 0
     
 Variable (int32) vaValue
     Attributes
-        ID   : 17
+        ID   : 21
         Scope: local
         Value: 0
     
 Variable (string) vaValues
     Attributes
-        ID            : 20
+        ID            : 24
         Scope         : local
         Text          : 
         Max. Text Size: 100
     
 Variable (int32) vaYUnit
     Attributes
-        ID   : 26
+        ID   : 30
         Scope: local
         Value: 0
     
 XFloat x0
     Attributes
-        ID                                  : 22
+        ID                                  : 26
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 190
+        x coordinate                        : 188
         y coordinate                        : 84
         Width                               : 100
         Height                              : 30
@@ -201,7 +215,7 @@ XFloat x0
     
 Text tHeading
     Attributes
-        ID                                  : 28
+        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -248,7 +262,7 @@ Picture p0
     
 Button bNext
     Attributes
-        ID                                  : 29
+        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -280,14 +294,7 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardChart,"
-            if(bNext.txt=="î")
-            {
-                tSend.txt+="bHome"
-            }else
-            {
-                tSend.txt+="bNext"
-            }
+            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -302,7 +309,7 @@ Button bNext
         
 Button bPrev
     Attributes
-        ID                                  : 27
+        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -334,14 +341,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardChart,"
-            if(bPrev.txt=="î¶")
-            {
-                tSend.txt+="bUp"
-            }else
-            {
-                tSend.txt+="bPrev"
-            }
+            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -356,15 +356,15 @@ Button bPrev
         
 Hotspot m0
     Attributes
-        ID                                  : 15
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 20
+        x coordinate                        : 35
         y coordinate                        : 90
-        Width                               : 440
+        Width                               : 410
         Height                              : 220
         Effect                              : load
         Effect Priority                     : 0
@@ -447,15 +447,15 @@ Hotspot m0
         
 Hotspot mSwipeNext
     Attributes
-        ID                                  : 30
+        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 472
+        x coordinate                        : 471
         y coordinate                        : 5
-        Width                               : 8
+        Width                               : 9
         Height                              : 310
         Effect                              : load
         Effect Priority                     : 0
@@ -467,7 +467,7 @@ Hotspot mSwipeNext
         
 Hotspot mSwipePrev
     Attributes
-        ID                                  : 9
+        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -487,7 +487,7 @@ Hotspot mSwipePrev
         
 Hotspot mSwipeUp
     Attributes
-        ID                                  : 8
+        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -507,7 +507,7 @@ Hotspot mSwipeUp
         
 Timer tmSerial
     Attributes
-        ID         : 2
+        ID         : 4
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -559,48 +559,42 @@ Timer tmSerial
                                     if(tInstruction.txt=="entityUpd")
                                     {
                                         spstr strCommand.txt,tHeading.txt,"~",1
-                                        // navigation icons
-                                        spstr strCommand.txt,tId.txt,"~",2
-                                        spstr tId.txt,tTmp.txt,"|",0
-                                        if(tTmp.txt=="0")
+                                        // navigation icon left
+                                        spstr strCommand.txt,tTmp.txt,"~",2 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bPrev,0
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent1.txt,"~",3
+                                            // change icon
+                                            spstr strCommand.txt,bPrev.txt,"~",4
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",5
+                                            covx tTmp.txt,sys0,0,0
+                                            bPrev.pco=sys0
                                             vis bPrev,1
-                                            tsw mSwipePrev,1
-                                            tsw mSwipeUp,0
-                                            bPrev.txt="î°"
                                         }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bPrev,1
-                                            tsw mSwipePrev,0
-                                            tsw mSwipeUp,1
-                                            bPrev.txt="î¶"
-                                        }
-                                        spstr tId.txt,tTmp.txt,"|",1
-                                        if(tTmp.txt=="0")
+                                        // navigation icon right
+                                        spstr strCommand.txt,tTmp.txt,"~",8 //type
+                                        if(tTmp.txt=="delete"||tTmp.txt=="")
                                         {
                                             vis bNext,0
-                                            tsw mSwipeNext,0
-                                        }
-                                        if(tTmp.txt=="1")
+                                        }else
                                         {
+                                            // get internal name
+                                            spstr strCommand.txt,nent2.txt,"~",9
+                                            // change icon
+                                            spstr strCommand.txt,bNext.txt,"~",10
+                                            // change icon color
+                                            spstr strCommand.txt,tTmp.txt,"~",11
+                                            covx tTmp.txt,sys0,0,0
+                                            bNext.pco=sys0
                                             vis bNext,1
-                                            tsw mSwipeNext,1
-                                            bNext.txt="î³"
-                                        }
-                                        if(tTmp.txt=="2")
-                                        {
-                                            vis bNext,1
-                                            bNext.txt="î"
                                         }
                                         // extract color
-                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        spstr strCommand.txt,tTmp.txt,"~",14
                                         covx tTmp.txt,vaColorL.val,0,0
                                         // prepare dark color
                                         sys0=vaColorL.val>>11 // red
@@ -612,7 +606,7 @@ Timer tmSerial
                                         //
                                         // detect nValues and maxValue
                                         vNValues.val=0
-                                        spstr strCommand.txt,tTmp.txt,"~",vNValues.val+6
+                                        spstr strCommand.txt,tTmp.txt,"~",vNValues.val+17
                                         strlen tTmp.txt,sya0
                                         while(sya0>0)
                                         {
@@ -623,7 +617,7 @@ Timer tmSerial
                                             }
                                             // next
                                             vNValues.val++
-                                            spstr strCommand.txt,tTmp.txt,"~",vNValues.val+6
+                                            spstr strCommand.txt,tTmp.txt,"~",vNValues.val+17
                                             strlen tTmp.txt,sya0
                                         }
                                         //
@@ -638,7 +632,7 @@ Timer tmSerial
                                         //
                                         line m0.x+25+40-10,m0.y,m0.x+25+40-10,vaBottom.val+10,14823
                                         line m0.x+25+40-5,vaBottom.val,m0.x+25+40-15,vaBottom.val,14823
-                                        spstr strCommand.txt,strTmp.txt,"~",5
+                                        spstr strCommand.txt,strTmp.txt,"~",16
                                         sya1=0
                                         spstr strTmp.txt,tTmp.txt,":",sya1
                                         strlen tTmp.txt,sya0
@@ -671,7 +665,7 @@ Timer tmSerial
                                         }
                                         //
                                         // y achis label
-                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        spstr strCommand.txt,tTmp.txt,"~",15
                                         // tTmp.txt="Gas [kW]"
                                         strlen tTmp.txt,sys1
                                         sya1=sys1*12+m0.h-48/2
@@ -687,7 +681,7 @@ Timer tmSerial
                                                 vaValues.txt+="~"
                                             }
                                             // extract next entry
-                                            spstr strCommand.txt,tTmp.txt,"~",sys0+6
+                                            spstr strCommand.txt,tTmp.txt,"~",sys0+17
                                             // calculate left
                                             sys1=sys0*5*vaUnit.val
                                             sys1+=vaLeft.val
@@ -868,7 +862,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 5
+        ID         : 7
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -899,7 +893,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 6
+        ID   : 8
         Scope: local
         Value: 0
     

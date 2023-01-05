@@ -134,7 +134,7 @@ Text tEntity
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 81
+        x coordinate                        : 80
         y coordinate                        : 48
         Width                               : 195
         Height                              : 30
@@ -164,7 +164,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 28
+        x coordinate                        : 27
         y coordinate                        : 63
         Width                               : 45
         Height                              : 30
@@ -194,7 +194,7 @@ Text tInfo1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 81
+        x coordinate                        : 80
         y coordinate                        : 76
         Width                               : 195
         Height                              : 30
@@ -224,7 +224,7 @@ Text tPosHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 80
+        x coordinate                        : 79
         y coordinate                        : 122
         Width                               : 188
         Height                              : 30
@@ -254,7 +254,7 @@ Text tTiltHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 80
+        x coordinate                        : 79
         y coordinate                        : 231
         Width                               : 191
         Height                              : 30
@@ -301,7 +301,7 @@ Slider hPosition
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 80
+        x coordinate                        : 79
         y coordinate                        : 152
         Width                               : 335
         Height                              : 43
@@ -345,7 +345,7 @@ Slider hTilt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 80
+        x coordinate                        : 79
         y coordinate                        : 261
         Width                               : 335
         Height                              : 43
@@ -389,7 +389,7 @@ Button b0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 413
+        x coordinate                        : 412
         y coordinate                        : 8
         Width                               : 50
         Height                              : 50
@@ -436,7 +436,7 @@ Button bDown1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 402
+        x coordinate                        : 401
         y coordinate                        : 95
         Width                               : 50
         Height                              : 50
@@ -483,7 +483,7 @@ Button bStop1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 350
+        x coordinate                        : 349
         y coordinate                        : 95
         Width                               : 50
         Height                              : 50
@@ -530,7 +530,7 @@ Button bTLeft
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 298
+        x coordinate                        : 297
         y coordinate                        : 205
         Width                               : 50
         Height                              : 50
@@ -577,7 +577,7 @@ Button bTRight
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 402
+        x coordinate                        : 401
         y coordinate                        : 205
         Width                               : 50
         Height                              : 50
@@ -624,7 +624,7 @@ Button bTStop
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 350
+        x coordinate                        : 349
         y coordinate                        : 205
         Width                               : 50
         Height                              : 50
@@ -671,7 +671,7 @@ Button bUp1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 298
+        x coordinate                        : 297
         y coordinate                        : 95
         Width                               : 50
         Height                              : 50

@@ -48,6 +48,13 @@ Variable (string) strCommand
         Text          : 
         Max. Text Size: 200
     
+Variable (string) strTmp
+    Attributes
+        ID            : 45
+        Scope         : local
+        Text          : 
+        Max. Text Size: 2
+    
 Variable (string) tId
     Attributes
         ID            : 16
@@ -126,8 +133,8 @@ Text t10
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 62
-        y coordinate                        : 199
+        x coordinate                        : 61
+        y coordinate                        : 201
         Width                               : 360
         Height                              : 2
         Effect                              : load
@@ -156,7 +163,7 @@ Text tAMPM
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 359
+        x coordinate                        : 358
         y coordinate                        : 56
         Width                               : 104
         Height                              : 57
@@ -186,8 +193,8 @@ Text tDate
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 16
-        y coordinate                        : 162
+        x coordinate                        : 15
+        y coordinate                        : 165
         Width                               : 450
         Height                              : 32
         Effect                              : load
@@ -216,8 +223,8 @@ Text tF1Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 162
-        y coordinate                        : 243
+        x coordinate                        : 161
+        y coordinate                        : 245
         Width                               : 40
         Height                              : 35
         Effect                              : load
@@ -246,8 +253,8 @@ Text tF2Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 244
-        y coordinate                        : 243
+        x coordinate                        : 243
+        y coordinate                        : 245
         Width                               : 40
         Height                              : 35
         Effect                              : load
@@ -276,8 +283,8 @@ Text tF3Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 325
-        y coordinate                        : 243
+        x coordinate                        : 324
+        y coordinate                        : 245
         Width                               : 40
         Height                              : 35
         Effect                              : load
@@ -306,8 +313,8 @@ Text tF4Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 406
-        y coordinate                        : 243
+        x coordinate                        : 405
+        y coordinate                        : 245
         Width                               : 40
         Height                              : 35
         Effect                              : load
@@ -336,8 +343,8 @@ Text tForecast1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 144
-        y coordinate                        : 214
+        x coordinate                        : 143
+        y coordinate                        : 216
         Width                               : 72
         Height                              : 26
         Effect                              : load
@@ -366,8 +373,8 @@ Text tForecast1Val
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 141
-        y coordinate                        : 280
+        x coordinate                        : 140
+        y coordinate                        : 282
         Width                               : 71
         Height                              : 25
         Effect                              : load
@@ -396,8 +403,8 @@ Text tForecast2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 228
-        y coordinate                        : 214
+        x coordinate                        : 227
+        y coordinate                        : 216
         Width                               : 72
         Height                              : 25
         Effect                              : load
@@ -426,8 +433,8 @@ Text tForecast2Val
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 228
-        y coordinate                        : 281
+        x coordinate                        : 227
+        y coordinate                        : 283
         Width                               : 72
         Height                              : 25
         Effect                              : load
@@ -456,8 +463,8 @@ Text tForecast3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 309
-        y coordinate                        : 214
+        x coordinate                        : 308
+        y coordinate                        : 216
         Width                               : 72
         Height                              : 25
         Effect                              : load
@@ -486,8 +493,8 @@ Text tForecast3Val
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 308
-        y coordinate                        : 281
+        x coordinate                        : 307
+        y coordinate                        : 283
         Width                               : 71
         Height                              : 25
         Effect                              : load
@@ -516,8 +523,8 @@ Text tForecast4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 390
-        y coordinate                        : 214
+        x coordinate                        : 389
+        y coordinate                        : 216
         Width                               : 72
         Height                              : 25
         Effect                              : load
@@ -546,8 +553,8 @@ Text tForecast4Val
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 390
-        y coordinate                        : 281
+        x coordinate                        : 389
+        y coordinate                        : 283
         Width                               : 72
         Height                              : 25
         Effect                              : load
@@ -576,7 +583,7 @@ Text tIcon1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
+        x coordinate                        : 15
         y coordinate                        : 0
         Width                               : 85
         Height                              : 45
@@ -590,7 +597,7 @@ Text tIcon1
         Back. Color                         : 0
         Font Color                          : 17299
         Horizontal Alignment                : left
-        Vertical Alignment                  : center
+        Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 10
@@ -606,7 +613,7 @@ Text tIcon2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 393
+        x coordinate                        : 380
         y coordinate                        : 0
         Width                               : 85
         Height                              : 45
@@ -620,7 +627,7 @@ Text tIcon2
         Back. Color                         : 0
         Font Color                          : 17299
         Horizontal Alignment                : right
-        Vertical Alignment                  : center
+        Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 10
@@ -636,8 +643,8 @@ Text tMR
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 160
-        y coordinate                        : 274
+        x coordinate                        : 159
+        y coordinate                        : 276
         Width                               : 62
         Height                              : 21
         Effect                              : load
@@ -666,8 +673,8 @@ Text tMRIcon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 117
-        y coordinate                        : 270
+        x coordinate                        : 116
+        y coordinate                        : 272
         Width                               : 40
         Height                              : 35
         Effect                              : load
@@ -696,8 +703,8 @@ Text tMainIcon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 42
-        y coordinate                        : 206
+        x coordinate                        : 41
+        y coordinate                        : 208
         Width                               : 70
         Height                              : 66
         Effect                              : load
@@ -726,8 +733,8 @@ Text tMainIconAlt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 16
-        y coordinate                        : 225
+        x coordinate                        : 15
+        y coordinate                        : 227
         Width                               : 100
         Height                              : 66
         Effect                              : load
@@ -756,8 +763,8 @@ Text tMainText
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 23
-        y coordinate                        : 271
+        x coordinate                        : 22
+        y coordinate                        : 273
         Width                               : 110
         Height                              : 43
         Effect                              : load
@@ -786,8 +793,8 @@ Text tMainTextAlt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 120
-        y coordinate                        : 214
+        x coordinate                        : 119
+        y coordinate                        : 216
         Width                               : 106
         Height                              : 42
         Effect                              : load
@@ -816,8 +823,8 @@ Text tNotifyHead
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 16
-        y coordinate                        : 205
+        x coordinate                        : 15
+        y coordinate                        : 207
         Width                               : 450
         Height                              : 58
         Effect                              : load
@@ -846,8 +853,8 @@ Text tNotifyText
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 16
-        y coordinate                        : 262
+        x coordinate                        : 15
+        y coordinate                        : 264
         Width                               : 450
         Height                              : 47
         Effect                              : load
@@ -863,7 +870,7 @@ Text tNotifyText
         Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 80
+        Max. Text Size                      : 120
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -876,7 +883,7 @@ Text tTime
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 53
+        x coordinate                        : 52
         y coordinate                        : 25
         Width                               : 376
         Height                              : 112
@@ -906,8 +913,8 @@ Text tTimeAdd
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 16
-        y coordinate                        : 130
+        x coordinate                        : 15
+        y coordinate                        : 134
         Width                               : 450
         Height                              : 32
         Effect                              : load
@@ -1064,6 +1071,27 @@ Timer tmSerial
                                         //set timeout to global var
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sleepTimeout,0,0
+                                    }
+                                    if(tInstruction.txt=="statusUpdate")
+                                    {
+                                        //statusIcon1
+                                        spstr strCommand.txt,tIcon1.txt,"~",1
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,tIcon1.pco,0,0
+                                        //statusIcon2
+                                        spstr strCommand.txt,tIcon2.txt,"~",3
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        covx tTmp.txt,tIcon2.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon1.font=3
+                                        }
+                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon2.font=3
+                                        }
                                     }
                                     if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {
