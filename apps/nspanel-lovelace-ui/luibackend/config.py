@@ -1,11 +1,15 @@
-from itertools import pairwise
-import uuid
+import secrets
+import string
 
 import apis
 
+def uuid():
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for _ in range(10))
+
 class Entity(object):
     def __init__(self, entity_input_config):
-        self.uuid = f"uuid.{uuid.uuid4().hex}"
+        self.uuid = f"uuid.{uuid()}"
         if type(entity_input_config) is not dict:
             #self._ha_api.log("Config error, not a dict check your entity configs")
             self.entityId = "error"
@@ -24,7 +28,7 @@ class Entity(object):
 
 class Card(object):
     def __init__(self, card_input_config, hidden=False):
-        self.uuid = f"uuid.{uuid.uuid4().hex}"
+        self.uuid = f"uuid.{uuid()}"
         self.uuid_prev = None
         self.uuid_next = None
         self.hidden = hidden
@@ -32,6 +36,8 @@ class Card(object):
         self.cardType = card_input_config.get("type", "unknown")
         self.title =  card_input_config.get("title", "unknown")
         self.key = card_input_config.get("key", "unknown")
+        self.nav1Override = card_input_config.get("navItem1")
+        self.nav2Override = card_input_config.get("navItem2")
         # for single entity card like climate or media
         self.entity = None
         if card_input_config.get("entity") is not None:
@@ -152,33 +158,28 @@ class LuiBackendConfig(object):
         apis.ha_api.log("Input config: %s", inconfig)
         self._config = self.dict_recursive_update(inconfig, self._DEFAULT_CONFIG)
         apis.ha_api.log("Loaded config: %s", self._config)
-        
+
         # parse cards
         for card in self.get("cards"):
             self._config_cards.append(Card(card))
-
+            
         # setup prev and next uuids
-        top_level_cards = filter(lambda card: not card.hidden, self._config_cards)
-        first_card = None
-        last_card  = None
-        for cur, next in pairwise(top_level_cards):
-            if first_card is None:
-                first_card = cur
-            last_card = next
-            cur.uuid_next = next.uuid
-            next.uuid_prev = cur.uuid
-        # if there is only one top level card first and last card will be none
-        if first_card and last_card:
-            first_card.uuid_prev = last_card.uuid
-            last_card.uuid_next  = first_card.uuid
+        top_level_cards = list(filter(lambda card: not card.hidden, self._config_cards))
+        card_ids = [card.id for card in top_level_cards]
 
+        prev_ids = card_ids[-1:] + card_ids[:-1]
+        next_ids = card_ids[ 1:] + card_ids[: 1]
+
+        if len(card_ids) > 1:
+            for prev_id, card, next_id in zip(prev_ids, top_level_cards, next_ids):
+                (card.uuid_prev, card.uuid_next) = (prev_id, next_id)
+                
         # parse screensaver
         self._config_screensaver = Card(self.get("screensaver"))
 
         # parse hidden cards
         for card in self.get("hiddenCards"):
             self._config_cards.append(Card(card, hidden=True))
-
         # all entites sorted by generated key, to be able to use short identifiers
         self._config_entites_table = {x.uuid: x for x in self.get_all_entitys()}
         self._config_card_table = {x.uuid: x for x in self._config_cards}
@@ -211,7 +212,7 @@ class LuiBackendConfig(object):
             entities.extend(card.get_entity_list())
         return entities
 
-    def searchCard(self, id):
+    def search_card(self, id):
         id = id.replace("navigate.", "")
         if id.startswith("uuid"):
             return self.get_card_by_uuid(id)
@@ -231,11 +232,11 @@ class LuiBackendConfig(object):
 
     def get_default_card(self):
         defaultCard = self._config.get("screensaver.defaultCard")
-        defaultCard = apis.ha_api.render_template(defaultCard)
         if defaultCard is not None:
+            defaultCard = apis.ha_api.render_template(defaultCard)
             defaultCard = self.search_card(defaultCard)
-        if defaultCard is not None:
-            return defaultCard
+            if defaultCard is not None:
+                return defaultCard
         else:
             return self._config_cards[0]
 

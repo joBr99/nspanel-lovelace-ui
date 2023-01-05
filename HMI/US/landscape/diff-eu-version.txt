@@ -2432,7 +2432,7 @@
 │                                              }
 │   --- HMI/n2t-out/cardThermo.txt
 ├── +++ HMI/US/landscape/n2t-out/cardThermo.txt
-│ @@ -59,26 +59,14 @@
+│ @@ -59,31 +59,19 @@
 │          
 │  Variable (string) entn
 │      Attributes
@@ -2456,9 +2456,15 @@
 │      Attributes
 │          Scope         : local
 │          Text          : 
-│          Max. Text Size: 250
+│ -        Max. Text Size: 750
+│ +        Max. Text Size: 250
 │      
 │  Variable (string) tId
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 20
+│      
 │ @@ -302,15 +290,22 @@
 │          Send Component ID                   : disabled
 │          State                               : unpressed
@@ -2885,3 +2891,56 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
+│ @@ -361,15 +342,15 @@
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : 
+│ -        Max. Text Size                      : 120
+│ +        Max. Text Size                      : 80
+│      
+│  Text tTime
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ @@ -508,35 +489,14 @@
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│                                      }
+│ -                                    if(tInstruction.txt=="statusUpdate")
+│ -                                    {
+│ -                                        //statusIcon1
+│ -                                        spstr strCommand.txt,tIcon1.txt,"~",1
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        covx tTmp.txt,tIcon1.pco,0,0
+│ -                                        //statusIcon2
+│ -                                        spstr strCommand.txt,tIcon2.txt,"~",3
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",4
+│ -                                        covx tTmp.txt,tIcon2.pco,0,0
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",5
+│ -                                        if(tTmp.txt!="")
+│ -                                        {
+│ -                                            tIcon1.font=3
+│ -                                        }
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",6
+│ -                                        if(tTmp.txt!="")
+│ -                                        {
+│ -                                            tIcon2.font=3
+│ -                                        }
+│ -                                    }
+│                                      if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
+│                                      {
+│                                          vis tMainIcon,1
+│                                          vis tMainIconAlt,0
+│                                          vis tMainText,1
+│                                          vis tMainTextAlt,0
+│                                          vis tMRIcon,0

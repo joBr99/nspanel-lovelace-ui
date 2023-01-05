@@ -100,13 +100,34 @@ change the page type:
 
 `notify~heading~text`
 
+`statusUpdate~icon1~icon1Color~icon2~icon2~icon2color~icon1font~icon2font`
+
 ### cardEntities Page
 
 Structure (Category): `entityUpd~title~[navigation]~[entity_information]`
 Example with 4 Entities: 
 ```
-entityUpd~LightTest~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~light~light.bed_light~A~17299~Bed Light~0~light~light.ceiling_lights~B~52231~Ceiling Lights~1~switch~switch.ac~C~17299~AC~0~switch~switch.decorative_lights~D~65222~Decorative Lights~1
+entityUpd~LightTest~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~~light~light.bed_light~A~17299~Bed Light~0~light~light.ceiling_lights~B~52231~Ceiling Lights~1~switch~switch.ac~C~17299~AC~0~switch~switch.decorative_lights~D~65222~Decorative Lights~1
 ```
+
+Possible entities on cardEntities/cardGrid:
+
+`~light~light.entityName~1~17299~Light1~0`
+
+`~shutter~cover.entityName~0~17299~Shutter2~iconUp|iconStop|iconDown`
+
+`~delete~~~~~`
+
+`~text~sensor.entityName~3~17299~Temperature~content`
+
+`~button~button.entityName~3~17299~bt-name~bt-text`
+
+`~switch~switch.entityName~4~17299~Switch1~0`
+
+`~number~input_number.entityName~4~17299~Number123~value|min|max`
+
+`~input_sel~input_select.entityName~3~17299~sel-name~sel-text`
+
 
 <table>
 <thead>
@@ -2094,6 +2115,50 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
 `entityUpd~heading~navigation~color~yAxisLabel~yAxisTick:[yAxisTick]*[~value[:xAxisLabel]?]*`  
 
 `entityUpd~Chart Demo~1|1~6666~Gas [kWh]~20:40:60:80:100~10~7^2:00~7~6^4:00~6~7^6:00~0~7^8:00~5~1^10:00~1~10^12:00~5~6^14:00~8`
+
+
+### popupLight Page
+
+`entityUpdateDetail~entityName~*ignored*~*iconColor*~*buttonState*~*sliderBrightnessPos*~*sliderColorTempPos*~*colorMode*~*color_translation*~*color_temp_translation*~*brightness_translation*`
+
+`entityUpdateDetail~1~17299~1~100~78~enable`
+
+`entityUpdateDetail~1~17299~1~100~disable`
+
+### popupShutter Page
+
+`entityUpdateDetail~entityName~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown~iconUpStatus~iconStopStatus~iconDownStatus~textTilt~iconTiltLeft~iconTiltStop~iconTiltRight~iconTiltLeftStatus~iconTiltStopStatus~iconTiltLeftStatus~tiltPos`
+
+`entityUpdateDetail~1~77`
+
+### popupNotify Page
+
+`entityUpdateDetail~*internalName*~*tHeading*~*tHeadingColor*~*b1*~*tB1Color*~*b2*~*tB2Color*~*tText*~*tTextColor*~*sleepTimeout*~*font*~*alt_icon*~*altIconColor*`
+
+`exitPopup`
+
+### popupThermo Page
+
+`entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{heading}~{mode}~mode1~mode1?mode2?mode3~{heading}~{mode}~mode1~mode1?mode2?mode3~{heading}~{mode}~mode1~mode1?mode2?mode3~`
+
+### popupInSel Page (input_select detail page)
+
+`entityUpdateDetail2~*entity_id*~~*icon_color*~*input_sel*~*state*~*options*`
+
+options are ? seperated
+
+### popupTimer
+
+editable is 0 or 1
+
+action fields are in the answer on the button press
+
+in case action is empty the button will be hidden
+
+`entityUpdateDetail~{entity_id}~~{icon_color}~{entity_id}~{min_remaining}~{sec_remaining}~{editable}~{action1}~{action2}~{action3}~{label1}~{label2}~{label3}`
+
+
+
 
 
 ## Messages from Nextion Display

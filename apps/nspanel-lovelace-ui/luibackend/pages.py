@@ -236,7 +236,7 @@ class LuiPagesGen(object):
         if entityType == "delete":
             return f"~{entityType}~~~~~"
         if entityType == "navigate":
-            page_search_res = self._config.searchCard(entityId)
+            page_search_res = self._config.search_card(entityId)
             if page_search_res is not None:
                 name = name if name is not None else page_search_res.title
                 text = get_translation(self._locale, "frontend.ui.card.button.press")
@@ -670,9 +670,13 @@ class LuiPagesGen(object):
         if card.hidden:
             leftBtn = f"x~navUp~{get_icon_id('mdi:arrow-up-bold')}~65535~~"
             rightBtn = "delete~~~~~"
-        #    r = 0
-        #    if self._config.get("homeButton"):
-        #        r = 2
+
+        if card.nav1Override is not None:
+            leftBtn = self.generate_entities_item(Entity(card.nav1Override))[1:]
+
+        if card.nav2Override is not None:
+            rightBtn = self.generate_entities_item(Entity(card.nav2Override))[1:]
+
         navigation = f"{leftBtn}~{rightBtn}"
 
         # Switch to page
@@ -709,7 +713,7 @@ class LuiPagesGen(object):
             self.generate_power_page(navigation, card.title, card.entities)
             return
 
-    def generate_light_detail_page(self, entity_id):
+    def generate_light_detail_page(self, entity_id, is_open_detail=False):
         entity = apis.ha_api.get_entity(entity_id)
         switch_val = 1 if entity.state == "on" else 0
         icon_color = self.get_entity_color(entity)
@@ -744,9 +748,9 @@ class LuiPagesGen(object):
         color_translation      = "Color"
         brightness_translation = get_translation(self._locale, "frontend.ui.card.light.brightness")
         color_temp_translation = get_translation(self._locale, "frontend.ui.card.light.color_temperature")
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}~{effect_supported}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}~{effect_supported}", force=is_open_detail)
     
-    def generate_shutter_detail_page(self, entity_id):
+    def generate_shutter_detail_page(self, entity_id, is_open_detail=False):
         entity       = apis.ha_api.get_entity(entity_id)
         entityType   = "cover"
         device_class = entity.attributes.get("device_class", "window")
@@ -812,9 +816,9 @@ class LuiPagesGen(object):
             if(tilt_pos == 100):
                 iconTiltLeftStatus  = "disable"
 
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}~{textTilt}~{iconTiltLeft}~{iconTiltStop}~{iconTiltRight}~{iconTiltLeftStatus}~{iconTiltStopStatus}~{iconTiltRightStatus}~{tilt_pos}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}~{textTilt}~{iconTiltLeft}~{iconTiltStop}~{iconTiltRight}~{iconTiltLeftStatus}~{iconTiltStopStatus}~{iconTiltRightStatus}~{tilt_pos}", force=is_open_detail)
 
-    def generate_fan_detail_page(self, entity_id):
+    def generate_fan_detail_page(self, entity_id, is_open_detail=False):
         entity = apis.ha_api.get_entity(entity_id)
         switch_val = 1 if entity.state == "on" else 0
         icon_color = self.get_entity_color(entity)
@@ -838,9 +842,9 @@ class LuiPagesGen(object):
         else:
             preset_modes = ""
 
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}~{preset_mode}~{preset_modes}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}~{preset_mode}~{preset_modes}", force=is_open_detail)
 
-    def generate_thermo_detail_page(self, entity_id):
+    def generate_thermo_detail_page(self, entity_id, is_open_detail=False):
         icon_id = get_icon_ha(entity_id)
         entity = apis.ha_api.get_entity(entity_id)
         icon_color = self.get_entity_color(entity, ha_type="climate")
@@ -862,9 +866,9 @@ class LuiPagesGen(object):
                 if modes:
                     modes_out += f"{heading}~{mode}~{cur_mode}~{modes_res}~"
 
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}")  
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}", force=is_open_detail)  
 
-    def generate_input_select_detail_page(self, entity_id):
+    def generate_input_select_detail_page(self, entity_id, is_open_detail=False):
         entity = apis.ha_api.get_entity(entity_id)
         options = []
         icon_color = 0
@@ -879,9 +883,9 @@ class LuiPagesGen(object):
             state = entity.attributes.get("source", "")
             options = entity.attributes.get("source_list", [])
         options = "?".join(options)
-        self._send_mqtt_msg(f"entityUpdateDetail2~{entity_id}~~{icon_color}~{ha_type}~{state}~{options}~")
+        self._send_mqtt_msg(f"entityUpdateDetail2~{entity_id}~~{icon_color}~{ha_type}~{state}~{options}~", force=is_open_detail)
 
-    def generate_timer_detail_page(self, entity_id):
+    def generate_timer_detail_page(self, entity_id, is_open_detail=False):
         if isinstance(entity_id, dict):
             entity_id = entity_id["entity_id"]
         entity = apis.ha_api.get_entity(entity_id)
@@ -915,7 +919,7 @@ class LuiPagesGen(object):
             label1  = get_translation(self._locale, "frontend.ui.card.timer.actions.pause")
             label2  = get_translation(self._locale, "frontend.ui.card.timer.actions.cancel")
             label3  = get_translation(self._locale, "frontend.ui.card.timer.actions.finish")
-        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{entity_id}~{min_remaining}~{sec_remaining}~{editable}~{action1}~{action2}~{action3}~{label1}~{label2}~{label3}")
+        self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~~{icon_color}~{entity_id}~{min_remaining}~{sec_remaining}~{editable}~{action1}~{action2}~{action3}~{label1}~{label2}~{label3}", force=is_open_detail)
         
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")

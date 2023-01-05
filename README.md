@@ -47,3 +47,16 @@ Some (not all) screenshots from the US Portrait Version:
 ## Documentation
 
 Visit https://docs.nspanel.pky.eu/ for installation instructions and documentation of the configuration.
+
+## Other Resources
+
+### Alternative Backends for other SmartHome Systems
+
+ioBroker: https://forum.iobroker.net/topic/58170/sonoff-nspanel-mit-lovelace-ui/
+
+IP Symcon: https://community.symcon.de/t/beta-modul-nspanel-lovelace-ui/130109
+
+SmartHomeNG: https://github.com/sisamiwe/shng-nspanel-plugin
+
+OpenHAB: https://github.com/donoo/o2n2l
+

@@ -346,7 +346,7 @@ Text tNotifyText
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 80
+        Max. Text Size                      : 120
     
 Text tTime
     Attributes
@@ -492,6 +492,27 @@ Timer tmSerial
                                         //set timeout to global var
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sleepTimeout,0,0
+                                    }
+                                    if(tInstruction.txt=="statusUpdate")
+                                    {
+                                        //statusIcon1
+                                        spstr strCommand.txt,tIcon1.txt,"~",1
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,tIcon1.pco,0,0
+                                        //statusIcon2
+                                        spstr strCommand.txt,tIcon2.txt,"~",3
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        covx tTmp.txt,tIcon2.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon1.font=3
+                                        }
+                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon2.font=3
+                                        }
                                     }
                                     if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {
