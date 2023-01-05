@@ -1042,7 +1042,7 @@ function get_locales() {
 
 async function check_updates() {
     try {
-        const desired_display_firmware_version = 46;
+        const desired_display_firmware_version = 47;
         const berry_driver_version = 8;
 
         if (Debug) {
@@ -1510,7 +1510,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.7.3';
+    const tft_version: string = 'v3.8.0';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
     try {
 
