@@ -25,3 +25,16 @@ You can override the status of navigation items, to make them look like differen
           - entity: navigate.testKey
             status: climate.test
 ```
+
+# Override Navigation Items itself
+
+```
+    cards:
+      - type: cardGrid
+        title: Wohnzimmer
+        navItem1:
+          entity: light.bad_lights
+        navItem2:
+          entity: light.bad_lights
+        entities:
+```
