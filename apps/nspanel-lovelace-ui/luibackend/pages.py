@@ -100,6 +100,7 @@ class LuiPagesGen(object):
         global babel_spec
         we_name = self._config._config_screensaver.entity.entityId
         unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
+        alt_day = self._config._config_screensaver.raw_config.get("alternativeDayLayout", False)
         state = {}
         
         if apis.ha_api.entity_exists(we_name):
