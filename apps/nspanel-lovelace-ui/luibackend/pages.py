@@ -129,12 +129,18 @@ class LuiPagesGen(object):
                         if same_day:
                             up = babel.dates.format_time(up, "H:mm", locale=self._locale)
                         else:
-                            up = babel.dates.format_date(up, "E", locale=self._locale)
+                            if alt_day:
+                                up = babel.dates.format_date(up, "E d/M", locale=self._locale)
+                            else:
+                                up = babel.dates.format_date(up, "E", locale=self._locale)
                     else:
                         if same_day:
                             up = up.strftime('%H:%M')
                         else:
-                            up = up.strftime('%a')
+                            if alt_day:
+                                up = up.strftime('%a %-d/%-m')
+                            else:
+                                up = up.strftime('%a')
                     icon = get_icon_ha(we_name, stateOverwrite=we.attributes.forecast[fid]['condition'])
                     if i == 1:
                         state["tF1Icon"] = we.attributes.forecast[fid]['condition']
