@@ -12,6 +12,7 @@ key | optional | type | default | description
 `statusIcon2` | True | complex | `None` | status icon right to the date string, config similar to weatherOverride
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
 `alternativeLayout` | True | boolean | `False` | alternative layout with humidity
+`alternativeDayLayout` | True | boolean | `False` | alternative layout showing weekday and date in forecast
 `theme` | True | complex | | configuration for theme
 `defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
