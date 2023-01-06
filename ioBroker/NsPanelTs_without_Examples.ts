@@ -13,7 +13,7 @@ Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
 *******************************************************************************
 In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
-unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Dowengrade 
+unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Downgrade 
 durchführen und FlashNextion wiederholen.
 *******************************************************************************
 
@@ -110,8 +110,9 @@ ReleaseNotes:
         - 01.01.2023 - v3.8.0   Add Tasmota "Web Admin Password"
         - 02.01.2023 - v3.8.0   Add Navigation bSubPrev and bSubNext and Subpages for bHome
         - 03.01.2023 - v3.8.0   Bugfix for cardThermostat - Payload (Minor)
-        - 04.01.2023 - v3.8.0   Add Volumio-Player to cardMedia
+        - 04.01.2023 - v3.8.0   Add Volumio-Player to cardMedia by @egal
         - 05.01.2023 - v3.8.0   Upgrade TFT 47
+        - 06.01.2023 - v3.8.0   Add Volumio Tracklist by @egal
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -380,7 +381,6 @@ export const config: Config = {
     panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
     firstScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Hourly.h0.PrecipitationProbability', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
     secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
-    //secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
     thirdScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.UVIndex', ScreensaverEntityIcon: 'solar-power', ScreensaverEntityText: 'UV', ScreensaverEntityUnitText: '', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} },
     fourthScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
     alternativeScreensaverLayout: false,
@@ -397,89 +397,18 @@ export const config: Config = {
     defaultBackgroundColor: HMIDark,    //New Parameter
     temperatureUnit: '°C',
     pages: [
-            Level_0_Grundstueck,
-            Buero_Seite_1,      //Beispiel-Seite
-            WLED,               //Beispiel-Seite
-            Radiosender,        //Beispiel-Seite
-            SensorGrid,         //Beispiel-Seite
-            CardChartExample,   //Beispiel-Seite
-            CardPowerExample,   //Beispiel-Seite
-            //SqueezeboxRPC,    //Beispiel-Seite
-            Sonos,              //Beispiel-Seite
-            SpotifyPremium,     //Beispiel-Seite
-            Alexa,              //Beispiel-Seite
-            Buero_Seite_2,      //Beispiel-Seite
-            Buero_Klimaanlage,  //Beispiel-Seite 
-            Button_1,           //Beispiel-Seite
-            Test_Licht1,        //Beispiel-Seite
-            Test_Licht2,        //Beispiel-Seite
-            Test_Funktionen,    //Beispiel-Seite    
-            Fenster_1,          //Beispiel-Seite
-            Subpages_1,         //Beispiel-Seite
-            Buero_Themostat,    //Beispiel-Seite
-            Buero_Alarm,        //Beispiel-Seite
 
             Service             //Auto-Alias Service Page
     ],
     subPages: [
-                Abfall,                     //Beispiel-Unterseite
-                WLAN,                       //Beispiel-Unterseite
                 
                 NSPanel_Infos,              //Auto-Alias Service Page
                 NSPanel_Einstellungen,      //Auto-Alias Service Page
                 NSPanel_Firmware_Info,      //Auto-Alias Service Page
 
-                Level_1_Haus,
-                    Level_2_Erdgeschoss_1,
-                        Level_3_Wohnzimmer,
-                            Level_4_Wohnzimmer_Licht_1,
-                            Level_4_Wohnzimmer_Licht_2,
-                            Level_4_Wohnzimmer_Sensoren_1,
-                            Level_4_Wohnzimmer_Aktoren,
-                            Level_4_Wohnzimmer_Thermostat,
-                        Level_3_Esszimmer,
-
-                        Level_3_Buero,
-                            Level_4_Buero_Licht,
-                            Level_4_Buero_Sensoren_1,
-                            Level_4_Buero_Sensoren_2,
-                            Level_4_Buero_Aktoren,
-                            Level_4_Buero_Thermostat,
-                        Level_3_Kueche,
-
-                        Level_3_Bad,
-                        
-                    Level_2_Erdgeschoss_2,
-                        Level_3_Kaminzimmer,
-
-                        Level_3_GaesteWC,
-
-                        Level_3_Hauswirtschaftsraum,
-
-                        Level_3_FlurVorne,
-
-                        Level_3_FlurHinten,
-
-                Level_1_Gartenhaus,
-                    Level_2_GH_Licht,
-                        Level_3_GH_Lampen_1,
-                        Level_3_GH_Lampen_2,
-                        Level_3_GH_Lampen_3,
-                        Level_3_GH_Lampen_4,
-                        Level_3_GH_LED_Stripes,
-                        Level_3_GH_WLED,
-                        Level_3_GH_Aussenlampen,
-                    Level_2_GH_Sensoren_1,
-                    Level_2_GH_Sensoren_2,
-                    Level_2_GH_Aktoren_1,
-                    Level_2_GH_Aktoren_2,
-                    Level_2_GH_Heizkoerper,
-                Level_1_Aussen,
-
-                Level_1_Garage
     ],
-    button1Page: button1Page,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
-    button2Page: button2Page    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
+    button1Page: null,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
+    button2Page: null    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
 };
 
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
@@ -1042,7 +971,7 @@ function get_locales() {
 
 async function check_updates() {
     try {
-        const desired_display_firmware_version = 47;
+        const desired_display_firmware_version = 46;
         const berry_driver_version = 8;
 
         if (Debug) {
@@ -1510,7 +1439,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.8.0';
+    const tft_version: string = 'v3.7.3';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
     try {
 
@@ -3969,6 +3898,19 @@ function HandleButtonEvent(words): void {
                         let strDevicePL = pageItemPL.playList[words[4]];
                         request({ url:`${getState(adapterInstancePL+'info.host').val}/api/commands/?cmd=playplaylist&name=${strDevicePL}`, headers: {'User-Agent': 'ioBroker'} }, 
                                   async (error, response, result)=>{}); /* nothing todo @ error */
+                        setTimeout(async function () {
+                            request({ url: `${getState(adapterInstancePL+'info.host').val}/api/getQueue`, headers: {'User-Agent': 'ioBroker'} }, 
+                                async (error, response, result) => {
+                                    try { 
+                                        const QUEUELIST = JSON.parse(result);
+                                        globalTracklist = QUEUELIST.queue;
+                                        if (Debug) { for (let i_index in QUEUELIST.queue) console.log(QUEUELIST.queue[i_index]); }
+                                    } catch (err) { 
+                                        console.log('get_volumio-queue: ' + err.message); 
+                                    }
+                                } 
+                            );
+                        }, 2000);
                         break;
                 }
                 break;
@@ -3985,6 +3927,10 @@ function HandleButtonEvent(words): void {
                         break;
                     case 'alexa2':
                         console.log('Aktuell hat alexa2 keine Tracklist')
+                        break;
+                    case 'volumio':
+                        request({ url:`${getState(adapterInstanceTL+'info.host').val}/api/commands/?cmd=play&N=${words[4]}`, headers: {'User-Agent': 'ioBroker'} }, 
+                            async (error, response, result)=>{}); /* nothing todo @ error */
                         break;
                 }
                 break;
@@ -4229,13 +4175,6 @@ function GetNavigationString(pageId: number): string {
         if (Debug) {
             console.log(pageId);
         }
-
-        // left navigation arrow | right navigation arrow
-        // X|X 
-        // 0 = no arrow
-        // 1|1 = right and left navigation arrow
-        // 2|0 = (right) up navigation arrow
-        // 2|2 = (right) up navigation arrow | (left) home navigation icon
 
         if (activePage.subPage && activePage.prev == undefined && activePage.next == undefined) {
             return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';
@@ -4902,16 +4841,27 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         } /**/
                         mode = 'playlist';
                     } else if (optional == 'tracklist') {
-                        actualState = ''
+                        actualState = '';
+                        /* Volumio: works for files */
+                        if (vAdapter == 'volumio') {
+                            actualState = getState(pageItem.id + '.TITLE').val;
+                        } else {
+                            actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
+                        }
                         actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
                         actualState = (actualState.replace('?','')).split(' -');
                         actualState = actualState[0].split(" (");
                         actualState = formatInSelText(actualState[0]);
-                        //Limit 900 Zeichen, danach SpeicherÃ¼berlauf --> Soweit kÃ¼rzen wie mÃ¶glich
+                        //Limit 900 Zeichen, danach Speicherüberlauf --> Soweit kürzen wie möglich
                         let temp_array = [];
                         //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
                         for (let track_index=0; track_index < 45; track_index++) {
                             let temp_cut_array = getAttr(globalTracklist, track_index + '.title');
+                            /* Volumio: @local/NAS no title -> name */
+                            if (temp_cut_array == undefined) {
+                                temp_cut_array = getAttr(globalTracklist, track_index + '.name');
+                            }
+                            if (Debug) console.log(temp_cut_array);
                             if (temp_cut_array != undefined) {
                                 temp_cut_array = (temp_cut_array.replace('?','')).split(' -');
                                 temp_cut_array = temp_cut_array[0].split(" (");
@@ -6121,6 +6071,7 @@ type PageItem = {
     playList: (string[] | undefined),
     equalizerList: (string[] | undefined),
     repeatList: (string[] | undefined),
+    globalTracklist: (string[] | undefined), 
     modeList: (string[] | undefined),
     hidePassword: (boolean | undefined),
     autoCreateALias: (boolean | undefined)
