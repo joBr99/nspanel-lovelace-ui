@@ -854,14 +854,13 @@ export const config: Config = {
     timeoutScreensaver: 20,
     screenSaverDoubleClick: true,
     locale: 'de-DE',                    // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
-    weatherEntity: 'alias.0.DasWetter',    // Dieser Alias muss erstellt werden, damit die 4 kleineren Icons (Wetter oder DP) angezeigt werden können
+    weatherEntity: 'alias.0.Wetter',    // Dieser Alias muss erstellt werden, damit die 4 kleineren Icons (Wetter oder DP) angezeigt werden können
     defaultOffColor: Off,
     defaultOnColor: On,
     defaultColor: Off,
     defaultBackgroundColor: HMIDark,    //New Parameter
     temperatureUnit: '°C',
     pages: [
-            Level_0_Grundstueck,
             Buero_Seite_1,      //Beispiel-Seite
             WLED,               //Beispiel-Seite
             Radiosender,        //Beispiel-Seite
