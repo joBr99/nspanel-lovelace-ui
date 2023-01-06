@@ -2600,9 +2600,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                 destTemp2 = getState(id + '.' + page.items[0].setThermoDestTemp2).val;
             }
 
-            let thermoPopup = 0
+            let thermoPopup = 1
             if (page.items[0].popupThermoMode1 != undefined) {
-                thermoPopup = 1;
+                thermoPopup = 0;
             }
             
 
