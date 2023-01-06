@@ -76,11 +76,11 @@ popupInSel
 	295  Unique line(s) of event code
 cardEntities
 	91   Component(s)
-	1609 Line(s) of event code
-	690  Unique line(s) of event code
+	1618 Line(s) of event code
+	699  Unique line(s) of event code
 
 Total
 	19   Page(s)
 	709  Component(s)
-	8633 Line(s) of event code
-	2247 Unique line(s) of event code
+	8642 Line(s) of event code
+	2255 Unique line(s) of event code
