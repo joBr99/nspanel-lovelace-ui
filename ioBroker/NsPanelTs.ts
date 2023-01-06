@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.8.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
-- abgestimmt auf TFT 47 / v3.8.0 / BerryDriver 8 / Tasmota 12.3.1
+TypeScript v3.8.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+- abgestimmt auf TFT 47 / v3.8.1 / BerryDriver 8 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -13,7 +13,7 @@ Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
 *******************************************************************************
 In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
-unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Downgrade 
+unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Dowengrade 
 durchführen und FlashNextion wiederholen.
 *******************************************************************************
 
@@ -110,9 +110,10 @@ ReleaseNotes:
         - 01.01.2023 - v3.8.0   Add Tasmota "Web Admin Password"
         - 02.01.2023 - v3.8.0   Add Navigation bSubPrev and bSubNext and Subpages for bHome
         - 03.01.2023 - v3.8.0   Bugfix for cardThermostat - Payload (Minor)
-        - 04.01.2023 - v3.8.0   Add Volumio-Player to cardMedia by @egal
+        - 04.01.2023 - v3.8.0   Add Volumio-Player to cardMedia
         - 05.01.2023 - v3.8.0   Upgrade TFT 47
-        - 06.01.2023 - v3.8.0   Add Volumio Tracklist by @egal
+        - 06.01.2023 - v3.8.0   Add Volumio Tracklist
+        - 06.01.2023 - v3.8.1   HMI-Hotfix
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -186,7 +187,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.8.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.8.1.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
@@ -1457,7 +1458,7 @@ function get_locales() {
 
 async function check_updates() {
     try {
-        const desired_display_firmware_version = 46;
+        const desired_display_firmware_version = 47;
         const berry_driver_version = 8;
 
         if (Debug) {
@@ -1925,7 +1926,7 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.7.3';
+    const tft_version: string = 'v3.8.1';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
     try {
 
