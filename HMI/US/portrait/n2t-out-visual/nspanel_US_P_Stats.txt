@@ -10,6 +10,10 @@ pageTest
 	14   Component(s)
 	14   Line(s) of event code
 	14   Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	181  Line(s) of event code
+	129  Unique line(s) of event code
 popupLight
 	28   Component(s)
 	408  Line(s) of event code
@@ -26,10 +30,6 @@ cardQR
 	34   Component(s)
 	398  Line(s) of event code
 	232  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	181  Line(s) of event code
-	129  Unique line(s) of event code
 cardPower
 	45   Component(s)
 	412  Line(s) of event code

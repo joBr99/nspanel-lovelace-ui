@@ -1034,24 +1034,6 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
-│   --- HMI/n2t-out/cardThermo.txt
-├── +++ HMI/US/portrait/n2t-out/cardThermo.txt
-│ @@ -75,15 +75,15 @@
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│ -        Max. Text Size: 750
-│ +        Max. Text Size: 250
-│      
-│  Variable (string) tId
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 20
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/portrait/n2t-out/pageStartup.txt
 │ @@ -118,15 +118,15 @@

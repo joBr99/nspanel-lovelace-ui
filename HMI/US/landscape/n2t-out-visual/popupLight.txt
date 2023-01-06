@@ -681,8 +681,8 @@ Button bEffect
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 415
-        y coordinate                        : 79
+        x coordinate                        : 411
+        y coordinate                        : 95
         Width                               : 50
         Height                              : 50
         Effect                              : load
@@ -721,7 +721,7 @@ Dual-state Button btOnOff1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 356
-        y coordinate                        : 79
+        y coordinate                        : 95
         Width                               : 50
         Height                              : 50
         Effect                              : load

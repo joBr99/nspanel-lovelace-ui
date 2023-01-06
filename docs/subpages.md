@@ -3,7 +3,7 @@
 You can configure entities with with the prefix `navigate`, that are navigating to cards, in case it's hidden card, the navigation items will change and the arrow is bringing you back to the previous page.
 
 ```yaml
-          - entity: navigate.cardGrid_testKey
+          - entity: navigate.testKey
 ```
 
 will allow you to navigate to a cardGrid page with the configured key testKey
@@ -22,6 +22,21 @@ will allow you to navigate to a cardGrid page with the configured key testKey
 You can override the status of navigation items, to make them look like different entities.
 
 ```yaml
-          - entity: navigate.cardGrid_test
+          - entity: navigate.testKey
             status: climate.test
+```
+
+# Override Navigation Items itself
+
+![image](https://user-images.githubusercontent.com/29555657/210870248-dfbaf95a-3dcb-4482-a24f-afca2e426406.png)
+
+```
+    cards:
+      - type: cardGrid
+        title: Wohnzimmer
+        navItem1:
+          entity: light.bad_lights
+        navItem2:
+          entity: light.bad_lights
+        entities:
 ```

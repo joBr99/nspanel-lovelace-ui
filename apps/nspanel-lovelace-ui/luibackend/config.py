@@ -165,14 +165,14 @@ class LuiBackendConfig(object):
             
         # setup prev and next uuids
         top_level_cards = list(filter(lambda card: not card.hidden, self._config_cards))
-        card_ids = [card.id for card in top_level_cards]
+        card_uuids = [card.uuid for card in top_level_cards]
 
-        prev_ids = card_ids[-1:] + card_ids[:-1]
-        next_ids = card_ids[ 1:] + card_ids[: 1]
+        prev_uuids = card_uuids[-1:] + card_uuids[:-1]
+        next_uuids = card_uuids[ 1:] + card_uuids[: 1]
 
-        if len(card_ids) > 1:
-            for prev_id, card, next_id in zip(prev_ids, top_level_cards, next_ids):
-                (card.uuid_prev, card.uuid_next) = (prev_id, next_id)
+        if len(card_uuids) > 1:
+            for prev_uuids, card, next_uuids in zip(prev_uuids, top_level_cards, next_uuids):
+                (card.uuid_prev, card.uuid_next) = (prev_uuids, next_uuids)
                 
         # parse screensaver
         self._config_screensaver = Card(self.get("screensaver"))

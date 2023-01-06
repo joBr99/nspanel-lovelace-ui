@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.7.3.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
-- abgestimmt auf TFT 46 / v3.7.3 / BerryDriver 8 / Tasmota 12.3.1
+TypeScript v3.8.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+- abgestimmt auf TFT 47 / v3.8.1 / BerryDriver 8 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -106,6 +106,14 @@ ReleaseNotes:
         - 28.12.2022 - v3.7.3.0 Update Berry Version 8
         - 29.12.2022 - v3.7.3.1 Hotfix - us-p - DateString - Use long/short Weekday and long/short Month
         - 29.12.2022 - v3.7.3.2 Add pageItem.id to Submenu; New Parameter targetPage by TT-TOM / @tt-tom17
+        - 30.12.2022 - v3.8.0   Add New HMI-Navi
+        - 01.01.2023 - v3.8.0   Add Tasmota "Web Admin Password"
+        - 02.01.2023 - v3.8.0   Add Navigation bSubPrev and bSubNext and Subpages for bHome
+        - 03.01.2023 - v3.8.0   Bugfix for cardThermostat - Payload (Minor)
+        - 04.01.2023 - v3.8.0   Add Volumio-Player to cardMedia
+        - 05.01.2023 - v3.8.0   Upgrade TFT 47
+        - 06.01.2023 - v3.8.0   Add Volumio Tracklist
+        - 06.01.2023 - v3.8.1   HMI-Hotfix
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -179,7 +187,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.7.3.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.8.1.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
@@ -188,6 +196,9 @@ let manually_Update = false;
 const autoCreateAlias = true;                   //Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.  
 const weatherAdapterInstance: string = 'accuweather.0.';  //Möglich 'accuweather.0.' oder 'daswetter.0.'
 const weatherScreensaverTempMinMax: string = 'MinMax';      // Mögliche Werte: 'Min', 'Max' oder 'MinMax'
+
+const tasmota_web_admin_user: string = 'admin'; // ändern, falls der User im Tasmota vor dem Kompilieren umbenannt wurde (Standard Tasmota: admin)
+const tasmota_web_admin_password: string = '';  // setzten, falls "Web Admin Password" in Tasmote vergeben
 
 const NSPanel_Path = '0_userdata.0.NSPanel.1.';
 const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.'; //Neuer Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm)
@@ -293,32 +304,38 @@ let vwIconColor = [];
 
 let Service: PageEntities =
 {
-    "type": "cardEntities",
-    "heading": "NSPanel Service",
-    "useColor": true,
-    "subPage": false,
-    "parent": undefined, 
-    "items": [
-        <PageItem>{ id: AliasPath + 'autoUpdate', name: "Auto-Updates" ,icon: "update", offColor: MSRed, onColor: MSGreen},
-        <PageItem>{ navigate: true, id: "NSPanel_Infos", icon: "information-outline", onColor: White, name: "NSPanel Infos"},
-        <PageItem>{ navigate: true, id: "NSPanel_Firmware_Info", icon: "update", onColor: White, name: "Firmware Infos"},
-        <PageItem>{ navigate: true, id: "NSPanel_Einstellungen", icon: "wrench-outline", onColor: White, name: "Screensaver"}
+    'type': 'cardEntities',
+    'heading': 'NSPanel Service',
+    'useColor': true,
+    'subPage': false,
+    'parent': undefined,
+    'prev': undefined,
+    'next': undefined,
+    'home': undefined, 
+    'items': [
+        <PageItem>{ id: AliasPath + 'autoUpdate', name: 'Auto-Updates' ,icon: 'update', offColor: MSRed, onColor: MSGreen},
+        <PageItem>{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', onColor: White, name: 'NSPanel Infos'},
+        <PageItem>{ navigate: true, id: 'NSPanel_Firmware_Info', icon: 'update', onColor: White, name: 'Firmware Infos'},
+        <PageItem>{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'wrench-outline', onColor: White, name: 'Screensaver'}
     ]
 };
 
         //Subpage 1 von Subpages_2
         let NSPanel_Infos: PageEntities =
         {
-            "type": "cardEntities",
-            "heading": "NSPanel Infos",
-            "useColor": true,
-            "subPage": true,
-            "parent": Service,
-            "items": [
+            'type': 'cardEntities',
+            'heading': 'NSPanel Infos',
+            'useColor': true,
+            'subPage': true,
+            'parent': Service,
+            'prev': undefined,
+            'next': undefined,
+            'home': undefined,
+            'items': [
                 <PageItem>{ id: AliasPath + 'Tasmota.Hardware', name: 'Hardware', icon: 'memory', offColor: MSYellow, onColor: MSYellow, useColor: true},
-                <PageItem>{ id: AliasPath + 'Sensor.ESP32.Temperature', name: "ESP Temperatur", icon: "thermometer", unit: "°C", offColor: MSYellow, onColor: MSYellow, useColor: true},
-                <PageItem>{ id: AliasPath + 'Tasmota.Uptime', name: "Uptime", icon: "timeline-clock-outline", offColor: MSYellow, onColor: MSYellow, useColor: true},
-                <PageItem>{ id: AliasPath + 'Tasmota.Wifi.RSSI', name: "Wifi-Signal", icon: "signal-distance-variant", unit: "dBm", offColor: MSYellow, onColor: MSYellow, useColor: true}
+                <PageItem>{ id: AliasPath + 'Sensor.ESP32.Temperature', name: 'ESP Temperatur', icon: 'thermometer', unit: '°C', offColor: MSYellow, onColor: MSYellow, useColor: true},
+                <PageItem>{ id: AliasPath + 'Tasmota.Uptime', name: 'Uptime', icon: 'timeline-clock-outline', offColor: MSYellow, onColor: MSYellow, useColor: true},
+                <PageItem>{ id: AliasPath + 'Tasmota.Wifi.RSSI', name: 'Wifi-Signal', icon: 'signal-distance-variant', unit: 'dBm', offColor: MSYellow, onColor: MSYellow, useColor: true}
             ]
         };
 
@@ -330,6 +347,9 @@ let Service: PageEntities =
             'useColor': true,
             'subPage': true,
             'parent': Service,
+            'prev': undefined,
+            'next': undefined,
+            'home': undefined,
             'items': [
                 <PageItem>{ id: AliasPath + 'Dimmode.brightnessDay', name: 'Brightness Tag', icon: 'brightness-5', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 5, maxValue: 10},
                 <PageItem>{ id: AliasPath + 'Dimmode.brightnessNight', name: 'Brightness Nacht', icon: 'brightness-4', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 4},
@@ -346,6 +366,9 @@ let Service: PageEntities =
             'useColor': true,
             'subPage': true,
             'parent': Service,
+            'prev': undefined,
+            'next': undefined,
+            'home': undefined,
             'items': [
                 <PageItem>{ id: AliasPath + 'Tasmota.Version', name: 'Tasmota Firmware', offColor: MSYellow, onColor: MSYellow, useColor: true},
                 <PageItem>{ id: AliasPath + 'Display.TFTVersion', name: 'TFT-Firmware', offColor: MSYellow, onColor: MSYellow, useColor: true},
@@ -359,7 +382,6 @@ export const config: Config = {
     panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
     firstScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Hourly.h0.PrecipitationProbability', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
     secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
-    //secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
     thirdScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.UVIndex', ScreensaverEntityIcon: 'solar-power', ScreensaverEntityText: 'UV', ScreensaverEntityUnitText: '', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} },
     fourthScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
     alternativeScreensaverLayout: false,
@@ -383,7 +405,8 @@ export const config: Config = {
                 
                 NSPanel_Infos,              //Auto-Alias Service Page
                 NSPanel_Einstellungen,      //Auto-Alias Service Page
-                NSPanel_Firmware_Info       //Auto-Alias Service Page
+                NSPanel_Firmware_Info,      //Auto-Alias Service Page
+
     ],
     button1Page: null,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
     button2Page: null    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
@@ -914,6 +937,11 @@ setState(config.panelSendTopic, 'pageType~pageStartup');
 get_tasmota_status0();
 get_panel_update_data();
 check_updates();
+/*
+setTimeout(async function () {
+    setState(config.panelSendTopic, 'pageType~pageStartup');
+}, 60000);
+*/
 
 //------------------Begin Update Functions
 
@@ -944,7 +972,7 @@ function get_locales() {
 
 async function check_updates() {
     try {
-        const desired_display_firmware_version = 46;
+        const desired_display_firmware_version = 47;
         const berry_driver_version = 8;
 
         if (Debug) {
@@ -1179,8 +1207,15 @@ function get_current_berry_driver_version() {
         if (Debug) {
             console.log('Requesting current berry driver version');
         }
+
+        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=GetDriverVersion`;
+        if (tasmota_web_admin_password != '') {
+            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=GetDriverVersion`;
+        }
+
         request({
-            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=GetDriverVersion`,
+
+            url: `${urlString}`,
             headers: {
                 'User-Agent': 'ioBroker'
             }
@@ -1206,8 +1241,14 @@ function get_tasmota_status0() {
         if (Debug) {
             console.log('Requesting tasmota status0');
         }
+        
+        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Status0`;
+        if (tasmota_web_admin_password != '') {
+            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Status0`;
+        }
+
         request({
-            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Status0`,
+            url: `${urlString}`,
             headers: {
                 'User-Agent': 'ioBroker'
             }
@@ -1379,8 +1420,14 @@ on({ id: config.panelRecvTopic }, async (obj) => {
 
 function update_berry_driver_version() {
     try {
+
+        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1`;
+        if (tasmota_web_admin_password != '') {
+            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1`;
+        }        
+        
         request({
-            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1`,
+            url: `${urlString}`,
             headers: {
                 'User-Agent': 'ioBroker'
             }
@@ -1393,11 +1440,17 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.7.3';
+    const tft_version: string = 'v3.8.1';
     const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
     try {
+
+        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=FlashNextion ${desired_display_firmware_url}`;
+        if (tasmota_web_admin_password != '') {
+            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=FlashNextion ${desired_display_firmware_url}`;
+        }
+
         request({
-            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=FlashNextion ${desired_display_firmware_url}`,
+            url: `${urlString}`,
             headers: {
                 'User-Agent': 'ioBroker'
             }
@@ -1412,8 +1465,14 @@ function update_tft_firmware() {
 
 function update_tasmota_firmware() {
     try {
+
+        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Upgrade 1`;
+        if (tasmota_web_admin_password != '') {
+            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Upgrade 1`;
+        }
+
         request({
-            url: `http://${get_current_tasmota_ip_address()}/cm?cmnd=Upgrade 1`,
+            url: `${urlString}`,
             headers: {
                 'User-Agent': 'ioBroker'
             }
@@ -2012,6 +2071,19 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
 
                 case 'motion': 
+                
+                    type = 'text';
+                    if (val === true) {
+                        optVal = 'On';
+                        iconColor = GetIconColor(pageItem, true, useColors);
+                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('motion-sensor');
+                    } else {
+                        optVal = 'Off';
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                        iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('motion-sensor');
+                    }
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'info':
 
@@ -2547,9 +2619,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                     + minTemp + '~'                                     // Thermostat Min-Temperatur
                     + maxTemp + '~'                                     // Thermostat Max-Temperatur
                     + stepTemp + '~'                                    // Schritte für Soll (5°C)
-                    + icon_res + '~'                                    // Icons Status
+                    + icon_res                                      // Icons Status
                     + findLocale('thermostat', 'Currently') + '~'       // Bezeichner vor Aktueller Raumtemperatur
-                    + findLocale('thermostat', 'State') + '~'           // Bezeichner vor State
+                    + findLocale('thermostat', 'State') + '~~'           // Bezeichner vor State
                     + config.temperatureUnit + '~'                      // iconTemperature dstTempTwoTempMode
                     + destTemp2 + '~'                                   // dstTempTwoTempMode --> Wenn Wert, dann 2 Temp
                     + thermoPopup                                       // PopUp
@@ -2688,6 +2760,33 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                 }
             }
         }
+
+        if (adapterPlayerInstance.startsWith('volumio')) {
+            if (existsObject(id) == false){
+                console.log('Volumio Alias ' + id + ' existiert nicht - wird jetzt angelegt')
+
+                let dpPath: string = adapterPlayerInstance;
+                try {
+                    setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
+                    await createAliasAsync(id + '.ACTUAL', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
+                    await createAliasAsync(id + '.ALBUM', dpPath + 'playbackInfo.album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
+                    await createAliasAsync(id + '.ARTIST', dpPath + 'playbackInfo.artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
+                    await createAliasAsync(id + '.TITLE', dpPath + 'playbackInfo.title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
+                    await createAliasAsync(id + '.NEXT', dpPath + 'player.next', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
+                    await createAliasAsync(id + '.PREV', dpPath + 'player.prev', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
+                    await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
+                    await createAliasAsync(id + '.PAUSE', dpPath + 'player.toggle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
+                    await createAliasAsync(id + '.STOP', dpPath + 'player.stop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
+                    await createAliasAsync(id + '.STATE', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
+                    await createAliasAsync(id + '.VOLUME', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
+                    await createAliasAsync(id + '.REPEAT', dpPath + 'playbackInfo.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
+                    await createAliasAsync(id + '.SHUFFLE', dpPath + 'queue.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
+                    await createAliasAsync(id + '.status', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon>{ type: 'string', role: 'media.state', name: 'status' });
+                } catch (err) {
+                    console.warn('function createAutoMediaAlias: ' + err.message);
+                }
+            }
+        }
     }    
 }
 
@@ -2792,6 +2891,13 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
             }
 
+            //Volumio
+            if (v2Adapter == 'volumio') {
+                if (name != undefined) { author = author + " [" + name + "]"; }
+                name = getState(vInstance + 'info.name').val;  /* page.heading; 
+                                                                  getState(id + '.TRACK').val; */
+            }
+
             let volume = getState(id + '.VOLUME').val;
             let iconplaypause = Icons.GetIcon('pause'); //pause
             let shuffle_icon = Icons.GetIcon('shuffle-variant'); //shuffle
@@ -2800,6 +2906,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             if (shuffle == 'off' || shuffle == false || shuffle == 0) {
                 shuffle_icon = Icons.GetIcon('shuffle-disabled'); //shuffle
             }
+            if (v2Adapter == 'volumio') { shuffle_icon = Icons.GetIcon('refresh'); } //Volumio: refresh playlist
+
 
             //Für alle Player
             if (getState(id + '.STATE').val) {
@@ -2812,6 +2920,16 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             //Ausnahme für squeezebox, da State = Power
             if (v2Adapter == 'squeezeboxrpc') {
                 if (getState(id + '.PAUSE').val === false) {
+                    onoffbutton = 65535;
+                    iconplaypause = Icons.GetIcon('pause'); //pause
+                } else {
+                    iconplaypause = Icons.GetIcon('play'); //play
+                }
+            }
+
+            //Ausnahme Volumio: status = string: play, pause, stop usw.
+            if (v2Adapter == 'volumio') {
+                if (getState(id + '.status').val == 'play') {
                     onoffbutton = 65535;
                     iconplaypause = Icons.GetIcon('pause'); //pause
                 } else {
@@ -2834,7 +2952,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             }
             //-------------------------------------------------------------------------------------------------------------
             // nachfolgend alle Alexa-Devices (ist Online / Player- und Commands-Verzeichnis vorhanden) auflisten und verketten
-            // Wenn Konstante alexaSpeakerList mind. einen Eintrag enthält, wird die Konstante verwendet - ansonsten Alle Devices aus dem Alexa Adapter
+            // Wenn Konstante alexaSpeakerList mind. einen Eintrag enthÃ¤lt, wird die Konstante verwendet - ansonsten Alle Devices aus dem Alexa Adapter
             let speakerList = '';
             if (page.items[0].speakerList.length > 0) {
                 for (let i_index in page.items[0].speakerList) {
@@ -2877,16 +2995,29 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let playListString: string = '~~~~~~'
             let playListIconCol = rgb_dec565(HMIOff);
             if (page.items[0].playList != undefined) {
+                /* Volumio: get actual playlist if empty */
+                if (v2Adapter == 'volumio') {
+                    if (page.items[0].playList.length == 0) {
+                        request({ url: `${getState(vInstance+'info.host').val}/api/listplaylists`, headers: {'User-Agent': 'ioBroker'} }, 
+                            async (error, response, result) => {
+                                try { 
+                                    page.items[0].playList = JSON.parse(result);
+                                    if (Debug) console.log(page.items[0].playList); 
+                                } catch (err) { 
+                                    console.log('get_volumio-playlist: ' + err.message); 
+                                }
+                            } 
+                        );
+                    }
+                }
                 playListIconCol = rgb_dec565(HMIOn);
                 playListString =    'input_sel' + '~' + 
                                     id + '?playlist' + '~' + 
                                     Icons.GetIcon('playlist-play') + '~' + 
                                     playListIconCol + '~' + 
-                                    'Playlist' + '~' + 
+                                    'PlayL ' + page.heading + '~' + 
                                     'media1~'
             } 
-
-            //Testvariable ********************
 
             //InSel Playlist
             let trackListString: string = '~~~~~~'
@@ -2949,6 +3080,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
             }
+            /* Volumio todo: 2 boolean 'Repeat' + 'RepeatSingle' */
 
             if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos') {
                 repeatButtonString =    'button' + '~' + 
@@ -3357,6 +3489,10 @@ function HandleButtonEvent(words): void {
             return;
         }
 
+        if (words[2] == 'bNext' || words[2] == 'bPrev' || words[2] == 'bUp' || words[2] == 'bHome' || words[2] == 'bSubNext' || words[2] == 'bSubPrev' ) {
+            buttonAction = words[2];
+        }
+
         if (Debug) {
             console.log(buttonAction);
         }
@@ -3395,6 +3531,10 @@ function HandleButtonEvent(words): void {
                 UnsubscribeWatcher();
                 GeneratePage(config.pages[pageId]);
                 break;
+            case 'bSubNext':
+                UnsubscribeWatcher();
+                GeneratePage(eval(activePage.next));
+                break;
             case 'bPrev':
                 pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
                 pageId = pageNum;
@@ -3412,6 +3552,10 @@ function HandleButtonEvent(words): void {
                 else {
                     GeneratePage(config.pages[pageId]);
                 }
+                break;
+            case 'bSubPrev':          
+                UnsubscribeWatcher();
+                GeneratePage(eval(activePage.prev));
                 break;
             case 'bExit':
                 if (config.screenSaverDoubleClick && words[2] == 'screensaver') {
@@ -3442,7 +3586,11 @@ function HandleButtonEvent(words): void {
                     console.log('bExit: ' + words[4] + ' - ' + pageId);
                 }
                 UnsubscribeWatcher();
-                GeneratePage(config.pages[0]);
+                if (activePage.home != undefined) {
+                    GeneratePage(eval(activePage.home));
+                } else {
+                    GeneratePage(config.pages[0]);
+                }
                 break;
             case 'notifyAction':
                 if (words[4] == 'yes') {
@@ -3684,6 +3832,7 @@ function HandleButtonEvent(words): void {
                 setIfExists(id + '.NEXT', true);
                 break;
             case 'media-shuffle':
+                if ((findPageItem(id).adapterPlayerInstance).startsWith("volumio")) { findPageItem(id).playList = []; break; } //Volumio: empty playlist $uha-20230103
                 if (getState(id + '.SHUFFLE').val == 'off') {
                     setIfExists(id + '.SHUFFLE', 'on');
                 } else {
@@ -3733,6 +3882,7 @@ function HandleButtonEvent(words): void {
                 switch (deviceAdapterPL) {
                     case 'spotify-premium':
                         let strDevicePI = pageItemPL.playList[words[4]]
+                        console.log(strDevicePI)
                         let playlistListString = (getState(adapterInstancePL + 'playlists.playlistListString').val).split(';');
                         let playlistListIds = (getState(adapterInstancePL + 'playlists.playlistListIds').val).split(';');
                         let playlistIndex = playlistListString.indexOf(strDevicePI);
@@ -3744,6 +3894,24 @@ function HandleButtonEvent(words): void {
                     case 'alexa2':
                         let tempListItem = pageItemPL.playList[words[4]].split('.');
                         setState(adapterInstancePL + 'Echo-Devices.' + pageItemPL.mediaDevice + '.Music-Provider.' + tempListItem[0], tempListItem[1]);
+                        break;
+                    case 'volumio':
+                        let strDevicePL = pageItemPL.playList[words[4]];
+                        request({ url:`${getState(adapterInstancePL+'info.host').val}/api/commands/?cmd=playplaylist&name=${strDevicePL}`, headers: {'User-Agent': 'ioBroker'} }, 
+                                  async (error, response, result)=>{}); /* nothing todo @ error */
+                        setTimeout(async function () {
+                            request({ url: `${getState(adapterInstancePL+'info.host').val}/api/getQueue`, headers: {'User-Agent': 'ioBroker'} }, 
+                                async (error, response, result) => {
+                                    try { 
+                                        const QUEUELIST = JSON.parse(result);
+                                        globalTracklist = QUEUELIST.queue;
+                                        if (Debug) { for (let i_index in QUEUELIST.queue) console.log(QUEUELIST.queue[i_index]); }
+                                    } catch (err) { 
+                                        console.log('get_volumio-queue: ' + err.message); 
+                                    }
+                                } 
+                            );
+                        }, 2000);
                         break;
                 }
                 break;
@@ -3760,6 +3928,10 @@ function HandleButtonEvent(words): void {
                         break;
                     case 'alexa2':
                         console.log('Aktuell hat alexa2 keine Tracklist')
+                        break;
+                    case 'volumio':
+                        request({ url:`${getState(adapterInstanceTL+'info.host').val}/api/commands/?cmd=play&N=${words[4]}`, headers: {'User-Agent': 'ioBroker'} }, 
+                            async (error, response, result)=>{}); /* nothing todo @ error */
                         break;
                 }
                 break;
@@ -4005,27 +4177,26 @@ function GetNavigationString(pageId: number): string {
             console.log(pageId);
         }
 
-        // left navigation arrow | right navigation arrow
-        // X|X 
-        // 0 = no arrow
-        // 1|1 = right and left navigation arrow
-        // 2|0 = (right) up navigation arrow
-        // 2|2 = (right) up navigation arrow | (left) home navigation icon
-
-        if (activePage.subPage)
-            return '2|2';
+        if (activePage.subPage && activePage.prev == undefined && activePage.next == undefined) {
+            return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';
+        } else if (activePage.subPage && activePage.prev == undefined && activePage.next != undefined) {
+            return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
+        } else if (activePage.subPage && activePage.prev != undefined && activePage.next != undefined) {
+            return 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
+        } else if (activePage.subPage && activePage.prev != undefined && activePage.next == undefined) {
+            return 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';
+        }
 
         switch (pageId) {
             case 0:
-                return '1|1';
             case config.pages.length - 1:
-                return '1|1';
+                return 'button~bPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
             case -1:
-                return '2|0';
+                return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + ' ~~~delete~~~~~';
             case -2:
-                return '2|0';
+                return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~delete~~~~~';
             default:
-                return '1|1';
+                return 'button~bPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
         }
 
     } catch (err) {
@@ -4034,7 +4205,7 @@ function GetNavigationString(pageId: number): string {
 }
 
 function GenerateDetailPage(type: string, optional: string, pageItem: PageItem): Payload[] {
-    //console.log(type + ' - ' + optional + ' - ' + pageItem.id)
+    if (Debug) console.log(type + ' - ' + optional + ' - ' + pageItem.id);
     try {
         let out_msgs: Array<Payload> = [];
         let id = pageItem.id
@@ -4654,16 +4825,30 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                                 let tempItem = pageItem.playList[i].split('.');
                                 tPlayList[i] = tempItem[1];
                             }
-
+                            
                             let tempPlayList = [];
                             for (let i = 0; i < tPlayList.length; i++) {
                                 tempPlayList[i] = formatInSelText(tPlayList[i]);
                             }
                             optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        }
+                        } else if (vAdapter == 'volumio') { /* Volumio: limit 900 chars */
+                            actualState = ''; //todo: no actual playlistname saving
+                            let tempPlayList = []; let tempPll = 0;
+                            for (let i = 0; i < pageItem.playList.length; i++) {
+                                tempPll += pageItem.playList[i].length; if (tempPll > 900) break;
+                                tempPlayList[i] = formatInSelText(pageItem.playList[i]);
+                            }
+                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                        } /**/
                         mode = 'playlist';
                     } else if (optional == 'tracklist') {
-                        actualState = ''
+                        actualState = '';
+                        /* Volumio: works for files */
+                        if (vAdapter == 'volumio') {
+                            actualState = getState(pageItem.id + '.TITLE').val;
+                        } else {
+                            actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
+                        }
                         actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
                         actualState = (actualState.replace('?','')).split(' -');
                         actualState = actualState[0].split(" (");
@@ -4673,6 +4858,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
                         for (let track_index=0; track_index < 45; track_index++) {
                             let temp_cut_array = getAttr(globalTracklist, track_index + '.title');
+                            /* Volumio: @local/NAS no title -> name */
+                            if (temp_cut_array == undefined) {
+                                temp_cut_array = getAttr(globalTracklist, track_index + '.name');
+                            }
+                            if (Debug) console.log(temp_cut_array);
                             if (temp_cut_array != undefined) {
                                 temp_cut_array = (temp_cut_array.replace('?','')).split(' -');
                                 temp_cut_array = temp_cut_array[0].split(" (");
@@ -5809,7 +5999,10 @@ type Page = {
     items: PageItem[],
     useColor: boolean,
     subPage: boolean,
-    parent: Page
+    parent: Page,
+    prev: string,
+    next: string,
+    home: string
 };
 
 interface PageEntities extends Page {
@@ -5879,6 +6072,7 @@ type PageItem = {
     playList: (string[] | undefined),
     equalizerList: (string[] | undefined),
     repeatList: (string[] | undefined),
+    globalTracklist: (string[] | undefined), 
     modeList: (string[] | undefined),
     hidePassword: (boolean | undefined),
     autoCreateALias: (boolean | undefined)
