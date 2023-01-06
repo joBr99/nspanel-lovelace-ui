@@ -489,7 +489,7 @@ class LuiPagesGen(object):
             
             detailPage = ""
             if any(x in ["preset_modes", "swing_modes", "fan_modes"] for x in entity.attributes):
-                detailPage = "1"
+                detailPage = "0"
 
             command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
         self._send_mqtt_msg(command)
