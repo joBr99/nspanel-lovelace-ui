@@ -30,7 +30,7 @@ You can override the status of navigation items, to make them look like differen
 
 ![image](https://user-images.githubusercontent.com/29555657/210870248-dfbaf95a-3dcb-4482-a24f-afca2e426406.png)
 
-```
+```yaml
     cards:
       - type: cardGrid
         title: Wohnzimmer
@@ -43,7 +43,7 @@ You can override the status of navigation items, to make them look like differen
 
 This can be used to add an home button to your subpages:
 
-```
+```yaml
     cards:
       - type: cardGrid
         title: Home
