@@ -40,3 +40,23 @@ You can override the status of navigation items, to make them look like differen
           entity: light.bad_lights
         entities:
 ```
+
+This can be used to add an home button to your subpages:
+
+```
+    cards:
+      - type: cardGrid
+        title: Home
+        key: home
+        entities:
+          - entity: light.bad
+
+    hiddenCards:
+      - type: cardGrid
+        title: Wohnzimmer
+        navItem2:
+          entity: navigate.home
+          icon: mdi:home
+        entities:
+          - entity: light.kitchen
+```
