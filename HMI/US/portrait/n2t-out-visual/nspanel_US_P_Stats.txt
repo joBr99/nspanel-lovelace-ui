@@ -34,10 +34,6 @@ cardPower
 	45   Component(s)
 	412  Line(s) of event code
 	289  Unique line(s) of event code
-screensaver
-	45   Component(s)
-	429  Line(s) of event code
-	301  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	398  Line(s) of event code
@@ -70,6 +66,10 @@ popupTimer
 	42   Component(s)
 	512  Line(s) of event code
 	255  Unique line(s) of event code
+screensaver
+	45   Component(s)
+	429  Line(s) of event code
+	301  Unique line(s) of event code
 popupInSel
 	34   Component(s)
 	617  Line(s) of event code
