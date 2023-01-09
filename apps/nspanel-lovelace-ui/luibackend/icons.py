@@ -181,10 +181,6 @@ def get_icon(ha_type, overwrite=None):
     if overwrite is not None:
         if type(overwrite) is str:
             return get_icon_char(overwrite)
-        if type(overwrite) is dict:
-            for overwrite_state, overwrite_icon in overwrite.items():
-                if overwrite_state == state:
-                    return get_icon_char(overwrite_icon)
     
     result_icon = "alert-circle-outline"
     if ha_type == "script":
