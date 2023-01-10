@@ -1,5 +1,20 @@
 --- HMI/n2t-out
 +++ HMI/US/landscape/n2t-out
+├── file list
+│ @@ -1,13 +1,12 @@
+│  Program.s.txt
+│  cardAlarm.txt
+│  cardChart.txt
+│  cardEntities.txt
+│  cardGrid.txt
+│ -cardLChart.txt
+│  cardMedia.txt
+│  cardPower.txt
+│  cardQR.txt
+│  cardThermo.txt
+│  pageIcons.txt
+│  pageStartup.txt
+│  pageTest.txt
 │   --- HMI/n2t-out/Program.s.txt
 ├── +++ HMI/US/landscape/n2t-out/Program.s.txt
 │ @@ -10,10 +10,8 @@
@@ -13,6 +28,174 @@
 │ -    // fix touch offset
 │ -    lcd_dev fffb 0002 0000 0020
 │      page pageStartup
+│   --- HMI/n2t-out/cardAlarm.txt
+├── +++ HMI/US/landscape/n2t-out/cardAlarm.txt
+│ @@ -864,18 +864,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
+│   --- HMI/n2t-out/cardChart.txt
+├── +++ HMI/US/landscape/n2t-out/cardChart.txt
+│ @@ -681,18 +681,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
+│   --- HMI/n2t-out/cardEntities.txt
+├── +++ HMI/US/landscape/n2t-out/cardEntities.txt
+│ @@ -1931,18 +1931,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
+│   --- HMI/n2t-out/cardGrid.txt
+├── +++ HMI/US/landscape/n2t-out/cardGrid.txt
+│ @@ -916,18 +916,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
+│   --- HMI/n2t-out/cardMedia.txt
+├── +++ HMI/US/landscape/n2t-out/cardMedia.txt
+│ @@ -1200,18 +1200,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
+│   --- HMI/n2t-out/cardPower.txt
+├── +++ HMI/US/landscape/n2t-out/cardPower.txt
+│ @@ -785,18 +785,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
+│   --- HMI/n2t-out/cardQR.txt
+├── +++ HMI/US/landscape/n2t-out/cardQR.txt
+│ @@ -715,18 +715,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
+│   --- HMI/n2t-out/cardThermo.txt
+├── +++ HMI/US/landscape/n2t-out/cardThermo.txt
+│ @@ -1117,18 +1117,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
 │ @@ -173,15 +173,15 @@
@@ -32,6 +215,25 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
+│ @@ -360,18 +360,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/landscape/n2t-out/screensaver.txt
 │ @@ -29,17 +29,14 @@
@@ -77,3 +279,22 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
+│ @@ -797,18 +784,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
