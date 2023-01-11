@@ -6012,14 +6012,14 @@ type Page = {
     heading: string,
     items: PageItem[],
     useColor: boolean,
-    subPage: boolean,
-    parent: Page,
+    subPage: (boolean | undefined),
+    parent: (Page | undefined),
     parentIcon: (string | undefined),
-    prev: string,
+    prev: (string | undefined),
     prevIcon: (string | undefined),
-    next: string,
+    next: (string | undefined),
     nextIcon: (string | undefined),
-    home: string
+    home: (string | undefined),
     homeIcon: (string | undefined)
 };
 
