@@ -22,6 +22,14 @@ cardChart
 	33   Component(s)
 	429  Line(s) of event code
 	292  Unique line(s) of event code
+cardLChart
+	33   Component(s)
+	408  Line(s) of event code
+	268  Unique line(s) of event code
+screensaver
+	47   Component(s)
+	443  Line(s) of event code
+	311  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	351  Line(s) of event code
@@ -46,10 +54,6 @@ pageStartup
 	19   Component(s)
 	185  Line(s) of event code
 	131  Unique line(s) of event code
-cardLChart
-	31   Component(s)
-	424  Line(s) of event code
-	274  Unique line(s) of event code
 cardMedia
 	59   Component(s)
 	641  Line(s) of event code
@@ -74,10 +78,6 @@ cardThermo
 	57   Component(s)
 	532  Line(s) of event code
 	315  Unique line(s) of event code
-screensaver
-	47   Component(s)
-	434  Line(s) of event code
-	304  Unique line(s) of event code
 cardEntities
 	67   Component(s)
 	1162 Line(s) of event code
@@ -85,6 +85,6 @@ cardEntities
 
 Total
 	20   Page(s)
-	728  Component(s)
-	8702 Line(s) of event code
-	2235 Unique line(s) of event code
+	730  Component(s)
+	8695 Line(s) of event code
+	2223 Unique line(s) of event code
