@@ -6014,13 +6014,13 @@ type Page = {
     useColor: boolean,
     subPage: boolean,
     parent: Page,
-    parentIcon: string,
+    parentIcon: (string | undefined),
     prev: string,
-    prevIcon: string,
+    prevIcon: (string | undefined),
     next: string,
-    nextIcon: string,
+    nextIcon: (string | undefined),
     home: string
-    homeIcon: string
+    homeIcon: (string | undefined)
 };
 
 interface PageEntities extends Page {
