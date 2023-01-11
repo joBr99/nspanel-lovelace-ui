@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.8.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
-- abgestimmt auf TFT 47 / v3.8.2 / BerryDriver 8 / Tasmota 12.3.1
+TypeScript v3.8.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+- abgestimmt auf TFT 47 / v3.8.1 / BerryDriver 8 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -114,7 +114,7 @@ ReleaseNotes:
         - 05.01.2023 - v3.8.0   Upgrade TFT 47
         - 06.01.2023 - v3.8.0   Add Volumio Tracklist
         - 06.01.2023 - v3.8.1   HMI-Hotfix
-        - 11.01.2023 - v3.8.2   Add configurable navigation buttons
+        - 11.01.2023 - v3.8.1.1   Add configurable navigation buttons
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
