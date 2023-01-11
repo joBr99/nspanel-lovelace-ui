@@ -114,6 +114,7 @@ ReleaseNotes:
         - 05.01.2023 - v3.8.0   Upgrade TFT 47
         - 06.01.2023 - v3.8.0   Add Volumio Tracklist
         - 06.01.2023 - v3.8.1   HMI-Hotfix
+        - 11.01.2023 - v3.8.2   Add configurable navigation buttons
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -302,16 +303,12 @@ let vwIconColor = [];
 //Service Pages mit Auto-Alias (Nachfolgende Seiten werden mit Alias automatisch angelegt)
 /********************************************************************************************************** */
 
-let Service: PageEntities =
+let Service = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'NSPanel Service',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined, 
     'items': [
         <PageItem>{ id: AliasPath + 'autoUpdate', name: 'Auto-Updates' ,icon: 'update', offColor: MSRed, onColor: MSGreen},
         <PageItem>{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', onColor: White, name: 'NSPanel Infos'},
@@ -321,16 +318,13 @@ let Service: PageEntities =
 };
 
         //Subpage 1 von Subpages_2
-        let NSPanel_Infos: PageEntities =
+        let NSPanel_Infos = <PageEntities> 
         {
             'type': 'cardEntities',
             'heading': 'NSPanel Infos',
             'useColor': true,
             'subPage': true,
             'parent': Service,
-            'prev': undefined,
-            'next': undefined,
-            'home': undefined,
             'items': [
                 <PageItem>{ id: AliasPath + 'Tasmota.Hardware', name: 'Hardware', icon: 'memory', offColor: MSYellow, onColor: MSYellow, useColor: true},
                 <PageItem>{ id: AliasPath + 'Sensor.ESP32.Temperature', name: 'ESP Temperatur', icon: 'thermometer', unit: '°C', offColor: MSYellow, onColor: MSYellow, useColor: true},
@@ -340,16 +334,13 @@ let Service: PageEntities =
         };
 
         //Subpage 2 von Subpages_2
-        let NSPanel_Einstellungen: PageEntities =
+        let NSPanel_Einstellungen = <PageEntities> 
         {
             'type': 'cardEntities',
             'heading': 'Screensaver',
             'useColor': true,
             'subPage': true,
             'parent': Service,
-            'prev': undefined,
-            'next': undefined,
-            'home': undefined,
             'items': [
                 <PageItem>{ id: AliasPath + 'Dimmode.brightnessDay', name: 'Brightness Tag', icon: 'brightness-5', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 5, maxValue: 10},
                 <PageItem>{ id: AliasPath + 'Dimmode.brightnessNight', name: 'Brightness Nacht', icon: 'brightness-4', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 4},
@@ -359,16 +350,13 @@ let Service: PageEntities =
         };
 
         //Subpage 3 von Subpages_2
-        let NSPanel_Firmware_Info: PageEntities =
+        let NSPanel_Firmware_Info = <PageEntities> 
         {
             'type': 'cardEntities',
             'heading': 'Firmware-Updates',
             'useColor': true,
             'subPage': true,
             'parent': Service,
-            'prev': undefined,
-            'next': undefined,
-            'home': undefined,
             'items': [
                 <PageItem>{ id: AliasPath + 'Tasmota.Version', name: 'Tasmota Firmware', offColor: MSYellow, onColor: MSYellow, useColor: true},
                 <PageItem>{ id: AliasPath + 'Display.TFTVersion', name: 'TFT-Firmware', offColor: MSYellow, onColor: MSYellow, useColor: true},
@@ -4177,14 +4165,40 @@ function GetNavigationString(pageId: number): string {
             console.log(pageId);
         }
 
-        if (activePage.subPage && activePage.prev == undefined && activePage.next == undefined) {
-            return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';
-        } else if (activePage.subPage && activePage.prev == undefined && activePage.next != undefined) {
-            return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
-        } else if (activePage.subPage && activePage.prev != undefined && activePage.next != undefined) {
-            return 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
-        } else if (activePage.subPage && activePage.prev != undefined && activePage.next == undefined) {
-            return 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';
+        var navigationString:string = "";
+
+        if (activePage.subPage){
+            if (activePage.prev == undefined){
+                if (activePage.parentIcon != undefined){                    
+                    navigationString = navigationString = 'button~bUp~' + Icons.GetIcon(activePage.parentIcon) + '~';                    
+                } else {
+                    navigationString = navigationString = 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~';
+                }
+            } else {
+                if (activePage.prevIcon != undefined){                    
+                    navigationString = 'button~bSubPrev~' + Icons.GetIcon(activePage.prevIcon) + '~';                    
+                } else {
+                    navigationString = 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~';
+                }                
+            }
+
+            if (activePage.next == undefined){
+                if (activePage.homeIcon != undefined){                    
+                    navigationString += rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon(activePage.homeIcon) + '~' + rgb_dec565(White) + '~~';                  
+                } else {
+                    navigationString += rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';  
+                }
+            } else {
+                if (activePage.nextIcon != undefined){                    
+                    navigationString += rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon(activePage.nextIcon) + '~' + rgb_dec565(White) + '~~';                     
+                } else {
+                    navigationString += rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';  
+                }                
+            }
+        }
+
+        if (navigationString != ""){
+            return navigationString
         }
 
         switch (pageId) {
@@ -6000,9 +6014,13 @@ type Page = {
     useColor: boolean,
     subPage: boolean,
     parent: Page,
+    parentIcon: string,
     prev: string,
+    prevIcon: string,
     next: string,
+    nextIcon: string,
     home: string
+    homeIcon: string
 };
 
 interface PageEntities extends Page {

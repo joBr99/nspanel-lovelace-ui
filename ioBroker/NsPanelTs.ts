@@ -114,6 +114,7 @@ ReleaseNotes:
         - 05.01.2023 - v3.8.0   Upgrade TFT 47
         - 06.01.2023 - v3.8.0   Add Volumio Tracklist
         - 06.01.2023 - v3.8.1   HMI-Hotfix
+        - 11.01.2023 - v3.8.2   Add configurable navigation buttons
 
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -294,16 +295,12 @@ let vwIconColor = [];
 
 //-- Anfang der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich ----------------
 
-let Test_Licht1: PageEntities =
+let Test_Licht1 = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'Color Aliase 1',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.TestRGBLichteinzeln', name: 'RGB-Licht Hex-Color', interpolateColor: true},
         <PageItem>{ id: 'alias.0.NSPanel_1.TestRGBLicht', name: 'RGB-Licht', minValueBrightness: 0, maxValueBrightness: 100, interpolateColor: true},
@@ -313,16 +310,12 @@ let Test_Licht1: PageEntities =
 };
 
 //Only DEV --> Test
-let CardChartExample: PageChart =
+let CardChartExample = <PageChart>
 {
     'type': 'cardChart',
     'heading': 'Stromzähler L1+L2+L3',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [<PageItem>{ 
                 id: 'alias.0.NSPanel_1.cardChart', 
                 yAxis: 'Leistung [kW]', 
@@ -331,31 +324,23 @@ let CardChartExample: PageChart =
              }]
 };
 
-let CardPowerExample: PagePower =
+let CardPowerExample = <PagePower>
 {
     'type': 'cardPower',
     'heading': 'cardPower Emulator',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.Power.PowerCard' },
     ]
 };
 
-let Test_Licht2: PageEntities =
+let Test_Licht2 = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'Color Aliase 2',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         //Beispiel für RGB Light mit neuem PageItem-Parameter colormode: "xy" alternativ colormode: "rgb" oder weglassen
         //Steuert im z.B. DeConz Adapter unter Lampen die Farben per CIE (XY)
@@ -364,16 +349,12 @@ let Test_Licht2: PageEntities =
     ]
 };
 
-let Test_Funktionen: PageEntities =
+let Test_Funktionen = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'Sonstige Aliase',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.TestLautstärke', offColor: MSRed, onColor: MSGreen, name: 'Echo Spot Büro', minValue: 0, maxValue: 100 },
         <PageItem>{ id: 'alias.0.NSPanel_1.TestTemperatur',name: 'Temperatur außen', icon: 'thermometer', onColor: White },
@@ -383,16 +364,12 @@ let Test_Funktionen: PageEntities =
     ]
 };
 
-let Buero_Seite_1: PageEntities =
+let Buero_Seite_1 = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'Büro',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe', interpolateColor: true},
         <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung', interpolateColor: true},
@@ -401,16 +378,12 @@ let Buero_Seite_1: PageEntities =
     ]
 };
 
-let Fenster_1: PageEntities =
+let Fenster_1 = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'Fenster und Türen',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.TestFenster', offColor: MSRed, onColor: MSGreen, name: 'Büro Fenster'},
         <PageItem>{ id: 'alias.0.NSPanel_1.Haustuer', offColor: MSRed, onColor: MSGreen, name: 'Haustür'},
@@ -419,16 +392,12 @@ let Fenster_1: PageEntities =
     ]
 };
 //<PageItem>{ id: "alias.0.NS-Panel.Buero.Rollade", icon: "blinds-horizontal", offColor: White, onColor: Yellow, name: "Büro", secondRow: "Hier Text für 2. Zeile"},
-let Button_1: PageEntities =
+let Button_1 = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'Button Aliase',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.TestTastensensor', name: 'Tastensensor (FFN)'},
         <PageItem>{ id: 'alias.0.NSPanel_1.Radio.NDR2', icon: 'radio', name: 'Taste (NDR2)', onColor: colorRadio},
@@ -437,16 +406,12 @@ let Button_1: PageEntities =
     ]
 };
 
-let Subpages_1: PageEntities =
+let Subpages_1 = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'Test Subpages',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ navigate: true, id: null, targetPage: 'Abfall', onColor: White, name: "Abfallkalender"},
         <PageItem>{ navigate: true, id: 'alias.0.NSPanel_1.TestBlind', targetPage: 'WLAN', name: 'Gäste WLAN', onColor: MSGreen, offColor: MSRed },
@@ -454,16 +419,13 @@ let Subpages_1: PageEntities =
 };
 
         //Subpage 1 von Subpages_1
-        let Abfall: PageEntities =
+        let Abfall = <PageEntities>
         {
             'type': 'cardEntities',
             'heading': 'Abfallkalender',
             'useColor': true,
             'subPage': true,
             'parent': Subpages_1,
-            'prev': undefined,
-            'next': undefined,
-            'home': undefined,
             'items': [
                 <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event1',icon: 'trash-can'},
                 <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event2',icon: 'trash-can'},
@@ -473,29 +435,22 @@ let Subpages_1: PageEntities =
         };
 
         //Subpage 2 von Subpages_1
-        let WLAN: PageQR = 
+        let WLAN = <PageQR>
         {
             'type': 'cardQR',
             'heading': 'Gäste WLAN',
             'useColor': true,
             'subPage': true,
             'parent': Subpages_1,
-            'prev': undefined,
-            'next': undefined,
-            'home': undefined,
             'items': [<PageItem>{ id: 'alias.0.NSPanel_1.Guest_Wifi', hidePassword: true }]
         };
 
-let Buero_Seite_2: PageGrid =
+let Buero_Seite_2 = <PageGrid>
 {
     'type': 'cardGrid',
     'heading': 'Büro 2',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe', name: 'Schreibtisch'},
         <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung', name: 'Deckenlampe'},
@@ -506,32 +461,24 @@ let Buero_Seite_2: PageGrid =
     ]
 };
 
-let Radiosender: PageGrid =
+let Radiosender = <PageGrid>
 {
     'type': 'cardGrid',
     'heading': 'Büro 2',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Bob', icon: 'radio', name: 'Radio BOB', onColor: colorRadio},
         <PageItem>{ id: 'alias.0.NSPanel_1.Countdown', icon: 'timer-outline', name: 'Timer', onColor: White}
     ]
 };
 
-let WLED: PageGrid =
+let WLED = <PageGrid>
 {
     'type': 'cardGrid',
     'heading': 'WLED Stripes WZ',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.WLED.Example.On', name: 'Power', icon: 'power', onColor: HMIOn, offColor: HMIOff},
         <PageItem>{ id: 'alias.0.NSPanel_1.WLED.Example.Sync', name: 'Sync', icon: 'sync', onColor: HMIOn, offColor: White},
@@ -550,16 +497,12 @@ let WLED: PageGrid =
     ]
 };
 
-let SensorGrid: PageGrid =
+let SensorGrid = <PageGrid>
 {
     'type': 'cardGrid',
     'heading': 'Sensor Werte',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.TestTemperatur', name: 'Außentemp. °C', offColor: MSRed, onColor: MSGreen, useValue: true },
         <PageItem>{ id: 'alias.0.NSPanel_1.TestFeuchtigkeit', name: 'Luftfeuchte %', offColor: MSYellow, onColor: MSYellow , useValue: true },
@@ -572,16 +515,12 @@ let SensorGrid: PageGrid =
 
 // NEW: Neue Definition von Medien-Aliasen
 // adapterPlayerInstance = alexa2.0. or spotify-premium.0. or sonos.0. or chromecast.0.
-let Alexa: PageMedia = 
+let Alexa = <PageMedia>
 {
     'type': 'cardMedia',
     'heading': 'Alexa',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [<PageItem>{   
                 id: AliasPath + 'Media.PlayerAlexa', 
                 adapterPlayerInstance: 'alexa2.0.',
@@ -607,16 +546,12 @@ let Alexa: PageMedia =
              }]
 };
 
-let Sonos: PageMedia = 
+let Sonos = <PageMedia>
 {
     'type': 'cardMedia',
     'heading': 'Sonos',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [<PageItem>{   
                 id: AliasPath + 'Media.PlayerSonos', 
                 adapterPlayerInstance: 'sonos.0.',
@@ -629,16 +564,12 @@ let Sonos: PageMedia =
              }]
 };
 
-let SpotifyPremium: PageMedia = 
+let SpotifyPremium = <PageMedia>
 {
     "type": "cardMedia",
     "heading": "Spotify-Premium",
     "useColor": true,
     "subPage": false,
-    "parent": undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     "items": [<PageItem>{ 
                 id: AliasPath + 'Media.PlayerSpotifyPremium', 
                 adapterPlayerInstance: "spotify-premium.0.",
@@ -655,16 +586,12 @@ let SpotifyPremium: PageMedia =
              }]
 };
 
-let SqueezeboxRPC: PageMedia = 
+let SqueezeboxRPC = <PageMedia>
 {
     'type': 'cardMedia',
     'heading': 'SqueezeboxRPC',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [<PageItem>{ 
                 id: 'alias.0.Media.LMS.SqueezePlay', 
                 adapterPlayerInstance: 'squeezeboxrpc.0.Players.SqueezePlay.',
@@ -672,29 +599,21 @@ let SqueezeboxRPC: PageMedia =
              }]
 };
 
-let Buero_Themostat: PageThermo = 
+let Buero_Themostat = <PageThermo>
 {
     'type': 'cardThermo',
     'heading': 'Test Thermostat',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [<PageItem>{ id: 'alias.0.NSPanel_1.Thermostat_Buero', minValue: 50, maxValue: 300 }]
 };
 
-let Buero_Klimaanlage: PageThermo = 
+let Buero_Klimaanlage = <PageThermo>
 {
     'type': 'cardThermo',
     'heading': 'Test Klimaanlage',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [<PageItem>{   
                 id: 'alias.0.NSPanel_1.TestKlimaanlage', 
                 minValue: 50, 
@@ -709,29 +628,21 @@ let Buero_Klimaanlage: PageThermo =
              }]
 };
 
-let Buero_Alarm: PageAlarm = 
+let Buero_Alarm = <PageAlarm >
 {
     'type': 'cardAlarm',
     'heading': 'Alarm',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [<PageItem>{ id: 'alias.0.Alarm' }]
 };
 
-let button1Page: PageGrid =
+let button1Page = <PageGrid>
 {
     'type': 'cardGrid',
     'heading': 'Radio',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.Radio.FFN', icon: 'radio', name: 'FFN', onColor: colorRadio},
         <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Antenne' , icon: 'radio', name: 'Antenne Nds.', onColor: colorRadio},
@@ -742,16 +653,12 @@ let button1Page: PageGrid =
     ]
 };
 
-let button2Page: PageEntities =
+let button2Page = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'Büro',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined,
     'items': [
         <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe'},
         <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung'}
@@ -765,16 +672,12 @@ let button2Page: PageEntities =
 //Service Pages mit Auto-Alias (Nachfolgende Seiten werden mit Alias automatisch angelegt)
 /********************************************************************************************************** */
 
-let Service: PageEntities =
+let Service = <PageEntities> 
 {
     'type': 'cardEntities',
     'heading': 'NSPanel Service',
     'useColor': true,
     'subPage': false,
-    'parent': undefined,
-    'prev': undefined,
-    'next': undefined,
-    'home': undefined, 
     'items': [
         <PageItem>{ id: AliasPath + 'autoUpdate', name: 'Auto-Updates' ,icon: 'update', offColor: MSRed, onColor: MSGreen},
         <PageItem>{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', onColor: White, name: 'NSPanel Infos'},
@@ -784,16 +687,13 @@ let Service: PageEntities =
 };
 
         //Subpage 1 von Subpages_2
-        let NSPanel_Infos: PageEntities =
+        let NSPanel_Infos = <PageEntities> 
         {
             'type': 'cardEntities',
             'heading': 'NSPanel Infos',
             'useColor': true,
             'subPage': true,
             'parent': Service,
-            'prev': undefined,
-            'next': undefined,
-            'home': undefined,
             'items': [
                 <PageItem>{ id: AliasPath + 'Tasmota.Hardware', name: 'Hardware', icon: 'memory', offColor: MSYellow, onColor: MSYellow, useColor: true},
                 <PageItem>{ id: AliasPath + 'Sensor.ESP32.Temperature', name: 'ESP Temperatur', icon: 'thermometer', unit: '°C', offColor: MSYellow, onColor: MSYellow, useColor: true},
@@ -803,16 +703,13 @@ let Service: PageEntities =
         };
 
         //Subpage 2 von Subpages_2
-        let NSPanel_Einstellungen: PageEntities =
+        let NSPanel_Einstellungen = <PageEntities> 
         {
             'type': 'cardEntities',
             'heading': 'Screensaver',
             'useColor': true,
             'subPage': true,
             'parent': Service,
-            'prev': undefined,
-            'next': undefined,
-            'home': undefined,
             'items': [
                 <PageItem>{ id: AliasPath + 'Dimmode.brightnessDay', name: 'Brightness Tag', icon: 'brightness-5', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 5, maxValue: 10},
                 <PageItem>{ id: AliasPath + 'Dimmode.brightnessNight', name: 'Brightness Nacht', icon: 'brightness-4', offColor: MSYellow, onColor: MSYellow, useColor: true, minValue: 0, maxValue: 4},
@@ -822,16 +719,13 @@ let Service: PageEntities =
         };
 
         //Subpage 3 von Subpages_2
-        let NSPanel_Firmware_Info: PageEntities =
+        let NSPanel_Firmware_Info = <PageEntities> 
         {
             'type': 'cardEntities',
             'heading': 'Firmware-Updates',
             'useColor': true,
             'subPage': true,
             'parent': Service,
-            'prev': undefined,
-            'next': undefined,
-            'home': undefined,
             'items': [
                 <PageItem>{ id: AliasPath + 'Tasmota.Version', name: 'Tasmota Firmware', offColor: MSYellow, onColor: MSYellow, useColor: true},
                 <PageItem>{ id: AliasPath + 'Display.TFTVersion', name: 'TFT-Firmware', offColor: MSYellow, onColor: MSYellow, useColor: true},
@@ -845,7 +739,6 @@ export const config: Config = {
     panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // anpassen
     firstScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Hourly.h0.PrecipitationProbability', ScreensaverEntityIcon: 'weather-pouring', ScreensaverEntityText: 'Regen', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} },
     secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
-    //secondScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', ScreensaverEntityIcon: 'weather-windy', ScreensaverEntityText: "Wind", ScreensaverEntityUnitText: 'km/h', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120} },
     thirdScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.UVIndex', ScreensaverEntityIcon: 'solar-power', ScreensaverEntityText: 'UV', ScreensaverEntityUnitText: '', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} },
     fourthScreensaverEntity: { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', ScreensaverEntityIcon: 'water-percent', ScreensaverEntityText: 'Luft', ScreensaverEntityUnitText: '%', ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
     alternativeScreensaverLayout: false,
@@ -4663,14 +4556,40 @@ function GetNavigationString(pageId: number): string {
             console.log(pageId);
         }
 
-        if (activePage.subPage && activePage.prev == undefined && activePage.next == undefined) {
-            return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';
-        } else if (activePage.subPage && activePage.prev == undefined && activePage.next != undefined) {
-            return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
-        } else if (activePage.subPage && activePage.prev != undefined && activePage.next != undefined) {
-            return 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
-        } else if (activePage.subPage && activePage.prev != undefined && activePage.next == undefined) {
-            return 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';
+        var navigationString:string = "";
+
+        if (activePage.subPage){
+            if (activePage.prev == undefined){
+                if (activePage.parentIcon != undefined){                    
+                    navigationString = navigationString = 'button~bUp~' + Icons.GetIcon(activePage.parentIcon) + '~';                    
+                } else {
+                    navigationString = navigationString = 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~';
+                }
+            } else {
+                if (activePage.prevIcon != undefined){                    
+                    navigationString = 'button~bSubPrev~' + Icons.GetIcon(activePage.prevIcon) + '~';                    
+                } else {
+                    navigationString = 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~';
+                }                
+            }
+
+            if (activePage.next == undefined){
+                if (activePage.homeIcon != undefined){                    
+                    navigationString += rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon(activePage.homeIcon) + '~' + rgb_dec565(White) + '~~';                  
+                } else {
+                    navigationString += rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';  
+                }
+            } else {
+                if (activePage.nextIcon != undefined){                    
+                    navigationString += rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon(activePage.nextIcon) + '~' + rgb_dec565(White) + '~~';                     
+                } else {
+                    navigationString += rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';  
+                }                
+            }
+        }
+
+        if (navigationString != ""){
+            return navigationString
         }
 
         switch (pageId) {
@@ -6486,9 +6405,13 @@ type Page = {
     useColor: boolean,
     subPage: boolean,
     parent: Page,
+    parentIcon: string,
     prev: string,
+    prevIcon: string,
     next: string,
+    nextIcon: string,
     home: string
+    homeIcon: string
 };
 
 interface PageEntities extends Page {
