@@ -1,6 +1,63 @@
-+++ /dev/fd/62	2023-01-09 16:10:16.514100386 +0000
++++ /dev/fd/62	2023-01-10 22:38:13.070258504 +0000
++le list
++ +1,12 @@
++.s.txt
++rm.txt
++rt.txt
++ities.txt
++d.txt
++art.txt
++ia.txt
++er.txt
++txt
++rmo.txt
++ns.txt
++rtup.txt
++t.txt
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
++I/n2t-out/cardAlarm.txt
+++ HMI/US/portrait/n2t-out/cardAlarm.txt
++18 +864,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++I/n2t-out/cardChart.txt
+++ HMI/US/portrait/n2t-out/cardChart.txt
++18 +681,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
 +4 +61,34 @@
@@ -51,13 +108,13 @@
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +186,26 @@
 +e (string) type6
@@ -463,8 +520,151 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
++,18 +2711,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++I/n2t-out/cardGrid.txt
+++ HMI/US/portrait/n2t-out/cardGrid.txt
++18 +916,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++I/n2t-out/cardMedia.txt
+++ HMI/US/portrait/n2t-out/cardMedia.txt
++,18 +1200,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++I/n2t-out/cardPower.txt
+++ HMI/US/portrait/n2t-out/cardPower.txt
++18 +785,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++I/n2t-out/cardQR.txt
+++ HMI/US/portrait/n2t-out/cardQR.txt
++18 +715,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++I/n2t-out/cardThermo.txt
+++ HMI/US/portrait/n2t-out/cardThermo.txt
++,18 +1117,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
++18 +360,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 +9 +29,20 @@
@@ -522,3 +722,22 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
++18 +778,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
