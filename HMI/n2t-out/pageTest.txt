@@ -128,12 +128,50 @@ Button b13
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         State                               : unpressed
-        Text                                : newtxt
+        Text                                : showqq
         Max. Text Size                      : 10
     
     Events
         Touch Press Event
             showqq
+        
+Button b14
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : newtxt
+        Max. Text Size                      : 10
+    
+Button b15
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : cardLchart
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            page cardLChart
+        
+Button b16
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        State                               : unpressed
+        Text                                : chart
+        Max. Text Size                      : 10
+    
+    Events
+        Touch Press Event
+            page cardChart
         
 Button b2
     Attributes
