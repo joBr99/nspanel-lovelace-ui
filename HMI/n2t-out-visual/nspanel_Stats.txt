@@ -30,6 +30,10 @@ screensaver
 	47   Component(s)
 	443  Line(s) of event code
 	311  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	185  Line(s) of event code
+	131  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	351  Line(s) of event code
@@ -50,10 +54,6 @@ cardPower
 	45   Component(s)
 	416  Line(s) of event code
 	291  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	185  Line(s) of event code
-	131  Unique line(s) of event code
 cardMedia
 	59   Component(s)
 	641  Line(s) of event code
