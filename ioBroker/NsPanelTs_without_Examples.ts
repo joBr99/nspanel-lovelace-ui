@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.8.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
-- abgestimmt auf TFT 47 / v3.8.1 / BerryDriver 8 / Tasmota 12.3.1
+TypeScript v3.8.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+- abgestimmt auf TFT 48 / v3.8.3 / BerryDriver 8 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -110,12 +110,19 @@ ReleaseNotes:
         - 01.01.2023 - v3.8.0   Add Tasmota "Web Admin Password"
         - 02.01.2023 - v3.8.0   Add Navigation bSubPrev and bSubNext and Subpages for bHome
         - 03.01.2023 - v3.8.0   Bugfix for cardThermostat - Payload (Minor)
-        - 04.01.2023 - v3.8.0   Add Volumio-Player to cardMedia
+        - 04.01.2023 - v3.8.0   Add Volumio-Player to cardMedia by @egal
         - 05.01.2023 - v3.8.0   Upgrade TFT 47
-        - 06.01.2023 - v3.8.0   Add Volumio Tracklist
+        - 06.01.2023 - v3.8.0   Add Volumio Tracklist by @egal
         - 06.01.2023 - v3.8.1   HMI-Hotfix
-        - 11.01.2023 - v3.8.1.1 Add configurable navigation buttons by @ravenst0ne
-
+        - 06.01.2023 - v3.8.2   Add globalTracklist for every Volumio-Player by @egal 
+        - 07.01.2023 - v3.8.3   Upgrade TFT 48
+        - 08.01.2023 - v3.8.3   Add cardLChart for Line diagrams
+        - 09.01.2023 - v3.8.3   Add new monobutton Functions by @ronny130286 
+        - 10.01.2023 - v3.8.3   Add Repeat-Button and external Tracklists/Queues to Volumio Media-Player by @egal
+        - 11.01.2023 - v3.8.3   Add configurable navigation buttons by @ravenst0ne (v3.8.1.1)
+        - 11.01.2023 - v3.8.3   Add Char"€" to HMI
+        - 11.01.2023 - v3.8.3   Fix Switch-Off for Color Lights
+        
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
 *****************************************************************************************************************
@@ -188,7 +195,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.8.1.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.8.3.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
@@ -376,7 +383,7 @@ export const config: Config = {
     autoWeatherColorScreensaverLayout: true,
     mrIcon1ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER1', ScreensaverEntityIcon: 'light-switch', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: HMIOff  },
     mrIcon2ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER2', ScreensaverEntityIcon: 'lightbulb', ScreensaverEntityOnColor: On, ScreensaverEntityOffColor: HMIOff  },
-    timeoutScreensaver: 20,
+    timeoutScreensaver: 15,
     screenSaverDoubleClick: true,
     locale: 'de-DE',                    // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.
     weatherEntity: 'alias.0.Wetter',    // Dieser Alias muss erstellt werden, damit die 4 kleineren Icons (Wetter oder DP) angezeigt werden können
@@ -960,7 +967,7 @@ function get_locales() {
 
 async function check_updates() {
     try {
-        const desired_display_firmware_version = 47;
+        const desired_display_firmware_version = 48;
         const berry_driver_version = 8;
 
         if (Debug) {
@@ -1428,15 +1435,24 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    const tft_version: string = 'v3.8.1';
-    const desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
+    const tft_version: string = 'v3.8.3';
+    let desired_display_firmware_url =""
+ 
+    if(getState(NSPanel_Path + '.NSPanel_Version').val =="us-l"){
+        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-${tft_version}.tft`;
+    }else if (getState(NSPanel_Path + '.NSPanel_Version').val =="us-p"){
+        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-${tft_version}.tft`;
+    }else{
+        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
+    }
+    
     try {
-
+ 
         let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=FlashNextion ${desired_display_firmware_url}`;
         if (tasmota_web_admin_password != '') {
             urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=FlashNextion ${desired_display_firmware_url}`;
         }
-
+ 
         request({
             url: `${urlString}`,
             headers: {
@@ -1643,6 +1659,9 @@ function GeneratePage(page: Page): void {
             case 'cardChart':
                 SendToPanel(GenerateChartPage(<PageChart>page));
                 break;
+            case 'cardLChart':
+                SendToPanel(GenerateChartPage(<PageChart>page));
+                break;
         }
     } catch (err) {
         console.warn('function GeneratePage: ' + err.message);
@@ -1795,18 +1814,25 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
             // Fallback if no name is given
             name = pageItem.name !== undefined ? pageItem.name : o.common.name.de;
-                    
+
             if (existsState(pageItem.id + '.GET')) {
                 val = getState(pageItem.id + '.GET').val;
                 RegisterEntityWatcher(pageItem.id + '.GET');
-            } 
-            if (existsState(pageItem.id + '.SET')) {
-                val = getState(pageItem.id + '.SET').val;
-                RegisterEntityWatcher(pageItem.id + '.SET');
-            } 
-            if (existsState(pageItem.id + '.ACTUAL')) {
-                val = getState(pageItem.id + '.ACTUAL').val;
-                RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+            }
+            if(pageItem.monobutton != undefined && pageItem.monobutton == true){
+                if (existsState(pageItem.id + '.ACTUAL')) {
+                    val = getState(pageItem.id + '.ACTUAL').val;
+                    RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+                }
+            } else {
+                if (existsState(pageItem.id + '.ACTUAL')) {
+                    val = getState(pageItem.id + '.ACTUAL').val;
+                    RegisterEntityWatcher(pageItem.id + '.ACTUAL');
+                }
+                if (existsState(pageItem.id + '.SET')) {
+                    val = getState(pageItem.id + '.SET').val;
+                    RegisterEntityWatcher(pageItem.id + '.SET');
+                }
             }
             if (existsState(pageItem.id + '.ON_ACTUAL')) {
                 val = getState(pageItem.id + '.ON_ACTUAL').val;
@@ -1820,7 +1846,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 val = getState(pageItem.id + '.ON').val;
                 RegisterEntityWatcher(pageItem.id + '.ON');
             }
-
+            
             if (pageItem.navigate) {
 
                 if (pageItem.id == null && pageItem.targetPage != undefined){
@@ -1928,9 +1954,16 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (val === true || val === 'true') {
                         optVal = '1';
                         iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                        if (pageItem.icon !== undefined) {
+                            if (pageItem.icon2 !== undefined) {
+                                iconId = iconId2;
+                            }
+                        }
                     }
 
-                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true) {
+                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true && val) {
                         if (existsState(pageItem.id + '.HUE')) {
                             if (getState(pageItem.id + '.HUE').val != null) {
                                 let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
@@ -1950,7 +1983,15 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (val === true || val === 'true') {
                         optVal = '1';
                         iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                        if (pageItem.icon !== undefined) {
+                            if (pageItem.icon2 !== undefined) {
+                                iconId = iconId2;
+                            }
+                        }
                     }
+
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
@@ -1962,9 +2003,16 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (val === true || val === 'true') {
                         optVal = '1';
                         iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                        if (pageItem.icon !== undefined) {
+                            if (pageItem.icon2 !== undefined) {
+                                iconId = iconId2;
+                            }
+                        }
                     }
 
-                    if (existsState(pageItem.id + '.RED') && existsState(pageItem.id + '.GREEN') && existsState(pageItem.id + '.BLUE')) {
+                    if (existsState(pageItem.id + '.RED') && existsState(pageItem.id + '.GREEN') && existsState(pageItem.id + '.BLUE') && val) {
                         if (getState(pageItem.id + '.RED').val != null && getState(pageItem.id + '.GREEN').val != null && getState(pageItem.id + '.BLUE').val != null) {
                             let rgbRed = getState(pageItem.id + '.RED').val;
                             let rgbGreen = getState(pageItem.id + '.GREEN').val;
@@ -1972,7 +2020,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             let rgb = <RGB>{ red: Math.round(rgbRed), green: Math.round(rgbGreen), blue: Math.round(rgbBlue) };
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                         }
-                    }
+                    } 
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
@@ -1985,9 +2033,16 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (val === true || val === 'true') {
                         optVal = '1'
                         iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                        if (pageItem.icon !== undefined) {
+                            if (pageItem.icon2 !== undefined) {
+                                iconId = iconId2;
+                            }
+                        }
                     }
 
-                    if (existsState(pageItem.id + '.RGB')) {
+                    if (existsState(pageItem.id + '.RGB') && val) {
                         if (getState(pageItem.id + '.RGB').val != null) {
                             let hex = getState(pageItem.id + '.RGB').val;
                             let hexRed = parseInt(hex[1] + hex[2], 16);
@@ -1996,7 +2051,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) };
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                         }
-                    }
+                    } 
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
@@ -2008,6 +2063,13 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (val === true || val === 'true') {
                         optVal = '1';
                         iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? 100 - getState(pageItem.id + '.ACTUAL').val : true, useColors);
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                        if (pageItem.icon !== undefined) {
+                            if (pageItem.icon2 !== undefined) {
+                                iconId = iconId2;
+                            }
+                        }
                     }
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
@@ -2225,11 +2287,14 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 default:
                     return '~delete~~~~~';
             }
+            
         }
+        
         return '~delete~~~~~';
     } catch (err) {
         console.warn('function CreateEntity: ' + err.message);
     }
+
 }
 
 function findLocale(controlsObject: string, controlsState: string): string {
@@ -3007,9 +3072,26 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                     'media1~'
             } 
 
-            //InSel Playlist
+            //InSel Tracklist
             let trackListString: string = '~~~~~~'
             let trackListIconCol = rgb_dec565(HMIOff);
+            if (v2Adapter == 'volumio') { /* Volumio: get queue */
+                setTimeout(async function () {
+                    request({ url: `${getState(vInstance+'info.host').val}/api/getQueue`, headers: {'User-Agent': 'ioBroker'} }, 
+                            async (error, response, result) => {
+                                try { 
+                                    const QUEUELIST = JSON.parse(result);
+                                    page.items[0].globalTracklist = QUEUELIST.queue;
+                                    if (Debug) { for (let i_index in QUEUELIST.queue) console.log(QUEUELIST.queue[i_index]); }
+                                } catch (err) { 
+                                    console.log('get_volumio-queue: ' + err.message); 
+                                }
+                            } 
+                        );
+                    }, 2000);
+                globalTracklist = page.items[0].globalTracklist;
+            }
+            
             if (globalTracklist!= null && globalTracklist.length != 0) {
                 trackListIconCol = rgb_dec565(HMIOn);
                 trackListString =   'input_sel' + '~' + 
@@ -3067,10 +3149,14 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     repeatIcon = Icons.GetIcon('repeat-once');
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
+            } else if (v2Adapter == 'volumio') { /* Volumio: only Repeat true/false with API */
+                if (getState(id + '.REPEAT').val == true) {
+                    repeatIcon = Icons.GetIcon('repeat-variant');
+                    repeatIconCol = rgb_dec565(colMediaIcon);
+                }
             }
-            /* Volumio todo: 2 boolean 'Repeat' + 'RepeatSingle' */
 
-            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos') {
+            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos' || v2Adapter == 'volumio') {
                 repeatButtonString =    'button' + '~' + 
                                         id + '?repeat' + '~' + 
                                         repeatIcon + '~' + 
@@ -3404,12 +3490,11 @@ function GenerateChartPage(page: PageChart): Payload[] {
 
         let id = page.items[0].id
         let out_msgs: Array<Payload> = [];
-        out_msgs.push({ payload: 'pageType~cardChart' });
+        out_msgs.push({ payload: 'pageType~' + page.type });
 
         let heading = page.heading !== undefined ? page.heading : "Chart..."
 
         let txt = getState(id + '.ACTUAL').val
-        //entityUpd~Chart Demo~1|1~6666~Gas [kWh]~20:40:60:80:100~10~7^2:00~7~6^4:00~6~7^6:00~0~7^8:00~5~1^10:00~1~10^12:00~5~6^14:00~8
 
         out_msgs.push({
             payload:    'entityUpd~' +                              //entityUpd
@@ -3420,6 +3505,8 @@ function GenerateChartPage(page: PageChart): Payload[] {
                         page.items[0].yAxisTicks.join(':') + '~' +
                         txt
         });     
+
+        //console.log(out_msgs);
 
         return out_msgs
 
@@ -3461,6 +3548,22 @@ function toggleState(id: string): boolean {
         console.warn('function toggleState: ' + err.message);
     }
 }
+
+// Änderung für Monobutton	
+function triggerButton(id: string): boolean{	
+	try {	
+		let obj = getObject(id);	
+		if (existsState(id) && obj.common.type !== undefined && obj.common.type === "boolean") {	
+			setState(id, true);	
+			setTimeout(function() { setState(id, false) }, 250)	
+			return true;	
+		}	
+		return false;	
+	}  catch (err) {	
+        console.warn('function triggerButton: ' + err.message);	
+    }		
+}	
+// Änderung für Monobutton
 
 function HandleButtonEvent(words): void {
     try {
@@ -3602,8 +3705,18 @@ function HandleButtonEvent(words): void {
                         case 'level.mode.fan':
                         case 'socket':
                         case 'light':
-                            setIfExists(id + '.SET', action);
-                            break;
+
+                            let pageItem = findPageItem(id);	
+							if(pageItem.monobutton != undefined && pageItem.monobutton == true){	
+								triggerButton(id + ".SET")	
+							}	
+							else {	
+								setIfExists(id + '.SET', action);
+							}		
+							break;
+
+                            //setIfExists(id + '.SET', action);
+                            //break;
                         case 'dimmer':
                             setIfExists(id + '.ON_SET', action) ? true : setIfExists(id + '.ON_ACTUAL', action);
                             break;
@@ -3635,8 +3748,20 @@ function HandleButtonEvent(words): void {
                             break;
                         case 'socket':
                         case 'light':
-                            toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
-                            break;
+	                        // Änderung für Monobutton	
+                            let pageItem = findPageItem(id);	
+							if(pageItem.monobutton != undefined && pageItem.monobutton == true){	
+								triggerButton(id + ".SET")	
+							}	
+							else {	
+								toggleState(id + ".SET") ? true : toggleState(id + ".ON_SET") 	
+							}	
+							break;	
+                            // Änderung für // Änderung für Monobutton	
+
+                            //toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
+                            //break;
+
                         case 'dimmer':
                             toggleState(id + '.ON_SET') ? true : toggleState(id + '.ON_ACTUAL');
                             break;
@@ -3676,8 +3801,11 @@ function HandleButtonEvent(words): void {
                                             console.log('Repeat kann nicht verändert werden');
                                         }
                                         break;
+                                    case 'volumio':
+                                        request({ url:`${getState(adapterInstanceRepeat+'info.host').val}/api/commands/?cmd=repeat`, headers: {'User-Agent': 'ioBroker'} }, 
+                                            async (error, response, result)=>{}); /* nothing todo @ error */
+                                        break;
                                 }
-
                             }
                     }
                 }
@@ -3887,19 +4015,7 @@ function HandleButtonEvent(words): void {
                         let strDevicePL = pageItemPL.playList[words[4]];
                         request({ url:`${getState(adapterInstancePL+'info.host').val}/api/commands/?cmd=playplaylist&name=${strDevicePL}`, headers: {'User-Agent': 'ioBroker'} }, 
                                   async (error, response, result)=>{}); /* nothing todo @ error */
-                        setTimeout(async function () {
-                            request({ url: `${getState(adapterInstancePL+'info.host').val}/api/getQueue`, headers: {'User-Agent': 'ioBroker'} }, 
-                                async (error, response, result) => {
-                                    try { 
-                                        const QUEUELIST = JSON.parse(result);
-                                        globalTracklist = QUEUELIST.queue;
-                                        if (Debug) { for (let i_index in QUEUELIST.queue) console.log(QUEUELIST.queue[i_index]); }
-                                    } catch (err) { 
-                                        console.log('get_volumio-queue: ' + err.message); 
-                                    }
-                                } 
-                            );
-                        }, 2000);
+
                         break;
                 }
                 break;
@@ -3935,6 +4051,7 @@ function HandleButtonEvent(words): void {
                         break;
                     case 'alexa2':
                         break;
+
                 }
                 break;
             case 'mode-equalizer':
@@ -4238,8 +4355,16 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         val = getState(id + '.GET').val;
                         RegisterDetailEntityWatcher(id + '.GET', pageItem, type);
                     } else if (existsState(id + '.SET')) {
-                        val = getState(id + '.SET').val;
-                        RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
+	                    if(pageItem.monobutton != undefined && pageItem.monobutton == true){	
+                            val = getState(id + ".STATE").val;	
+						    RegisterDetailEntityWatcher(id + ".STATE", pageItem, type);	
+                        }	
+                        else {	
+                            val = getState(id + '.SET').val;	
+                            RegisterDetailEntityWatcher(id + '.SET', pageItem, type);	
+                        }
+                        //val = getState(id + '.SET').val;
+                        //RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
                     }
 
                     icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
@@ -4860,10 +4985,10 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         /* Volumio: works for files */
                         if (vAdapter == 'volumio') {
                             actualState = getState(pageItem.id + '.TITLE').val;
+                            globalTracklist = pageItem.globalTracklist;
                         } else {
                             actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
                         }
-                        actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
                         actualState = (actualState.replace('?','')).split(' -');
                         actualState = actualState[0].split(" (");
                         actualState = formatInSelText(actualState[0]);
@@ -6011,8 +6136,8 @@ type Page = {
     type: string,
     heading: string,
     items: PageItem[],
-    useColor: boolean,
-    subPage: (boolean | undefined),
+    useColor: (boolean | false),
+    subPage: (boolean | false),
     parent: (Page | undefined),
     parentIcon: (string | undefined),
     prev: (string | undefined),
@@ -6059,7 +6184,7 @@ interface PagePower extends Page {
 }
 
 interface PageChart extends Page {
-    type: 'cardChart',
+    type: 'cardChart' | 'cardLChart',
     items: PageItem[],
 }
 
@@ -6105,9 +6230,11 @@ type PageItem = {
     setThermoDestTemp2: (string | undefined),
     yAxis: (string | undefined),
     yAxisTicks: (number[] | undefined),
+    xAxisDecorationId: (string | undefined),
     popupType: (string | undefined),
     popupOptions: (string[] | undefined),
-    useValue: (boolean | undefined)
+    useValue: (boolean | undefined),
+    monobutton: (boolean | undefined)
 }
 
 type DimMode = {
@@ -6138,7 +6265,7 @@ type Config = {
     defaultOnColor: RGB,
     defaultOffColor: RGB,
     defaultBackgroundColor: RGB,
-    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart)[],
+    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart )[],
     subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart)[],
     button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null),
     button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | null)
