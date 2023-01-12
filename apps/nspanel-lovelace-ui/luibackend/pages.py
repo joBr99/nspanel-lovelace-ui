@@ -542,7 +542,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~{navigation}~{entityId}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{item_str}"
         self._send_mqtt_msg(command)
         
-    def generate_alarm_page(self, navigation, entity, overwrite_supported_modes, alarmBtn):
+    def generate_alarm_page(self, navigation, title, entity, overwrite_supported_modes, alarmBtn):
         item = entity.entityId
         if not apis.ha_api.entity_exists(item):
             command = f"entityUpd~Not found~{navigation}~{item}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
@@ -699,7 +699,7 @@ class LuiPagesGen(object):
         if card.cardType == "cardAlarm":
             alarmBtn = card.raw_config.get("alarmControl")
             overwrite_supported_modes = card.raw_config.get("supportedModes")
-            self.generate_alarm_page(navigation, card.entity, overwrite_supported_modes, alarmBtn)
+            self.generate_alarm_page(navigation, card.title, card.entity, overwrite_supported_modes, alarmBtn)
             return
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")
