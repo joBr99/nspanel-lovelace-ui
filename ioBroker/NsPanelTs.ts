@@ -121,6 +121,7 @@ ReleaseNotes:
         - 10.01.2023 - v3.8.3   Add Repeat-Button and external Tracklists/Queues to Volumio Media-Player by @egal
         - 11.01.2023 - v3.8.3   Add configurable navigation buttons by @ravenst0ne (v3.8.1.1)
         - 11.01.2023 - v3.8.3   Add Char"€" to HMI
+	- 11.01.2023 - v3.8.3   Fix Switch-Off for Color Lights
         
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -6315,7 +6316,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 
         await setStateAsync(NSPanel_Path + 'Sensor.Time', <iobJS.State>{ val: Tasmota_Sensor.Time, ack: true });
         await setStateAsync(NSPanel_Path + 'Sensor.TempUnit', <iobJS.State>{ val: '°' + Tasmota_Sensor.TempUnit, ack: true });
-        //await setStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ANALOG.Temperature1), ack: true });
+        await setStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ANALOG.Temperature1), ack: true });
         await setStateAsync(NSPanel_Path + 'Sensor.ESP32.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ESP32.Temperature), ack: true });
         
         if (autoCreateAlias) {
