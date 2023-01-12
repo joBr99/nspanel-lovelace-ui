@@ -31,6 +31,13 @@ Variable (string) strCommand
         Text          : 
         Max. Text Size: 20
     
+Variable (string) strTmp
+    Attributes
+        ID            : 25
+        Scope         : local
+        Text          : 
+        Max. Text Size: 2
+    
 Variable (string) tInstruction
     Attributes
         ID            : 16
@@ -71,6 +78,36 @@ Text tBench
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 20
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tTmp
+    Attributes
+        ID                                  : 24
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 49
+        y coordinate                        : 48
+        Width                               : 257
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 0
+        Back. Color                         : 65535
+        Font Color                          : 0
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : test123test123
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
