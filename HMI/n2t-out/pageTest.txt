@@ -22,6 +22,12 @@ Variable (string) strCommand
         Text          : 
         Max. Text Size: 20
     
+Variable (string) strTmp
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 2
+    
 Variable (string) tInstruction
     Attributes
         Scope         : local
@@ -43,6 +49,16 @@ Text tBench
         Associated Keyboard                 : none
         Text                                : 
         Max. Text Size                      : 20
+    
+Text tTmp
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : test123test123
+        Max. Text Size                      : 30
     
 Picture p0
     Attributes
