@@ -9,6 +9,9 @@ assignees: ''
 
 <!-- Thanks for reporting a problem for this project. READ THIS FIRST:
 
+DO NOT DELETE ANY TEXT from this template! Otherwise the issue will be auto-closed.
+
+
 This issue template is meant to REPORT BUGS/PROBLEMS ONLY
 
 Please take a few minutes to complete the requested information below.
@@ -16,8 +19,6 @@ The ability to provide assistance is greatly hampered without it.
 
 PLEASE RESTART APPDAEMON BEFORE SUBMITTING AN ISSUE
 To reload all modules after an Update it is reqired to restart the AppDaemon Container, as noted in every Release Notes.
-
-DO NOT DELETE ANY TEXT from this template! Otherwise the issue will be auto-closed.
 -->
 
 

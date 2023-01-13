@@ -1512,7 +1512,7 @@ Serial Protocol of cardThermo is about to change; table will be completed later
 <table>
 <thead>
   <tr>
-    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Parameter Number</th>
     <th>Category</th>
     <th>Location</th>
     <th>Type</th>
@@ -1534,7 +1534,7 @@ Serial Protocol of cardThermo is about to change; table will be completed later
     <td>title</td>
     <td>title</td>
     <td>title</td>
-    <td>intNameEntity</td>
+    <td>title</td>
     <td></td>
   </tr>
   <tr>
@@ -1604,90 +1604,97 @@ Serial Protocol of cardThermo is about to change; table will be completed later
   </tr>
   <tr>
     <td>14</td>
-    <td rowspan="15">cardAlarm specific</td>
-    <td colspan="2" rowspan="2">1st button&nbsp;&nbsp;&nbsp;right side</td>
-    <td>displayName</td>
+    <td rowspan="16">cardAlarm specific</td>
+    <td colspan="2">card intNameEntity</td>
+    <td>intNameEntity</td>
     <td></td>
   </tr>
   <tr>
     <td>15</td>
-    <td>intId</td>
+    <td colspan="2" rowspan="2">1st button right side</td>
+    <td>displayName</td>
     <td></td>
   </tr>
   <tr>
     <td>16</td>
-    <td colspan="2" rowspan="2">2nd button&nbsp;&nbsp;&nbsp;right side</td>
-    <td>displayName</td>
+    <td>intId</td>
     <td></td>
   </tr>
   <tr>
     <td>17</td>
-    <td>intId</td>
+    <td colspan="2" rowspan="2">2nd button right side</td>
+    <td>displayName</td>
     <td></td>
   </tr>
   <tr>
     <td>18</td>
-    <td colspan="2" rowspan="2">3rd button&nbsp;&nbsp;&nbsp;right side</td>
-    <td>displayName</td>
+    <td>intId</td>
     <td></td>
   </tr>
   <tr>
     <td>19</td>
-    <td>intId</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>20</td>
-    <td colspan="2" rowspan="2">4th button&nbsp;&nbsp;&nbsp;right side</td>
+    <td colspan="2" rowspan="2">3rd button right side</td>
     <td>displayName</td>
     <td></td>
   </tr>
   <tr>
-    <td>21</td>
+    <td>20</td>
     <td>intId</td>
     <td></td>
   </tr>
   <tr>
+    <td>21</td>
+    <td colspan="2" rowspan="2">4th button right side</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
     <td>22</td>
+    <td>intId</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
     <td colspan="2" rowspan="2">icon next to code display</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>23</td>
+    <td>24</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
-    <td>24</td>
+    <td>25</td>
     <td colspan="2">numpad</td>
     <td>numpadStatus</td>
     <td>"disable" or "enable"</td>
   </tr>
   <tr>
-    <td>25</td>
+    <td>26</td>
     <td colspan="2">flashing of icon next to code</td>
     <td>flashing status</td>
     <td>"enable" or "disable"</td>
   </tr>
   <tr>
-    <td>26</td>
+    <td>27</td>
     <td colspan="2" rowspan="3">button bottom left corner</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>27</td>
+    <td>28</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
-    <td>28</td>
+    <td>29</td>
     <td>intNameEntity</td>
     <td></td>
   </tr>
 </tbody>
 </table>
+
 
 ### cardQR
 

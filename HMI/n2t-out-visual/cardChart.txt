@@ -847,6 +847,10 @@ Timer tmSerial
                                         {
                                             page cardChart
                                         }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1

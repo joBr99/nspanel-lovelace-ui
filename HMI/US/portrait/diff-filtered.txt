@@ -1,9 +1,408 @@
-+++ /dev/fd/62	2023-01-03 11:41:49.967173379 +0000
++++ /dev/fd/62	2023-01-12 21:12:36.218426206 +0000
++le list
++ +1,12 @@
++.s.txt
++rm.txt
++rt.txt
++ities.txt
++d.txt
++art.txt
++ia.txt
++er.txt
++txt
++rmo.txt
++ns.txt
++rtup.txt
++t.txt
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
++I/n2t-out/cardAlarm.txt
+++ HMI/US/portrait/n2t-out/cardAlarm.txt
++24 +123,14 @@
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++
++eading
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 40
++
++con
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++176 +303,154 @@
++ State                               : unpressed
++ Text                                : 1
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"1"
++     vis tCode,1
++     vis tHeading,0
++ 
++b1
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 2
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"2"
++     vis tCode,1
++     vis tHeading,0
++ 
++b10
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 0
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"0"
++     vis tCode,1
++     vis tHeading,0
++ 
++b11
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : CLR
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=""
++     vis tCode,1
++     vis tHeading,0
++ 
++b2
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 3
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"3"
++     vis tCode,1
++     vis tHeading,0
++ 
++b3
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 4
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"4"
++     vis tCode,1
++     vis tHeading,0
++ 
++b4
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 5
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"5"
++     vis tCode,1
++     vis tHeading,0
++ 
++b5
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 6
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"6"
++     vis tCode,1
++     vis tHeading,0
++ 
++b6
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 7
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"7"
++     vis tCode,1
++     vis tHeading,0
++ 
++b7
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 8
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"8"
++     vis tCode,1
++     vis tHeading,0
++ 
++b8
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 9
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tCode.txt=tCode.txt+"9"
++     vis tCode,1
++     vis tHeading,0
++ 
++b9
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++24 +633,15 @@
++                             // write command to variable strCommand
++                             ucopy strCommand.txt,4,payloadLength-5,0
++                             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
++                             spstr strCommand.txt,tInstruction.txt,"~",0
++                             if(tInstruction.txt=="entityUpd")
++                             {
++                                 //entn
++                                 spstr strCommand.txt,tHeading.txt,"~",1
++                                 if(tHeading.txt!="")
++                                 {
++                                     vis tCode,0
++                                     vis tHeading,1
++                                 }else
++                                 {
++                                     vis tCode,1
++                                     vis tHeading,0
++                                 }
++                                 spstr strCommand.txt,entn.txt,"~",1
++                                 // navigation icon left
++                                 spstr strCommand.txt,tTmp.txt,"~",2 //type
++                                 if(tTmp.txt=="delete"||tTmp.txt=="")
++                                 {
++                                     vis bPrev,0
++                                 }else
++                                 {
++56 +668,54 @@
++                                     spstr strCommand.txt,bNext.txt,"~",10
++                                     // change icon color
++                                     spstr strCommand.txt,tTmp.txt,"~",11
++                                     covx tTmp.txt,sys0,0,0
++                                     bNext.pco=sys0
++                                     vis bNext,1
++                                 }
++                                 //entn
++                                 spstr strCommand.txt,entn.txt,"~",14
++                                 //text arm1
++                                 spstr strCommand.txt,arm1.txt,"~",15
++                                 spstr strCommand.txt,arm1.txt,"~",14
++                                 if(arm1.txt!="")
++                                 {
++                                     vis arm1,1
++                                 }
++                                 //id arm1
++                                 spstr strCommand.txt,va1.txt,"~",16
++                                 spstr strCommand.txt,va1.txt,"~",15
++                                 //text arm2
++                                 spstr strCommand.txt,arm2.txt,"~",17
++                                 spstr strCommand.txt,arm2.txt,"~",16
++                                 if(arm2.txt!="")
++                                 {
++                                     vis arm2,1
++                                 }
++                                 //id arm2
++                                 spstr strCommand.txt,va2.txt,"~",18
++                                 spstr strCommand.txt,va2.txt,"~",17
++                                 //text arm3
++                                 spstr strCommand.txt,arm3.txt,"~",19
++                                 spstr strCommand.txt,arm3.txt,"~",18
++                                 if(arm3.txt!="")
++                                 {
++                                     vis arm3,1
++                                 }
++                                 //id arm3
++                                 spstr strCommand.txt,va3.txt,"~",20
++                                 spstr strCommand.txt,va3.txt,"~",19
++                                 //text arm4
++                                 spstr strCommand.txt,arm4.txt,"~",21
++                                 spstr strCommand.txt,arm4.txt,"~",20
++                                 if(arm4.txt!="")
++                                 {
++                                     vis arm4,1
++                                 }
++                                 //id arm4
++                                 spstr strCommand.txt,va4.txt,"~",22
++                                 spstr strCommand.txt,va4.txt,"~",21
++                                 //icon
++                                 spstr strCommand.txt,tIcon.txt,"~",23
++                                 spstr strCommand.txt,tIcon.txt,"~",22
++                                 //icon color
++                                 spstr strCommand.txt,tTmp.txt,"~",24
++                                 spstr strCommand.txt,tTmp.txt,"~",23
++                                 covx tTmp.txt,sys0,0,0
++                                 tIcon.pco=sys0
++                                 //numpad status
++                                 spstr strCommand.txt,tTmp.txt,"~",25
++                                 spstr strCommand.txt,tTmp.txt,"~",24
++                                 if(tTmp.txt!="disable")
++                                 {
++                                     vis b0,1
++                                     vis b1,1
++                                     vis b2,1
++                                     vis b3,1
++                                     vis b4,1
++30 +740,30 @@
++                                     vis b8,0
++                                     vis b9,0
++                                     vis b10,0
++                                     vis b11,0
++                                     vis tCode,0
++                                 }
++                                 //flashing status
++                                 spstr strCommand.txt,tTmp.txt,"~",26
++                                 spstr strCommand.txt,tTmp.txt,"~",25
++                                 if(tTmp.txt=="enable")
++                                 {
++                                     tmFlash.en=1
++                                 }else
++                                 {
++                                     tmFlash.en=0
++                                 }
++                                 // extra button
++                                 spstr strCommand.txt,b9.txt,"~",27
++                                 spstr strCommand.txt,b9.txt,"~",26
++                                 if(b9.txt!="")
++                                 {
++                                     vis b9,1
++                                     spstr strCommand.txt,tTmp.txt,"~",28
++                                     spstr strCommand.txt,tTmp.txt,"~",27
++                                     covx tTmp.txt,b9.pco,0,0
++                                     spstr strCommand.txt,vaAddBtn.txt,"~",29
++                                     spstr strCommand.txt,vaAddBtn.txt,"~",28
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++18 +864,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
++I/n2t-out/cardChart.txt
+++ HMI/US/portrait/n2t-out/cardChart.txt
++18 +681,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
-+5 +96,57 @@
++4 +61,34 @@
++     //ui e6
++     vis btOnOff6,0
++     vis bUp6,0
++     vis bStop6,0
++     vis bDown6,0
++     vis tIcon6,0
++     vis tEntity6,0
++     vis bText6,0
++     vis hSlider6,0
++     vis nNum6,0
++5 +106,57 @@
 +         }
 +     }
 + 
@@ -40,22 +439,22 @@
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
-+14 +176,26 @@
++14 +186,26 @@
 +e (string) type6
 +ributes
 + Scope         : local
 + Text          : 
 + Max. Text Size: 10
 +
-+14 +224,32 @@
++14 +234,32 @@
 +nNum6
 +ributes
 + Scope                               : local
@@ -65,7 +464,7 @@
 + Associated Keyboard                 : none
 + Value                               : 0
 +
-+14 +282,34 @@
++14 +292,34 @@
 +ntity6
 +ributes
 + Scope                               : local
@@ -76,7 +475,7 @@
 + Text                                : tEntity5
 + Max. Text Size                      : 30
 +
-+14 +352,34 @@
++14 +362,34 @@
 +con6
 +ributes
 + Scope                               : local
@@ -87,7 +486,7 @@
 + Text                                : î°
 + Max. Text Size                      : 5
 +
-+14 +521,70 @@
++14 +531,70 @@
 +hSlider6
 +ributes
 + Scope                               : local
@@ -116,7 +515,7 @@
 +     prints tSend.txt,0
 +     prints crcval,2
 + 
-+14 +677,64 @@
++14 +687,64 @@
 +bDown6
 +ributes
 + Scope                               : local
@@ -142,7 +541,7 @@
 +     prints tSend.txt,0
 +     prints crcval,2
 + 
-+14 +877,64 @@
++14 +887,64 @@
 +bStop6
 +ributes
 + Scope                               : local
@@ -168,7 +567,7 @@
 +     prints tSend.txt,0
 +     prints crcval,2
 + 
-+14 +1027,64 @@
++14 +1037,64 @@
 +bText6
 +ributes
 + Scope                               : local
@@ -194,7 +593,7 @@
 +     prints tSend.txt,0
 +     prints crcval,2
 + 
-+14 +1177,64 @@
++14 +1187,64 @@
 +bUp6
 +ributes
 + Scope                               : local
@@ -220,7 +619,7 @@
 +     prints tSend.txt,0
 +     prints crcval,2
 + 
-+14 +1335,68 @@
++14 +1345,68 @@
 +ate Button btOnOff6
 +ributes
 + Scope                               : local
@@ -248,7 +647,7 @@
 +     prints tSend.txt,0
 +     prints crcval,2
 + 
-+,14 +1529,84 @@
++,14 +1539,84 @@
 +         page popupInSel
 +     if(type4.txt=="timer")
 +         page popupTimer
@@ -291,7 +690,7 @@
 +     {
 +         page popupTimer
 +     }
-+,14 +2334,312 @@
++,14 +2344,312 @@
 +                                 spstr strCommand.txt,type5.txt,"~",38
 +                                 spstr strCommand.txt,entn5.txt,"~",39
 +                                     spstr strCommand.txt,tIcon5.txt,"~",40
@@ -452,26 +851,189 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
++,18 +2711,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++I/n2t-out/cardGrid.txt
+++ HMI/US/portrait/n2t-out/cardGrid.txt
++18 +916,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++I/n2t-out/cardMedia.txt
+++ HMI/US/portrait/n2t-out/cardMedia.txt
++,18 +1200,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++I/n2t-out/cardPower.txt
+++ HMI/US/portrait/n2t-out/cardPower.txt
++18 +785,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++I/n2t-out/cardQR.txt
+++ HMI/US/portrait/n2t-out/cardQR.txt
++18 +715,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
 +I/n2t-out/cardThermo.txt
 ++ HMI/US/portrait/n2t-out/cardThermo.txt
-+5 +75,15 @@
-+ Text          : 
-+ Max. Text Size: 80
-+
++,18 +1117,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
++I/n2t-out/pageStartup.txt
+++ HMI/US/portrait/n2t-out/pageStartup.txt
++0 +35,14 @@
++ 
 +e (string) strCommand
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 750
-+ Max. Text Size: 250
++ Max. Text Size: 50
 +
-+e (string) tId
++e (string) strTmp
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 20
-+I/n2t-out/pageStartup.txt
-++ HMI/US/portrait/n2t-out/pageStartup.txt
++ Max. Text Size: 2
++
++frame_ptr
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++15 +139,15 @@
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 30
++ Max. Text Size                      : 10
++
++ersion
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++18 +360,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 +9 +29,20 @@
@@ -504,7 +1066,7 @@
 + Max. Text Size: 25
 +
 +e (string) tInstruction
-+24 +94,14 @@
++35 +94,14 @@
 + Value: 0
 +
 +e (int32) ycR
@@ -522,6 +1084,17 @@
 + Text                                : 
 + Max. Text Size                      : 10
 +
++nts
++ Touch Press Event
++     tTmp.txt="change model conf to us-l/p "
++     strlen tTmp.txt,sys1
++     sya1=sys1*11+m0.h-48/2
++     for(sys0=0;sys0<sys1;sys0++)
++     {
++         substr tTmp.txt,strTmp.txt,sys0,1
++         xstr m0.x-5,sys0*-11+m0.y+sya1,23,20,6,WHITE,RED,2,1,3,strTmp.txt
++     }
++ 
 +0
 +ributes
 + Scope                               : local
@@ -529,3 +1102,38 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
++15 +594,14 @@
++                                     tIcon1.font=3
++                                 }
++                                 spstr strCommand.txt,tTmp.txt,"~",22
++                                 if(tTmp.txt!="")
++                                 {
++                                     tIcon2.font=3
++                                 }
++                                 click m0,1
++                             }
++                             if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
++                             {
++                                 spstr strCommand.txt,tTmp.txt,"~",1
++                                 covx tTmp.txt,tTime.bco,0,0
++                                 if(tTime.bco!=screensaver.bco)
++                                 {
++18 +778,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             // end of user code
++                             udelete payloadLength-1
++                             bufferPos=0
++                         }
++                     }
++                 }

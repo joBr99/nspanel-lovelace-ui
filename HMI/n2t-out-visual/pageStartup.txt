@@ -48,6 +48,13 @@ Variable (string) strCommand
         Text          : 
         Max. Text Size: 50
     
+Variable (string) strTmp
+    Attributes
+        ID            : 19
+        Scope         : local
+        Text          : 
+        Max. Text Size: 2
+    
 Number frame_ptr
     Attributes
         ID                                  : 10
@@ -373,7 +380,7 @@ Text tTmp
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -402,7 +409,7 @@ Text tVersion
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 46
+        Text                                : 48
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -658,6 +665,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     // end of user code

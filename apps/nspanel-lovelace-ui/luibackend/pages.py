@@ -489,7 +489,7 @@ class LuiPagesGen(object):
             
             detailPage = ""
             if any(x in ["preset_modes", "swing_modes", "fan_modes"] for x in entity.attributes):
-                detailPage = "1"
+                detailPage = "0"
 
             command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
         self._send_mqtt_msg(command)
@@ -542,10 +542,10 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~{navigation}~{entityId}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{item_str}"
         self._send_mqtt_msg(command)
         
-    def generate_alarm_page(self, navigation, entity, overwrite_supported_modes, alarmBtn):
+    def generate_alarm_page(self, navigation, title, entity, overwrite_supported_modes, alarmBtn):
         item = entity.entityId
         if not apis.ha_api.entity_exists(item):
-            command = f"entityUpd~{item}~{navigation}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
+            command = f"entityUpd~Not found~{navigation}~{item}~Not found~Not found~Check your~Check your~apps.~apps.~yaml~yaml~0~~0"
         else:
             entity = apis.ha_api.get_entity(item)
             icon = get_icon_id("shield-off")
@@ -616,7 +616,7 @@ class LuiPagesGen(object):
                 arm_buttons += f"~{get_translation(self._locale, modeName)}~{b}"
             if len(supported_modes) < 4:
                 arm_buttons += "~"*((4-len(supported_modes))*2)
-            command = f"entityUpd~{item}~{navigation}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}~{add_btn}"
+            command = f"entityUpd~{title}~{navigation}~{item}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}~{add_btn}"
         self._send_mqtt_msg(command)
         
 
@@ -699,7 +699,7 @@ class LuiPagesGen(object):
         if card.cardType == "cardAlarm":
             alarmBtn = card.raw_config.get("alarmControl")
             overwrite_supported_modes = card.raw_config.get("supportedModes")
-            self.generate_alarm_page(navigation, card.entity, overwrite_supported_modes, alarmBtn)
+            self.generate_alarm_page(navigation, card.title, card.entity, overwrite_supported_modes, alarmBtn)
             return
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")

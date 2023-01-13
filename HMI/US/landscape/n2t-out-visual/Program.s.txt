@@ -14,3 +14,4 @@ Program.s
     //color vars
     int defaultFontColor=65535
     int defaultBcoColor=6371
+    page pageStartup
