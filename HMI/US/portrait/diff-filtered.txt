@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-01-12 21:12:36.218426206 +0000
++++ /dev/fd/62	2023-01-14 10:23:59.645842082 +0000
 +le list
 + +1,12 @@
 +.s.txt
@@ -18,6 +18,23 @@
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardAlarm.txt
 ++ HMI/US/portrait/n2t-out/cardAlarm.txt
++5 +34,15 @@
++     vis b9,0
++     vis b10,0
++     vis b11,0
++     vis tCode,0
++     vis bPrev,0
++     vis bNext,0
++     cardAlarm.bco=defaultBcoColor
++     for(sys0=0;sys0<44;sys0++)
++     for(sys0=0;sys0<40;sys0++)
++     {
++         if(b[sys0].type==98||b[sys0].type==116)
++         {
++             b[sys0].bco=defaultBcoColor
++             //b[sys0].pco=defaultFontColor
++         }
++     }
 +24 +123,14 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
@@ -220,7 +237,7 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
-+24 +633,15 @@
++26 +633,15 @@
 +                             // write command to variable strCommand
 +                             ucopy strCommand.txt,4,payloadLength-5,0
 +                             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
@@ -229,13 +246,15 @@
 +                             {
 +                                 //entn
 +                                 spstr strCommand.txt,tHeading.txt,"~",1
++                                 if(tHeading.txt=="unknown")
++                                 {
++                                     tHeading.txt=""
++                                 }
 +                                 if(tHeading.txt!="")
 +                                 {
-+                                     vis tCode,0
 +                                     vis tHeading,1
 +                                 }else
 +                                 {
-+                                     vis tCode,1
 +                                     vis tHeading,0
 +                                 }
 +                                 spstr strCommand.txt,entn.txt,"~",1
@@ -246,7 +265,7 @@
 +                                     vis bPrev,0
 +                                 }else
 +                                 {
-+56 +668,54 @@
++77 +668,69 @@
 +                                     spstr strCommand.txt,bNext.txt,"~",10
 +                                     // change icon color
 +                                     spstr strCommand.txt,tTmp.txt,"~",11
@@ -314,6 +333,28 @@
 +                                     vis b2,1
 +                                     vis b3,1
 +                                     vis b4,1
++                                     vis b5,1
++                                     vis b6,1
++                                     vis b7,1
++                                     vis b8,1
++                                     vis b9,1
++                                     vis b10,1
++                                     vis b11,1
++                                     if(tHeading.txt!="")
++                                     {
++                                         vis tCode,0
++                                     }else
++                                     {
++                                         vis tCode,1
++                                     }
++                                     vis tCode,1
++                                 }else
++                                 {
++                                     vis b0,0
++                                     vis b1,0
++                                     vis b2,0
++                                     vis b3,0
++                                     vis b4,0
 +30 +740,30 @@
 +                                     vis b8,0
 +                                     vis b9,0
@@ -391,7 +432,7 @@
 +                 }
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
-+4 +61,34 @@
++6 +61,36 @@
 +     //ui e6
 +     vis btOnOff6,0
 +     vis bUp6,0
@@ -402,6 +443,9 @@
 +     vis bText6,0
 +     vis hSlider6,0
 +     vis nNum6,0
++     for(sys0=0;sys0<67;sys0++)
++         }
++         if(b[sys0].type==53&&defaultBcoColor==0)
 +5 +106,57 @@
 +         }
 +     }
@@ -935,6 +979,28 @@
 +                             if(tInstruction.txt=="date")
 +I/n2t-out/cardQR.txt
 ++ HMI/US/portrait/n2t-out/cardQR.txt
++19 +602,19 @@
++                                     // get Text (optional Value)
++                                     spstr strCommand.txt,bText2.txt,"~",26
++                                 }
++                                 if(type2.txt=="delete"||type2.txt=="")
++                                 {
++                                     if(type1.txt=="delete"||type1.txt=="")
++                                     {
++                                         qrcode m1.x,m1.y,200,defaultBcoColor,65535,-1,vaQR.txt
++                                         qrcode m1.x,m1.y,200,6371,65535,-1,vaQR.txt
++                                     }
++                                 }else
++                                 {
++                                     qrcode m0.x,m0.y,200,defaultBcoColor,65535,-1,vaQR.txt
++                                     qrcode m0.x,m0.y,200,6371,65535,-1,vaQR.txt
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
 +18 +715,14 @@
 +                                 {
 +                                     page cardPower
