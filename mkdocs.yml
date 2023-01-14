@@ -81,6 +81,7 @@ nav:
             - "Media Card": card-media.md
             - "Alarm Card": card-alarm.md
             - "Wifi/QR Card": card-qr.md
+            - "Power Card": card-power.md
         - "Special Settings for Entities": entities.md
         - "Subpages": subpages.md
         - "Notifications": notifications.md
