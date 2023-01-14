@@ -630,19 +630,16 @@ class LuiPagesGen(object):
 
     def generate_power_page(self, navigation, heading, items):
         command = f"entityUpd~{heading}~{navigation}"
-        for idx, item in enumerate(items):
+        for item in items:
             entity = apis.ha_api.get_entity(item.entityId)
             icon_color = self.get_entity_color(entity, overwrite=item.colorOverride)
-            device_class = entity.attributes.get("device_class", "")
             icon = get_icon_ha(item.entityId, overwrite=item.iconOverride)
             speed = 0
             if float(entity.state) > 0:
-                speed = item.entity_input_config.get("speed", 1)
-                apis.ha_api.log(f"{item.data}")
-            if idx == 0:
-                command += f"~{icon_color}~{icon}~{entity.state}"
-            else:
-                command += f"~{icon_color}~{icon}~{speed}~{entity.state}"
+                speed = str(item.entity_input_config.get("speed", 1))
+                speed = apis.ha_api.render_template(speed)
+            unit = get_attr_safe(entity, "unit_of_measurement", "")
+            command += f"~{icon_color}~{icon}~{speed}~{entity.state} {unit}"
         self._send_mqtt_msg(command)
 
     def render_card(self, card, send_page_type=True):

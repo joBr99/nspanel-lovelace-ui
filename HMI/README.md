@@ -1868,12 +1868,14 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
 </table>
 
 
-### cardPower (in development)
+### cardPower
+
+```entityUpd~LightTest~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~~17299~C~1~100 W~17299~D~0~100 W~17299~E~3~3499.5 kWh~17299~F~-1~3499.5 kWh~17299~G~-2~3499.5 kWh~17299~H~-3~3499.5 kWh~17299~G~1~3499.5 kWh~17299~H~1~100 W```
 
 <table>
 <thead>
   <tr>
-    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Parameter Number</th>
     <th>Category</th>
     <th>Location</th>
     <th>Type</th>
@@ -1965,153 +1967,178 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
   </tr>
   <tr>
     <td>14</td>
-    <td rowspan="27">cardPower specific</td>
-    <td rowspan="3">Home Icon Middle</td>
-    <td></td>
+    <td rowspan="32">cardPower specific</td>
+    <td rowspan="4">Home Icon / Value below Home Icon</td>
+    <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
     <td>15</td>
-    <td></td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>16</td>
-    <td></td>
+    <td>speed</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>17</td>
     <td>text</td>
     <td></td>
   </tr>
   <tr>
-    <td>17</td>
+    <td>18</td>
+    <td rowspan="4">Value above Home Icon</td>
+    <td rowspan="4">Power Entity Definition</td>
+    <td>iconColor</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>icon</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>speed</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>text</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
     <td rowspan="4">1st Item Upper Left</td>
     <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
-    <td>18</td>
+    <td>23</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>19</td>
+    <td>24</td>
     <td>speed</td>
     <td>numbers (-2,-1,0,1,2)</td>
   </tr>
   <tr>
-    <td>20</td>
+    <td>25</td>
     <td>text</td>
     <td></td>
   </tr>
   <tr>
-    <td>21</td>
+    <td>26</td>
     <td rowspan="4">2nd Item Middle Left</td>
     <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
-    <td>22</td>
+    <td>27</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>23</td>
+    <td>28</td>
     <td>speed</td>
     <td>numbers (-2,-1,0,1,2)</td>
   </tr>
   <tr>
-    <td>24</td>
+    <td>29</td>
     <td>text</td>
     <td></td>
   </tr>
   <tr>
-    <td>25</td>
+    <td>30</td>
     <td rowspan="4">3rd Item Bottom Left</td>
     <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
-    <td>26</td>
+    <td>31</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>27</td>
+    <td>32</td>
     <td>speed</td>
     <td>numbers (-2,-1,0,1,2)</td>
   </tr>
   <tr>
-    <td>28</td>
+    <td>33</td>
     <td>text</td>
     <td></td>
   </tr>
   <tr>
-    <td>29</td>
+    <td>34</td>
     <td rowspan="4">4th Item Upper Right</td>
     <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
-    <td>30</td>
+    <td>35</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>31</td>
+    <td>36</td>
     <td>speed</td>
     <td>numbers (-2,-1,0,1,2)</td>
   </tr>
   <tr>
-    <td>32</td>
+    <td>37</td>
     <td>text</td>
     <td></td>
   </tr>
   <tr>
-    <td>33</td>
+    <td>38</td>
     <td rowspan="4">5thItem Middle Right</td>
     <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
-    <td>34</td>
+    <td>39</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>35</td>
+    <td>40</td>
     <td>speed</td>
     <td>numbers (-2,-1,0,1,2)</td>
   </tr>
   <tr>
-    <td>36</td>
+    <td>41</td>
     <td>text</td>
     <td></td>
   </tr>
   <tr>
-    <td>37</td>
+    <td>42</td>
     <td rowspan="4">6th Item Bottom Right</td>
     <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
-    <td>38</td>
+    <td>43</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>39</td>
+    <td>44</td>
     <td>speed</td>
     <td>numbers (-2,-1,0,1,2)</td>
   </tr>
   <tr>
-    <td>40</td>
+    <td>45</td>
     <td>text</td>
     <td></td>
   </tr>
