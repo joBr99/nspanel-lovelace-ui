@@ -1539,25 +1539,235 @@
 │                                      if(tInstruction.txt=="date")
 │   --- HMI/n2t-out/cardPower.txt
 ├── +++ HMI/US/portrait/n2t-out/cardPower.txt
-│ @@ -785,18 +785,14 @@
-│                                          {
-│                                              page cardPower
+│ @@ -35,15 +35,15 @@
+│              vis t0Icon,0
+│              vis t1Icon,0
+│              vis t2Icon,0
+│              vis t3Icon,0
+│              vis t4Icon,0
+│              vis t5Icon,0
+│              cardPower.bco=defaultBcoColor
+│ -            for(sys0=0;sys0<48;sys0++)
+│ +            for(sys0=0;sys0<43;sys0++)
+│              {
+│                  if(b[sys0].type==98||b[sys0].type==116)
+│                  {
+│                      b[sys0].bco=defaultBcoColor
+│                      b[sys0].pco=defaultFontColor
+│                  }
+│                  if(defaultBcoColor==0)
+│ @@ -275,44 +275,14 @@
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : 
+│          Max. Text Size                      : 20
+│      
+│ -Text tHome2
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        Associated Keyboard                 : none
+│ -        Text                                : 
+│ -        Max. Text Size                      : 10
+│ -    
+│ -Text tHomeO
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        Associated Keyboard                 : none
+│ -        Text                                : 
+│ -        Max. Text Size                      : 20
+│ -    
+│ -Text tHomeO2
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        Associated Keyboard                 : none
+│ -        Text                                : 
+│ -        Max. Text Size                      : 10
+│ -    
+│  Picture p0
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│      
+│ @@ -618,141 +588,131 @@
+│                                              vis bNext,1
 │                                          }
-│                                          if(tId.txt=="cardChart")
+│                                          // icon color home
+│                                          spstr strCommand.txt,tTmp.txt,"~",14
+│                                          covx tTmp.txt,t1.pco,0,0
+│                                          // icon home
+│                                          spstr strCommand.txt,t1.txt,"~",15
+│ -                                        // speed 16 ignored
+│ -                                        // text home
+│ -                                        spstr strCommand.txt,tHome.txt,"~",17
+│ -                                        spstr tHome.txt,tHome2.txt," ",1
+│ -                                        spstr tHome.txt,tHome.txt," ",0
+│ -                                        // icon color 18 ignored
+│ -                                        // icon 19 ignored
+│ -                                        // speed 20 ignored
+│                                          // text home
+│ -                                        spstr strCommand.txt,tHomeO.txt,"~",21
+│ -                                        spstr tHomeO.txt,tHomeO2.txt," ",1
+│ -                                        spstr tHomeO.txt,tHomeO.txt," ",0
+│ +                                        spstr strCommand.txt,tHome.txt,"~",16
+│                                          // iconColor
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",22
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",17
+│                                          covx tTmp.txt,t0Icon.pco,0,0
+│                                          // icon
+│ -                                        spstr strCommand.txt,t0Icon.txt,"~",23
+│ +                                        spstr strCommand.txt,t0Icon.txt,"~",18
+│                                          // speed
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",24
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",19
+│                                          covx tTmp.txt,t0Speed.val,0,0
+│                                          // lower text
+│ -                                        spstr strCommand.txt,t0u.txt,"~",25
+│ +                                        spstr strCommand.txt,t0u.txt,"~",20
+│                                          if(t0Icon.txt!="")
 │                                          {
-│                                              page cardChart
+│                                              vis t0Icon,1
+│                                              vis t0u,1
+│                                              vis h0,1
+│                                          }else
+│                                          {
+│                                              vis t0Icon,0
+│                                              vis t0u,0
+│                                              vis h0,0
 │                                          }
-│ -                                        if(tId.txt=="cardLChart")
-│ -                                        {
-│ -                                            page cardLChart
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="time")
-│                                      {
-│                                          // get set time to global variable
-│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-│                                      }
-│                                      if(tInstruction.txt=="date")
+│                                          // iconColor
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",26
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",21
+│                                          covx tTmp.txt,t1Icon.pco,0,0
+│                                          // icon
+│ -                                        spstr strCommand.txt,t1Icon.txt,"~",27
+│ +                                        spstr strCommand.txt,t1Icon.txt,"~",22
+│                                          // speed
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",28
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",23
+│                                          covx tTmp.txt,t1Speed.val,0,0
+│                                          // lower text
+│ -                                        spstr strCommand.txt,t1u.txt,"~",29
+│ +                                        spstr strCommand.txt,t1u.txt,"~",24
+│                                          if(t1Icon.txt!="")
+│                                          {
+│                                              vis t1Icon,1
+│                                              vis t1u,1
+│                                              vis h1,1
+│                                          }else
+│                                          {
+│                                              vis t1Icon,0
+│                                              vis t1u,0
+│                                              vis h1,0
+│                                          }
+│                                          // iconColor
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",30
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",25
+│                                          covx tTmp.txt,t2Icon.pco,0,0
+│                                          // icon
+│ -                                        spstr strCommand.txt,t2Icon.txt,"~",31
+│ +                                        spstr strCommand.txt,t2Icon.txt,"~",26
+│                                          // speed
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",32
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",27
+│                                          covx tTmp.txt,t2Speed.val,0,0
+│                                          // lower text
+│ -                                        spstr strCommand.txt,t2u.txt,"~",33
+│ +                                        spstr strCommand.txt,t2u.txt,"~",28
+│                                          if(t2Icon.txt!="")
+│                                          {
+│                                              vis t2Icon,1
+│                                              vis t2u,1
+│                                              vis h2,1
+│                                          }else
+│                                          {
+│                                              vis t2Icon,0
+│                                              vis t2u,0
+│                                              vis h2,0
+│                                          }
+│                                          // iconColor
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",34
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",29
+│                                          covx tTmp.txt,t3Icon.pco,0,0
+│                                          // icon
+│ -                                        spstr strCommand.txt,t3Icon.txt,"~",35
+│ +                                        spstr strCommand.txt,t3Icon.txt,"~",30
+│                                          // speed
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",36
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",31
+│                                          covx tTmp.txt,t3Speed.val,0,0
+│                                          // lower text
+│ -                                        spstr strCommand.txt,t3u.txt,"~",37
+│ +                                        spstr strCommand.txt,t3u.txt,"~",32
+│                                          if(t3Icon.txt!="")
+│                                          {
+│                                              vis t3Icon,1
+│                                              vis t3u,1
+│                                              vis h3,1
+│                                          }else
+│                                          {
+│                                              vis t3Icon,0
+│                                              vis t3u,0
+│                                              vis h3,0
+│                                          }
+│                                          // iconColor
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",38
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",33
+│                                          covx tTmp.txt,t4Icon.pco,0,0
+│                                          // icon
+│ -                                        spstr strCommand.txt,t4Icon.txt,"~",39
+│ +                                        spstr strCommand.txt,t4Icon.txt,"~",34
+│                                          // speed
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",40
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",35
+│                                          covx tTmp.txt,t4Speed.val,0,0
+│                                          // lower text
+│ -                                        spstr strCommand.txt,t4u.txt,"~",41
+│ +                                        spstr strCommand.txt,t4u.txt,"~",36
+│                                          if(t4Icon.txt!="")
+│                                          {
+│                                              vis t4Icon,1
+│                                              vis t4u,1
+│                                              vis h4,1
+│                                          }else
+│                                          {
+│                                              vis t4Icon,0
+│                                              vis t4u,0
+│                                              vis h4,0
+│                                          }
+│                                          // iconColor
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",42
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",37
+│                                          covx tTmp.txt,t5Icon.pco,0,0
+│                                          // icon
+│ -                                        spstr strCommand.txt,t5Icon.txt,"~",43
+│ +                                        spstr strCommand.txt,t5Icon.txt,"~",38
+│                                          // speed
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",44
+│ +                                        spstr strCommand.txt,tTmp.txt,"~",39
+│                                          covx tTmp.txt,t5Speed.val,0,0
+│                                          // lower text
+│ -                                        spstr strCommand.txt,t5u.txt,"~",45
+│ +                                        spstr strCommand.txt,t5u.txt,"~",40
+│                                          if(t5Icon.txt!="")
+│                                          {
+│                                              vis t5Icon,1
+│                                              vis t5u,1
+│                                              vis h5,1
+│                                          }else
+│                                          {
 │   --- HMI/n2t-out/cardQR.txt
 ├── +++ HMI/US/portrait/n2t-out/cardQR.txt
 │ @@ -602,19 +602,19 @@
