@@ -74,7 +74,7 @@ Page cardEntities
             vis bPrev,0
             vis bNext,0
             cardEntities.bco=defaultBcoColor
-            for(sys0=0;sys0<65;sys0++)
+            for(sys0=0;sys0<67;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==54)
                 {

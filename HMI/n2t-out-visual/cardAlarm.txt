@@ -46,7 +46,7 @@ Page cardAlarm
             vis bPrev,0
             vis bNext,0
             cardAlarm.bco=defaultBcoColor
-            for(sys0=0;sys0<40;sys0++)
+            for(sys0=0;sys0<44;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
@@ -1275,13 +1275,15 @@ Timer tmSerial
                                     {
                                         //entn
                                         spstr strCommand.txt,tHeading.txt,"~",1
+                                        if(tHeading.txt=="unknown")
+                                        {
+                                            tHeading.txt=""
+                                        }
                                         if(tHeading.txt!="")
                                         {
-                                            vis tCode,0
                                             vis tHeading,1
                                         }else
                                         {
-                                            vis tCode,1
                                             vis tHeading,0
                                         }
                                         // navigation icon left
@@ -1374,7 +1376,13 @@ Timer tmSerial
                                             vis b9,1
                                             vis b10,1
                                             vis b11,1
-                                            vis tCode,1
+                                            if(tHeading.txt!="")
+                                            {
+                                                vis tCode,0
+                                            }else
+                                            {
+                                                vis tCode,1
+                                            }
                                         }else
                                         {
                                             vis b0,0
