@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.8.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
+TypeScript v3.8.3.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar/@Sternmiere/@Britzelpuf
 - abgestimmt auf TFT 48 / v3.8.3 / BerryDriver 8 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -122,6 +122,7 @@ ReleaseNotes:
         - 11.01.2023 - v3.8.3   Add configurable navigation buttons by @ravenst0ne (v3.8.1.1)
         - 11.01.2023 - v3.8.3   Add Char"€" to HMI
         - 11.01.2023 - v3.8.3   Fix Switch-Off for Color Lights
+        - 16.01.2023 - v3.8.3.1 Add configurable navigation buttons for top level pages and icon colors
         
 *****************************************************************************************************************
 * Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -4285,49 +4286,92 @@ function GetNavigationString(pageId: number): string {
         var navigationString:string = "";
 
         if (activePage.subPage){
+            //Left icon
             if (activePage.prev == undefined){
                 if (activePage.parentIcon != undefined){                    
-                    navigationString = navigationString = 'button~bUp~' + Icons.GetIcon(activePage.parentIcon) + '~';                    
+                    navigationString = 'button~bUp~' + Icons.GetIcon(activePage.parentIcon);     
+                    if (activePage.parentIconColor != undefined){                    
+                        navigationString += '~' + rgb_dec565(activePage.parentIconColor);        
+                    } else {
+                        navigationString += '~' + rgb_dec565(White);
+                    }                
                 } else {
-                    navigationString = navigationString = 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~';
+                    navigationString = 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White);
                 }
             } else {
-                if (activePage.prevIcon != undefined){                    
-                    navigationString = 'button~bSubPrev~' + Icons.GetIcon(activePage.prevIcon) + '~';                    
+                if (activePage.prevIcon != undefined){       
+                    navigationString = 'button~bSubPrev~' + Icons.GetIcon(activePage.prevIcon);        
+                    if (activePage.prevIconColor != undefined){                    
+                        navigationString += '~' + rgb_dec565(activePage.prevIconColor);        
+                    } else {
+                        navigationString += '~' + rgb_dec565(White);
+                    }                     
                 } else {
-                    navigationString = 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~';
+                    navigationString = 'button~bSubPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White);
                 }                
             }
 
+            //Right icon
             if (activePage.next == undefined){
                 if (activePage.homeIcon != undefined){                    
-                    navigationString += rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon(activePage.homeIcon) + '~' + rgb_dec565(White) + '~~';                  
+                    navigationString += '~~~button~bHome~' + Icons.GetIcon(activePage.homeIcon);      
+                    if (activePage.homeIconColor != undefined){                    
+                        navigationString += '~' + rgb_dec565(activePage.homeIconColor) + '~~';;        
+                    } else {
+                        navigationString += '~' + rgb_dec565(White) + '~~';;
+                    }              
                 } else {
-                    navigationString += rgb_dec565(White) + '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';  
+                    navigationString += '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';   
                 }
             } else {
                 if (activePage.nextIcon != undefined){                    
-                    navigationString += rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon(activePage.nextIcon) + '~' + rgb_dec565(White) + '~~';                     
+                    navigationString += '~~~button~bSubNext~' + Icons.GetIcon(activePage.nextIcon);    
+                    if (activePage.nextIconColor != undefined){                    
+                        navigationString += '~' + rgb_dec565(activePage.nextIconColor) + '~~';        
+                    } else {
+                        navigationString += '~' + rgb_dec565(White) + '~~';
+                    }                   
                 } else {
-                    navigationString += rgb_dec565(White) + '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';  
+                    navigationString += '~~~button~bSubNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';  
                 }                
             }
-        }
+        }       
 
-        if (navigationString != ""){
+        if (activePage.subPage && (navigationString != "")){
             return navigationString
         }
 
         switch (pageId) {
-            case 0:
-            case config.pages.length - 1:
-                return 'button~bPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
             case -1:
                 return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + ' ~~~delete~~~~~';
             case -2:
                 return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~delete~~~~~';
             default:
-                return 'button~bPrev~' + Icons.GetIcon('arrow-left-bold') + '~' + rgb_dec565(White) + '~~~button~bNext~' + Icons.GetIcon('arrow-right-bold') + '~' + rgb_dec565(White) + '~~';
+            {
+                if (activePage.prevIcon != undefined){                    
+                    navigationString = 'button~bPrev~' + Icons.GetIcon(activePage.prevIcon);        
+                } else {
+                    navigationString = 'button~bPrev~' + Icons.GetIcon('arrow-left-bold');
+                }  
+
+                if (activePage.prevIconColor != undefined){                    
+                    navigationString += '~' + rgb_dec565(activePage.prevIconColor);        
+                } else {
+                    navigationString += '~' + rgb_dec565(White);
+                }                    
+
+                if (activePage.nextIcon != undefined){                    
+                    navigationString += '~~~button~bNext~' + Icons.GetIcon(activePage.nextIcon);                
+                } else {
+                    navigationString += '~~~button~bNext~' + Icons.GetIcon('arrow-right-bold');
+                }  
+                if (activePage.nextIconColor != undefined){                    
+                    navigationString += '~' + rgb_dec565(activePage.nextIconColor) + '~~';        
+                } else {
+                    navigationString += '~' + rgb_dec565(White) + '~~';
+                }
+                return navigationString;
+            }
         }
 
     } catch (err) {
@@ -5943,8 +5987,10 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 
         await setStateAsync(NSPanel_Path + 'Sensor.Time', <iobJS.State>{ val: Tasmota_Sensor.Time, ack: true });
         await setStateAsync(NSPanel_Path + 'Sensor.TempUnit', <iobJS.State>{ val: '°' + Tasmota_Sensor.TempUnit, ack: true });
-        await setStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ANALOG.Temperature1), ack: true });
-        await setStateAsync(NSPanel_Path + 'Sensor.ESP32.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ESP32.Temperature), ack: true });
+        try {
+            await setStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ANALOG.Temperature1), ack: true });
+            await setStateAsync(NSPanel_Path + 'Sensor.ESP32.Temperature', <iobJS.State>{ val: parseFloat(Tasmota_Sensor.ESP32.Temperature), ack: true });
+        } catch (e){}
         
         if (autoCreateAlias) {
             setObject(AliasPath + 'Sensor.ANALOG.Temperature', {type: 'channel', common: {role: 'info', name: ''}, native: {}});
@@ -6140,12 +6186,16 @@ type Page = {
     subPage: (boolean | false),
     parent: (Page | undefined),
     parentIcon: (string | undefined),
+    parentIconColor: (RGB | undefined),
     prev: (string | undefined),
     prevIcon: (string | undefined),
+    prevIconColor: (RGB | undefined),
     next: (string | undefined),
     nextIcon: (string | undefined),
+    nextIconColor: (RGB | undefined),
     home: (string | undefined),
-    homeIcon: (string | undefined)
+    homeIcon: (string | undefined),
+    homeIconColor: (RGB | undefined)
 };
 
 interface PageEntities extends Page {
