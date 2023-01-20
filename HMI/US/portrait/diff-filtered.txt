@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-01-14 14:44:28.229131210 +0000
++++ /dev/fd/62	2023-01-20 14:06:59.554663210 +0000
 +le list
 + +1,12 @@
 +.s.txt
@@ -975,7 +975,7 @@
 +             b[sys0].pco=defaultFontColor
 +         }
 +         if(defaultBcoColor==0)
-+44 +275,14 @@
++109 +275,79 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
@@ -1020,6 +1020,83 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 +
++h0
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Position                            : 600
++ Upper range limit                   : 1200
++ Position                            : 50
++ Upper range limit                   : 100
++ Lower range limit                   : 0
++
++h1
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Position                            : 600
++ Upper range limit                   : 1200
++ Position                            : 50
++ Upper range limit                   : 100
++ Lower range limit                   : 0
++
++h2
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Position                            : 600
++ Upper range limit                   : 1200
++ Position                            : 50
++ Upper range limit                   : 100
++ Lower range limit                   : 0
++
++h3
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Position                            : 600
++ Upper range limit                   : 1200
++ Position                            : 50
++ Upper range limit                   : 100
++ Lower range limit                   : 0
++
++h4
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Position                            : 600
++ Upper range limit                   : 1200
++ Position                            : 50
++ Upper range limit                   : 100
++ Lower range limit                   : 0
++
++h5
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Position                            : 600
++ Upper range limit                   : 1200
++ Position                            : 50
++ Upper range limit                   : 100
++ Lower range limit                   : 0
++
++bNext
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
 +92 +433,74 @@
 +ributes
 + Scope      : local
@@ -1161,7 +1238,7 @@
 + Period (ms): 50
 + Enabled    : yes
 +
-+141 +588,131 @@
++189 +588,131 @@
 +                                     vis bNext,1
 +                                 }
 +                                 // icon color home
@@ -1193,6 +1270,14 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",24
 +                                 spstr strCommand.txt,tTmp.txt,"~",19
 +                                 covx tTmp.txt,t0Speed.val,0,0
++                                 if(t0Speed.val>120)
++                                 {
++                                     t0Speed.val=120
++                                 }
++                                 if(t0Speed.val<-120)
++                                 {
++                                     t0Speed.val=-120
++                                 }
 +                                 // lower text
 +                                 spstr strCommand.txt,t0u.txt,"~",25
 +                                 spstr strCommand.txt,t0u.txt,"~",20
@@ -1218,6 +1303,14 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",28
 +                                 spstr strCommand.txt,tTmp.txt,"~",23
 +                                 covx tTmp.txt,t1Speed.val,0,0
++                                 if(t1Speed.val>120)
++                                 {
++                                     t1Speed.val=120
++                                 }
++                                 if(t1Speed.val<-120)
++                                 {
++                                     t1Speed.val=-120
++                                 }
 +                                 // lower text
 +                                 spstr strCommand.txt,t1u.txt,"~",29
 +                                 spstr strCommand.txt,t1u.txt,"~",24
@@ -1243,6 +1336,14 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",32
 +                                 spstr strCommand.txt,tTmp.txt,"~",27
 +                                 covx tTmp.txt,t2Speed.val,0,0
++                                 if(t2Speed.val>120)
++                                 {
++                                     t2Speed.val=120
++                                 }
++                                 if(t2Speed.val<-120)
++                                 {
++                                     t2Speed.val=-120
++                                 }
 +                                 // lower text
 +                                 spstr strCommand.txt,t2u.txt,"~",33
 +                                 spstr strCommand.txt,t2u.txt,"~",28
@@ -1268,6 +1369,14 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",36
 +                                 spstr strCommand.txt,tTmp.txt,"~",31
 +                                 covx tTmp.txt,t3Speed.val,0,0
++                                 if(t3Speed.val>120)
++                                 {
++                                     t3Speed.val=120
++                                 }
++                                 if(t3Speed.val<-120)
++                                 {
++                                     t3Speed.val=-120
++                                 }
 +                                 // lower text
 +                                 spstr strCommand.txt,t3u.txt,"~",37
 +                                 spstr strCommand.txt,t3u.txt,"~",32
@@ -1293,6 +1402,14 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",40
 +                                 spstr strCommand.txt,tTmp.txt,"~",35
 +                                 covx tTmp.txt,t4Speed.val,0,0
++                                 if(t4Speed.val>120)
++                                 {
++                                     t4Speed.val=120
++                                 }
++                                 if(t4Speed.val<-120)
++                                 {
++                                     t4Speed.val=-120
++                                 }
 +                                 // lower text
 +                                 spstr strCommand.txt,t4u.txt,"~",41
 +                                 spstr strCommand.txt,t4u.txt,"~",36
@@ -1318,6 +1435,14 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",44
 +                                 spstr strCommand.txt,tTmp.txt,"~",39
 +                                 covx tTmp.txt,t5Speed.val,0,0
++                                 if(t5Speed.val>120)
++                                 {
++                                     t5Speed.val=120
++                                 }
++                                 if(t5Speed.val<-120)
++                                 {
++                                     t5Speed.val=-120
++                                 }
 +                                 // lower text
 +                                 spstr strCommand.txt,t5u.txt,"~",45
 +                                 spstr strCommand.txt,t5u.txt,"~",40
