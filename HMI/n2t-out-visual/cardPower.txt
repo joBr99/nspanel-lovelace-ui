@@ -742,8 +742,8 @@ Slider h0
         Cursor height                       : 255
         Back. Picture ID                    : 18
         Slided Back. Picture ID             : 18
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h1
@@ -767,8 +767,8 @@ Slider h1
         Cursor height                       : 255
         Back. Picture ID                    : 18
         Slided Back. Picture ID             : 18
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h2
@@ -792,8 +792,8 @@ Slider h2
         Cursor height                       : 255
         Back. Picture ID                    : 18
         Slided Back. Picture ID             : 18
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h3
@@ -817,8 +817,8 @@ Slider h3
         Cursor height                       : 255
         Back. Picture ID                    : 18
         Slided Back. Picture ID             : 18
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h4
@@ -842,8 +842,8 @@ Slider h4
         Cursor height                       : 255
         Back. Picture ID                    : 18
         Slided Back. Picture ID             : 18
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h5
@@ -867,8 +867,8 @@ Slider h5
         Cursor height                       : 255
         Back. Picture ID                    : 18
         Slided Back. Picture ID             : 18
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Button bNext
@@ -1228,6 +1228,14 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",24
                                         covx tTmp.txt,t0Speed.val,0,0
+                                        if(t0Speed.val>120)
+                                        {
+                                            t0Speed.val=120
+                                        }
+                                        if(t0Speed.val<-120)
+                                        {
+                                            t0Speed.val=-120
+                                        }
                                         // lower text
                                         spstr strCommand.txt,t0u.txt,"~",25
                                         if(t0Icon.txt!="")
@@ -1249,6 +1257,14 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",28
                                         covx tTmp.txt,t1Speed.val,0,0
+                                        if(t1Speed.val>120)
+                                        {
+                                            t1Speed.val=120
+                                        }
+                                        if(t1Speed.val<-120)
+                                        {
+                                            t1Speed.val=-120
+                                        }
                                         // lower text
                                         spstr strCommand.txt,t1u.txt,"~",29
                                         if(t1Icon.txt!="")
@@ -1270,6 +1286,14 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",32
                                         covx tTmp.txt,t2Speed.val,0,0
+                                        if(t2Speed.val>120)
+                                        {
+                                            t2Speed.val=120
+                                        }
+                                        if(t2Speed.val<-120)
+                                        {
+                                            t2Speed.val=-120
+                                        }
                                         // lower text
                                         spstr strCommand.txt,t2u.txt,"~",33
                                         if(t2Icon.txt!="")
@@ -1291,6 +1315,14 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",36
                                         covx tTmp.txt,t3Speed.val,0,0
+                                        if(t3Speed.val>120)
+                                        {
+                                            t3Speed.val=120
+                                        }
+                                        if(t3Speed.val<-120)
+                                        {
+                                            t3Speed.val=-120
+                                        }
                                         // lower text
                                         spstr strCommand.txt,t3u.txt,"~",37
                                         if(t3Icon.txt!="")
@@ -1312,6 +1344,14 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",40
                                         covx tTmp.txt,t4Speed.val,0,0
+                                        if(t4Speed.val>120)
+                                        {
+                                            t4Speed.val=120
+                                        }
+                                        if(t4Speed.val<-120)
+                                        {
+                                            t4Speed.val=-120
+                                        }
                                         // lower text
                                         spstr strCommand.txt,t4u.txt,"~",41
                                         if(t4Icon.txt!="")
@@ -1333,6 +1373,14 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",44
                                         covx tTmp.txt,t5Speed.val,0,0
+                                        if(t5Speed.val>120)
+                                        {
+                                            t5Speed.val=120
+                                        }
+                                        if(t5Speed.val<-120)
+                                        {
+                                            t5Speed.val=-120
+                                        }
                                         // lower text
                                         spstr strCommand.txt,t5u.txt,"~",45
                                         if(t5Icon.txt!="")

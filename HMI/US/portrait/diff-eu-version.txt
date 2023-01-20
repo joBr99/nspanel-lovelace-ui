@@ -1556,7 +1556,7 @@
 │                      b[sys0].pco=defaultFontColor
 │                  }
 │                  if(defaultBcoColor==0)
-│ @@ -275,44 +275,14 @@
+│ @@ -275,109 +275,79 @@
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
@@ -1601,6 +1601,83 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │      
+│  Slider h0
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ -        Position                            : 600
+│ -        Upper range limit                   : 1200
+│ +        Position                            : 50
+│ +        Upper range limit                   : 100
+│          Lower range limit                   : 0
+│      
+│  Slider h1
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ -        Position                            : 600
+│ -        Upper range limit                   : 1200
+│ +        Position                            : 50
+│ +        Upper range limit                   : 100
+│          Lower range limit                   : 0
+│      
+│  Slider h2
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ -        Position                            : 600
+│ -        Upper range limit                   : 1200
+│ +        Position                            : 50
+│ +        Upper range limit                   : 100
+│          Lower range limit                   : 0
+│      
+│  Slider h3
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ -        Position                            : 600
+│ -        Upper range limit                   : 1200
+│ +        Position                            : 50
+│ +        Upper range limit                   : 100
+│          Lower range limit                   : 0
+│      
+│  Slider h4
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ -        Position                            : 600
+│ -        Upper range limit                   : 1200
+│ +        Position                            : 50
+│ +        Upper range limit                   : 100
+│          Lower range limit                   : 0
+│      
+│  Slider h5
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│ -        Position                            : 600
+│ -        Upper range limit                   : 1200
+│ +        Position                            : 50
+│ +        Upper range limit                   : 100
+│          Lower range limit                   : 0
+│      
+│  Button bNext
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
 │ @@ -463,92 +433,74 @@
 │      Attributes
 │          Scope      : local
@@ -1713,7 +1790,7 @@
 │ +            if(sys0<h3.minval)
 │ +            {
 │ +                h3.val=h3.maxval
-│ +            }
+│              }
 │ +            h3.val+=t3Speed.val
 │ +            sys0=h4.val+t4Speed.val
 │ +            if(sys0>h4.maxval)
@@ -1733,7 +1810,7 @@
 │ +            if(sys0<h5.minval)
 │ +            {
 │ +                h5.val=h5.maxval
-│              }
+│ +            }
 │ +            h5.val+=t5Speed.val
 │          
 │  Timer tmSerial
@@ -1742,7 +1819,7 @@
 │          Period (ms): 50
 │          Enabled    : yes
 │      
-│ @@ -636,141 +588,131 @@
+│ @@ -636,189 +588,131 @@
 │                                              vis bNext,1
 │                                          }
 │                                          // icon color home
@@ -1774,6 +1851,14 @@
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",24
 │ +                                        spstr strCommand.txt,tTmp.txt,"~",19
 │                                          covx tTmp.txt,t0Speed.val,0,0
+│ -                                        if(t0Speed.val>120)
+│ -                                        {
+│ -                                            t0Speed.val=120
+│ -                                        }
+│ -                                        if(t0Speed.val<-120)
+│ -                                        {
+│ -                                            t0Speed.val=-120
+│ -                                        }
 │                                          // lower text
 │ -                                        spstr strCommand.txt,t0u.txt,"~",25
 │ +                                        spstr strCommand.txt,t0u.txt,"~",20
@@ -1799,6 +1884,14 @@
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",28
 │ +                                        spstr strCommand.txt,tTmp.txt,"~",23
 │                                          covx tTmp.txt,t1Speed.val,0,0
+│ -                                        if(t1Speed.val>120)
+│ -                                        {
+│ -                                            t1Speed.val=120
+│ -                                        }
+│ -                                        if(t1Speed.val<-120)
+│ -                                        {
+│ -                                            t1Speed.val=-120
+│ -                                        }
 │                                          // lower text
 │ -                                        spstr strCommand.txt,t1u.txt,"~",29
 │ +                                        spstr strCommand.txt,t1u.txt,"~",24
@@ -1824,6 +1917,14 @@
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",32
 │ +                                        spstr strCommand.txt,tTmp.txt,"~",27
 │                                          covx tTmp.txt,t2Speed.val,0,0
+│ -                                        if(t2Speed.val>120)
+│ -                                        {
+│ -                                            t2Speed.val=120
+│ -                                        }
+│ -                                        if(t2Speed.val<-120)
+│ -                                        {
+│ -                                            t2Speed.val=-120
+│ -                                        }
 │                                          // lower text
 │ -                                        spstr strCommand.txt,t2u.txt,"~",33
 │ +                                        spstr strCommand.txt,t2u.txt,"~",28
@@ -1849,6 +1950,14 @@
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",36
 │ +                                        spstr strCommand.txt,tTmp.txt,"~",31
 │                                          covx tTmp.txt,t3Speed.val,0,0
+│ -                                        if(t3Speed.val>120)
+│ -                                        {
+│ -                                            t3Speed.val=120
+│ -                                        }
+│ -                                        if(t3Speed.val<-120)
+│ -                                        {
+│ -                                            t3Speed.val=-120
+│ -                                        }
 │                                          // lower text
 │ -                                        spstr strCommand.txt,t3u.txt,"~",37
 │ +                                        spstr strCommand.txt,t3u.txt,"~",32
@@ -1874,6 +1983,14 @@
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",40
 │ +                                        spstr strCommand.txt,tTmp.txt,"~",35
 │                                          covx tTmp.txt,t4Speed.val,0,0
+│ -                                        if(t4Speed.val>120)
+│ -                                        {
+│ -                                            t4Speed.val=120
+│ -                                        }
+│ -                                        if(t4Speed.val<-120)
+│ -                                        {
+│ -                                            t4Speed.val=-120
+│ -                                        }
 │                                          // lower text
 │ -                                        spstr strCommand.txt,t4u.txt,"~",41
 │ +                                        spstr strCommand.txt,t4u.txt,"~",36
@@ -1899,6 +2016,14 @@
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",44
 │ +                                        spstr strCommand.txt,tTmp.txt,"~",39
 │                                          covx tTmp.txt,t5Speed.val,0,0
+│ -                                        if(t5Speed.val>120)
+│ -                                        {
+│ -                                            t5Speed.val=120
+│ -                                        }
+│ -                                        if(t5Speed.val<-120)
+│ -                                        {
+│ -                                            t5Speed.val=-120
+│ -                                        }
 │                                          // lower text
 │ -                                        spstr strCommand.txt,t5u.txt,"~",45
 │ +                                        spstr strCommand.txt,t5u.txt,"~",40
