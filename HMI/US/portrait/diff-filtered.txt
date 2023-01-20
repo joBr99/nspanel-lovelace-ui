@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-01-20 14:06:59.554663210 +0000
++++ /dev/fd/62	2023-01-20 23:11:09.357823892 +0000
 +le list
 + +1,12 @@
 +.s.txt
@@ -483,13 +483,13 @@
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +186,26 @@
 +e (string) type6
@@ -1644,7 +1644,161 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+15 +594,14 @@
++55 +264,65 @@
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++
++ainIcon
++R
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++
++ainIconAlt
++RIcon
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++
++ainText
++ainIcon
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++
++ainTextAlt
++ainIconAlt
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++
++ainText
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++
++ainTextAlt2
++ainTextAlt
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++15 +436,14 @@
++                         {
++                             // crc is okay
++                             // here is the location where acual code should be
++                             // write command to variable strCommand
++                             ucopy strCommand.txt,4,payloadLength-5,0
++                             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
++                             spstr strCommand.txt,tInstruction.txt,"~",0
++                             click m0,1
++                             if(tInstruction.txt=="wake")
++                             {
++                                 //dim=100
++                                 click tc0,1
++                             }
++                             if(tInstruction.txt=="dimmode")
++                             {
++15 +516,16 @@
++                             }
++                             if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
++                             {
++                                 vis tMainIcon,1
++                                 vis tMainIconAlt,0
++                                 vis tMainText,1
++                                 vis tMainTextAlt,0
++                                 vis tMainTextAlt2,0
++                                 vis tMRIcon,0
++                                 vis tMR,0
++                                 //tMainIcon
++                                 spstr strCommand.txt,tMainIcon.txt,"~",1
++                                 tMainIconAlt.txt=tMainIcon.txt
++                                 //tMainText
++                                 spstr strCommand.txt,tMainText.txt,"~",2
++                                 tMainTextAlt.txt=tMainText.txt
++                                 //tForecast1
++53 +549,76 @@
++                                 //tForecast4
++                                 spstr strCommand.txt,tForecast4.txt,"~",12
++                                 //tF4Icon
++                                 spstr strCommand.txt,tF4Icon.txt,"~",13
++                                 //tForecast4Val
++                                 spstr strCommand.txt,tForecast4Val.txt,"~",14
++                                 //alternative layout
++                                 //tMainTextAlt2
++                                 spstr strCommand.txt,tMainTextAlt2.txt,"~",15
++                                 if(tMainTextAlt2.txt!=""&&p0.w!=320)
++                                 //tMRIcon
++                                 spstr strCommand.txt,tMRIcon.txt,"~",15
++                                 if(tMRIcon.txt!=""&&p0.w!=320)
++                                 {
++                                     //value for tMRIcon, activate alternative layout
++                                     vis tMainIcon,0
++                                     vis tMainText,0
++                                     vis tMainTextAlt,1
++                                     vis tMainIconAlt,1
++                                     vis tMainTextAlt2,1
++                                     vis tMRIcon,1
++                                     vis tMR,1
++                                     vis tForecast1,0
++                                     vis tF1Icon,0
++                                     vis tForecast1Val,0
++                                     //move forecast values to the right
++                                     tForecast4.txt=tForecast3.txt
++                                     tForecast3.txt=tForecast2.txt
++                                     tForecast2.txt=tForecast1.txt
++                                     tForecast4Val.txt=tForecast3Val.txt
++                                     tForecast3Val.txt=tForecast2Val.txt
++                                     tForecast2Val.txt=tForecast1Val.txt
++                                     tF4Icon.txt=tF3Icon.txt
++                                     tF3Icon.txt=tF2Icon.txt
++                                     tF2Icon.txt=tF1Icon.txt
++                                 }
++                                 //tMR
++                                 spstr strCommand.txt,tMR.txt,"~",16
++                                 //statusIcon1
++                                 spstr strCommand.txt,tIcon1.txt,"~",17
++                                 spstr strCommand.txt,tTmp.txt,"~",18
++                                 covx tTmp.txt,tIcon1.pco,0,0
++                                 //statusIcon2
++                                 spstr strCommand.txt,tIcon2.txt,"~",19
++                                 spstr strCommand.txt,tTmp.txt,"~",20
++                                 covx tTmp.txt,tIcon2.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",21
++                                 if(tTmp.txt!="")
++                                 {
 +                                     tIcon1.font=3
 +                                 }
 +                                 spstr strCommand.txt,tTmp.txt,"~",22
@@ -1652,7 +1806,6 @@
 +                                 {
 +                                     tIcon2.font=3
 +                                 }
-+                                 click m0,1
 +                             }
 +                             if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
 +                             {
@@ -1660,22 +1813,46 @@
 +                                 covx tTmp.txt,tTime.bco,0,0
 +                                 if(tTime.bco!=screensaver.bco)
 +                                 {
-+18 +778,14 @@
++                                     screensaver.bco=tTime.bco
++                                     tAMPM.bco=tTime.bco
++                                     tDate.bco=tTime.bco
++                                     tMainIcon.bco=tTime.bco
++                                     tMainText.bco=tTime.bco
++                                     tMainIconAlt.bco=tTime.bco
++                                     tMainTextAlt.bco=tTime.bco
++                                     tMainTextAlt2.bco=tTime.bco
++                                     tMRIcon.bco=tTime.bco
++                                     tMR.bco=tTime.bco
++                                     tMRIcon.bco=tTime.bco
++                                     tIcon1.bco=tTime.bco
++                                     tIcon2.bco=tTime.bco
++                                     tForecast1.bco=tTime.bco
++                                     tForecast1Val.bco=tTime.bco
++                                     tF1Icon.bco=tTime.bco
++                                     tForecast2.bco=tTime.bco
++                                     tForecast2Val.bco=tTime.bco
++20 +666,20 @@
++                                 spstr strCommand.txt,tTmp.txt,"~",17
++                                 covx tTmp.txt,tForecast3Val.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",18
++                                 covx tTmp.txt,tForecast4Val.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",19
++                                 covx tTmp.txt,t10.bco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",20
++                                 covx tTmp.txt,tMainTextAlt2.pco,0,0
++                                 //spstr strCommand.txt,tTmp.txt,"~",21
++                                 //covx tTmp.txt,tMR.pco,0,0
++                                 covx tTmp.txt,tMRIcon.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",21
++                                 covx tTmp.txt,tMR.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",22
++                                 covx tTmp.txt,tTimeAdd.pco,0,0
++                                 if(tMainTextAlt2.txt!=""&&p0.w!=320)
++                                 if(tMRIcon.txt!=""&&p0.w!=320)
 +                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                                 if(tId.txt=="cardLChart")
-+                                 {
-+                                     page cardLChart
-+                                 }
-+                             }
-+                             // end of user code
-+                             udelete payloadLength-1
-+                             bufferPos=0
-+                         }
-+                     }
-+                 }
++                                     tF4Icon.pco=tF3Icon.pco
++                                     tF3Icon.pco=tF2Icon.pco
++                                     tF2Icon.pco=tF1Icon.pco
++                                     tForecast4Val.pco=tForecast3Val.pco
++                                     tForecast3Val.pco=tForecast2Val.pco
++                                     tForecast2Val.pco=tForecast1Val.pco
