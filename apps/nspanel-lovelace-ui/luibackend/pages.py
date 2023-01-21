@@ -24,7 +24,7 @@ class LuiPagesGen(object):
         self._locale  = config.get("locale")
         self._send_mqtt_msg = send_mqtt_msg
     
-    def get_entity_color(self, entity, ha_type=None, overwrite=None):
+    def get_entity_color(self, entity, ha_type=None, stateOverwrite=None, overwrite=None):
         if overwrite is not None:
             if type(overwrite) in [str, list]:
                 return rgb_dec565(overwrite)
@@ -37,32 +37,59 @@ class LuiPagesGen(object):
             default_color = rgb_dec565([68, 115, 158])
             return default_color
         else:
+            state = entity.state
+            if stateOverwrite is not None:
+                state = stateOverwrite
             attr = entity.attributes
             default_color_on  = rgb_dec565([253, 216, 53])
             default_color_off = rgb_dec565([68, 115, 158])
-            icon_color = default_color_on if entity.state in ["on", "unlocked", "above_horizon", "home", "active"] else default_color_off
+            icon_color = default_color_on if state in ["on", "unlocked", "above_horizon", "home", "active"] else default_color_off
 
             if ha_type == "alarm_control_panel":
-                if entity.state == "disarmed":
+                if state == "disarmed":
                     icon_color = rgb_dec565([13,160,53])
-                if entity.state == "arming":
+                if state == "arming":
                     icon_color = rgb_dec565([244,180,0])
-                if entity.state in ["armed_home", "armed_away", "armed_night", "armed_vacation", "pending", "triggered"]:
+                if state in ["armed_home", "armed_away", "armed_night", "armed_vacation", "pending", "triggered"]:
                     icon_color = rgb_dec565([223,76,30])
 
             if ha_type == "climate":
-                if entity.state in ["auto", "heat_cool"]:
+                if state in ["auto", "heat_cool"]:
                     icon_color = 1024
-                if entity.state == "heat":
+                if state == "heat":
                     icon_color = 64512
-                if entity.state == "off":
+                if state == "off":
                     icon_color = 35921
-                if entity.state == "cool":
+                if state == "cool":
                     icon_color = 11487
-                if entity.state == "dry":
+                if state == "dry":
                     icon_color = 60897
-                if entity.state == "fan_only":
+                if state == "fan_only":
                     icon_color = 35921
+
+            if ha_type == "weather":
+                if state in ["clear-night", "partlycloudy", "windy", "windy-variant"]:
+                    icon_color = 35957 #50% grey
+                if state == "cloudy":
+                    icon_color = 31728 #grey-blue
+                if state == "exceptional":
+                    icon_color = 63488 #red
+                if state == "fog":
+                    icon_color = 21130 #75% grey
+                if state in ["hail", "snowy"]: 
+                    icon_color = 65535 #white
+                if state == "lightning":
+                    icon_color = 65120 #golden-yellow
+                if state == "lightning-rainy":
+                    icon_color = 50400 #dark-golden-yellow
+                if state == "pouring":
+                    icon_color = 249 #blue
+                if state == "rainy":
+                    icon_color = 33759 #light-blue
+                if state == "snowy-rainy":
+                    icon_color = 44479 #light-blue-grey
+                if state == "sunny":
+                    icon_color = 63469 #bright-yellow
 
             if "rgb_color" in attr:
                 color = attr.rgb_color
@@ -97,100 +124,19 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(f"pageType~{target_page}")
     
     def update_screensaver_weather(self, theme):
-        global babel_spec
-        we_name = self._config._config_screensaver.entity.entityId
-        unit = self._config._config_screensaver.raw_config.get("weatherUnit", "celsius")
-        state = {}
-        
-        if apis.ha_api.entity_exists(we_name):
-            we = apis.ha_api.get_entity(we_name)
-        else:
-            apis.ha_api.error(f"Skipping Weather Update, entity {we_name} not found")
-            return
+        entities = self._config._config_screensaver.entities
 
-        icon_cur           = get_icon_ha(we_name)
-        state["tMainIcon"] = we.state
-        text_cur           = convert_temperature(we.attributes.temperature, unit)
+        # default screensaver based on configured entity
+        if len(entities) == 0:
+            entities.append(self._config._config_screensaver.entity)
+            for i in range(0,4):
+                entities.append(Entity({'entity': f'{self._config._config_screensaver.entity.entityId}','type': i}))
 
-        if self._config._config_screensaver.raw_config.get("alternativeLayout", False):
-            text_cur           = f"{get_icon_id('thermometer')}{text_cur}"
+        item_str = ""
+        for item in entities:
+            item_str += self.generate_entities_item(item, "cardGrid")
 
-        forecastSkip = self._config._config_screensaver.raw_config.get(f"forecastSkip")+1
-        # check if the difference between the first 2 forecast items is less than 24h
-        difference = (dp.parse(we.attributes.forecast[forecastSkip]['datetime']) - dp.parse(we.attributes.forecast[0]['datetime']))
-        total_seconds = difference.total_seconds()
-        same_day = total_seconds < 86400
-        weather_res = ""
-        for i in range(1,5):
-            wOF = self._config._config_screensaver.raw_config.get(f"weatherOverrideForecast{i}")
-            if wOF is None:
-                fid = (i-1)*forecastSkip
-                if len(we.attributes.forecast) >= fid:
-                    up = we.attributes.forecast[fid]['datetime']
-                    up   = dp.parse(up).astimezone()
-                    if babel_spec is not None:
-                        if same_day:
-                            up = babel.dates.format_time(up, "H:mm", locale=self._locale)
-                        else:
-                            up = babel.dates.format_date(up, "E", locale=self._locale)
-                    else:
-                        if same_day:
-                            up = up.strftime('%H:%M')
-                        else:
-                            up = up.strftime('%a')
-                    icon = get_icon_ha(we_name, stateOverwrite=we.attributes.forecast[fid]['condition'])
-                    if i == 1:
-                        state["tF1Icon"] = we.attributes.forecast[fid]['condition']
-                    elif i == 2:
-                        state["tF2Icon"] = we.attributes.forecast[fid]['condition']
-                    elif i == 3:
-                        state["tF3Icon"] = we.attributes.forecast[fid]['condition']
-                    elif i == 4:
-                        state["tF4Icon"] = we.attributes.forecast[fid]['condition']
-                    down = convert_temperature(we.attributes.forecast[fid]['temperature'], unit)
-                else:
-                    up = ""
-                    icon = ""
-                    down = ""
-            else:
-                apis.ha_api.log(f"Forecast {i} is overriden with {wOF}")
-                icon = wOF.get("icon")
-                name = wOF.get("name")
-                entity = apis.ha_api.get_entity(wOF.get("entity"))
-                up = name if name is not None else entity.attributes.friendly_name
-                icon = get_icon_ha(wOF.get("entity"), overwrite=icon)
-                if "color" in wOF:
-                    if theme is None:
-                        theme = {}
-                    color = wOF.get("color")
-                    if type(color) is dict:
-                        for overwrite_state, overwrite_val in color.items():
-                            if overwrite_state == entity.state:
-                                color = overwrite_val
-                    if i == 1:
-                        theme["tF1Icon"] = color
-                    elif i == 2:
-                        theme["tF2Icon"] = color
-                    elif i == 3:
-                        theme["tF3Icon"] = color
-                    elif i == 4:
-                        theme["tF4Icon"] = color
-
-                unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
-                down = f"{entity.state} {unit_of_measurement}"
-            weather_res+=f"~{up}~{icon}~{down}"
-
-        altLayout = "~"
-        if self._config._config_screensaver.raw_config.get("alternativeLayout", False):
-            indoorTemp = self._config._config_screensaver.raw_config.get("indoorTemp")
-            if indoorTemp is not None and apis.ha_api.entity_exists(indoorTemp.get("entity","")):
-                entity = apis.ha_api.get_entity(indoorTemp.get("entity"))
-                icon = get_icon_ha(indoorTemp.get("entity"), overwrite=indoorTemp.get("icon"))
-                unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
-                altLayout = f"~{icon}{entity.state}{unit_of_measurement}"
-            else:
-                altLayout = f"~{get_icon_id('water-percent')}{we.attributes.humidity} %"
-        self._send_mqtt_msg(f"weatherUpdate~{icon_cur}~{text_cur}{weather_res}{altLayout}")
+        self._send_mqtt_msg(f"weatherUpdate{item_str}")
 
     def update_status_icons(self):
         status_res = ""
@@ -397,6 +343,21 @@ class LuiPagesGen(object):
         elif entityType == "timer":
             entityTypePanel = "timer"
             value = get_translation(self._locale, f"backend.component.timer.state._.{entity.state}")
+        elif entityType == "weather":
+            entityTypePanel = "text"
+            unit = get_attr_safe(entity, "temperature_unit", "")
+            if type(item.stype) == int and len(entity.attributes.forecast) >= item.stype:
+                fdate = dp.parse(entity.attributes.forecast[item.stype]['datetime']).astimezone()
+                global babel_spec
+                if babel_spec is not None:
+                    name = babel.dates.format_date(fdate, "E", locale=self._locale)
+                else:
+                    name = fdate.strftime('%a')
+                icon_id = get_icon_ha(entityId, stateOverwrite=entity.attributes.forecast[item.stype]['condition'])
+                value = f'{entity.attributes.forecast[item.stype].get("temperature", "")}{unit}'
+                color = self.get_entity_color(entity, ha_type=entityType, stateOverwrite=entity.attributes.forecast[item.stype]['condition'], overwrite=colorOverride)
+            else:
+                value = f'{get_attr_safe(entity, "temperature", "")}{unit}'
         else:
             name = "unsupported"
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"

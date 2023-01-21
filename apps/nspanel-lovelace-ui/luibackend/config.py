@@ -23,6 +23,7 @@ class Entity(object):
         self.condStateNot  = entity_input_config.get("state_not")
         self.condTemplate  = entity_input_config.get("state_template")
         self.assumedState  = entity_input_config.get("assumed_state", False)
+        self.stype         = entity_input_config.get("type")
         self.data  = entity_input_config.get("data", {})
         self.entity_input_config = entity_input_config
 
@@ -61,7 +62,7 @@ class Card(object):
                 entityIds.append(e.status)
 
         # additional keys to check
-        add_ent_keys = ['weatherOverrideForecast1', 'weatherOverrideForecast2', 'weatherOverrideForecast3', 'weatherOverrideForecast4', 'statusIcon1', 'statusIcon2', 'alarmControl']
+        add_ent_keys = ['statusIcon1', 'statusIcon2', 'alarmControl']
         for ent_key in add_ent_keys:
             val = self.raw_config.get(ent_key)
             if val is not None:
