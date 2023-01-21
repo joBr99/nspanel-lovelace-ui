@@ -741,7 +741,7 @@ Text tMainIconAlt
     
 Text tMainIconAlt2
     Attributes
-        ID                                  : 46
+        ID                                  : 45
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -868,7 +868,7 @@ Text tNotifyHead
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 107
+        y coordinate                        : 207
         Width                               : 450
         Height                              : 58
         Effect                              : load
@@ -891,14 +891,14 @@ Text tNotifyHead
     
 Text tNotifyText
     Attributes
-        ID                                  : 45
+        ID                                  : 46
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 164
+        y coordinate                        : 264
         Width                               : 450
         Height                              : 47
         Effect                              : load
