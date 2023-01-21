@@ -49,7 +49,7 @@ Variable (string) strCommand
         ID            : 4
         Scope         : local
         Text          : 
-        Max. Text Size: 200
+        Max. Text Size: 400
     
 Variable (string) strTmp
     Attributes
@@ -717,10 +717,10 @@ Text tMainIconAlt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 2
-        y coordinate                        : 238
+        x coordinate                        : 11
+        y coordinate                        : 216
         Width                               : 54
-        Height                              : 50
+        Height                              : 45
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -730,7 +730,37 @@ Text tMainIconAlt
         Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
-        Horizontal Alignment                : center
+        Horizontal Alignment                : right
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tMainIconAlt2
+    Attributes
+        ID                                  : 46
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 11
+        y coordinate                        : 265
+        Width                               : 54
+        Height                              : 45
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 3
+        Back. Color                         : 0
+        Font Color                          : 65535
+        Horizontal Alignment                : right
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
@@ -777,9 +807,9 @@ Text tMainTextAlt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 58
-        y coordinate                        : 216
-        Width                               : 152
+        x coordinate                        : 69
+        y coordinate                        : 215
+        Width                               : 135
         Height                              : 45
         Effect                              : load
         Effect Priority                     : 0
@@ -807,9 +837,9 @@ Text tMainTextAlt2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 58
+        x coordinate                        : 69
         y coordinate                        : 265
-        Width                               : 152
+        Width                               : 135
         Height                              : 45
         Effect                              : load
         Effect Priority                     : 0
@@ -838,7 +868,7 @@ Text tNotifyHead
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 207
+        y coordinate                        : 107
         Width                               : 450
         Height                              : 58
         Effect                              : load
@@ -868,7 +898,7 @@ Text tNotifyText
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 264
+        y coordinate                        : 164
         Width                               : 450
         Height                              : 47
         Effect                              : load
@@ -1033,10 +1063,8 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
-                                    click m0,1
                                     if(tInstruction.txt=="wake")
                                     {
-                                        //dim=100
                                         click tc0,1
                                     }
                                     if(tInstruction.txt=="dimmode")
@@ -1063,6 +1091,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="time")
                                     {
+                                        click m0,1
                                         //get set time to global variable
                                         spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
                                         spstr pageIcons.vaTime.txt,tTime.txt,"?",0
@@ -1080,12 +1109,6 @@ Timer tmSerial
                                         //get set date to global variable
                                         spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
                                         tDate.txt=pageIcons.vaDate.txt
-                                    }
-                                    if(tInstruction.txt=="timeout")
-                                    {
-                                        //set timeout to global var
-                                        spstr strCommand.txt,tTmp.txt,"~",1
-                                        covx tTmp.txt,sleepTimeout,0,0
                                     }
                                     if(tInstruction.txt=="statusUpdate")
                                     {
@@ -1115,39 +1138,61 @@ Timer tmSerial
                                         vis tMainText,1
                                         vis tMainTextAlt,0
                                         vis tMainTextAlt2,0
+                                        vis tMainIconAlt2,0
                                         //tMainIcon
-                                        spstr strCommand.txt,tMainIcon.txt,"~",1
+                                        spstr strCommand.txt,tMainIcon.txt,"~",3
                                         tMainIconAlt.txt=tMainIcon.txt
+                                        //tMainIcon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        covx tTmp.txt,tMainIcon.pco,0,0
+                                        tMainIconAlt.pco=tMainIcon.pco
                                         //tMainText
-                                        spstr strCommand.txt,tMainText.txt,"~",2
+                                        spstr strCommand.txt,tMainText.txt,"~",6
                                         tMainTextAlt.txt=tMainText.txt
                                         //tForecast1
-                                        spstr strCommand.txt,tForecast1.txt,"~",3
+                                        spstr strCommand.txt,tForecast1.txt,"~",11
                                         //tF1Icon
-                                        spstr strCommand.txt,tF1Icon.txt,"~",4
+                                        spstr strCommand.txt,tF1Icon.txt,"~",9
+                                        //tF1Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        covx tTmp.txt,tF1Icon.pco,0,0
                                         //tForecast1Val
-                                        spstr strCommand.txt,tForecast1Val.txt,"~",5
+                                        spstr strCommand.txt,tForecast1Val.txt,"~",12
                                         //tForecast2
-                                        spstr strCommand.txt,tForecast2.txt,"~",6
+                                        spstr strCommand.txt,tForecast2.txt,"~",17
                                         //tF2Icon
-                                        spstr strCommand.txt,tF2Icon.txt,"~",7
+                                        spstr strCommand.txt,tF2Icon.txt,"~",15
+                                        //tF2Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        covx tTmp.txt,tF2Icon.pco,0,0
                                         //tForecast2Val
-                                        spstr strCommand.txt,tForecast2Val.txt,"~",8
+                                        spstr strCommand.txt,tForecast2Val.txt,"~",18
                                         //tForecast3
-                                        spstr strCommand.txt,tForecast3.txt,"~",9
+                                        spstr strCommand.txt,tForecast3.txt,"~",23
                                         //tF3Icon
-                                        spstr strCommand.txt,tF3Icon.txt,"~",10
+                                        spstr strCommand.txt,tF3Icon.txt,"~",21
+                                        //tF3Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        covx tTmp.txt,tF3Icon.pco,0,0
                                         //tForecast3Val
-                                        spstr strCommand.txt,tForecast3Val.txt,"~",11
+                                        spstr strCommand.txt,tForecast3Val.txt,"~",24
                                         //tForecast4
-                                        spstr strCommand.txt,tForecast4.txt,"~",12
+                                        spstr strCommand.txt,tForecast4.txt,"~",29
                                         //tF4Icon
-                                        spstr strCommand.txt,tF4Icon.txt,"~",13
+                                        spstr strCommand.txt,tF4Icon.txt,"~",27
+                                        //tF4Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",28
+                                        covx tTmp.txt,tF4Icon.pco,0,0
                                         //tForecast4Val
-                                        spstr strCommand.txt,tForecast4Val.txt,"~",14
+                                        spstr strCommand.txt,tForecast4Val.txt,"~",30
                                         //alternative layout
                                         //tMainTextAlt2
-                                        spstr strCommand.txt,tMainTextAlt2.txt,"~",15
+                                        spstr strCommand.txt,tMainTextAlt2.txt,"~",36
+                                        //tMainIconAlt2
+                                        spstr strCommand.txt,tMainIconAlt2.txt,"~",33
+                                        //tMainIconAlt2 Color
+                                        spstr strCommand.txt,tTmp.txt,"~",34
+                                        covx tTmp.txt,tMainIconAlt2.pco,0,0
                                         if(tMainTextAlt2.txt!=""&&p0.w!=320)
                                         {
                                             //value for tMRIcon, activate alternative layout
@@ -1156,6 +1201,7 @@ Timer tmSerial
                                             vis tMainTextAlt,1
                                             vis tMainIconAlt,1
                                             vis tMainTextAlt2,1
+                                            vis tMainIconAlt2,1
                                             vis tForecast1,0
                                             vis tF1Icon,0
                                             vis tForecast1Val,0
@@ -1185,6 +1231,7 @@ Timer tmSerial
                                             tMainIconAlt.bco=tTime.bco
                                             tMainTextAlt.bco=tTime.bco
                                             tMainTextAlt2.bco=tTime.bco
+                                            tMainIconAlt2.bco=tTime.bco
                                             tIcon1.bco=tTime.bco
                                             tIcon2.bco=tTime.bco
                                             tForecast1.bco=tTime.bco
@@ -1208,48 +1255,34 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",4
                                         covx tTmp.txt,tDate.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",5
-                                        covx tTmp.txt,tMainIcon.pco,0,0
-                                        tMainIconAlt.pco=tMainIcon.pco
-                                        spstr strCommand.txt,tTmp.txt,"~",6
                                         covx tTmp.txt,tMainText.pco,0,0
                                         tMainTextAlt.pco=tMainText.pco
-                                        spstr strCommand.txt,tTmp.txt,"~",7
+                                        spstr strCommand.txt,tTmp.txt,"~",6
                                         covx tTmp.txt,tForecast1.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",8
+                                        spstr strCommand.txt,tTmp.txt,"~",7
                                         covx tTmp.txt,tForecast2.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",9
+                                        spstr strCommand.txt,tTmp.txt,"~",8
                                         covx tTmp.txt,tForecast3.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        spstr strCommand.txt,tTmp.txt,"~",9
                                         covx tTmp.txt,tForecast4.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",11
-                                        covx tTmp.txt,tF1Icon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",12
-                                        covx tTmp.txt,tF2Icon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",13
-                                        covx tTmp.txt,tF3Icon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",14
-                                        covx tTmp.txt,tF4Icon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",15
+                                        spstr strCommand.txt,tTmp.txt,"~",10
                                         covx tTmp.txt,tForecast1Val.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        spstr strCommand.txt,tTmp.txt,"~",11
                                         covx tTmp.txt,tForecast2Val.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",17
+                                        spstr strCommand.txt,tTmp.txt,"~",12
                                         covx tTmp.txt,tForecast3Val.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",18
+                                        spstr strCommand.txt,tTmp.txt,"~",13
                                         covx tTmp.txt,tForecast4Val.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",19
+                                        spstr strCommand.txt,tTmp.txt,"~",14
                                         covx tTmp.txt,t10.bco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",20
+                                        spstr strCommand.txt,tTmp.txt,"~",15
                                         covx tTmp.txt,tMainTextAlt2.pco,0,0
-                                        //spstr strCommand.txt,tTmp.txt,"~",21
+                                        //spstr strCommand.txt,tTmp.txt,"~",16
                                         //covx tTmp.txt,tMR.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        spstr strCommand.txt,tTmp.txt,"~",17
                                         covx tTmp.txt,tTimeAdd.pco,0,0
                                         if(tMainTextAlt2.txt!=""&&p0.w!=320)
                                         {
-                                            tF4Icon.pco=tF3Icon.pco
-                                            tF3Icon.pco=tF2Icon.pco
-                                            tF2Icon.pco=tF1Icon.pco
                                             tForecast4Val.pco=tForecast3Val.pco
                                             tForecast3Val.pco=tForecast2Val.pco
                                             tForecast2Val.pco=tForecast1Val.pco
@@ -1352,6 +1385,12 @@ Timer tmSerial
                                         {
                                             page cardChart
                                         }
+                                    }
+                                    if(tInstruction.txt=="timeout")
+                                    {
+                                        //set timeout to global var
+                                        spstr strCommand.txt,tTmp.txt,"~",1
+                                        covx tTmp.txt,sleepTimeout,0,0
                                     }
                                     // end of user code
                                     udelete payloadLength-1
