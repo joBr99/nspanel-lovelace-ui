@@ -53,7 +53,7 @@ Variable (string) strCommand
     
 Variable (string) strTmp
     Attributes
-        ID            : 45
+        ID            : 41
         Scope         : local
         Text          : 
         Max. Text Size: 2
@@ -67,21 +67,21 @@ Variable (string) tId
     
 Variable (string) tInstruction
     Attributes
-        ID            : 30
+        ID            : 28
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) tSend
     Attributes
-        ID            : 34
+        ID            : 30
         Scope         : local
         Text          : 
         Max. Text Size: 50
     
 Variable (string) tTmp
     Attributes
-        ID            : 31
+        ID            : 29
         Scope         : local
         Text          : 
         Max. Text Size: 50
@@ -94,43 +94,43 @@ Variable (int32) vaTap
     
 Variable (int32) xc1
     Attributes
-        ID   : 39
+        ID   : 35
         Scope: local
         Value: 0
     
 Variable (int32) xc2
     Attributes
-        ID   : 41
+        ID   : 37
         Scope: local
         Value: 0
     
 Variable (int32) xcR
     Attributes
-        ID   : 44
+        ID   : 40
         Scope: local
         Value: 0
     
 Variable (int32) yc1
     Attributes
-        ID   : 40
+        ID   : 36
         Scope: local
         Value: 0
     
 Variable (int32) yc2
     Attributes
-        ID   : 42
+        ID   : 38
         Scope: local
         Value: 0
     
 Variable (int32) ycR
     Attributes
-        ID   : 43
+        ID   : 39
         Scope: local
         Value: 0
     
 Text m0
     Attributes
-        ID                                  : 46
+        ID                                  : 42
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -621,7 +621,7 @@ Text tForecast4Val
     
 Text tIcon1
     Attributes
-        ID                                  : 35
+        ID                                  : 31
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -651,7 +651,7 @@ Text tIcon1
     
 Text tIcon2
     Attributes
-        ID                                  : 36
+        ID                                  : 32
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -672,66 +672,6 @@ Text tIcon2
         Font Color                          : 17299
         Horizontal Alignment                : right
         Vertical Alignment                  : top
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text tMR
-    Attributes
-        ID                                  : 29
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 144
-        y coordinate                        : 276
-        Width                               : 62
-        Height                              : 21
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : left
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text tMRIcon
-    Attributes
-        ID                                  : 28
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 101
-        y coordinate                        : 272
-        Width                               : 40
-        Height                              : 35
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
         Max. Text Size                      : 10
@@ -777,17 +717,17 @@ Text tMainIconAlt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 227
-        Width                               : 100
-        Height                              : 66
+        x coordinate                        : 2
+        y coordinate                        : 238
+        Width                               : 54
+        Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 4
+        Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
         Horizontal Alignment                : center
@@ -837,10 +777,10 @@ Text tMainTextAlt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 104
+        x coordinate                        : 58
         y coordinate                        : 216
-        Width                               : 106
-        Height                              : 42
+        Width                               : 152
+        Height                              : 45
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -850,7 +790,37 @@ Text tMainTextAlt
         Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
-        Horizontal Alignment                : left
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
+Text tMainTextAlt2
+    Attributes
+        ID                                  : 43
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 58
+        y coordinate                        : 265
+        Width                               : 152
+        Height                              : 45
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 3
+        Back. Color                         : 0
+        Font Color                          : 65535
+        Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
@@ -861,7 +831,7 @@ Text tMainTextAlt
     
 Text tNotifyHead
     Attributes
-        ID                                  : 32
+        ID                                  : 44
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -891,7 +861,7 @@ Text tNotifyHead
     
 Text tNotifyText
     Attributes
-        ID                                  : 33
+        ID                                  : 45
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -951,7 +921,7 @@ Text tTime
     
 Text tTimeAdd
     Attributes
-        ID                                  : 37
+        ID                                  : 33
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -998,7 +968,7 @@ Picture p0
     
 Timer tm0
     Attributes
-        ID         : 38
+        ID         : 34
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -1063,6 +1033,7 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
+                                    click m0,1
                                     if(tInstruction.txt=="wake")
                                     {
                                         //dim=100
@@ -1143,8 +1114,7 @@ Timer tmSerial
                                         vis tMainIconAlt,0
                                         vis tMainText,1
                                         vis tMainTextAlt,0
-                                        vis tMRIcon,0
-                                        vis tMR,0
+                                        vis tMainTextAlt2,0
                                         //tMainIcon
                                         spstr strCommand.txt,tMainIcon.txt,"~",1
                                         tMainIconAlt.txt=tMainIcon.txt
@@ -1176,17 +1146,16 @@ Timer tmSerial
                                         //tForecast4Val
                                         spstr strCommand.txt,tForecast4Val.txt,"~",14
                                         //alternative layout
-                                        //tMRIcon
-                                        spstr strCommand.txt,tMRIcon.txt,"~",15
-                                        if(tMRIcon.txt!=""&&p0.w!=320)
+                                        //tMainTextAlt2
+                                        spstr strCommand.txt,tMainTextAlt2.txt,"~",15
+                                        if(tMainTextAlt2.txt!=""&&p0.w!=320)
                                         {
                                             //value for tMRIcon, activate alternative layout
                                             vis tMainIcon,0
                                             vis tMainText,0
                                             vis tMainTextAlt,1
                                             vis tMainIconAlt,1
-                                            vis tMRIcon,1
-                                            vis tMR,1
+                                            vis tMainTextAlt2,1
                                             vis tForecast1,0
                                             vis tF1Icon,0
                                             vis tForecast1Val,0
@@ -1201,27 +1170,6 @@ Timer tmSerial
                                             tF3Icon.txt=tF2Icon.txt
                                             tF2Icon.txt=tF1Icon.txt
                                         }
-                                        //tMR
-                                        spstr strCommand.txt,tMR.txt,"~",16
-                                        //statusIcon1
-                                        spstr strCommand.txt,tIcon1.txt,"~",17
-                                        spstr strCommand.txt,tTmp.txt,"~",18
-                                        covx tTmp.txt,tIcon1.pco,0,0
-                                        //statusIcon2
-                                        spstr strCommand.txt,tIcon2.txt,"~",19
-                                        spstr strCommand.txt,tTmp.txt,"~",20
-                                        covx tTmp.txt,tIcon2.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",21
-                                        if(tTmp.txt!="")
-                                        {
-                                            tIcon1.font=3
-                                        }
-                                        spstr strCommand.txt,tTmp.txt,"~",22
-                                        if(tTmp.txt!="")
-                                        {
-                                            tIcon2.font=3
-                                        }
-                                        click m0,1
                                     }
                                     if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {
@@ -1236,9 +1184,7 @@ Timer tmSerial
                                             tMainText.bco=tTime.bco
                                             tMainIconAlt.bco=tTime.bco
                                             tMainTextAlt.bco=tTime.bco
-                                            tMRIcon.bco=tTime.bco
-                                            tMR.bco=tTime.bco
-                                            tMRIcon.bco=tTime.bco
+                                            tMainTextAlt2.bco=tTime.bco
                                             tIcon1.bco=tTime.bco
                                             tIcon2.bco=tTime.bco
                                             tForecast1.bco=tTime.bco
@@ -1294,12 +1240,12 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,t10.bco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",20
-                                        covx tTmp.txt,tMRIcon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",21
-                                        covx tTmp.txt,tMR.pco,0,0
+                                        covx tTmp.txt,tMainTextAlt2.pco,0,0
+                                        //spstr strCommand.txt,tTmp.txt,"~",21
+                                        //covx tTmp.txt,tMR.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",22
                                         covx tTmp.txt,tTimeAdd.pco,0,0
-                                        if(tMRIcon.txt!=""&&p0.w!=320)
+                                        if(tMainTextAlt2.txt!=""&&p0.w!=320)
                                         {
                                             tF4Icon.pco=tF3Icon.pco
                                             tF3Icon.pco=tF2Icon.pco
@@ -1405,10 +1351,6 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
-                                        }
-                                        if(tId.txt=="cardLChart")
-                                        {
-                                            page cardLChart
                                         }
                                     }
                                     // end of user code

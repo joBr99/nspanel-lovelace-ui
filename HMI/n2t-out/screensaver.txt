@@ -298,26 +298,6 @@ Text tIcon2
         Text                                : 
         Max. Text Size                      : 10
     
-Text tMR
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
-    
-Text tMRIcon
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
-    
 Text tMainIcon
     Attributes
         Scope                               : local
@@ -349,6 +329,16 @@ Text tMainText
         Max. Text Size                      : 10
     
 Text tMainTextAlt
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tMainTextAlt2
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -470,6 +460,7 @@ Timer tmSerial
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
+                                    click m0,1
                                     if(tInstruction.txt=="wake")
                                     {
                                         //dim=100
@@ -550,8 +541,7 @@ Timer tmSerial
                                         vis tMainIconAlt,0
                                         vis tMainText,1
                                         vis tMainTextAlt,0
-                                        vis tMRIcon,0
-                                        vis tMR,0
+                                        vis tMainTextAlt2,0
                                         //tMainIcon
                                         spstr strCommand.txt,tMainIcon.txt,"~",1
                                         tMainIconAlt.txt=tMainIcon.txt
@@ -583,17 +573,16 @@ Timer tmSerial
                                         //tForecast4Val
                                         spstr strCommand.txt,tForecast4Val.txt,"~",14
                                         //alternative layout
-                                        //tMRIcon
-                                        spstr strCommand.txt,tMRIcon.txt,"~",15
-                                        if(tMRIcon.txt!=""&&p0.w!=320)
+                                        //tMainTextAlt2
+                                        spstr strCommand.txt,tMainTextAlt2.txt,"~",15
+                                        if(tMainTextAlt2.txt!=""&&p0.w!=320)
                                         {
                                             //value for tMRIcon, activate alternative layout
                                             vis tMainIcon,0
                                             vis tMainText,0
                                             vis tMainTextAlt,1
                                             vis tMainIconAlt,1
-                                            vis tMRIcon,1
-                                            vis tMR,1
+                                            vis tMainTextAlt2,1
                                             vis tForecast1,0
                                             vis tF1Icon,0
                                             vis tForecast1Val,0
@@ -608,27 +597,6 @@ Timer tmSerial
                                             tF3Icon.txt=tF2Icon.txt
                                             tF2Icon.txt=tF1Icon.txt
                                         }
-                                        //tMR
-                                        spstr strCommand.txt,tMR.txt,"~",16
-                                        //statusIcon1
-                                        spstr strCommand.txt,tIcon1.txt,"~",17
-                                        spstr strCommand.txt,tTmp.txt,"~",18
-                                        covx tTmp.txt,tIcon1.pco,0,0
-                                        //statusIcon2
-                                        spstr strCommand.txt,tIcon2.txt,"~",19
-                                        spstr strCommand.txt,tTmp.txt,"~",20
-                                        covx tTmp.txt,tIcon2.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",21
-                                        if(tTmp.txt!="")
-                                        {
-                                            tIcon1.font=3
-                                        }
-                                        spstr strCommand.txt,tTmp.txt,"~",22
-                                        if(tTmp.txt!="")
-                                        {
-                                            tIcon2.font=3
-                                        }
-                                        click m0,1
                                     }
                                     if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {
@@ -643,9 +611,7 @@ Timer tmSerial
                                             tMainText.bco=tTime.bco
                                             tMainIconAlt.bco=tTime.bco
                                             tMainTextAlt.bco=tTime.bco
-                                            tMRIcon.bco=tTime.bco
-                                            tMR.bco=tTime.bco
-                                            tMRIcon.bco=tTime.bco
+                                            tMainTextAlt2.bco=tTime.bco
                                             tIcon1.bco=tTime.bco
                                             tIcon2.bco=tTime.bco
                                             tForecast1.bco=tTime.bco
@@ -701,12 +667,12 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",19
                                         covx tTmp.txt,t10.bco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",20
-                                        covx tTmp.txt,tMRIcon.pco,0,0
-                                        spstr strCommand.txt,tTmp.txt,"~",21
-                                        covx tTmp.txt,tMR.pco,0,0
+                                        covx tTmp.txt,tMainTextAlt2.pco,0,0
+                                        //spstr strCommand.txt,tTmp.txt,"~",21
+                                        //covx tTmp.txt,tMR.pco,0,0
                                         spstr strCommand.txt,tTmp.txt,"~",22
                                         covx tTmp.txt,tTimeAdd.pco,0,0
-                                        if(tMRIcon.txt!=""&&p0.w!=320)
+                                        if(tMainTextAlt2.txt!=""&&p0.w!=320)
                                         {
                                             tF4Icon.pco=tF3Icon.pco
                                             tF3Icon.pco=tF2Icon.pco
@@ -812,10 +778,6 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
-                                        }
-                                        if(tId.txt=="cardLChart")
-                                        {
-                                            page cardLChart
                                         }
                                     }
                                     // end of user code
