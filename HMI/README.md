@@ -94,9 +94,418 @@ change the page type:
 
 ### screensaver page
 
-`weatherUpdate~tMainIcon~tMainText~tForecast1~tF1Icon~tForecast1Val~tForecast2~tF2Icon~tForecast2Val~tForecast3~tF3Icon~tForecast3Val~tForecast4~tF4Icon~tForecast4Val~optionalLayoutIcon~optionalLayoutText~altIconFont~altIconFont`
+Example default layout: `weatherUpdate~~~A~21130~~-0.7C~~~B~63469~Sat~3.6C~~~C~35957~Sun~3.9C~~~D~31728~Mon~4.3C~~~E~35957~Tue~3.6C`
+Example alternative layout: `weatherUpdate~~~A~21130~~-0.7C~~~B~63469~Sat~3.6C~~~C~35957~Sun~3.9C~~~D~31728~Mon~4.3C~~~E~35957~Tue~3.6C~~~F~21130~~23.6C`
 
-`color~background~time~timeAMPM~date~tMainIcon~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tF1Icon~tF2Icon~tF3Icon~tF4Icon~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMRIcon~tMR`
+<table>
+<thead>
+  <tr>
+    <th>Parameter Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>weatherupdate</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td></td>
+    <td rowspan="6">Main Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td></td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td></td>
+    <td rowspan="6">First Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td></td>
+    <td rowspan="6">Second Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td></td>
+    <td rowspan="6">Third Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td></td>
+    <td rowspan="6">Fourth Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td></td>
+    <td rowspan="6">Alternative Layout Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td></td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+`color~background~tTime~timeAMPM~tDate~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMainTextAlt2~tMR~tTimeAdd`
+
+<table>
+<thead>
+  <tr>
+    <th>Parameter Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td colspan="3">instruction</td>
+    <td>color</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>background</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tTime</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>timeAMPM</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tDate</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tMainText</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast1</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast2</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast3</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast4</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast1Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast2Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast3Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast4Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>bar</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tMainTextAlt2</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tMR</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tTimeAdd</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
 
 `notify~heading~text`
 
