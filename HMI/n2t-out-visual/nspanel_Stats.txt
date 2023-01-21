@@ -43,9 +43,9 @@ pageStartup
 	185  Line(s) of event code
 	131  Unique line(s) of event code
 screensaver
-	46   Component(s)
-	416  Line(s) of event code
-	301  Unique line(s) of event code
+	47   Component(s)
+	419  Line(s) of event code
+	302  Unique line(s) of event code
 cardPower
 	48   Component(s)
 	483  Line(s) of event code
@@ -85,6 +85,6 @@ cardEntities
 
 Total
 	20   Page(s)
-	736  Component(s)
-	8775 Line(s) of event code
-	2264 Unique line(s) of event code
+	737  Component(s)
+	8778 Line(s) of event code
+	2266 Unique line(s) of event code
