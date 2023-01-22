@@ -134,7 +134,7 @@ class LuiPagesGen(object):
 
         item_str = ""
         for item in entities:
-            item_str += self.generate_entities_item(item, "cardGrid")
+            item_str += self.generate_entities_item(item, "cardEntities")
 
         self._send_mqtt_msg(f"weatherUpdate{item_str}")
 
