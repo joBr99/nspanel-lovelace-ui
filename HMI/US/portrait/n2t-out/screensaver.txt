@@ -375,13 +375,6 @@ Picture p0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
     
-Hotspot m0
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-    
 Timer tm0
     Attributes
         Scope      : local
@@ -475,7 +468,6 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="time")
                                     {
-                                        click m0,1
                                         //get set time to global variable
                                         spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
                                         spstr pageIcons.vaTime.txt,tTime.txt,"?",0
@@ -768,6 +760,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     if(tInstruction.txt=="timeout")
