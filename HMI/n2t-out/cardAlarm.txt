@@ -318,7 +318,10 @@ Button b0
         Touch Press Event
             tCode.txt=tCode.txt+"1"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b1
     Attributes
@@ -334,7 +337,10 @@ Button b1
         Touch Press Event
             tCode.txt=tCode.txt+"2"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b10
     Attributes
@@ -350,7 +356,10 @@ Button b10
         Touch Press Event
             tCode.txt=tCode.txt+"0"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b11
     Attributes
@@ -366,7 +375,10 @@ Button b11
         Touch Press Event
             tCode.txt=""
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b2
     Attributes
@@ -382,7 +394,10 @@ Button b2
         Touch Press Event
             tCode.txt=tCode.txt+"3"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b3
     Attributes
@@ -398,7 +413,10 @@ Button b3
         Touch Press Event
             tCode.txt=tCode.txt+"4"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b4
     Attributes
@@ -414,7 +432,10 @@ Button b4
         Touch Press Event
             tCode.txt=tCode.txt+"5"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b5
     Attributes
@@ -430,7 +451,10 @@ Button b5
         Touch Press Event
             tCode.txt=tCode.txt+"6"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b6
     Attributes
@@ -446,7 +470,10 @@ Button b6
         Touch Press Event
             tCode.txt=tCode.txt+"7"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b7
     Attributes
@@ -462,7 +489,10 @@ Button b7
         Touch Press Event
             tCode.txt=tCode.txt+"8"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b8
     Attributes
@@ -478,7 +508,10 @@ Button b8
         Touch Press Event
             tCode.txt=tCode.txt+"9"
             vis tCode,1
-            vis tHeading,0
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b9
     Attributes

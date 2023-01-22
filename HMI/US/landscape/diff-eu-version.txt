@@ -72,7 +72,7 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
-│ @@ -313,176 +303,154 @@
+│ @@ -313,209 +303,154 @@
 │          State                               : unpressed
 │          Text                                : 1
 │          Max. Text Size                      : 10
@@ -81,7 +81,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"1"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b1
 │      Attributes
@@ -97,7 +100,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"2"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b10
 │      Attributes
@@ -113,7 +119,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"0"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b11
 │      Attributes
@@ -129,7 +138,10 @@
 │          Touch Press Event
 │              tCode.txt=""
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b2
 │      Attributes
@@ -145,7 +157,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"3"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b3
 │      Attributes
@@ -161,7 +176,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"4"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b4
 │      Attributes
@@ -177,7 +195,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"5"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b5
 │      Attributes
@@ -193,7 +214,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"6"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b6
 │      Attributes
@@ -209,7 +233,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"7"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b7
 │      Attributes
@@ -225,7 +252,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"8"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b8
 │      Attributes
@@ -241,7 +271,10 @@
 │          Touch Press Event
 │              tCode.txt=tCode.txt+"9"
 │ -            vis tCode,1
-│ -            vis tHeading,0
+│ -            if(p0.w!=320)
+│ -            {
+│ -                vis tHeading,0
+│ -            }
 │          
 │  Button b9
 │      Attributes
@@ -249,7 +282,7 @@
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
-│ @@ -665,26 +633,15 @@
+│ @@ -698,26 +633,15 @@
 │                                      // write command to variable strCommand
 │                                      ucopy strCommand.txt,4,payloadLength-5,0
 │                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
@@ -277,7 +310,7 @@
 │                                              vis bPrev,0
 │                                          }else
 │                                          {
-│ @@ -711,77 +668,69 @@
+│ @@ -744,77 +668,69 @@
 │                                              spstr strCommand.txt,bNext.txt,"~",10
 │                                              // change icon color
 │                                              spstr strCommand.txt,tTmp.txt,"~",11
@@ -367,7 +400,7 @@
 │                                              vis b2,0
 │                                              vis b3,0
 │                                              vis b4,0
-│ @@ -791,30 +740,30 @@
+│ @@ -824,30 +740,30 @@
 │                                              vis b8,0
 │                                              vis b9,0
 │                                              vis b10,0
@@ -402,7 +435,7 @@
 │                                          // get set time to global variable
 │                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 │                                      }
-│ @@ -915,18 +864,14 @@
+│ @@ -948,18 +864,14 @@
 │                                          {
 │                                              page cardPower
 │                                          }
