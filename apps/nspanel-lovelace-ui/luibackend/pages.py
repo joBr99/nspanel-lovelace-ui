@@ -162,6 +162,11 @@ class LuiPagesGen(object):
         colorOverride = item.colorOverride
         name = item.nameOverride
         uuid = item.uuid
+        
+        # check ha template for name
+        if item.nameOverride is not None and ("{" in item.nameOverride and "}" in item.nameOverride):
+            name = apis.ha_api.render_template(item.nameOverride)
+        
         # type of the item is the string before the "." in the entityId
         entityType = entityId.split(".")[0]
 
@@ -296,9 +301,6 @@ class LuiPagesGen(object):
         elif entityType == "script":
             entityTypePanel = "button"
             value = get_translation(self._locale, "frontend.ui.card.script.run")
-            override = item.entity_input_config.get("action_name")
-            if override is not None:
-                value = override
         elif entityType == "lock":
             entityTypePanel = "button"
             value = get_translation(self._locale, "frontend.ui.card.lock.lock") if entity.state == "unlocked" else get_translation(self._locale, "frontend.ui.card.lock.unlock")
@@ -349,10 +351,11 @@ class LuiPagesGen(object):
             if type(item.stype) == int and len(entity.attributes.forecast) >= item.stype:
                 fdate = dp.parse(entity.attributes.forecast[item.stype]['datetime']).astimezone()
                 global babel_spec
-                if babel_spec is not None:
-                    name = babel.dates.format_date(fdate, "E", locale=self._locale)
+                    dateformat = "E" if item.nameOverride is None else item.nameOverride
+                    name = babel.dates.format_date(fdate, dateformat, locale=self._locale)
                 else:
-                    name = fdate.strftime('%a')
+                    dateformat = "%a" if item.nameOverride is None else item.nameOverride
+                    name = fdate.strftime(dateformat)
                 icon_id = get_icon_ha(entityId, stateOverwrite=entity.attributes.forecast[item.stype]['condition'])
                 value = f'{entity.attributes.forecast[item.stype].get("temperature", "")}{unit}'
                 color = self.get_entity_color(entity, ha_type=entityType, stateOverwrite=entity.attributes.forecast[item.stype]['condition'], overwrite=colorOverride)
@@ -360,6 +363,10 @@ class LuiPagesGen(object):
                 value = f'{get_attr_safe(entity, "temperature", "")}{unit}'
         else:
             name = "unsupported"
+        # Overwrite for value
+        ovalue = item.value
+        if ovalue is not None:
+            value = apis.ha_api.render_template(ovalue)
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
     def generate_entities_page(self, navigation, heading, items, cardType, tempUnit):
