@@ -10,17 +10,17 @@
           - entity: sensor.today_energy
           - entity: delete
           - entity: sensor.today_energy
-            speed: 3
+            speed: 30
           - entity: sensor.today_energy
-            speed: -1
+            speed: -10
           - entity: sensor.today_energy
-            speed: -2
+            speed: -20
           - entity: sensor.today_energy
-            speed: -3
+            speed: -30
           - entity: sensor.today_energy
-            speed: 1
+            speed: 10
           - entity: sensor.today_energy
-            speed: 1
+            speed: 10
 ```
 
 The first two entities are shown in the middle of the card, all other entities are used around it.
@@ -40,12 +40,17 @@ List of supported entitiy types for this page:
 
 Some details about speed:
 
-It is possible to calculate the speed though home assistant templates, this allows to link the speed to something within your homeassistant.
+It is possible to calculate the speed through a Home Assistant template, this allows to calculate the speed in relation to other data in Home Assistant.
 
-If you got a proper configuration for that, feel free to share it, would be a good addition to the documentation.
-
+This template will calculate a speed setting based on the amount of power drawn on a device as a fraction of the total power usage.
+```yaml
+            speed: >-
+              {% set entity_power = states('sensor.appliance_water_heater_power') |float | round(3)%}
+              {% set total_power = states('sensor.ams_power_active') | float | round(3) %}
+              {% set entity_usage = (entity_power / total_power * 100) | float %}
+              {{ (entity_usage | round()) * -1 }}
 ```
-          - entity: sensor.today_energy
-            speed: '{{ range(-3, 3) | random }}'
+It provides the number as a negative integer, making the dot move from the centre of the card toward the icon of your entity. If you want the dot to move towards the centre of the card, just skip inverting it at the end of the template like this:
+```yaml
+              {{ (entity_usage | round()) }}
 ```
-

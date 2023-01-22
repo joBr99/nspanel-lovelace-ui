@@ -1,14 +1,22 @@
-Page cardChart
+Page cardLChart
     Attributes
+        ID                                  : 0
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        Width                               : 320
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
         Locked                              : no
         Swide up page ID                    : disabled
         Swide down page ID                  : disabled
         Swide left page ID                  : disabled
         Swide right page ID                 : disabled
+        Fill                                : solid color
+        Back. Color                         : 6371
     
     Events
         Preinitialize Event
@@ -20,10 +28,10 @@ Page cardChart
             vis tId,0
             vis bPrev,0
             vis bNext,0
-            cardChart.bco=defaultBcoColor
-            vis x0,0
-            x0.bco=defaultBcoColor
-            x0.borderc=defaultBcoColor
+            cardLChart.bco=defaultBcoColor
+            //vis x0,0
+            //x0.bco=defaultBcoColor
+            //x0.borderc=defaultBcoColor
             for(sys0=0;sys0<32;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
@@ -45,153 +53,228 @@ Page cardChart
         
 Variable (string) entn
     Attributes
+        ID            : 6
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) nent1
     Attributes
+        ID            : 32
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) nent2
     Attributes
+        ID            : 31
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (string) strCommand
     Attributes
+        ID            : 5
         Scope         : local
         Text          : 
-        Max. Text Size: 275
+        Max. Text Size: 512
     
 Variable (string) strTmp
     Attributes
+        ID            : 18
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) tId
     Attributes
+        ID            : 14
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tInstruction
     Attributes
+        ID            : 15
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tSend
     Attributes
+        ID            : 9
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) tTmp
     Attributes
+        ID            : 13
         Scope         : local
         Text          : 
-        Max. Text Size: 20
-    
-Variable (int32) vMax
-    Attributes
-        Scope: local
-        Value: 0
+        Max. Text Size: 400
     
 Variable (int32) vNValues
     Attributes
+        ID   : 17
         Scope: local
         Value: 0
     
 Variable (int32) vaBottom
     Attributes
+        ID   : 22
         Scope: local
         Value: 0
     
 Variable (int32) vaColorD
     Attributes
+        ID   : 25
         Scope: local
         Value: 0
     
 Variable (int32) vaColorL
     Attributes
+        ID   : 24
         Scope: local
         Value: 0
-    
-Variable (int32) vaLast
-    Attributes
-        Scope: local
-        Value: 4294967295
     
 Variable (int32) vaLeft
     Attributes
+        ID   : 23
         Scope: local
         Value: 0
     
-Variable (int32) vaUnit
+Variable (int32) vaMaxX
     Attributes
+        ID   : 27
+        Scope: local
+        Value: 2147483648
+    
+Variable (int32) vaMaxY
+    Attributes
+        ID   : 26
         Scope: local
         Value: 0
+    
+Variable (int32) vaMinX
+    Attributes
+        ID   : 29
+        Scope: local
+        Value: 2147483647
+    
+Variable (int32) vaMinY
+    Attributes
+        ID   : 30
+        Scope: local
+        Value: 2147483647
     
 Variable (int32) vaValue
     Attributes
+        ID   : 21
         Scope: local
         Value: 0
     
-Variable (string) vaValues
+Variable (int32) vaXUnit
     Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 100
+        ID   : 20
+        Scope: local
+        Value: 0
     
 Variable (int32) vaYUnit
     Attributes
+        ID   : 28
         Scope: local
         Value: 0
     
-XFloat x0
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
-    
 Text tHeading
     Attributes
+        ID                                  : 16
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 66
+        y coordinate                        : 26
+        Width                               : 184
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
         Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
         Text                                : 
         Max. Text Size                      : 40
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
 Picture p0
     Attributes
+        ID                                  : 1
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 0
+        Width                               : 319
+        Height                              : 479
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Picture ID                          : 0
     
 Button bNext
     Attributes
+        ID                                  : 2
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 262
+        y coordinate                        : 16
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 65535
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
         State                               : unpressed
         Text                                : î³
         Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
+            tSend.txt="event,buttonPress2,cardChart,"
+            if(bPrev.txt=="î")
+            {
+                tSend.txt+="bHome"
+            }else
+            {
+                tSend.txt+="bNext"
+            }
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -206,17 +289,46 @@ Button bNext
         
 Button bPrev
     Attributes
+        ID                                  : 3
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 9
+        y coordinate                        : 16
+        Width                               : 50
+        Height                              : 50
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Font ID                             : 3
+        Back. Color                         : 6371
+        Back. Picture ID (Pressed)          : 65535
+        Back. Color (Pressed)               : 14823
+        Font Color (Unpressed)              : 65535
+        Font Color (Pressed)                : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
         State                               : unpressed
         Text                                : î°
         Max. Text Size                      : 10
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
+            tSend.txt="event,buttonPress2,cardChart,"
+            if(bPrev.txt=="î¶")
+            {
+                tSend.txt+="bUp"
+            }else
+            {
+                tSend.txt+="bPrev"
+            }
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -231,92 +343,39 @@ Button bPrev
         
 Hotspot m0
     Attributes
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 20
+        y coordinate                        : 90
+        Width                               : 280
+        Height                              : 370
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
     
     Events
         Touch Press Event
-            if(vaLast.val>=0)
-            {
-                //  spstr vaValues.txt,tTmp.txt,"~",vaLast.val
-                //  covx tTmp.txt,vaValue.val,0,0
-                sys1=vaLast.val*5*vaUnit.val
-                sys1+=vaLeft.val
-                sya0=sys1/100
-                sya1=vaUnit.val*4+sys1/100
-                if(vaValue.val==0)
-                {
-                    line sya0,vaBottom.val,sya1,vaBottom.val,vaColorD.val
-                }else
-                {
-                    sys0=0
-                    if(vaValue.val<0)
-                    {
-                        vaValue.val*=-1
-                        sys0=1
-                    }
-                    fill sya0+1,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4/100,vaYUnit.val*vaValue.val-1,vaColorD.val
-                    //    line sya0+1,-10*vaValue.val+vaBottom.val,sya1-1,-10*vaValue.val+vaBottom.val,vaColorL.val
-                    draw sya0,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,sya1,vaBottom.val,vaColorL.val
-                    if(sys0!=0)
-                    {
-                        sya1=-1*vaYUnit.val*vaValue.val+vaBottom.val
-                        for(sys0=vaBottom.val;sys0>=sya1;sys0-=10)
-                        {
-                            sys2=sys0-5
-                            if(sys2<sya1)
-                            {
-                                sys2=sya1
-                            }
-                            line vaUnit.val*2+sys1/100,sys0,vaUnit.val*2+sys1/100,sys2,vaColorL.val
-                        }
-                    }
-                }
-            }
-            sys0=tch0-m0.x-25-40*100/vaUnit.val
-            sys1=sys0%5
-            if(sys1<4&&sys0>=0)
-            {
-                vis x0,1
-                vaLast.val=sys0/5
-                // n0.val=sys0/5
-                spstr vaValues.txt,tTmp.txt,"~",vaLast.val
-                covx tTmp.txt,vaValue.val,0,0
-                // t0.txt=tTmp.txt
-                sys1=vaLast.val*5*vaUnit.val
-                sys1+=vaLeft.val
-                sya0=sys1/100
-                sya1=vaUnit.val*4+sys1/100
-                if(vaValue.val==0)
-                {
-                    line sya0,vaBottom.val,sya1,vaBottom.val,vaColorL.val
-                    x0.val=vaValue.val
-                }else
-                {
-                    if(vaValue.val<0)
-                    {
-                        fill sya0+1,vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4/100,-1*vaYUnit.val*vaValue.val-1,vaColorL.val
-                        x0.val=vaValue.val*-1
-                    }else
-                    {
-                        fill sya0+1,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4/100,vaYUnit.val*vaValue.val-1,vaColorL.val
-                        x0.val=vaValue.val
-                    }
-                }
-            }else
-            {
-                vis x0,0
-                vaLast.val=-1
-            }
+            //fill m0.x,m0.y,m0.w,m0.h,RED
         
 Hotspot mSwipeNext
     Attributes
+        ID                                  : 10
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 313
+        y coordinate                        : 5
+        Width                               : 7
+        Height                              : 475
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
     
     Events
         Touch Press Event
@@ -324,10 +383,19 @@ Hotspot mSwipeNext
         
 Hotspot mSwipePrev
     Attributes
+        ID                                  : 12
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 0
+        y coordinate                        : 5
+        Width                               : 9
+        Height                              : 310
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
     
     Events
         Touch Press Event
@@ -335,10 +403,19 @@ Hotspot mSwipePrev
         
 Hotspot mSwipeUp
     Attributes
+        ID                                  : 11
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 12
+        y coordinate                        : 0
+        Width                               : 300
+        Height                              : 9
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
     
     Events
         Touch Press Event
@@ -346,6 +423,7 @@ Hotspot mSwipeUp
         
 Timer tmSerial
     Attributes
+        ID         : 4
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -431,6 +509,7 @@ Timer tmSerial
                                             bNext.pco=sys0
                                             vis bNext,1
                                         }
+                                        //draw m0.x,m0.y,m0.x+m0.w,m0.y+m0.h,RED
                                         // extract color
                                         spstr strCommand.txt,tTmp.txt,"~",14
                                         covx tTmp.txt,vaColorL.val,0,0
@@ -442,141 +521,197 @@ Timer tmSerial
                                         sys0=vaColorL.val%32
                                         vaColorD.val=sys0*8/10+vaColorD.val // store and add
                                         //
-                                        // detect nValues and maxValue
+                                        // detect nValues and maxX/Y
                                         vNValues.val=0
-                                        spstr strCommand.txt,tTmp.txt,"~",vNValues.val+17
+                                        spstr strCommand.txt,tTmp.txt,"~",vNValues.val+18
                                         strlen tTmp.txt,sya0
                                         while(sya0>0)
                                         {
-                                            covx tTmp.txt,sya1,0,0
-                                            if(sya1>vMax.val)
+                                            //tHeading.txt="last value="+tTmp.txt
+                                            spstr tTmp.txt,strTmp.txt,":",0
+                                            covx strTmp.txt,sya1,0,0
+                                            if(sya1>vaMaxX.val)
                                             {
-                                                vMax.val=sya1
+                                                vaMaxX.val=sya1
+                                            }
+                                            if(sya1<vaMinX.val)
+                                            {
+                                                vaMinX.val=sya1
+                                            }
+                                            spstr tTmp.txt,strTmp.txt,":",1
+                                            covx strTmp.txt,sya1,0,0
+                                            if(sya1>vaMaxY.val)
+                                            {
+                                                vaMaxY.val=sya1
+                                            }
+                                            if(sya1<vaMinY.val)
+                                            {
+                                                vaMinY.val=sya1
                                             }
                                             // next
                                             vNValues.val++
-                                            spstr strCommand.txt,tTmp.txt,"~",vNValues.val+17
+                                            spstr strCommand.txt,tTmp.txt,"~",vNValues.val+18
                                             strlen tTmp.txt,sya0
                                         }
-                                        //
-                                        // calculate unit width
-                                        sys0=vNValues.val*4
-                                        sys0+=vNValues.val-1
-                                        vaUnit.val=m0.w-25-40*100
-                                        vaUnit.val/=sys0
-                                        vaBottom.val=m0.y+m0.h-24
-                                        vaLeft.val=m0.x+25+40*100
-                                        vaYUnit.val=m0.h-24/vMax.val
-                                        //
-                                        line m0.x+25+40-10,m0.y,m0.x+25+40-10,vaBottom.val+10,14823
-                                        line m0.x+25+40-5,vaBottom.val,m0.x+25+40-15,vaBottom.val,14823
-                                        spstr strCommand.txt,strTmp.txt,"~",16
-                                        sya1=0
-                                        spstr strTmp.txt,tTmp.txt,":",sya1
-                                        strlen tTmp.txt,sya0
+                                        // find first given y axis labels
+                                        spstr strCommand.txt,tTmp.txt,"~",16 // labels in tTmp.txt
+                                        sys0=0 // <= result (here: first label value)
+                                        spstr tTmp.txt,strTmp.txt,":",sys0
+                                        strlen strTmp.txt,sya0
                                         while(sya0>0)
                                         {
-                                            covx tTmp.txt,sys1,0,0
-                                            if(sys1<=vMax.val)
+                                            covx strTmp.txt,sya1,0,0
+                                            if(sya1>vaMinY.val)
                                             {
-                                                line m0.x+25+40-5,-1*vaYUnit.val*sys1+vaBottom.val,m0.x+25+40-15,-1*vaYUnit.val*sys1+vaBottom.val,14823
-                                                sys2=sys1%10
-                                                sys1/=10
-                                                if(sys1>0)
+                                                sys0--
+                                                if(sys0>=0)
                                                 {
-                                                    covx sys1,tTmp.txt,0,0
-                                                }else
-                                                {
-                                                    tTmp.txt=""
+                                                    // found a y-tick => take is at min...
+                                                    spstr tTmp.txt,strTmp.txt,":",sys0
+                                                    covx strTmp.txt,vaMinY.val,0,0
                                                 }
-                                                if(sys2!=0)
-                                                {
-                                                    covx sys2,tId.txt,0,0
-                                                    tTmp.txt=tTmp.txt+"."+tId.txt
-                                                }
-                                                xstr m0.x+28,sys1*10+sys2*-1*vaYUnit.val+vaBottom.val-10,20,20,0,defaultFontColor,RED,2,1,3,tTmp.txt
+                                                sya0=0
+                                            }else
+                                            {
+                                                // next
+                                                sys0++
+                                                spstr tTmp.txt,strTmp.txt,":",sys0
+                                                strlen strTmp.txt,sya0
                                             }
-                                            // next
-                                            sya1++
-                                            spstr strTmp.txt,tTmp.txt,":",sya1
-                                            strlen tTmp.txt,sya0
                                         }
-                                        //
+                                        sys1=sys0+1 // last label
+                                        spstr tTmp.txt,strTmp.txt,":",sys1
+                                        strlen strTmp.txt,sya0
+                                        while(sya0>0)
+                                        {
+                                            covx strTmp.txt,sya1,0,0
+                                            if(sya1>=vaMaxY.val)
+                                            {
+                                                vaMaxY.val=sya1
+                                                sya0=0
+                                            }else
+                                            {
+                                                // next
+                                                sys1++
+                                                spstr tTmp.txt,strTmp.txt,":",sys1
+                                                strlen strTmp.txt,sya0
+                                            }
+                                        }
+                                        // get first given x axis tick
+                                        spstr strCommand.txt,strTmp.txt,"~",17 // X-Axis ticks & labels in strTmp.txt
+                                        covx strTmp.txt,vaMinX.val,0,0
+                                        //              covx vaMinX.val,strTmp.txt,0,0
+                                        //              tHeading.txt+=strTmp.txt+":"
+                                        //              covx vaMaxX.val,strTmp.txt,0,0
+                                        //              tHeading.txt+=strTmp.txt
+                                        // calculate unit width
+                                        vaBottom.val=m0.y+m0.h-24
+                                        vaLeft.val=m0.x+25+40*100
+                                        sya1=vaMaxX.val-vaMinX.val
+                                        vaXUnit.val=m0.w-25-40*100/sya1
+                                        sya1=vaMaxY.val-vaMinY.val
+                                        vaYUnit.val=m0.h-24*100/sya1
+                                        // draw labels
+                                        // labels still in tTmp.txt
+                                        line m0.x+25+40-10,m0.y,m0.x+25+40-10,vaBottom.val+5,14823
+                                        line m0.x+25+40-5,vaBottom.val,m0.x+25+40-15,vaBottom.val,14823
+                                        if(sys0>0)
+                                        {
+                                            sys0--
+                                        }
+                                        for(sya0=sys0;sya0<=sys1;sya0++)
+                                        {
+                                            spstr tTmp.txt,strTmp.txt,":",sya0
+                                            covx strTmp.txt,sya1,0,0
+                                            sys2=sya1%10
+                                            sya1/=10
+                                            if(sya1>0)
+                                            {
+                                                covx sya1,strTmp.txt,0,0
+                                            }else
+                                            {
+                                                strTmp.txt=""
+                                            }
+                                            if(sys2!=0)
+                                            {
+                                                covx sys2,tId.txt,0,0
+                                                strTmp.txt=strTmp.txt+"."+tId.txt
+                                            }
+                                            sya1*=10+sys2
+                                            sya1-=vaMinY.val
+                                            xstr m0.x+28,-1*vaYUnit.val*sya1/100+vaBottom.val-10,20,20,0,defaultFontColor,RED,2,1,3,strTmp.txt
+                                            line m0.x+25+40-5,-1*vaYUnit.val*sya1/100+vaBottom.val,m0.x+25+40-15,-1*vaYUnit.val*sya1/100+vaBottom.val,14823
+                                        }
                                         // y achis label
                                         spstr strCommand.txt,tTmp.txt,"~",15
-                                        // tTmp.txt="Gas [kW]"
                                         strlen tTmp.txt,sys1
-                                        sya1=sys1*12+m0.h-48/2
+                                        sya1=sys1*11+m0.h-48/2
                                         for(sys0=0;sys0<sys1;sys0++)
                                         {
                                             substr tTmp.txt,strTmp.txt,sys0,1
-                                            xstr m0.x,sys0*-12+m0.y+sya1,30,20,6,defaultFontColor,RED,2,1,3,strTmp.txt
+                                            xstr m0.x,sys0*-11+m0.y+sya1,24,20,6,defaultFontColor,RED,2,1,3,strTmp.txt
                                         }
-                                        for(sys0=0;sys0<vNValues.val;sys0++)
+                                        //
+                                        // x axis tick/labels
+                                        // draw bottom line
+                                        line m0.x+25+40,vaBottom.val,m0.x+m0.w,vaBottom.val,14823
+                                        spstr strCommand.txt,tTmp.txt,"~",17 // X-Axis ticks & labels in strTmp.txt
+                                        //
+                                        sys1=0
+                                        // extract first tick ~> sya1 contains fist ticks value
+                                        spstr tTmp.txt,strTmp.txt,"+",sys1
+                                        strlen strTmp.txt,sya0
+                                        covx strTmp.txt,sya1,0,0
+                                        // loop until current ticks label is smaller than the maximum value observed
+                                        while(sya0>0&&sya1<vaMaxX.val)
                                         {
-                                            if(sys0>0)
-                                            {
-                                                vaValues.txt+="~"
-                                            }
-                                            // extract next entry
-                                            spstr strCommand.txt,tTmp.txt,"~",sys0+17
-                                            // calculate left
-                                            sys1=sys0*5*vaUnit.val
-                                            sys1+=vaLeft.val
-                                            // if there is a colon in the obtained value we have a label/and gridline
-                                            spstr tTmp.txt,strTmp.txt,"^",1
+                                            sys2=sya1-vaMinX.val*vaXUnit.val/100+m0.x+25+40
+                                            // draw tick line
+                                            line sys2,vaBottom.val-5,sys2,vaBottom.val+5,14823
+                                            // check for label
+                                            spstr strTmp.txt,strTmp.txt,"^",1
                                             strlen strTmp.txt,sya0
                                             if(sya0>0)
                                             {
-                                                // we have a label!!!
-                                                // -> extract label
-                                                sys2=vaUnit.val*2+sys1/100
-                                                // draw label
-                                                xstr sya0*-6+sys2,vaBottom.val+2,sya0*12,22,0,defaultFontColor,defaultBcoColor,1,1,3,strTmp.txt
-                                                // draw line
-                                                // line sys2,vaBottom.val,sys2,m0.y,defaultFontColor
-                                                sya1=1
-                                                //spstr tTmp.txt,strTmp.txt,":",0
-                                                spstr tTmp.txt,tTmp.txt,":",0
-                                                vaValues.txt+="-"
-                                            }else
-                                            {
-                                                sya1=0
+                                                // label found ~> draw
+                                                xstr -6*sya0+sys2,vaBottom.val+2,sya0*12,22,0,defaultFontColor,defaultBcoColor,1,1,3,strTmp.txt
                                             }
-                                            vaValues.txt+=tTmp.txt
-                                            covx tTmp.txt,vaValue.val,0,0
-                                            sya0=sys1/100
-                                            if(vaValue.val==0)
+                                            // next ~> sya1 contains next ticks label
+                                            sys1++
+                                            spstr tTmp.txt,strTmp.txt,"+",sys1
+                                            strlen strTmp.txt,sya0
+                                            covx strTmp.txt,sya1,0,0
+                                        }
+                                        //
+                                        // draw line segments...
+                                        sys1=-2147483648
+                                        sys2=-2147483648
+                                        for(sys0=0;sys0<vNValues.val;sys0++)
+                                        {
+                                            // extract x:y from "~" separated payload
+                                            spstr strCommand.txt,tTmp.txt,"~",sys0+18
+                                            spstr tTmp.txt,strTmp.txt,":",0
+                                            covx strTmp.txt,sya0,0,0
+                                            spstr tTmp.txt,strTmp.txt,":",1
+                                            covx strTmp.txt,sya1,0,0
+                                            sya0=sya0-vaMinX.val*vaXUnit.val/100+m0.x+25+40
+                                            sya1=sya1-vaMinY.val*vaYUnit.val/-100+vaBottom.val
+                                            // draw circle
+                                            // cir sya0-vaMinX.val*vaXUnit.val/100+m0.x+25+40,sya1-vaMinY.val*vaYUnit.val/-100+vaBottom.val,3,vaColorL.val
+                                            if(sys1>0&&sys2>0)
                                             {
-                                                line sya0,vaBottom.val,vaUnit.val*4+sys1/100,vaBottom.val,vaColorD.val
-                                            }else
-                                            {
-                                                fill sya0+1,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4/100,vaYUnit.val*vaValue.val-1,vaColorD.val
-                                                line sya0+1,-1*vaYUnit.val*vaValue.val+vaBottom.val,vaUnit.val*4+sys1/100-1,-1*vaYUnit.val*vaValue.val+vaBottom.val,vaColorL.val
-                                                draw sya0,-1*vaYUnit.val*vaValue.val+vaBottom.val+1,vaUnit.val*4+sys1/100,vaBottom.val,vaColorL.val
+                                                // this is not the first point as the last one has been stored in (sys1,sys2)
+                                                // ~> connect with a line...
+                                                //line sys1,sys2,sya0-vaMinX.val*vaXUnit.val/100+m0.x+25+40,sya1-vaMinY.val*vaYUnit.val/-100+vaBottom.val,vaColorD.val
+                                                line sys1,sys2,sya0,sya1,vaColorD.val
+                                                //line sys1-1,sys2-1,sya0-1,sya1-1,vaColorL.val
+                                                //line sys1+1,sys2+1,sya0+1,sya1+1,vaColorL.val
                                             }
-                                            if(sya1>0)
-                                            {
-                                                sya1=-1*vaYUnit.val*vaValue.val+vaBottom.val
-                                                for(sya0=vaBottom.val-5;sya0>m0.y;sya0-=10)
-                                                {
-                                                    sys1=sya0+5
-                                                    if(sya0>=sya1)
-                                                    {
-                                                        line sys2,sya0,sys2,sys1,vaColorL.val
-                                                    }else
-                                                    {
-                                                        if(sys1>=sya1)
-                                                        {
-                                                            line sys2,sya0,sys2,sya1-1,14823
-                                                            line sys2,sya1,sys2,sys1,vaColorL.val
-                                                        }else
-                                                        {
-                                                            line sys2,sya0,sys2,sys1,14823
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                            // store current point to (sys1,sys2)
+                                            //sys1=sya0-vaMinX.val*vaXUnit.val/100+m0.x+25+40
+                                            //sys2=sya1-vaMinY.val*vaYUnit.val/-100+vaBottom.val
+                                            sys1=sya0
+                                            sys2=sya1
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -704,6 +839,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
+        ID         : 7
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -734,6 +870,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
+        ID   : 8
         Scope: local
         Value: 0
     
