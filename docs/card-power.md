@@ -10,17 +10,17 @@
           - entity: sensor.today_energy
           - entity: delete
           - entity: sensor.today_energy
-            speed: 3
+            speed: 30
           - entity: sensor.today_energy
-            speed: -1
+            speed: -10
           - entity: sensor.today_energy
-            speed: -2
+            speed: -20
           - entity: sensor.today_energy
-            speed: -3
+            speed: -30
           - entity: sensor.today_energy
-            speed: 1
+            speed: 10
           - entity: sensor.today_energy
-            speed: 1
+            speed: 10
 ```
 
 The first two entities are shown in the middle of the card, all other entities are used around it.
@@ -43,7 +43,7 @@ Some details about speed:
 It is possible to calculate the speed through a Home Assistant template, this allows to calculate the speed in relation to other data in Home Assistant.
 
 This template will calculate a speed setting based on the amount of power drawn on a device as a fraction of the total power usage.
-```
+```yaml
             speed: >-
               {% set entity_power = states('sensor.appliance_water_heater_power') |float | round(3)%}
               {% set total_power = states('sensor.ams_power_active') | float | round(3) %}
@@ -51,6 +51,6 @@ This template will calculate a speed setting based on the amount of power drawn 
               {{ (entity_usage | round()) * -1 }}
 ```
 It provides the number as a negative integer, making the dot move from the centre of the card toward the icon of your entity. If you want the dot to move towards the centre of the card, just skip inverting it at the end of the template like this:
-```
+```yaml
               {{ (entity_usage | round()) }}
 ```
