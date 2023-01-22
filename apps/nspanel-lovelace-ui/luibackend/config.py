@@ -24,6 +24,7 @@ class Entity(object):
         self.condTemplate  = entity_input_config.get("state_template")
         self.assumedState  = entity_input_config.get("assumed_state", False)
         self.stype         = entity_input_config.get("type")
+        self.value         = entity_input_config.get("value")
         self.data  = entity_input_config.get("data", {})
         self.entity_input_config = entity_input_config
 
@@ -243,3 +244,4 @@ class LuiBackendConfig(object):
 
     def get_card_by_uuid(self, uuid):
         return self._config_card_table.get(uuid)
+    
