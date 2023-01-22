@@ -810,7 +810,7 @@ Text tMainTextAlt2
     
 Text tNotifyHead
     Attributes
-        ID                                  : 45
+        ID                                  : 44
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -840,7 +840,7 @@ Text tNotifyHead
     
 Text tNotifyText
     Attributes
-        ID                                  : 44
+        ID                                  : 43
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -945,22 +945,6 @@ Picture p0
         Effect Time                         : 300
         Picture ID                          : 0
     
-Hotspot m0
-    Attributes
-        ID                                  : 43
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 289
-        y coordinate                        : 282
-        Width                               : 24
-        Height                              : 23
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-    
 Timer tm0
     Attributes
         ID         : 40
@@ -1056,7 +1040,6 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="time")
                                     {
-                                        click m0,1
                                         //get set time to global variable
                                         spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
                                         spstr pageIcons.vaTime.txt,tTime.txt,"?",0
@@ -1349,6 +1332,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     if(tInstruction.txt=="timeout")
