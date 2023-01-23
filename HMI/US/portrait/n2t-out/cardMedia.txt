@@ -29,7 +29,7 @@ Page cardMedia
             vis bEntity5,0
             vis bEntity6,0
             cardMedia.bco=defaultBcoColor
-            for(sys0=0;sys0<34;sys0++)
+            for(sys0=0;sys0<54;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {

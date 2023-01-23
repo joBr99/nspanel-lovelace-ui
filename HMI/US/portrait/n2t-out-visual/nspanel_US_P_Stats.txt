@@ -50,6 +50,10 @@ cardThermo
 	57   Component(s)
 	532  Line(s) of event code
 	315  Unique line(s) of event code
+cardMedia
+	59   Component(s)
+	641  Line(s) of event code
+	318  Unique line(s) of event code
 cardChart
 	33   Component(s)
 	429  Line(s) of event code
@@ -58,10 +62,6 @@ cardLChart
 	33   Component(s)
 	408  Line(s) of event code
 	268  Unique line(s) of event code
-cardMedia
-	59   Component(s)
-	641  Line(s) of event code
-	318  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	512  Line(s) of event code
@@ -87,4 +87,4 @@ Total
 	20   Page(s)
 	747  Component(s)
 	9231 Line(s) of event code
-	2382 Unique line(s) of event code
+	2383 Unique line(s) of event code
