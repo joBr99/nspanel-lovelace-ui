@@ -155,9 +155,9 @@ Text t1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 10
+        x coordinate                        : 60
         y coordinate                        : 374
-        Width                               : 240
+        Width                               : 251
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -186,7 +186,7 @@ Text t2
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 10
-        y coordinate                        : 415
+        y coordinate                        : 374
         Width                               : 45
         Height                              : 30
         Effect                              : load
@@ -216,7 +216,7 @@ Text t3
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 10
-        y coordinate                        : 307
+        y coordinate                        : 267
         Width                               : 45
         Height                              : 30
         Effect                              : load
@@ -245,9 +245,9 @@ Text t4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 9
-        y coordinate                        : 267
-        Width                               : 242
+        x coordinate                        : 60
+        y coordinate                        : 266
+        Width                               : 250
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -336,7 +336,7 @@ Text tId
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 100
-        y coordinate                        : 417
+        y coordinate                        : 450
         Width                               : 100
         Height                              : 30
         Effect                              : load
@@ -366,7 +366,7 @@ Text tInstruction
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 417
+        y coordinate                        : 450
         Width                               : 100
         Height                              : 30
         Effect                              : load
@@ -396,7 +396,7 @@ Text tTmp
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 282
-        y coordinate                        : 413
+        y coordinate                        : 446
         Width                               : 34
         Height                              : 30
         Effect                              : load
@@ -487,9 +487,9 @@ Slider hBrightness
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 61
+        x coordinate                        : 12
         y coordinate                        : 409
-        Width                               : 250
+        Width                               : 300
         Height                              : 44
         Effect                              : load
         Effect Priority                     : 0
@@ -532,9 +532,9 @@ Slider hTempSlider
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 61
+        x coordinate                        : 12
         y coordinate                        : 304
-        Width                               : 250
+        Width                               : 300
         Height                              : 44
         Effect                              : load
         Effect Priority                     : 0

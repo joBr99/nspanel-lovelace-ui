@@ -474,7 +474,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="time")
                                     {
-                                        click m0,1
+                                        //click m0,1
                                         //get set time to global variable
                                         spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
                                         spstr pageIcons.vaTime.txt,tTime.txt,"?",0
