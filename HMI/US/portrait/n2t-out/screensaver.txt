@@ -39,6 +39,12 @@ Variable (string) strCommand
         Text          : 
         Max. Text Size: 200
     
+Variable (string) strTmp
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 2
+    
 Variable (string) tId
     Attributes
         Scope         : local
@@ -468,6 +474,7 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="time")
                                     {
+                                        click m0,1
                                         //get set time to global variable
                                         spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
                                         spstr pageIcons.vaTime.txt,tTime.txt,"?",0
@@ -591,6 +598,9 @@ Timer tmSerial
                                             tF4Icon.txt=tF3Icon.txt
                                             tF3Icon.txt=tF2Icon.txt
                                             tF2Icon.txt=tF1Icon.txt
+                                            tF4Icon.pco=tF3Icon.pco
+                                            tF3Icon.pco=tF2Icon.pco
+                                            tF2Icon.pco=tF1Icon.pco
                                         }
                                     }
                                     if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")

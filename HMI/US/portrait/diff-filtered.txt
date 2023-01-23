@@ -1,25 +1,6 @@
-+++ /dev/fd/62	2023-01-22 12:29:59.836182943 +0000
++++ /dev/fd/62	2023-01-23 16:53:32.157856011 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
-+I/n2t-out/cardAlarm.txt
-++ HMI/US/portrait/n2t-out/cardAlarm.txt
-+5 +34,15 @@
-+     vis b9,0
-+     vis b10,0
-+     vis b11,0
-+     vis tCode,0
-+     vis bPrev,0
-+     vis bNext,0
-+     cardAlarm.bco=defaultBcoColor
-+     for(sys0=0;sys0<44;sys0++)
-+     for(sys0=0;sys0<40;sys0++)
-+     {
-+         if(b[sys0].type==98||b[sys0].type==116)
-+         {
-+             b[sys0].bco=defaultBcoColor
-+             //b[sys0].pco=defaultFontColor
-+         }
-+     }
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
 +6 +61,36 @@
@@ -485,277 +466,25 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+I/n2t-out/cardPower.txt
-++ HMI/US/portrait/n2t-out/cardPower.txt
-+5 +35,15 @@
-+     vis t0Icon,0
-+     vis t1Icon,0
-+     vis t2Icon,0
-+     vis t3Icon,0
-+     vis t4Icon,0
-+     vis t5Icon,0
-+     cardPower.bco=defaultBcoColor
-+     for(sys0=0;sys0<48;sys0++)
-+     for(sys0=0;sys0<43;sys0++)
++I/n2t-out/cardMedia.txt
+++ HMI/US/portrait/n2t-out/cardMedia.txt
++5 +25,15 @@
++     vis bEntity1,0
++     vis bEntity2,0
++     vis bEntity3,0
++     vis bEntity4,0
++     vis bEntity5,0
++     vis bEntity6,0
++     cardMedia.bco=defaultBcoColor
++     for(sys0=0;sys0<52;sys0++)
++     for(sys0=0;sys0<34;sys0++)
 +     {
 +         if(b[sys0].type==98||b[sys0].type==116)
 +         {
 +             b[sys0].bco=defaultBcoColor
 +             b[sys0].pco=defaultFontColor
 +         }
-+         if(defaultBcoColor==0)
-+15 +283,15 @@
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 
-+ Max. Text Size                      : 10
-+ Max. Text Size                      : 20
-+
-+omeO
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+81 +303,81 @@
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 
-+ Max. Text Size                      : 10
-+ Max. Text Size                      : 20
-+
-+ p0
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+
-+h0
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Position                            : 600
-+ Upper range limit                   : 1200
-+ Position                            : 50
-+ Upper range limit                   : 100
-+ Lower range limit                   : 0
-+
-+h1
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Position                            : 600
-+ Upper range limit                   : 1200
-+ Position                            : 50
-+ Upper range limit                   : 100
-+ Lower range limit                   : 0
-+
-+h2
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Position                            : 600
-+ Upper range limit                   : 1200
-+ Position                            : 50
-+ Upper range limit                   : 100
-+ Lower range limit                   : 0
-+
-+h3
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Position                            : 600
-+ Upper range limit                   : 1200
-+ Position                            : 50
-+ Upper range limit                   : 100
-+ Lower range limit                   : 0
-+
-+h4
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Position                            : 600
-+ Upper range limit                   : 1200
-+ Position                            : 50
-+ Upper range limit                   : 100
-+ Lower range limit                   : 0
-+
-+h5
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Position                            : 600
-+ Upper range limit                   : 1200
-+ Position                            : 50
-+ Upper range limit                   : 100
-+ Lower range limit                   : 0
-+
-+bNext
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+92 +463,74 @@
-+ributes
-+ Scope      : local
-+ Period (ms): 100
-+ Enabled    : yes
-+
-+nts
-+ Timer Event
-+     if(t0Speed.val!=0)
-+     sys0=h0.val+t0Speed.val
-+     if(sys0>h0.maxval)
-+     {
-+         sys0=h0.val+t0Speed.val
-+         if(sys0>h0.maxval)
-+         {
-+             h0.val=h0.minval
-+         }
-+         if(sys0<h0.minval)
-+         {
-+             h0.val=h0.maxval
-+         }
-+         h0.val+=t0Speed.val
-+         h0.val=h0.minval
 +     }
-+     if(t1Speed.val!=0)
-+     if(sys0<h0.minval)
-+     {
-+         sys0=h1.val+t1Speed.val
-+         if(sys0>h1.maxval)
-+         {
-+             h1.val=h1.minval
-+         }
-+         if(sys0<h1.minval)
-+         {
-+             h1.val=h1.maxval
-+         }
-+         h1.val+=t1Speed.val
-+         h0.val=h0.maxval
-+     }
-+     if(t2Speed.val!=0)
-+     h0.val+=t0Speed.val
-+     sys0=h1.val+t1Speed.val
-+     if(sys0>h1.maxval)
-+     {
-+         sys0=h2.val+t2Speed.val
-+         if(sys0>h2.maxval)
-+         {
-+             h2.val=h2.minval
-+         }
-+         if(sys0<h2.minval)
-+         {
-+             h2.val=h2.maxval
-+         }
-+         h2.val+=t2Speed.val
-+         h1.val=h1.minval
-+     }
-+     if(t3Speed.val!=0)
-+     if(sys0<h1.minval)
-+     {
-+         sys0=h3.val+t3Speed.val
-+         if(sys0>h3.maxval)
-+         {
-+             h3.val=h3.minval
-+         }
-+         if(sys0<h3.minval)
-+         {
-+             h3.val=h3.maxval
-+         }
-+         h3.val+=t3Speed.val
-+         h1.val=h1.maxval
-+     }
-+     if(t4Speed.val!=0)
-+     h1.val+=t1Speed.val
-+     sys0=h2.val+t2Speed.val
-+     if(sys0>h2.maxval)
-+     {
-+         sys0=h4.val+t4Speed.val
-+         if(sys0>h4.maxval)
-+         {
-+             h4.val=h4.minval
-+         }
-+         if(sys0<h4.minval)
-+         {
-+             h4.val=h4.maxval
-+         }
-+         h4.val+=t4Speed.val
-+         h2.val=h2.minval
-+     }
-+     if(t5Speed.val!=0)
-+     if(sys0<h2.minval)
-+     {
-+         sys0=h5.val+t5Speed.val
-+         if(sys0>h5.maxval)
-+         {
-+             h5.val=h5.minval
-+         }
-+         if(sys0<h5.minval)
-+         {
-+             h5.val=h5.maxval
-+         }
-+         h5.val+=t5Speed.val
-+         h2.val=h2.maxval
-+     }
-+     h2.val+=t2Speed.val
-+     sys0=h3.val+t3Speed.val
-+     if(sys0>h3.maxval)
-+     {
-+         h3.val=h3.minval
-+     }
-+     if(sys0<h3.minval)
-+     {
-+         h3.val=h3.maxval
-+     }
-+     h3.val+=t3Speed.val
-+     sys0=h4.val+t4Speed.val
-+     if(sys0>h4.maxval)
-+     {
-+         h4.val=h4.minval
-+     }
-+     if(sys0<h4.minval)
-+     {
-+         h4.val=h4.maxval
-+     }
-+     h4.val+=t4Speed.val
-+     sys0=h5.val+t5Speed.val
-+     if(sys0>h5.maxval)
-+     {
-+         h5.val=h5.minval
-+     }
-+     if(sys0<h5.minval)
-+     {
-+         h5.val=h5.maxval
-+     }
-+     h5.val+=t5Speed.val
-+ 
-+mSerial
-+ributes
-+ Scope      : local
-+ Period (ms): 50
-+ Enabled    : yes
 +I/n2t-out/cardQR.txt
 ++ HMI/US/portrait/n2t-out/cardQR.txt
 +19 +602,19 @@
@@ -782,7 +511,60 @@
 +                             }
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
-+0 +35,14 @@
++ +8,56 @@
++ Swide up page ID                    : disabled
++ Swide down page ID                  : disabled
++ Swide left page ID                  : disabled
++ Swide right page ID                 : disabled
++
++nts
++ Preinitialize Event
++     dim=dimValueNormal
++     vis p0,0
++     recmod=1
++     bauds=115200
++     vis tSend,0
++     vis tInstruction,0
++     vis tTmp,0
++     vis tId,0
++     vis bSendStartup,0
++     vis frame_ptr,0
++     vis spinner_w,0
++     vis frapic_w,0
++     vis usual_cnt,0
++     vis tMsg2,0
++     vis tMsg3,0
++     vis tVersion,0
++     dim=100
++     vis t5,0
++     vis tShuffle,0
++     vis bPrev,0
++     vis bNext,0
++     vis bEntity1,0
++     vis bEntity2,0
++     vis bEntity3,0
++     vis bEntity4,0
++     vis bEntity5,0
++     vis bEntity6,0
++     cardMedia.bco=defaultBcoColor
++     for(sys0=0;sys0<52;sys0++)
++     {
++         if(b[sys0].type==98||b[sys0].type==116)
++         {
++             b[sys0].bco=defaultBcoColor
++             b[sys0].pco=defaultFontColor
++         }
++     }
++     if(defaultBcoColor==0)
++     {
++         hVolume.pic=14
++         hVolume.pic1=13
++         hVolume.pic2=15
++     }
++ 
++ Postinitialize Event
++     //send messages by clicking button
++     click bSendStartup,1
 + 
 +e (string) strCommand
 +ributes
@@ -803,26 +585,11 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+15 +139,15 @@
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 
-+ Max. Text Size                      : 30
-+ Max. Text Size                      : 10
-+
-+ersion
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
++15 +133,15 @@
++15 +188,15 @@
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
-+8 +29,19 @@
++2 +29,19 @@
 +     }
 +     tDate.txt=pageIcons.vaDate.txt
 +     dim=dimValue
@@ -838,21 +605,15 @@
 + Scope         : local
 + Text          : 
 + Max. Text Size: 400
++ Max. Text Size: 200
 +
 +e (string) strTmp
 +ributes
 + Scope         : local
 + Text          : 
 + Max. Text Size: 2
-+ Max. Text Size: 200
 +
-+e (string) tId
-+ributes
-+ Scope         : local
-+ Text          : 
-+ Max. Text Size: 25
-+
-+35 +94,14 @@
++35 +100,14 @@
 + Value: 0
 +
 +e (int32) ycR
@@ -888,38 +649,3 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+15 +464,14 @@
-+                                 if(tTmp.txt!="")
-+                                 {
-+                                     covx tTmp.txt,defaultFontColor,0,0
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 click m0,1
-+                                 //get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                                 spstr pageIcons.vaTime.txt,tTime.txt,"?",0
-+                                 spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
-+                                 if(tAMPM.txt=="")
-+                                 {
-+                                     vis tAMPM,0
-+14 +757,18 @@
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                                 if(tId.txt=="cardLChart")
-+                                 {
-+                                     page cardLChart
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="timeout")
-+                             {
-+                                 //set timeout to global var
-+                                 spstr strCommand.txt,tTmp.txt,"~",1
-+                                 covx tTmp.txt,sleepTimeout,0,0
-+                             }
