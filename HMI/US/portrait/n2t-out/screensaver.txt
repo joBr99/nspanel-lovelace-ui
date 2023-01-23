@@ -516,12 +516,6 @@ Timer tmSerial
                                     }
                                     if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
                                     {
-                                        vis tMainIcon,1
-                                        vis tMainIconAlt,0
-                                        vis tMainText,1
-                                        vis tMainTextAlt,0
-                                        vis tMainTextAlt2,0
-                                        vis tMainIconAlt2,0
                                         //tMainIcon
                                         spstr strCommand.txt,tMainIcon.txt,"~",3
                                         tMainIconAlt.txt=tMainIcon.txt
@@ -601,6 +595,14 @@ Timer tmSerial
                                             tF4Icon.pco=tF3Icon.pco
                                             tF3Icon.pco=tF2Icon.pco
                                             tF2Icon.pco=tF1Icon.pco
+                                        }else
+                                        {
+                                            vis tMainIcon,1
+                                            vis tMainIconAlt,0
+                                            vis tMainText,1
+                                            vis tMainTextAlt,0
+                                            vis tMainTextAlt2,0
+                                            vis tMainIconAlt2,0
                                         }
                                     }
                                     if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")

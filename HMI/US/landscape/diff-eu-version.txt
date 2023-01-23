@@ -1399,16 +1399,18 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",2
 │                                          covx tTmp.txt,tIcon1.pco,0,0
 │                                          //statusIcon2
-│ @@ -540,95 +522,91 @@
+│ @@ -536,101 +518,95 @@
+│                                          if(tTmp.txt!="")
+│                                          {
+│                                              tIcon2.font=3
+│                                          }
 │                                      }
 │                                      if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
 │                                      {
-│                                          vis tMainIcon,1
-│                                          vis tMainIconAlt,0
-│                                          vis tMainText,1
-│                                          vis tMainTextAlt,0
-│ -                                        vis tMainTextAlt2,0
-│ -                                        vis tMainIconAlt2,0
+│ +                                        vis tMainIcon,1
+│ +                                        vis tMainIconAlt,0
+│ +                                        vis tMainText,1
+│ +                                        vis tMainTextAlt,0
 │ +                                        vis tMRIcon,0
 │ +                                        vis tMR,0
 │                                          //tMainIcon
@@ -1509,6 +1511,7 @@
 │ -                                            tF4Icon.pco=tF3Icon.pco
 │ -                                            tF3Icon.pco=tF2Icon.pco
 │ -                                            tF2Icon.pco=tF1Icon.pco
+│ -                                        }else
 │ +                                        }
 │ +                                        //tMR
 │ +                                        spstr strCommand.txt,tMR.txt,"~",16
@@ -1527,7 +1530,13 @@
 │ +                                        }
 │ +                                        spstr strCommand.txt,tTmp.txt,"~",22
 │ +                                        if(tTmp.txt!="")
-│ +                                        {
+│                                          {
+│ -                                            vis tMainIcon,1
+│ -                                            vis tMainIconAlt,0
+│ -                                            vis tMainText,1
+│ -                                            vis tMainTextAlt,0
+│ -                                            vis tMainTextAlt2,0
+│ -                                            vis tMainIconAlt2,0
 │ +                                            tIcon2.font=3
 │                                          }
 │                                      }
@@ -1536,7 +1545,7 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",1
 │                                          covx tTmp.txt,tTime.bco,0,0
 │                                          if(tTime.bco!=screensaver.bco)
-│ @@ -636,16 +614,17 @@
+│ @@ -638,16 +614,17 @@
 │                                              screensaver.bco=tTime.bco
 │                                              tAMPM.bco=tTime.bco
 │                                              tDate.bco=tTime.bco
@@ -1556,7 +1565,7 @@
 │                                              tF1Icon.bco=tTime.bco
 │                                              tForecast2.bco=tTime.bco
 │                                              tForecast2Val.bco=tTime.bco
-│ @@ -661,42 +640,56 @@
+│ @@ -663,42 +640,56 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",2
 │                                          covx tTmp.txt,tTime.pco,0,0
 │                                          spstr strCommand.txt,tTmp.txt,"~",3
@@ -1627,7 +1636,7 @@
 │                                              tForecast3.pco=tForecast2.pco
 │                                              tForecast2.pco=tForecast1.pco
 │                                          }
-│ @@ -791,24 +784,14 @@
+│ @@ -793,24 +784,14 @@
 │                                          {
 │                                              page cardPower
 │                                          }
