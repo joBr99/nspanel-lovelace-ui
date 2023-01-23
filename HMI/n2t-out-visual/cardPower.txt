@@ -609,7 +609,7 @@ Text tHome
         Vertical Alignment                  : bottom
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 20
+        Max. Text Size                      : 10
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -669,7 +669,7 @@ Text tHomeO
         Vertical Alignment                  : bottom
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 20
+        Max. Text Size                      : 10
         Word wrap                           : enabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0

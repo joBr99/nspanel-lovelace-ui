@@ -277,7 +277,7 @@ Text tHome
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 20
+        Max. Text Size                      : 10
     
 Text tHome2
     Attributes
@@ -297,7 +297,7 @@ Text tHomeO
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 20
+        Max. Text Size                      : 10
     
 Text tHomeO2
     Attributes
