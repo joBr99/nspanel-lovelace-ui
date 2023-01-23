@@ -536,6 +536,23 @@
 │                                      if(tInstruction.txt=="date")
 │   --- HMI/n2t-out/cardMedia.txt
 ├── +++ HMI/US/landscape/n2t-out/cardMedia.txt
+│ @@ -25,15 +25,15 @@
+│              vis bEntity1,0
+│              vis bEntity2,0
+│              vis bEntity3,0
+│              vis bEntity4,0
+│              vis bEntity5,0
+│              vis bEntity6,0
+│              cardMedia.bco=defaultBcoColor
+│ -            for(sys0=0;sys0<52;sys0++)
+│ +            for(sys0=0;sys0<34;sys0++)
+│              {
+│                  if(b[sys0].type==98||b[sys0].type==116)
+│                  {
+│                      b[sys0].bco=defaultBcoColor
+│                      b[sys0].pco=defaultFontColor
+│                  }
+│              }
 │ @@ -1200,18 +1200,14 @@
 │                                          {
 │                                              page cardPower
@@ -574,14 +591,16 @@
 │                      b[sys0].pco=defaultFontColor
 │                  }
 │                  if(defaultBcoColor==0)
-│ @@ -275,109 +275,79 @@
+│ @@ -273,111 +273,81 @@
+│      Attributes
+│          Scope                               : local
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
 │          Text                                : 
-│          Max. Text Size                      : 20
-│      
+│ -        Max. Text Size                      : 10
+│ -    
 │ -Text tHome2
 │ -    Attributes
 │ -        Scope                               : local
@@ -600,7 +619,7 @@
 │ -        Send Component ID                   : disabled
 │ -        Associated Keyboard                 : none
 │ -        Text                                : 
-│ -        Max. Text Size                      : 20
+│ -        Max. Text Size                      : 10
 │ -    
 │ -Text tHomeO2
 │ -    Attributes
@@ -611,7 +630,8 @@
 │ -        Associated Keyboard                 : none
 │ -        Text                                : 
 │ -        Max. Text Size                      : 10
-│ -    
+│ +        Max. Text Size                      : 20
+│      
 │  Picture p0
 │      Attributes
 │          Scope                               : local
@@ -1379,7 +1399,7 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",2
 │                                          covx tTmp.txt,tIcon1.pco,0,0
 │                                          //statusIcon2
-│ @@ -540,109 +522,109 @@
+│ @@ -540,95 +522,91 @@
 │                                      }
 │                                      if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
 │                                      {
@@ -1486,7 +1506,10 @@
 │                                              tF4Icon.txt=tF3Icon.txt
 │                                              tF3Icon.txt=tF2Icon.txt
 │                                              tF2Icon.txt=tF1Icon.txt
-│                                          }
+│ -                                            tF4Icon.pco=tF3Icon.pco
+│ -                                            tF3Icon.pco=tF2Icon.pco
+│ -                                            tF2Icon.pco=tF1Icon.pco
+│ +                                        }
 │ +                                        //tMR
 │ +                                        spstr strCommand.txt,tMR.txt,"~",16
 │ +                                        //statusIcon1
@@ -1506,14 +1529,14 @@
 │ +                                        if(tTmp.txt!="")
 │ +                                        {
 │ +                                            tIcon2.font=3
-│ +                                        }
+│                                          }
 │                                      }
 │                                      if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
 │                                      {
 │                                          spstr strCommand.txt,tTmp.txt,"~",1
 │                                          covx tTmp.txt,tTime.bco,0,0
 │                                          if(tTime.bco!=screensaver.bco)
-│                                          {
+│ @@ -636,16 +614,17 @@
 │                                              screensaver.bco=tTime.bco
 │                                              tAMPM.bco=tTime.bco
 │                                              tDate.bco=tTime.bco
@@ -1533,7 +1556,7 @@
 │                                              tF1Icon.bco=tTime.bco
 │                                              tForecast2.bco=tTime.bco
 │                                              tForecast2Val.bco=tTime.bco
-│ @@ -658,42 +640,56 @@
+│ @@ -661,42 +640,56 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",2
 │                                          covx tTmp.txt,tTime.pco,0,0
 │                                          spstr strCommand.txt,tTmp.txt,"~",3
@@ -1604,24 +1627,28 @@
 │                                              tForecast3.pco=tForecast2.pco
 │                                              tForecast2.pco=tForecast1.pco
 │                                          }
-│ @@ -789,20 +785,14 @@
+│ @@ -791,24 +784,14 @@
+│                                          {
 │                                              page cardPower
 │                                          }
 │                                          if(tId.txt=="cardChart")
 │                                          {
 │                                              page cardChart
 │                                          }
-│                                      }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│ -                                    }
 │ -                                    if(tInstruction.txt=="timeout")
 │ -                                    {
 │ -                                        //set timeout to global var
 │ -                                        spstr strCommand.txt,tTmp.txt,"~",1
 │ -                                        covx tTmp.txt,sleepTimeout,0,0
-│ -                                    }
+│                                      }
 │                                      // end of user code
 │                                      udelete payloadLength-1
 │                                      bufferPos=0
 │                                  }
 │                              }
 │                          }
-│                      }

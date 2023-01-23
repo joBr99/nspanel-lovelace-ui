@@ -46,7 +46,7 @@ Page cardAlarm
             vis bPrev,0
             vis bNext,0
             cardAlarm.bco=defaultBcoColor
-            for(sys0=0;sys0<40;sys0++)
+            for(sys0=0;sys0<44;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
