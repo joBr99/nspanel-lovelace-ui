@@ -544,7 +544,7 @@
 │              vis bEntity5,0
 │              vis bEntity6,0
 │              cardMedia.bco=defaultBcoColor
-│ -            for(sys0=0;sys0<52;sys0++)
+│ -            for(sys0=0;sys0<54;sys0++)
 │ +            for(sys0=0;sys0<34;sys0++)
 │              {
 │                  if(b[sys0].type==98||b[sys0].type==116)
@@ -824,11 +824,11 @@
 │ +            if(sys0>h3.maxval)
 │ +            {
 │ +                h3.val=h3.minval
-│ +            }
+│              }
 │ +            if(sys0<h3.minval)
 │ +            {
 │ +                h3.val=h3.maxval
-│              }
+│ +            }
 │ +            h3.val+=t3Speed.val
 │ +            sys0=h4.val+t4Speed.val
 │ +            if(sys0>h4.maxval)
@@ -1072,6 +1072,25 @@
 │                                              vis h5,1
 │                                          }else
 │                                          {
+│ @@ -891,18 +785,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
 │   --- HMI/n2t-out/cardQR.txt
 ├── +++ HMI/US/landscape/n2t-out/cardQR.txt
 │ @@ -602,19 +602,19 @@

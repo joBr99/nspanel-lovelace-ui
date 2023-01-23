@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-01-23 17:04:15.689928965 +0000
++++ /dev/fd/62	2023-01-23 17:28:44.671366324 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardEntities.txt
@@ -54,13 +54,13 @@
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +186,26 @@
 +e (string) type6
@@ -466,25 +466,27 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+I/n2t-out/cardMedia.txt
-++ HMI/US/portrait/n2t-out/cardMedia.txt
-+5 +25,15 @@
-+     vis bEntity1,0
-+     vis bEntity2,0
-+     vis bEntity3,0
-+     vis bEntity4,0
-+     vis bEntity5,0
-+     vis bEntity6,0
-+     cardMedia.bco=defaultBcoColor
-+     for(sys0=0;sys0<52;sys0++)
-+     for(sys0=0;sys0<34;sys0++)
-+     {
-+         if(b[sys0].type==98||b[sys0].type==116)
-+         {
-+             b[sys0].bco=defaultBcoColor
-+             b[sys0].pco=defaultFontColor
-+         }
-+     }
++I/n2t-out/cardPower.txt
+++ HMI/US/portrait/n2t-out/cardPower.txt
++18 +891,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
 +I/n2t-out/cardQR.txt
 ++ HMI/US/portrait/n2t-out/cardQR.txt
 +19 +602,19 @@
