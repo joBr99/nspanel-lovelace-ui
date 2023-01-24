@@ -1,4 +1,4 @@
-Page cardQR
+Page cardLChart
     Attributes
         Scope                               : local
         Dragging                            : 0
@@ -20,19 +20,10 @@ Page cardQR
             vis tId,0
             vis bPrev,0
             vis bNext,0
-            //ui e1
-            vis btOnOff1,0
-            vis tIcon1,0
-            vis tEntity1,0
-            vis bText1,0
-            //ui e2
-            vis btOnOff2,0
-            vis tIcon2,0
-            vis tEntity2,0
-            vis bText2,0
-            tsw m0,0
-            tsw m1,0
-            cardQR.bco=defaultBcoColor
+            cardLChart.bco=defaultBcoColor
+            //vis x0,0
+            //x0.bco=defaultBcoColor
+            //x0.borderc=defaultBcoColor
             for(sys0=0;sys0<32;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
@@ -58,35 +49,29 @@ Variable (string) entn
         Text          : 
         Max. Text Size: 80
     
-Variable (string) entn1
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
-Variable (string) entn2
-    Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
-    
 Variable (string) nent1
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 80
     
 Variable (string) nent2
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 80
     
 Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 400
+        Max. Text Size: 512
+    
+Variable (string) strTmp
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 200
     
 Variable (string) tId
     Attributes
@@ -110,45 +95,67 @@ Variable (string) tTmp
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 10
+        Max. Text Size: 400
     
-Variable (string) type1
+Variable (int32) vNValues
     Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 10
+        Scope: local
+        Value: 0
     
-Variable (string) type2
+Variable (int32) vaBottom
     Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 10
+        Scope: local
+        Value: 0
     
-Variable (string) vaQR
+Variable (int32) vaColorD
     Attributes
-        Scope         : local
-        Text          : 
-        Max. Text Size: 80
+        Scope: local
+        Value: 0
     
-Text tEntity1
+Variable (int32) vaColorL
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity1
-        Max. Text Size                      : 30
+        Scope: local
+        Value: 0
     
-Text tEntity2
+Variable (int32) vaLeft
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity1
-        Max. Text Size                      : 30
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaMaxX
+    Attributes
+        Scope: local
+        Value: 2147483648
+    
+Variable (int32) vaMaxY
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaMinX
+    Attributes
+        Scope: local
+        Value: 2147483647
+    
+Variable (int32) vaMinY
+    Attributes
+        Scope: local
+        Value: 2147483647
+    
+Variable (int32) vaValue
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaXUnit
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) vaYUnit
+    Attributes
+        Scope: local
+        Value: 0
     
 Text tHeading
     Attributes
@@ -159,26 +166,6 @@ Text tHeading
         Associated Keyboard                 : none
         Text                                : 
         Max. Text Size                      : 40
-    
-Text tIcon1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î°
-        Max. Text Size                      : 5
-    
-Text tIcon2
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î°
-        Max. Text Size                      : 5
     
 Picture p0
     Attributes
@@ -199,7 +186,14 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
+            tSend.txt="event,buttonPress2,cardChart,"
+            if(bPrev.txt=="î")
+            {
+                tSend.txt+="bHome"
+            }else
+            {
+                tSend.txt+="bNext"
+            }
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -224,111 +218,14 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bText1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 30
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Button bText2
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 30
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Dual-state Button btOnOff1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
-            covx btOnOff1.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
-            //send calc crc
-            btlen tSend.txt,sys0
-            crcrest 1,0xffff // reset CRC
-            crcputh 55 bb
-            crcputs sys0,2
-            crcputs tSend.txt,0
-            //send cmd
-            printh 55 bb
-            prints sys0,2
-            prints tSend.txt,0
-            prints crcval,2
-        
-Dual-state Button btOnOff2
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 10
-    
-    Events
-        Touch Press Event
-            tSend.txt="event,buttonPress2,"+entn2.txt+",OnOff,"
-            covx btOnOff2.val,tTmp.txt,0,0
-            tSend.txt+=tTmp.txt
+            tSend.txt="event,buttonPress2,cardChart,"
+            if(bPrev.txt=="î¶")
+            {
+                tSend.txt+="bUp"
+            }else
+            {
+                tSend.txt+="bPrev"
+            }
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -348,13 +245,10 @@ Hotspot m0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
     
-Hotspot m1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-    
+    Events
+        Touch Press Event
+            //fill m0.x,m0.y,m0.w,m0.h,RED
+        
 Hotspot mSwipeNext
     Attributes
         Scope                               : local
@@ -435,14 +329,11 @@ Timer tmSerial
                                 {
                                     // crc is okay
                                     // here is the location where acual code should be
-                                    // write command to variable strCommand
                                     ucopy strCommand.txt,4,payloadLength-5,0
                                     // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
                                     spstr strCommand.txt,tInstruction.txt,"~",0
                                     if(tInstruction.txt=="entityUpd")
                                     {
-                                        // command format: entityUpd,heading,navigation,textQR[,type,internalName,iconId,displayName,optionalValue]x2
-                                        //tHeading
                                         spstr strCommand.txt,tHeading.txt,"~",1
                                         // navigation icon left
                                         spstr strCommand.txt,tTmp.txt,"~",2 //type
@@ -478,139 +369,209 @@ Timer tmSerial
                                             bNext.pco=sys0
                                             vis bNext,1
                                         }
-                                        //text qrcode
-                                        spstr strCommand.txt,vaQR.txt,"~",14
-                                        // get Type
-                                        spstr strCommand.txt,type1.txt,"~",15
-                                        // get internal name
-                                        spstr strCommand.txt,entn1.txt,"~",16
-                                        if(type1.txt=="delete"||type1.txt=="")
+                                        //draw m0.x,m0.y,m0.x+m0.w,m0.y+m0.h,RED
+                                        // extract color
+                                        spstr strCommand.txt,tTmp.txt,"~",14
+                                        covx tTmp.txt,vaColorL.val,0,0
+                                        // prepare dark color
+                                        sys0=vaColorL.val>>11 // red
+                                        vaColorD.val=sys0*8/10<<11 // store and shift
+                                        sys0=vaColorL.val>>5%64 // green
+                                        vaColorD.val=sys0*8/10<<5+vaColorD.val // store and shift
+                                        sys0=vaColorL.val%32
+                                        vaColorD.val=sys0*8/10+vaColorD.val // store and add
+                                        //
+                                        // detect nValues and maxX/Y
+                                        vNValues.val=0
+                                        spstr strCommand.txt,tTmp.txt,"~",vNValues.val+18
+                                        strlen tTmp.txt,sya0
+                                        while(sya0>0)
                                         {
-                                            vis btOnOff1,0
-                                            vis tEntity1,0
-                                            vis tIcon1,0
-                                            vis bText1,0
-                                        }else
-                                        {
-                                            // change icon
-                                            spstr strCommand.txt,tIcon1.txt,"~",17
-                                            vis tIcon1,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",18
-                                            covx tTmp.txt,sys0,0,0
-                                            tIcon1.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity1.txt,"~",19
-                                            vis tEntity1,1
-                                        }
-                                        if(type1.txt=="light")
-                                        {
-                                            vis btOnOff1,1
-                                            vis bText1,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",20
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff1.val=sys0
-                                        }
-                                        if(type1.txt=="switch")
-                                        {
-                                            vis btOnOff1,1
-                                            vis bText1,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",20
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff1.val=sys0
-                                        }
-                                        if(type1.txt=="text")
-                                        {
-                                            vis btOnOff1,0
-                                            vis bText1,1
-                                            tsw bText1,0
-                                            bText1.pco=65535
-                                            bText1.pco2=65535
-                                            // get Text (optional Value)
-                                            spstr strCommand.txt,bText1.txt,"~",20
-                                        }
-                                        if(type1.txt=="button")
-                                        {
-                                            vis btOnOff1,0
-                                            vis bText1,1
-                                            tsw bText1,1
-                                            bText1.pco=1374
-                                            bText1.pco2=1374
-                                            // get Text (optional Value)
-                                            spstr strCommand.txt,bText1.txt,"~",20
-                                        }
-                                        // get Type
-                                        spstr strCommand.txt,type2.txt,"~",21
-                                        // get internal name
-                                        spstr strCommand.txt,entn2.txt,"~",22
-                                        if(type2.txt=="delete"||type2.txt=="")
-                                        {
-                                            vis btOnOff2,0
-                                            vis tEntity2,0
-                                            vis tIcon2,0
-                                            vis bText2,0
-                                        }else
-                                        {
-                                            // change icon
-                                            spstr strCommand.txt,tIcon2.txt,"~",23
-                                            vis tIcon2,1
-                                            // change icon color
-                                            spstr strCommand.txt,tTmp.txt,"~",24
-                                            covx tTmp.txt,sys0,0,0
-                                            tIcon2.pco=sys0
-                                            // set name
-                                            spstr strCommand.txt,tEntity2.txt,"~",25
-                                            vis tEntity2,1
-                                        }
-                                        if(type2.txt=="light")
-                                        {
-                                            vis btOnOff2,1
-                                            vis bText2,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",26
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff2.val=sys0
-                                        }
-                                        if(type2.txt=="switch")
-                                        {
-                                            vis btOnOff2,1
-                                            vis bText2,0
-                                            // get Button State (optional Value)
-                                            spstr strCommand.txt,tTmp.txt,"~",26
-                                            covx tTmp.txt,sys0,0,0
-                                            btOnOff2.val=sys0
-                                        }
-                                        if(type2.txt=="text")
-                                        {
-                                            vis btOnOff2,0
-                                            vis bText2,1
-                                            tsw bText2,0
-                                            bText2.pco=65535
-                                            bText2.pco2=65535
-                                            // get Text (optional Value)
-                                            spstr strCommand.txt,bText2.txt,"~",26
-                                        }
-                                        if(type2.txt=="button")
-                                        {
-                                            vis btOnOff2,0
-                                            vis bText2,1
-                                            tsw bText2,1
-                                            bText2.pco=1374
-                                            bText2.pco2=1374
-                                            // get Text (optional Value)
-                                            spstr strCommand.txt,bText2.txt,"~",26
-                                        }
-                                        if(type2.txt=="delete"||type2.txt=="")
-                                        {
-                                            if(type1.txt=="delete"||type1.txt=="")
+                                            //tHeading.txt="last value="+tTmp.txt
+                                            spstr tTmp.txt,strTmp.txt,":",0
+                                            covx strTmp.txt,sya1,0,0
+                                            if(sya1>vaMaxX.val)
                                             {
-                                                qrcode m1.x,m1.y,200,defaultBcoColor,65535,-1,vaQR.txt
+                                                vaMaxX.val=sya1
                                             }
-                                        }else
+                                            if(sya1<vaMinX.val)
+                                            {
+                                                vaMinX.val=sya1
+                                            }
+                                            spstr tTmp.txt,strTmp.txt,":",1
+                                            covx strTmp.txt,sya1,0,0
+                                            if(sya1>vaMaxY.val)
+                                            {
+                                                vaMaxY.val=sya1
+                                            }
+                                            if(sya1<vaMinY.val)
+                                            {
+                                                vaMinY.val=sya1
+                                            }
+                                            // next
+                                            vNValues.val++
+                                            spstr strCommand.txt,tTmp.txt,"~",vNValues.val+18
+                                            strlen tTmp.txt,sya0
+                                        }
+                                        // find first given y axis labels
+                                        spstr strCommand.txt,tTmp.txt,"~",16 // labels in tTmp.txt
+                                        sys0=0 // <= result (here: first label value)
+                                        spstr tTmp.txt,strTmp.txt,":",sys0
+                                        strlen strTmp.txt,sya0
+                                        while(sya0>0)
                                         {
-                                            qrcode m0.x,m0.y,200,defaultBcoColor,65535,-1,vaQR.txt
+                                            covx strTmp.txt,sya1,0,0
+                                            if(sya1>vaMinY.val)
+                                            {
+                                                sys0--
+                                                if(sys0>=0)
+                                                {
+                                                    // found a y-tick => take is at min...
+                                                    spstr tTmp.txt,strTmp.txt,":",sys0
+                                                    covx strTmp.txt,vaMinY.val,0,0
+                                                }
+                                                sya0=0
+                                            }else
+                                            {
+                                                // next
+                                                sys0++
+                                                spstr tTmp.txt,strTmp.txt,":",sys0
+                                                strlen strTmp.txt,sya0
+                                            }
+                                        }
+                                        sys1=sys0+1 // last label
+                                        spstr tTmp.txt,strTmp.txt,":",sys1
+                                        strlen strTmp.txt,sya0
+                                        while(sya0>0)
+                                        {
+                                            covx strTmp.txt,sya1,0,0
+                                            if(sya1>=vaMaxY.val)
+                                            {
+                                                vaMaxY.val=sya1
+                                                sya0=0
+                                            }else
+                                            {
+                                                // next
+                                                sys1++
+                                                spstr tTmp.txt,strTmp.txt,":",sys1
+                                                strlen strTmp.txt,sya0
+                                            }
+                                        }
+                                        // get first given x axis tick
+                                        spstr strCommand.txt,strTmp.txt,"~",17 // X-Axis ticks & labels in strTmp.txt
+                                        covx strTmp.txt,vaMinX.val,0,0
+                                        //              covx vaMinX.val,strTmp.txt,0,0
+                                        //              tHeading.txt+=strTmp.txt+":"
+                                        //              covx vaMaxX.val,strTmp.txt,0,0
+                                        //              tHeading.txt+=strTmp.txt
+                                        // calculate unit width
+                                        vaBottom.val=m0.y+m0.h-24
+                                        vaLeft.val=m0.x+25+40*100
+                                        sya1=vaMaxX.val-vaMinX.val
+                                        vaXUnit.val=m0.w-25-40*100/sya1
+                                        sya1=vaMaxY.val-vaMinY.val
+                                        vaYUnit.val=m0.h-24*100/sya1
+                                        // draw labels
+                                        // labels still in tTmp.txt
+                                        line m0.x+25+40-10,m0.y,m0.x+25+40-10,vaBottom.val+5,14823
+                                        line m0.x+25+40-5,vaBottom.val,m0.x+25+40-15,vaBottom.val,14823
+                                        if(sys0>0)
+                                        {
+                                            sys0--
+                                        }
+                                        for(sya0=sys0;sya0<=sys1;sya0++)
+                                        {
+                                            spstr tTmp.txt,strTmp.txt,":",sya0
+                                            covx strTmp.txt,sya1,0,0
+                                            sys2=sya1%10
+                                            sya1/=10
+                                            if(sya1>0)
+                                            {
+                                                covx sya1,strTmp.txt,0,0
+                                            }else
+                                            {
+                                                strTmp.txt=""
+                                            }
+                                            if(sys2!=0)
+                                            {
+                                                covx sys2,tId.txt,0,0
+                                                strTmp.txt=strTmp.txt+"."+tId.txt
+                                            }
+                                            sya1*=10+sys2
+                                            sya1-=vaMinY.val
+                                            xstr m0.x+28,-1*vaYUnit.val*sya1/100+vaBottom.val-10,20,20,0,defaultFontColor,RED,2,1,3,strTmp.txt
+                                            line m0.x+25+40-5,-1*vaYUnit.val*sya1/100+vaBottom.val,m0.x+25+40-15,-1*vaYUnit.val*sya1/100+vaBottom.val,14823
+                                        }
+                                        // y achis label
+                                        spstr strCommand.txt,tTmp.txt,"~",15
+                                        strlen tTmp.txt,sys1
+                                        sya1=sys1*11+m0.h-48/2
+                                        for(sys0=0;sys0<sys1;sys0++)
+                                        {
+                                            substr tTmp.txt,strTmp.txt,sys0,1
+                                            xstr m0.x,sys0*-11+m0.y+sya1,24,20,6,defaultFontColor,RED,2,1,3,strTmp.txt
+                                        }
+                                        //
+                                        // x axis tick/labels
+                                        // draw bottom line
+                                        line m0.x+25+40,vaBottom.val,m0.x+m0.w,vaBottom.val,14823
+                                        spstr strCommand.txt,tTmp.txt,"~",17 // X-Axis ticks & labels in strTmp.txt
+                                        //
+                                        sys1=0
+                                        // extract first tick ~> sya1 contains fist ticks value
+                                        spstr tTmp.txt,strTmp.txt,"+",sys1
+                                        strlen strTmp.txt,sya0
+                                        covx strTmp.txt,sya1,0,0
+                                        // loop until current ticks label is smaller than the maximum value observed
+                                        while(sya0>0&&sya1<vaMaxX.val)
+                                        {
+                                            sys2=sya1-vaMinX.val*vaXUnit.val/100+m0.x+25+40
+                                            // draw tick line
+                                            line sys2,vaBottom.val-5,sys2,vaBottom.val+5,14823
+                                            // check for label
+                                            spstr strTmp.txt,strTmp.txt,"^",1
+                                            strlen strTmp.txt,sya0
+                                            if(sya0>0)
+                                            {
+                                                // label found ~> draw
+                                                xstr -6*sya0+sys2,vaBottom.val+2,sya0*12,22,0,defaultFontColor,defaultBcoColor,1,1,3,strTmp.txt
+                                            }
+                                            // next ~> sya1 contains next ticks label
+                                            sys1++
+                                            spstr tTmp.txt,strTmp.txt,"+",sys1
+                                            strlen strTmp.txt,sya0
+                                            covx strTmp.txt,sya1,0,0
+                                        }
+                                        //
+                                        // draw line segments...
+                                        sys1=-2147483648
+                                        sys2=-2147483648
+                                        for(sys0=0;sys0<vNValues.val;sys0++)
+                                        {
+                                            // extract x:y from "~" separated payload
+                                            spstr strCommand.txt,tTmp.txt,"~",sys0+18
+                                            spstr tTmp.txt,strTmp.txt,":",0
+                                            covx strTmp.txt,sya0,0,0
+                                            spstr tTmp.txt,strTmp.txt,":",1
+                                            covx strTmp.txt,sya1,0,0
+                                            sya0=sya0-vaMinX.val*vaXUnit.val/100+m0.x+25+40
+                                            sya1=sya1-vaMinY.val*vaYUnit.val/-100+vaBottom.val
+                                            // draw circle
+                                            // cir sya0-vaMinX.val*vaXUnit.val/100+m0.x+25+40,sya1-vaMinY.val*vaYUnit.val/-100+vaBottom.val,3,vaColorL.val
+                                            if(sys1>0&&sys2>0)
+                                            {
+                                                // this is not the first point as the last one has been stored in (sys1,sys2)
+                                                // ~> connect with a line...
+                                                //line sys1,sys2,sya0-vaMinX.val*vaXUnit.val/100+m0.x+25+40,sya1-vaMinY.val*vaYUnit.val/-100+vaBottom.val,vaColorD.val
+                                                line sys1,sys2,sya0,sya1,vaColorD.val
+                                                //line sys1-1,sys2-1,sya0-1,sya1-1,vaColorL.val
+                                                //line sys1+1,sys2+1,sya0+1,sya1+1,vaColorL.val
+                                            }
+                                            // store current point to (sys1,sys2)
+                                            //sys1=sya0-vaMinX.val*vaXUnit.val/100+m0.x+25+40
+                                            //sys2=sya1-vaMinY.val*vaYUnit.val/-100+vaBottom.val
+                                            sys1=sya0
+                                            sys2=sya1
                                         }
                                     }
                                     if(tInstruction.txt=="time")

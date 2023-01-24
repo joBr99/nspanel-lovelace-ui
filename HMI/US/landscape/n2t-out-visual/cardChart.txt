@@ -189,7 +189,7 @@ XFloat x0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 188
+        x coordinate                        : 189
         y coordinate                        : 84
         Width                               : 100
         Height                              : 30
@@ -221,7 +221,7 @@ Text tHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 81
+        x coordinate                        : 82
         y coordinate                        : 26
         Width                               : 320
         Height                              : 30
@@ -268,7 +268,7 @@ Button bNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 406
+        x coordinate                        : 407
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -315,7 +315,7 @@ Button bPrev
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 24
+        x coordinate                        : 25
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -362,7 +362,7 @@ Hotspot m0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 35
+        x coordinate                        : 36
         y coordinate                        : 90
         Width                               : 410
         Height                              : 220
@@ -846,6 +846,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     // end of user code
