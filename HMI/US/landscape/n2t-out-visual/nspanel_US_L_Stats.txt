@@ -18,10 +18,6 @@ cardChart
 	33   Component(s)
 	429  Line(s) of event code
 	292  Unique line(s) of event code
-cardLChart
-	33   Component(s)
-	408  Line(s) of event code
-	268  Unique line(s) of event code
 popupInSel
 	34   Component(s)
 	617  Line(s) of event code
@@ -42,6 +38,10 @@ cardQR
 	34   Component(s)
 	402  Line(s) of event code
 	234  Unique line(s) of event code
+cardLChart
+	33   Component(s)
+	394  Line(s) of event code
+	262  Unique line(s) of event code
 pageStartup
 	20   Component(s)
 	185  Line(s) of event code
@@ -86,5 +86,5 @@ screensaver
 Total
 	20   Page(s)
 	736  Component(s)
-	8814 Line(s) of event code
-	2263 Unique line(s) of event code
+	8800 Line(s) of event code
+	2256 Unique line(s) of event code

@@ -26,10 +26,6 @@ cardChart
 	33   Component(s)
 	429  Line(s) of event code
 	292  Unique line(s) of event code
-cardLChart
-	33   Component(s)
-	408  Line(s) of event code
-	268  Unique line(s) of event code
 pageTest
 	26   Component(s)
 	68   Line(s) of event code
@@ -46,6 +42,10 @@ cardAlarm
 	43   Component(s)
 	492  Line(s) of event code
 	269  Unique line(s) of event code
+cardLChart
+	33   Component(s)
+	394  Line(s) of event code
+	262  Unique line(s) of event code
 screensaver
 	47   Component(s)
 	428  Line(s) of event code
@@ -86,5 +86,5 @@ cardEntities
 Total
 	20   Page(s)
 	737  Component(s)
-	8824 Line(s) of event code
-	2271 Unique line(s) of event code
+	8810 Line(s) of event code
+	2264 Unique line(s) of event code

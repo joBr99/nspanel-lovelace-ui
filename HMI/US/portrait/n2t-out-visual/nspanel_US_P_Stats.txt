@@ -22,6 +22,10 @@ popupFan
 	27   Component(s)
 	351  Line(s) of event code
 	204  Unique line(s) of event code
+cardLChart
+	33   Component(s)
+	394  Line(s) of event code
+	262  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	185  Line(s) of event code
@@ -54,10 +58,6 @@ cardChart
 	33   Component(s)
 	429  Line(s) of event code
 	292  Unique line(s) of event code
-cardLChart
-	33   Component(s)
-	408  Line(s) of event code
-	268  Unique line(s) of event code
 screensaver
 	46   Component(s)
 	418  Line(s) of event code
@@ -86,5 +86,5 @@ cardEntities
 Total
 	20   Page(s)
 	747  Component(s)
-	9219 Line(s) of event code
-	2390 Unique line(s) of event code
+	9205 Line(s) of event code
+	2383 Unique line(s) of event code
