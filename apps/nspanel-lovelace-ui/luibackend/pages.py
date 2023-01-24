@@ -351,6 +351,7 @@ class LuiPagesGen(object):
             if type(item.stype) == int and len(entity.attributes.forecast) >= item.stype:
                 fdate = dp.parse(entity.attributes.forecast[item.stype]['datetime']).astimezone()
                 global babel_spec
+                if babel_spec is not None:
                     dateformat = "E" if item.nameOverride is None else item.nameOverride
                     name = babel.dates.format_date(fdate, dateformat, locale=self._locale)
                 else:
