@@ -1047,51 +1047,6 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
-│   --- HMI/n2t-out/cardPower.txt
-├── +++ HMI/US/portrait/n2t-out/cardPower.txt
-│ @@ -891,18 +891,14 @@
-│                                          {
-│                                              page cardPower
-│                                          }
-│                                          if(tId.txt=="cardChart")
-│                                          {
-│                                              page cardChart
-│                                          }
-│ -                                        if(tId.txt=="cardLChart")
-│ -                                        {
-│ -                                            page cardLChart
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="time")
-│                                      {
-│                                          // get set time to global variable
-│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-│                                      }
-│                                      if(tInstruction.txt=="date")
-│   --- HMI/n2t-out/cardQR.txt
-├── +++ HMI/US/portrait/n2t-out/cardQR.txt
-│ @@ -602,19 +602,19 @@
-│                                              // get Text (optional Value)
-│                                              spstr strCommand.txt,bText2.txt,"~",26
-│                                          }
-│                                          if(type2.txt=="delete"||type2.txt=="")
-│                                          {
-│                                              if(type1.txt=="delete"||type1.txt=="")
-│                                              {
-│ -                                                qrcode m1.x,m1.y,200,defaultBcoColor,65535,-1,vaQR.txt
-│ +                                                qrcode m1.x,m1.y,200,6371,65535,-1,vaQR.txt
-│                                              }
-│                                          }else
-│                                          {
-│ -                                            qrcode m0.x,m0.y,200,defaultBcoColor,65535,-1,vaQR.txt
-│ +                                            qrcode m0.x,m0.y,200,6371,65535,-1,vaQR.txt
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="time")
-│                                      {
-│                                          // get set time to global variable
-│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-│                                      }
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/portrait/n2t-out/pageStartup.txt
 │ @@ -35,20 +35,14 @@
@@ -1151,7 +1106,7 @@
 │              //send cmd
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver.txt
-│ @@ -29,22 +29,19 @@
+│ @@ -29,17 +29,14 @@
 │              }
 │              tDate.txt=pageIcons.vaDate.txt
 │              dim=dimValue
@@ -1166,15 +1121,9 @@
 │      Attributes
 │          Scope         : local
 │          Text          : 
-│ -        Max. Text Size: 400
-│ +        Max. Text Size: 200
+│          Max. Text Size: 400
 │      
 │  Variable (string) strTmp
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 2
-│      
 │ @@ -103,35 +100,14 @@
 │          Value: 0
 │      
