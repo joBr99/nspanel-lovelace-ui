@@ -26,6 +26,10 @@ cardQR
 	34   Component(s)
 	402  Line(s) of event code
 	234  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	185  Line(s) of event code
+	131  Unique line(s) of event code
 screensaver
 	46   Component(s)
 	418  Line(s) of event code
@@ -50,10 +54,6 @@ cardMedia
 	59   Component(s)
 	641  Line(s) of event code
 	318  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	185  Line(s) of event code
-	131  Unique line(s) of event code
 cardChart
 	33   Component(s)
 	429  Line(s) of event code

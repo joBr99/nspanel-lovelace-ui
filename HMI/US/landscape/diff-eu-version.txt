@@ -2,23 +2,6 @@
 +++ HMI/US/landscape/n2t-out
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
-│ @@ -154,15 +154,15 @@
-│  Text tVersion
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ -        Text                                : 48
-│ +        Text                                : 49
-│          Max. Text Size                      : 10
-│      
-│  Picture p0
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
 │ @@ -179,15 +179,15 @@
 │          Max. Text Size                      : 10
 │      
