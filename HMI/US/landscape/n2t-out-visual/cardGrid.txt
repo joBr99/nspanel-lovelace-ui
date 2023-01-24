@@ -174,7 +174,7 @@ Text tEntity1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 21
+        x coordinate                        : 22
         y coordinate                        : 155
         Width                               : 140
         Height                              : 30
@@ -204,7 +204,7 @@ Text tEntity2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 168
+        x coordinate                        : 169
         y coordinate                        : 155
         Width                               : 140
         Height                              : 30
@@ -234,7 +234,7 @@ Text tEntity3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 314
+        x coordinate                        : 315
         y coordinate                        : 155
         Width                               : 140
         Height                              : 30
@@ -264,7 +264,7 @@ Text tEntity4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 21
+        x coordinate                        : 16
         y coordinate                        : 274
         Width                               : 140
         Height                              : 30
@@ -294,7 +294,7 @@ Text tEntity5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 168
+        x coordinate                        : 169
         y coordinate                        : 274
         Width                               : 140
         Height                              : 30
@@ -324,7 +324,7 @@ Text tEntity6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 314
+        x coordinate                        : 315
         y coordinate                        : 274
         Width                               : 140
         Height                              : 30
@@ -354,7 +354,7 @@ Text tHeading
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 126
+        x coordinate                        : 127
         y coordinate                        : 26
         Width                               : 227
         Height                              : 30
@@ -384,7 +384,7 @@ Text tId
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 126
+        x coordinate                        : 111
         y coordinate                        : 290
         Width                               : 39
         Height                              : 30
@@ -414,7 +414,7 @@ Text tInstruction
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 15
+        x coordinate                        : 0
         y coordinate                        : 290
         Width                               : 100
         Height                              : 30
@@ -444,7 +444,7 @@ Text tTmp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 415
+        x coordinate                        : 400
         y coordinate                        : 290
         Width                               : 34
         Height                              : 30
@@ -491,7 +491,7 @@ Button bEntity1
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 21
+        x coordinate                        : 22
         y coordinate                        : 75
         Width                               : 140
         Height                              : 80
@@ -558,7 +558,7 @@ Button bEntity2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 167
+        x coordinate                        : 168
         y coordinate                        : 75
         Width                               : 140
         Height                              : 80
@@ -625,7 +625,7 @@ Button bEntity3
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 314
+        x coordinate                        : 315
         y coordinate                        : 75
         Width                               : 140
         Height                              : 80
@@ -692,7 +692,7 @@ Button bEntity4
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 21
+        x coordinate                        : 22
         y coordinate                        : 194
         Width                               : 140
         Height                              : 80
@@ -759,7 +759,7 @@ Button bEntity5
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 168
+        x coordinate                        : 169
         y coordinate                        : 194
         Width                               : 140
         Height                              : 80
@@ -826,7 +826,7 @@ Button bEntity6
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 314
+        x coordinate                        : 315
         y coordinate                        : 194
         Width                               : 140
         Height                              : 80
@@ -893,7 +893,7 @@ Button bNext
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 406
+        x coordinate                        : 407
         y coordinate                        : 16
         Width                               : 50
         Height                              : 50
@@ -940,7 +940,7 @@ Button bPrev
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 25
+        x coordinate                        : 26
         y coordinate                        : 16
         Width                               : 49
         Height                              : 50
@@ -987,7 +987,7 @@ Hotspot mSpecial
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 323
+        x coordinate                        : 308
         y coordinate                        : 0
         Width                               : 83
         Height                              : 67
@@ -1053,7 +1053,7 @@ Hotspot mSwipeUp
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 27
+        x coordinate                        : 12
         y coordinate                        : 0
         Width                               : 426
         Height                              : 9
@@ -1367,6 +1367,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     if(tInstruction.txt=="time")

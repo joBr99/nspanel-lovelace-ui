@@ -39,7 +39,7 @@ Page cardPower
             vis t4Icon,0
             vis t5Icon,0
             cardPower.bco=defaultBcoColor
-            for(sys0=0;sys0<43;sys0++)
+            for(sys0=0;sys0<48;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
@@ -277,7 +277,37 @@ Text tHome
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 20
+        Max. Text Size                      : 10
+    
+Text tHome2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tHomeO
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tHomeO2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
     
 Picture p0
     Attributes
@@ -292,8 +322,8 @@ Slider h0
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h1
@@ -302,8 +332,8 @@ Slider h1
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h2
@@ -312,8 +342,8 @@ Slider h2
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h3
@@ -322,8 +352,8 @@ Slider h3
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h4
@@ -332,8 +362,8 @@ Slider h4
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Slider h5
@@ -342,8 +372,8 @@ Slider h5
         Dragging                            : 0
         Disable release event after dragging: 0
         Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
+        Position                            : 600
+        Upper range limit                   : 1200
         Lower range limit                   : 0
     
 Button bNext
@@ -437,66 +467,84 @@ Timer tm0
     
     Events
         Timer Event
-            sys0=h0.val+t0Speed.val
-            if(sys0>h0.maxval)
+            if(t0Speed.val!=0)
             {
-                h0.val=h0.minval
+                sys0=h0.val+t0Speed.val
+                if(sys0>h0.maxval)
+                {
+                    h0.val=h0.minval
+                }
+                if(sys0<h0.minval)
+                {
+                    h0.val=h0.maxval
+                }
+                h0.val+=t0Speed.val
             }
-            if(sys0<h0.minval)
+            if(t1Speed.val!=0)
             {
-                h0.val=h0.maxval
+                sys0=h1.val+t1Speed.val
+                if(sys0>h1.maxval)
+                {
+                    h1.val=h1.minval
+                }
+                if(sys0<h1.minval)
+                {
+                    h1.val=h1.maxval
+                }
+                h1.val+=t1Speed.val
             }
-            h0.val+=t0Speed.val
-            sys0=h1.val+t1Speed.val
-            if(sys0>h1.maxval)
+            if(t2Speed.val!=0)
             {
-                h1.val=h1.minval
+                sys0=h2.val+t2Speed.val
+                if(sys0>h2.maxval)
+                {
+                    h2.val=h2.minval
+                }
+                if(sys0<h2.minval)
+                {
+                    h2.val=h2.maxval
+                }
+                h2.val+=t2Speed.val
             }
-            if(sys0<h1.minval)
+            if(t3Speed.val!=0)
             {
-                h1.val=h1.maxval
+                sys0=h3.val+t3Speed.val
+                if(sys0>h3.maxval)
+                {
+                    h3.val=h3.minval
+                }
+                if(sys0<h3.minval)
+                {
+                    h3.val=h3.maxval
+                }
+                h3.val+=t3Speed.val
             }
-            h1.val+=t1Speed.val
-            sys0=h2.val+t2Speed.val
-            if(sys0>h2.maxval)
+            if(t4Speed.val!=0)
             {
-                h2.val=h2.minval
+                sys0=h4.val+t4Speed.val
+                if(sys0>h4.maxval)
+                {
+                    h4.val=h4.minval
+                }
+                if(sys0<h4.minval)
+                {
+                    h4.val=h4.maxval
+                }
+                h4.val+=t4Speed.val
             }
-            if(sys0<h2.minval)
+            if(t5Speed.val!=0)
             {
-                h2.val=h2.maxval
+                sys0=h5.val+t5Speed.val
+                if(sys0>h5.maxval)
+                {
+                    h5.val=h5.minval
+                }
+                if(sys0<h5.minval)
+                {
+                    h5.val=h5.maxval
+                }
+                h5.val+=t5Speed.val
             }
-            h2.val+=t2Speed.val
-            sys0=h3.val+t3Speed.val
-            if(sys0>h3.maxval)
-            {
-                h3.val=h3.minval
-            }
-            if(sys0<h3.minval)
-            {
-                h3.val=h3.maxval
-            }
-            h3.val+=t3Speed.val
-            sys0=h4.val+t4Speed.val
-            if(sys0>h4.maxval)
-            {
-                h4.val=h4.minval
-            }
-            if(sys0<h4.minval)
-            {
-                h4.val=h4.maxval
-            }
-            h4.val+=t4Speed.val
-            sys0=h5.val+t5Speed.val
-            if(sys0>h5.maxval)
-            {
-                h5.val=h5.minval
-            }
-            if(sys0<h5.minval)
-            {
-                h5.val=h5.maxval
-            }
-            h5.val+=t5Speed.val
         
 Timer tmSerial
     Attributes
@@ -592,18 +640,36 @@ Timer tmSerial
                                         covx tTmp.txt,t1.pco,0,0
                                         // icon home
                                         spstr strCommand.txt,t1.txt,"~",15
+                                        // speed 16 ignored
                                         // text home
-                                        spstr strCommand.txt,tHome.txt,"~",16
+                                        spstr strCommand.txt,tHome.txt,"~",17
+                                        spstr tHome.txt,tHome2.txt," ",1
+                                        spstr tHome.txt,tHome.txt," ",0
+                                        // icon color 18 ignored
+                                        // icon 19 ignored
+                                        // speed 20 ignored
+                                        // text home
+                                        spstr strCommand.txt,tHomeO.txt,"~",21
+                                        spstr tHomeO.txt,tHomeO2.txt," ",1
+                                        spstr tHomeO.txt,tHomeO.txt," ",0
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",17
+                                        spstr strCommand.txt,tTmp.txt,"~",22
                                         covx tTmp.txt,t0Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t0Icon.txt,"~",18
+                                        spstr strCommand.txt,t0Icon.txt,"~",23
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",19
+                                        spstr strCommand.txt,tTmp.txt,"~",24
                                         covx tTmp.txt,t0Speed.val,0,0
+                                        if(t0Speed.val>120)
+                                        {
+                                            t0Speed.val=120
+                                        }
+                                        if(t0Speed.val<-120)
+                                        {
+                                            t0Speed.val=-120
+                                        }
                                         // lower text
-                                        spstr strCommand.txt,t0u.txt,"~",20
+                                        spstr strCommand.txt,t0u.txt,"~",25
                                         if(t0Icon.txt!="")
                                         {
                                             vis t0Icon,1
@@ -616,15 +682,23 @@ Timer tmSerial
                                             vis h0,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",21
+                                        spstr strCommand.txt,tTmp.txt,"~",26
                                         covx tTmp.txt,t1Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t1Icon.txt,"~",22
+                                        spstr strCommand.txt,t1Icon.txt,"~",27
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",23
+                                        spstr strCommand.txt,tTmp.txt,"~",28
                                         covx tTmp.txt,t1Speed.val,0,0
+                                        if(t1Speed.val>120)
+                                        {
+                                            t1Speed.val=120
+                                        }
+                                        if(t1Speed.val<-120)
+                                        {
+                                            t1Speed.val=-120
+                                        }
                                         // lower text
-                                        spstr strCommand.txt,t1u.txt,"~",24
+                                        spstr strCommand.txt,t1u.txt,"~",29
                                         if(t1Icon.txt!="")
                                         {
                                             vis t1Icon,1
@@ -637,15 +711,23 @@ Timer tmSerial
                                             vis h1,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",25
+                                        spstr strCommand.txt,tTmp.txt,"~",30
                                         covx tTmp.txt,t2Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t2Icon.txt,"~",26
+                                        spstr strCommand.txt,t2Icon.txt,"~",31
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",27
+                                        spstr strCommand.txt,tTmp.txt,"~",32
                                         covx tTmp.txt,t2Speed.val,0,0
+                                        if(t2Speed.val>120)
+                                        {
+                                            t2Speed.val=120
+                                        }
+                                        if(t2Speed.val<-120)
+                                        {
+                                            t2Speed.val=-120
+                                        }
                                         // lower text
-                                        spstr strCommand.txt,t2u.txt,"~",28
+                                        spstr strCommand.txt,t2u.txt,"~",33
                                         if(t2Icon.txt!="")
                                         {
                                             vis t2Icon,1
@@ -658,15 +740,23 @@ Timer tmSerial
                                             vis h2,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",29
+                                        spstr strCommand.txt,tTmp.txt,"~",34
                                         covx tTmp.txt,t3Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t3Icon.txt,"~",30
+                                        spstr strCommand.txt,t3Icon.txt,"~",35
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",31
+                                        spstr strCommand.txt,tTmp.txt,"~",36
                                         covx tTmp.txt,t3Speed.val,0,0
+                                        if(t3Speed.val>120)
+                                        {
+                                            t3Speed.val=120
+                                        }
+                                        if(t3Speed.val<-120)
+                                        {
+                                            t3Speed.val=-120
+                                        }
                                         // lower text
-                                        spstr strCommand.txt,t3u.txt,"~",32
+                                        spstr strCommand.txt,t3u.txt,"~",37
                                         if(t3Icon.txt!="")
                                         {
                                             vis t3Icon,1
@@ -679,15 +769,23 @@ Timer tmSerial
                                             vis h3,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",33
+                                        spstr strCommand.txt,tTmp.txt,"~",38
                                         covx tTmp.txt,t4Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t4Icon.txt,"~",34
+                                        spstr strCommand.txt,t4Icon.txt,"~",39
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",35
+                                        spstr strCommand.txt,tTmp.txt,"~",40
                                         covx tTmp.txt,t4Speed.val,0,0
+                                        if(t4Speed.val>120)
+                                        {
+                                            t4Speed.val=120
+                                        }
+                                        if(t4Speed.val<-120)
+                                        {
+                                            t4Speed.val=-120
+                                        }
                                         // lower text
-                                        spstr strCommand.txt,t4u.txt,"~",36
+                                        spstr strCommand.txt,t4u.txt,"~",41
                                         if(t4Icon.txt!="")
                                         {
                                             vis t4Icon,1
@@ -700,15 +798,23 @@ Timer tmSerial
                                             vis h4,0
                                         }
                                         // iconColor
-                                        spstr strCommand.txt,tTmp.txt,"~",37
+                                        spstr strCommand.txt,tTmp.txt,"~",42
                                         covx tTmp.txt,t5Icon.pco,0,0
                                         // icon
-                                        spstr strCommand.txt,t5Icon.txt,"~",38
+                                        spstr strCommand.txt,t5Icon.txt,"~",43
                                         // speed
-                                        spstr strCommand.txt,tTmp.txt,"~",39
+                                        spstr strCommand.txt,tTmp.txt,"~",44
                                         covx tTmp.txt,t5Speed.val,0,0
+                                        if(t5Speed.val>120)
+                                        {
+                                            t5Speed.val=120
+                                        }
+                                        if(t5Speed.val<-120)
+                                        {
+                                            t5Speed.val=-120
+                                        }
                                         // lower text
-                                        spstr strCommand.txt,t5u.txt,"~",40
+                                        spstr strCommand.txt,t5u.txt,"~",45
                                         if(t5Icon.txt!="")
                                         {
                                             vis t5Icon,1
@@ -788,6 +894,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     if(tInstruction.txt=="time")
