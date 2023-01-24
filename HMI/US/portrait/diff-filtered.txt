@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-01-24 17:39:56.497711621 +0000
++++ /dev/fd/62	2023-01-24 18:23:47.994140804 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardEntities.txt
@@ -54,13 +54,13 @@
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +186,26 @@
 +e (string) type6
@@ -466,51 +466,6 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+I/n2t-out/cardPower.txt
-++ HMI/US/portrait/n2t-out/cardPower.txt
-+18 +891,14 @@
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                                 if(tId.txt=="cardLChart")
-+                                 {
-+                                     page cardLChart
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 // get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                             }
-+                             if(tInstruction.txt=="date")
-+I/n2t-out/cardQR.txt
-++ HMI/US/portrait/n2t-out/cardQR.txt
-+19 +602,19 @@
-+                                     // get Text (optional Value)
-+                                     spstr strCommand.txt,bText2.txt,"~",26
-+                                 }
-+                                 if(type2.txt=="delete"||type2.txt=="")
-+                                 {
-+                                     if(type1.txt=="delete"||type1.txt=="")
-+                                     {
-+                                         qrcode m1.x,m1.y,200,defaultBcoColor,65535,-1,vaQR.txt
-+                                         qrcode m1.x,m1.y,200,6371,65535,-1,vaQR.txt
-+                                     }
-+                                 }else
-+                                 {
-+                                     qrcode m0.x,m0.y,200,defaultBcoColor,65535,-1,vaQR.txt
-+                                     qrcode m0.x,m0.y,200,6371,65535,-1,vaQR.txt
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 // get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                             }
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 +0 +35,14 @@
@@ -536,7 +491,7 @@
 + Associated Keyboard                 : none
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
-+2 +29,19 @@
++7 +29,14 @@
 +     }
 +     tDate.txt=pageIcons.vaDate.txt
 +     dim=dimValue
@@ -552,14 +507,8 @@
 + Scope         : local
 + Text          : 
 + Max. Text Size: 400
-+ Max. Text Size: 200
 +
 +e (string) strTmp
-+ributes
-+ Scope         : local
-+ Text          : 
-+ Max. Text Size: 2
-+
 +35 +100,14 @@
 + Value: 0
 +
