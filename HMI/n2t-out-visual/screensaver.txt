@@ -820,7 +820,7 @@ Text tMainTextAlt
         Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
-        Horizontal Alignment                : center
+        Horizontal Alignment                : right
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
@@ -850,7 +850,7 @@ Text tMainTextAlt2
         Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
-        Horizontal Alignment                : center
+        Horizontal Alignment                : right
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
