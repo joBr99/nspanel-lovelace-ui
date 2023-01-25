@@ -46,10 +46,6 @@ cardLChart
 	33   Component(s)
 	394  Line(s) of event code
 	262  Unique line(s) of event code
-screensaver
-	47   Component(s)
-	428  Line(s) of event code
-	307  Unique line(s) of event code
 popupInSel
 	34   Component(s)
 	617  Line(s) of event code
@@ -66,6 +62,10 @@ cardMedia
 	59   Component(s)
 	641  Line(s) of event code
 	318  Unique line(s) of event code
+screensaver
+	47   Component(s)
+	428  Line(s) of event code
+	307  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	512  Line(s) of event code
