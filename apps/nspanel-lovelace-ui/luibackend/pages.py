@@ -139,6 +139,9 @@ class LuiPagesGen(object):
             item_str += self.generate_entities_item(item, "cardEntities")
 
         self._send_mqtt_msg(f"weatherUpdate{item_str}")
+        # send color if configured in screensaver
+        if theme is not None:
+            self._send_mqtt_msg(get_screensaver_color_output(theme=theme))
 
     def update_status_icons(self):
         status_res = ""
