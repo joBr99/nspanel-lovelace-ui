@@ -635,7 +635,12 @@ class LuiPagesGen(object):
                     speed = str(item.entity_input_config.get("speed", 1))
                     speed = apis.ha_api.render_template(speed)
                 unit = get_attr_safe(entity, "unit_of_measurement", "")
-                command += f"~{icon_color}~{icon}~{speed}~{entity.state} {unit}"
+                value = f"{entity.state} {unit}"
+                # Overwrite for value
+                ovalue = item.value
+                if ovalue is not None:
+                    value = apis.ha_api.render_template(ovalue)
+                command += f"~{icon_color}~{icon}~{speed}~{value}"
             elif item.entityId == "delete":
                 command += f"~~~~"
             else:
