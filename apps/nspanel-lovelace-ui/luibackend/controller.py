@@ -385,6 +385,18 @@ class LuiController(object):
                     msg += f"- {apis.ha_api.get_entity(e).attributes.friendly_name}\r\n"
             self._pages_gen.send_message_page("opnSensorNotifyRes", "", msg, "", "")
 
+        # for cardUnlock
+        if button_type == "cardUnlock-unlock":
+            curCard = self._config.get_card_by_uuid(entity_id.replace('navigate.',''))
+            if curCard is not None:
+                if int(curCard.raw_config.get("pin")) == int(value):
+                    dstCard = self._config.search_card(curCard.raw_config.get("destination"))
+                    if dstCard is not None:
+                        if dstCard.hidden:
+                            self._previous_cards.append(self._current_card)
+                        self._current_card = dstCard
+                        self._pages_gen.render_card(self._current_card)
+
         if button_type == "mode-preset_modes":
             entity = apis.ha_api.get_entity(entity_id)
             preset_mode = entity.attributes.preset_modes[int(value)]

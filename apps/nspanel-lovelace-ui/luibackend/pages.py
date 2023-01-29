@@ -121,6 +121,8 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(f"date~{date}{addDateText}")
 
     def page_type(self, target_page):
+        if target_page == "cardUnlock":
+            target_page = "cardAlarm"
         self._send_mqtt_msg(f"pageType~{target_page}")
     
     def update_screensaver_weather(self, theme):
@@ -368,7 +370,7 @@ class LuiPagesGen(object):
         ovalue = item.value
         if ovalue is not None:
             value = apis.ha_api.render_template(ovalue)
-        if locale == "he_IL" and any("\u0590" <= c <= "\u05EA" for c in name):
+        if self._locale == "he_IL" and any("\u0590" <= c <= "\u05EA" for c in name):
             name = name[::-1]
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
@@ -595,6 +597,20 @@ class LuiPagesGen(object):
             command = f"entityUpd~{title}~{navigation}~{item}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}~{add_btn}"
         self._send_mqtt_msg(command)
         
+    def generate_unlock_page(self, navigation, item, title, destination, pin):
+        color = rgb_dec565([255,0,0])
+        icon = get_icon_id("lock")
+        supported_modes = ["cardUnlock-unlock"]
+        
+        # add padding to arm buttons
+        arm_buttons = ""
+        for b in supported_modes:
+            arm_buttons += f'~{get_translation(self._locale, "frontend.ui.card.lock.unlock")}~{b}'
+            if len(supported_modes) < 4:
+                arm_buttons += "~"*((4-len(supported_modes))*2)
+        numpad = "enable"
+        command = f"entityUpd~{title}~{navigation}~{item}{arm_buttons}~{icon}~{color}~{numpad}~disable~"
+        self._send_mqtt_msg(command)
 
     def generate_qr_page(self, navigation, heading, items, cardType, qrcode):
         qrcode = apis.ha_api.render_template(qrcode)
@@ -678,6 +694,12 @@ class LuiPagesGen(object):
             alarmBtn = card.raw_config.get("alarmControl")
             overwrite_supported_modes = card.raw_config.get("supportedModes")
             self.generate_alarm_page(navigation, card.title, card.entity, overwrite_supported_modes, alarmBtn)
+            return
+        if card.cardType == "cardUnlock":
+            pin = card.raw_config.get("pin", 3830)
+            destination = card.raw_config.get("destination")
+            item = card.uuid
+            self.generate_unlock_page(navigation, item, card.title, destination, pin)
             return
         if card.cardType == "screensaver":
             theme = card.raw_config.get("theme")
@@ -903,3 +925,4 @@ class LuiPagesGen(object):
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
         self._send_mqtt_msg(f"entityUpdateDetail~{ident}~{heading}~65535~{b1}~65535~{b2}~65535~{msg}~65535~0")
+    

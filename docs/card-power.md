@@ -29,7 +29,7 @@ List of supported config keys of this card:
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
-`type` | False | string | `None` | Used by navigate items
+`type` | False | string | `None` | Type of the card
 `entities` | False | complex | `None` | contains entities of the card
 `title` | True | string | `None` | Title of the Page 
 `key` | True | string | `None` | Used by navigate items
