@@ -348,7 +348,7 @@ Example alternative layout: `weatherUpdate~~~A~21130~~-0.7C~~~B~63469~Sat~3.6C~~
 </tbody>
 </table>
 
-`color~background~tTime~timeAMPM~tDate~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMainTextAlt2~tMR~tTimeAdd`
+`color~background~tTime~timeAMPM~tDate~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMainTextAlt2~tTimeAdd`
 
 <table>
 <thead>
@@ -490,14 +490,6 @@ Example alternative layout: `weatherUpdate~~~A~21130~~-0.7C~~~B~63469~Sat~3.6C~~
   </tr>
   <tr>
     <td>16</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>tMR</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>17</td>
     <td></td>
     <td></td>
     <td></td>
