@@ -12,7 +12,6 @@ key | optional | type | default | description
 `key` | True | string | `None` | Used by navigate items
 
 Example for the a screensaver config with custom entities/overrides:
-Using a 6th entity will automatically activate the alternative layout.
 
 ```yaml
     screensaver:
@@ -38,8 +37,7 @@ Using a 6th entity will automatically activate the alternative layout.
         - entity: weather.demo_weather_north
           type: 1
         - entity: sensor.energy_usage
-        - entity: weather.demo_weather_north
-          type: 2
+        - entity: delete
         - entity: sensor.indoor_temp
           icon: mdi:home-thermometer-outline
 ```
