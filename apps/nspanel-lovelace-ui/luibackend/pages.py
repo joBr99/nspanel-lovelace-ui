@@ -368,6 +368,8 @@ class LuiPagesGen(object):
         ovalue = item.value
         if ovalue is not None:
             value = apis.ha_api.render_template(ovalue)
+        if locale == "he_IL" and any("\u0590" <= c <= "\u05EA" for c in name):
+            name = name[::-1]
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
     def generate_entities_page(self, navigation, heading, items, cardType, tempUnit):
