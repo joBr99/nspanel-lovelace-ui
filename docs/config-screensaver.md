@@ -132,4 +132,27 @@ Example for the theme config:
 ```
 </details>
 
+<details>
+<summary>Config Example for a custom date format on forecast</summary>
+<br>
+```
+   screensaver:
+      entities:
+        - entity: weather.demo_weather_north
+        - entity: weather.demo_weather_north
+          type: 0
+          name: "%a %-d/%-m"
+        - entity: weather.demo_weather_north
+          type: 1
+          name: "%a %-d/%-m"
+        - entity: weather.demo_weather_north
+          name: "%a %-d/%-m"
+          type: 2
+        - entity: weather.demo_weather_north
+	  name: "%a %-d/%-m"
+          type: 3
+```
+</details>
+
+
 It is possible to increase the size of the font used for the icons by adding `altFont: True` to the statusIcon configuration. Icon/Color Overrides are also possible like on any other Entity.
