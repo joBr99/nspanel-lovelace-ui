@@ -30,23 +30,12 @@ default_screensaver_color_mapping = {
 def get_screensaver_color_output(theme, state=None):
     color_output = "color"
     for key in default_screensaver_color_mapping:
-        color_output += f"~{map_color(key=key, theme=theme, state=state)}"
+        color_output += f"~{map_color(key=key, theme=theme)}"
     return color_output
 
-def map_color(key, theme, state=None):
+def map_color(key, theme):
     config_color = default_screensaver_color_mapping[key]
 #   Use theme color if set
     if key in theme:
         config_color = rgb_dec565(theme[key])
-#   Use Autocolouring for weather
-    elif state is not None:
-        if key in ["tMainIcon", "tF1Icon", "tF2Icon", "tF3Icon", "tF4Icon"]:
-            config_color = map_weather_icon_color(key=key, theme=theme, state=state)
-    return config_color
-
-def map_weather_icon_color(key, theme, state):
-    if key in state and state[key] in theme:
-        config_color = rgb_dec565(theme[state[key]])
-    else:
-        config_color = "65535"
     return config_color
