@@ -52,7 +52,6 @@ key | option | type | default | description
 `time` | True | list | White | `[R, G, B]`
 `timeAMPM` | True | list | White | `[R, G, B]`
 `date` | True | list | White | `[R, G, B]`
-`tMainIcon` | True | list | White | `[R, G, B]`
 `tMainText` | True | list | White | `[R, G, B]`
 `tForecast1` | True | list | White | `[R, G, B]`
 `tForecast2` | True | list | White | `[R, G, B]`
@@ -63,12 +62,8 @@ key | option | type | default | description
 `tForecast3Val` | True | list | White | `[R, G, B]`
 `tForecast4Val` | True | list | White | `[R, G, B]`
 `bar` | True | list | White | `[R, G, B]`
-`tMainIconAlt` | True | list | White | `[R, G, B]`
 `tMainTextAlt` | True | list | White | `[R, G, B]`
-`tMRIcon` | True | list | White | `[R, G, B]`
-`tMR` | True | list | White | `[R, G, B]`
 `tTimeAdd` | True | list | White | `[R, G, B]`
-
 
 Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red or `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same). Also note that the screen has a low contrast ratio, so colors look sigificantly different at full display brightness and lowest brightness.
 
