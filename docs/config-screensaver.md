@@ -95,6 +95,8 @@ Example for the theme config:
 ```
 </details>
 
+It is possible to increase the size of the font used for the icons by adding `altFont: True` to the statusIcon configuration. Icon/Color Overrides are also possible like on any other Entity.
+
 <details>
 <summary>Config Example for configured statusIcons with increased size of the icons</summary>
 <br>
@@ -153,6 +155,3 @@ Example for the theme config:
           type: 3
 ```
 </details>
-
-
-It is possible to increase the size of the font used for the icons by adding `altFont: True` to the statusIcon configuration. Icon/Color Overrides are also possible like on any other Entity.
