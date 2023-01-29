@@ -151,7 +151,7 @@ It is possible to increase the size of the font used for the icons by adding `al
           name: "%a %-d/%-m"
           type: 2
         - entity: weather.demo_weather_north
-	  name: "%a %-d/%-m"
+          name: "%a %-d/%-m"
           type: 3
 ```
 </details>
