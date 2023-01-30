@@ -2271,13 +2271,12 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
 
 ### cardPower
 
-```entityUpd~LightTest~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~~17299~C~1~100 W~17299~D~0~100 W~17299~E~3~3499.5 kWh~17299~F~-1~3499.5 kWh~17299~G~-2~3499.5 kWh~17299~H~-3~3499.5 kWh~17299~G~1~3499.5 kWh~17299~H~1~100 W```
+```entityUpd~PowerTest~x~navUp~A~65535~~~delete~~~~~~text~sensor.power_consumption~B~17299~Power consumption~100W~1~text~sensor.power_consumption~C~17299~Power consumption~100W~1~text~sensor.today_energy~D~17299~Total energy 1~5836.0kWh~0~delete~~~~~~0~text~sensor.today_energy~E~17299~Total energy 1~5836.0kWh~-30~delete~~~~~~0~text~sensor.today_energy~F~65504~Total energy 1~5836.0kWh~90~text~sensor.today_energy~G~17299~Total energy 1~5836.0kWh~10```
 
 <table>
 <thead>
   <tr>
     <th>Parameter Number</th>
-    <th>Category</th>
     <th>Location</th>
     <th>Type</th>
     <th>Field</th>
@@ -2287,7 +2286,6 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
 <tbody>
   <tr>
     <td>0</td>
-    <td>instruction</td>
     <td></td>
     <td>instruction</td>
     <td>entityUpd</td>
@@ -2298,12 +2296,10 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
     <td>title</td>
     <td>title</td>
     <td>title</td>
-    <td>intNameEntity</td>
     <td></td>
   </tr>
   <tr>
     <td>2</td>
-    <td rowspan="12">Navigation</td>
     <td rowspan="6">Upper Left Icon</td>
     <td rowspan="6">Entity Definition</td>
     <td>type</td>
@@ -2368,180 +2364,299 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
   </tr>
   <tr>
     <td>14</td>
-    <td rowspan="32">cardPower specific</td>
-    <td rowspan="4">Home Icon / Value below Home Icon</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
-    <td></td>
+    <td rowspan="7">Home Icon / Value below Home Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>15</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>16</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>16</td>
-    <td>speed</td>
-    <td>ignored</td>
-  </tr>
-  <tr>
     <td>17</td>
-    <td>text</td>
+    <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
     <td>18</td>
-    <td rowspan="4">Value above Home Icon</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
-    <td>ignored</td>
+    <td>displayName</td>
+    <td></td>
   </tr>
   <tr>
     <td>19</td>
-    <td>icon</td>
-    <td>ignored</td>
+    <td>optionalValue</td>
+    <td></td>
   </tr>
   <tr>
     <td>20</td>
-    <td>speed</td>
+    <td colspan="2">speed</td>
     <td>ignored</td>
   </tr>
   <tr>
     <td>21</td>
-    <td>text</td>
-    <td></td>
+    <td rowspan="7">Value above Home Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>22</td>
-    <td rowspan="4">1st Item Upper Left</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
-    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>23</td>
     <td>icon</td>
-    <td></td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>24</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td>iconColor</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>25</td>
-    <td>text</td>
-    <td></td>
+    <td>displayName</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>26</td>
-    <td rowspan="4">2nd Item Middle Left</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
+    <td>optionalValue</td>
     <td></td>
   </tr>
   <tr>
     <td>27</td>
-    <td>icon</td>
-    <td></td>
+    <td colspan="2">speed</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>28</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td rowspan="7">1st Item Upper Left</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>29</td>
-    <td>text</td>
-    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>30</td>
-    <td rowspan="4">3rd Item Bottom Left</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>31</td>
-    <td>icon</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>32</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
-  </tr>
-  <tr>
-    <td>33</td>
-    <td>text</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>34</td>
-    <td rowspan="4">4th Item Upper Right</td>
-    <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
+    <td>32</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
     <td>35</td>
+    <td rowspan="7">2nd Item Middle Left</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>37</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>36</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
-  </tr>
-  <tr>
-    <td>37</td>
-    <td>text</td>
-    <td></td>
-  </tr>
-  <tr>
     <td>38</td>
-    <td rowspan="4">5thItem Middle Right</td>
-    <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
     <td>39</td>
-    <td>icon</td>
+    <td>displayName</td>
     <td></td>
   </tr>
   <tr>
     <td>40</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td>optionalValue</td>
+    <td></td>
   </tr>
   <tr>
     <td>41</td>
-    <td>text</td>
-    <td></td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
   </tr>
   <tr>
     <td>42</td>
-    <td rowspan="4">6th Item Bottom Right</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
-    <td></td>
+    <td rowspan="7">3rd Item Bottom Left</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>43</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>44</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>44</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td>45</td>
+    <td>iconColor</td>
+    <td></td>
   </tr>
   <tr>
-    <td>45</td>
-    <td>text</td>
+    <td>46</td>
+    <td>displayName</td>
     <td></td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td rowspan="7">4th Item Upper Right</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>54</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td rowspan="7">5th Item Middle Right</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>58</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>59</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>61</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>62</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>63</td>
+    <td rowspan="7">6th Item Bottom Right</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>64</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>65</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>66</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>67</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>68</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>69</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
   </tr>
 </tbody>
 </table>
