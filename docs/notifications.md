@@ -26,6 +26,12 @@ Font 4 - Size 80 (Icons and limited chars)
 Font 5 - Size 128 (ascii only)
 ```
 
+You need to use the acual char for the icon instead of the icon name which is used in the configuration. You can get the char of the icon from the cheatsheet.
+
+https://docs.nspanel.pky.eu/icon-cheatsheet.html
+
+
+
 
 It is possible to exit from the page by sending `exitPopup`
   
