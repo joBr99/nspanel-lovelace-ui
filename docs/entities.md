@@ -73,6 +73,11 @@ There probably not much cases where this is needed, but here is an exmaple to sh
         icon: 'ha:{{ state_attr("climate.wohnzimmer_boden","current_temperature")}}'
 ```
 
+You can use the acual chars for the icon in the above ha: template, however if you want to use the icon names you can use `ha-i` instead. This will be evaluated as HA Template first and then looked up as an icon.
+
+```
+        icon: 'ha-i:{{ iif(is_state('light.kitchen', 'on'), 'mdi:flashlight', 'mdi:flashlight-off') }}'
+```
 
 ## Hide item based on state
 
