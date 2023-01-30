@@ -46,6 +46,10 @@ pageStartup
 	20   Component(s)
 	185  Line(s) of event code
 	131  Unique line(s) of event code
+screensaver
+	46   Component(s)
+	418  Line(s) of event code
+	298  Unique line(s) of event code
 cardGrid
 	44   Component(s)
 	515  Line(s) of event code
@@ -78,10 +82,6 @@ cardPower
 	48   Component(s)
 	487  Line(s) of event code
 	326  Unique line(s) of event code
-screensaver
-	46   Component(s)
-	418  Line(s) of event code
-	299  Unique line(s) of event code
 
 Total
 	20   Page(s)

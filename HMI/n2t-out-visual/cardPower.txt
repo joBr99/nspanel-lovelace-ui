@@ -191,7 +191,7 @@ Text t0u
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 82
-        y coordinate                        : 132
+        y coordinate                        : 119
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -285,7 +285,7 @@ Text t1u
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 82
-        y coordinate                        : 209
+        y coordinate                        : 195
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -347,7 +347,7 @@ Text t2u
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 82
-        y coordinate                        : 285
+        y coordinate                        : 272
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -409,7 +409,7 @@ Text t3u
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 262
-        y coordinate                        : 132
+        y coordinate                        : 119
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -471,7 +471,7 @@ Text t4u
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 262
-        y coordinate                        : 209
+        y coordinate                        : 195
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -533,7 +533,7 @@ Text t5u
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 262
-        y coordinate                        : 285
+        y coordinate                        : 272
         Width                               : 108
         Height                              : 30
         Effect                              : load
@@ -755,7 +755,7 @@ Slider h1
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 78
-        y coordinate                        : 165
+        y coordinate                        : 164
         Width                               : 120
         Height                              : 44
         Effect                              : load
@@ -830,7 +830,7 @@ Slider h4
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 258
-        y coordinate                        : 165
+        y coordinate                        : 164
         Width                               : 120
         Height                              : 44
         Effect                              : load
@@ -1046,6 +1046,7 @@ Timer tm0
                     h0.val=h0.maxval
                 }
                 h0.val+=t0Speed.val
+                ref t0u
             }
             if(t1Speed.val!=0)
             {
@@ -1059,6 +1060,7 @@ Timer tm0
                     h1.val=h1.maxval
                 }
                 h1.val+=t1Speed.val
+                ref t1u
             }
             if(t2Speed.val!=0)
             {
@@ -1072,6 +1074,7 @@ Timer tm0
                     h2.val=h2.maxval
                 }
                 h2.val+=t2Speed.val
+                ref t2u
             }
             if(t3Speed.val!=0)
             {
@@ -1085,6 +1088,7 @@ Timer tm0
                     h3.val=h3.maxval
                 }
                 h3.val+=t3Speed.val
+                ref t3u
             }
             if(t4Speed.val!=0)
             {
@@ -1098,6 +1102,7 @@ Timer tm0
                     h4.val=h4.maxval
                 }
                 h4.val+=t4Speed.val
+                ref t4u
             }
             if(t5Speed.val!=0)
             {
@@ -1111,6 +1116,7 @@ Timer tm0
                     h5.val=h5.maxval
                 }
                 h5.val+=t5Speed.val
+                ref t5u
             }
         
 Timer tmSerial

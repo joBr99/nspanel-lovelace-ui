@@ -30,10 +30,10 @@ pageTest
 	26   Component(s)
 	68   Line(s) of event code
 	66   Unique line(s) of event code
-cardPower
-	48   Component(s)
-	487  Line(s) of event code
-	326  Unique line(s) of event code
+screensaver
+	47   Component(s)
+	428  Line(s) of event code
+	306  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	351  Line(s) of event code
@@ -62,10 +62,10 @@ cardMedia
 	59   Component(s)
 	641  Line(s) of event code
 	318  Unique line(s) of event code
-screensaver
-	47   Component(s)
-	428  Line(s) of event code
-	307  Unique line(s) of event code
+cardPower
+	48   Component(s)
+	493  Line(s) of event code
+	332  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	512  Line(s) of event code
@@ -86,5 +86,5 @@ cardEntities
 Total
 	20   Page(s)
 	737  Component(s)
-	8810 Line(s) of event code
-	2264 Unique line(s) of event code
+	8816 Line(s) of event code
+	2270 Unique line(s) of event code
