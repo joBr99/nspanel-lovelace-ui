@@ -1047,6 +1047,94 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
+│   --- HMI/n2t-out/cardPower.txt
+├── +++ HMI/US/portrait/n2t-out/cardPower.txt
+│ @@ -475,85 +475,79 @@
+│                      h0.val=h0.minval
+│                  }
+│                  if(sys0<h0.minval)
+│                  {
+│                      h0.val=h0.maxval
+│                  }
+│                  h0.val+=t0Speed.val
+│ -                ref t0u
+│              }
+│              if(t1Speed.val!=0)
+│              {
+│                  sys0=h1.val+t1Speed.val
+│                  if(sys0>h1.maxval)
+│                  {
+│                      h1.val=h1.minval
+│                  }
+│                  if(sys0<h1.minval)
+│                  {
+│                      h1.val=h1.maxval
+│                  }
+│                  h1.val+=t1Speed.val
+│ -                ref t1u
+│              }
+│              if(t2Speed.val!=0)
+│              {
+│                  sys0=h2.val+t2Speed.val
+│                  if(sys0>h2.maxval)
+│                  {
+│                      h2.val=h2.minval
+│                  }
+│                  if(sys0<h2.minval)
+│                  {
+│                      h2.val=h2.maxval
+│                  }
+│                  h2.val+=t2Speed.val
+│ -                ref t2u
+│              }
+│              if(t3Speed.val!=0)
+│              {
+│                  sys0=h3.val+t3Speed.val
+│                  if(sys0>h3.maxval)
+│                  {
+│                      h3.val=h3.minval
+│                  }
+│                  if(sys0<h3.minval)
+│                  {
+│                      h3.val=h3.maxval
+│                  }
+│                  h3.val+=t3Speed.val
+│ -                ref t3u
+│              }
+│              if(t4Speed.val!=0)
+│              {
+│                  sys0=h4.val+t4Speed.val
+│                  if(sys0>h4.maxval)
+│                  {
+│                      h4.val=h4.minval
+│                  }
+│                  if(sys0<h4.minval)
+│                  {
+│                      h4.val=h4.maxval
+│                  }
+│                  h4.val+=t4Speed.val
+│ -                ref t4u
+│              }
+│              if(t5Speed.val!=0)
+│              {
+│                  sys0=h5.val+t5Speed.val
+│                  if(sys0>h5.maxval)
+│                  {
+│                      h5.val=h5.minval
+│                  }
+│                  if(sys0<h5.minval)
+│                  {
+│                      h5.val=h5.maxval
+│                  }
+│                  h5.val+=t5Speed.val
+│ -                ref t5u
+│              }
+│          
+│  Timer tmSerial
+│      Attributes
+│          Scope      : local
+│          Period (ms): 50
+│          Enabled    : yes
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/portrait/n2t-out/pageStartup.txt
 │ @@ -35,20 +35,14 @@
@@ -1121,7 +1209,7 @@
 │      Attributes
 │          Scope         : local
 │          Text          : 
-│          Max. Text Size: 400
+│          Max. Text Size: 600
 │      
 │  Variable (string) strTmp
 │ @@ -103,35 +100,14 @@

@@ -61,7 +61,7 @@ cardChart
 screensaver
 	46   Component(s)
 	418  Line(s) of event code
-	299  Unique line(s) of event code
+	298  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	512  Line(s) of event code
