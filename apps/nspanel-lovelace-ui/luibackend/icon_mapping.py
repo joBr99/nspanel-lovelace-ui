@@ -6904,11 +6904,13 @@ def get_icon_id(ma_name):
         return ma_name.replace("text:","")
     if "ha:" in ma_name:
         return apis.ha_api.render_template(ma_name.replace("ha:",""))
+    if "ha-i:" in ma_name:
+        ma_name = apis.ha_api.render_template(ma_name.replace("ha:",""))
     ma_name = ma_name.replace("mdi:","")
     if ma_name in icons:
         return icons[ma_name]
     else:
         return icons["alert-circle-outline"]
-   
+    
 def get_icon_char(ma_name):
     return get_icon_id(ma_name)
