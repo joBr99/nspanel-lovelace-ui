@@ -7,20 +7,24 @@
       - type: cardPower
         title: Power Test
         entities:
-          - entity: sensor.today_energy
+          - entity: sensor.power_consumption
+            icon: mdi:home
           - entity: delete
           - entity: sensor.today_energy
+            icon: mdi:car
+            speed: -20
+          - entity: delete
+          - entity: sensor.today_energy
+            icon: mdi:battery
+            speed: 20
+          - entity: delete
+          - entity: sensor.today_energy
+            icon: mdi:solar-panel
+            color: [255, 255, 0]
             speed: 30
           - entity: sensor.today_energy
-            speed: -10
-          - entity: sensor.today_energy
-            speed: -20
-          - entity: sensor.today_energy
-            speed: -30
-          - entity: sensor.today_energy
-            speed: 10
-          - entity: sensor.today_energy
-            speed: 10
+            speed: -40
+            icon: mdi:help
 ```
 
 The first two entities are shown in the middle of the card, all other entities are used around it.
