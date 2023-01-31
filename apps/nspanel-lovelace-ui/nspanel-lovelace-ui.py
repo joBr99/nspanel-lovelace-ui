@@ -32,12 +32,13 @@ class NsPanelLovelaceUIManager(hass.Hass):
         
         model       = cfg.get("model")
         if model == "us-l":
-            desired_display_firmware_url = cfg.get("displayURL-US-L", f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-{version}.tft")
+            desired_display_firmware_url = cfg._config.get("displayURL-US-L", f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-{version}.tft")
         elif model == "us-p":
-            desired_display_firmware_url = cfg.get("displayURL-US-P", f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-{version}.tft")
+            desired_display_firmware_url = cfg._config.get("displayURL-US-L", f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-{version}.tft")
         else:
-            desired_display_firmware_url = cfg.get("displayURL-EU",   f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-{version}.tft")
-        desired_tasmota_driver_url       = cfg.get("berryURL",         "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be")
+            desired_display_firmware_url = cfg._config.get("displayURL-EU",   f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-{version}.tft")
+        desired_tasmota_driver_url       = cfg._config.get("berryURL",         "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be")
+
 
 
         mode = cfg.get("updateMode")
