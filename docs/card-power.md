@@ -23,7 +23,7 @@
             speed: 10
 ```
 
-The first two entities are shown in the middle of the card, all other entities are used around it.
+The first two entities are shown in the middle of the card, all other entities are used around it. Any entity overrides (e.g. icon, color) in the first entity apply to the middle of the card.
 
 List of supported config keys of this card:
 
@@ -38,7 +38,11 @@ List of supported entitiy types for this page:
 
 - sensor
 
+N.B. Negative values will likely be truncated and not display gracefully. For this reason, when measuring energy you should use the same inputs as you use on the Home Assistant Energy Dashboard (i.e. separate grid import and grid export) and similarly when measuring power.
+
 Some details about speed:
+
+Speed expects an integer input between `-100` and `100`.
 
 It is possible to calculate the speed through a Home Assistant template, this allows to calculate the speed in relation to other data in Home Assistant.
 
@@ -50,7 +54,7 @@ This template will calculate a speed setting based on the amount of power drawn 
               {% set entity_usage = (entity_power / total_power * 100) | float %}
               {{ (entity_usage | round()) * -1 }}
 ```
-It provides the number as a negative integer, making the dot move from the centre of the card toward the icon of your entity. If you want the dot to move towards the centre of the card, just skip inverting it at the end of the template like this:
+It provides the number as a negative integer, making the dot move from the entity toward the middle of the card. If you want the dot to move away from the middle of the card, just skip inverting it at the end of the template like this:
 ```yaml
               {{ (entity_usage | round()) }}
 ```
