@@ -68,14 +68,18 @@ class LuiPagesGen(object):
                     icon_color = 35921
 
             if ha_type == "weather":
-                if state in ["clear-night", "partlycloudy", "windy", "windy-variant"]:
-                    icon_color = 35957 #50% grey
+                if state in ["partlycloudy", "windy"]:
+                    icon_color = 38066 #50% grey
+                if state == "clear-night":
+                    icon_color = 38060 #yellow grey
+                if state == "windy-variant":
+                    icon_color: 64495 #red grey
                 if state == "cloudy":
                     icon_color = 31728 #grey-blue
                 if state == "exceptional":
-                    icon_color = 63488 #red
+                    icon_color = 63878 #red
                 if state == "fog":
-                    icon_color = 21130 #75% grey
+                    icon_color = 38066 #75% grey
                 if state in ["hail", "snowy"]: 
                     icon_color = 65535 #white
                 if state == "lightning":
@@ -83,13 +87,13 @@ class LuiPagesGen(object):
                 if state == "lightning-rainy":
                     icon_color = 50400 #dark-golden-yellow
                 if state == "pouring":
-                    icon_color = 249 #blue
+                    icon_color = 12703 #blue
                 if state == "rainy":
-                    icon_color = 33759 #light-blue
+                    icon_color = 25375 #light-blue
                 if state == "snowy-rainy":
-                    icon_color = 44479 #light-blue-grey
+                    icon_color = 38079 #light-blue-grey
                 if state == "sunny":
-                    icon_color = 63469 #bright-yellow
+                    icon_color = 65504 #bright-yellow
 
             if "rgb_color" in attr:
                 color = attr.rgb_color
