@@ -1,5 +1,8 @@
 #### Possible configuration values for screensaver config
 
+![screensaver](img/screensaver.png)
+
+
 key | optional | type | default | description
 -- | -- | -- | -- | --
 `entity` | True | string | `weather.example` | weather entity from homeassistant
@@ -27,6 +30,8 @@ Example for the a screensaver config with custom entities/overrides:
 ```
 
 Using a 6th entity will automatically activate the alternative layout.
+
+![screensaver-alt](img/screensaver-alt.png)
 
 ```yaml
     screensaver:
