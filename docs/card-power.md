@@ -54,7 +54,8 @@ This template will calculate a speed setting based on the amount of power drawn 
               {% set entity_usage = (entity_power / total_power * 100) | float %}
               {{ (entity_usage | round()) * -1 }}
 ```
-It provides the number as a negative integer, making the dot move from the entity toward the middle of the card. If you want the dot to move away from the middle of the card, just skip inverting it at the end of the template like this:
+It provides the number as a negative integer, making the dot move from the middle of the card toward the entity. If you want the dot to move toward from the middle of the card, just skip inverting it at the end of the template like this:
 ```yaml
               {{ (entity_usage | round()) }}
 ```
+Note: It appears that on the `US-P` firmware because of the orientation this is inverted i.e. negative speeds move from the entity toward the middle and positive speeds move from the middle toward the entity.
