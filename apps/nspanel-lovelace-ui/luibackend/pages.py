@@ -382,6 +382,9 @@ class LuiPagesGen(object):
             value = apis.ha_api.render_template(ovalue)
         if self._locale == "he_IL" and any("\u0590" <= c <= "\u05EA" for c in name):
             name = name[::-1]
+        # use uuid instead for some types and probably expand on this in future
+        if entityType in ["light"]:
+            entityId = uuid
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
     def generate_entities_page(self, navigation, heading, items, cardType, tempUnit):
@@ -719,7 +722,11 @@ class LuiPagesGen(object):
             return
 
     def generate_light_detail_page(self, entity_id, is_open_detail=False):
-        entity = apis.ha_api.get_entity(entity_id)
+        if entity_id.startswith('uuid'):
+            entity_config = self._config._config_entites_table.get(entity_id)
+            entity = apis.ha_api.get_entity(entity_config.entityId)
+        else:
+            entity = apis.ha_api.get_entity(entity_id)
         switch_val = 1 if entity.state == "on" else 0
         icon_color = self.get_entity_color(entity)
         brightness = "disable"
@@ -874,16 +881,26 @@ class LuiPagesGen(object):
         self._send_mqtt_msg(f"entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{modes_out}", force=is_open_detail)  
 
     def generate_input_select_detail_page(self, entity_id, is_open_detail=False):
-        entity = apis.ha_api.get_entity(entity_id)
+        options_list = None
+        if entity_id.startswith('uuid'):
+            entity_config = self._config._config_entites_table.get(entity_id)
+            entity = apis.ha_api.get_entity(entity_config.entityId)
+            ha_type = entity_config.entityId.split(".")[0]
+            options_list = entity_config.entity_input_config.get("effectList")
+        else:
+            entity = apis.ha_api.get_entity(entity_id)
+            ha_type = entity_id.split(".")[0]
         options = []
         icon_color = 0
-        ha_type = entity_id.split(".")[0]
         icon_color = self.get_entity_color(entity, ha_type=ha_type)
         state = entity.state
         if ha_type in ["input_select", "select"]:
             options = entity.attributes.get("options", [])
         elif ha_type == "light":
-            options = entity.attributes.get("effect_list", [])[:15]
+            if options_list is not None:
+                options = options_list
+            else:
+                options = entity.attributes.get("effect_list", [])[:15]
         elif ha_type == "media_player":
             state = entity.attributes.get("source", "")
             options = entity.attributes.get("source_list", [])
