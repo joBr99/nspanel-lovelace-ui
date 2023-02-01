@@ -40,6 +40,8 @@ class Card(object):
         self.key = card_input_config.get("key", "unknown")
         self.nav1Override = card_input_config.get("navItem1")
         self.nav2Override = card_input_config.get("navItem2")
+        self.last_update = 0
+        self.cooldown = card_input_config.get("cooldown", 0)
         # for single entity card like climate or media
         self.entity = None
         if card_input_config.get("entity") is not None:
@@ -49,8 +51,7 @@ class Card(object):
         for e in card_input_config.get("entities", []):
             self.entities.append(Entity(e))
         self.id = f"{self.cardType}_{self.key}".replace(".","_").replace("~","_").replace(" ","_")
-        #self._ha_api.log(f"Created Card {self.cardType} and id {self.id}")
-    
+        
     def get_entity_names(self):
         entityIds = []
         if self.entity is not None:

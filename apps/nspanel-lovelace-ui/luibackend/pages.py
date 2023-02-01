@@ -648,6 +648,13 @@ class LuiPagesGen(object):
 
     def render_card(self, card, send_page_type=True):
 
+        # page type is false, so this request is from a callback
+        if not send_page_type and card.cooldown != 0:
+            if (time.time()-card.last_update) < card.cooldown:
+                return
+        card.last_update = time.time()
+        
+        
         leftBtn = "delete~~~~~"
         if card.uuid_prev is not None:
             leftBtn = self.generate_entities_item(Entity(
