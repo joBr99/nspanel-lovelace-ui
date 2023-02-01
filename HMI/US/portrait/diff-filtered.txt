@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-01-30 20:21:28.702188855 +0000
++++ /dev/fd/62	2023-02-01 21:52:45.071014440 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardEntities.txt
@@ -54,13 +54,13 @@
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +186,26 @@
 +e (string) type6
@@ -499,7 +499,7 @@
 + 
 +e (string) nent1
 +ributes
-+5 +69,15 @@
++6 +69,82 @@
 + Text          : 
 + Max. Text Size: 80
 +
@@ -515,8 +515,75 @@
 + Scope: local
 + Value: 0
 +
++e (string) t0o
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 1
++
 +e (int32) t1Speed
-+24 +135,14 @@
++ributes
++ Scope: local
++ Value: 0
++
++e (string) t1o
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 1
++
++e (int32) t2Speed
++ributes
++ Scope: local
++ Value: 0
++
++e (string) t2o
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 1
++
++e (int32) t3Speed
++ributes
++ Scope: local
++ Value: 0
++
++e (string) t3o
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 1
++
++e (int32) t4Speed
++ributes
++ Scope: local
++ Value: 0
++
++e (string) t4o
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 1
++
++e (int32) t5Speed
++ributes
++ Scope: local
++ Value: 0
++
++e (string) t5o
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 1
++
++e (string) tId
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 20
++
++e (string) tInstruction
++24 +171,14 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
@@ -541,7 +608,7 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+24 +165,14 @@
++24 +201,14 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
@@ -566,7 +633,7 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+24 +185,14 @@
++24 +221,14 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
@@ -591,7 +658,7 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+24 +205,14 @@
++24 +241,14 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
@@ -616,7 +683,7 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+24 +225,14 @@
++24 +261,14 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
@@ -641,7 +708,7 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+24 +245,14 @@
++24 +281,14 @@
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
@@ -666,7 +733,7 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+85 +475,79 @@
++85 +511,79 @@
 +             h0.val=h0.minval
 +         }
 +         if(sys0<h0.minval)
@@ -752,275 +819,6 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
-+14 +595,15 @@
-+                             // here is the location where acual code should be
-+                             // write command to variable strCommand
-+                             ucopy strCommand.txt,4,payloadLength-5,0
-+                             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-+                             spstr strCommand.txt,tInstruction.txt,"~",0
-+                             if(tInstruction.txt=="entityUpd")
-+                             {
-+                                 // command format: entityUpd,heading,navigation,colorHome,iconHome[,iconColor,icon,speed,valueUp,valueDown]x6
-+                                 spstr strCommand.txt,tHeading.txt,"~",1
-+                                 // navigation icon left
-+                                 spstr strCommand.txt,tTmp.txt,"~",2 //type
-+                                 if(tTmp.txt=="delete"||tTmp.txt=="")
-+                                 {
-+                                     vis bPrev,0
-+                                 }else
-+202 +632,193 @@
-+                                     // change icon color
-+                                     spstr strCommand.txt,tTmp.txt,"~",11
-+                                     covx tTmp.txt,sys0,0,0
-+                                     bNext.pco=sys0
-+                                     vis bNext,1
-+                                 }
-+                                 // icon color home
-+                                 spstr strCommand.txt,tTmp.txt,"~",17
-+                                 spstr strCommand.txt,tTmp.txt,"~",14
-+                                 covx tTmp.txt,t1.pco,0,0
-+                                 // icon home
-+                                 spstr strCommand.txt,t1.txt,"~",16
-+                                 spstr strCommand.txt,t1.txt,"~",15
-+                                 // speed 16 ignored
-+                                 // text home
-+                                 spstr strCommand.txt,tHome.txt,"~",19
-+                                 spstr strCommand.txt,tHome.txt,"~",17
-+                                 spstr tHome.txt,tHome2.txt," ",1
-+                                 spstr tHome.txt,tHome.txt," ",0
-+                                 // icon color 18 ignored
-+                                 // icon 19 ignored
-+                                 // speed 20 ignored
-+                                 // text home
-+                                 spstr strCommand.txt,tHomeO.txt,"~",26
-+                                 spstr strCommand.txt,tHomeO.txt,"~",21
-+                                 spstr tHomeO.txt,tHomeO2.txt," ",1
-+                                 spstr tHomeO.txt,tHomeO.txt," ",0
-+                                 // iconColor
-+                                 spstr strCommand.txt,tTmp.txt,"~",31
-+                                 spstr strCommand.txt,tTmp.txt,"~",22
-+                                 covx tTmp.txt,t0Icon.pco,0,0
-+                                 // icon
-+                                 spstr strCommand.txt,t0Icon.txt,"~",30
-+                                 spstr strCommand.txt,t0Icon.txt,"~",23
-+                                 // speed
-+                                 spstr strCommand.txt,tTmp.txt,"~",34
-+                                 spstr strCommand.txt,tTmp.txt,"~",24
-+                                 covx tTmp.txt,t0Speed.val,0,0
-+                                 if(t0Speed.val>120)
-+                                 {
-+                                     t0Speed.val=120
-+                                 }
-+                                 if(t0Speed.val<-120)
-+                                 {
-+                                     t0Speed.val=-120
-+                                 }
-+                                 // lower text
-+                                 spstr strCommand.txt,t0u.txt,"~",33
-+                                 // upper text
-+                                 spstr strCommand.txt,t0o.txt,"~",32
-+                                 spstr strCommand.txt,t0u.txt,"~",25
-+                                 if(t0Icon.txt!="")
-+                                 {
-+                                     vis t0Icon,1
-+                                     vis t0u,1
-+                                     vis h0,1
-+                                 }else
-+                                 {
-+                                     vis t0Icon,0
-+                                     vis t0u,0
-+                                     vis h0,0
-+                                 }
-+                                 // iconColor
-+                                 spstr strCommand.txt,tTmp.txt,"~",38
-+                                 spstr strCommand.txt,tTmp.txt,"~",26
-+                                 covx tTmp.txt,t1Icon.pco,0,0
-+                                 // icon
-+                                 spstr strCommand.txt,t1Icon.txt,"~",37
-+                                 spstr strCommand.txt,t1Icon.txt,"~",27
-+                                 // speed
-+                                 spstr strCommand.txt,tTmp.txt,"~",41
-+                                 spstr strCommand.txt,tTmp.txt,"~",28
-+                                 covx tTmp.txt,t1Speed.val,0,0
-+                                 if(t1Speed.val>120)
-+                                 {
-+                                     t1Speed.val=120
-+                                 }
-+                                 if(t1Speed.val<-120)
-+                                 {
-+                                     t1Speed.val=-120
-+                                 }
-+                                 // lower text
-+                                 spstr strCommand.txt,t1u.txt,"~",40
-+                                 // upper text
-+                                 spstr strCommand.txt,t1o.txt,"~",39
-+                                 spstr strCommand.txt,t1u.txt,"~",29
-+                                 if(t1Icon.txt!="")
-+                                 {
-+                                     vis t1Icon,1
-+                                     vis t1u,1
-+                                     vis h1,1
-+                                 }else
-+                                 {
-+                                     vis t1Icon,0
-+                                     vis t1u,0
-+                                     vis h1,0
-+                                 }
-+                                 // iconColor
-+                                 spstr strCommand.txt,tTmp.txt,"~",45
-+                                 spstr strCommand.txt,tTmp.txt,"~",30
-+                                 covx tTmp.txt,t2Icon.pco,0,0
-+                                 // icon
-+                                 spstr strCommand.txt,t2Icon.txt,"~",44
-+                                 spstr strCommand.txt,t2Icon.txt,"~",31
-+                                 // speed
-+                                 spstr strCommand.txt,tTmp.txt,"~",48
-+                                 spstr strCommand.txt,tTmp.txt,"~",32
-+                                 covx tTmp.txt,t2Speed.val,0,0
-+                                 if(t2Speed.val>120)
-+                                 {
-+                                     t2Speed.val=120
-+                                 }
-+                                 if(t2Speed.val<-120)
-+                                 {
-+                                     t2Speed.val=-120
-+                                 }
-+                                 // lower text
-+                                 spstr strCommand.txt,t2u.txt,"~",47
-+                                 // upper text
-+                                 spstr strCommand.txt,t2o.txt,"~",46
-+                                 spstr strCommand.txt,t2u.txt,"~",33
-+                                 if(t2Icon.txt!="")
-+                                 {
-+                                     vis t2Icon,1
-+                                     vis t2u,1
-+                                     vis h2,1
-+                                 }else
-+                                 {
-+                                     vis t2Icon,0
-+                                     vis t2u,0
-+                                     vis h2,0
-+                                 }
-+                                 // iconColor
-+                                 spstr strCommand.txt,tTmp.txt,"~",52
-+                                 spstr strCommand.txt,tTmp.txt,"~",34
-+                                 covx tTmp.txt,t3Icon.pco,0,0
-+                                 // icon
-+                                 spstr strCommand.txt,t3Icon.txt,"~",51
-+                                 spstr strCommand.txt,t3Icon.txt,"~",35
-+                                 // speed
-+                                 spstr strCommand.txt,tTmp.txt,"~",55
-+                                 spstr strCommand.txt,tTmp.txt,"~",36
-+                                 covx tTmp.txt,t3Speed.val,0,0
-+                                 if(t3Speed.val>120)
-+                                 {
-+                                     t3Speed.val=120
-+                                 }
-+                                 if(t3Speed.val<-120)
-+                                 {
-+                                     t3Speed.val=-120
-+                                 }
-+                                 // lower text
-+                                 spstr strCommand.txt,t3u.txt,"~",54
-+                                 // upper text
-+                                 spstr strCommand.txt,t3o.txt,"~",53
-+                                 spstr strCommand.txt,t3u.txt,"~",37
-+                                 if(t3Icon.txt!="")
-+                                 {
-+                                     vis t3Icon,1
-+                                     vis t3u,1
-+                                     vis h3,1
-+                                 }else
-+                                 {
-+                                     vis t3Icon,0
-+                                     vis t3u,0
-+                                     vis h3,0
-+                                 }
-+                                 // iconColor
-+                                 spstr strCommand.txt,tTmp.txt,"~",59
-+                                 spstr strCommand.txt,tTmp.txt,"~",38
-+                                 covx tTmp.txt,t4Icon.pco,0,0
-+                                 // icon
-+                                 spstr strCommand.txt,t4Icon.txt,"~",58
-+                                 spstr strCommand.txt,t4Icon.txt,"~",39
-+                                 // speed
-+                                 spstr strCommand.txt,tTmp.txt,"~",62
-+                                 spstr strCommand.txt,tTmp.txt,"~",40
-+                                 covx tTmp.txt,t4Speed.val,0,0
-+                                 if(t4Speed.val>120)
-+                                 {
-+                                     t4Speed.val=120
-+                                 }
-+                                 if(t4Speed.val<-120)
-+                                 {
-+                                     t4Speed.val=-120
-+                                 }
-+                                 // lower text
-+                                 spstr strCommand.txt,t4u.txt,"~",61
-+                                 // upper text
-+                                 spstr strCommand.txt,t4o.txt,"~",60
-+                                 spstr strCommand.txt,t4u.txt,"~",41
-+                                 if(t4Icon.txt!="")
-+                                 {
-+                                     vis t4Icon,1
-+                                     vis t4u,1
-+                                     vis h4,1
-+                                 }else
-+                                 {
-+                                     vis t4Icon,0
-+                                     vis t4u,0
-+                                     vis h4,0
-+                                 }
-+                                 // iconColor
-+                                 spstr strCommand.txt,tTmp.txt,"~",66
-+                                 spstr strCommand.txt,tTmp.txt,"~",42
-+                                 covx tTmp.txt,t5Icon.pco,0,0
-+                                 // icon
-+                                 spstr strCommand.txt,t5Icon.txt,"~",65
-+                                 spstr strCommand.txt,t5Icon.txt,"~",43
-+                                 // speed
-+                                 spstr strCommand.txt,tTmp.txt,"~",69
-+                                 spstr strCommand.txt,tTmp.txt,"~",44
-+                                 covx tTmp.txt,t5Speed.val,0,0
-+                                 if(t5Speed.val>120)
-+                                 {
-+                                     t5Speed.val=120
-+                                 }
-+                                 if(t5Speed.val<-120)
-+                                 {
-+                                     t5Speed.val=-120
-+                                 }
-+                                 // lower text
-+                                 spstr strCommand.txt,t5u.txt,"~",68
-+                                 // upper text
-+                                 spstr strCommand.txt,t5o.txt,"~",67
-+                                 spstr strCommand.txt,t5u.txt,"~",45
-+                                 if(t5Icon.txt!="")
-+                                 {
-+                                     vis t5Icon,1
-+                                     vis t5u,1
-+                                     vis h5,1
-+                                 }else
-+                                 {
-+14 +891,18 @@
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                                 if(tId.txt=="cardLChart")
-+                                 {
-+                                     page cardLChart
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 // get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                             }
-+                             if(tInstruction.txt=="date")
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 +0 +35,14 @@
