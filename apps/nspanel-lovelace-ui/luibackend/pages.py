@@ -293,6 +293,13 @@ class LuiPagesGen(object):
             device_class = entity.attributes.get("device_class", "")
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state
+            
+            # limit value to 4 chars on us-p
+            if self._config.get("model") == "us-p":
+                value = entity.state[:4]
+                if value[-1] == ".":
+                    value = value[:-1]
+                    
             if device_class != "temperature":
                 value = value + " "
             value = value + unit_of_measurement
