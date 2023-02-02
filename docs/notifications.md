@@ -103,7 +103,7 @@ nspanel_screensaver_notification:
 
 ## Buzzer
 
-See <a href="https://tasmota.github.io/docs/Buzzer/#buzzer-command">Tasmota Buzzer</a> for commands.
+See [Tasmota Buzzer](https://tasmota.github.io/docs/Buzzer/#buzzer-command) for commands.
 
 It might be necessary to enable the buzzer with:
 ```
