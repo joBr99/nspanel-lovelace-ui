@@ -46,7 +46,7 @@ Page cardAlarm
             vis bPrev,0
             vis bNext,0
             cardAlarm.bco=defaultBcoColor
-            for(sys0=0;sys0<40;sys0++)
+            for(sys0=0;sys0<44;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
@@ -143,8 +143,8 @@ Text tCode
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 68
-        y coordinate                        : 17
+        x coordinate                        : 23
+        y coordinate                        : 73
         Width                               : 192
         Height                              : 49
         Effect                              : load
@@ -165,6 +165,36 @@ Text tCode
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
+Text tHeading
+    Attributes
+        ID                                  : 42
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Opacity                             : 127
+        x coordinate                        : 68
+        y coordinate                        : 26
+        Width                               : 184
+        Height                              : 30
+        Effect                              : load
+        Effect Priority                     : 0
+        Effect Time                         : 300
+        Fill                                : solid color
+        Style                               : flat
+        Associated Keyboard                 : none
+        Font ID                             : 1
+        Back. Color                         : 6371
+        Font Color                          : 65535
+        Horizontal Alignment                : center
+        Vertical Alignment                  : center
+        Input Type                          : character
+        Text                                : 
+        Max. Text Size                      : 40
+        Word wrap                           : disabled
+        Horizontal Spacing                  : 0
+        Vertical Spacing                    : 0
+    
 Text tIcon
     Attributes
         ID                                  : 26
@@ -173,7 +203,7 @@ Text tIcon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 129
+        x coordinate                        : 236
         y coordinate                        : 73
         Width                               : 64
         Height                              : 49
@@ -295,8 +325,8 @@ Picture p0
         Opacity                             : 127
         x coordinate                        : 0
         y coordinate                        : 0
-        Width                               : 319
-        Height                              : 479
+        Width                               : 320
+        Height                              : 480
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -527,7 +557,7 @@ Button b0
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 25
-        y coordinate                        : 252
+        y coordinate                        : 251
         Width                               : 75
         Height                              : 50
         Effect                              : load
@@ -555,6 +585,11 @@ Button b0
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"1"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b1
     Attributes
@@ -593,6 +628,11 @@ Button b1
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"2"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b10
     Attributes
@@ -631,6 +671,11 @@ Button b10
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"0"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b11
     Attributes
@@ -669,6 +714,11 @@ Button b11
     Events
         Touch Press Event
             tCode.txt=""
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b2
     Attributes
@@ -707,6 +757,11 @@ Button b2
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"3"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b3
     Attributes
@@ -745,6 +800,11 @@ Button b3
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"4"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b4
     Attributes
@@ -783,6 +843,11 @@ Button b4
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"5"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b5
     Attributes
@@ -821,6 +886,11 @@ Button b5
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"6"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b6
     Attributes
@@ -859,6 +929,11 @@ Button b6
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"7"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b7
     Attributes
@@ -897,6 +972,11 @@ Button b7
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"8"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b8
     Attributes
@@ -935,6 +1015,11 @@ Button b8
     Events
         Touch Press Event
             tCode.txt=tCode.txt+"9"
+            vis tCode,1
+            if(p0.w!=320)
+            {
+                vis tHeading,0
+            }
         
 Button b9
     Attributes
@@ -1139,7 +1224,7 @@ Hotspot mSwipeUp
         x coordinate                        : 10
         y coordinate                        : 0
         Width                               : 300
-        Height                              : 9
+        Height                              : 8
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -1222,7 +1307,18 @@ Timer tmSerial
                                     if(tInstruction.txt=="entityUpd")
                                     {
                                         //entn
-                                        spstr strCommand.txt,entn.txt,"~",1
+                                        spstr strCommand.txt,tHeading.txt,"~",1
+                                        if(tHeading.txt=="unknown")
+                                        {
+                                            tHeading.txt=""
+                                        }
+                                        if(tHeading.txt!="")
+                                        {
+                                            vis tHeading,1
+                                        }else
+                                        {
+                                            vis tHeading,0
+                                        }
                                         // navigation icon left
                                         spstr strCommand.txt,tTmp.txt,"~",2 //type
                                         if(tTmp.txt=="delete"||tTmp.txt=="")
@@ -1257,46 +1353,48 @@ Timer tmSerial
                                             bNext.pco=sys0
                                             vis bNext,1
                                         }
+                                        //entn
+                                        spstr strCommand.txt,entn.txt,"~",14
                                         //text arm1
-                                        spstr strCommand.txt,arm1.txt,"~",14
+                                        spstr strCommand.txt,arm1.txt,"~",15
                                         if(arm1.txt!="")
                                         {
                                             vis arm1,1
                                         }
                                         //id arm1
-                                        spstr strCommand.txt,va1.txt,"~",15
+                                        spstr strCommand.txt,va1.txt,"~",16
                                         //text arm2
-                                        spstr strCommand.txt,arm2.txt,"~",16
+                                        spstr strCommand.txt,arm2.txt,"~",17
                                         if(arm2.txt!="")
                                         {
                                             vis arm2,1
                                         }
                                         //id arm2
-                                        spstr strCommand.txt,va2.txt,"~",17
+                                        spstr strCommand.txt,va2.txt,"~",18
                                         //text arm3
-                                        spstr strCommand.txt,arm3.txt,"~",18
+                                        spstr strCommand.txt,arm3.txt,"~",19
                                         if(arm3.txt!="")
                                         {
                                             vis arm3,1
                                         }
                                         //id arm3
-                                        spstr strCommand.txt,va3.txt,"~",19
+                                        spstr strCommand.txt,va3.txt,"~",20
                                         //text arm4
-                                        spstr strCommand.txt,arm4.txt,"~",20
+                                        spstr strCommand.txt,arm4.txt,"~",21
                                         if(arm4.txt!="")
                                         {
                                             vis arm4,1
                                         }
                                         //id arm4
-                                        spstr strCommand.txt,va4.txt,"~",21
+                                        spstr strCommand.txt,va4.txt,"~",22
                                         //icon
-                                        spstr strCommand.txt,tIcon.txt,"~",22
+                                        spstr strCommand.txt,tIcon.txt,"~",23
                                         //icon color
-                                        spstr strCommand.txt,tTmp.txt,"~",23
+                                        spstr strCommand.txt,tTmp.txt,"~",24
                                         covx tTmp.txt,sys0,0,0
                                         tIcon.pco=sys0
                                         //numpad status
-                                        spstr strCommand.txt,tTmp.txt,"~",24
+                                        spstr strCommand.txt,tTmp.txt,"~",25
                                         if(tTmp.txt!="disable")
                                         {
                                             vis b0,1
@@ -1311,7 +1409,13 @@ Timer tmSerial
                                             vis b9,1
                                             vis b10,1
                                             vis b11,1
-                                            vis tCode,1
+                                            if(tHeading.txt!="")
+                                            {
+                                                vis tCode,0
+                                            }else
+                                            {
+                                                vis tCode,1
+                                            }
                                         }else
                                         {
                                             vis b0,0
@@ -1329,7 +1433,7 @@ Timer tmSerial
                                             vis tCode,0
                                         }
                                         //flashing status
-                                        spstr strCommand.txt,tTmp.txt,"~",25
+                                        spstr strCommand.txt,tTmp.txt,"~",26
                                         if(tTmp.txt=="enable")
                                         {
                                             tmFlash.en=1
@@ -1338,13 +1442,13 @@ Timer tmSerial
                                             tmFlash.en=0
                                         }
                                         // extra button
-                                        spstr strCommand.txt,b9.txt,"~",26
+                                        spstr strCommand.txt,b9.txt,"~",27
                                         if(b9.txt!="")
                                         {
                                             vis b9,1
-                                            spstr strCommand.txt,tTmp.txt,"~",27
+                                            spstr strCommand.txt,tTmp.txt,"~",28
                                             covx tTmp.txt,b9.pco,0,0
-                                            spstr strCommand.txt,vaAddBtn.txt,"~",28
+                                            spstr strCommand.txt,vaAddBtn.txt,"~",29
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -1452,6 +1556,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     // end of user code

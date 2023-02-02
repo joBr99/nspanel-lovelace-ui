@@ -27,17 +27,19 @@ class NsPanelLovelaceUIManager(hass.Hass):
         controller = LuiController(cfg, mqttsend.send_mqtt_msg)
         
         desired_tasmota_driver_version   = 8
-        desired_display_firmware_version = 48
-        version     = "v3.8.3"
+        desired_display_firmware_version = 49
+        version     = "v3.9.4"
         
         model       = cfg.get("model")
         if model == "us-l":
-            desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-{version}.tft"
+            desired_display_firmware_url = cfg._config.get("displayURL-US-L", f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-{version}.tft")
         elif model == "us-p":
-            desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-{version}.tft"
+            desired_display_firmware_url = cfg._config.get("displayURL-US-L", f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-{version}.tft")
         else:
-            desired_display_firmware_url = f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-{version}.tft"
-        desired_tasmota_driver_url       = "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be"
+            desired_display_firmware_url = cfg._config.get("displayURL-EU",   f"http://nspanel.pky.eu/lovelace-ui/github/nspanel-{version}.tft")
+        desired_tasmota_driver_url       = cfg._config.get("berryURL",         "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be")
+
+
 
         mode = cfg.get("updateMode")
         updater = Updater(self.log, mqttsend.send_mqtt_msg, topic_send, mode, desired_display_firmware_version, model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url)

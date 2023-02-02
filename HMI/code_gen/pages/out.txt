@@ -43,197 +43,282 @@ if(usize>1)
             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
             spstr strCommand.txt,tInstruction.txt,"~",0
 
-            if(tInstruction.txt=="entityUpd")
+            if(tInstruction.txt=="wake")
             {
-            // command format: entityUpd,heading,navigation,colorHome,iconHome[,iconColor,icon,speed,valueUp,valueDown]x6
-            spstr strCommand.txt,tHeading.txt,"~",1
-
-              // navigation icon left
-              spstr strCommand.txt,tTmp.txt,"~",2 //type
-              if(tTmp.txt=="delete"||tTmp.txt=="")
+              click tc0,1
+            }
+            if(tInstruction.txt=="dimmode")
+            {
+              // get value
+              spstr strCommand.txt,tTmp.txt,"~",1
+              covx tTmp.txt,dimValue,0,0
+              dim=dimValue
+              // get value normal
+              spstr strCommand.txt,tTmp.txt,"~",2
+              covx tTmp.txt,dimValueNormal,0,0
+              // get background color
+              spstr strCommand.txt,tTmp.txt,"~",3
+              if(tTmp.txt!="")
               {
-                vis bPrev,0
-              }else
-              {
-                // get internal name
-                spstr strCommand.txt,nent1.txt,"~",3
-                // change icon
-                spstr strCommand.txt,bPrev.txt,"~",4
-                // change icon color
-                spstr strCommand.txt,tTmp.txt,"~",5
-                covx tTmp.txt,sys0,0,0
-                bPrev.pco=sys0
-                vis bPrev,1
+                covx tTmp.txt,defaultBcoColor,0,0
               }
-              
-              // navigation icon right
-              spstr strCommand.txt,tTmp.txt,"~",8 //type
-              if(tTmp.txt=="delete"||tTmp.txt=="")
+              // get font color
+              spstr strCommand.txt,tTmp.txt,"~",4
+              if(tTmp.txt!="")
               {
-                vis bNext,0
-              }else
-              {
-                // get internal name
-                spstr strCommand.txt,nent2.txt,"~",9
-                // change icon
-                spstr strCommand.txt,bNext.txt,"~",10
-                // change icon color
-                spstr strCommand.txt,tTmp.txt,"~",11
-                covx tTmp.txt,sys0,0,0
-                bNext.pco=sys0
-                vis bNext,1
+                covx tTmp.txt,defaultFontColor,0,0
               }
-
-			  // icon color home
-              spstr strCommand.txt,tTmp.txt,"~",14
-              covx tTmp.txt,t1.pco,0,0
-			        // icon home
-              spstr strCommand.txt,t1.txt,"~",15
-			        // text home
-              spstr strCommand.txt,tHome.txt,"~",16
-
-
-              // iconColor
-              spstr strCommand.txt,tTmp.txt,"~",17
-              covx tTmp.txt,t0Icon.pco,0,0
-              // icon
-              spstr strCommand.txt,t0Icon.txt,"~",18
-              // speed
-              spstr strCommand.txt,tTmp.txt,"~",19
-              covx tTmp.txt,t0Speed.val,0,0
-              // lower text
-              spstr strCommand.txt,t0u.txt,"~",20
-
-              if(t0Icon.txt!="")
+            }
+            if(tInstruction.txt=="time")
+            {
+              click m0,1
+              //get set time to global variable
+              spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+              spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+              spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
+              if(tAMPM.txt=="")
               {
-                vis t0Icon,1
-                vis t0u,1
-                vis h0,1
-              }else
-              {
-                vis t0Icon,0
-                vis t0u,0
-                vis h0,0
+                vis tAMPM,0
               }
-
-
-              // iconColor
-              spstr strCommand.txt,tTmp.txt,"~",21
-              covx tTmp.txt,t1Icon.pco,0,0
-              // icon
-              spstr strCommand.txt,t1Icon.txt,"~",22
-              // speed
-              spstr strCommand.txt,tTmp.txt,"~",23
-              covx tTmp.txt,t1Speed.val,0,0
-              // lower text
-              spstr strCommand.txt,t1u.txt,"~",24
-
-              if(t1Icon.txt!="")
+              spstr strCommand.txt,tTimeAdd.txt,"~",2
+              ref tIcon1
+              ref tIcon2
+            }
+            if(tInstruction.txt=="date")
+            {
+              //get set date to global variable
+              spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
+              tDate.txt=pageIcons.vaDate.txt
+            }
+            if(tInstruction.txt=="statusUpdate")
+            {
+              //statusIcon1
+              spstr strCommand.txt,tIcon1.txt,"~",1
+              spstr strCommand.txt,tTmp.txt,"~",2
+              covx tTmp.txt,tIcon1.pco,0,0
+              //statusIcon2
+              spstr strCommand.txt,tIcon2.txt,"~",3
+              spstr strCommand.txt,tTmp.txt,"~",4
+              covx tTmp.txt,tIcon2.pco,0,0
+              spstr strCommand.txt,tTmp.txt,"~",5
+              if(tTmp.txt!="")
               {
-                vis t1Icon,1
-                vis t1u,1
-                vis h1,1
-              }else
-              {
-                vis t1Icon,0
-                vis t1u,0
-                vis h1,0
+                tIcon1.font=3
               }
-
-
-              // iconColor
-              spstr strCommand.txt,tTmp.txt,"~",25
-              covx tTmp.txt,t2Icon.pco,0,0
-              // icon
-              spstr strCommand.txt,t2Icon.txt,"~",26
-              // speed
-              spstr strCommand.txt,tTmp.txt,"~",27
-              covx tTmp.txt,t2Speed.val,0,0
-              // lower text
-              spstr strCommand.txt,t2u.txt,"~",28
-
-              if(t2Icon.txt!="")
+              spstr strCommand.txt,tTmp.txt,"~",6
+              if(tTmp.txt!="")
               {
-                vis t2Icon,1
-                vis t2u,1
-                vis h2,1
-              }else
-              {
-                vis t2Icon,0
-                vis t2u,0
-                vis h2,0
+                tIcon2.font=3
               }
+            }
+            if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
+            {
 
+              //tMainIcon
+              spstr strCommand.txt,tMainIcon.txt,"~",3
+              //tMainIcon Color
+              spstr strCommand.txt,tTmp.txt,"~",4
+              covx tTmp.txt,tMainIcon.pco,0,0
+              //tMainText
+              spstr strCommand.txt,tMainText.txt,"~",6
 
-              // iconColor
-              spstr strCommand.txt,tTmp.txt,"~",29
-              covx tTmp.txt,t3Icon.pco,0,0
-              // icon
-              spstr strCommand.txt,t3Icon.txt,"~",30
-              // speed
-              spstr strCommand.txt,tTmp.txt,"~",31
-              covx tTmp.txt,t3Speed.val,0,0
-              // lower text
-              spstr strCommand.txt,t3u.txt,"~",32
+              //d1Icon
+              spstr strCommand.txt,d1Icon.txt,"~",9
+              //d1Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",10
+              covx tTmp.txt,d1Icon.pco,0,0
+              //d1Val
+              spstr strCommand.txt,d1Val.txt,"~",12
 
-              if(t3Icon.txt!="")
+    
+              //d2Icon
+              spstr strCommand.txt,d2Icon.txt,"~",15
+              //d2Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",16
+              covx tTmp.txt,d2Icon.pco,0,0
+              //d2Val
+              spstr strCommand.txt,d2Val.txt,"~",18
+
+    
+              //d3Icon
+              spstr strCommand.txt,d3Icon.txt,"~",21
+              //d3Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",22
+              covx tTmp.txt,d3Icon.pco,0,0
+              //d3Val
+              spstr strCommand.txt,d3Val.txt,"~",24
+
+    
+              //e1Name
+              spstr strCommand.txt,e1Name.txt,"~",29
+              //e1Icon
+              spstr strCommand.txt,e1Icon.txt,"~",27
+              //e1Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",28
+              covx tTmp.txt,e1Icon.pco,0,0
+              //e1Val
+              spstr strCommand.txt,e1Val.txt,"~",30
+
+    
+              //e2Name
+              spstr strCommand.txt,e2Name.txt,"~",35
+              //e2Icon
+              spstr strCommand.txt,e2Icon.txt,"~",33
+              //e2Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",34
+              covx tTmp.txt,e2Icon.pco,0,0
+              //e2Val
+              spstr strCommand.txt,e2Val.txt,"~",36
+
+    
+              //e3Name
+              spstr strCommand.txt,e3Name.txt,"~",41
+              //e3Icon
+              spstr strCommand.txt,e3Icon.txt,"~",39
+              //e3Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",40
+              covx tTmp.txt,e3Icon.pco,0,0
+              //e3Val
+              spstr strCommand.txt,e3Val.txt,"~",42
+
+    
+              //e4Name
+              spstr strCommand.txt,e4Name.txt,"~",47
+              //e4Icon
+              spstr strCommand.txt,e4Icon.txt,"~",45
+              //e4Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",46
+              covx tTmp.txt,e4Icon.pco,0,0
+              //e4Val
+              spstr strCommand.txt,e4Val.txt,"~",48
+
+    
+              //e5Name
+              spstr strCommand.txt,e5Name.txt,"~",53
+              //e5Icon
+              spstr strCommand.txt,e5Icon.txt,"~",51
+              //e5Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",52
+              covx tTmp.txt,e5Icon.pco,0,0
+              //e5Val
+              spstr strCommand.txt,e5Val.txt,"~",54
+
+    
+              //e6Name
+              spstr strCommand.txt,e6Name.txt,"~",59
+              //e6Icon
+              spstr strCommand.txt,e6Icon.txt,"~",57
+              //e6Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",58
+              covx tTmp.txt,e6Icon.pco,0,0
+              //e6Val
+              spstr strCommand.txt,e6Val.txt,"~",60
+
+    
+              //f1Icon
+              spstr strCommand.txt,f1Icon.txt,"~",63
+              //f1Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",64
+              covx tTmp.txt,f1Icon.pco,0,0
+    
+              //f2Icon
+              spstr strCommand.txt,f2Icon.txt,"~",69
+              //f2Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",70
+              covx tTmp.txt,f2Icon.pco,0,0
+    
+              //f3Icon
+              spstr strCommand.txt,f3Icon.txt,"~",75
+              //f3Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",76
+              covx tTmp.txt,f3Icon.pco,0,0
+    
+              //f4Icon
+              spstr strCommand.txt,f4Icon.txt,"~",81
+              //f4Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",82
+              covx tTmp.txt,f4Icon.pco,0,0
+    
+              //f5Icon
+              spstr strCommand.txt,f5Icon.txt,"~",87
+              //f5Icon Color
+              spstr strCommand.txt,tTmp.txt,"~",88
+              covx tTmp.txt,f5Icon.pco,0,0
+    
+            }
+
+            if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
+            {
+              spstr strCommand.txt,tTmp.txt,"~",1
+              covx tTmp.txt,tTime.bco,0,0
+              if(tTime.bco!=screensaver.bco)
               {
-                vis t3Icon,1
-                vis t3u,1
-                vis h3,1
-              }else
-              {
-                vis t3Icon,0
-                vis t3u,0
-                vis h3,0
+                for(sys0=0;sys0<60;sys0++)
+                {
+                  if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==54)
+                  {
+                    b[sys0].bco=tTime.bco
+                  }
+                }
               }
+              spstr strCommand.txt,tTmp.txt,"~",2
+              covx tTmp.txt,tTime.pco,0,0
+              spstr strCommand.txt,tTmp.txt,"~",3
+              covx tTmp.txt,tAMPM.pco,0,0
+              spstr strCommand.txt,tTmp.txt,"~",4
+              covx tTmp.txt,tDate.pco,0,0
+              spstr strCommand.txt,tTmp.txt,"~",5
+              covx tTmp.txt,tMainText.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",6
+              //covx tTmp.txt,tForecast1.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",7
+              //covx tTmp.txt,tForecast2.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",8
+              //covx tTmp.txt,tForecast3.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",9
+              //covx tTmp.txt,tForecast4.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",10
+              //covx tTmp.txt,tForecast1Val.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",11
+              //covx tTmp.txt,tForecast2Val.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",12
+              //covx tTmp.txt,tForecast3Val.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",13
+              //covx tTmp.txt,tForecast4Val.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",14
+              //covx tTmp.txt,t10.bco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",15
+              //covx tTmp.txt,tMainTextAlt2.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",16
+              //covx tTmp.txt,tTimeAdd.pco,0,0
+            }
 
 
-              // iconColor
-              spstr strCommand.txt,tTmp.txt,"~",33
-              covx tTmp.txt,t4Icon.pco,0,0
-              // icon
-              spstr strCommand.txt,t4Icon.txt,"~",34
-              // speed
-              spstr strCommand.txt,tTmp.txt,"~",35
-              covx tTmp.txt,t4Speed.val,0,0
-              // lower text
-              spstr strCommand.txt,t4u.txt,"~",36
 
-              if(t4Icon.txt!="")
+            if(tInstruction.txt=="notify")
+            {
+              spstr strCommand.txt,tNotifyHead.txt,"~",1
+              spstr strCommand.txt,tNotifyText.txt,"~",2
+              if(tNotifyHead.txt!=""||tNotifyText.txt!="")
               {
-                vis t4Icon,1
-                vis t4u,1
-                vis h4,1
+                vis tNotifyHead,1
+                vis tNotifyText,1
               }else
               {
-                vis t4Icon,0
-                vis t4u,0
-                vis h4,0
+                vis tNotifyHead,0
+                vis tNotifyText,0
               }
-
-
-              // iconColor
-              spstr strCommand.txt,tTmp.txt,"~",37
-              covx tTmp.txt,t5Icon.pco,0,0
-              // icon
-              spstr strCommand.txt,t5Icon.txt,"~",38
-              // speed
-              spstr strCommand.txt,tTmp.txt,"~",39
-              covx tTmp.txt,t5Speed.val,0,0
-              // lower text
-              spstr strCommand.txt,t5u.txt,"~",40
-
-              if(t5Icon.txt!="")
+              tNotifyHead.bco=tTime.bco
+              tNotifyText.bco=tTime.bco
+              spstr strCommand.txt,tTmp.txt,"~",3
+              if(tTmp.txt!="")
               {
-                vis t5Icon,1
-                vis t5u,1
-                vis h5,1
-              }else
+                covx tTmp.txt,tNotifyHead.pco,0,0
+              }
+              spstr strCommand.txt,tTmp.txt,"~",4
+              if(tTmp.txt!="")
               {
-                vis t5Icon,0
-                vis t5u,0
-                vis h5,0
+                covx tTmp.txt,tNotifyText.pco,0,0
               }
 
 
@@ -241,7 +326,7 @@ if(usize>1)
 
             if(tInstruction.txt=="pageType")
             {
-              sleepValue=0
+              dim=100
               //command format pageType,specialPageName
               //write name of speical page to tId
               spstr strCommand.txt,tId.txt,"~",1
@@ -260,6 +345,10 @@ if(usize>1)
               if(tId.txt=="screensaver")
               {
                 page screensaver
+              }
+              if(tId.txt=="screensaver2")
+              {
+                page screensaver2
               }
               if(tId.txt=="cardEntities")
               {
@@ -306,38 +395,6 @@ if(usize>1)
               if(tId.txt=="cardChart")
               {
                 page cardChart
-              }
-            }
-            if(tInstruction.txt=="time")
-            {
-              // get set time to global variable
-              spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-            }
-            if(tInstruction.txt=="date")
-            {
-              // get set date to global variable
-              spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
-            }
-            if(tInstruction.txt=="dimmode")
-            {
-              // get value
-              spstr strCommand.txt,tTmp.txt,"~",1
-              covx tTmp.txt,dimValue,0,0
-              // get value normal
-              spstr strCommand.txt,tTmp.txt,"~",2
-              covx tTmp.txt,dimValueNormal,0,0
-              dim=dimValueNormal
-              // get background color
-              spstr strCommand.txt,tTmp.txt,"~",3
-              if(tTmp.txt!="")
-              {
-                covx tTmp.txt,defaultBcoColor,0,0
-              }
-              // get font color
-              spstr strCommand.txt,tTmp.txt,"~",4
-              if(tTmp.txt!="")
-              {
-                covx tTmp.txt,defaultFontColor,0,0
               }
             }
             if(tInstruction.txt=="timeout")

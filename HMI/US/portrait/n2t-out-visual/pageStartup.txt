@@ -373,7 +373,7 @@ Text tTmp
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -402,7 +402,7 @@ Text tVersion
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : 48
+        Text                                : 49
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -658,6 +658,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     // end of user code

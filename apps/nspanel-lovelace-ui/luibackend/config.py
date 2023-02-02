@@ -23,6 +23,8 @@ class Entity(object):
         self.condStateNot  = entity_input_config.get("state_not")
         self.condTemplate  = entity_input_config.get("state_template")
         self.assumedState  = entity_input_config.get("assumed_state", False)
+        self.stype         = entity_input_config.get("type")
+        self.value         = entity_input_config.get("value")
         self.data  = entity_input_config.get("data", {})
         self.entity_input_config = entity_input_config
 
@@ -38,6 +40,8 @@ class Card(object):
         self.key = card_input_config.get("key", "unknown")
         self.nav1Override = card_input_config.get("navItem1")
         self.nav2Override = card_input_config.get("navItem2")
+        self.last_update = 0
+        self.cooldown = card_input_config.get("cooldown", 0)
         # for single entity card like climate or media
         self.entity = None
         if card_input_config.get("entity") is not None:
@@ -47,8 +51,7 @@ class Card(object):
         for e in card_input_config.get("entities", []):
             self.entities.append(Entity(e))
         self.id = f"{self.cardType}_{self.key}".replace(".","_").replace("~","_").replace(" ","_")
-        #self._ha_api.log(f"Created Card {self.cardType} and id {self.id}")
-    
+        
     def get_entity_names(self):
         entityIds = []
         if self.entity is not None:
@@ -61,7 +64,7 @@ class Card(object):
                 entityIds.append(e.status)
 
         # additional keys to check
-        add_ent_keys = ['weatherOverrideForecast1', 'weatherOverrideForecast2', 'weatherOverrideForecast3', 'weatherOverrideForecast4', 'statusIcon1', 'statusIcon2', 'alarmControl']
+        add_ent_keys = ['statusIcon1', 'statusIcon2', 'alarmControl']
         for ent_key in add_ent_keys:
             val = self.raw_config.get(ent_key)
             if val is not None:
@@ -242,3 +245,4 @@ class LuiBackendConfig(object):
 
     def get_card_by_uuid(self, uuid):
         return self._config_card_table.get(uuid)
+    

@@ -13,7 +13,7 @@ List of supported config keys of this card:
 
 key | optional | type | default | description
 -- | -- | -- | -- | --
-`type` | False | string | `None` | Used by navigate items
+`type` | False | string | `None` | Type of the card
 `title` | True | string | `None` | Title of the Page 
 `entity` | False | string | `None` | contains the entity of the current card
 `key` | True | string | `None` | Used by navigate items

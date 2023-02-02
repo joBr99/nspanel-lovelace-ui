@@ -907,11 +907,11 @@ Timer tmSerial
                                         {
                                             if(type1.txt=="delete"||type1.txt=="")
                                             {
-                                                qrcode m1.x,m1.y,200,6371,65535,-1,vaQR.txt
+                                                qrcode m1.x,m1.y,200,defaultBcoColor,65535,-1,vaQR.txt
                                             }
                                         }else
                                         {
-                                            qrcode m0.x,m0.y,200,6371,65535,-1,vaQR.txt
+                                            qrcode m0.x,m0.y,200,defaultBcoColor,65535,-1,vaQR.txt
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -1019,6 +1019,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     // end of user code

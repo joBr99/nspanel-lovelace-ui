@@ -143,7 +143,7 @@ Text tTmp
         Send Component ID                   : disabled
         Associated Keyboard                 : none
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 30
     
 Text tVersion
     Attributes
@@ -152,7 +152,7 @@ Text tVersion
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 48
+        Text                                : 49
         Max. Text Size                      : 10
     
 Picture p0
@@ -363,6 +363,10 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
+                                        }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardLChart
                                         }
                                     }
                                     // end of user code

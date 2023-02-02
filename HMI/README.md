@@ -94,9 +94,410 @@ change the page type:
 
 ### screensaver page
 
-`weatherUpdate~tMainIcon~tMainText~tForecast1~tF1Icon~tForecast1Val~tForecast2~tF2Icon~tForecast2Val~tForecast3~tF3Icon~tForecast3Val~tForecast4~tF4Icon~tForecast4Val~optionalLayoutIcon~optionalLayoutText~altIconFont~altIconFont`
+Example default layout: `weatherUpdate~~~A~21130~~-0.7C~~~B~63469~Sat~3.6C~~~C~35957~Sun~3.9C~~~D~31728~Mon~4.3C~~~E~35957~Tue~3.6C`
+Example alternative layout: `weatherUpdate~~~A~21130~~-0.7C~~~B~63469~Sat~3.6C~~~C~35957~Sun~3.9C~~~D~31728~Mon~4.3C~~~E~35957~Tue~3.6C~~~F~21130~~23.6C`
 
-`color~background~time~timeAMPM~date~tMainIcon~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tF1Icon~tF2Icon~tF3Icon~tF4Icon~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMRIcon~tMR`
+<table>
+<thead>
+  <tr>
+    <th>Parameter Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>weatherupdate</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td></td>
+    <td rowspan="6">Main Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td></td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td></td>
+    <td rowspan="6">First Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td></td>
+    <td rowspan="6">Second Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td></td>
+    <td rowspan="6">Third Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td></td>
+    <td rowspan="6">Fourth Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td></td>
+    <td rowspan="6">Alternative Layout Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td></td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+`color~background~tTime~timeAMPM~tDate~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMainTextAlt2~tTimeAdd`
+
+<table>
+<thead>
+  <tr>
+    <th>Parameter Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td colspan="3">instruction</td>
+    <td>color</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>background</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tTime</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>timeAMPM</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tDate</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tMainText</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast1</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast2</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast3</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast4</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast1Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast2Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast3Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast4Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>bar</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tMainTextAlt2</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tTimeAdd</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
 
 `notify~heading~text`
 
@@ -1868,13 +2269,14 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
 </table>
 
 
-### cardPower (in development)
+### cardPower
+
+```entityUpd~PowerTest~x~navUp~A~65535~~~delete~~~~~~text~sensor.power_consumption~B~17299~Power consumption~100W~1~text~sensor.power_consumption~C~17299~Power consumption~100W~1~text~sensor.today_energy~D~17299~Total energy 1~5836.0kWh~0~delete~~~~~~0~text~sensor.today_energy~E~17299~Total energy 1~5836.0kWh~-30~delete~~~~~~0~text~sensor.today_energy~F~65504~Total energy 1~5836.0kWh~90~text~sensor.today_energy~G~17299~Total energy 1~5836.0kWh~10```
 
 <table>
 <thead>
   <tr>
-    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
-    <th>Category</th>
+    <th>Parameter Number</th>
     <th>Location</th>
     <th>Type</th>
     <th>Field</th>
@@ -1884,7 +2286,6 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
 <tbody>
   <tr>
     <td>0</td>
-    <td>instruction</td>
     <td></td>
     <td>instruction</td>
     <td>entityUpd</td>
@@ -1895,12 +2296,10 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
     <td>title</td>
     <td>title</td>
     <td>title</td>
-    <td>intNameEntity</td>
     <td></td>
   </tr>
   <tr>
     <td>2</td>
-    <td rowspan="12">Navigation</td>
     <td rowspan="6">Upper Left Icon</td>
     <td rowspan="6">Entity Definition</td>
     <td>type</td>
@@ -1965,96 +2364,89 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
   </tr>
   <tr>
     <td>14</td>
-    <td rowspan="27">cardPower specific</td>
-    <td rowspan="3">Home Icon Middle</td>
-    <td></td>
-    <td>iconColor</td>
-    <td></td>
+    <td rowspan="7">Home Icon / Value below Home Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>15</td>
-    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>16</td>
     <td>icon</td>
     <td></td>
   </tr>
   <tr>
-    <td>16</td>
-    <td></td>
-    <td>text</td>
-    <td></td>
-  </tr>
-  <tr>
     <td>17</td>
-    <td rowspan="4">1st Item Upper Left</td>
-    <td rowspan="4">Power Entity Definition</td>
     <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
     <td>18</td>
-    <td>icon</td>
+    <td>displayName</td>
     <td></td>
   </tr>
   <tr>
     <td>19</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td>optionalValue</td>
+    <td></td>
   </tr>
   <tr>
     <td>20</td>
-    <td>text</td>
-    <td></td>
+    <td colspan="2">speed</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>21</td>
-    <td rowspan="4">2nd Item Middle Left</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
-    <td></td>
+    <td rowspan="7">Value above Home Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>22</td>
-    <td>icon</td>
-    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>23</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td>icon</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>24</td>
-    <td>text</td>
-    <td></td>
+    <td>iconColor</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>25</td>
-    <td rowspan="4">3rd Item Bottom Left</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
-    <td></td>
+    <td>displayName</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>26</td>
-    <td>icon</td>
+    <td>optionalValue</td>
     <td></td>
   </tr>
   <tr>
     <td>27</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td colspan="2">speed</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>28</td>
-    <td>text</td>
-    <td></td>
+    <td rowspan="7">1st Item Upper Left</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>29</td>
-    <td rowspan="4">4th Item Upper Right</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
-    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>30</td>
@@ -2063,57 +2455,208 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
   </tr>
   <tr>
     <td>31</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td>iconColor</td>
+    <td></td>
   </tr>
   <tr>
     <td>32</td>
-    <td>text</td>
+    <td>displayName</td>
     <td></td>
   </tr>
   <tr>
     <td>33</td>
-    <td rowspan="4">5thItem Middle Right</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
+    <td>optionalValue</td>
     <td></td>
   </tr>
   <tr>
     <td>34</td>
-    <td>icon</td>
-    <td></td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
   </tr>
   <tr>
     <td>35</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td rowspan="7">2nd Item Middle Left</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>36</td>
-    <td>text</td>
-    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
   </tr>
   <tr>
     <td>37</td>
-    <td rowspan="4">6th Item Bottom Right</td>
-    <td rowspan="4">Power Entity Definition</td>
-    <td>iconColor</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>38</td>
-    <td>icon</td>
+    <td>iconColor</td>
     <td></td>
   </tr>
   <tr>
     <td>39</td>
-    <td>speed</td>
-    <td>numbers (-2,-1,0,1,2)</td>
+    <td>displayName</td>
+    <td></td>
   </tr>
   <tr>
     <td>40</td>
-    <td>text</td>
+    <td>optionalValue</td>
     <td></td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td rowspan="7">3rd Item Bottom Left</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td rowspan="7">4th Item Upper Right</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>54</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td rowspan="7">5th Item Middle Right</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>58</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>59</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>61</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>62</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>63</td>
+    <td rowspan="7">6th Item Bottom Right</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>64</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>65</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>66</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>67</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>68</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>69</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
   </tr>
 </tbody>
 </table>

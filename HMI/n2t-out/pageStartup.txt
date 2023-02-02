@@ -158,7 +158,7 @@ Text tVersion
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 48
+        Text                                : 49
         Max. Text Size                      : 10
     
 Picture p0
@@ -323,6 +323,10 @@ Timer tmSerial
                                         if(tId.txt=="screensaver")
                                         {
                                             page screensaver
+                                        }
+                                        if(tId.txt=="screensaver2")
+                                        {
+                                            page screensaver2
                                         }
                                         if(tId.txt=="cardEntities")
                                         {

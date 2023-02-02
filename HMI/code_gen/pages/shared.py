@@ -67,6 +67,10 @@ sharedfoot = """
               {
                 page screensaver
               }
+              if(tId.txt=="screensaver2")
+              {
+                page screensaver2
+              }
               if(tId.txt=="cardEntities")
               {
                 page cardEntities

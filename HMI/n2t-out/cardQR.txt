@@ -606,11 +606,11 @@ Timer tmSerial
                                         {
                                             if(type1.txt=="delete"||type1.txt=="")
                                             {
-                                                qrcode m1.x,m1.y,200,6371,65535,-1,vaQR.txt
+                                                qrcode m1.x,m1.y,200,defaultBcoColor,65535,-1,vaQR.txt
                                             }
                                         }else
                                         {
-                                            qrcode m0.x,m0.y,200,6371,65535,-1,vaQR.txt
+                                            qrcode m0.x,m0.y,200,defaultBcoColor,65535,-1,vaQR.txt
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -672,6 +672,10 @@ Timer tmSerial
                                         if(tId.txt=="screensaver")
                                         {
                                             page screensaver
+                                        }
+                                        if(tId.txt=="screensaver2")
+                                        {
+                                            page screensaver2
                                         }
                                         if(tId.txt=="cardEntities")
                                         {

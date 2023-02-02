@@ -9,7 +9,8 @@ It is possible to overwrite and configure varrious things on Entities.
 key | optional | type | default | description
 -- | -- | -- | -- | --
 `entity` | False | string | `None` | name of ha entity
-`name` | True | string | `None` | Used to override names
+`name` | True | string | `None` | Used to override names (supports home assistant templates)
+`value` | True | string | `None` | Used to override the value (supports home assistant templates)
 `icon` | True | string | `None` | Used to override icons
 `color` | True | array | `None` | Overwrite color of entity `color: [255, 0, 0]`
 `state` | True | string | `None` | Only displayed if Entity state is equal to this value
@@ -17,6 +18,7 @@ key | optional | type | default | description
 `status` | True | string | `None` | Only valid for navigate and service items, adds a entity to track state for the icon
 `assumed_state` | True | string | `None` | Only for cover items, up, down and stop buttons are always shown
 `action_name` | True | string | `None` | Only valid for script; Button label
+
 
 ## Override Icons or Names
 
@@ -71,6 +73,11 @@ There probably not much cases where this is needed, but here is an exmaple to sh
         icon: 'ha:{{ state_attr("climate.wohnzimmer_boden","current_temperature")}}'
 ```
 
+You can use the acual chars for the icon in the above ha: template, however if you want to use the icon names you can use `ha-i` instead. This will be evaluated as HA Template first and then looked up as an icon.
+
+```yaml
+        icon: 'ha-i:{{ iif(is_state('light.kitchen', 'on'), 'mdi:flashlight', 'mdi:flashlight-off') }}'
+```
 
 ## Hide item based on state
 

@@ -267,14 +267,7 @@ Button bNext
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardChart,"
-            if(bPrev.txt=="î")
-            {
-                tSend.txt+="bHome"
-            }else
-            {
-                tSend.txt+="bNext"
-            }
+            tSend.txt="event,buttonPress2,"+nent2.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -321,14 +314,7 @@ Button bPrev
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,cardChart,"
-            if(bPrev.txt=="î¶")
-            {
-                tSend.txt+="bUp"
-            }else
-            {
-                tSend.txt+="bPrev"
-            }
+            tSend.txt="event,buttonPress2,"+nent1.txt+",button"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
@@ -773,6 +759,10 @@ Timer tmSerial
                                         if(tId.txt=="screensaver")
                                         {
                                             page screensaver
+                                        }
+                                        if(tId.txt=="screensaver2")
+                                        {
+                                            page screensaver2
                                         }
                                         if(tId.txt=="cardEntities")
                                         {

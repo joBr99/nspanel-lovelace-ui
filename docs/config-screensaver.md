@@ -1,29 +1,54 @@
 #### Possible configuration values for screensaver config
 
+![screensaver](img/screensaver.png)
+
+
 key | optional | type | default | description
 -- | -- | -- | -- | --
 `entity` | True | string | `weather.example` | weather entity from homeassistant
-`weatherUnit` | True | string | `celsius` | unit for temperature, valid values are `celsius` or `fahrenheit`
-`weatherOverrideForecast1` | True | complex | `None` | sensor entity from home assistant here to overwrite the first weather forecast item on the screensaver
-`weatherOverrideForecast2` | True | complex | `None` | sensor entity from home assistant here to overwrite the second weather forecast item on the screensaver
-`weatherOverrideForecast3` | True | complex | `None` | sensor entity from home assistant here to overwrite the third weather forecast item on the screensaver
-`weatherOverrideForecast4` | True | complex | `None` | sensor entity from home assistant here to overwrite the forth weather forecast item on the screensaver
+`entities` | True | string | `None` | contains a list of entities of this card (will be used instead of entity)
 `statusIcon1` | True | complex | `None` | status icon left to the date string, config similar to weatherOverride
 `statusIcon2` | True | complex | `None` | status icon right to the date string, config similar to weatherOverride
 `doubleTapToUnlock` | True | boolean | `False` | requires to tap screensaver two times
-`alternativeLayout` | True | boolean | `False` | alternative layout with humidity
 `theme` | True | complex | | configuration for theme
 `defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
 
-Example for the weatherOverride config options:
+Example for the a screensaver config with custom entities/overrides:
 
 ```yaml
-      weatherOverrideForecast4:
-        entity: sensor.example_item
-        name: name
-        icon: mdi:lightbulb
+    screensaver:
+      entities:
+        - entity: weather.demo_weather_north
+        - entity: weather.demo_weather_north
+          type: 0
+        - entity: weather.demo_weather_north
+          type: 1
+        - entity: weather.demo_weather_north
+          type: 2
+        - entity: sensor.energy_usage
 ```
+
+Using a 6th entity will automatically activate the alternative layout.
+
+![screensaver-alt](img/screensaver-alt.png)
+
+```yaml
+    screensaver:
+      entities:
+        - entity: weather.demo_weather_north
+        - entity: weather.demo_weather_north
+          type: 0
+        - entity: weather.demo_weather_north
+          type: 1
+        - entity: sensor.energy_usage
+        - entity: delete
+        - entity: sensor.indoor_temp
+          icon: mdi:home-thermometer-outline
+```
+
+You can use override the options decribed on the [entities documentation page](https://docs.nspanel.pky.eu/entities/) to override colors, names or values of the entities. 
+
 #### Possible configuration values for screensaver theme config
 
 key | option | type | default | description
@@ -32,29 +57,18 @@ key | option | type | default | description
 `time` | True | list | White | `[R, G, B]`
 `timeAMPM` | True | list | White | `[R, G, B]`
 `date` | True | list | White | `[R, G, B]`
-`tMainIcon` | True | list | White | `[R, G, B]`
 `tMainText` | True | list | White | `[R, G, B]`
 `tForecast1` | True | list | White | `[R, G, B]`
 `tForecast2` | True | list | White | `[R, G, B]`
 `tForecast3` | True | list | White | `[R, G, B]`
 `tForecast4` | True | list | White | `[R, G, B]`
-`tF1Icon` | True | list | White | `[R, G, B]`
-`tF2Icon` | True | list | White | `[R, G, B]`
-`tF3Icon` | True | list | White | `[R, G, B]`
-`tF4Icon` | True | list | White | `[R, G, B]`
 `tForecast1Val` | True | list | White | `[R, G, B]`
 `tForecast2Val` | True | list | White | `[R, G, B]`
 `tForecast3Val` | True | list | White | `[R, G, B]`
 `tForecast4Val` | True | list | White | `[R, G, B]`
 `bar` | True | list | White | `[R, G, B]`
-`tMainIconAlt` | True | list | White | `[R, G, B]`
 `tMainTextAlt` | True | list | White | `[R, G, B]`
-`tMRIcon` | True | list | White | `[R, G, B]`
-`tMR` | True | list | White | `[R, G, B]`
 `tTimeAdd` | True | list | White | `[R, G, B]`
-`autoWeather` | True | boolean | false | Set to `true` to enable weather icons to change depending on state e.g. blue for rainy. Any custom colors in `tMainIcon` `tF1Icon` `tF2Icon` `tF3Icon` `tF4Icon` take precedence.
-
-If `autoWeather: true` is set. You may also overwrite the default color mapping for any valid weather state provided by homeassistant e.g. `rainy: [50, 50, 255]` or `sunny: [255, 255, 0]`
 
 Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red or `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same). Also note that the screen has a low contrast ratio, so colors look sigificantly different at full display brightness and lowest brightness.
 
@@ -63,30 +77,13 @@ Example for the theme config:
 ```yaml
     screensaver:
       theme:
-        autoWeather: true
+        date: [255, 0, 0]
 ```
-
-
-<details>
-<summary>Config Example for configured weatherOverrides</summary>
-<br>
-```
-  config:
-    screensaver:
-      entity: weather.k3ll3r
-      weatherOverrideForecast4:
-        entity: sensor.example_item
-        name: name
-        icon: lightbulb
-      alternativeLayout: True
-```
-</details>
 
 <details>
 <summary>Config Example for configured statusIcons</summary>
 <br>
 ```
-  config:
     screensaver:
         entity: weather.k3ll3r
         statusIcon1:
@@ -96,11 +93,12 @@ Example for the theme config:
 ```
 </details>
 
+It is possible to increase the size of the font used for the icons by adding `altFont: True` to the statusIcon configuration. Icon/Color Overrides are also possible like on any other Entity.
+
 <details>
 <summary>Config Example for configured statusIcons with increased size of the icons</summary>
 <br>
 ```
-  config:
     screensaver:
         entity: weather.k3ll3r
         statusIcon1:
@@ -112,72 +110,46 @@ Example for the theme config:
 ```
 </details>
 
-It is possible to increase the size of the font used for the icons by adding `altFont: True` to the statusIcon configuration. Icon/Color Overrides are also possible like on any other Entity.
-
 <details>
-<summary>Config Example for configured theme (colored weather icons)</summary>
+<summary>Config Example for all white icons on screensaver</summary>
 <br>
 ```
-  config:
     screensaver:
-        entity: weather.k3ll3r
-        theme:
-          autoWeather: true
+      entities:
+        - entity: weather.demo_weather_north
+        - entity: weather.demo_weather_north
+          type: 0
+	  color: [255,255,255]
+        - entity: weather.demo_weather_north
+          type: 1
+	  color: [255,255,255]
+        - entity: weather.demo_weather_north
+          type: 2
+	  color: [255,255,255]
+        - entity: weather.demo_weather_north
+          type: 3
+	  color: [255,255,255]
 ```
 </details>
 
-
 <details>
-<summary>Config Example for configured theme (custom)</summary>
+<summary>Config Example for a custom date format on forecast</summary>
 <br>
 ```
-  config:
-    screensaver:
-        entity: weather.k3ll3r
    screensaver:
-      entity: weather.k3ll3r
-      theme:
-        #time:             [220, 0, 255]
-        #timeAMPM:         [220, 0, 255]
-        #date:             [220, 0, 255]
-        #tMainIcon:        [220, 0, 255]
-        #tMainText:        [220, 0, 255]
-        #tForecast1:       [220, 0, 255]
-        #tForecast2:       [220, 0, 255]
-        #tForecast3:       [220, 0, 255]
-        #tForecast4:       [220, 0, 255]
-        #tF1Icon:          [220, 0, 255]
-        #tF2Icon:          [220, 0, 255]
-        #tF3Icon:          [220, 0, 255]
-        #tF4Icon:          [220, 0, 255]
-        #tForecast1Val:    [220, 0, 255]
-        #tForecast2Val:    [220, 0, 255]
-        #tForecast3Val:    [220, 0, 255]
-        #tForecast4Val:    [220, 0, 255]
-        #bar:              [220, 0, 255]
-        #tMRIcon:          [220, 0, 255]
-        #tMR:              [220, 0, 255]
-	#tTimeAdd:         [220, 0, 255]
-
-        #autoWeather automatically colors the screensaver weather icons based upon weather. Uncomment the following line to enable.
-        #autoWeather: true
-        
-        #If you have enabled autoWeather, the following options allow you to customise the colors used for autoWeather.
-        
-        #clear-night:              [150, 150, 100]
-        #cloudy:                   [75, 75, 75]
-        #exceptional:              [255, 50, 50]
-        #fog:                      [150, 150, 150]
-        #hail:                     [200, 200, 200]
-        #lightning:                [200, 200, 0]
-        #lightning-rainy:          [200, 200, 150]
-        #partlycloudy:             [150, 150, 150]
-        #pouring:                  [50, 50, 255]
-        #rainy:                    [100, 100, 255]
-        #snowy:                    [150, 150, 150]
-        #snowy-rainy:              [150, 150, 255]
-        #sunny:                    [255, 255, 0]
-        #windy:                    [150, 150, 150]
-        #windy-variant:            [255, 125, 125]
+      entities:
+        - entity: weather.demo_weather_north
+        - entity: weather.demo_weather_north
+          type: 0
+          name: "%a %-d/%-m"
+        - entity: weather.demo_weather_north
+          type: 1
+          name: "%a %-d/%-m"
+        - entity: weather.demo_weather_north
+          name: "%a %-d/%-m"
+          type: 2
+        - entity: weather.demo_weather_north
+          name: "%a %-d/%-m"
+          type: 3
 ```
 </details>

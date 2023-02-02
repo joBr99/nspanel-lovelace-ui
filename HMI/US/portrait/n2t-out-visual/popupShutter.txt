@@ -301,9 +301,9 @@ Slider hPosition
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 12
+        x coordinate                        : 11
         y coordinate                        : 213
-        Width                               : 250
+        Width                               : 300
         Height                              : 44
         Effect                              : load
         Effect Priority                     : 0
@@ -345,9 +345,9 @@ Slider hTilt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 12
+        x coordinate                        : 11
         y coordinate                        : 365
-        Width                               : 250
+        Width                               : 300
         Height                              : 44
         Effect                              : load
         Effect Priority                     : 0
