@@ -1,5 +1,143 @@
 --- HMI/n2t-out
 +++ HMI/US/landscape/n2t-out
+├── file list
+│ @@ -14,9 +14,8 @@
+│  popupFan.txt
+│  popupInSel.txt
+│  popupLight.txt
+│  popupNotify.txt
+│  popupShutter.txt
+│  popupThermo.txt
+│  popupTimer.txt
+│ -screensaver.txt
+│ -screensaver2.txt
+│ +screensaver.txt
+│   --- HMI/n2t-out/cardAlarm.txt
+├── +++ HMI/US/landscape/n2t-out/cardAlarm.txt
+│ @@ -902,18 +902,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardChart.txt
+├── +++ HMI/US/landscape/n2t-out/cardChart.txt
+│ @@ -635,18 +635,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardEntities.txt
+├── +++ HMI/US/landscape/n2t-out/cardEntities.txt
+│ @@ -1885,18 +1885,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardGrid.txt
+├── +++ HMI/US/landscape/n2t-out/cardGrid.txt
+│ @@ -870,18 +870,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardLChart.txt
+├── +++ HMI/US/landscape/n2t-out/cardLChart.txt
+│ @@ -616,18 +616,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardMedia.txt
+├── +++ HMI/US/landscape/n2t-out/cardMedia.txt
+│ @@ -1154,18 +1154,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
 │   --- HMI/n2t-out/cardPower.txt
 ├── +++ HMI/US/landscape/n2t-out/cardPower.txt
 │ @@ -35,27 +35,27 @@
@@ -536,7 +674,26 @@
 │                                              vis h5,1
 │                                          }else
 │                                          {
-│ @@ -965,14 +891,18 @@
+│ @@ -919,18 +845,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│ @@ -969,14 +891,18 @@
 │                                          {
 │                                              page cardPower
 │                                          }
@@ -555,6 +712,48 @@
 │                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 │                                      }
 │                                      if(tInstruction.txt=="date")
+│   --- HMI/n2t-out/cardQR.txt
+├── +++ HMI/US/landscape/n2t-out/cardQR.txt
+│ @@ -669,18 +669,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardThermo.txt
+├── +++ HMI/US/landscape/n2t-out/cardThermo.txt
+│ @@ -1071,18 +1071,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
 │ @@ -179,15 +179,15 @@
@@ -574,6 +773,25 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
+│ @@ -320,18 +320,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/landscape/n2t-out/screensaver.txt
 │ @@ -29,17 +29,14 @@
@@ -647,3 +865,22 @@
 │                                          if(tAMPM.txt=="")
 │                                          {
 │                                              vis tAMPM,0
+│ @@ -745,18 +721,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid

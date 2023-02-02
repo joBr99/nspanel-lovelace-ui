@@ -1,6 +1,60 @@
-+++ /dev/fd/62	2023-02-01 21:52:45.071014440 +0000
++++ /dev/fd/62	2023-02-02 19:03:22.647127423 +0000
++le list
++ +14,8 @@
++n.txt
++Sel.txt
++ght.txt
++tify.txt
++utter.txt
++ermo.txt
++mer.txt
++aver.txt
++aver2.txt
++aver.txt
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
++I/n2t-out/cardAlarm.txt
+++ HMI/US/portrait/n2t-out/cardAlarm.txt
++18 +902,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/cardChart.txt
+++ HMI/US/portrait/n2t-out/cardChart.txt
++18 +635,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
 +6 +61,36 @@
@@ -54,13 +108,13 @@
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +186,26 @@
 +e (string) type6
@@ -466,6 +520,88 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
++,18 +2665,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/cardGrid.txt
+++ HMI/US/portrait/n2t-out/cardGrid.txt
++18 +870,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/cardLChart.txt
+++ HMI/US/portrait/n2t-out/cardLChart.txt
++18 +616,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/cardMedia.txt
+++ HMI/US/portrait/n2t-out/cardMedia.txt
++,18 +1154,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +I/n2t-out/cardPower.txt
 ++ HMI/US/portrait/n2t-out/cardPower.txt
 +7 +35,27 @@
@@ -819,6 +955,67 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
++18 +889,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/cardQR.txt
+++ HMI/US/portrait/n2t-out/cardQR.txt
++18 +669,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/cardThermo.txt
+++ HMI/US/portrait/n2t-out/cardThermo.txt
++,18 +1071,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 +0 +35,14 @@
@@ -842,6 +1039,25 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
++18 +314,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 +7 +29,14 @@
@@ -915,3 +1131,22 @@
 +                                 if(tAMPM.txt=="")
 +                                 {
 +                                     vis tAMPM,0
++18 +721,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
