@@ -141,8 +141,8 @@ class LuiPagesGen(object):
 
         item_str = ""
         for item in entities:
-            item_str += self.generate_entities_item(item, "cardEntities")
-
+            item_str += self.generate_entities_item(item, "cardEntities", mask=["type", "entityId"])
+    
         self._send_mqtt_msg(f"weatherUpdate{item_str}")
         # send color if configured in screensaver
         if theme is not None:
@@ -166,7 +166,7 @@ class LuiPagesGen(object):
                 altfont += "~"
         self._send_mqtt_msg(f"statusUpdate{status_res}{altfont}")
 
-    def generate_entities_item(self, item, cardType="cardGrid", temp_unit=""):
+    def generate_entities_item(self, item, cardType="cardGrid", temp_unit="", mask=None):
         entityId = item.entityId
         icon = item.iconOverride
         colorOverride = item.colorOverride
@@ -393,6 +393,12 @@ class LuiPagesGen(object):
         # use uuid instead for some types and probably expand on this in future
         if entityType in ["light"]:
             entityId = uuid
+        # remove stuff defined in mask
+        if mask is not None:
+            if "type" in mask:
+                entityTypePanel = ""
+            if "entityId" in mask:
+                entityId = ""
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
     def generate_entities_page(self, navigation, heading, items, cardType, tempUnit):
@@ -608,6 +614,7 @@ class LuiPagesGen(object):
                     icon_color = rgb_dec565([243,179,0])
                 add_btn=f"{iconnav}~{icon_color}~{entity}"
                 
+                
             # add padding to arm buttons
             arm_buttons = ""
             for b in supported_modes:
@@ -723,7 +730,7 @@ class LuiPagesGen(object):
             item = card.uuid
             self.generate_unlock_page(navigation, item, card.title, destination, pin)
             return
-        if card.cardType == "screensaver":
+        if card.cardType in ["screensaver", "screensaver2"]:
             theme = card.raw_config.get("theme")
             self.update_screensaver_weather(theme)
             self.update_status_icons()

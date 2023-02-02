@@ -202,9 +202,7 @@ head = head + """
               covx tTmp.txt,t10.bco,0,0
               spstr strCommand.txt,tTmp.txt,"~",15
               covx tTmp.txt,tMainTextAlt2.pco,0,0
-              //spstr strCommand.txt,tTmp.txt,"~",16
-              //covx tTmp.txt,tMR.pco,0,0
-              spstr strCommand.txt,tTmp.txt,"~",17
+              spstr strCommand.txt,tTmp.txt,"~",16
               covx tTmp.txt,tTimeAdd.pco,0,0
               if(tMainTextAlt2.txt!=""&&p0.w!=320)
               {

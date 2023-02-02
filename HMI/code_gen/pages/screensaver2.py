@@ -126,6 +126,55 @@ for i in range(1,6):
 
 head = head + """
             }
+
+            if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
+            {
+              spstr strCommand.txt,tTmp.txt,"~",1
+              covx tTmp.txt,tTime.bco,0,0
+              if(tTime.bco!=screensaver.bco)
+              {
+                for(sys0=0;sys0<60;sys0++)
+                {
+                  if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==54)
+                  {
+                    b[sys0].bco=tTime.bco
+                  }
+                }
+              }
+              spstr strCommand.txt,tTmp.txt,"~",2
+              covx tTmp.txt,tTime.pco,0,0
+              spstr strCommand.txt,tTmp.txt,"~",3
+              covx tTmp.txt,tAMPM.pco,0,0
+              spstr strCommand.txt,tTmp.txt,"~",4
+              covx tTmp.txt,tDate.pco,0,0
+              spstr strCommand.txt,tTmp.txt,"~",5
+              covx tTmp.txt,tMainText.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",6
+              //covx tTmp.txt,tForecast1.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",7
+              //covx tTmp.txt,tForecast2.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",8
+              //covx tTmp.txt,tForecast3.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",9
+              //covx tTmp.txt,tForecast4.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",10
+              //covx tTmp.txt,tForecast1Val.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",11
+              //covx tTmp.txt,tForecast2Val.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",12
+              //covx tTmp.txt,tForecast3Val.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",13
+              //covx tTmp.txt,tForecast4Val.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",14
+              //covx tTmp.txt,t10.bco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",15
+              //covx tTmp.txt,tMainTextAlt2.pco,0,0
+              //spstr strCommand.txt,tTmp.txt,"~",16
+              //covx tTmp.txt,tTimeAdd.pco,0,0
+            }
+
+
+
             if(tInstruction.txt=="notify")
             {
               spstr strCommand.txt,tNotifyHead.txt,"~",1
