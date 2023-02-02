@@ -104,7 +104,7 @@ nspanel_screensaver_notification:
 ## Buzzer
 
 See <a href="https://tasmota.github.io/docs/Buzzer/#buzzer-command">Tasmota Buzzer</a> for commands.
-Might be necessary to enable the buzzer with:
+It might be necessary to enable the buzzer with:
 ```
 BuzzerPWM 1
 ```
