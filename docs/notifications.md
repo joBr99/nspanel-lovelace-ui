@@ -101,6 +101,15 @@ nspanel_screensaver_notification:
   icon: mdi:message-badge
 ```
 
+## Buzzer
+
+See <a href="https://tasmota.github.io/docs/Buzzer/#buzzer-command">Tasmota Buzzer</a> for commands.
+Might be necessary to enable the buzzer with:
+```
+BuzzerPWM 1
+```
+
+
 ## Color Picker
 <input type="color" id="colorpicker" onchange="conv565()" value="#000000">
 
