@@ -1738,6 +1738,12 @@ Timer tmSerial
                                         //set timeout to global var
                                         spstr strCommand.txt,tTmp.txt,"~",1
                                         covx tTmp.txt,sleepTimeout,0,0
+                                        //temporary disable sleep timer
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        if(tTmp.txt=="disable")
+                                        {
+                                            tmSleep.en=0
+                                        }
                                     }
                                     // end of user code
                                     udelete payloadLength-1
