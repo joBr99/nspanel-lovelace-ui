@@ -7,7 +7,7 @@ You can configure the buttons to mimic an UI element on the screen by configurin
 The following rule will change the behaviour of the two buttons to do page navigation.
 
 ```
-Rule2 on Button1#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,buttonPress2,hwbtn,bPrev"} endon on Button2#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,buttonPress2,hwbtn,bNext"} endon
+Rule2 on Button1#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,buttonPress2,navPrev,button"} endon on Button2#state do Publish tele/%topic%/RESULT {"CustomRecv":"event,buttonPress2,navNext,button"} endon
 
 Rule2 1
 ```
