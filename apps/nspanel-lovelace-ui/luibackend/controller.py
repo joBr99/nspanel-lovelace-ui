@@ -290,6 +290,14 @@ class LuiController(object):
                 else:
                     self._current_card = self._config.get_default_card()
                 self._pages_gen.render_card(self._current_card)
+            if entity_id.startswith('navPrev'):
+                if self._current_card.uuid_prev:
+                    self._current_card = self._config.get_card_by_uuid(self._current_card.uuid_prev)
+                    self._pages_gen.render_card(self._current_card)
+            if entity_id.startswith('navNext'):
+                if self._current_card.uuid_next:
+                    self._current_card = self._config.get_card_by_uuid(self._current_card.uuid_next)
+                    self._pages_gen.render_card(self._current_card)
             elif entity_id.startswith('scene'):
                 apis.ha_api.get_entity(entity_id).call_service("turn_on")
             elif entity_id.startswith('script'):
