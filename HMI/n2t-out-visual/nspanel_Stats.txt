@@ -14,14 +14,14 @@ popupNotify
 	19   Component(s)
 	257  Line(s) of event code
 	166  Unique line(s) of event code
-cardChart
-	33   Component(s)
-	433  Line(s) of event code
-	294  Unique line(s) of event code
 cardLChart
 	33   Component(s)
 	398  Line(s) of event code
 	264  Unique line(s) of event code
+cardChart
+	33   Component(s)
+	433  Line(s) of event code
+	294  Unique line(s) of event code
 pageStartup
 	20   Component(s)
 	189  Line(s) of event code
@@ -42,6 +42,10 @@ cardQR
 	34   Component(s)
 	406  Line(s) of event code
 	236  Unique line(s) of event code
+cardPower
+	54   Component(s)
+	499  Line(s) of event code
+	338  Unique line(s) of event code
 cardGrid
 	44   Component(s)
 	519  Line(s) of event code
@@ -78,10 +82,6 @@ screensaver
 	47   Component(s)
 	432  Line(s) of event code
 	308  Unique line(s) of event code
-cardPower
-	54   Component(s)
-	499  Line(s) of event code
-	338  Unique line(s) of event code
 cardEntities
 	67   Component(s)
 	1166 Line(s) of event code

@@ -114,7 +114,7 @@ Text d1Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
     
 Text d1Val
@@ -124,7 +124,7 @@ Text d1Val
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : XXXXXXX
+        Text                                : 
         Max. Text Size                      : 10
     
 Text d2Icon
@@ -134,7 +134,7 @@ Text d2Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
     
 Text d2Val
@@ -144,7 +144,7 @@ Text d2Val
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : XXXXXXX
+        Text                                : 
         Max. Text Size                      : 10
     
 Text d3Icon
@@ -154,7 +154,7 @@ Text d3Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
     
 Text d3Val
@@ -164,7 +164,7 @@ Text d3Val
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : XXXXXXX
+        Text                                : 
         Max. Text Size                      : 10
     
 Text e1Icon
@@ -354,7 +354,7 @@ Text f1Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
     
 Text f2Icon
@@ -364,7 +364,7 @@ Text f2Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
     
 Text f3Icon
@@ -374,7 +374,7 @@ Text f3Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
     
 Text f4Icon
@@ -384,7 +384,7 @@ Text f4Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
     
 Text f5Icon
@@ -394,7 +394,7 @@ Text f5Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
     
 Text m0

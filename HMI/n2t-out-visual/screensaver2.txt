@@ -152,7 +152,7 @@ Text d1Icon
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -182,7 +182,7 @@ Text d1Val
         Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : XXXXXXX
+        Text                                : 
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -212,7 +212,7 @@ Text d2Icon
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -242,7 +242,7 @@ Text d2Val
         Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : XXXXXXX
+        Text                                : 
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -272,7 +272,7 @@ Text d3Icon
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -302,7 +302,7 @@ Text d3Val
         Horizontal Alignment                : left
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : XXXXXXX
+        Text                                : 
         Max. Text Size                      : 10
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -872,7 +872,7 @@ Text f1Icon
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -902,7 +902,7 @@ Text f2Icon
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -932,7 +932,7 @@ Text f3Icon
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -962,7 +962,7 @@ Text f4Icon
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
@@ -992,7 +992,7 @@ Text f5Icon
         Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
-        Text                                : X
+        Text                                : 
         Max. Text Size                      : 4
         Word wrap                           : disabled
         Horizontal Spacing                  : 0

@@ -572,7 +572,7 @@ Text tHeading
         Fill                                : solid color
         Style                               : flat
         Associated Keyboard                 : none
-        Font ID                             : 1
+        Font ID                             : 2
         Back. Color                         : 6371
         Font Color                          : 65535
         Horizontal Alignment                : center
