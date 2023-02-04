@@ -14,7 +14,28 @@
 │ +screensaver.txt
 │   --- HMI/n2t-out/cardAlarm.txt
 ├── +++ HMI/US/landscape/n2t-out/cardAlarm.txt
-│ @@ -902,18 +902,14 @@
+│ @@ -879,20 +879,14 @@
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│ -                                        //temporary disable sleep timer
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            tmSleep.en=0
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="pageType")
+│                                      {
+│                                          sleepValue=0
+│                                          //command format pageType,specialPageName
+│                                          //write name of speical page to tId
+│                                          spstr strCommand.txt,tId.txt,"~",1
+│ @@ -908,18 +902,14 @@
 │                                          {
 │                                              page pageStartup
 │                                          }
@@ -35,7 +56,28 @@
 │                                              page cardGrid
 │   --- HMI/n2t-out/cardChart.txt
 ├── +++ HMI/US/landscape/n2t-out/cardChart.txt
-│ @@ -635,18 +635,14 @@
+│ @@ -612,20 +612,14 @@
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│ -                                        //temporary disable sleep timer
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            tmSleep.en=0
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="pageType")
+│                                      {
+│                                          sleepValue=0
+│                                          //command format pageType,specialPageName
+│                                          //write name of speical page to tId
+│                                          spstr strCommand.txt,tId.txt,"~",1
+│ @@ -641,18 +635,14 @@
 │                                          {
 │                                              page pageStartup
 │                                          }
@@ -75,6 +117,27 @@
 │                                          if(tId.txt=="cardGrid")
 │                                          {
 │                                              page cardGrid
+│ @@ -1977,20 +1973,14 @@
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│ -                                        //temporary disable sleep timer
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            tmSleep.en=0
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
 │   --- HMI/n2t-out/cardGrid.txt
 ├── +++ HMI/US/landscape/n2t-out/cardGrid.txt
 │ @@ -870,18 +870,14 @@
@@ -96,9 +159,51 @@
 │                                          if(tId.txt=="cardGrid")
 │                                          {
 │                                              page cardGrid
+│ @@ -962,20 +958,14 @@
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│ -                                        //temporary disable sleep timer
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            tmSleep.en=0
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
 │   --- HMI/n2t-out/cardLChart.txt
 ├── +++ HMI/US/landscape/n2t-out/cardLChart.txt
-│ @@ -616,18 +616,14 @@
+│ @@ -593,20 +593,14 @@
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│ -                                        //temporary disable sleep timer
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            tmSleep.en=0
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="pageType")
+│                                      {
+│                                          sleepValue=0
+│                                          //command format pageType,specialPageName
+│                                          //write name of speical page to tId
+│                                          spstr strCommand.txt,tId.txt,"~",1
+│ @@ -622,18 +616,14 @@
 │                                          {
 │                                              page pageStartup
 │                                          }
@@ -138,6 +243,27 @@
 │                                          if(tId.txt=="cardGrid")
 │                                          {
 │                                              page cardGrid
+│ @@ -1246,20 +1242,14 @@
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│ -                                        //temporary disable sleep timer
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            tmSleep.en=0
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
 │   --- HMI/n2t-out/cardPower.txt
 ├── +++ HMI/US/landscape/n2t-out/cardPower.txt
 │ @@ -35,27 +35,27 @@
@@ -712,9 +838,51 @@
 │                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 │                                      }
 │                                      if(tInstruction.txt=="date")
+│ @@ -1007,20 +933,14 @@
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│ -                                        //temporary disable sleep timer
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            tmSleep.en=0
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
 │   --- HMI/n2t-out/cardQR.txt
 ├── +++ HMI/US/landscape/n2t-out/cardQR.txt
-│ @@ -669,18 +669,14 @@
+│ @@ -646,20 +646,14 @@
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│ -                                        //temporary disable sleep timer
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            tmSleep.en=0
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="pageType")
+│                                      {
+│                                          sleepValue=0
+│                                          //command format pageType,specialPageName
+│                                          //write name of speical page to tId
+│                                          spstr strCommand.txt,tId.txt,"~",1
+│ @@ -675,18 +669,14 @@
 │                                          {
 │                                              page pageStartup
 │                                          }
@@ -754,6 +922,27 @@
 │                                          if(tId.txt=="cardGrid")
 │                                          {
 │                                              page cardGrid
+│ @@ -1163,20 +1159,14 @@
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│ -                                        //temporary disable sleep timer
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt=="disable")
+│ -                                        {
+│ -                                            tmSleep.en=0
+│ -                                        }
+│                                      }
+│                                      // end of user code
+│                                      udelete payloadLength-1
+│                                      bufferPos=0
+│                                  }
+│                              }
+│                          }
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
 │ @@ -179,15 +179,15 @@
