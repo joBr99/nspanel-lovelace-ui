@@ -46,4 +46,4 @@ class NsPanelLovelaceUIManager(hass.Hass):
 
         LuiMqttListener(topic_recv, controller, updater)
 
-        self.log('Started')
+        self.log(f'Started ({version})')
