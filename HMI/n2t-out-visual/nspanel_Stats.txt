@@ -80,8 +80,8 @@ popupTimer
 	255  Unique line(s) of event code
 screensaver
 	47   Component(s)
-	432  Line(s) of event code
-	308  Unique line(s) of event code
+	430  Line(s) of event code
+	309  Unique line(s) of event code
 cardPower
 	54   Component(s)
 	504  Line(s) of event code
@@ -90,5 +90,5 @@ cardPower
 Total
 	21   Page(s)
 	802  Component(s)
-	9261 Line(s) of event code
-	2332 Unique line(s) of event code
+	9259 Line(s) of event code
+	2334 Unique line(s) of event code

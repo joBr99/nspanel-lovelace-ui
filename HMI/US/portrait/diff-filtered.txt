@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-02-03 17:56:15.794899421 +0000
++++ /dev/fd/62	2023-02-04 08:43:13.965206960 +0000
 +le list
 + +14,8 @@
 +n.txt
@@ -667,13 +667,6 @@
 +                                 {
 +                                     tmSleep.en=0
 +                                 }
-+                             }
-+                             if(tInstruction.txt=="pageType")
-+                             {
-+                                 sleepValue=0
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
 +18 +616,14 @@
 +                                 {
 +                                     page pageStartup
@@ -1144,6 +1137,13 @@
 +                                 {
 +                                     tmSleep.en=0
 +                                 }
++                             }
++                             if(tInstruction.txt=="pageType")
++                             {
++                                 sleepValue=0
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
 +18 +669,14 @@
 +                                 {
 +                                     page pageStartup
@@ -1303,39 +1303,3 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+15 +470,15 @@
-+                                 if(tTmp.txt!="")
-+                                 {
-+                                     covx tTmp.txt,defaultFontColor,0,0
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 click m0,1
-+                                 //click m0,1
-+                                 //get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                                 spstr pageIcons.vaTime.txt,tTime.txt,"?",0
-+                                 spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
-+                                 if(tAMPM.txt=="")
-+                                 {
-+                                     vis tAMPM,0
-+18 +721,14 @@
-+                                 {
-+                                     page pageStartup
-+                                 }
-+                                 if(tId.txt=="screensaver")
-+                                 {
-+                                     page screensaver
-+                                 }
-+                                 if(tId.txt=="screensaver2")
-+                                 {
-+                                     page screensaver2
-+                                 }
-+                                 if(tId.txt=="cardEntities")
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid

@@ -644,7 +644,7 @@ Text tMainIcon
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 125
-        y coordinate                        : 261
+        y coordinate                        : 260
         Width                               : 70
         Height                              : 65
         Effect                              : load
@@ -673,10 +673,10 @@ Text tMainIconAlt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 58
+        x coordinate                        : 47
         y coordinate                        : 257
-        Width                               : 50
-        Height                              : 50
+        Width                               : 70
+        Height                              : 65
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -703,10 +703,10 @@ Text tMainIconAlt2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 214
+        x coordinate                        : 203
         y coordinate                        : 257
-        Width                               : 50
-        Height                              : 50
+        Width                               : 70
+        Height                              : 65
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -763,9 +763,9 @@ Text tMainTextAlt
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 30
-        y coordinate                        : 314
-        Width                               : 105
+        x coordinate                        : 0
+        y coordinate                        : 325
+        Width                               : 160
         Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
@@ -776,7 +776,7 @@ Text tMainTextAlt
         Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
-        Horizontal Alignment                : left
+        Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
@@ -793,9 +793,9 @@ Text tMainTextAlt2
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 187
-        y coordinate                        : 314
-        Width                               : 105
+        x coordinate                        : 160
+        y coordinate                        : 325
+        Width                               : 160
         Height                              : 50
         Effect                              : load
         Effect Priority                     : 0
@@ -806,7 +806,7 @@ Text tMainTextAlt2
         Font ID                             : 3
         Back. Color                         : 0
         Font Color                          : 65535
-        Horizontal Alignment                : left
+        Horizontal Alignment                : center
         Vertical Alignment                  : center
         Input Type                          : character
         Text                                : 
@@ -1143,7 +1143,7 @@ Timer tmSerial
                                         //tMainIconAlt2 Color
                                         spstr strCommand.txt,tTmp.txt,"~",34
                                         covx tTmp.txt,tMainIconAlt2.pco,0,0
-                                        if(tMainTextAlt2.txt!=""&&p0.w!=320)
+                                        if(tMainTextAlt2.txt!="")
                                         {
                                             //value for tMRIcon, activate alternative layout
                                             vis tMainIcon,0
@@ -1152,22 +1152,25 @@ Timer tmSerial
                                             vis tMainIconAlt,1
                                             vis tMainTextAlt2,1
                                             vis tMainIconAlt2,1
-                                            vis tForecast1,0
-                                            vis tF1Icon,0
-                                            vis tForecast1Val,0
-                                            //move forecast values to the right
-                                            tForecast4.txt=tForecast3.txt
-                                            tForecast3.txt=tForecast2.txt
-                                            tForecast2.txt=tForecast1.txt
-                                            tForecast4Val.txt=tForecast3Val.txt
-                                            tForecast3Val.txt=tForecast2Val.txt
-                                            tForecast2Val.txt=tForecast1Val.txt
-                                            tF4Icon.txt=tF3Icon.txt
-                                            tF3Icon.txt=tF2Icon.txt
-                                            tF2Icon.txt=tF1Icon.txt
-                                            tF4Icon.pco=tF3Icon.pco
-                                            tF3Icon.pco=tF2Icon.pco
-                                            tF2Icon.pco=tF1Icon.pco
+                                            if(p0.w!=320)
+                                            {
+                                                vis tForecast1,0
+                                                vis tF1Icon,0
+                                                vis tForecast1Val,0
+                                                //move forecast values to the right
+                                                tForecast4.txt=tForecast3.txt
+                                                tForecast3.txt=tForecast2.txt
+                                                tForecast2.txt=tForecast1.txt
+                                                tForecast4Val.txt=tForecast3Val.txt
+                                                tForecast3Val.txt=tForecast2Val.txt
+                                                tForecast2Val.txt=tForecast1Val.txt
+                                                tF4Icon.txt=tF3Icon.txt
+                                                tF3Icon.txt=tF2Icon.txt
+                                                tF2Icon.txt=tF1Icon.txt
+                                                tF4Icon.pco=tF3Icon.pco
+                                                tF3Icon.pco=tF2Icon.pco
+                                                tF2Icon.pco=tF1Icon.pco
+                                            }
                                         }else
                                         {
                                             vis tMainIcon,1

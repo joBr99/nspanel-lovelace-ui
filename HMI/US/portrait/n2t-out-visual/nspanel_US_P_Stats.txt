@@ -58,10 +58,6 @@ cardQR
 	34   Component(s)
 	402  Line(s) of event code
 	234  Unique line(s) of event code
-screensaver
-	46   Component(s)
-	418  Line(s) of event code
-	298  Unique line(s) of event code
 cardThermo
 	57   Component(s)
 	532  Line(s) of event code
@@ -74,6 +70,10 @@ cardPower
 	54   Component(s)
 	489  Line(s) of event code
 	330  Unique line(s) of event code
+screensaver
+	46   Component(s)
+	421  Line(s) of event code
+	302  Unique line(s) of event code
 popupInSel
 	34   Component(s)
 	617  Line(s) of event code
@@ -86,5 +86,5 @@ cardEntities
 Total
 	20   Page(s)
 	753  Component(s)
-	9207 Line(s) of event code
-	2393 Unique line(s) of event code
+	9210 Line(s) of event code
+	2395 Unique line(s) of event code
