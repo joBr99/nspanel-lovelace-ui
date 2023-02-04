@@ -373,7 +373,7 @@ class LuiPagesGen(object):
                 global babel_spec
                 if babel_spec is not None:
                     dateformat = "E" if item.nameOverride is None else item.nameOverride
-                    name = babel.dates.format_date(fdate, dateformat, locale=self._locale)
+                    name = babel.dates.format_datetime(fdate, dateformat, locale=self._locale)
                 else:
                     dateformat = "%a" if item.nameOverride is None else item.nameOverride
                     name = fdate.strftime(dateformat)
