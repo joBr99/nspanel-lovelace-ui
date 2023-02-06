@@ -5121,6 +5121,15 @@ function HandleButtonEvent(words: any): void {
             case 'tempUpd':
                 setIfExists(id + '.SET', parseInt(words[4]) / 10);
                 break;
+            case 'tempUpdHighLow':
+                let temps = words[4].split('|');
+                if (getState(id + '.ACTUAL2').val * 10 != parseInt(temps[1])) { // avoid writing if not needed
+                    setIfExists(id + '.ACTUAL2', parseInt(temps[1]) / 10);
+                }
+                if (getState(id + '.SET').val * 10 != parseInt(temps[0])) {
+                    setIfExists(id + '.SET', parseInt(temps[0]) / 10);
+                }
+                break;
             case 'media-back':
                 setIfExists(id + '.PREV', true);
                 break;
