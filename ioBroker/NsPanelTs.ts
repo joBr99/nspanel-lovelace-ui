@@ -3819,7 +3819,8 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
             let destTemp2 = '';
             if (page.items[0].setThermoDestTemp2 != undefined) {
-                destTemp2 = getState(id + '.' + page.items[0].setThermoDestTemp2).val;
+                let setValue2 = getState(id + '.' + page.items[0].setThermoDestTemp2).val;
+                destTemp2 = '' + setValue2.toFixed(2) * 10;
             }
 
             let thermoPopup = 1;
@@ -5120,6 +5121,15 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'tempUpd':
                 setIfExists(id + '.SET', parseInt(words[4]) / 10);
+                break;
+            case 'tempUpdHighLow':
+                let temps = words[4].split('|');
+                if (getState(id + '.ACTUAL2').val * 10 != parseInt(temps[1])) { // avoid writing if not needed
+                    setIfExists(id + '.ACTUAL2', parseInt(temps[1]) / 10);
+                }
+                if (getState(id + '.SET').val * 10 != parseInt(temps[0])) {
+                    setIfExists(id + '.SET', parseInt(temps[0]) / 10);
+                }
                 break;
             case 'media-back':
                 setIfExists(id + '.PREV', true);
