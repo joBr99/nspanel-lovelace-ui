@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.9.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf
+TypeScript v3.9.0.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf
 - abgestimmt auf TFT 49 / v3.9.0 / BerryDriver 8 / Tasmota 12.3.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -97,7 +97,8 @@ ReleaseNotes:
         - 28.01.2023 - v3.9.0   Fix TFT-Version Path in function update_tft_firmware (drop ".")
         - 29.01.2023 - v3.9.0   Upgrade TFT 49
 	- 03.02.2023 - v3.9.0.2 Hotfix Screensaver bExit
-	- 06.02.2023 - v3.9.0.3 PR #754 - added missing 'tempUpdHighLow' ButtonEvent handling - by @fre4242
+	- 06.02.2023 - v3.9.0.3 PR #754 - added missing 'tempUpdHighLow' ButtonEvent handling - by @fre4242	
+	- 07.02.2023 - v3.9.0.4 Open activepage again after closing popupLight or popupShutter
 
         Todo Next Release
         - XX.XX.2023 - v4.0.0   Add cardUnlock 
@@ -4469,7 +4470,9 @@ function HandleButtonEvent(words: any): void {
                 GeneratePage(eval(activePage.prev));
                 break;
             case 'bExit':
-                if (getState(NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick').val && words[2] == 'screensaver') {
+                if ((words[2] == 'popupShutter') || (words[2] == 'popupLight')) {
+                    GeneratePage(activePage);
+                } else if (getState(NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick').val && words[2] == 'screensaver') {
                     if (words[4] >= 2) {
                         setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
                         setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
