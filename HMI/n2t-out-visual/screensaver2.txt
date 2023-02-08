@@ -347,9 +347,9 @@ Text e1Name
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 5
-        y coordinate                        : 198
+        y coordinate                        : 195
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -377,9 +377,9 @@ Text e1Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 5
-        y coordinate                        : 254
+        y coordinate                        : 252
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -437,9 +437,9 @@ Text e2Name
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 78
-        y coordinate                        : 198
+        y coordinate                        : 195
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -467,9 +467,9 @@ Text e2Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 79
-        y coordinate                        : 254
+        y coordinate                        : 252
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -527,9 +527,9 @@ Text e3Name
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 153
-        y coordinate                        : 198
+        y coordinate                        : 195
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -557,9 +557,9 @@ Text e3Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 153
-        y coordinate                        : 254
+        y coordinate                        : 252
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -617,9 +617,9 @@ Text e4Name
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 230
-        y coordinate                        : 198
+        y coordinate                        : 195
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -647,9 +647,9 @@ Text e4Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 230
-        y coordinate                        : 254
+        y coordinate                        : 252
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -707,9 +707,9 @@ Text e5Name
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 304
-        y coordinate                        : 198
+        y coordinate                        : 195
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -737,9 +737,9 @@ Text e5Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 304
-        y coordinate                        : 254
+        y coordinate                        : 252
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -797,9 +797,9 @@ Text e6Name
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 377
-        y coordinate                        : 198
+        y coordinate                        : 195
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -827,9 +827,9 @@ Text e6Val
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 377
-        y coordinate                        : 254
+        y coordinate                        : 252
         Width                               : 70
-        Height                              : 20
+        Height                              : 25
         Effect                              : load
         Effect Priority                     : 0
         Effect Time                         : 300
@@ -1258,7 +1258,7 @@ Text tNotifyText
         Send Component ID                   : disabled
         Opacity                             : 127
         x coordinate                        : 0
-        y coordinate                        : 220
+        y coordinate                        : 221
         Width                               : 448
         Height                              : 58
         Effect                              : load
