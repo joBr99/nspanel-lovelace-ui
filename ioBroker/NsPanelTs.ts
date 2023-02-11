@@ -4264,6 +4264,11 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     }, 2000);
                 globalTracklist = page.items[0].globalTracklist;
             }
+
+            if(v2Adapter == 'squeezeboxrpc' && existsObject(([page.items[0].adapterPlayerInstance, 'Playlist'].join('')))) {
+                let lmstracklist = JSON.parse(getState(([page.items[0].adapterPlayerInstance, 'Playlist'].join(''))).val);
+                globalTracklist = lmstracklist;
+            }
             
             if (globalTracklist!= null && globalTracklist.length != 0) {
                 trackListIconCol = rgb_dec565(HMIOn);
@@ -6237,7 +6242,21 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                                 tempPlayList[i] = formatInSelText(pageItem.playList[i]);
                             }
                             optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } /**/
+                        } else if(vAdapter == 'squeezeboxrpc') {
+                            // Playlist browsing not supported by squeezeboxrpc adapter. But Favorites can be used
+                            actualState = ''; // Not supported by squeezeboxrpc adapter
+                            let tempPlayList = [];
+                            let pathParts: Array<string> = pageItem.adapterPlayerInstance.split('.');
+                            for (let favorite_index=0; favorite_index < 45; favorite_index++) {
+                                let favorite_name_selector: string = [pathParts[0], pathParts[1], 'Favorites', favorite_index, 'Name'].join('.');
+                                if(!existsObject(favorite_name_selector)) {
+                                    break;
+                                }
+                                let favoritename = getState(favorite_name_selector).val;
+                                tempPlayList.push(formatInSelText(favoritename));
+                            }
+                            optionalString = tempPlayList.length > 1 ? tempPlayList.join('?') : '';
+                        }
                         mode = 'playlist';
                     } else if (optional == 'tracklist') {
                         actualState = '';
@@ -6245,6 +6264,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         if (vAdapter == 'volumio') {
                             actualState = getState(pageItem.id + '.TITLE').val;
                             globalTracklist = pageItem.globalTracklist;
+                        }else if(vAdapter == 'squeezeboxrpc') {
+                            actualState = getState(pageItem.id + '.TITLE').val;
                         } else {
                             actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
                         }
