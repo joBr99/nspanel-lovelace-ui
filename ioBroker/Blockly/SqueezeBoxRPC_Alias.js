@@ -49,3 +49,5 @@ createAlias(aliasPath + '.' + aliasDevice + '.STOP', 'STOP', squeezeBoxInstanz +
 createAlias(aliasPath + '.' + aliasDevice + '.STATE', 'STATE', squeezeBoxInstanz + squeezeBoxDevice + '.Power', '', 'state', 'switch', 'number');
 createAlias(aliasPath + '.' + aliasDevice + '.VOLUME', 'VOLUME', squeezeBoxInstanz + squeezeBoxDevice + '.Volume', '', 'state', 'level.volume', 'number');
 createAlias(aliasPath + '.' + aliasDevice + '.VOLUME_ACTUAL', 'VOLUME_ACTUAL', squeezeBoxInstanz + squeezeBoxDevice + '.Volume', '', 'state', 'value.volume', 'number');
+createAlias(aliasPath + '.' + aliasDevice + '.SHUFFLE', 'SHUFFLE', squeezeBoxInstanz + squeezeBoxDevice + '.PlaylistShuffle', '', 'state', 'media.mode.shuffle', 'string');
+createAlias(aliasPath + '.' + aliasDevice + '.REPEAT', 'REPEAT', squeezeBoxInstanz + squeezeBoxDevice + '.PlaylistRepeat', '', 'state', 'media.mode.repeat', 'boolean');
