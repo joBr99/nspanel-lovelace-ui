@@ -12,6 +12,19 @@
 │ -screensaver.txt
 │ -screensaver2.txt
 │ +screensaver.txt
+│   --- HMI/n2t-out/Program.s.txt
+├── +++ HMI/US/landscape/n2t-out/Program.s.txt
+│ @@ -11,9 +11,9 @@
+│      // dim value
+│      int dimValue=40
+│      int dimValueNormal=100
+│      //color vars
+│      int defaultFontColor=65535
+│      int defaultBcoColor=6371
+│      // fix touch offset
+│ -    lcd_dev fffb 0002 0000 0020
+│ +    //lcd_dev fffb 0002 0000 0020
+│      page pageStartup
 │   --- HMI/n2t-out/cardAlarm.txt
 ├── +++ HMI/US/landscape/n2t-out/cardAlarm.txt
 │ @@ -879,20 +879,14 @@

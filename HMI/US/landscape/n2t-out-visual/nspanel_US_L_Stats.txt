@@ -1,7 +1,7 @@
 Program.s
 	0    Component(s)
-	13   Line(s) of event code
-	13   Unique line(s) of event code
+	12   Line(s) of event code
+	12   Unique line(s) of event code
 pageIcons
 	7    Component(s)
 	0    Line(s) of event code
@@ -86,5 +86,5 @@ cardPower
 Total
 	20   Page(s)
 	736  Component(s)
-	8800 Line(s) of event code
-	2256 Unique line(s) of event code
+	8799 Line(s) of event code
+	2255 Unique line(s) of event code
