@@ -194,6 +194,10 @@ class LuiController(object):
 
     def button_press(self, entity_id, button_type, value):
         apis.ha_api.log(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
+        if entity_id.startswith('uuid'):
+            entity_config = self._config._config_entites_table.get(entity_id)
+            if entity_config is not None:
+                entity_id = entity_config.entityId
         # internal buttons
         if entity_id == "screensaver" and button_type == "bExit":
             # get default card if there is one
@@ -267,10 +271,6 @@ class LuiController(object):
 
 
         if button_type == "button":
-            if entity_id.startswith('uuid'):
-                entity_config = self._config._config_entites_table.get(entity_id)
-                entity_id = entity_config.entityId
-                
             if entity_id.startswith('navigate'):
                 # internal navigation for next/prev
                 if entity_id.startswith('navigate.uuid'):
@@ -418,6 +418,9 @@ class LuiController(object):
             entity.call_service("select_option", option=option)
 
         if button_type == "mode-light":
+            if entity_id.startswith('uuid'):
+                entity_config = self._config._config_entites_table.get(entity_id)
+                entity_id = entity_config.entityId
             entity = apis.ha_api.get_entity(entity_id)
             options_list = entity_config.entity_input_config.get("effectList")
             if options_list is not None:
