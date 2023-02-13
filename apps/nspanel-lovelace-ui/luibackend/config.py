@@ -25,7 +25,6 @@ class Entity(object):
         self.assumedState  = entity_input_config.get("assumed_state", False)
         self.stype         = entity_input_config.get("type")
         self.value         = entity_input_config.get("value")
-        self.sleepTimeout  = entity_input_config.get("sleepTimeout")
         self.data  = entity_input_config.get("data", {})
         self.entity_input_config = entity_input_config
 
@@ -41,6 +40,7 @@ class Card(object):
         self.key = card_input_config.get("key", "unknown")
         self.nav1Override = card_input_config.get("navItem1")
         self.nav2Override = card_input_config.get("navItem2")
+        self.sleepTimeout  = entity_input_config.get("sleepTimeout")
         self.last_update = 0
         self.cooldown = card_input_config.get("cooldown", 0)
         # for single entity card like climate or media
