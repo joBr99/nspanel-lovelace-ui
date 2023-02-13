@@ -1,0 +1,978 @@
+Page screensaver2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Locked                              : no
+        Swide up page ID                    : disabled
+        Swide down page ID                  : disabled
+        Swide left page ID                  : disabled
+        Swide right page ID                 : disabled
+    
+    Events
+        Preinitialize Event
+            recmod=1
+            baud=115200
+            vis tInstruction,0
+            vis tTmp,0
+            vis p0,0
+            vis tNotifyHead,0
+            vis tNotifyText,0
+            //load gloabl time string from pageIcons
+            //tTime.txt=vaTime.txt
+            spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+            spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
+            if(tAMPM.txt=="")
+            {
+                vis tAMPM,0
+            }
+            tDate.txt=pageIcons.vaDate.txt
+            dim=dimValue
+            vis tSend,0
+            //page open event
+            // clear weather elements, to keep example content in HMI
+        
+Variable (string) strCommand
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 1979
+    
+Variable (string) strTmp
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 2
+    
+Variable (string) tId
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 25
+    
+Variable (string) tInstruction
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
+    
+Variable (string) tSend
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
+    
+Variable (string) tTmp
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 50
+    
+Variable (int32) vaTap
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) xc1
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) xc2
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) xcR
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) yc1
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) yc2
+    Attributes
+        Scope: local
+        Value: 0
+    
+Variable (int32) ycR
+    Attributes
+        Scope: local
+        Value: 0
+    
+Text d1Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text d1Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text d2Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text d2Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text d3Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text d3Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e1Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text e1Name
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e1Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e2Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text e2Name
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e2Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e3Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text e3Name
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e3Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e4Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text e4Name
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e4Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e5Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text e5Name
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e5Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e6Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text e6Name
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text e6Val
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text f1Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text f2Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text f3Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text f4Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text f5Icon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text tAMPM
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : PM
+        Max. Text Size                      : 10
+    
+Text tDate
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : Thursday, 02.02
+        Max. Text Size                      : 30
+    
+Text tIcon1
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tIcon2
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tMainIcon
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 4
+    
+Text tMainText
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 10
+    
+Text tNotifyHead
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 35
+    
+Text tNotifyText
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 120
+    
+Text tTime
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 21:32
+        Max. Text Size                      : 15
+    
+Text tTimeAdd
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+        Associated Keyboard                 : none
+        Text                                : 
+        Max. Text Size                      : 20
+    
+Picture p0
+    Attributes
+        Scope                               : local
+        Dragging                            : 0
+        Disable release event after dragging: 0
+        Send Component ID                   : disabled
+    
+Timer tm0
+    Attributes
+        Scope      : local
+        Period (ms): 50
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            if(tc0.val!=0)
+            {
+                xc2.val=tch0
+                yc2.val=tch1
+            }
+        
+Timer tmSerial
+    Attributes
+        Scope      : local
+        Period (ms): 50
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            // data available
+            if(usize>1)
+            {
+                bufferPos=0
+                while(bufferPos<usize)
+                {
+                    // check for 0x55 0xBB - Command Init Secuence
+                    if(u[bufferPos]==187&&u[bufferPos-1]==85)
+                    {
+                        //remove garbage at the start of the buffer if there's any to free buffer for command
+                        if(u[bufferPos]!=1)
+                        {
+                            udelete bufferPos-1
+                        }
+                        //instruction is now aligned with buffer, because we deleted garbage before instrcution
+                        //get length after init sequence (check if there are more than to bytes in buffer)
+                        if(3<usize)
+                        {
+                            // check if serial buffer has reached the announced length
+                            ucopy payloadLength,2,2,0
+                            // we are only checking payload length so we have to skip first 3 bytes (init+payload length) (-1 because of < instead of <=)
+                            payloadLength+=3
+                            // payload length does also not contain crc, so we are adding another 2 bytes for crc
+                            payloadLength+=2
+                            if(payloadLength<usize)
+                            {
+                                // calculate crc
+                                crcrest 1,0xFFFF
+                                // u[2] contains payload legth at 3rd pos in buffer, we are calculating crc from 3rd pos with number of bytes from payload length
+                                //crcputu 3,u[2]
+                                // u[2] cotnains payload length, we are calculating a crc over the whole message, so we have to add 3 to the length from u[2]
+                                crcputu 0,payloadLength-1
+                                // get recived crc to be able to compare it
+                                ucopy recvCrc,payloadLength-1,2,0
+                                // compare crc with recived value
+                                if(crcval==recvCrc)
+                                {
+                                    // crc is okay
+                                    // here is the location where acual code should be
+                                    // write command to variable strCommand
+                                    ucopy strCommand.txt,4,payloadLength-5,0
+                                    // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
+                                    spstr strCommand.txt,tInstruction.txt,"~",0
+                                    if(tInstruction.txt=="wake")
+                                    {
+                                        click tc0,1
+                                    }
+                                    if(tInstruction.txt=="dimmode")
+                                    {
+                                        // get value
+                                        spstr strCommand.txt,tTmp.txt,"~",1
+                                        covx tTmp.txt,dimValue,0,0
+                                        dim=dimValue
+                                        // get value normal
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,dimValueNormal,0,0
+                                        // get background color
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultBcoColor,0,0
+                                        }
+                                        // get font color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,defaultFontColor,0,0
+                                        }
+                                    }
+                                    if(tInstruction.txt=="time")
+                                    {
+                                        //get set time to global variable
+                                        spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+                                        spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+                                        spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
+                                        if(tAMPM.txt=="")
+                                        {
+                                            vis tAMPM,0
+                                        }
+                                        spstr strCommand.txt,tTimeAdd.txt,"~",2
+                                        ref tIcon1
+                                        ref tIcon2
+                                    }
+                                    if(tInstruction.txt=="date")
+                                    {
+                                        //get set date to global variable
+                                        spstr strCommand.txt,pageIcons.vaDate.txt,"~",1
+                                        tDate.txt=pageIcons.vaDate.txt
+                                    }
+                                    if(tInstruction.txt=="statusUpdate")
+                                    {
+                                        //statusIcon1
+                                        spstr strCommand.txt,tIcon1.txt,"~",1
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        covx tTmp.txt,tIcon1.pco,0,0
+                                        //statusIcon2
+                                        spstr strCommand.txt,tIcon2.txt,"~",3
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        covx tTmp.txt,tIcon2.pco,0,0
+                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon1.font=3
+                                        }
+                                        spstr strCommand.txt,tTmp.txt,"~",6
+                                        if(tTmp.txt!="")
+                                        {
+                                            tIcon2.font=3
+                                        }
+                                    }
+                                    if(tInstruction.txt=="weatherUpdate"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
+                                    {
+                                        //tMainIcon
+                                        spstr strCommand.txt,tMainIcon.txt,"~",3
+                                        //tMainIcon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        covx tTmp.txt,tMainIcon.pco,0,0
+                                        //tMainText
+                                        spstr strCommand.txt,tMainText.txt,"~",6
+                                        //d1Icon
+                                        spstr strCommand.txt,d1Icon.txt,"~",9
+                                        //d1Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",10
+                                        covx tTmp.txt,d1Icon.pco,0,0
+                                        //d1Val
+                                        spstr strCommand.txt,d1Val.txt,"~",12
+                                        //d2Icon
+                                        spstr strCommand.txt,d2Icon.txt,"~",15
+                                        //d2Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",16
+                                        covx tTmp.txt,d2Icon.pco,0,0
+                                        //d2Val
+                                        spstr strCommand.txt,d2Val.txt,"~",18
+                                        //d3Icon
+                                        spstr strCommand.txt,d3Icon.txt,"~",21
+                                        //d3Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",22
+                                        covx tTmp.txt,d3Icon.pco,0,0
+                                        //d3Val
+                                        spstr strCommand.txt,d3Val.txt,"~",24
+                                        //e1Name
+                                        spstr strCommand.txt,e1Name.txt,"~",29
+                                        //e1Icon
+                                        spstr strCommand.txt,e1Icon.txt,"~",27
+                                        //e1Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",28
+                                        covx tTmp.txt,e1Icon.pco,0,0
+                                        //e1Val
+                                        spstr strCommand.txt,e1Val.txt,"~",30
+                                        //e2Name
+                                        spstr strCommand.txt,e2Name.txt,"~",35
+                                        //e2Icon
+                                        spstr strCommand.txt,e2Icon.txt,"~",33
+                                        //e2Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",34
+                                        covx tTmp.txt,e2Icon.pco,0,0
+                                        //e2Val
+                                        spstr strCommand.txt,e2Val.txt,"~",36
+                                        //e3Name
+                                        spstr strCommand.txt,e3Name.txt,"~",41
+                                        //e3Icon
+                                        spstr strCommand.txt,e3Icon.txt,"~",39
+                                        //e3Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",40
+                                        covx tTmp.txt,e3Icon.pco,0,0
+                                        //e3Val
+                                        spstr strCommand.txt,e3Val.txt,"~",42
+                                        //e4Name
+                                        spstr strCommand.txt,e4Name.txt,"~",47
+                                        //e4Icon
+                                        spstr strCommand.txt,e4Icon.txt,"~",45
+                                        //e4Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",46
+                                        covx tTmp.txt,e4Icon.pco,0,0
+                                        //e4Val
+                                        spstr strCommand.txt,e4Val.txt,"~",48
+                                        //e5Name
+                                        spstr strCommand.txt,e5Name.txt,"~",53
+                                        //e5Icon
+                                        spstr strCommand.txt,e5Icon.txt,"~",51
+                                        //e5Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",52
+                                        covx tTmp.txt,e5Icon.pco,0,0
+                                        //e5Val
+                                        spstr strCommand.txt,e5Val.txt,"~",54
+                                        //e6Name
+                                        spstr strCommand.txt,e6Name.txt,"~",59
+                                        //e6Icon
+                                        spstr strCommand.txt,e6Icon.txt,"~",57
+                                        //e6Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",58
+                                        covx tTmp.txt,e6Icon.pco,0,0
+                                        //e6Val
+                                        spstr strCommand.txt,e6Val.txt,"~",60
+                                        //f1Icon
+                                        spstr strCommand.txt,f1Icon.txt,"~",63
+                                        //f1Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",64
+                                        covx tTmp.txt,f1Icon.pco,0,0
+                                        //f2Icon
+                                        spstr strCommand.txt,f2Icon.txt,"~",69
+                                        //f2Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",70
+                                        covx tTmp.txt,f2Icon.pco,0,0
+                                        //f3Icon
+                                        spstr strCommand.txt,f3Icon.txt,"~",75
+                                        //f3Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",76
+                                        covx tTmp.txt,f3Icon.pco,0,0
+                                        //f4Icon
+                                        spstr strCommand.txt,f4Icon.txt,"~",81
+                                        //f4Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",82
+                                        covx tTmp.txt,f4Icon.pco,0,0
+                                        //f5Icon
+                                        spstr strCommand.txt,f5Icon.txt,"~",87
+                                        //f5Icon Color
+                                        spstr strCommand.txt,tTmp.txt,"~",88
+                                        covx tTmp.txt,f5Icon.pco,0,0
+                                    }
+                                    if(tInstruction.txt=="notify")
+                                    {
+                                        spstr strCommand.txt,tNotifyHead.txt,"~",1
+                                        spstr strCommand.txt,tNotifyText.txt,"~",2
+                                        if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+                                        {
+                                            vis tNotifyHead,1
+                                            vis tNotifyText,1
+                                        }else
+                                        {
+                                            vis tNotifyHead,0
+                                            vis tNotifyText,0
+                                        }
+                                        tNotifyHead.bco=tTime.bco
+                                        tNotifyText.bco=tTime.bco
+                                        spstr strCommand.txt,tTmp.txt,"~",3
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,tNotifyHead.pco,0,0
+                                        }
+                                        spstr strCommand.txt,tTmp.txt,"~",4
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,tNotifyText.pco,0,0
+                                        }
+                                    }
+                                    if(tInstruction.txt=="pageType")
+                                    {
+                                        dim=100
+                                        //command format pageType,specialPageName
+                                        //write name of speical page to tId
+                                        spstr strCommand.txt,tId.txt,"~",1
+                                        //save second arg if there's one
+                                        spstr strCommand.txt,tTmp.txt,"~",2
+                                        //save third arg if there's one
+                                        spstr strCommand.txt,pageIcons.tTmp2.txt,"~",3
+                                        spstr strCommand.txt,pageIcons.tTmp3.txt,"~",4
+                                        //we are going to exit this page with this command, so we have to clear the buffer, so we are not getting into a stupid loop ...
+                                        udelete payloadLength-1
+                                        bufferPos=0
+                                        if(tId.txt=="pageStartup")
+                                        {
+                                            page pageStartup
+                                        }
+                                        if(tId.txt=="screensaver")
+                                        {
+                                            page screensaver
+                                        }
+                                        if(tId.txt=="screensaver2")
+                                        {
+                                            page screensaver2
+                                        }
+                                        if(tId.txt=="cardEntities")
+                                        {
+                                            page cardEntities
+                                        }
+                                        if(tId.txt=="cardGrid")
+                                        {
+                                            page cardGrid
+                                        }
+                                        if(tId.txt=="popupLight")
+                                        {
+                                            pageIcons.tTmp1.txt=tTmp.txt
+                                            page popupLight
+                                        }
+                                        if(tId.txt=="popupShutter")
+                                        {
+                                            pageIcons.tTmp1.txt=tTmp.txt
+                                            page popupShutter
+                                        }
+                                        if(tId.txt=="popupNotify")
+                                        {
+                                            page popupNotify
+                                        }
+                                        if(tId.txt=="cardThermo")
+                                        {
+                                            page cardThermo
+                                        }
+                                        if(tId.txt=="cardMedia")
+                                        {
+                                            page cardMedia
+                                        }
+                                        if(tId.txt=="cardAlarm")
+                                        {
+                                            page cardAlarm
+                                        }
+                                        if(tId.txt=="cardQR")
+                                        {
+                                            page cardQR
+                                        }
+                                        if(tId.txt=="cardPower")
+                                        {
+                                            page cardPower
+                                        }
+                                        if(tId.txt=="cardChart")
+                                        {
+                                            page cardChart
+                                        }
+                                    }
+                                    if(tInstruction.txt=="timeout")
+                                    {
+                                        //set timeout to global var
+                                        spstr strCommand.txt,tTmp.txt,"~",1
+                                        covx tTmp.txt,sleepTimeout,0,0
+                                    }
+                                    // end of user code
+                                    udelete payloadLength-1
+                                    bufferPos=0
+                                }
+                            }
+                        }
+                    }
+                    // next character
+                    bufferPos++
+                }
+            }
+        
+Timer tmSleep
+    Attributes
+        Scope      : local
+        Period (ms): 1000
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            if(sleepTimeout!=0&&dimValue!=dim)
+            {
+                sleepValue+=1
+                if(sleepTimeout<=sleepValue)
+                {
+                    sleepValue=0
+                    dim=dimValue
+                    vaTap.val=0
+                }
+            }
+        
+TouchCap tc0
+    Attributes
+        Scope: local
+        Value: 0
+    
+    Events
+        Touch Press Event
+            xc1.val=tch0
+            yc1.val=tch1
+            tm0.en=1
+            if(tNotifyHead.txt!=""||tNotifyText.txt!="")
+            {
+                if(dim!=0)
+                {
+                    tNotifyHead.txt=""
+                    tNotifyText.txt=""
+                    vis tNotifyHead,0
+                    vis tNotifyText,0
+                }
+            }
+            dim=dimValueNormal
+            vaTap.val+=1
+            covx vaTap.val,tTmp.txt,0,0
+            tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
+            //send calc crc
+            //btlen tSend.txt,sys0
+            //crcrest 1,0xffff // reset CRC
+            //crcputh 55 bb
+            //crcputs sys0,2
+            //crcputs tSend.txt,0
+            //send cmd
+            //printh 55 bb
+            //prints sys0,2
+            //prints tSend.txt,0
+            //prints crcval,2
+        
+        Touch Release Event
+            tm0.en=0
+            if(tch0==0)
+            // When this is zero we can interpret that as the real end of the drag event
+            {
+                xcR.val=xc1.val-xc2.val
+                ycR.val=yc1.val-yc2.val
+                // new method
+                // one of the difference values should be low to be a valid direction, in case it has a high value it's not a valid swipe, because it's diagonal
+                // x difference between -125 and 125 (swipe on y-axis)
+                if(xcR.val>-125&&xcR.val<125)
+                {
+                    //tStatusNew.txt="x low, -> y"
+                    // check if below minimum value (change is negative)
+                    if(ycR.val<-80)
+                    {
+                        //tDirNew.txt="down"
+                        tSend.txt="event,buttonPress2,screensaver,swipeDown"
+                    }else if(ycR.val>80)
+                    {
+                        //tDirNew.txt="up"
+                        tSend.txt="event,buttonPress2,screensaver,swipeUp"
+                    }else
+                    {
+                        //tDirNew.txt="invalid"
+                    }
+                    // y difference between -125 and 125 (swipe on x-axis)
+                }else if(ycR.val>-125&&ycR.val<125)
+                {
+                    //tStatusNew.txt="y low, -> x"
+                    if(xcR.val<-80)
+                    {
+                        //tDirNew.txt="right"
+                        tSend.txt="event,buttonPress2,screensaver,swipeRight"
+                    }else if(xcR.val>80)
+                    {
+                        //tDirNew.txt="left"
+                        tSend.txt="event,buttonPress2,screensaver,swipeLeft"
+                    }else
+                    {
+                        //tDirNew.txt="invalid"
+                    }
+                    //diagonal swipe invalid
+                }else
+                {
+                    //tStatusNew.txt="invalid"
+                    //tDirNew.txt="diagonal"
+                }
+            }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
