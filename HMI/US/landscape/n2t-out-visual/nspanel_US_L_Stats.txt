@@ -82,9 +82,13 @@ cardPower
 	48   Component(s)
 	487  Line(s) of event code
 	326  Unique line(s) of event code
+screensaver2
+	58   Component(s)
+	344  Line(s) of event code
+	243  Unique line(s) of event code
 
 Total
-	20   Page(s)
-	736  Component(s)
-	8799 Line(s) of event code
-	2255 Unique line(s) of event code
+	21   Page(s)
+	794  Component(s)
+	9143 Line(s) of event code
+	2307 Unique line(s) of event code
