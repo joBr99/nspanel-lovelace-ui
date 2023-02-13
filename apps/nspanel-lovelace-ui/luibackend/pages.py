@@ -710,7 +710,7 @@ class LuiPagesGen(object):
         if card.sleepTimeout is not None:
             self._send_mqtt_msg(f"timeout~{card.sleepTimeout}")
         else:
-            self._send_mqtt_msg(f'timeout~{self._config.get("sleepTimeout",20)}')
+            self._send_mqtt_msg(f'timeout~{self._config.get("sleepTimeout")}')
         
         temp_unit = card.raw_config.get("temperatureUnit", "celsius")
         if card.cardType in ["cardEntities", "cardGrid"]:
