@@ -709,6 +709,8 @@ class LuiPagesGen(object):
         # send sleep timeout if there is one configured for the current card
         if card.sleepTimeout is not None:
             self._send_mqtt_msg(f"timeout~{card.sleepTimeout}")
+        else:
+            self._send_mqtt_msg(f'timeout~{self._config.get("sleepTimeout",20)}')
         
         temp_unit = card.raw_config.get("temperatureUnit", "celsius")
         if card.cardType in ["cardEntities", "cardGrid"]:
@@ -738,10 +740,6 @@ class LuiPagesGen(object):
             theme = card.raw_config.get("theme")
             self.update_screensaver_weather(theme)
             self.update_status_icons()
-
-            # set screensaver timeout
-            timeout = self._config.get("sleepTimeout")
-            self._send_mqtt_msg(f"timeout~{timeout}")
             return
         if card.cardType == "cardQR":
             qrcode = card.raw_config.get("qrCode", "")
