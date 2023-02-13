@@ -1,0 +1,409 @@
+--- HMI/n2t-out
++++ HMI/US/landscape/n2t-out
+│   --- HMI/n2t-out/Program.s.txt
+├── +++ HMI/US/landscape/n2t-out/Program.s.txt
+│ @@ -11,9 +11,9 @@
+│      // dim value
+│      int dimValue=40
+│      int dimValueNormal=100
+│      //color vars
+│      int defaultFontColor=65535
+│      int defaultBcoColor=6371
+│      // fix touch offset
+│ -    lcd_dev fffb 0002 0000 0020
+│ +    //lcd_dev fffb 0002 0000 0020
+│      page pageStartup
+│   --- HMI/n2t-out/cardAlarm.txt
+├── +++ HMI/US/landscape/n2t-out/cardAlarm.txt
+│ @@ -902,18 +902,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardChart.txt
+├── +++ HMI/US/landscape/n2t-out/cardChart.txt
+│ @@ -635,18 +635,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardEntities.txt
+├── +++ HMI/US/landscape/n2t-out/cardEntities.txt
+│ @@ -1885,18 +1885,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardGrid.txt
+├── +++ HMI/US/landscape/n2t-out/cardGrid.txt
+│ @@ -870,18 +870,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardLChart.txt
+├── +++ HMI/US/landscape/n2t-out/cardLChart.txt
+│ @@ -616,18 +616,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardMedia.txt
+├── +++ HMI/US/landscape/n2t-out/cardMedia.txt
+│ @@ -1154,18 +1154,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardQR.txt
+├── +++ HMI/US/landscape/n2t-out/cardQR.txt
+│ @@ -669,18 +669,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/cardThermo.txt
+├── +++ HMI/US/landscape/n2t-out/cardThermo.txt
+│ @@ -1071,18 +1071,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/pageStartup.txt
+├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
+│ @@ -179,15 +179,15 @@
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│              recmod=1
+│              bauds=115200
+│              // startup event
+│ -            tSend.txt="event,startup,"+tVersion.txt+",eu"
+│ +            tSend.txt="event,startup,"+tVersion.txt+",us-l"
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
+│ @@ -320,18 +320,14 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ -                                        if(tId.txt=="screensaver2")
+│ -                                        {
+│ -                                            page screensaver2
+│ -                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/screensaver.txt
+├── +++ HMI/US/landscape/n2t-out/screensaver.txt
+│ @@ -29,17 +29,14 @@
+│              }
+│              tDate.txt=pageIcons.vaDate.txt
+│              dim=dimValue
+│              vis tSend,0
+│              //page open event
+│              // clear weather elements, to keep example content in HMI
+│          
+│ -        Postinitialize Event
+│ -            click m0,1
+│ -        
+│  Variable (string) strCommand
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 600
+│      
+│  Variable (string) strTmp
+│ @@ -103,35 +100,14 @@
+│          Value: 0
+│      
+│  Variable (int32) ycR
+│      Attributes
+│          Scope: local
+│          Value: 0
+│      
+│ -Text m0
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        Associated Keyboard                 : none
+│ -        Text                                : 
+│ -        Max. Text Size                      : 10
+│ -    
+│ -    Events
+│ -        Touch Press Event
+│ -            tTmp.txt="change model conf to us-l/p "
+│ -            strlen tTmp.txt,sys1
+│ -            sya1=sys1*11+m0.h-48/2
+│ -            for(sys0=0;sys0<sys1;sys0++)
+│ -            {
+│ -                substr tTmp.txt,strTmp.txt,sys0,1
+│ -                xstr m0.x-5,sys0*-11+m0.y+sya1,23,20,6,WHITE,RED,2,1,3,strTmp.txt
+│ -            }
+│ -        
+│  Text t10
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│ @@ -590,42 +566,39 @@
+│                                          //tMainTextAlt2
+│                                          spstr strCommand.txt,tMainTextAlt2.txt,"~",36
+│                                          //tMainIconAlt2
+│                                          spstr strCommand.txt,tMainIconAlt2.txt,"~",33
+│                                          //tMainIconAlt2 Color
+│                                          spstr strCommand.txt,tTmp.txt,"~",34
+│                                          covx tTmp.txt,tMainIconAlt2.pco,0,0
+│ -                                        if(tMainTextAlt2.txt!="")
+│ +                                        if(tMainTextAlt2.txt!=""&&p0.w!=320)
+│                                          {
+│                                              //value for tMRIcon, activate alternative layout
+│                                              vis tMainIcon,0
+│                                              vis tMainText,0
+│                                              vis tMainTextAlt,1
+│                                              vis tMainIconAlt,1
+│                                              vis tMainTextAlt2,1
+│                                              vis tMainIconAlt2,1
+│ -                                            if(p0.w!=320)
+│ -                                            {
+│ -                                                vis tForecast1,0
+│ -                                                vis tF1Icon,0
+│ -                                                vis tForecast1Val,0
+│ -                                                //move forecast values to the right
+│ -                                                tForecast4.txt=tForecast3.txt
+│ -                                                tForecast3.txt=tForecast2.txt
+│ -                                                tForecast2.txt=tForecast1.txt
+│ -                                                tForecast4Val.txt=tForecast3Val.txt
+│ -                                                tForecast3Val.txt=tForecast2Val.txt
+│ -                                                tForecast2Val.txt=tForecast1Val.txt
+│ -                                                tF4Icon.txt=tF3Icon.txt
+│ -                                                tF3Icon.txt=tF2Icon.txt
+│ -                                                tF2Icon.txt=tF1Icon.txt
+│ -                                                tF4Icon.pco=tF3Icon.pco
+│ -                                                tF3Icon.pco=tF2Icon.pco
+│ -                                                tF2Icon.pco=tF1Icon.pco
+│ -                                            }
+│ +                                            vis tForecast1,0
+│ +                                            vis tF1Icon,0
+│ +                                            vis tForecast1Val,0
+│ +                                            //move forecast values to the right
+│ +                                            tForecast4.txt=tForecast3.txt
+│ +                                            tForecast3.txt=tForecast2.txt
+│ +                                            tForecast2.txt=tForecast1.txt
+│ +                                            tForecast4Val.txt=tForecast3Val.txt
+│ +                                            tForecast3Val.txt=tForecast2Val.txt
+│ +                                            tForecast2Val.txt=tForecast1Val.txt
+│ +                                            tF4Icon.txt=tF3Icon.txt
+│ +                                            tF3Icon.txt=tF2Icon.txt
+│ +                                            tF2Icon.txt=tF1Icon.txt
+│ +                                            tF4Icon.pco=tF3Icon.pco
+│ +                                            tF3Icon.pco=tF2Icon.pco
+│ +                                            tF2Icon.pco=tF1Icon.pco
+│                                          }else
+│                                          {
+│                                              vis tMainIcon,1
+│                                              vis tMainIconAlt,0
+│                                              vis tMainText,1
+│                                              vis tMainTextAlt,0
+│                                              vis tMainTextAlt2,0
+│   --- HMI/n2t-out/screensaver2.txt
+├── +++ HMI/US/landscape/n2t-out/screensaver2.txt
+│ @@ -29,17 +29,14 @@
+│              }
+│              tDate.txt=pageIcons.vaDate.txt
+│              dim=dimValue
+│              vis tSend,0
+│              //page open event
+│              // clear weather elements, to keep example content in HMI
+│          
+│ -        Postinitialize Event
+│ -            click m0,1
+│ -        
+│  Variable (string) strCommand
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 1979
+│      
+│  Variable (string) strTmp
+│ @@ -393,35 +390,14 @@
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : 
+│          Max. Text Size                      : 4
+│      
+│ -Text m0
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        Associated Keyboard                 : none
+│ -        Text                                : 
+│ -        Max. Text Size                      : 10
+│ -    
+│ -    Events
+│ -        Touch Press Event
+│ -            tTmp.txt="change model conf to us-l/p "
+│ -            strlen tTmp.txt,sys1
+│ -            sya1=sys1*11+m0.h-48/2
+│ -            for(sys0=0;sys0<sys1;sys0++)
+│ -            {
+│ -                substr tTmp.txt,strTmp.txt,sys0,1
+│ -                xstr m0.x-5,sys0*-11+m0.y+sya1,23,20,6,WHITE,RED,2,1,3,strTmp.txt
+│ -            }
+│ -        
+│  Text tAMPM
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│ @@ -614,15 +590,14 @@
+│                                          if(tTmp.txt!="")
+│                                          {
+│                                              covx tTmp.txt,defaultFontColor,0,0
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│ -                                        click m0,1
+│                                          //get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                          spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+│                                          spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
+│                                          if(tAMPM.txt=="")
+│                                          {
+│                                              vis tAMPM,0

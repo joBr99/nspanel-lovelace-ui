@@ -18,6 +18,10 @@ cardLChart
 	33   Component(s)
 	394  Line(s) of event code
 	262  Unique line(s) of event code
+pageStartup
+	20   Component(s)
+	185  Line(s) of event code
+	131  Unique line(s) of event code
 cardChart
 	33   Component(s)
 	429  Line(s) of event code
@@ -42,10 +46,10 @@ cardQR
 	34   Component(s)
 	402  Line(s) of event code
 	234  Unique line(s) of event code
-pageStartup
-	20   Component(s)
-	185  Line(s) of event code
-	131  Unique line(s) of event code
+cardPower
+	54   Component(s)
+	523  Line(s) of event code
+	345  Unique line(s) of event code
 screensaver
 	46   Component(s)
 	418  Line(s) of event code
@@ -78,10 +82,6 @@ cardAlarm
 	43   Component(s)
 	492  Line(s) of event code
 	269  Unique line(s) of event code
-cardPower
-	48   Component(s)
-	487  Line(s) of event code
-	326  Unique line(s) of event code
 screensaver2
 	58   Component(s)
 	344  Line(s) of event code
@@ -89,6 +89,6 @@ screensaver2
 
 Total
 	21   Page(s)
-	794  Component(s)
-	9143 Line(s) of event code
-	2307 Unique line(s) of event code
+	800  Component(s)
+	9179 Line(s) of event code
+	2329 Unique line(s) of event code
