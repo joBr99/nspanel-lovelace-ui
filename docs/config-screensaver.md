@@ -29,6 +29,8 @@ Example for the a screensaver config with custom entities/overrides:
         - entity: sensor.energy_usage
 ```
 
+
+
 Using a 6th entity will automatically activate the alternative layout.
 
 ![screensaver-alt](img/screensaver-alt.png)
@@ -152,4 +154,8 @@ It is possible to increase the size of the font used for the icons by adding `al
           name: "%a %-d/%-m"
           type: 3
 ```
+
+See [Babel Documentation](https://babel.pocoo.org/en/latest/dates.html#date-fields) or the [Python Documenation](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes) in case you do not have babel installed.
+
 </details>
+
