@@ -32,10 +32,6 @@ class LuiController(object):
         # send time and date on startup
         self._pages_gen.update_time("")
         self._pages_gen.update_date("")
-
-        # set screensaver timeout
-        timeout = self._config.get("sleepTimeout")
-        self._send_mqtt_msg(f"timeout~{timeout}")
         
         # set current screensaver brightness
         self.update_screensaver_brightness(kwargs={"ssbr": self.current_screensaver_brightness, "sbr": self.current_screen_brightness})
