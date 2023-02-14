@@ -1080,16 +1080,8 @@
 │          
 │  Variable (string) nent1
 │      Attributes
-│ @@ -69,46 +69,82 @@
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│ -        Max. Text Size: 1000
-│ +        Max. Text Size: 275
+│ @@ -76,39 +76,75 @@
+│          Max. Text Size: 1000
 │      
 │  Variable (int32) t0Speed
 │      Attributes

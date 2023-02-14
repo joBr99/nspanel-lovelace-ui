@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-02-14 21:29:44.298399725 +0000
++++ /dev/fd/62	2023-02-14 22:03:05.879411129 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardEntities.txt
@@ -499,16 +499,8 @@
 + 
 +e (string) nent1
 +ributes
-+6 +69,82 @@
-+ Text          : 
-+ Max. Text Size: 80
-+
-+e (string) strCommand
-+ributes
-+ Scope         : local
-+ Text          : 
++9 +76,75 @@
 + Max. Text Size: 1000
-+ Max. Text Size: 275
 +
 +e (int32) t0Speed
 +ributes

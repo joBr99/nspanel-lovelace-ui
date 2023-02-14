@@ -73,7 +73,7 @@ Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 275
+        Max. Text Size: 1000
     
 Variable (int32) t0Speed
     Attributes
