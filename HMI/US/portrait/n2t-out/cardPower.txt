@@ -73,7 +73,7 @@ Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 275
+        Max. Text Size: 1000
     
 Variable (int32) t0Speed
     Attributes
@@ -692,6 +692,10 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",34
                                         covx tTmp.txt,t0Speed.val,0,0
+                                        if(p0.h==320)
+                                        {
+                                            t0Speed.val=t0Speed.val*-1
+                                        }
                                         if(t0Speed.val>120)
                                         {
                                             t0Speed.val=120
@@ -723,6 +727,10 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",41
                                         covx tTmp.txt,t1Speed.val,0,0
+                                        if(p0.h==320)
+                                        {
+                                            t1Speed.val=t1Speed.val*-1
+                                        }
                                         if(t1Speed.val>120)
                                         {
                                             t1Speed.val=120
@@ -754,6 +762,10 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",48
                                         covx tTmp.txt,t2Speed.val,0,0
+                                        if(p0.h==320)
+                                        {
+                                            t2Speed.val=t2Speed.val*-1
+                                        }
                                         if(t2Speed.val>120)
                                         {
                                             t2Speed.val=120
@@ -785,6 +797,10 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",55
                                         covx tTmp.txt,t3Speed.val,0,0
+                                        if(p0.h==320)
+                                        {
+                                            t3Speed.val=t3Speed.val*-1
+                                        }
                                         if(t3Speed.val>120)
                                         {
                                             t3Speed.val=120
@@ -816,6 +832,10 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",62
                                         covx tTmp.txt,t4Speed.val,0,0
+                                        if(p0.h==320)
+                                        {
+                                            t4Speed.val=t4Speed.val*-1
+                                        }
                                         if(t4Speed.val>120)
                                         {
                                             t4Speed.val=120
@@ -847,6 +867,10 @@ Timer tmSerial
                                         // speed
                                         spstr strCommand.txt,tTmp.txt,"~",69
                                         covx tTmp.txt,t5Speed.val,0,0
+                                        if(p0.h==320)
+                                        {
+                                            t5Speed.val=t5Speed.val*-1
+                                        }
                                         if(t5Speed.val>120)
                                         {
                                             t5Speed.val=120
@@ -892,6 +916,10 @@ Timer tmSerial
                                         if(tId.txt=="screensaver")
                                         {
                                             page screensaver
+                                        }
+                                        if(tId.txt=="screensaver2")
+                                        {
+                                            page screensaver2
                                         }
                                         if(tId.txt=="cardEntities")
                                         {
