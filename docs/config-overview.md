@@ -165,3 +165,15 @@ The following example configuration is turning off the screen after sunset, but 
 | `vi_VN`       | Vietnamese          |
 | `zh_CN`       | Simplified Chinese  |
 | `zh_TW`       | Traditional Chinese |
+
+## Customize OTA URLs
+
+In case you need to change the OTA URLs to do automatic updates without internet access for tasmota, you can modify the OTA URLs:
+
+```yaml
+  config:
+    displayURL-US-L: "http://example.com/us-l.tft"
+    displayURL-US-P: "http://example.com/us-l.tft"
+    displayURL-EU: "http://example.com/us-l.tft"
+    berryURL: "http://exampe.com/autoexec.be"
+```
