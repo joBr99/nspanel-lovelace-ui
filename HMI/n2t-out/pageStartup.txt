@@ -158,7 +158,7 @@ Text tVersion
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Associated Keyboard                 : none
-        Text                                : 49
+        Text                                : 50
         Max. Text Size                      : 10
     
 Picture p0

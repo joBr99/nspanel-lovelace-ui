@@ -18,14 +18,14 @@ cardQR
 	34   Component(s)
 	406  Line(s) of event code
 	236  Unique line(s) of event code
-cardChart
-	33   Component(s)
-	433  Line(s) of event code
-	294  Unique line(s) of event code
 pageStartup
 	20   Component(s)
 	189  Line(s) of event code
 	133  Unique line(s) of event code
+cardChart
+	33   Component(s)
+	433  Line(s) of event code
+	294  Unique line(s) of event code
 pageTest
 	26   Component(s)
 	68   Line(s) of event code
