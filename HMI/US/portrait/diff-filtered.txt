@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-02-14 22:03:05.879411129 +0000
++++ /dev/fd/62	2023-02-16 21:36:10.214918888 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardEntities.txt
@@ -834,6 +834,23 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
++15 +148,15 @@
++ersion
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 50
++ Text                                : 49
++ Max. Text Size                      : 10
++
++ p0
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
 +18 +314,14 @@
 +                                 {
 +                                     page pageStartup

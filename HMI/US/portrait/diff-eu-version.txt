@@ -1432,6 +1432,23 @@
 │          Scope                               : local
 │          Dragging                            : 0
 │          Disable release event after dragging: 0
+│ @@ -154,15 +148,15 @@
+│  Text tVersion
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│ -        Text                                : 50
+│ +        Text                                : 49
+│          Max. Text Size                      : 10
+│      
+│  Picture p0
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
 │ @@ -179,15 +173,15 @@
 │          Max. Text Size                      : 10
 │      
