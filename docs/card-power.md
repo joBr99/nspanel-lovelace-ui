@@ -63,4 +63,3 @@ It provides the number as a negative integer, making the dot move from the middl
 ```yaml
               {{ (entity_usage | round()) }}
 ```
-Note: It appears that on the `US-P` firmware because of the orientation this is inverted i.e. negative speeds move from the entity toward the middle and positive speeds move from the middle toward the entity.
