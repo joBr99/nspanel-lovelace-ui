@@ -18,6 +18,7 @@ key | optional | type | default | description
 `status` | True | string | `None` | Only valid for navigate and service items, adds a entity to track state for the icon
 `assumed_state` | True | string | `None` | Only for cover items, up, down and stop buttons are always shown
 `action_name` | True | string | `None` | Only valid for script; Button label
+`effectList` | True | string | `None` | Only valid for light; for example `[Android, Aurora` (fav list for effects)
 
 
 ## Override Icons or Names
