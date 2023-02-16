@@ -36,6 +36,7 @@ key | optional | type | default | description
 `type` | False | string | `None` | Type of the card
 `entities` | False | complex | `None` | contains entities of the card
 `title` | True | string | `None` | Title of the Page 
+`cooldown` | True | float | `None` | Rate Limit for Entity Updates to the card in Seconds (`cooldown: 0.5`)
 `key` | True | string | `None` | Used by navigate items
 
 List of supported entitiy types for this page:
