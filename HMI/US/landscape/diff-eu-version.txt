@@ -1,17 +1,5 @@
 --- HMI/n2t-out
 +++ HMI/US/landscape/n2t-out
-├── file list
-│ @@ -14,9 +14,8 @@
-│  popupFan.txt
-│  popupInSel.txt
-│  popupLight.txt
-│  popupNotify.txt
-│  popupShutter.txt
-│  popupThermo.txt
-│  popupTimer.txt
-│ -screensaver.txt
-│ -screensaver2.txt
-│ +screensaver.txt
 │   --- HMI/n2t-out/Program.s.txt
 ├── +++ HMI/US/landscape/n2t-out/Program.s.txt
 │ @@ -11,9 +11,9 @@
@@ -25,937 +13,6 @@
 │ -    lcd_dev fffb 0002 0000 0020
 │ +    //lcd_dev fffb 0002 0000 0020
 │      page pageStartup
-│   --- HMI/n2t-out/cardAlarm.txt
-├── +++ HMI/US/landscape/n2t-out/cardAlarm.txt
-│ @@ -879,20 +879,14 @@
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│ -                                        //temporary disable sleep timer
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
-│ -                                        if(tTmp.txt=="disable")
-│ -                                        {
-│ -                                            tmSleep.en=0
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="pageType")
-│                                      {
-│                                          sleepValue=0
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│ @@ -908,18 +902,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│   --- HMI/n2t-out/cardChart.txt
-├── +++ HMI/US/landscape/n2t-out/cardChart.txt
-│ @@ -612,20 +612,14 @@
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│ -                                        //temporary disable sleep timer
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
-│ -                                        if(tTmp.txt=="disable")
-│ -                                        {
-│ -                                            tmSleep.en=0
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="pageType")
-│                                      {
-│                                          sleepValue=0
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│ @@ -641,18 +635,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│   --- HMI/n2t-out/cardEntities.txt
-├── +++ HMI/US/landscape/n2t-out/cardEntities.txt
-│ @@ -1885,18 +1885,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│ @@ -1977,20 +1973,14 @@
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│ -                                        //temporary disable sleep timer
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
-│ -                                        if(tTmp.txt=="disable")
-│ -                                        {
-│ -                                            tmSleep.en=0
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
-│   --- HMI/n2t-out/cardGrid.txt
-├── +++ HMI/US/landscape/n2t-out/cardGrid.txt
-│ @@ -870,18 +870,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│ @@ -962,20 +958,14 @@
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│ -                                        //temporary disable sleep timer
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
-│ -                                        if(tTmp.txt=="disable")
-│ -                                        {
-│ -                                            tmSleep.en=0
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
-│   --- HMI/n2t-out/cardLChart.txt
-├── +++ HMI/US/landscape/n2t-out/cardLChart.txt
-│ @@ -593,20 +593,14 @@
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│ -                                        //temporary disable sleep timer
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
-│ -                                        if(tTmp.txt=="disable")
-│ -                                        {
-│ -                                            tmSleep.en=0
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="pageType")
-│                                      {
-│                                          sleepValue=0
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│ @@ -622,18 +616,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│   --- HMI/n2t-out/cardMedia.txt
-├── +++ HMI/US/landscape/n2t-out/cardMedia.txt
-│ @@ -1154,18 +1154,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│ @@ -1246,20 +1242,14 @@
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│ -                                        //temporary disable sleep timer
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
-│ -                                        if(tTmp.txt=="disable")
-│ -                                        {
-│ -                                            tmSleep.en=0
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
-│   --- HMI/n2t-out/cardPower.txt
-├── +++ HMI/US/landscape/n2t-out/cardPower.txt
-│ @@ -35,27 +35,27 @@
-│              vis t0Icon,0
-│              vis t1Icon,0
-│              vis t2Icon,0
-│              vis t3Icon,0
-│              vis t4Icon,0
-│              vis t5Icon,0
-│              cardPower.bco=defaultBcoColor
-│ -            for(sys0=0;sys0<54;sys0++)
-│ +            for(sys0=0;sys0<48;sys0++)
-│              {
-│                  if(b[sys0].type==98||b[sys0].type==116)
-│                  {
-│                      b[sys0].bco=defaultBcoColor
-│                      b[sys0].pco=defaultFontColor
-│                  }
-│                  if(defaultBcoColor==0)
-│                  {
-│                      if(b[sys0].type==1)
-│                      {
-│ -                        b[sys0].pic=21
-│ -                        b[sys0].pic1=21
-│ +                        b[sys0].pic=19
-│ +                        b[sys0].pic1=19
-│                          b[sys0].pic2=15
-│                      }
-│                  }
-│              }
-│          
-│  Variable (string) nent1
-│      Attributes
-│ @@ -69,15 +69,15 @@
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│  Variable (string) strCommand
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│ -        Max. Text Size: 1000
-│ +        Max. Text Size: 275
-│      
-│  Variable (int32) t0Speed
-│      Attributes
-│          Scope: local
-│          Value: 0
-│      
-│  Variable (int32) t1Speed
-│ @@ -135,24 +135,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î¢
-│          Max. Text Size                      : 5
-│      
-│ -Text t0o
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
-│ -    
-│  Text t0u
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -175,24 +165,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î¶
-│          Max. Text Size                      : 5
-│      
-│ -Text t1o
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
-│ -    
-│  Text t1u
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -205,24 +185,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î °
-│          Max. Text Size                      : 5
-│      
-│ -Text t2o
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
-│ -    
-│  Text t2u
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -235,24 +205,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î °
-│          Max. Text Size                      : 5
-│      
-│ -Text t3o
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
-│ -    
-│  Text t3u
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -265,24 +225,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î´½
-│          Max. Text Size                      : 5
-│      
-│ -Text t4o
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
-│ -    
-│  Text t4u
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -295,24 +245,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î
-│          Max. Text Size                      : 5
-│      
-│ -Text t5o
-│ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
-│ -    
-│  Text t5u
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -535,85 +475,79 @@
-│                      h0.val=h0.minval
-│                  }
-│                  if(sys0<h0.minval)
-│                  {
-│                      h0.val=h0.maxval
-│                  }
-│                  h0.val+=t0Speed.val
-│ -                ref t0u
-│              }
-│              if(t1Speed.val!=0)
-│              {
-│                  sys0=h1.val+t1Speed.val
-│                  if(sys0>h1.maxval)
-│                  {
-│                      h1.val=h1.minval
-│                  }
-│                  if(sys0<h1.minval)
-│                  {
-│                      h1.val=h1.maxval
-│                  }
-│                  h1.val+=t1Speed.val
-│ -                ref t1u
-│              }
-│              if(t2Speed.val!=0)
-│              {
-│                  sys0=h2.val+t2Speed.val
-│                  if(sys0>h2.maxval)
-│                  {
-│                      h2.val=h2.minval
-│                  }
-│                  if(sys0<h2.minval)
-│                  {
-│                      h2.val=h2.maxval
-│                  }
-│                  h2.val+=t2Speed.val
-│ -                ref t2u
-│              }
-│              if(t3Speed.val!=0)
-│              {
-│                  sys0=h3.val+t3Speed.val
-│                  if(sys0>h3.maxval)
-│                  {
-│                      h3.val=h3.minval
-│                  }
-│                  if(sys0<h3.minval)
-│                  {
-│                      h3.val=h3.maxval
-│                  }
-│                  h3.val+=t3Speed.val
-│ -                ref t3u
-│              }
-│              if(t4Speed.val!=0)
-│              {
-│                  sys0=h4.val+t4Speed.val
-│                  if(sys0>h4.maxval)
-│                  {
-│                      h4.val=h4.minval
-│                  }
-│                  if(sys0<h4.minval)
-│                  {
-│                      h4.val=h4.maxval
-│                  }
-│                  h4.val+=t4Speed.val
-│ -                ref t4u
-│              }
-│              if(t5Speed.val!=0)
-│              {
-│                  sys0=h5.val+t5Speed.val
-│                  if(sys0>h5.maxval)
-│                  {
-│                      h5.val=h5.minval
-│                  }
-│                  if(sys0<h5.minval)
-│                  {
-│                      h5.val=h5.maxval
-│                  }
-│                  h5.val+=t5Speed.val
-│ -                ref t5u
-│              }
-│          
-│  Timer tmSerial
-│      Attributes
-│          Scope      : local
-│          Period (ms): 50
-│          Enabled    : yes
-│ @@ -661,14 +595,15 @@
-│                                      // here is the location where acual code should be
-│                                      // write command to variable strCommand
-│                                      ucopy strCommand.txt,4,payloadLength-5,0
-│                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
-│                                      spstr strCommand.txt,tInstruction.txt,"~",0
-│                                      if(tInstruction.txt=="entityUpd")
-│                                      {
-│ +                                        // command format: entityUpd,heading,navigation,colorHome,iconHome[,iconColor,icon,speed,valueUp,valueDown]x6
-│                                          spstr strCommand.txt,tHeading.txt,"~",1
-│                                          // navigation icon left
-│                                          spstr strCommand.txt,tTmp.txt,"~",2 //type
-│                                          if(tTmp.txt=="delete"||tTmp.txt=="")
-│                                          {
-│                                              vis bPrev,0
-│                                          }else
-│ @@ -697,202 +632,193 @@
-│                                              // change icon color
-│                                              spstr strCommand.txt,tTmp.txt,"~",11
-│                                              covx tTmp.txt,sys0,0,0
-│                                              bNext.pco=sys0
-│                                              vis bNext,1
-│                                          }
-│                                          // icon color home
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",17
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",14
-│                                          covx tTmp.txt,t1.pco,0,0
-│                                          // icon home
-│ -                                        spstr strCommand.txt,t1.txt,"~",16
-│ +                                        spstr strCommand.txt,t1.txt,"~",15
-│                                          // speed 16 ignored
-│                                          // text home
-│ -                                        spstr strCommand.txt,tHome.txt,"~",19
-│ +                                        spstr strCommand.txt,tHome.txt,"~",17
-│                                          spstr tHome.txt,tHome2.txt," ",1
-│                                          spstr tHome.txt,tHome.txt," ",0
-│ +                                        // icon color 18 ignored
-│ +                                        // icon 19 ignored
-│ +                                        // speed 20 ignored
-│                                          // text home
-│ -                                        spstr strCommand.txt,tHomeO.txt,"~",26
-│ +                                        spstr strCommand.txt,tHomeO.txt,"~",21
-│                                          spstr tHomeO.txt,tHomeO2.txt," ",1
-│                                          spstr tHomeO.txt,tHomeO.txt," ",0
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",31
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",22
-│                                          covx tTmp.txt,t0Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t0Icon.txt,"~",30
-│ +                                        spstr strCommand.txt,t0Icon.txt,"~",23
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",34
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",24
-│                                          covx tTmp.txt,t0Speed.val,0,0
-│                                          if(t0Speed.val>120)
-│                                          {
-│                                              t0Speed.val=120
-│                                          }
-│                                          if(t0Speed.val<-120)
-│                                          {
-│                                              t0Speed.val=-120
-│                                          }
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t0u.txt,"~",33
-│ -                                        // upper text
-│ -                                        spstr strCommand.txt,t0o.txt,"~",32
-│ +                                        spstr strCommand.txt,t0u.txt,"~",25
-│                                          if(t0Icon.txt!="")
-│                                          {
-│                                              vis t0Icon,1
-│                                              vis t0u,1
-│                                              vis h0,1
-│                                          }else
-│                                          {
-│                                              vis t0Icon,0
-│                                              vis t0u,0
-│                                              vis h0,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",38
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",26
-│                                          covx tTmp.txt,t1Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t1Icon.txt,"~",37
-│ +                                        spstr strCommand.txt,t1Icon.txt,"~",27
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",41
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",28
-│                                          covx tTmp.txt,t1Speed.val,0,0
-│                                          if(t1Speed.val>120)
-│                                          {
-│                                              t1Speed.val=120
-│                                          }
-│                                          if(t1Speed.val<-120)
-│                                          {
-│                                              t1Speed.val=-120
-│                                          }
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t1u.txt,"~",40
-│ -                                        // upper text
-│ -                                        spstr strCommand.txt,t1o.txt,"~",39
-│ +                                        spstr strCommand.txt,t1u.txt,"~",29
-│                                          if(t1Icon.txt!="")
-│                                          {
-│                                              vis t1Icon,1
-│                                              vis t1u,1
-│                                              vis h1,1
-│                                          }else
-│                                          {
-│                                              vis t1Icon,0
-│                                              vis t1u,0
-│                                              vis h1,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",45
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",30
-│                                          covx tTmp.txt,t2Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t2Icon.txt,"~",44
-│ +                                        spstr strCommand.txt,t2Icon.txt,"~",31
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",48
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",32
-│                                          covx tTmp.txt,t2Speed.val,0,0
-│                                          if(t2Speed.val>120)
-│                                          {
-│                                              t2Speed.val=120
-│                                          }
-│                                          if(t2Speed.val<-120)
-│                                          {
-│                                              t2Speed.val=-120
-│                                          }
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t2u.txt,"~",47
-│ -                                        // upper text
-│ -                                        spstr strCommand.txt,t2o.txt,"~",46
-│ +                                        spstr strCommand.txt,t2u.txt,"~",33
-│                                          if(t2Icon.txt!="")
-│                                          {
-│                                              vis t2Icon,1
-│                                              vis t2u,1
-│                                              vis h2,1
-│                                          }else
-│                                          {
-│                                              vis t2Icon,0
-│                                              vis t2u,0
-│                                              vis h2,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",52
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",34
-│                                          covx tTmp.txt,t3Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t3Icon.txt,"~",51
-│ +                                        spstr strCommand.txt,t3Icon.txt,"~",35
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",55
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",36
-│                                          covx tTmp.txt,t3Speed.val,0,0
-│                                          if(t3Speed.val>120)
-│                                          {
-│                                              t3Speed.val=120
-│                                          }
-│                                          if(t3Speed.val<-120)
-│                                          {
-│                                              t3Speed.val=-120
-│                                          }
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t3u.txt,"~",54
-│ -                                        // upper text
-│ -                                        spstr strCommand.txt,t3o.txt,"~",53
-│ +                                        spstr strCommand.txt,t3u.txt,"~",37
-│                                          if(t3Icon.txt!="")
-│                                          {
-│                                              vis t3Icon,1
-│                                              vis t3u,1
-│                                              vis h3,1
-│                                          }else
-│                                          {
-│                                              vis t3Icon,0
-│                                              vis t3u,0
-│                                              vis h3,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",59
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",38
-│                                          covx tTmp.txt,t4Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t4Icon.txt,"~",58
-│ +                                        spstr strCommand.txt,t4Icon.txt,"~",39
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",62
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",40
-│                                          covx tTmp.txt,t4Speed.val,0,0
-│                                          if(t4Speed.val>120)
-│                                          {
-│                                              t4Speed.val=120
-│                                          }
-│                                          if(t4Speed.val<-120)
-│                                          {
-│                                              t4Speed.val=-120
-│                                          }
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t4u.txt,"~",61
-│ -                                        // upper text
-│ -                                        spstr strCommand.txt,t4o.txt,"~",60
-│ +                                        spstr strCommand.txt,t4u.txt,"~",41
-│                                          if(t4Icon.txt!="")
-│                                          {
-│                                              vis t4Icon,1
-│                                              vis t4u,1
-│                                              vis h4,1
-│                                          }else
-│                                          {
-│                                              vis t4Icon,0
-│                                              vis t4u,0
-│                                              vis h4,0
-│                                          }
-│                                          // iconColor
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",66
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",42
-│                                          covx tTmp.txt,t5Icon.pco,0,0
-│                                          // icon
-│ -                                        spstr strCommand.txt,t5Icon.txt,"~",65
-│ +                                        spstr strCommand.txt,t5Icon.txt,"~",43
-│                                          // speed
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",69
-│ +                                        spstr strCommand.txt,tTmp.txt,"~",44
-│                                          covx tTmp.txt,t5Speed.val,0,0
-│                                          if(t5Speed.val>120)
-│                                          {
-│                                              t5Speed.val=120
-│                                          }
-│                                          if(t5Speed.val<-120)
-│                                          {
-│                                              t5Speed.val=-120
-│                                          }
-│                                          // lower text
-│ -                                        spstr strCommand.txt,t5u.txt,"~",68
-│ -                                        // upper text
-│ -                                        spstr strCommand.txt,t5o.txt,"~",67
-│ +                                        spstr strCommand.txt,t5u.txt,"~",45
-│                                          if(t5Icon.txt!="")
-│                                          {
-│                                              vis t5Icon,1
-│                                              vis t5u,1
-│                                              vis h5,1
-│                                          }else
-│                                          {
-│ @@ -919,18 +845,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│ @@ -969,14 +891,18 @@
-│                                          {
-│                                              page cardPower
-│                                          }
-│                                          if(tId.txt=="cardChart")
-│                                          {
-│                                              page cardChart
-│                                          }
-│ +                                        if(tId.txt=="cardLChart")
-│ +                                        {
-│ +                                            page cardLChart
-│ +                                        }
-│                                      }
-│                                      if(tInstruction.txt=="time")
-│                                      {
-│                                          // get set time to global variable
-│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-│                                      }
-│                                      if(tInstruction.txt=="date")
-│ @@ -1007,20 +933,14 @@
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│ -                                        //temporary disable sleep timer
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
-│ -                                        if(tTmp.txt=="disable")
-│ -                                        {
-│ -                                            tmSleep.en=0
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
-│   --- HMI/n2t-out/cardQR.txt
-├── +++ HMI/US/landscape/n2t-out/cardQR.txt
-│ @@ -646,20 +646,14 @@
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│ -                                        //temporary disable sleep timer
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
-│ -                                        if(tTmp.txt=="disable")
-│ -                                        {
-│ -                                            tmSleep.en=0
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="pageType")
-│                                      {
-│                                          sleepValue=0
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│ @@ -675,18 +669,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│   --- HMI/n2t-out/cardThermo.txt
-├── +++ HMI/US/landscape/n2t-out/cardThermo.txt
-│ @@ -1071,18 +1071,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│ @@ -1163,20 +1159,14 @@
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│ -                                        //temporary disable sleep timer
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
-│ -                                        if(tTmp.txt=="disable")
-│ -                                        {
-│ -                                            tmSleep.en=0
-│ -                                        }
-│                                      }
-│                                      // end of user code
-│                                      udelete payloadLength-1
-│                                      bufferPos=0
-│                                  }
-│                              }
-│                          }
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
 │ @@ -179,15 +179,15 @@
@@ -1110,3 +167,94 @@
 │                                              vis tMainText,1
 │                                              vis tMainTextAlt,0
 │                                              vis tMainTextAlt2,0
+│ @@ -748,14 +721,18 @@
+│                                          {
+│                                              page pageStartup
+│                                          }
+│                                          if(tId.txt=="screensaver")
+│                                          {
+│                                              page screensaver
+│                                          }
+│ +                                        if(tId.txt=="screensaver2")
+│ +                                        {
+│ +                                            page screensaver2
+│ +                                        }
+│                                          if(tId.txt=="cardEntities")
+│                                          {
+│                                              page cardEntities
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│   --- HMI/n2t-out/screensaver2.txt
+├── +++ HMI/US/landscape/n2t-out/screensaver2.txt
+│ @@ -29,17 +29,14 @@
+│              }
+│              tDate.txt=pageIcons.vaDate.txt
+│              dim=dimValue
+│              vis tSend,0
+│              //page open event
+│              // clear weather elements, to keep example content in HMI
+│          
+│ -        Postinitialize Event
+│ -            click m0,1
+│ -        
+│  Variable (string) strCommand
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 1979
+│      
+│  Variable (string) strTmp
+│ @@ -393,35 +390,14 @@
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : 
+│          Max. Text Size                      : 4
+│      
+│ -Text m0
+│ -    Attributes
+│ -        Scope                               : local
+│ -        Dragging                            : 0
+│ -        Disable release event after dragging: 0
+│ -        Send Component ID                   : disabled
+│ -        Associated Keyboard                 : none
+│ -        Text                                : 
+│ -        Max. Text Size                      : 10
+│ -    
+│ -    Events
+│ -        Touch Press Event
+│ -            tTmp.txt="change model conf to us-l/p "
+│ -            strlen tTmp.txt,sys1
+│ -            sya1=sys1*11+m0.h-48/2
+│ -            for(sys0=0;sys0<sys1;sys0++)
+│ -            {
+│ -                substr tTmp.txt,strTmp.txt,sys0,1
+│ -                xstr m0.x-5,sys0*-11+m0.y+sya1,23,20,6,WHITE,RED,2,1,3,strTmp.txt
+│ -            }
+│ -        
+│  Text tAMPM
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│ @@ -614,15 +590,14 @@
+│                                          if(tTmp.txt!="")
+│                                          {
+│                                              covx tTmp.txt,defaultFontColor,0,0
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│ -                                        click m0,1
+│                                          //get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                          spstr pageIcons.vaTime.txt,tTime.txt,"?",0
+│                                          spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
+│                                          if(tAMPM.txt=="")
+│                                          {
+│                                              vis tAMPM,0

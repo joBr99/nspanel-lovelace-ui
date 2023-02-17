@@ -33,6 +33,10 @@ for i in range(0,6):
               // speed
               spstr strCommand.txt,tTmp.txt,"~",{idxstart+7}
               covx tTmp.txt,t{i}Speed.val,0,0
+              if(p0.h==320)
+              {{
+                t{i}Speed.val=t{i}Speed.val*-1
+              }}
               if(t{i}Speed.val>120)
               {{
                 t{i}Speed.val=120
