@@ -97,7 +97,7 @@ ReleaseNotes:
         - 28.01.2023 - v3.9.0   Fix TFT-Version Path in function update_tft_firmware (drop ".")
         - 29.01.2023 - v3.9.0   Upgrade TFT 49
 	- 03.02.2023 - v3.9.0.2 Hotfix Screensaver bExit
-	- 06.02.2023 - v3.9.0.3 PR #754 - added missing 'tempUpdHighLow' ButtonEvent handling - by @fre4242 	
+	- 06.02.2023 - v3.9.0.3 PR #754 - added missing 'tempUpdHighLow' ButtonEvent handling - by @fre4242	
 	- 07.02.2023 - v3.9.0.4 Open activepage again after closing popupLight or popupShutter
 
         Todo Next Release
@@ -603,9 +603,12 @@ let SqueezeboxRPC = <PageMedia>
     'heading': 'SqueezeboxRPC',
     'useColor': true,
     'items': [<PageItem>{ 
-                id: 'alias.0.Media.LMS.SqueezePlay', 
-                adapterPlayerInstance: 'squeezeboxrpc.0.Players.SqueezePlay.',
-                speakerList: ['SqueezePlay']
+                id: 'alias.0.Media.LMS', 
+                adapterPlayerInstance: 'squeezeboxrpc.0',
+                speakerList: ['SqueezePlay'],
+                mediaDevice: 'SqueezePlay',
+                playList: ['Playlist'],
+                autoCreateALias : true
              }]
 };
 
@@ -2700,7 +2703,9 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     let tempPageItem = words[3].split('?');
                     let pageItem = findPageItem(tempPageItem[0]);
                     if (pageItem !== undefined) {
-                        //console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                        if (Debug) {
+                            console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                        }
                         SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem));
                     }
                     break;
@@ -3989,7 +3994,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
 
         if (adapterPlayerInstance.startsWith('volumio')) {
             if (existsObject(id) == false){
-                console.log('Volumio Alias ' + id + ' does not exist - will be created now')
+                console.log('Volumio Alias ' + id + ' does not exist - will be created now');
 
                 let dpPath: string = adapterPlayerInstance;
                 try {
@@ -4013,18 +4018,62 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                 }
             }
         }
-    }    
+
+        if (adapterPlayerInstance.startsWith('squeezeboxrpc')) {           
+            if (existsObject(id) == false){
+                console.log('Squeezebox Alias ' + id + ' does not exist - will be created now');
+
+                let dpPath: string = adapterPlayerInstance + '.Players.' + mediaDevice;
+                try {
+                    setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
+                    await createAliasAsync(id + '.ALBUM',  dpPath + '.Album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM'});
+                    await createAliasAsync(id + '.ARTIST', dpPath + '.Artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST'});
+                    await createAliasAsync(id + '.TITLE', dpPath + '.Title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE'});
+                    await createAliasAsync(id + '.NEXT', dpPath + '.btnForward', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.forward', name: 'NEXT'});
+                    await createAliasAsync(id + '.PREV', dpPath + '.btnRewind', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.reverse', name: 'PREV'});
+                    await createAliasAsync(id + '.PLAY', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'PLAY', alias: { id: dpPath + '.state', read: 'val === 1 ? true : false' }});
+                    await createAliasAsync(id + '.PAUSE', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'PAUSE', alias: { id: dpPath + '.state', read: 'val === 0 ? true : false'}});
+                    await createAliasAsync(id + '.STOP', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STOP', alias: { id: dpPath + '.state', read: 'val === 0 ? true : false'}});
+                    await createAliasAsync(id + '.STATE', dpPath + '.Power', true, <iobJS.StateCommon>{ type: 'number', role: 'switch', name: 'STATE'});
+                    await createAliasAsync(id + '.VOLUME', dpPath + '.Volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME'});
+                    await createAliasAsync(id + '.VOLUME_ACTUAL', dpPath + '.Volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'VOLUME_ACTUAL'});
+                    await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: { id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1' }});
+                    await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon>{type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
+                } catch (err) {
+                    console.warn('function createAutoMediaAlias: ' + err.message);
+                }
+            }
+        }
+    }
 }
 
 function GenerateMediaPage(page: PageMedia): Payload[] {
     try {
-        let id = page.items[0].id;
+        unsubscribeMediaSubscriptions();
 
+        let id = page.items[0].id;
         let out_msgs: Array<Payload> = [];
 
-        unsubscribeMediaSubscriptions();
+        let vInstance = page.items[0].adapterPlayerInstance;
+        let v1Adapter = vInstance.split('.');
+        let v2Adapter = v1Adapter[0];
         
-        subscribeMediaSubscriptions(id);
+        // Etwas magic um die ID des Alias zu ändern, da Speaker keine Property sondern getrennte Objekte sind
+        if(v2Adapter == 'squeezeboxrpc') {
+            if(getObject(id).type != 'channel') {
+                id = id + '.' + page.items[0].mediaDevice;
+                page.items[0].id = id;
+                page.heading = page.items[0].mediaDevice ?? '';
+            } else {
+                let idParts = id.split('.');
+                if(idParts[idParts.length-1] !== page.items[0].mediaDevice) {
+                    idParts[idParts.length-1] = page.items[0].mediaDevice ?? '';
+                    id = idParts.join('.');
+                    page.items[0].id = id;
+                    page.heading = page.items[0].mediaDevice ?? '';
+                }
+            }
+        }
 
         if (page.items[0].autoCreateALias) {
             let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
@@ -4033,14 +4082,12 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
         out_msgs.push({ payload: 'pageType~cardMedia' });
         if (existsObject(id)) {
+            subscribeMediaSubscriptions(id);
+
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
             let author = getState(id + '.ARTIST').val;
             let shuffle = getState(id + '.SHUFFLE').val;
-
-            let vInstance = page.items[0].adapterPlayerInstance;
-            let v1Adapter = vInstance.split('.');
-            let v2Adapter = v1Adapter[0];
 
             //Neue Adapter/Player
             let media_icon = Icons.GetIcon('playlist-music');
@@ -4088,8 +4135,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 media_icon = Icons.GetIcon('dlna');
                 let nameLength = name.length;
                 if (nameLength == 0) {
-                    name = 'Squeezebox RPC';
-                    author = 'no music to control';
+                    name = page.items[0].mediaDevice;
                 }
             }
 
@@ -4172,18 +4218,23 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             } else if (v2Adapter == 'sonos') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.members'].join(''))).val;
             } else if (v2Adapter == 'squeezeboxrpc') {
-                if(existsObject(([page.items[0].adapterPlayerInstance, 'Playername'].join('')))) {
-                    currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Playername'].join(''))).val;
-                }
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playername'].join(''))).val;
             }
             //-------------------------------------------------------------------------------------------------------------
             // nachfolgend alle Alexa-Devices (ist Online / Player- und Commands-Verzeichnis vorhanden) auflisten und verketten
             // Wenn Konstante alexaSpeakerList mind. einen Eintrag enthÃ¤lt, wird die Konstante verwendet - ansonsten Alle Devices aus dem Alexa Adapter
-            let speakerList = '';
-            if (page.items[0].speakerList.length > 0) {
+            let speakerListArray: Array<string> = [];
+            if (page.items[0].speakerList && page.items[0].speakerList.length > 0) {
                 for (let i_index in page.items[0].speakerList) {
-                    speakerList = speakerList + page.items[0].speakerList[i_index] + '?';
+                    speakerListArray.push(page.items[0].speakerList[i_index]);
                 }
+            } else if (v2Adapter == 'squeezeboxrpc') {
+                // Beim Squeezeboxrpc ist jeder Player ein eigener Knoten im Objektbaum. Somit werden einzelne Aliase benötigt.
+                const squeezeboxPlayerQuery: iobJS.QueryResult = $('channel[state.id=' + page.items[0].adapterPlayerInstance + '.Players.*.Playername]');
+                squeezeboxPlayerQuery.each((playerId: string, playerIndex: number) => {
+                    speakerListArray.push(getState(playerId).val);
+                    page.items[0].speakerList = speakerListArray;
+                });
             } else {
                 let i_list = Array.prototype.slice.apply($('[state.id="' + page.items[0].adapterPlayerInstance + 'Echo-Devices.*.Info.name"]'));
                 for (let i_index in i_list) {
@@ -4193,11 +4244,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     if (getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.online'].join(''))).val &&
                         existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Player'].join(''))) &&
                         existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Commands'].join('')))) {
-                        speakerList = speakerList + getState(i).val + '?';
+                            speakerListArray.push(getState(i).val);
                     }
                 }
             }
-            speakerList = speakerList.substring(0, speakerList.length - 1);
             //--------------------------------------------------------------------------------------------------------------
 
             let colMediaIcon = (page.items[0].colorMediaIcon != undefined) ? page.items[0].colorMediaIcon : White;
@@ -4207,7 +4257,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             //InSel Speaker
             let speakerListString: string = '~~~~~~'
             let speakerListIconCol = rgb_dec565(HMIOff);
-            if (page.items[0].speakerList != undefined) {
+            if (speakerListArray.length > 0) {
                 speakerListIconCol = rgb_dec565(HMIOn);
                 speakerListString = 'input_sel' + '~' + 
                                     id + '?speakerlist' + '~' + 
@@ -4263,10 +4313,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                         );
                     }, 2000);
                 globalTracklist = page.items[0].globalTracklist;
-            }
-
-            if(v2Adapter == 'squeezeboxrpc' && existsObject(([page.items[0].adapterPlayerInstance, 'Playlist'].join('')))) {
-                let lmstracklist = JSON.parse(getState(([page.items[0].adapterPlayerInstance, 'Playlist'].join(''))).val);
+            } else if(v2Adapter == 'squeezeboxrpc' && existsObject(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playlist'].join('')))) {
+                let lmstracklist = JSON.parse(getState(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playlist'].join(''))).val);
                 globalTracklist = lmstracklist;
             }
             
@@ -4321,11 +4369,14 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
             } else if (v2Adapter == 'squeezeboxrpc') {
                 if (getState(id + '.REPEAT').val == 1) {
-                    repeatIcon = Icons.GetIcon('repeat-variant');
-                    repeatIconCol = rgb_dec565(HMIOn);
-                } else if (getState(id + '.REPEAT').val == 2) {
                     repeatIcon = Icons.GetIcon('repeat-once');
                     repeatIconCol = rgb_dec565(HMIOn);
+                } else if (getState(id + '.REPEAT').val == 2) {
+                    repeatIcon = Icons.GetIcon('repeat');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                }
+                else {
+                    repeatIcon = Icons.GetIcon('repeat-off');
                 }
             } else if (v2Adapter == 'volumio') { /* Volumio: only Repeat true/false with API */
                 if (getState(id + '.REPEAT').val == true) {
@@ -4334,7 +4385,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
             }
 
-            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos' || v2Adapter == 'volumio') {
+            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos' || v2Adapter == 'volumio' || v2Adapter == 'squeezeboxrpc') {
                 repeatButtonString =    'button' + '~' + 
                                         id + '?repeat' + '~' + 
                                         repeatIcon + '~' + 
@@ -5015,6 +5066,23 @@ function HandleButtonEvent(words: any): void {
                                         request({ url:`${getState(adapterInstanceRepeat+'info.host').val}/api/commands/?cmd=repeat`, headers: {'User-Agent': 'ioBroker'} }, 
                                             async (error, response, result)=>{}); /* nothing todo @ error */
                                         break;
+                                    case 'squeezeboxrpc':
+                                        try {
+                                            switch(getState(id + '.REPEAT').val) {
+                                                case 0:
+                                                    setIfExists(id + '.REPEAT', 1);
+                                                    break;
+                                                case 1:
+                                                    setIfExists(id + '.REPEAT', 2);
+                                                    break;
+                                                case 2:
+                                                    setIfExists(id + '.REPEAT', 0);
+                                                    break;
+                                            }
+                                        } catch (err) {
+                                            console.log('Repeat kann nicht verändert werden');
+                                        }
+                                        break;
                                 }
                             }
                     }
@@ -5147,13 +5215,15 @@ function HandleButtonEvent(words: any): void {
                 let pageItemTemp = findPageItem(id);
                 let adaInstanceSplit = pageItemTemp.adapterPlayerInstance.split('.');
                 if (adaInstanceSplit[0] == 'squeezeboxrpc') {
-                    let stateVal = getState(pageItemTemp.adapterPlayerInstance + 'state').val;
+                    let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
+                    console.log(adapterPlayerInstanceStateSeceltor);
+                    let stateVal = getState(adapterPlayerInstanceStateSeceltor).val;
                     if (stateVal == 0) {
-                        setState(pageItemTemp.adapterPlayerInstance + 'state', 1);
+                        setState(adapterPlayerInstanceStateSeceltor, 1);
                     } else if (stateVal == 1) {
-                        setState(pageItemTemp.adapterPlayerInstance + 'state', 0);
+                        setState(adapterPlayerInstanceStateSeceltor, 0);
                     } else if (stateVal == null) {
-                        setState(pageItemTemp.adapterPlayerInstance + 'state', 1);
+                        setState(adapterPlayerInstanceStateSeceltor, 1);
                     }
                 } else {
                     if (getState(id + '.STATE').val === true) {
@@ -5206,6 +5276,9 @@ function HandleButtonEvent(words: any): void {
                         break;
                     case 'chromecast':
                         break;
+                    case 'squeezeboxrpc':
+                        pageItem.mediaDevice = pageItem.speakerList[words[4]];
+                        break;
                 }
                 break;
             case 'mode-playlist':
@@ -5235,6 +5308,9 @@ function HandleButtonEvent(words: any): void {
                         request({ url:`${getState(adapterInstancePL+'info.host').val}/api/commands/?cmd=playplaylist&name=${strDevicePL}`, headers: {'User-Agent': 'ioBroker'} }, 
                                   async (error, response, result)=>{}); /* nothing todo @ error */
                         break;
+                    case 'squeezeboxrpc':
+                        setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
+                        break;
                 }
                 break;
             case 'mode-tracklist':
@@ -5254,6 +5330,9 @@ function HandleButtonEvent(words: any): void {
                     case 'volumio':
                         request({ url:`${getState(adapterInstanceTL+'info.host').val}/api/commands/?cmd=play&N=${words[4]}`, headers: {'User-Agent': 'ioBroker'} }, 
                             async (error, response, result)=>{}); /* nothing todo @ error */
+                        break;
+                    case 'squeezeboxrpc':
+                        setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
                         break;
                 }
                 break;
@@ -5287,13 +5366,14 @@ function HandleButtonEvent(words: any): void {
                 let pageItemTem = findPageItem(id);
                 let adaInstanceSpli = pageItemTem.adapterPlayerInstance.split('.');
                 if (adaInstanceSpli[0] == 'squeezeboxrpc') {
-                    let stateVal = getState(pageItemTem.adapterPlayerInstance + 'Power').val;
+                    let adapterPlayerInstancePowerSelector: string = [pageItemTem.adapterPlayerInstance, 'Players', pageItemTem.mediaDevice, 'Power'].join('.');
+                    let stateVal = getState(adapterPlayerInstancePowerSelector).val;
                     if (stateVal === 0) {
-                        setState(pageItemTem.adapterPlayerInstance + 'Power', 1);
+                        setState(adapterPlayerInstancePowerSelector, 1);
                         setIfExists(id + '.STOP', false);
                         setIfExists(id + '.STATE', 1);
                     } else {
-                        setState(pageItemTem.adapterPlayerInstance + 'Power', 0);
+                        setState(adapterPlayerInstancePowerSelector, 0);
                         setIfExists(id + '.STOP', true);
                         setIfExists(id + '.STATE', 0);
                     }
@@ -6201,10 +6281,12 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                                 //Todo Richtiges Device finden
                                 actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
                             }
+                        } else if (vAdapter == 'squeezeboxrpc') {
+                            actualState = pageItem.mediaDevice;
                         }
                         let tempSpeakerList = [];
                         for (let i = 0; i < pageItem.speakerList.length; i++) {
-                            tempSpeakerList[i] = formatInSelText(pageItem.speakerList[i]);
+                            tempSpeakerList[i] = formatInSelText(pageItem.speakerList[i]).trim();
                         }
                         optionalString = pageItem.speakerList != undefined ? tempSpeakerList.join('?') : '';
                         mode = 'speakerlist';
@@ -6255,7 +6337,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                                 let favoritename = getState(favorite_name_selector).val;
                                 tempPlayList.push(formatInSelText(favoritename));
                             }
-                            optionalString = tempPlayList.length > 1 ? tempPlayList.join('?') : '';
+                            optionalString = tempPlayList.length > 0 ? tempPlayList.join('?') : '';
                         }
                         mode = 'playlist';
                     } else if (optional == 'tracklist') {
@@ -6291,6 +6373,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                                 } else {
                                     temp_array[track_index] = temp_cut_array.substring(0,23);
                                 }
+                            }
+                            else {
+                                break;
                             }
                         }
                         let tempTrackList = [];
