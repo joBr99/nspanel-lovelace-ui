@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-02-18 13:46:17.475034495 +0000
++++ /dev/fd/62	2023-02-18 15:07:51.297065909 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardEntities.txt
@@ -879,23 +879,6 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+15 +726,15 @@
-+                                 }
-+                                 if(tId.txt=="screensaver")
-+                                 {
-+                                     page screensaver
-+                                 }
-+                                 if(tId.txt=="screensaver2")
-+                                 {
-+                                     page screensaver
-+                                     page screensaver2
-+                                 }
-+                                 if(tId.txt=="cardEntities")
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
 +I/n2t-out/screensaver2.txt
 ++ HMI/US/portrait/n2t-out/screensaver2.txt
 +7 +29,14 @@

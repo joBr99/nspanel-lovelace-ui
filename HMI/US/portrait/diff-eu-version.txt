@@ -1493,23 +1493,6 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
-│ @@ -750,15 +726,15 @@
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│                                          if(tId.txt=="screensaver2")
-│                                          {
-│ -                                            page screensaver
-│ +                                            page screensaver2
-│                                          }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
 │   --- HMI/n2t-out/screensaver2.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver2.txt
 │ @@ -29,17 +29,14 @@

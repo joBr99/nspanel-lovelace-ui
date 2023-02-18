@@ -1347,7 +1347,7 @@ Timer tmSerial
                                         }
                                         if(tId.txt=="screensaver2")
                                         {
-                                            page screensaver
+                                            page screensaver2
                                         }
                                         if(tId.txt=="cardEntities")
                                         {
