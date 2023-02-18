@@ -13,6 +13,7 @@ key | optional | type | default | description
 `theme` | True | complex | | configuration for theme
 `defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
+`type` | True | string | `screensaver` | `screensaver` or `screensaver2`
 
 Example for the a screensaver config with custom entities/overrides:
 
@@ -51,7 +52,22 @@ Using a 6th entity will automatically activate the alternative layout.
 
 You can use override the options decribed on the [entities documentation page](https://docs.nspanel.pky.eu/entities/) to override colors, names or values of the entities. 
 
-#### Possible configuration values for screensaver theme config
+
+With Version 4.0.0 there is another alternative layout for the screensaver:
+
+Configuration is similar, you just need to add `type: screensaver2` to switch the layout.
+
+![screensaver2](img/screensaver2.png)
+
+```yaml
+    screensaver:
+	  type: screensaver2
+      entities:
+        - entity: weather.demo_weather_north
+```
+
+
+#### Possible configuration values for screensaver theme config (only normal screensaver layout not screensaver2)
 
 key | option | type | default | description
 -- | -- | -- | -- | --
