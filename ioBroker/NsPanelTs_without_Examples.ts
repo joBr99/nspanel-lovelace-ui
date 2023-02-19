@@ -3219,7 +3219,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
             let minTemp = page.items[0].minValue !== undefined ? page.items[0].minValue : 50;   //Min Temp 5°C
             let maxTemp = page.items[0].maxValue !== undefined ? page.items[0].maxValue : 300;  //Max Temp 30°C
-            let stepTemp = 5 // 0,5° Schritte
+            let stepTemp = page.items[0].stepValue !== undefined ? page.items[0].stepValue : 5; //Default 0,5° Schritte
 
             let destTemp = 0;
             if (existsState(id + '.SET')) {
@@ -6952,6 +6952,7 @@ type PageItem = {
     maxValueColorTemp: (number | undefined),
     minValue: (number | undefined),
     maxValue: (number | undefined),
+    stepValue: (number | undefined),
     prefixName: (string | undefined),
     suffixName: (string | undefined),
     name: (string | undefined),
