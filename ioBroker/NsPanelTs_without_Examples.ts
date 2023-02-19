@@ -4313,15 +4313,17 @@ function GenerateChartPage(page: PageChart): Payload[] {
 
         let txt = getState(id + '.ACTUAL').val;
 
+        let yAxisTicks = (typeof page.items[0].yAxisTicks == 'object') ? page.items[0].yAxisTicks : JSON.parse(getState(page.items[0].yAxisTicks).val);
+
         out_msgs.push({
             payload:    'entityUpd~' +                              //entityUpd
                         heading + '~' +                             //heading
                         GetNavigationString(pageId) + '~' +         //navigation
                         rgb_dec565(page.items[0].onColor) + '~' +   //color
                         page.items[0].yAxis + '~' +
-                        page.items[0].yAxisTicks.join(':') + '~' +
+                        yAxisTicks.join(':') + '~' +
                         txt
-        });     
+        });
 
         if (Debug) console.log(out_msgs);
 
@@ -6980,7 +6982,7 @@ type PageItem = {
     setThermoAlias: (string[] | undefined),
     setThermoDestTemp2: (string | undefined),
     yAxis: (string | undefined),
-    yAxisTicks: (number[] | undefined),
+    yAxisTicks: (number[] | string | undefined),
     xAxisDecorationId: (string | undefined),
     popupType: (string | undefined),
     popupOptions: (string[] | undefined),
