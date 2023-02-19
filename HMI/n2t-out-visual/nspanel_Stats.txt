@@ -18,14 +18,14 @@ cardQR
 	34   Component(s)
 	406  Line(s) of event code
 	236  Unique line(s) of event code
-cardChart
-	33   Component(s)
-	433  Line(s) of event code
-	294  Unique line(s) of event code
 pageStartup
 	20   Component(s)
 	189  Line(s) of event code
 	133  Unique line(s) of event code
+cardChart
+	33   Component(s)
+	433  Line(s) of event code
+	294  Unique line(s) of event code
 pageTest
 	26   Component(s)
 	68   Line(s) of event code
@@ -80,8 +80,8 @@ popupTimer
 	255  Unique line(s) of event code
 screensaver
 	47   Component(s)
-	430  Line(s) of event code
-	309  Unique line(s) of event code
+	434  Line(s) of event code
+	311  Unique line(s) of event code
 cardEntities
 	67   Component(s)
 	1166 Line(s) of event code
@@ -90,5 +90,5 @@ cardEntities
 Total
 	21   Page(s)
 	802  Component(s)
-	9238 Line(s) of event code
+	9242 Line(s) of event code
 	2340 Unique line(s) of event code

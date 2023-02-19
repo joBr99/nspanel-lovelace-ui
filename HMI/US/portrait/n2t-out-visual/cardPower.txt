@@ -47,7 +47,7 @@ Page cardPower
             vis t4Icon,0
             vis t5Icon,0
             cardPower.bco=defaultBcoColor
-            for(sys0=0;sys0<48;sys0++)
+            for(sys0=0;sys0<54;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {

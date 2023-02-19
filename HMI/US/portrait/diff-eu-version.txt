@@ -47,7 +47,7 @@
 │ +            vis nNum6,0
 │              cardEntities.bco=defaultBcoColor
 │ -            for(sys0=0;sys0<67;sys0++)
-│ +            for(sys0=0;sys0<65;sys0++)
+│ +            for(sys0=0;sys0<90;sys0++)
 │              {
 │                  if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==54)
 │                  {
@@ -1049,19 +1049,7 @@
 │                                          spstr strCommand.txt,tId.txt,"~",1
 │   --- HMI/n2t-out/cardPower.txt
 ├── +++ HMI/US/portrait/n2t-out/cardPower.txt
-│ @@ -35,27 +35,27 @@
-│              vis t0Icon,0
-│              vis t1Icon,0
-│              vis t2Icon,0
-│              vis t3Icon,0
-│              vis t4Icon,0
-│              vis t5Icon,0
-│              cardPower.bco=defaultBcoColor
-│ -            for(sys0=0;sys0<54;sys0++)
-│ +            for(sys0=0;sys0<48;sys0++)
-│              {
-│                  if(b[sys0].type==98||b[sys0].type==116)
-│                  {
+│ @@ -46,16 +46,16 @@
 │                      b[sys0].bco=defaultBcoColor
 │                      b[sys0].pco=defaultFontColor
 │                  }
@@ -1449,25 +1437,6 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-│ @@ -320,18 +314,14 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ -                                        if(tId.txt=="screensaver2")
-│ -                                        {
-│ -                                            page screensaver2
-│ -                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver.txt
 │ @@ -29,17 +29,14 @@
@@ -1524,25 +1493,6 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
-│ @@ -748,14 +724,18 @@
-│                                          {
-│                                              page pageStartup
-│                                          }
-│                                          if(tId.txt=="screensaver")
-│                                          {
-│                                              page screensaver
-│                                          }
-│ +                                        if(tId.txt=="screensaver2")
-│ +                                        {
-│ +                                            page screensaver2
-│ +                                        }
-│                                          if(tId.txt=="cardEntities")
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
 │   --- HMI/n2t-out/screensaver2.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver2.txt
 │ @@ -29,17 +29,14 @@
