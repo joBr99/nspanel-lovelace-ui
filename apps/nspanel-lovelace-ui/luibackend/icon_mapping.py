@@ -6905,7 +6905,7 @@ def get_icon_id(ma_name):
     if "ha:" in ma_name:
         return apis.ha_api.render_template(ma_name.replace("ha:",""))
     if "ha-i:" in ma_name:
-        ma_name = apis.ha_api.render_template(ma_name.replace("ha:",""))
+        ma_name = apis.ha_api.render_template(ma_name.replace("ha-i:",""))
     ma_name = ma_name.replace("mdi:","")
     if ma_name in icons:
         return icons[ma_name]
