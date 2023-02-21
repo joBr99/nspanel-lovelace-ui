@@ -3381,6 +3381,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                 if (o.common.role == 'airCondition') {
                     if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
                         let Mode = getState(id + '.MODE').val
+
                         if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
                             if (Mode != 0 || getState(id + '.POWER').val) {                             //0=ON oder .POWER = true
                                 bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
@@ -3390,48 +3391,82 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                                 statusStr = 'OFF';
                             }
                         }
-                        if (Mode == 1) {                                                                //1=AUTO
-                            bt[1] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
-                            statusStr = 'AUTO';
-                        } else {
-                            bt[1] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
+
+                        let States = getObject(id + '.MODE').common.states;
+                        let iconIndex: number = 1;
+                        for(const statekey in States) {
+                            let stateName: string = States[statekey];
+                            let stateKeyNumber: number = parseInt(statekey);
+                            if(stateName == 'OFF' || stateKeyNumber > 6) {
+                                continue;
+                            }
+                            if(stateKeyNumber == Mode) {
+                                statusStr = stateName.replace('_', ' ');
+                            }
+                            switch(stateName) {
+                                case 'AUTO':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
+                                    }
+                                    break;
+                                case 'COOL':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
+                                    }
+                                    break;
+                                case 'HEAT':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
+                                    }
+                                    break;
+                                case 'ECO':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                                    }
+                                    break;
+                                case 'FAN_ONLY':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN' + '~';
+                                    }
+                                    break;
+                                case 'DRY':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
+                                    }
+                                    break;
+                            }
+                            iconIndex++;
                         }
-                        if (Mode == 2) {                                                                //2=COOL
-                            bt[2] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
-                            statusStr = 'COOL';
-                        } else {
-                            bt[2] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
+                        
+                        if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
+                            if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
+                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                statusStr = 'ECO';
+                            } else {
+                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                            }
+                            iconIndex++;
                         }
-                        if (Mode == 3) {                                                                //3=HEAT
-                            bt[3] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
-                            statusStr = 'HEAT';
-                        } else {
-                            bt[3] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
-                        }
-                        if (Mode == 4) {                                                                //4=ECO
-                            bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
-                            statusStr = 'ECO';
-                        } else {
-                            bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
-                        }
-                        if (Mode == 5) {                                                                //5=FANONLY
-                            bt[5] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN' + '~';
-                            statusStr = 'FAN ONLY';
-                        } else {
-                            bt[5] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN' + '~';
-                        }
-                        if (Mode == 6) {                                                                //6=DRY
-                            bt[6] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
-                            statusStr = 'DRY';
-                        } else {
-                            bt[6] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
-                        }
-                        if (existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
+
+                        if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
                             if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
                                 bt[7] = Icons.GetIcon('swap-vertical-bold') + '~2016~1~' + 'SWING' + '~';
                             } else {
                                 bt[7] = Icons.GetIcon('swap-vertical-bold') + '~35921~0~' + 'SWING' + '~';
                             }
+                            iconIndex++;
                         }
                     }
                 }
