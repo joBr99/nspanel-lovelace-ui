@@ -3764,18 +3764,8 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                 if (o.common.role == 'airCondition') {
                     if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
                         let Mode = getState(id + '.MODE').val
-
-                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                            if (Mode != 0 || getState(id + '.POWER').val) {                             //0=ON oder .POWER = true
-                                bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
-                                statusStr = 'ON';
-                            } else {
-                                bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
-                                statusStr = 'OFF';
-                            }
-                        }
-
                         let States = getObject(id + '.MODE').common.states;
+                        
                         let iconIndex: number = 1;
                         for(const statekey in States) {
                             let stateName: string = States[statekey];
@@ -3850,6 +3840,19 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                                 bt[7] = Icons.GetIcon('swap-vertical-bold') + '~35921~0~' + 'SWING' + '~';
                             }
                             iconIndex++;
+                        }
+
+                        // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
+                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                            console.log(Mode);
+                            console.log(States[Mode]);
+                            if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
+                                bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
+                                statusStr = 'OFF';
+                            }
+                            else {
+                                bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
+                            }
                         }
                     }
                 }
