@@ -5001,42 +5001,33 @@ function HandleButtonEvent(words: any): void {
                     }
                     GeneratePage(config.pages[pageId]);
                 } else {
-                    let HVACMode = 0;
-                    switch (words[4]) {
-                        case 'POWER':
-                            HVACMode = 0;
-                            setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val);
-                            if (getState(words[2] + '.' + words[4]).val) {
-                                HVACMode = 1;
-                            }
-                            break;
-                        case 'AUTO':
-                            HVACMode = 1;
-                            break;
-                        case 'COOL':
-                            HVACMode = 2;
-                            break;
-                        case 'HEAT':
-                            HVACMode = 3;
-                            break;
-                        case 'ECO':
-                            HVACMode = 4;
-                            break;
-                        case 'FAN':
-                            HVACMode = 5;
-                            break;
-                        case 'DRY':
-                            HVACMode = 6;
-                            break;
-                        case 'SWING':
-                            HVACMode = getState(words[2] + '.MODE').val;
-                            if (getState(words[2] + '.SWING').val == 0) {
-                                setIfExists(words[2] + '.SWING', 1);
-                            } else {
-                                setIfExists(words[2] + '.' + 'SWING', 0);
-                            }
-                            break;
+                    let HVACMode = getState(words[2] + '.MODE').val;
+
+                    // Event ist an ein eigenes Objekt gebunden
+                    if(existsObject(words[2] + '.' + words[4])) {
+                        switch(words[4]) {
+                            case 'SWING':
+                                if (getState(words[2] + '.SWING').val == 0) {
+                                    setIfExists(words[2] + '.SWING', 1);
+                                } else {
+                                    setIfExists(words[2] + '.' + 'SWING', 0);
+                                }
+                                break;
+                            default: // Power und Eco koennen einfach getoggelt werden
+                                setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val);
+                                break;
+                        }
                     }
+
+                    // Event ist ein Modus der Liste (Moduswechsel)
+                    let HVACModeList = getObject(words[2] + '.MODE').common.states;
+                    for(const statekey in HVACModeList) {
+                        if(HVACModeList[statekey] == words[4]) {
+                            HVACMode = parseInt(statekey);
+                            break;
+                        }
+                    }
+                    
                     setIfExists(words[2] + '.' + 'MODE', HVACMode);
                     GeneratePage(config.pages[pageId]);
                 }
