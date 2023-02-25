@@ -92,6 +92,117 @@ change the page type:
 
 `pageType~screensaver`
 
+### A Word about color values
+
+The Nexion Display is capable of displaying only 65k color also known as 16-bit high color and also referred as RGB565. A 16-bit color depth can contain 5 red bpp, 6 green bpp, and 5 blue bpp. These 16-bit RGB values transmitted as decimal values ranging from black RGB(0,0,0) =
+0x0000 (no color) to white RGB(1,1,1) = 65,535 (all colors) and everything in between. You can find color values like that in the weatherupdate string in the next example. Below are definitions for a variety of 16-bit colors. You might also want to have alook at the [color calculator](http://www.rinkydinkelectronics.com/calc_rgb565.php)
+
+<div class="colortable">
+<table>
+  <thead>
+    <th>
+    Color
+    </th>
+    <th>
+      16-bit Output (Hex)
+    </th>
+    <th>
+      Decimal
+    </th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      White
+    </td>
+    <td>
+      0xffff
+    </td>
+    <td>
+      65535
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Yellow
+    </td>
+    <td>
+      0xffE0
+    </td>
+    <td>
+      65504
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Magenta
+    </td>
+    <td>
+      0xF81F 
+    </td>
+    <td>
+      63,519
+    </td>
+  </tr>
+ <tr>
+    <td>
+      Red
+    </td>
+    <td>
+      0xF800
+    </td>
+    <td>
+      63,488
+    </td>
+  </tr>    
+ <tr>
+    <td>
+      Cyan
+    </td>
+    <td>
+      0x07FF
+    </td>
+    <td>
+      2047
+    </td>
+  </tr>
+ <tr>
+    <td>
+      Green
+    </td>
+    <td>
+      0x07E0
+    </td>
+    <td>
+      2016
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Blue
+    </td>
+    <td>
+      0x001F
+    </td>
+    <td>
+      31
+    </td>
+  </tr> 
+     <tr>
+    <td>
+      Black
+    </td>
+    <td>
+      0x0000
+    </td>
+    <td>
+      0
+    </td>
+  </tr>   
+  </tbody>
+  </table>
+</div>
 ### screensaver page
 
 Example default layout: `weatherUpdate~~~A~21130~~-0.7C~~~B~63469~Sat~3.6C~~~C~35957~Sun~3.9C~~~D~31728~Mon~4.3C~~~E~35957~Tue~3.6C`
