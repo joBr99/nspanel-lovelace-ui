@@ -3381,56 +3381,92 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                 if (o.common.role == 'airCondition') {
                     if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
                         let Mode = getState(id + '.MODE').val
-                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                            if (Mode != 0 || getState(id + '.POWER').val) {                             //0=ON oder .POWER = true
-                                bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
-                                statusStr = 'ON';
-                            } else {
-                                bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
-                                statusStr = 'OFF';
+                        let States = getObject(id + '.MODE').common.states;
+                        
+                        let iconIndex: number = 1;
+                        for(const statekey in States) {
+                            let stateName: string = States[statekey];
+                            let stateKeyNumber: number = parseInt(statekey);
+                            if(stateName == 'OFF' || stateKeyNumber > 6) {
+                                continue;
                             }
+                            if(stateKeyNumber == Mode) {
+                                statusStr = stateName.replace('_', ' ');
+                            }
+                            switch(stateName) {
+                                case 'AUTO':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
+                                    }
+                                    break;
+                                case 'COOL':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
+                                    }
+                                    break;
+                                case 'HEAT':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
+                                    }
+                                    break;
+                                case 'ECO':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                                    }
+                                    break;
+                                case 'FAN_ONLY':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN_ONLY' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN_ONLY' + '~';
+                                    }
+                                    break;
+                                case 'DRY':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
+                                    }
+                                    break;
+                            }
+                            iconIndex++;
                         }
-                        if (Mode == 1) {                                                                //1=AUTO
-                            bt[1] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
-                            statusStr = 'AUTO';
-                        } else {
-                            bt[1] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
+                        
+                        if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
+                            if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
+                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                statusStr = 'ECO';
+                            } else {
+                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                            }
+                            iconIndex++;
                         }
-                        if (Mode == 2) {                                                                //2=COOL
-                            bt[2] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
-                            statusStr = 'COOL';
-                        } else {
-                            bt[2] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
-                        }
-                        if (Mode == 3) {                                                                //3=HEAT
-                            bt[3] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
-                            statusStr = 'HEAT';
-                        } else {
-                            bt[3] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
-                        }
-                        if (Mode == 4) {                                                                //4=ECO
-                            bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
-                            statusStr = 'ECO';
-                        } else {
-                            bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
-                        }
-                        if (Mode == 5) {                                                                //5=FANONLY
-                            bt[5] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN' + '~';
-                            statusStr = 'FAN ONLY';
-                        } else {
-                            bt[5] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN' + '~';
-                        }
-                        if (Mode == 6) {                                                                //6=DRY
-                            bt[6] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
-                            statusStr = 'DRY';
-                        } else {
-                            bt[6] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
-                        }
-                        if (existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
+
+                        if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
                             if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
                                 bt[7] = Icons.GetIcon('swap-vertical-bold') + '~2016~1~' + 'SWING' + '~';
                             } else {
                                 bt[7] = Icons.GetIcon('swap-vertical-bold') + '~35921~0~' + 'SWING' + '~';
+                            }
+                            iconIndex++;
+                        }
+
+                        // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
+                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                            if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
+                                bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
+                                statusStr = 'OFF';
+                            }
+                            else {
+                                bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
                             }
                         }
                     }
@@ -4961,46 +4997,37 @@ function HandleButtonEvent(words: any): void {
                             setIfExists(words[2] + '.' + modesDP[mode], false);
                         }
                     }
-                    GeneratePage(config.pages[pageId]);
+                    GeneratePage(activePage);
                 } else {
-                    let HVACMode = 0;
-                    switch (words[4]) {
-                        case 'POWER':
-                            HVACMode = 0;
-                            setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val);
-                            if (getState(words[2] + '.' + words[4]).val) {
-                                HVACMode = 1;
-                            }
-                            break;
-                        case 'AUTO':
-                            HVACMode = 1;
-                            break;
-                        case 'COOL':
-                            HVACMode = 2;
-                            break;
-                        case 'HEAT':
-                            HVACMode = 3;
-                            break;
-                        case 'ECO':
-                            HVACMode = 4;
-                            break;
-                        case 'FAN':
-                            HVACMode = 5;
-                            break;
-                        case 'DRY':
-                            HVACMode = 6;
-                            break;
-                        case 'SWING':
-                            HVACMode = getState(words[2] + '.MODE').val;
-                            if (getState(words[2] + '.SWING').val == 0) {
-                                setIfExists(words[2] + '.SWING', 1);
-                            } else {
-                                setIfExists(words[2] + '.' + 'SWING', 0);
-                            }
-                            break;
+                    let HVACMode = getState(words[2] + '.MODE').val;
+
+                    // Event ist an ein eigenes Objekt gebunden
+                    if(existsObject(words[2] + '.' + words[4])) {
+                        switch(words[4]) {
+                            case 'SWING':
+                                if (getState(words[2] + '.SWING').val == 0) {
+                                    setIfExists(words[2] + '.SWING', 1);
+                                } else {
+                                    setIfExists(words[2] + '.' + 'SWING', 0);
+                                }
+                                break;
+                            default: // Power und Eco koennen einfach getoggelt werden
+                                setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val);
+                                break;
+                        }
                     }
+
+                    // Event ist ein Modus der Liste (Moduswechsel)
+                    let HVACModeList = getObject(words[2] + '.MODE').common.states;
+                    for(const statekey in HVACModeList) {
+                        if(HVACModeList[statekey] == words[4]) {
+                            HVACMode = parseInt(statekey);
+                            break;
+                        }
+                    }
+                    
                     setIfExists(words[2] + '.' + 'MODE', HVACMode);
-                    GeneratePage(config.pages[pageId]);
+                    GeneratePage(activePage);
                 }
                 break;
             case 'mode-modus1':
