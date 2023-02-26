@@ -53,24 +53,29 @@ class Card(object):
             self.entities.append(Entity(e))
         self.id = f"{self.cardType}_{self.key}".replace(".","_").replace("~","_").replace(" ","_")
         
-    def get_entity_names(self):
-        entityIds = []
+    def get_entity_names(self, uuid=False):
+        entityIds = {}
         if self.entity is not None:
-            entityIds.append(self.entity.entityId)
+            entityIds[self.entity.uuid] = self.entity.entityId
             if self.entity.status is not None:
-                entityIds.append(self.entity.status)
+                entityIds[self.entity.uuid] = self.entity.status
         for e in self.entities:
-            entityIds.append(e.entityId)
+            entityIds[e.uuid] = e.entityId
             if e.status is not None:
-                entityIds.append(e.status)
+                entityIds[e.uuid] = e.status
 
         # additional keys to check
         add_ent_keys = ['statusIcon1', 'statusIcon2', 'alarmControl']
         for ent_key in add_ent_keys:
             val = self.raw_config.get(ent_key)
             if val is not None:
-                entityIds.append(val.get("entity"))
-        return entityIds
+                #entityIds.append(val.get("entity"))
+                entityIds["nouuid."] = val.get("entity")
+
+        if uuid:
+            return entityIds
+        else:
+            return entityIds.values()
 
     def get_entity_list(self):
         entitys = []
