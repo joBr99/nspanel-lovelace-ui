@@ -3461,8 +3461,6 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
 
                         // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
                         if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                            console.log(Mode);
-                            console.log(States[Mode]);
                             if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
                                 bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
                                 statusStr = 'OFF';
