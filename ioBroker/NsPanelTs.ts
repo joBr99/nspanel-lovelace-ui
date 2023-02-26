@@ -3807,9 +3807,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                                     break;
                                 case 'FAN_ONLY':
                                     if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN' + '~';
+                                        bt[iconIndex] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN_ONLY' + '~';
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN' + '~';
+                                        bt[iconIndex] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN_ONLY' + '~';
                                     }
                                     break;
                                 case 'DRY':
