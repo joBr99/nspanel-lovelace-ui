@@ -5382,7 +5382,7 @@ function HandleButtonEvent(words: any): void {
                             setIfExists(words[2] + '.' + modesDP[mode], false);
                         }
                     }
-                    GeneratePage(config.pages[pageId]);
+                    GeneratePage(activePage);
                 } else {
                     let HVACMode = getState(words[2] + '.MODE').val;
 
@@ -5412,7 +5412,7 @@ function HandleButtonEvent(words: any): void {
                     }
                     
                     setIfExists(words[2] + '.' + 'MODE', HVACMode);
-                    GeneratePage(config.pages[pageId]);
+                    GeneratePage(activePage);
                 }
                 break;
             case 'mode-modus1':
