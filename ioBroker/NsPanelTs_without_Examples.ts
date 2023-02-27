@@ -111,8 +111,10 @@ ReleaseNotes:
         - 19.02.2023 - v4.0.0   Make Temperature Steps configurable by bembelstemmer
         - 20.02.2023 - v4.0.0   Hotfix cardThermo Status by Gargano
         - 26.02.2023 - v4.0.1   Optimize cardThermo by bembelstemmer
-	- 27.02.2023 - v4.0.2   Dynamic Indicator Icons in Advanced Screensaver by Gargano
-	- 27.02.2023 - v4.0.2   Upgrade TFT 50 / 4.0.2
+        - 27.02.2023 - v4.0.2   Dynamic Indicator Icons in Advanced Screensaver by Gargano
+        - 27.02.2023 - v4.0.2   Upgrade TFT 50 / 4.0.2
+        - 27.02.2023 - v4.0.3   Upgrade TFT 50 / 4.0.3
+
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -202,7 +204,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.2.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.3.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
@@ -769,7 +771,7 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.0.2';
+const tft_version: string = 'v4.0.3';
 const desired_display_firmware_version = 50;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
