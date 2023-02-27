@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
-- abgestimmt auf TFT 50 / v4.0.0 / BerryDriver 8 / Tasmota 12.4.0
+TypeScript v4.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+- abgestimmt auf TFT 50 / v4.0.2 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -110,7 +110,9 @@ ReleaseNotes:
         - 19.02.2023 - v4.0.0   cardChart/cardLChart YAxisTicks from a datapoint by bembelstemmer
         - 19.02.2023 - v4.0.0   Make Temperature Steps configurable by bembelstemmer
         - 20.02.2023 - v4.0.0   Hotfix cardThermo Status by Gargano
-        - 26.02.2023 - v4.0.0   Optimize cardThermo by bembelstemmer
+        - 26.02.2023 - v4.0.1   Optimize cardThermo by bembelstemmer
+	- 27.02.2023 - v4.0.2   Dynamic Indicator Icons in Advanced Screensaver by Gargano
+	- 27.02.2023 - v3.9.0   Upgrade TFT 50 / 4.0.2
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -7069,7 +7071,14 @@ function HandleScreensaverUpdate(): void {
                     if (checkpoint) {
                         let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
                         let iconColor = rgb_dec565(White);
-                        let icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn);
+			    
+			let icon = null;
+                        if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn)) {
+                            let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                            icon = Icons.GetIcon(iconName);
+                        } else {
+                            icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn);
+                        }    
 
                         if (typeof(getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val) == 'number') {
                             val = (getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val * config.indicatorScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.indicatorScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.indicatorScreensaverEntity[i].ScreensaverEntityUnitText;
