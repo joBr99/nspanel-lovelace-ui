@@ -1265,7 +1265,8 @@ async function InitActiveBrightness() {
     }
 }
 InitActiveBrightness();
-on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightness'), change: "ne"}, async function (obj) {
+//gargano
+on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightness'), change: "any"}, async function (obj) {
     try {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
 
