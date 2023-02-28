@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v3.9.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf
-- abgestimmt auf TFT 49 / v3.9.0 / BerryDriver 8 / Tasmota 12.3.1
+TypeScript v4.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+- abgestimmt auf TFT 50 / v4.0.2 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -13,7 +13,7 @@ Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
 *******************************************************************************
 In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
-unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Downgrade 
+unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Dowengrade 
 durchführen und FlashNextion wiederholen.
 *******************************************************************************
 
@@ -96,16 +96,29 @@ ReleaseNotes:
         - 27.01.2023 - v3.9.0   Add getState in PageItem.name with prefix and suffix
         - 28.01.2023 - v3.9.0   Fix TFT-Version Path in function update_tft_firmware (drop ".")
         - 29.01.2023 - v3.9.0   Upgrade TFT 49
-	- 03.02.2023 - v3.9.0.2 Hotfix Screensaver bExit
-	- 06.02.2023 - v3.9.0.3 PR #754 - added missing 'tempUpdHighLow' ButtonEvent handling - by @fre4242	
-	- 07.02.2023 - v3.9.0.4 Open activepage again after closing popupLight or popupShutter
+        - 03.02.2023 - v3.9.0.1 Hotfix - Catch exception for missing sensor values separately
+        - 03.02.2023 - v3.9.0.2 Hotfix - Screensaver bExit
+        - 06.02.2023 - v3.9.0.3 Hotfix - PR #754 - added missing 'tempUpdHighLow' ButtonEvent handling - by @fre4242
+        - 07.02.2023 - v3.9.0.4 Hotfix - PR #760 - Open activepage again after closing popupLight or popupShutter - by @ravenst0ne
+        - 01.02.2023 - v4.0.0   Add new HMI Serial-Protocol to cardPower
+        - 07.02.2023 - v4.0.0   Check whether setObjects is set
+        - 08.02.2023 - v4.0.0   Add Screensaver2 - Renew all Screensaver functions
+        - 09.02.2023 - v4.0.0   Fix bExit - to much notify~~ events outside of screensaver --> Black Screens
+        - 10.02.2023 - v4.0.0   Add Screensaver2 Parameter to Service Pages
+        - 12.02.2023 - v4.0.0   Add cardUnlock
+        - 17.02.2023 - v4.0.0   Extension of the Squeezebox player by bembelstemmer
+        - 19.02.2023 - v4.0.0   cardChart/cardLChart YAxisTicks from a datapoint by bembelstemmer
+        - 19.02.2023 - v4.0.0   Make Temperature Steps configurable by bembelstemmer
+        - 20.02.2023 - v4.0.0   Hotfix cardThermo Status by Gargano
+        - 26.02.2023 - v4.0.1   Optimize cardThermo by bembelstemmer
+        - 27.02.2023 - v4.0.2   Dynamic Indicator Icons in Advanced Screensaver by Gargano
+        - 27.02.2023 - v4.0.2   Upgrade TFT 50 / 4.0.2
+        - 27.02.2023 - v4.0.3   Upgrade TFT 50 / 4.0.3
 
-        Todo Next Release
-        - XX.XX.2023 - v4.0.0   Add cardUnlock 
-        
-*****************************************************************************************************************
-* Falls Aliase durch das Skript erstellt werden sollen, muss in der JavaScript Instanz "setObect" gesetzt sein! *
-*****************************************************************************************************************
+
+***********************************************************************************************************
+* Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
+***********************************************************************************************************
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 
@@ -191,7 +204,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v3.9.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.3.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
@@ -203,8 +216,6 @@ let weatherForecast: boolean;
 
 const Debug = false;
 
-let manually_Update = false;                                // bei Bedarf anpassen
-
 const autoCreateAlias = true;                               // Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.  
 const weatherAdapterInstance: string = 'accuweather.0.';    // Möglich 'accuweather.0.' oder 'daswetter.0.'
 const weatherScreensaverTempMinMax: string = 'MinMax';      // Mögliche Werte: 'Min', 'Max' oder 'MinMax'
@@ -213,11 +224,11 @@ const tasmota_web_admin_user: string = 'admin';             // ändern, falls de
 const tasmota_web_admin_password: string = '';              // setzten, falls "Web Admin Password" in Tasmote vergeben
 
 // Setzen der bevorzugten Tasmota32-Version
-const tasmotaOtaVersion: string = 'tasmota32-nspanel.bin';
+const tasmotaOtaVersion: string = 'tasmota32-DE.bin';
 // Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
 // 'tasmota32-nspanel.bin' oder 'tasmota32.bin' oder 'tasmota32-DE.bin' oder etc.
 
-const NSPanel_Path = '0_userdata.0.NSPanel.1.';         // Anpassen an das jewilige NSPanel
+const NSPanel_Path = '0_userdata.0.NSPanel.1.';       // Anpassen an das jewilige NSPanel
 const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.';     // Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm)
 
 const AliasPath: string = 'alias.0.' + NSPanel_Path.substring(13, NSPanel_Path.length);
@@ -432,19 +443,21 @@ let NSPanel_Service = <PageEntities>
             };
 
                 //Level_2
-                let NSPanel_Screensaver = <PageEntities>
+                let NSPanel_Screensaver = <PageGrid>
                 {
-                    'type': 'cardEntities',
+                    'type': 'cardGrid',
                     'heading': 'Einstellungen',
                     'useColor': true,
                     'subPage': true,
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverDimmode', icon: 'wifi', offColor: Menu, onColor: Menu, name: 'Dimmode/Sonstige', buttonText: 'mehr...'},
-                        <PageItem>{ navigate: true, id: 'NSPanel_Weather', icon: 'weather-partly-rainy', offColor: Menu, onColor: Menu, name: 'Wetter', buttonText: 'mehr...'},
-                        <PageItem>{ navigate: true, id: 'NSPanel_Dateformat', icon: 'calendar-expand-horizontal', offColor: Menu, onColor: Menu, name: 'Datumsformat', buttonText: 'mehr...'},
-                        <PageItem>{ navigate: true, id: 'NSPanel_Indicators', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: 'Indikatoren', buttonText: 'mehr...'}
+                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverDimmode', icon: 'sun-clock', offColor: Menu, onColor: Menu, name: 'Dimmode'},
+                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverBrightness', icon: 'brightness-5', offColor: Menu, onColor: Menu, name: 'Brightness'},
+                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverLayout', icon: 'page-next-outline', offColor: Menu, onColor: Menu, name: 'Layout'},
+                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverWeather', icon: 'weather-partly-rainy', offColor: Menu, onColor: Menu, name: 'Wetter'},
+                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverDateformat', icon: 'calendar-expand-horizontal', offColor: Menu, onColor: Menu, name: 'Datumsformat'},
+                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverIndicators', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: 'Indikatoren'}
                     ]
                 };
                             
@@ -466,24 +479,38 @@ let NSPanel_Service = <PageEntities>
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverOther = <PageEntities>
+                        let NSPanel_ScreensaverBrightness = <PageEntities>
                         {
                             'type': 'cardEntities',
-                            'heading': 'Sonstige (2)',
+                            'heading': 'Brightness',
                             'useColor': true,
                             'subPage': true,
-                            'prev': 'NSPanel_ScreensaverDimmode',
+                            'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
                                 <PageItem>{ id: AliasPath + 'ScreensaverInfo.activeBrightness', name: 'Helligkeit Aktiv', icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 20, maxValue: 100},
                                 <PageItem>{ id: AliasPath + 'Config.Screensaver.timeoutScreensaver', name: 'Screensaver Timeout', icon: 'clock-end', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 60},
-                                <PageItem>{ id: AliasPath + 'Config.Screensaver.screenSaverDoubleClick', name: 'Doppelklick Weakup' ,icon: 'gesture-two-double-tap', offColor: HMIOff, onColor: HMIOn},                                            
-                                <PageItem>{ id: AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', name: 'Alternativ Layout' ,icon: 'page-previous-outline', offColor: HMIOff, onColor: HMIOn},            
+                                <PageItem>{ id: AliasPath + 'Config.Screensaver.screenSaverDoubleClick', name: 'Doppelklick Weakup' ,icon: 'gesture-two-double-tap', offColor: HMIOff, onColor: HMIOn}
                             ]
                         };
 
                         //Level_3
-                        let NSPanel_Weather = <PageEntities>
+                        let NSPanel_ScreensaverLayout = <PageEntities>
+                        {
+                            'type': 'cardEntities',
+                            'heading': 'Layout',
+                            'useColor': true,
+                            'subPage': true,
+                            'parent': NSPanel_Screensaver,
+                            'home': 'NSPanel_Service',
+                            'items': [
+                                <PageItem>{ id: AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', name: 'Alternativ Layout' ,icon: 'page-previous-outline', offColor: HMIOff, onColor: HMIOn},
+                                <PageItem>{ id: AliasPath + 'Config.Screensaver.ScreensaverAdvanced', name: 'Advanced Layout' ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
+                            ]
+                        };
+
+                        //Level_3
+                        let NSPanel_ScreensaverWeather = <PageEntities>
                         {
                             'type': 'cardEntities',
                             'heading': 'Wetter Parameter',
@@ -500,7 +527,7 @@ let NSPanel_Service = <PageEntities>
                         };
 
                         //Level_3
-                        let NSPanel_Dateformat = <PageEntities>
+                        let NSPanel_ScreensaverDateformat = <PageEntities>
                         {
                             'type': 'cardEntities',
                             'heading': 'Datumsformat',
@@ -515,7 +542,7 @@ let NSPanel_Service = <PageEntities>
                         };
 
                         //Level_3
-                        let NSPanel_Indicators = <PageEntities>
+                        let NSPanel_ScreensaverIndicators = <PageEntities>
                         {
                             'type': 'cardEntities',
                             'heading': 'Indikatoren',
@@ -617,81 +644,101 @@ let NSPanel_Service = <PageEntities>
  **                                                                   **
  ***********************************************************************/
 
-export const config: Config = {
+export const config = <Config> {
     panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // Bitte anpassen
     panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // Bitte anpassen
 
-    // 4 kleine Icons im Screensaver
-    // Mit 3.9.0 neue Parameter - Bitte anpassen - siehe auch Wiki
-    firstScreensaverEntity:   { ScreensaverEntity: 'accuweather.0.Hourly.h0.PrecipitationProbability',
-                                ScreensaverEntityFactor: 1,                                 //New
-                                ScreensaverEntityDecimalPlaces: 0,                          //New 
-                                ScreensaverEntityIcon: 'weather-pouring', 
-                                ScreensaverEntityText: 'Regen', 
-                                ScreensaverEntityUnitText: '%', 
-                                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100} 
-                              },
-    secondScreensaverEntity:  { ScreensaverEntity: 'accuweather.0.Current.WindSpeed', 
-                                ScreensaverEntityFactor: (1000/3600),                       //New
-                                ScreensaverEntityDecimalPlaces: 1,                          //New 
-                                ScreensaverEntityIcon: 'weather-windy', 
-                                ScreensaverEntityText: "Wind", 
-                                ScreensaverEntityUnitText: 'm/s', 
-                                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 35} 
-                              },
-    thirdScreensaverEntity:   { ScreensaverEntity: 'accuweather.0.Current.UVIndex',
-                                ScreensaverEntityFactor: 1,                                 //New
-                                ScreensaverEntityDecimalPlaces: 0,                          //New  
-                                ScreensaverEntityIcon: 'solar-power', 
-                                ScreensaverEntityText: 'UV', 
-                                ScreensaverEntityUnitText: '', 
-                                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9} 
-                              },
-    fourthScreensaverEntity:  { ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity', 
-                                ScreensaverEntityFactor: 1,                                 //New
-                                ScreensaverEntityDecimalPlaces: 0,                          //New 
-                                ScreensaverEntityIcon: 'water-percent', 
-                                ScreensaverEntityText: 'Luft', 
-                                ScreensaverEntityUnitText: '%', 
-                                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65} 
-                              },
+    leftScreensaverEntity:
+        [
+		// Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 	
+        ],
 
-    // Indikator Icons im oberen Teil des Screensavers
-    // Mit 3.9.0 neue Parameter - Bitte anpassen - siehe auch Wiki
-    mrIcon1ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER1', 
-                                ScreensaverEntityIconOn: 'lightbulb',                           //Rename
-                                ScreensaverEntityIconOff: null, 
-                                ScreensaverEntityValue: null,                                   //New
-                                ScreensaverEntityValueDecimalPlace : 0,                         //New
-                                ScreensaverEntityValueUnit: null,                               //New
-                                ScreensaverEntityOnColor: On, 
-                                ScreensaverEntityOffColor: HMIOff },
-    mrIcon2ScreensaverEntity: { ScreensaverEntity: 'mqtt.0.SmartHome.NSPanel_1.stat.POWER2', 
-                                ScreensaverEntityIconOn: 'heat-wave',
-                                ScreensaverEntityIconOff: null, 
-                                ScreensaverEntityValue: NSPanel_Path + 'Sensor.ANALOG.Temperature',
-                                ScreensaverEntityValueDecimalPlace : 1,
-                                ScreensaverEntityValueUnit: '°', 
-                                ScreensaverEntityOnColor: MSRed, 
-                                ScreensaverEntityOffColor: Yellow },
+    bottomScreensaverEntity :  
+        [
+            // bottomScreensaverEntity 1
+            {
+                ScreensaverEntity: 'accuweather.0.Daily.Day1.Sunrise',
+                ScreensaverEntityFactor: 1,
+                ScreensaverEntityDecimalPlaces: 0,
+                ScreensaverEntityDateFormat: 'hh:mm',   // like DD.MM or DD.MM.YY or YYYY/MM/DD or hh:mm
+                ScreensaverEntityIconOn: 'weather-sunset-up',
+                ScreensaverEntityIconOff: null,
+                ScreensaverEntityText: 'Sonne',
+                ScreensaverEntityUnitText: '%',
+                ScreensaverEntityIconColor: MSYellow //{'val_min': 0, 'val_max': 100}
+            },
+            // bottomScreensaverEntity 2
+            {
+                ScreensaverEntity: 'accuweather.0.Current.WindSpeed',
+                ScreensaverEntityFactor: (1000/3600),
+                ScreensaverEntityDecimalPlaces: 1,
+                ScreensaverEntityIconOn: 'weather-windy',
+                ScreensaverEntityIconOff: null,
+                ScreensaverEntityText: "Wind",
+                ScreensaverEntityUnitText: 'm/s',
+                ScreensaverEntityIconColor: { 'val_min': 0, 'val_max': 120 }
+            },
+            // bottomScreensaverEntity 3
+            {
+                ScreensaverEntity: 'accuweather.0.Current.WindGust',
+                ScreensaverEntityFactor: (1000/3600),
+                ScreensaverEntityDecimalPlaces: 1,
+                ScreensaverEntityIconOn: 'weather-tornado',
+                ScreensaverEntityIconOff: null,
+                ScreensaverEntityText: 'Böen',
+                ScreensaverEntityUnitText: 'm/s',
+                ScreensaverEntityIconColor: { 'val_min': 0, 'val_max': 120 }
+            },
+            // bottomScreensaverEntity 4
+            {
+                ScreensaverEntity: '0_userdata.0.wetter.Windrichtung',
+                ScreensaverEntityFactor: 0,
+                ScreensaverEntityDecimalPlaces: 0,
+                ScreensaverEntityIconOn: 'windsock',
+                ScreensaverEntityIconOff: null,
+                ScreensaverEntityText: 'Windr.',
+                ScreensaverEntityUnitText: '°',
+                ScreensaverEntityIconColor: White
+            },
+	        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+        ],
+
+    indicatorScreensaverEntity:
+        [
+		// Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+        ],
+
+    mrIcon1ScreensaverEntity: 
+        { 
+            ScreensaverEntity: NSPanel_Path + 'Relay.1', 
+            ScreensaverEntityIconOn: 'lightbulb',
+            ScreensaverEntityIconOff: null, 
+            ScreensaverEntityValue: null,
+            ScreensaverEntityValueDecimalPlace : 0,
+            ScreensaverEntityValueUnit: null,
+            ScreensaverEntityOnColor: On, 
+            ScreensaverEntityOffColor: HMIOff 
+        },
+    mrIcon2ScreensaverEntity: 
+        { 
+            ScreensaverEntity: NSPanel_Path + 'Relay.2', 
+            ScreensaverEntityIconOn: 'lightbulb',
+            ScreensaverEntityIconOff: null, 
+            ScreensaverEntityValue: null,
+            ScreensaverEntityValueDecimalPlace : 0,
+            ScreensaverEntityValueUnit: null, 
+            ScreensaverEntityOnColor: On, 
+            ScreensaverEntityOffColor: HMIOff 
+        },
 
     weatherEntity: 'alias.0.Wetter',    // Dieser Alias wird automatisch für den gewählten Wetter erstellt und kann entsprechend angepasst werden
     defaultOffColor: Off,               // Default-Farbe für Off-Zustände
     defaultOnColor: On,                 // Default-Farbe für On-Zustände
     defaultColor: Off,
     defaultBackgroundColor: HMIDark,    // Default-Hintergrundfarbe HMIDark oder Black
-
-    // Mit 3.9.0 in Datenpunkte verschoben. Auch über Service Pages konfigurierbar
-        //alternativeScreensaverLayout: false,
-        //autoWeatherColorScreensaverLayout: true,
-        //timeoutScreensaver: 10,
-        //screenSaverDoubleClick: true,
-        //temperatureUnit: '°C',
-        //locale: 'de-DE',                    
-
     pages: [
 
-            NSPanel_Service         //Auto-Alias Service Page
+            NSPanel_Service         	//Auto-Alias Service Page
     ],
     subPages: [
                 
@@ -703,11 +750,12 @@ export const config: Config = {
                 NSPanel_Einstellungen,                  //Auto-Alias Service Page
                     NSPanel_Screensaver,                //Auto-Alias Service Page
                         NSPanel_ScreensaverDimmode,     //Auto-Alias Service Page
-                        NSPanel_ScreensaverOther,       //Auto-Alias Service Page
-                        NSPanel_Weather,                //Auto-Alias Service Page
-                        NSPanel_Dateformat,             //Auto-Alias Service Page
-                        NSPanel_Indicators,             //Auto-Alias Service Page
-                        NSPanel_Relays,                 //Auto-Alias Service Page
+                        NSPanel_ScreensaverBrightness,  //Auto-Alias Service Page
+                        NSPanel_ScreensaverLayout,      //Auto-Alias Service Page
+                        NSPanel_ScreensaverWeather,     //Auto-Alias Service Page
+                        NSPanel_ScreensaverDateformat,  //Auto-Alias Service Page
+                        NSPanel_ScreensaverIndicators,  //Auto-Alias Service Page
+                    NSPanel_Relays,                     //Auto-Alias Service Page
                 NSPanel_Firmware,                       //Auto-Alias Service Page
                     NSPanel_FirmwareTasmota,            //Auto-Alias Service Page
                     NSPanel_FirmwareBerry,              //Auto-Alias Service Page
@@ -718,14 +766,13 @@ export const config: Config = {
 };
 
 
-
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v3.9.0';
-const desired_display_firmware_version = 49;
+const tft_version: string = 'v4.0.3';
+const desired_display_firmware_version = 50;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 
@@ -736,8 +783,8 @@ let bgColorScrSaver: number = 0;
 let globalTracklist: any;
 
 async function Init_Release() {
-    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.0','4.0.0','4.1.0']
+    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52]
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.2','4.1.0','4.2.0']
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -786,6 +833,11 @@ async function InitConfigParameters() {
         setObject(AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', {type: 'channel', common: {role: 'socket', name:'alternativeScreensaverLayout'}, native: {}});
         await createAliasAsync(AliasPath + 'Config.Screensaver.alternativeScreensaverLayout.ACTUAL', NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
         await createAliasAsync(AliasPath + 'Config.Screensaver.alternativeScreensaverLayout.SET', NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
+
+        await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, { type: 'boolean' });
+        setObject(AliasPath + 'Config.Screensaver.ScreensaverAdvanced', {type: 'channel', common: {role: 'socket', name:'ScreensaverAdvanced'}, native: {}});
+        await createAliasAsync(AliasPath + 'Config.Screensaver.ScreensaverAdvanced.ACTUAL', NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
+        await createAliasAsync(AliasPath + 'Config.Screensaver.ScreensaverAdvanced.SET', NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
 
         // autoWeatherColorScreensaverLayout (socket)
         await createStateAsync(NSPanel_Path + 'Config.Screensaver.autoWeatherColorScreensaverLayout', true, { type: 'boolean' });
@@ -877,14 +929,12 @@ async function CheckConfigParameters() {
                 let common = getObject(id).common;
                 if (common.name == 'javascript') {
                     let jsVersion = common.version.split('.');
-                    if (parseInt(jsVersion[0]) < 6) { 
-                        console.error('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version);
-                    } else if (parseInt(jsVersion[1]) < 1) {
-                        console.error('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version);
-                    }
+                    let jsV = 10*parseInt(jsVersion[0]) + parseInt(jsVersion[1]);
+                    if (jsV<61) console.error('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version);
                 }     
             }
         });
+        
         const hostList = $('system.host.*.nodeCurrent');
         hostList.each(function(id, i) {
             let nodeJSVersion = (getState(id).val).split('.');
@@ -895,17 +945,40 @@ async function CheckConfigParameters() {
                 console.warn('nodeJS does not have an even version number. An odd version number is a developer version. Please correct nodeJS version');
             }
         });
-        if (existsObject(config.mrIcon1ScreensaverEntity.ScreensaverEntity) == false) {
+        if (existsObject(config.mrIcon1ScreensaverEntity.ScreensaverEntity) == false && config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
             console.warn('mrIcon1ScreensaverEntity data point in the config not available - please adjust');
         } 
-        if (existsObject(config.mrIcon2ScreensaverEntity.ScreensaverEntity) == false) {
+        if (existsObject(config.mrIcon2ScreensaverEntity.ScreensaverEntity) == false && config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
             console.warn('mrIcon2ScreensaverEntity data point in the config not available - please adjust');
+        } 
+        if (CheckEnableSetObject) {
+            console.log('setObjects enabled - create Alias Channels possible');
+        } else {    
+            console.warn('setObjects disabled - Please enable setObjects in JS-Adapter Instance - create Alias Channels not possible');
         } 
     } catch (err) { 
         console.warn('function CheckConfigParameters: ' + err.message); 
     }
 }
 CheckConfigParameters();
+
+//switch for Screensaver 1 and Screensaver 2
+async function Init_ScreensaverAdvanced() {
+    try {
+        if (existsState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced') == false ) { 
+            await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, true, { type: 'boolean' });
+        }
+    } catch (err) { 
+        console.warn('function Init_ScreensaverAdvanced: ' + err.message); 
+    }
+}
+Init_ScreensaverAdvanced();
+
+// prüft ob setObjects() für die Instanz zur Verfügung steht (true/false)
+function CheckEnableSetObject() { 
+    var enableSetObject = getObject("system.adapter.javascript." + instance).native.enableSetObject;
+    return enableSetObject;
+}
 
 //switch BackgroundColors for Screensaver Indicators
 async function Init_ActivePageData() {
@@ -942,6 +1015,14 @@ on({id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: "ne"}, async 
         }
     } catch (err) { 
         console.warn('trigger bgColorIndicator: ' + err.message); 
+    }
+});
+
+on({id: NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', change: "ne"}, async function (obj) {
+    try {
+        setState(config.panelSendTopic, 'pageType~pageStartup');
+    } catch (err) { 
+        console.warn('trigger Screensaver Advanced: ' + err.message); 
     }
 });
 
@@ -1133,7 +1214,6 @@ async function InitAlternateMRIconsSize() {
 }
 InitAlternateMRIconsSize();
 
-
 //DateString short/long
 async function InitDateformat() {
     try {
@@ -1230,14 +1310,14 @@ async function CreateWeatherAlias () {
             if (weatherAdapterInstance == 'daswetter.0.') {
                 try {
                     if (!existsState(config.weatherEntity + '.ICON') && existsState('daswetter.0.NextHours.Location_1.Day_1.current.symbol_value')) {
-                        console.log('Wetter-Alias existiert noch nicht, wird jetzt angelegt'); 
+                        console.log('Weather alias for daswetter.0. does not exist yet, will be created now'); 
                         setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
                         await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.0.NextHours.Location_1.Day_1.current.symbol_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
                         await createAliasAsync(config.weatherEntity + '.TEMP', 'daswetter.0.NextHours.Location_1.Day_1.current.temp_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
                         await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'daswetter.0.NextDays.Location_1.Day_1.Minimale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
                         await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'daswetter.0.NextDays.Location_1.Day_1.Maximale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
                     } else {
-                        console.log('Wetter-Alias für daswetter.0. existiert bereits');
+                        console.log('weather alias for daswetter.0. already exists');
                     }
                 } catch (err) {
                     console.log('function InitPageNavi: ' + err.message);
@@ -1245,14 +1325,14 @@ async function CreateWeatherAlias () {
             } else if (weatherAdapterInstance == 'accuweather.0.') {
                 try {
                     if (!existsState(config.weatherEntity + '.ICON') && existsState('accuweather.0.Current.WeatherIcon')) {
-                        console.log('Wetter-Alias existiert noch nicht, wird jetzt angelegt'); 
+                        console.log('Weather alias for accuweather.0. does not exist yet, will be created now'); 
                         setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
                         await createAliasAsync(config.weatherEntity + '.ICON', 'accuweather.0.Current.WeatherIcon', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
                         await createAliasAsync(config.weatherEntity + '.TEMP', 'accuweather.0.Current.Temperature', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
                         await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'accuweather.0.Daily.Day1.Temperature.Minimum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
                         await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'accuweather.0.Daily.Day1.Temperature.Maximum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
                     } else {
-                        console.log('Wetter-Alias für accuweather.0. existiert bereits');
+                        console.log('weather alias for accuweather.0. already exists');
                     }
                 } catch (err) {
                     console.log('function InitPageNavi: ' + err.message);
@@ -1472,8 +1552,10 @@ async function InitPopupNotify() {
         on({ id: [screensaverNotifyHeading, screensaverNotifyText], change: 'ne', ack: false }, async (obj) => {
             const heading = getState(screensaverNotifyHeading).val;
             const text = getState(screensaverNotifyText).val;
-
-            setIfExists(config.panelSendTopic, `notify~${heading}~${text}`);
+            
+            if (screensaverEnabled) {
+                setIfExists(config.panelSendTopic, `notify~${heading}~${text}`);
+            }
 
             if (obj.id) {
                 await setStateAsync(obj.id, <iobJS.State>{ val: obj.state.val, ack: true }); // ack new value
@@ -1520,7 +1602,6 @@ async function InitPopupNotify() {
         console.warn('function InitPopupNotify: ' + err.message);
     }
 }
-
 InitPopupNotify();
 
 let subscriptions: any = {};
@@ -1793,14 +1874,13 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
     try {
         const val = obj.state ? obj.state.val : false;
         if (!val) {
-            manually_Update = false;
             if (Debug) {
                 console.log('Es wurde Button1 gedrückt');
             }
         } else if (val) {
-            if (manually_Update) {
-                const internalName = getState(NSPanel_Path + 'popupNotify.popupNotifyInternalName').val;
-
+            
+            const internalName: string = getState(NSPanel_Path + 'popupNotify.popupNotifyInternalName').val;
+            if (internalName.includes('Update')) {
                 if (internalName == 'TasmotaFirmwareUpdate') {
                     update_tasmota_firmware();
                 } else if (internalName == 'BerryDriverUpdate') {
@@ -2224,27 +2304,6 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 
 //------------------End Update Functions
 
-// Only monitor the extra nodes if present
-let updateArray: string[] = [];
-
-if (config.firstScreensaverEntity !== null && config.firstScreensaverEntity.ScreensaverEntity != null && existsState(config.firstScreensaverEntity.ScreensaverEntity)) {
-    updateArray.push(config.firstScreensaverEntity.ScreensaverEntity);
-}
-if (config.secondScreensaverEntity !== null && config.secondScreensaverEntity.ScreensaverEntity != null && existsState(config.secondScreensaverEntity.ScreensaverEntity)) {
-    updateArray.push(config.secondScreensaverEntity.ScreensaverEntity);
-}
-if (config.thirdScreensaverEntity !== null && config.thirdScreensaverEntity.ScreensaverEntity != null && existsState(config.thirdScreensaverEntity.ScreensaverEntity)) {
-    updateArray.push(config.thirdScreensaverEntity.ScreensaverEntity);
-}
-if (config.fourthScreensaverEntity !== null && config.fourthScreensaverEntity.ScreensaverEntity != null && existsState(config.fourthScreensaverEntity.ScreensaverEntity)) {
-    updateArray.push(config.fourthScreensaverEntity.ScreensaverEntity);
-}
-if (updateArray.length > 0) {
-    on(updateArray, () => {
-        HandleScreensaverUpdate();
-    });
-}
-
 on({ id: config.panelRecvTopic, change: 'any' }, async function (obj) {
     try {
         if (obj.state.val.startsWith('\{"CustomRecv":')) {
@@ -2262,11 +2321,11 @@ on({ id: config.panelRecvTopic, change: 'any' }, async function (obj) {
     }
 });
 
-function SendToPanel(val: Payload | Payload[]): void {
+async function SendToPanel(val: Payload | Payload[]) {
     try {
         if (Array.isArray(val)) {
             val.forEach(function (id) {
-                setState(config.panelSendTopic, id.payload);
+                setStateAsync(config.panelSendTopic, id.payload);
                 if (Debug) {
                     console.log(id.payload);
                 }
@@ -2274,6 +2333,7 @@ function SendToPanel(val: Payload | Payload[]): void {
         } else {
             setState(config.panelSendTopic, val.payload);
         }
+
     } catch (err) {
         console.warn('function SendToPanel: ' + err.message);
     }
@@ -2318,7 +2378,9 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     let tempPageItem = words[3].split('?');
                     let pageItem = findPageItem(tempPageItem[0]);
                     if (pageItem !== undefined) {
-                        //console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                        if (Debug) {
+                            console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                        }
                         SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem));
                     }
                     break;
@@ -2675,17 +2737,17 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         default:
                             return '~delete~~~~~';
                     }
-                    return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;   
+                    return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;   
                 } else {
                     type = 'button';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
                     iconColor = GetIconColor(pageItem, true, useColors);
                     let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
-
-                    return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;                    
+ 
+                    return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;                    
                 } 
             } 
-
+ 
             switch (o.common.role) {
                 case 'socket':
                 case 'light':
@@ -3068,6 +3130,13 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     let itemName = getState(([pageItem.id, '.TITLE'].join(''))).val;
                     let itemInfo = getState(([pageItem.id, '.INFO'].join(''))).val;
 
+                    RegisterEntityWatcher(pageItem.id + '.LEVEL');
+                    RegisterEntityWatcher(pageItem.id + '.INFO');
+
+                    if (pageItem.useValue) {
+                        iconId = itemInfo; 
+                    }
+
                     return '~' + type + '~' + itemName + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo;
 
                 default:
@@ -3232,9 +3301,13 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                 destTemp = setValue.toFixed(2) * 10;
             }
             let statusStr: String = 'MANU';
-            let status = '';
-            if (existsState(id + '.MODE')) {
-                status = getState(id + '.MODE').val;    // FixMe: Variable status is never used!
+
+            if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
+                if (getState(id + '.MODE').val === 1) {
+                    statusStr = 'MANU';
+                } else {
+                    statusStr = 'AUTO';
+                }
             }
 
             //Attribute hinzufügen, wenn im Alias definiert
@@ -3381,56 +3454,92 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                 if (o.common.role == 'airCondition') {
                     if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
                         let Mode = getState(id + '.MODE').val
-                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                            if (Mode != 0 || getState(id + '.POWER').val) {                             //0=ON oder .POWER = true
-                                bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
-                                statusStr = 'ON';
-                            } else {
-                                bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
-                                statusStr = 'OFF';
+                        let States = getObject(id + '.MODE').common.states;
+                        
+                        let iconIndex: number = 1;
+                        for(const statekey in States) {
+                            let stateName: string = States[statekey];
+                            let stateKeyNumber: number = parseInt(statekey);
+                            if(stateName == 'OFF' || stateKeyNumber > 6) {
+                                continue;
                             }
+                            if(stateKeyNumber == Mode) {
+                                statusStr = stateName.replace('_', ' ');
+                            }
+                            switch(stateName) {
+                                case 'AUTO':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
+                                    }
+                                    break;
+                                case 'COOL':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
+                                    }
+                                    break;
+                                case 'HEAT':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
+                                    }
+                                    break;
+                                case 'ECO':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                                    }
+                                    break;
+                                case 'FAN_ONLY':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN_ONLY' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN_ONLY' + '~';
+                                    }
+                                    break;
+                                case 'DRY':
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
+                                    }
+                                    break;
+                            }
+                            iconIndex++;
                         }
-                        if (Mode == 1) {                                                                //1=AUTO
-                            bt[1] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
-                            statusStr = 'AUTO';
-                        } else {
-                            bt[1] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
+                        
+                        if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
+                            if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
+                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                statusStr = 'ECO';
+                            } else {
+                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                            }
+                            iconIndex++;
                         }
-                        if (Mode == 2) {                                                                //2=COOL
-                            bt[2] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
-                            statusStr = 'COOL';
-                        } else {
-                            bt[2] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
-                        }
-                        if (Mode == 3) {                                                                //3=HEAT
-                            bt[3] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
-                            statusStr = 'HEAT';
-                        } else {
-                            bt[3] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
-                        }
-                        if (Mode == 4) {                                                                //4=ECO
-                            bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
-                            statusStr = 'ECO';
-                        } else {
-                            bt[4] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
-                        }
-                        if (Mode == 5) {                                                                //5=FANONLY
-                            bt[5] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN' + '~';
-                            statusStr = 'FAN ONLY';
-                        } else {
-                            bt[5] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN' + '~';
-                        }
-                        if (Mode == 6) {                                                                //6=DRY
-                            bt[6] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
-                            statusStr = 'DRY';
-                        } else {
-                            bt[6] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
-                        }
-                        if (existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
+
+                        if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
                             if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
                                 bt[7] = Icons.GetIcon('swap-vertical-bold') + '~2016~1~' + 'SWING' + '~';
                             } else {
                                 bt[7] = Icons.GetIcon('swap-vertical-bold') + '~35921~0~' + 'SWING' + '~';
+                            }
+                            iconIndex++;
+                        }
+
+                        // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
+                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                            if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
+                                bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
+                                statusStr = 'OFF';
+                            }
+                            else {
+                                bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
                             }
                         }
                     }
@@ -3607,7 +3716,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
 
         if (adapterPlayerInstance.startsWith('volumio')) {
             if (existsObject(id) == false){
-                console.log('Volumio Alias ' + id + ' does not exist - will be created now')
+                console.log('Volumio Alias ' + id + ' does not exist - will be created now');
 
                 let dpPath: string = adapterPlayerInstance;
                 try {
@@ -3631,18 +3740,63 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                 }
             }
         }
-    }    
+
+        if (adapterPlayerInstance.startsWith('squeezeboxrpc')) {           
+            if (existsObject(id) == false){
+                console.log('Squeezebox Alias ' + id + ' does not exist - will be created now');
+
+                let dpPath: string = adapterPlayerInstance + '.Players.' + mediaDevice;
+                try {
+                    setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
+                    await createAliasAsync(id + '.ALBUM',  dpPath + '.Album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM'});
+                    await createAliasAsync(id + '.ARTIST', dpPath + '.Artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST'});
+                    await createAliasAsync(id + '.TITLE', dpPath + '.Title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE'});
+                    await createAliasAsync(id + '.NEXT', dpPath + '.btnForward', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.forward', name: 'NEXT'});
+                    await createAliasAsync(id + '.PREV', dpPath + '.btnRewind', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.reverse', name: 'PREV'});
+                    await createAliasAsync(id + '.PLAY', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'PLAY', alias: { id: dpPath + '.state', read: 'val === 1 ? true : false' }});
+                    await createAliasAsync(id + '.PAUSE', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'PAUSE', alias: { id: dpPath + '.state', read: 'val === 0 ? true : false'}});
+                    await createAliasAsync(id + '.STOP', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STOP', alias: { id: dpPath + '.state', read: 'val === 0 ? true : false'}});
+                    await createAliasAsync(id + '.STATE', dpPath + '.Power', true, <iobJS.StateCommon>{ type: 'number', role: 'switch', name: 'STATE'});
+                    await createAliasAsync(id + '.VOLUME', dpPath + '.Volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME'});
+                    await createAliasAsync(id + '.VOLUME_ACTUAL', dpPath + '.Volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'VOLUME_ACTUAL'});
+                    await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: { id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1' }});
+                    await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon>{type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
+                } catch (err) {
+                    console.warn('function createAutoMediaAlias: ' + err.message);
+                }
+            }
+        }
+
+    }
 }
 
 function GenerateMediaPage(page: PageMedia): Payload[] {
     try {
-        let id = page.items[0].id;
+        unsubscribeMediaSubscriptions();
 
+        let id = page.items[0].id;
         let out_msgs: Array<Payload> = [];
 
-        unsubscribeMediaSubscriptions();
+        let vInstance = page.items[0].adapterPlayerInstance;
+        let v1Adapter = vInstance.split('.');
+        let v2Adapter = v1Adapter[0];
         
-        subscribeMediaSubscriptions(id);
+        // Etwas magic um die ID des Alias zu ändern, da Speaker keine Property sondern getrennte Objekte sind
+        if(v2Adapter == 'squeezeboxrpc') {
+            if(getObject(id).type != 'channel') {
+                id = id + '.' + page.items[0].mediaDevice;
+                page.items[0].id = id;
+                page.heading = page.items[0].mediaDevice ?? '';
+            } else {
+                let idParts = id.split('.');
+                if(idParts[idParts.length-1] !== page.items[0].mediaDevice) {
+                    idParts[idParts.length-1] = page.items[0].mediaDevice ?? '';
+                    id = idParts.join('.');
+                    page.items[0].id = id;
+                    page.heading = page.items[0].mediaDevice ?? '';
+                }
+            }
+        }
 
         if (page.items[0].autoCreateALias) {
             let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
@@ -3651,14 +3805,12 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
         out_msgs.push({ payload: 'pageType~cardMedia' });
         if (existsObject(id)) {
+            subscribeMediaSubscriptions(id);
+
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
             let author = getState(id + '.ARTIST').val;
             let shuffle = getState(id + '.SHUFFLE').val;
-
-            let vInstance = page.items[0].adapterPlayerInstance;
-            let v1Adapter = vInstance.split('.');
-            let v2Adapter = v1Adapter[0];
 
             //Neue Adapter/Player
             let media_icon = Icons.GetIcon('playlist-music');
@@ -3706,8 +3858,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 media_icon = Icons.GetIcon('dlna');
                 let nameLength = name.length;
                 if (nameLength == 0) {
-                    name = 'Squeezebox RPC';
-                    author = 'no music to control';
+                    name = page.items[0].mediaDevice;
                 }
             }
 
@@ -3790,18 +3941,23 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             } else if (v2Adapter == 'sonos') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.members'].join(''))).val;
             } else if (v2Adapter == 'squeezeboxrpc') {
-                if(existsObject(([page.items[0].adapterPlayerInstance, 'Playername'].join('')))) {
-                    currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Playername'].join(''))).val;
-                }
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playername'].join(''))).val;
             }
             //-------------------------------------------------------------------------------------------------------------
             // nachfolgend alle Alexa-Devices (ist Online / Player- und Commands-Verzeichnis vorhanden) auflisten und verketten
             // Wenn Konstante alexaSpeakerList mind. einen Eintrag enthÃ¤lt, wird die Konstante verwendet - ansonsten Alle Devices aus dem Alexa Adapter
-            let speakerList = '';
-            if (page.items[0].speakerList.length > 0) {
+            let speakerListArray: Array<string> = [];
+            if (page.items[0].speakerList && page.items[0].speakerList.length > 0) {
                 for (let i_index in page.items[0].speakerList) {
-                    speakerList = speakerList + page.items[0].speakerList[i_index] + '?';
+                    speakerListArray.push(page.items[0].speakerList[i_index]);
                 }
+            } else if (v2Adapter == 'squeezeboxrpc') {
+                // Beim Squeezeboxrpc ist jeder Player ein eigener Knoten im Objektbaum. Somit werden einzelne Aliase benötigt.
+                const squeezeboxPlayerQuery: iobJS.QueryResult = $('channel[state.id=' + page.items[0].adapterPlayerInstance + '.Players.*.Playername]');
+                squeezeboxPlayerQuery.each((playerId: string, playerIndex: number) => {
+                    speakerListArray.push(getState(playerId).val);
+                    page.items[0].speakerList = speakerListArray;
+                });
             } else {
                 let i_list = Array.prototype.slice.apply($('[state.id="' + page.items[0].adapterPlayerInstance + 'Echo-Devices.*.Info.name"]'));
                 for (let i_index in i_list) {
@@ -3811,11 +3967,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     if (getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.online'].join(''))).val &&
                         existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Player'].join(''))) &&
                         existsObject(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', deviceId[3], '.Commands'].join('')))) {
-                        speakerList = speakerList + getState(i).val + '?';
+                            speakerListArray.push(getState(i).val);
                     }
                 }
             }
-            speakerList = speakerList.substring(0, speakerList.length - 1);
             //--------------------------------------------------------------------------------------------------------------
 
             let colMediaIcon = (page.items[0].colorMediaIcon != undefined) ? page.items[0].colorMediaIcon : White;
@@ -3825,7 +3980,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             //InSel Speaker
             let speakerListString: string = '~~~~~~'
             let speakerListIconCol = rgb_dec565(HMIOff);
-            if (page.items[0].speakerList != undefined) {
+            if (speakerListArray.length > 0) {
                 speakerListIconCol = rgb_dec565(HMIOn);
                 speakerListString = 'input_sel' + '~' + 
                                     id + '?speakerlist' + '~' + 
@@ -3881,6 +4036,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                         );
                     }, 2000);
                 globalTracklist = page.items[0].globalTracklist;
+            } else if(v2Adapter == 'squeezeboxrpc' && existsObject(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playlist'].join('')))) {
+                let lmstracklist = JSON.parse(getState(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playlist'].join(''))).val);
+                globalTracklist = lmstracklist;
             }
             
             if (globalTracklist!= null && globalTracklist.length != 0) {
@@ -3934,11 +4092,14 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
             } else if (v2Adapter == 'squeezeboxrpc') {
                 if (getState(id + '.REPEAT').val == 1) {
-                    repeatIcon = Icons.GetIcon('repeat-variant');
-                    repeatIconCol = rgb_dec565(HMIOn);
-                } else if (getState(id + '.REPEAT').val == 2) {
                     repeatIcon = Icons.GetIcon('repeat-once');
                     repeatIconCol = rgb_dec565(HMIOn);
+                } else if (getState(id + '.REPEAT').val == 2) {
+                    repeatIcon = Icons.GetIcon('repeat');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                }
+                else {
+                    repeatIcon = Icons.GetIcon('repeat-off');
                 }
             } else if (v2Adapter == 'volumio') { /* Volumio: only Repeat true/false with API */
                 if (getState(id + '.REPEAT').val == true) {
@@ -3947,7 +4108,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
             }
 
-            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos' || v2Adapter == 'volumio') {
+            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos' || v2Adapter == 'volumio' || v2Adapter == 'squeezeboxrpc') {
                 repeatButtonString =    'button' + '~' + 
                                         id + '?repeat' + '~' + 
                                         repeatIcon + '~' + 
@@ -4106,7 +4267,42 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
 
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
-        let nsPath = NSPanel_Alarm_Path + 'Unlock.';
+        let nsPath = NSPanel_Path + 'Unlock.';
+
+        if (existsState(nsPath + 'UnlockPin') == false) {
+            createState(nsPath + 'UnlockPin', '0000', { type: 'string' }, function () { setState(nsPath + 'UnlockPin', '0000') });
+        }
+
+        if (existsState(nsPath + 'Access') == false) {
+            createState(nsPath + 'Access', 'false', { type: 'boolean' }, function () { setState(nsPath + 'Access', 'false') });
+        }
+
+        let unlock1 = 'Entsprerren';                                    //unlock1*~*
+        let unlock1ActionName = 'U1';                                   //unlock1ActionName*~*
+
+        let iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 });  //icon*~*
+        let icon = Icons.GetIcon('lock-remove');                        //iconcolor*~*
+        let numpadStatus = 'enable';                                    //numpadStatus*~*
+        let flashing = 'disable'                                        //flashing*
+
+        out_msgs.push({
+            payload:    'entityUpd~' +                          //entityUpd~*
+                        name + '~' +                            //heading                    
+                        GetNavigationString(pageId) + '~' +     //navigation*~* --> hiddenCardsv
+                        id + '~' +                              //internalNameEntity*~*
+                        unlock1 + '~' +                         //unlock1*~*
+                        unlock1ActionName + '~' +               //unlock1ActionName*~*
+                        '~' +
+                        '~' +
+                        '~' +
+                        '~' +
+                        '~' +
+                        '~' +
+                        icon + '~' +                            //icon*~*
+                        iconcolor + '~' +                       //iconcolor*~*
+                        numpadStatus + '~' +                    //numpadStatus*~*
+                        flashing                                //flashing*
+            });
 
         if (Debug) {
             console.log(out_msgs);
@@ -4271,10 +4467,13 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         let power_string : any = '';
 
         for (let i = 1; i < 7; i++ ) {
-            power_string = power_string + rgb_dec565(array_icon_color[i+1]) + '~';    // icon_color~
+            power_string = power_string + '~';                                        // type (ignored)
+            power_string = power_string + '~';                                        // intNameEntity (ignored)
             power_string = power_string + Icons.GetIcon(array_icon[i+1]) + '~';       // icon~
+            power_string = power_string + rgb_dec565(array_icon_color[i+1]) + '~';    // icon_color~
+            power_string = power_string + '~';                                        // display (ignored in TS)
+            power_string = power_string + array_powerstate[i+1] + '~';                // optionalValue~
             power_string = power_string + array_powerspeed[i+1] + '~';                // speed~
-            power_string = power_string + array_powerstate[i+1] + '~';                // entity.state~
         }
 
         power_string = power_string.substring(0, power_string.length - 1);
@@ -4283,17 +4482,26 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             payload: 'entityUpd~' +                                 //entityUpd~*
                 heading                         + '~' +             //internalNameEntity*~*
                 GetNavigationString(pageId)     + '~' +             //navigation*~*
-                rgb_dec565(array_icon_color[homeIconColor]) + '~' + // icon_color~              Mitte
-                Icons.GetIcon(array_icon[0])    + '~' +             // icon~                    Mitte
-                '~' +                                               // ignored                  Mitte
-                array_powerstate[0]             + '~' +             // entity.state~            Mitte
-                '' + '~' +                                          // ignored                  Mitte
-                '' + '~' +                                          // ignored                  Mitte
-                '' + '~' +                                          // ignored                  Mitte
-                '' + '~' +                                          // Value above Home Icon    Mitte (JSON erweitern)
+            // Home Icon / Value below Home Icon
+                '' + '~' +                                          // type (ignored)
+                '' + '~' +                                          // intNameEntity (ignored)
+                Icons.GetIcon(array_icon[0])    + '~' +             // icon
+                rgb_dec565(array_icon_color[homeIconColor]) + '~' + // icon_color
+                '' + '~' +                                          // display (ignored in TS)
+                array_powerstate[0]             + '~' +             // optionalValue
+                '' + '~' +                                          // speed
+            // Value above Home Icon
+                '' + '~' +                                          // type (ignored)
+                '' + '~' +                                          // intNameEntity (ignored)
+                '' + '~' +                                          // icon
+                '' + '~' +                                          // icon_color
+                '' + '~' +                                          // display (ignored in TS)
+                '' + '~' +                                          // optionalValue
+                '' + '~' +                                          // speed~
+            // 1st to 6th Item
                 power_string
         });
-
+        
         return out_msgs;
 
     } catch (err) {
@@ -4323,9 +4531,7 @@ function GenerateChartPage(page: PageChart): Payload[] {
                         page.items[0].yAxis + '~' +
                         yAxisTicks.join(':') + '~' +
                         txt
-        });
-
-        if (Debug) console.log(out_msgs);
+        });     
 
         return out_msgs;
 
@@ -4472,39 +4678,36 @@ function HandleButtonEvent(words: any): void {
                 GeneratePage(eval(activePage.prev));
                 break;
             case 'bExit':
-                if ((words[2] == 'popupShutter') || (words[2] == 'popupLight')) {
-                    GeneratePage(activePage);
-                } else if (getState(NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick').val && words[2] == 'screensaver') {
-                    if (words[4] >= 2) {
-                        setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
-                        setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
-                        if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null) {
-                            pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val;
-                            activePage = config.pages[pageId];
-                            GeneratePage(activePage);
+                if (words[2] == 'screensaver') {
+                    if (getState(NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick').val) {
+                        if (words[4] >= 2) {
+                            if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null) {
+                                pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val;
+                            }
                         } else {
-                            GeneratePage(activePage);
+                            if (getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading').val != '') {
+                                setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
+                            }
+                            if (getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyText').val != '') {
+                                setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
+                            }
+                            screensaverEnabled = true;
+                            break;
                         }
                     } else {
-                        setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
-                        setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
-                        screensaverEnabled = true;
-                        break;
+                        if (getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading').val != '') {
+                            setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
+                        }
+                        if (getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyText').val != '') {
+                            setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
+                        }
+                        if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null) {
+                            pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val
+                        }
                     }
-                } else {
-                    if (Debug) {
-                        console.log('bExit: ' + words[4] + ' - ' + pageId);
-                    }
-                    setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading', '');
-                    setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
-                    if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null) {
-                        pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val
-                        activePage = config.pages[pageId];
-                        GeneratePage(activePage);
-                    } else {
-                        GeneratePage(activePage);
-                    }
-                }
+                } 
+                activePage = config.pages[pageId];
+                GeneratePage(activePage);
                 break;
             case 'bHome':
                 if (Debug) {
@@ -4629,6 +4832,23 @@ function HandleButtonEvent(words: any): void {
                                     case 'volumio':
                                         request({ url:`${getState(adapterInstanceRepeat+'info.host').val}/api/commands/?cmd=repeat`, headers: {'User-Agent': 'ioBroker'} }, 
                                             async (error, response, result)=>{}); /* nothing todo @ error */
+                                        break;
+                                    case 'squeezeboxrpc':
+                                        try {
+                                            switch(getState(id + '.REPEAT').val) {
+                                                case 0:
+                                                    setIfExists(id + '.REPEAT', 1);
+                                                    break;
+                                                case 1:
+                                                    setIfExists(id + '.REPEAT', 2);
+                                                    break;
+                                                case 2:
+                                                    setIfExists(id + '.REPEAT', 0);
+                                                    break;
+                                            }
+                                        } catch (err) {
+                                            console.log('Repeat kann nicht verändert werden');
+                                        }
                                         break;
                                 }
                             }
@@ -4762,15 +4982,18 @@ function HandleButtonEvent(words: any): void {
                 let pageItemTemp = findPageItem(id);
                 let adaInstanceSplit = pageItemTemp.adapterPlayerInstance.split('.');
                 if (adaInstanceSplit[0] == 'squeezeboxrpc') {
-                    let stateVal = getState(pageItemTemp.adapterPlayerInstance + 'state').val;
+                    let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
+                    console.log(adapterPlayerInstanceStateSeceltor);
+                    let stateVal = getState(adapterPlayerInstanceStateSeceltor).val;
                     if (stateVal == 0) {
-                        setState(pageItemTemp.adapterPlayerInstance + 'state', 1);
+                        setState(adapterPlayerInstanceStateSeceltor, 1);
                     } else if (stateVal == 1) {
-                        setState(pageItemTemp.adapterPlayerInstance + 'state', 0);
+                        setState(adapterPlayerInstanceStateSeceltor, 0);
                     } else if (stateVal == null) {
-                        setState(pageItemTemp.adapterPlayerInstance + 'state', 1);
+                        setState(adapterPlayerInstanceStateSeceltor, 1);
                     }
                 } else {
+                    console.log(getState(id + '.STATE').val);
                     if (getState(id + '.STATE').val === true) {
                         setIfExists(id + '.PAUSE', true);
                     } else {
@@ -4821,6 +5044,9 @@ function HandleButtonEvent(words: any): void {
                         break;
                     case 'chromecast':
                         break;
+                    case 'squeezeboxrpc':
+                        pageItem.mediaDevice = pageItem.speakerList[words[4]];
+                        break;
                 }
                 break;
             case 'mode-playlist':
@@ -4850,6 +5076,9 @@ function HandleButtonEvent(words: any): void {
                         request({ url:`${getState(adapterInstancePL+'info.host').val}/api/commands/?cmd=playplaylist&name=${strDevicePL}`, headers: {'User-Agent': 'ioBroker'} }, 
                                   async (error, response, result)=>{}); /* nothing todo @ error */
                         break;
+                    case 'squeezeboxrpc':
+                        setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
+                        break;
                 }
                 break;
             case 'mode-tracklist':
@@ -4869,6 +5098,9 @@ function HandleButtonEvent(words: any): void {
                     case 'volumio':
                         request({ url:`${getState(adapterInstanceTL+'info.host').val}/api/commands/?cmd=play&N=${words[4]}`, headers: {'User-Agent': 'ioBroker'} }, 
                             async (error, response, result)=>{}); /* nothing todo @ error */
+                        break;
+                    case 'squeezeboxrpc':
+                        setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
                         break;
                 }
                 break;
@@ -4902,13 +5134,14 @@ function HandleButtonEvent(words: any): void {
                 let pageItemTem = findPageItem(id);
                 let adaInstanceSpli = pageItemTem.adapterPlayerInstance.split('.');
                 if (adaInstanceSpli[0] == 'squeezeboxrpc') {
-                    let stateVal = getState(pageItemTem.adapterPlayerInstance + 'Power').val;
+                    let adapterPlayerInstancePowerSelector: string = [pageItemTem.adapterPlayerInstance, 'Players', pageItemTem.mediaDevice, 'Power'].join('.');
+                    let stateVal = getState(adapterPlayerInstancePowerSelector).val;
                     if (stateVal === 0) {
-                        setState(pageItemTem.adapterPlayerInstance + 'Power', 1);
+                        setState(adapterPlayerInstancePowerSelector, 1);
                         setIfExists(id + '.STOP', false);
                         setIfExists(id + '.STATE', 1);
                     } else {
-                        setState(pageItemTem.adapterPlayerInstance + 'Power', 0);
+                        setState(adapterPlayerInstancePowerSelector, 0);
                         setIfExists(id + '.STOP', true);
                         setIfExists(id + '.STATE', 0);
                     }
@@ -4961,46 +5194,37 @@ function HandleButtonEvent(words: any): void {
                             setIfExists(words[2] + '.' + modesDP[mode], false);
                         }
                     }
-                    GeneratePage(config.pages[pageId]);
+                    GeneratePage(activePage);
                 } else {
-                    let HVACMode = 0;
-                    switch (words[4]) {
-                        case 'POWER':
-                            HVACMode = 0;
-                            setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val);
-                            if (getState(words[2] + '.' + words[4]).val) {
-                                HVACMode = 1;
-                            }
-                            break;
-                        case 'AUTO':
-                            HVACMode = 1;
-                            break;
-                        case 'COOL':
-                            HVACMode = 2;
-                            break;
-                        case 'HEAT':
-                            HVACMode = 3;
-                            break;
-                        case 'ECO':
-                            HVACMode = 4;
-                            break;
-                        case 'FAN':
-                            HVACMode = 5;
-                            break;
-                        case 'DRY':
-                            HVACMode = 6;
-                            break;
-                        case 'SWING':
-                            HVACMode = getState(words[2] + '.MODE').val;
-                            if (getState(words[2] + '.SWING').val == 0) {
-                                setIfExists(words[2] + '.SWING', 1);
-                            } else {
-                                setIfExists(words[2] + '.' + 'SWING', 0);
-                            }
-                            break;
+                    let HVACMode = getState(words[2] + '.MODE').val;
+
+                    // Event ist an ein eigenes Objekt gebunden
+                    if(existsObject(words[2] + '.' + words[4])) {
+                        switch(words[4]) {
+                            case 'SWING':
+                                if (getState(words[2] + '.SWING').val == 0) {
+                                    setIfExists(words[2] + '.SWING', 1);
+                                } else {
+                                    setIfExists(words[2] + '.' + 'SWING', 0);
+                                }
+                                break;
+                            default: // Power und Eco koennen einfach getoggelt werden
+                                setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val);
+                                break;
+                        }
                     }
+
+                    // Event ist ein Modus der Liste (Moduswechsel)
+                    let HVACModeList = getObject(words[2] + '.MODE').common.states;
+                    for(const statekey in HVACModeList) {
+                        if(HVACModeList[statekey] == words[4]) {
+                            HVACMode = parseInt(statekey);
+                            break;
+                        }
+                    }
+                    
                     setIfExists(words[2] + '.' + 'MODE', HVACMode);
-                    GeneratePage(config.pages[pageId]);
+                    GeneratePage(activePage);
                 }
                 break;
             case 'mode-modus1':
@@ -5100,6 +5324,16 @@ function HandleButtonEvent(words: any): void {
                     setTimeout(function(){
                         GeneratePage(activePage);
                     },500);
+                }
+                break;
+            case 'U1': // Unlock-Page
+                let pageItemUnlock = findPageItem(id);
+                if (words[4] == getState(id + '.PIN').val) {
+                    UnsubscribeWatcher();
+                    GeneratePage(eval(pageItemUnlock.targetPage));
+                    setIfExists(id + '.ACTUAL', true)
+                } else {
+                    setIfExists(id + '.ACTUAL', false)
                 }
                 break;
             default:
@@ -5281,7 +5515,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
 
                     if (val === true) {
-                        let iconColor = GetIconColor(pageItem, val, false);
+                        iconColor = GetIconColor(pageItem, val, false);
                         switchVal = '1'
                     }
 
@@ -5816,10 +6050,12 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                                 //Todo Richtiges Device finden
                                 actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
                             }
+                        } else if (vAdapter == 'squeezeboxrpc') {
+                            actualState = pageItem.mediaDevice;
                         }
                         let tempSpeakerList = [];
                         for (let i = 0; i < pageItem.speakerList.length; i++) {
-                            tempSpeakerList[i] = formatInSelText(pageItem.speakerList[i]);
+                            tempSpeakerList[i] = formatInSelText(pageItem.speakerList[i]).trim();
                         }
                         optionalString = pageItem.speakerList != undefined ? tempSpeakerList.join('?') : '';
                         mode = 'speakerlist';
@@ -5857,7 +6093,21 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                                 tempPlayList[i] = formatInSelText(pageItem.playList[i]);
                             }
                             optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } /**/
+                        } else if(vAdapter == 'squeezeboxrpc') {
+                            // Playlist browsing not supported by squeezeboxrpc adapter. But Favorites can be used
+                            actualState = ''; // Not supported by squeezeboxrpc adapter
+                            let tempPlayList = [];
+                            let pathParts: Array<string> = pageItem.adapterPlayerInstance.split('.');
+                            for (let favorite_index=0; favorite_index < 45; favorite_index++) {
+                                let favorite_name_selector: string = [pathParts[0], pathParts[1], 'Favorites', favorite_index, 'Name'].join('.');
+                                if(!existsObject(favorite_name_selector)) {
+                                    break;
+                                }
+                                let favoritename = getState(favorite_name_selector).val;
+                                tempPlayList.push(formatInSelText(favoritename));
+                            }
+                            optionalString = tempPlayList.length > 0 ? tempPlayList.join('?') : '';
+                        }
                         mode = 'playlist';
                     } else if (optional == 'tracklist') {
                         actualState = '';
@@ -5865,6 +6115,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         if (vAdapter == 'volumio') {
                             actualState = getState(pageItem.id + '.TITLE').val;
                             globalTracklist = pageItem.globalTracklist;
+                        }else if(vAdapter == 'squeezeboxrpc') {
+                            actualState = getState(pageItem.id + '.TITLE').val;
                         } else {
                             actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
                         }
@@ -5890,6 +6142,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                                 } else {
                                     temp_array[track_index] = temp_cut_array.substring(0,23);
                                 }
+                            }
+                            else {
+                                break;
                             }
                         }
                         let tempTrackList = [];
@@ -5948,7 +6203,6 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         tempModeList[i] = formatInSelText(pageItem.modeList[i]);
                     }
                     let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
-                    //let valueList = pageItem.modeList.join('?');
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
@@ -5990,64 +6244,174 @@ function UnsubscribeWatcher(): void {
 function HandleScreensaver(): void {
     setIfExists(NSPanel_Path + 'ActivePage.type', 'screensaver');
     setIfExists(NSPanel_Path + 'ActivePage.heading', 'Screensaver');
-    SendToPanel({ payload: 'pageType~screensaver' });
-    UnsubscribeWatcher();
+    if (existsObject(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced')) {
+        if (getState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced').val) {
+            SendToPanel({ payload: 'pageType~screensaver2' });
+        } else {
+            SendToPanel({ payload: 'pageType~screensaver' });
+        }
+    } else {
+        SendToPanel({ payload: 'pageType~screensaver' }); //Fallback
+    }
+    weatherForecast = getState(NSPanel_Path + 'ScreensaverInfo.weatherForecast').val;
     HandleScreensaverUpdate();
+    HandleScreensaverStatusIcons();
     HandleScreensaverColors();
 }
 
 function HandleScreensaverUpdate(): void {
     try {
-        let arrayEntityType = [];
-        let arrayEntityIntNameEntity = [];
-        let arrayEntityIcon = [];
-        let arrayEntityIconColor = [];
-        let arrayEntityDisplayName = [];
-        let arrayEntityOptionalValue = [];
+        
+        if (screensaverEnabled) {
 
-        //Create MainIcon
-        if (screensaverEnabled && config.weatherEntity != null && existsObject(config.weatherEntity)) {
-            let icon = getState(config.weatherEntity + '.ICON').val;
-            let temperature =
-                existsState(config.weatherEntity + '.ACTUAL') ? getState(config.weatherEntity + '.ACTUAL').val :
-                    existsState(config.weatherEntity + '.TEMP') ? getState(config.weatherEntity + '.TEMP').val : 'null';
+            UnsubscribeWatcher();
+
+            let payloadString: string = '';
             let temperatureUnit = getState(NSPanel_Path + 'Config.temperatureUnit').val;
-            arrayEntityOptionalValue[0] = temperature + ' ' + temperatureUnit;
-            if (weatherAdapterInstance == 'daswetter.0.') {
-                arrayEntityIcon [0] = Icons.GetIcon(GetDasWetterIcon(parseInt(icon)));
-                arrayEntityIconColor[0] = GetDasWetterIconColor(parseInt(icon));
-            } else if (weatherAdapterInstance == 'accuweather.0.') {
-                arrayEntityIcon [0] = Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon)));
-                arrayEntityIconColor[0] = GetAccuWeatherIconColor(parseInt(icon));
+            let screensaverAdvanced = getState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced').val;
+
+            //Create Weather MainIcon
+            if (screensaverEnabled && config.weatherEntity != null && existsObject(config.weatherEntity)) {
+                let icon = getState(config.weatherEntity + '.ICON').val;
+                RegisterScreensaverEntityWatcher(config.weatherEntity + '.ICON')
+                let temperature = '0';
+                if (existsState(config.weatherEntity + '.ACTUAL')) {
+                    temperature= getState(config.weatherEntity + '.ACTUAL').val;
+                    RegisterScreensaverEntityWatcher(config.weatherEntity + '.ACTUAL')
+                } else {
+                    if (existsState(config.weatherEntity + '.TEMP')) {
+                        temperature = getState(config.weatherEntity + '.TEMP').val;
+                    } else {
+                        'null';
+                    }
+                }           
+                let optionalValue = temperature + ' ' + temperatureUnit;
+                let entityIcon = '';
+                let entityIconCol = 0;
+                if (weatherAdapterInstance == 'daswetter.0.') {
+                    entityIcon = Icons.GetIcon(GetDasWetterIcon(parseInt(icon)));
+                    entityIconCol = GetDasWetterIconColor(parseInt(icon));
+                } else if (weatherAdapterInstance == 'accuweather.0.') {
+                    entityIcon = Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon)));
+                    entityIconCol = GetAccuWeatherIconColor(parseInt(icon));
+                }
+
+                payloadString += '~' +
+                                '~' +
+                                entityIcon + '~' +
+                                entityIconCol + '~' +
+                                '~' +
+                                optionalValue + '~';
             }
 
-            arrayEntityType[0] = '';
-            arrayEntityIntNameEntity[0] = '';
-            arrayEntityDisplayName[0] = '';
-            arrayEntityOptionalValue[0] = temperature + ' ' + temperatureUnit;
+            // 3 leftScreensaverEntities  
+            if (screensaverAdvanced) {       
+                let checkpoint = true;
+                let i = 0;
+                for (i = 0; i < 3; i++) {
+                    
+                    if (config.leftScreensaverEntity[i] == null) {
+                        checkpoint = false;
+                        break;
+                    } else {
+                        RegisterScreensaverEntityWatcher(config.leftScreensaverEntity[i].ScreensaverEntity)
+                    }
+
+                    if (checkpoint) {
+                        let val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
+                        let iconColor = rgb_dec565(White);
+                        let icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
+
+                        if (typeof(getState(config.leftScreensaverEntity[i].ScreensaverEntity).val) == 'number') {
+                            val = (getState(config.leftScreensaverEntity[i].ScreensaverEntity).val * config.leftScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
+                            iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
+                        }
+                        if (typeof(getState(config.leftScreensaverEntity[i].ScreensaverEntity).val) == 'boolean') {
+                            val = (getState(config.leftScreensaverEntity[i].ScreensaverEntity).val);
+                            iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
+                            if (val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
+                                icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
+                            }
+                        }
+                        if (typeof getState(config.leftScreensaverEntity[i].ScreensaverEntity).val == 'string') {
+                            iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
+                            if (!isNaN(Date.parse(getState(config.leftScreensaverEntity[i].ScreensaverEntity).val))) {
+                                val = formatDate(getDateObject(getState(config.leftScreensaverEntity[i].ScreensaverEntity).val), config.leftScreensaverEntity[i].ScreensaverEntityDateFormat);
+                            } else {
+                                val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
+                            }                
+                        }
+
+                        if (existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconColor)) {
+                            iconColor = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconColor).val;
+                        }
+
+                        payloadString += '~' +
+                                        '~' +
+                                        icon + '~' +
+                                        iconColor + '~' +
+                                        config.leftScreensaverEntity[i].ScreensaverEntityText + '~' +
+                                        val + '~';
+                    } else {
+                    console.log('Only ' + i+1 + ' leftScreensaverEntities defined');  
+                    }
+                }
+                if (checkpoint == false) {
+                    for (let j = i; j < 3; j++) {
+                        payloadString += '~~~~~~';
+                    }    
+                }
+            }
+
+            // 6 bottomScreensaverEntities
+            let maxEntities: number = 7;
+            if (screensaverAdvanced == false) {
+                maxEntities = 5;
+                if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
+                maxEntities = 6; 
+                }
+            }
 
             if (weatherForecast) {
-                // AccuWeather Forecast Tag 2 - Tag 5 -- Wenn weatherForecast = true
-                for (let i = 2; i < 6; i++) {
 
+                if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
+                maxEntities = 5; 
+                }
+                
+                for (let i = 1; i < maxEntities; i++) {
                     let TempMin = 0;
                     let TempMax = 0;
                     let DayOfWeek = 0;
                     let WeatherIcon = '0';
+                    let WheatherColor = 0;
 
                     if (weatherAdapterInstance == 'daswetter.0.') {
                         TempMin = getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value').val;
                         TempMax = getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value').val;
                         DayOfWeek = (getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Tag_value').val).substring(0,2);
                         WeatherIcon = GetDasWetterIcon(getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
-                        vwIconColor[i-1] = GetDasWetterIconColor(getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
+                        WheatherColor = GetDasWetterIconColor(getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
+
+                        RegisterScreensaverEntityWatcher('daswetter.0.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value');
+                        RegisterScreensaverEntityWatcher('daswetter.0.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value');
+                        RegisterScreensaverEntityWatcher('daswetter.0.NextDays.Location_1.Day_' + i + '.Tag_value');
+                        RegisterScreensaverEntityWatcher('daswetter.0.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id');
                     } else if (weatherAdapterInstance == 'accuweather.0.') {
-                        TempMin = getState('accuweather.0.Summary.TempMin_d' + i).val;
-                        TempMax = getState('accuweather.0.Summary.TempMax_d' + i).val;
-                        DayOfWeek = getState('accuweather.0.Summary.DayOfWeek_d' + i).val;
-                        WeatherIcon = GetAccuWeatherIcon(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
-                        vwIconColor[i-1] = GetAccuWeatherIconColor(getState('accuweather.0.Summary.WeatherIcon_d' + i).val);
-                    } 
+                        if (i < 6) {
+                            //Maximal 5 Tage bei accuweather
+                            TempMin = (existsObject('accuweather.0.Summary.TempMin_d' + i)) ? getState('accuweather.0.Summary.TempMin_d' + i).val : 0;
+                            TempMax = (existsObject('accuweather.0.Summary.TempMax_d' + i)) ? getState('accuweather.0.Summary.TempMax_d' + i).val : 0;
+                            DayOfWeek = (existsObject('accuweather.0.Summary.DayOfWeek_d' + i)) ? getState('accuweather.0.Summary.DayOfWeek_d' + i).val : 0;
+                            WeatherIcon = (existsObject('accuweather.0.Summary.WeatherIcon_d' + i)) ? GetAccuWeatherIcon(getState('accuweather.0.Summary.WeatherIcon_d' + i).val) : '';
+                            WheatherColor = (existsObject('accuweather.0.Summary.WeatherIcon_d' + i)) ? GetAccuWeatherIconColor(getState('accuweather.0.Summary.WeatherIcon_d' + i).val) : 0;
+
+                            RegisterScreensaverEntityWatcher('accuweather.0.Summary.TempMin_d' + i);
+                            RegisterScreensaverEntityWatcher('accuweather.0.Summary.TempMax_d' + i);
+                            RegisterScreensaverEntityWatcher('accuweather.0.Summary.DayOfWeek_d' + i);
+                            RegisterScreensaverEntityWatcher('accuweather.0.Summary.WeatherIcon_d' + i);
+                        }
+                    }
+
                     let tempMinMaxString: string = '';
                     if (weatherScreensaverTempMinMax == 'Min') {
                         tempMinMaxString = TempMin + temperatureUnit;
@@ -6056,71 +6420,179 @@ function HandleScreensaverUpdate(): void {
                     } else if (weatherScreensaverTempMinMax == 'MinMax') {
                         tempMinMaxString = Math.round(TempMin) + '° ' + Math.round(TempMax) + '°';
                     }
-                    arrayEntityType[i-1] = ''; 
-                    arrayEntityIntNameEntity[i-1] = '';
-                    arrayEntityIcon[i-1] = Icons.GetIcon(WeatherIcon);
-                    arrayEntityIconColor[i-1] = vwIconColor[i-1];
-                    arrayEntityDisplayName[i-1] = DayOfWeek;
-                    arrayEntityOptionalValue[i-1] = tempMinMaxString;
+                    
+                    if (weatherAdapterInstance == 'accuweather.0.' && i == 6)  {
+
+                        let nextSunEvent = 0
+                        let valDateNow = new Date;
+                        let arraySunEvent = [];
+
+                        arraySunEvent[0] = getDateObject(getState("accuweather.0.Daily.Day1.Sunrise").val).getTime();
+                        arraySunEvent[1] = getDateObject(getState("accuweather.0.Daily.Day1.Sunset").val).getTime();
+                        arraySunEvent[2] = getDateObject(getState("accuweather.0.Daily.Day2.Sunrise").val).getTime();
+                        
+                        let j = 0;
+                        for (j = 0; j < 3; j++) {
+                            if (arraySunEvent[j] > valDateNow) {
+                                nextSunEvent = j;
+                                break;
+                            }
+                        }
+                        let sun = '';
+                        if (j == 1) {
+                            sun = 'weather-sunset-down';
+                        } else {
+                            sun = 'weather-sunset-up';
+                        }
+
+                        payloadString += '~' +
+                                        '~' +
+                                        Icons.GetIcon(sun) + '~' + 
+                                        rgb_dec565(MSYellow) + '~' +
+                                        'Sonne' + '~' +
+                                        formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
+                    } else {
+                        payloadString += '~' +
+                                        '~' +
+                                        Icons.GetIcon(WeatherIcon) + '~' +
+                                        WheatherColor + '~' +
+                                        DayOfWeek + '~' +
+                                        tempMinMaxString + '~';
+                    }
                 }
+
+                //Alternativ Layout bekommt zusätzlichen Status
+                if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
+                    let val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
+                    let iconColor = rgb_dec565(White);
+                    if (typeof(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val) == 'number') {
+                        val = (getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val * config.bottomScreensaverEntity[4].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[4].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[4].ScreensaverEntityUnitText;
+                        iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
+                    }
+                    if (typeof(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val) == 'boolean') {
+                        val = (getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val);
+                        iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
+                    }
+                    if (typeof getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val == 'string') {
+                        iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
+                        if (!isNaN(Date.parse(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val))) {
+                            val = formatDate(getDateObject(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val), config.bottomScreensaverEntity[4].ScreensaverEntityDateFormat);
+                        } else {
+                            val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
+                        }                
+                    }
+                    if (existsObject(config.bottomScreensaverEntity[4].ScreensaverEntityIconColor)) {
+                        iconColor = getState(config.bottomScreensaverEntity[4].ScreensaverEntityIconColor).val;
+                    }                
+                    payloadString += '~' +
+                                    '~' +
+                                    Icons.GetIcon(config.bottomScreensaverEntity[4].ScreensaverEntityIconOn) + '~' +
+                                    iconColor + '~' +
+                                    config.bottomScreensaverEntity[4].ScreensaverEntityText + '~' +
+                                    val
+                }
+
             } else {
-                arrayEntityType[1] = '';
-                arrayEntityType[2] = '';
-                arrayEntityType[3] = '';
-                arrayEntityType[4] = ''; 
-                arrayEntityIntNameEntity[1] = '';
-                arrayEntityIntNameEntity[2] = '';
-                arrayEntityIntNameEntity[3] = '';
-                arrayEntityIntNameEntity[4] = '';
-                arrayEntityOptionalValue[1] = (getState(config.firstScreensaverEntity.ScreensaverEntity).val * config.firstScreensaverEntity.ScreensaverEntityFactor).toFixed(config.firstScreensaverEntity.ScreensaverEntityDecimalPlaces) + config.firstScreensaverEntity.ScreensaverEntityUnitText;
-                arrayEntityOptionalValue[2] = (getState(config.secondScreensaverEntity.ScreensaverEntity).val * config.secondScreensaverEntity.ScreensaverEntityFactor).toFixed(config.secondScreensaverEntity.ScreensaverEntityDecimalPlaces) + config.secondScreensaverEntity.ScreensaverEntityUnitText;
-                arrayEntityOptionalValue[3] = (getState(config.thirdScreensaverEntity.ScreensaverEntity).val * config.thirdScreensaverEntity.ScreensaverEntityFactor).toFixed(config.thirdScreensaverEntity.ScreensaverEntityDecimalPlaces) + config.thirdScreensaverEntity.ScreensaverEntityUnitText;
-                arrayEntityOptionalValue[4] = (getState(config.fourthScreensaverEntity.ScreensaverEntity).val * config.fourthScreensaverEntity.ScreensaverEntityFactor).toFixed(config.fourthScreensaverEntity.ScreensaverEntityDecimalPlaces) + config.fourthScreensaverEntity.ScreensaverEntityUnitText;
-                arrayEntityIcon[1] = Icons.GetIcon(config.firstScreensaverEntity.ScreensaverEntityIcon);
-                arrayEntityIcon[2] = Icons.GetIcon(config.secondScreensaverEntity.ScreensaverEntityIcon);
-                arrayEntityIcon[3] = Icons.GetIcon(config.thirdScreensaverEntity.ScreensaverEntityIcon);
-                arrayEntityIcon[4] = Icons.GetIcon(config.fourthScreensaverEntity.ScreensaverEntityIcon);
-                arrayEntityDisplayName[1] = config.firstScreensaverEntity.ScreensaverEntityText;
-                arrayEntityDisplayName[2] = config.secondScreensaverEntity.ScreensaverEntityText;
-                arrayEntityDisplayName[3] = config.thirdScreensaverEntity.ScreensaverEntityText;
-                arrayEntityDisplayName[4] = config.fourthScreensaverEntity.ScreensaverEntityText;
-                GetScreenSaverEntityColor(config.firstScreensaverEntity, 1, sctF1Icon);
-                arrayEntityIconColor[1] = vwIconColor[1];
-                GetScreenSaverEntityColor(config.secondScreensaverEntity, 2, sctF2Icon);
-                arrayEntityIconColor[2] = vwIconColor[2];
-                GetScreenSaverEntityColor(config.thirdScreensaverEntity, 3, sctF3Icon);
-                arrayEntityIconColor[3] = vwIconColor[3];
-                GetScreenSaverEntityColor(config.fourthScreensaverEntity, 4, sctF4Icon);    
-                arrayEntityIconColor[4] = vwIconColor[4];
+                let checkpoint = true;
+                let i = 0;
+                for (i = 0; i < maxEntities - 1; i++) {
+                    if (config.bottomScreensaverEntity[i] == null) {
+                        checkpoint = false;
+                        break;
+                    } else {
+                        RegisterScreensaverEntityWatcher(config.bottomScreensaverEntity[i].ScreensaverEntity)
+                    }
+                    if (checkpoint) {
+                        let val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
+                        let iconColor = rgb_dec565(White);
+                        let icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn);
+
+                        if (typeof(getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val) == 'number') {
+                            val = (getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val * config.bottomScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[i].ScreensaverEntityUnitText;
+                            iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
+                        }
+                        if (typeof(getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val) == 'boolean') {
+                            val = (getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val);
+                            iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
+                            if (val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
+                                icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
+                            }
+                        }
+                        if (typeof getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val == 'string') {
+                            iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
+                            if (!isNaN(Date.parse(getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val))) {
+                                val = formatDate(getDateObject(getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val), config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat);
+                            } else {
+                                val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
+                            }                
+                        }
+                        if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor)) {
+                            iconColor = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor).val;
+                        }
+                        if (i < maxEntities - 1) {
+                            val = val + '~';
+                        }
+                        payloadString += '~' +
+                                        '~' +
+                                        icon + '~' +
+                                        iconColor + '~' +
+                                        config.bottomScreensaverEntity[i].ScreensaverEntityText + '~' +
+                                        val
+                    }
+                }
+                if (checkpoint == false) {
+                    for (let j = i; j < maxEntities - 1; j++) {
+                        payloadString += '~~~~~~';
+                    }    
+                }
             }
 
-            //AltLayout
-            if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {           
-                arrayEntityType[5] = ''; 
-                arrayEntityIntNameEntity[5] = '';
-                arrayEntityIcon[5] = Icons.GetIcon(config.fourthScreensaverEntity.ScreensaverEntityIcon);
-                arrayEntityIconColor[5] = rgb_dec565(White);
-                arrayEntityDisplayName[5] = '';
-                arrayEntityOptionalValue[5] = getState(config.fourthScreensaverEntity.ScreensaverEntity).val + ' ' + config.fourthScreensaverEntity.ScreensaverEntityUnitText ;
-            }
+            if (screensaverAdvanced) {
+                // 5 indicatorScreensaverEntities     
+                for (let i = 0; i < 5; i++) {
+                    let checkpoint = true;
+                    if (config.indicatorScreensaverEntity[i] == null) {
+                        checkpoint = false;
+                        break;
+                    } else {
+                        RegisterScreensaverEntityWatcher(config.indicatorScreensaverEntity[i].ScreensaverEntity)
+                    }
 
-            HandleScreensaverColors();
+                    if (checkpoint) {
+                        let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
+                        let iconColor = rgb_dec565(White);
+			    
+			let icon = null;
+                        if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn)) {
+                            let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                            icon = Icons.GetIcon(iconName);
+                        } else {
+                            icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn);
+                        }    
 
-            let payloadString = '';
-            let max_index = 5;
-            if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
-                max_index = 6;
+                        if (typeof(getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val) == 'number') {
+                            val = (getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val * config.indicatorScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.indicatorScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.indicatorScreensaverEntity[i].ScreensaverEntityUnitText;
+                            iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
+                        }
+                        if (typeof(getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val) == 'boolean') {
+                            val = (getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val);
+                            iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
+                            if (val && config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff != null) {
+                                icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff)
+                            }
+                        }
+                        if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconColor)) {
+                            iconColor = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconColor).val;
+                        }
+                        payloadString += '~' +
+                                        '~' +
+                                        icon + '~' +
+                                        iconColor + '~' +
+                                        config.indicatorScreensaverEntity[i].ScreensaverEntityText + '~' +
+                                        val + '~';
+                    }
+                }
             }
-            
-            for (let j = 0; j < max_index; j++) {
-                payloadString +=    arrayEntityType[j] + '~' +
-                                    arrayEntityIntNameEntity[j] + '~' +
-                                    arrayEntityIcon[j] + '~' +
-                                    arrayEntityIconColor[j] + '~' +
-                                    arrayEntityDisplayName[j] + '~' +
-                                    arrayEntityOptionalValue[j] + '~';
-            }
-
             if (Debug) console.log('weatherUpdate~' + payloadString);
 
             SendToPanel(<Payload>{ payload: 'weatherUpdate~' + payloadString });
@@ -6128,8 +6600,23 @@ function HandleScreensaverUpdate(): void {
             HandleScreensaverStatusIcons();
 
         }
+
     } catch (err) {
         console.log('HandleScreensaverUpdate: ' + err.message);
+    }
+}
+
+function RegisterScreensaverEntityWatcher(id: string): void {
+    try {
+        if (subscriptions.hasOwnProperty(id)) {
+            return;
+        }
+
+        subscriptions[id] = (on({ id: id, change: 'any' }, () => {
+            HandleScreensaverUpdate();
+        }));
+    } catch (err) {
+        console.warn('function RegisterEntityWatcher: ' + err.message);
     }
 }
 
@@ -6177,7 +6664,22 @@ function HandleScreensaverStatusIcons() : void {
                 }
                 payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
             }
-        } else {
+        } else if (config.mrIcon1ScreensaverEntity.ScreensaverEntity == null && config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null){
+            
+            if(config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor != null){
+                hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
+            }
+            if(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn != null){
+                payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
+            }
+            
+            if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
+                payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;                        
+            }
+            payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
+        }
+        else {
             hwBtn1Col = Black;
             payloadString += '~~';
         }
@@ -6223,6 +6725,21 @@ function HandleScreensaverStatusIcons() : void {
                 }
                 payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
             }
+        } else if (config.mrIcon2ScreensaverEntity.ScreensaverEntity == null && config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null){
+            
+            if(config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor != null){
+                hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
+            }
+
+            if(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn != null){
+                payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
+            }
+            
+            if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
+                payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                payloadString += config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;                        
+            }
+            payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
         } else {
             hwBtn2Col = Black;
             payloadString += '~~';
@@ -6342,11 +6859,12 @@ function HandleScreensaverColors(): void {
     }
 }
 
-function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null, index: number, color: RGB): void {
+function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): number {
     try {
+        let colorReturn: any;
         if (configElement.ScreensaverEntityIconColor != undefined) {
             if (typeof getState(configElement.ScreensaverEntity).val == 'boolean') {
-                vwIconColor[index] = (getState(configElement.ScreensaverEntity).val == true) ? rgb_dec565(colorScale10) : rgb_dec565(colorScale0);
+                colorReturn = (getState(configElement.ScreensaverEntity).val == true) ? rgb_dec565(colorScale10) : rgb_dec565(colorScale0);
             } else if (typeof configElement.ScreensaverEntityIconColor == 'object') {
                 let iconvalmin = (configElement.ScreensaverEntityIconColor.val_min != undefined) ? configElement.ScreensaverEntityIconColor.val_min : 0 ;
                 let iconvalmax = (configElement.ScreensaverEntityIconColor.val_max != undefined) ? configElement.ScreensaverEntityIconColor.val_max : 100 ;
@@ -6354,7 +6872,7 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null, ind
                 let valueScale = getState(configElement.ScreensaverEntity).val * configElement.ScreensaverEntityFactor;
 
                 if (iconvalmin == 0 && iconvalmax == 1) {
-                    vwIconColor[index] = (getState(configElement.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                    colorReturn = (getState(configElement.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
                 } else {
                     if (iconvalbest == iconvalmin) {
                         valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0);
@@ -6368,17 +6886,18 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null, ind
                         }
                     }
                     let valueScaletemp = (Math.round(valueScale)).toFixed();
-                    vwIconColor[index] = HandleColorScale(valueScaletemp);
+                    colorReturn = HandleColorScale(valueScaletemp);
                 }
                 if (configElement.ScreensaverEntityIconColor.val_min == undefined) {
-                    vwIconColor[index] = rgb_dec565(configElement.ScreensaverEntityIconColor);
+                    colorReturn = rgb_dec565(configElement.ScreensaverEntityIconColor);
                 }
             } else {
-                vwIconColor[index] = rgb_dec565(color);
+                colorReturn = rgb_dec565(White);
             }
         } else {
-            vwIconColor[index] = rgb_dec565(color);
+            colorReturn = rgb_dec565(White);
         }
+        return colorReturn;
     } catch (err) {
         console.warn('GetScreenSaverEntityColor: '+ err.message);
     }
@@ -7003,10 +7522,9 @@ type Config = {
     panelRecvTopic: string,
     panelSendTopic: string,
     weatherEntity: string | null,
-    firstScreensaverEntity: ScreenSaverElement | null,
-    secondScreensaverEntity: ScreenSaverElement | null,
-    thirdScreensaverEntity: ScreenSaverElement | null,
-    fourthScreensaverEntity: ScreenSaverElement | null,
+    leftScreensaverEntity: ScreenSaverElement[] | null,
+    bottomScreensaverEntity: ScreenSaverElement[] | null,
+    indicatorScreensaverEntity: ScreenSaverElement[] | null,
     mrIcon1ScreensaverEntity: ScreenSaverMRElement | null,
     mrIcon2ScreensaverEntity: ScreenSaverMRElement | null,
     defaultColor: RGB,
@@ -7023,7 +7541,9 @@ type ScreenSaverElement = {
     ScreensaverEntity: string | null,
     ScreensaverEntityFactor: number | 1,
     ScreensaverEntityDecimalPlaces: number | 0,
-    ScreensaverEntityIcon: string | null,
+    ScreensaverEntityDateFormat: string | null,
+    ScreensaverEntityIconOn: string | null,
+    ScreensaverEntityIconOff: string | null,
     ScreensaverEntityText: string | null,
     ScreensaverEntityUnitText: string | null,
     ScreensaverEntityIconColor: any | null

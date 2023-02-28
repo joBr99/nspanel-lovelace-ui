@@ -6,10 +6,6 @@ pageIcons
 	7    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
-popupNotify
-	19   Component(s)
-	257  Line(s) of event code
-	166  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	398  Line(s) of event code
@@ -26,6 +22,10 @@ popupInSel
 	34   Component(s)
 	617  Line(s) of event code
 	295  Unique line(s) of event code
+popupNotify
+	19   Component(s)
+	261  Line(s) of event code
+	168  Unique line(s) of event code
 pageTest
 	26   Component(s)
 	68   Line(s) of event code
@@ -90,5 +90,5 @@ cardEntities
 Total
 	21   Page(s)
 	800  Component(s)
-	9218 Line(s) of event code
+	9222 Line(s) of event code
 	2331 Unique line(s) of event code
