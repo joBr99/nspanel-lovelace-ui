@@ -69,8 +69,7 @@ class Card(object):
         for ent_key in add_ent_keys:
             val = self.raw_config.get(ent_key)
             if val is not None:
-                #entityIds.append(val.get("entity"))
-                entityIds["nouuid."] = val.get("entity")
+                entityIds[f"{ent_key}."] = val.get("entity")
 
         if uuid:
             return entityIds
