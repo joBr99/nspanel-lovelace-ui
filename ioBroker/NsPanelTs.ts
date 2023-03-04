@@ -3290,7 +3290,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
                         if (pageItem.icon !== undefined) {
@@ -3319,7 +3319,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
                         if (pageItem.icon !== undefined) {
@@ -3338,7 +3338,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
                         if (pageItem.icon !== undefined) {
@@ -3368,7 +3368,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     if (val === true || val === 'true') {
                         optVal = '1'
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? 100 - getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
                         if (pageItem.icon !== undefined) {
@@ -3398,7 +3398,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? 100 - getState(pageItem.id + '.ACTUAL').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
                         if (pageItem.icon !== undefined) {
@@ -6043,7 +6043,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
 
                     if (val === true) {
-                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        iconColor = GetIconColor(pageItem, brightness, true);
                         switchVal = '1';
                     } else {
                         iconColor = GetIconColor(pageItem, false, true);
@@ -6087,7 +6087,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
 
                     if (val === true) {
-                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        iconColor = GetIconColor(pageItem, brightness, true);
                         switchVal = '1';
                     } else {
                         iconColor = GetIconColor(pageItem, false, true);
@@ -6153,7 +6153,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
 
                     if (val === true) {
-                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        iconColor = GetIconColor(pageItem, brightness, true);
                         switchVal = '1';
                     } else {
                         iconColor = GetIconColor(pageItem, false, true);
@@ -6218,7 +6218,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
 
                     if (val === true) {
-                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        iconColor = GetIconColor(pageItem, brightness, true);
                         switchVal = '1';
                     } else {
                         iconColor = GetIconColor(pageItem, false, true);
@@ -6287,7 +6287,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
 
                     if (val === true) {
-                        iconColor = GetIconColor(pageItem, 100 - brightness, true);
+                        iconColor = GetIconColor(pageItem, brightness, true);
                         switchVal = '1';
                     } else {
                         iconColor = GetIconColor(pageItem, false, true);
