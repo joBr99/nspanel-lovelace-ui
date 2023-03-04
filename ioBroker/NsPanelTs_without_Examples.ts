@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
-- abgestimmt auf TFT 50 / v4.0.3 / BerryDriver 8 / Tasmota 12.4.0
+TypeScript v4.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+- abgestimmt auf TFT 50 / v4.0.4 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -114,7 +114,8 @@ ReleaseNotes:
         - 27.02.2023 - v4.0.2   Dynamic Indicator Icons in Advanced Screensaver by Gargano
         - 27.02.2023 - v4.0.2   Upgrade TFT 50 / 4.0.2
         - 27.02.2023 - v4.0.3   Upgrade TFT 50 / 4.0.3
-
+	- 04.03.2023 - v4.0.4   Upgrade TFT 50 / 4.0.4
+	- 04.03.2023 - v4.0.4   Fix bExit with popupLight, popup....
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -204,7 +205,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.3.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.4.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
@@ -771,7 +772,7 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.0.3';
+const tft_version: string = 'v4.0.4';
 const desired_display_firmware_version = 50;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -784,7 +785,7 @@ let globalTracklist: any;
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.3','4.1.0','4.2.0']
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.4','4.1.0','4.2.0']
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -4705,8 +4706,8 @@ function HandleButtonEvent(words: any): void {
                             pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val
                         }
                     }
-                } 
-                activePage = config.pages[pageId];
+                    activePage = config.pages[pageId];
+		} 
                 GeneratePage(activePage);
                 break;
             case 'bHome':
