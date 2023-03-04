@@ -5218,8 +5218,8 @@ function HandleButtonEvent(words: any): void {
                             pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val
                         }
                     }
-                } 
-                activePage = config.pages[pageId];
+		    activePage = config.pages[pageId];
+		} 
                 GeneratePage(activePage);
                 break;
             case 'bHome':
