@@ -83,6 +83,10 @@ class Card(object):
         if self.entities:
             for e in self.entities:
                 entitys.append(e)
+        if self.nav1Override:
+            entitys.append(self.nav1Override)
+        if self.nav2Override:
+            entitys.append(self.nav2Override)
         return entitys
 
 
