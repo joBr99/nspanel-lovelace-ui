@@ -695,10 +695,10 @@ class LuiPagesGen(object):
             rightBtn = "delete~~~~~"
 
         if card.nav1Override is not None:
-            leftBtn = self.generate_entities_item(Entity(card.nav1Override))[1:]
+            leftBtn = self.generate_entities_item(card.nav1Override)[1:]
 
         if card.nav2Override is not None:
-            rightBtn = self.generate_entities_item(Entity(card.nav2Override))[1:]
+            rightBtn = self.generate_entities_item(card.nav2Override)[1:]
 
         navigation = f"{leftBtn}~{rightBtn}"
 

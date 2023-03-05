@@ -38,8 +38,12 @@ class Card(object):
         self.cardType = card_input_config.get("type", "unknown")
         self.title =  card_input_config.get("title", "unknown")
         self.key = card_input_config.get("key", "unknown")
-        self.nav1Override = card_input_config.get("navItem1")
-        self.nav2Override = card_input_config.get("navItem2")
+        self.nav1Override = None
+        if card_input_config.get("navItem1"):
+            self.nav1Override = Entity(card_input_config.get("navItem1"))
+        self.nav2Override = None
+        if card_input_config.get("navItem2"):
+            self.nav2Override = Entity(card_input_config.get("navItem2"))
         self.sleepTimeout  = card_input_config.get("sleepTimeout")
         self.last_update = 0
         self.cooldown = card_input_config.get("cooldown", 0)
