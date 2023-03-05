@@ -7377,7 +7377,8 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
         let colorReturn: any;
         if (configElement.ScreensaverEntityIconColor != undefined) {
             if (typeof getState(configElement.ScreensaverEntity).val == 'boolean') {
-                colorReturn = (getState(configElement.ScreensaverEntity).val == true) ? rgb_dec565(colorScale10) : rgb_dec565(colorScale0);
+                let iconvalbest = (configElement.ScreensaverEntityIconColor.val_best != undefined) ? configElement.ScreensaverEntityIconColor.val_best : false ;
+                colorReturn = (getState(configElement.ScreensaverEntity).val == iconvalbest) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
             } else if (typeof configElement.ScreensaverEntityIconColor == 'object') {
                 let iconvalmin = (configElement.ScreensaverEntityIconColor.val_min != undefined) ? configElement.ScreensaverEntityIconColor.val_min : 0 ;
                 let iconvalmax = (configElement.ScreensaverEntityIconColor.val_max != undefined) ? configElement.ScreensaverEntityIconColor.val_max : 100 ;
