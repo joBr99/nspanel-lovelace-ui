@@ -492,7 +492,7 @@ class LuiPagesGen(object):
             state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
             action_translation = get_translation(self._locale, "frontend.ui.card.climate.operation").replace(' ','\r\n')
             
-            detailPage = ""
+            detailPage = "1"
             if any(x in ["preset_modes", "swing_modes", "fan_modes"] for x in entity.attributes):
                 detailPage = "0"
 
