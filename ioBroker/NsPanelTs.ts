@@ -6826,48 +6826,40 @@ function HandleScreensaverUpdate(): void {
                     if (config.leftScreensaverEntity[i] == null) {
                         checkpoint = false;
                         break;
-                    } else {
-                        RegisterScreensaverEntityWatcher(config.leftScreensaverEntity[i].ScreensaverEntity)
+                    }
+                    RegisterScreensaverEntityWatcher(config.leftScreensaverEntity[i].ScreensaverEntity)
+
+                    let val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
+                    let iconColor = rgb_dec565(White);
+                    let icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
+
+                    if (typeof(val) == 'number') {
+                        val = (val * config.leftScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
+                        iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
+                    }
+                    if (typeof(val) == 'boolean') {
+                        iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
+                        if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
+                            icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
+                        }
+                    }
+                    if (typeof(val) == 'string') {
+                        iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
+                        if (!isNaN(Date.parse(val))) {
+                            val = formatDate(getDateObject(val), config.leftScreensaverEntity[i].ScreensaverEntityDateFormat);
+                        }                
                     }
 
-                    if (checkpoint) {
-                        let val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
-                        let iconColor = rgb_dec565(White);
-                        let icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
-
-                        if (typeof(getState(config.leftScreensaverEntity[i].ScreensaverEntity).val) == 'number') {
-                            val = (getState(config.leftScreensaverEntity[i].ScreensaverEntity).val * config.leftScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
-                            iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                        }
-                        if (typeof(getState(config.leftScreensaverEntity[i].ScreensaverEntity).val) == 'boolean') {
-                            val = (getState(config.leftScreensaverEntity[i].ScreensaverEntity).val);
-                            iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                            if (val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                                icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
-                            }
-                        }
-                        if (typeof getState(config.leftScreensaverEntity[i].ScreensaverEntity).val == 'string') {
-                            iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                            if (!isNaN(Date.parse(getState(config.leftScreensaverEntity[i].ScreensaverEntity).val))) {
-                                val = formatDate(getDateObject(getState(config.leftScreensaverEntity[i].ScreensaverEntity).val), config.leftScreensaverEntity[i].ScreensaverEntityDateFormat);
-                            } else {
-                                val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
-                            }                
-                        }
-
-                        if (existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconColor)) {
-                            iconColor = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconColor).val;
-                        }
-
-                        payloadString += '~' +
-                                        '~' +
-                                        icon + '~' +
-                                        iconColor + '~' +
-                                        config.leftScreensaverEntity[i].ScreensaverEntityText + '~' +
-                                        val + '~';
-                    } else {
-                    console.log('Only ' + i+1 + ' leftScreensaverEntities defined');  
+                    if (existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconColor)) {
+                        iconColor = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconColor).val;
                     }
+
+                    payloadString += '~' +
+                                    '~' +
+                                    icon + '~' +
+                                    iconColor + '~' +
+                                    config.leftScreensaverEntity[i].ScreensaverEntityText + '~' +
+                                    val + '~';
                 }
                 if (checkpoint == false) {
                     for (let j = i; j < 3; j++) {
@@ -7012,46 +7004,41 @@ function HandleScreensaverUpdate(): void {
                     if (config.bottomScreensaverEntity[i] == null) {
                         checkpoint = false;
                         break;
-                    } else {
-                        RegisterScreensaverEntityWatcher(config.bottomScreensaverEntity[i].ScreensaverEntity)
-                    }
-                    if (checkpoint) {
-                        let val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
-                        let iconColor = rgb_dec565(White);
-                        let icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn);
+                    } 
+                    RegisterScreensaverEntityWatcher(config.bottomScreensaverEntity[i].ScreensaverEntity)
+                    
+                    let val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
+                    let iconColor = rgb_dec565(White);
+                    let icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn);
 
-                        if (typeof(getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val) == 'number') {
-                            val = (getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val * config.bottomScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[i].ScreensaverEntityUnitText;
-                            iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
-                        }
-                        if (typeof(getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val) == 'boolean') {
-                            val = (getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val);
-                            iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
-                            if (val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                                icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
-                            }
-                        }
-                        if (typeof getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val == 'string') {
-                            iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
-                            if (!isNaN(Date.parse(getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val))) {
-                                val = formatDate(getDateObject(getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val), config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat);
-                            } else {
-                                val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
-                            }                
-                        }
-                        if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor)) {
-                            iconColor = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor).val;
-                        }
-                        if (i < maxEntities - 1) {
-                            val = val + '~';
-                        }
-                        payloadString += '~' +
-                                        '~' +
-                                        icon + '~' +
-                                        iconColor + '~' +
-                                        config.bottomScreensaverEntity[i].ScreensaverEntityText + '~' +
-                                        val
+                    if (typeof(val) == 'number') {
+                        val = (val * config.bottomScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[i].ScreensaverEntityUnitText;
+                        iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
                     }
+                    if (typeof(val) == 'boolean') {
+                        iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
+                        if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
+                            icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
+                        }
+                    }
+                    if (typeof val == 'string') {
+                        iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
+                        if (!isNaN(Date.parse(val))) {
+                            val = formatDate(getDateObject(val), config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat);
+                        }                
+                    }
+                    if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor)) {
+                        iconColor = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor).val;
+                    }
+                    if (i < maxEntities - 1) {
+                        val = val + '~';
+                    }
+                    payloadString += '~' +
+                                    '~' +
+                                    icon + '~' +
+                                    iconColor + '~' +
+                                    config.bottomScreensaverEntity[i].ScreensaverEntityText + '~' +
+                                    val
                 }
                 if (checkpoint == false) {
                     for (let j = i; j < maxEntities - 1; j++) {
@@ -7067,43 +7054,39 @@ function HandleScreensaverUpdate(): void {
                     if (config.indicatorScreensaverEntity[i] == null) {
                         checkpoint = false;
                         break;
+                    }
+                    RegisterScreensaverEntityWatcher(config.indicatorScreensaverEntity[i].ScreensaverEntity)
+
+                    let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
+                    let iconColor = rgb_dec565(White);
+            
+                    let icon = null;
+                    if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn)) {
+                        let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                        icon = Icons.GetIcon(iconName);
                     } else {
-                        RegisterScreensaverEntityWatcher(config.indicatorScreensaverEntity[i].ScreensaverEntity)
-                    }
+                        icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn);
+                    }    
 
-                    if (checkpoint) {
-                        let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
-                        let iconColor = rgb_dec565(White);
-			    
-			let icon = null;
-                        if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn)) {
-                            let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn).val;
-                            icon = Icons.GetIcon(iconName);
-                        } else {
-                            icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn);
-                        }    
-
-                        if (typeof(getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val) == 'number') {
-                            val = (getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val * config.indicatorScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.indicatorScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.indicatorScreensaverEntity[i].ScreensaverEntityUnitText;
-                            iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
-                        }
-                        if (typeof(getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val) == 'boolean') {
-                            val = (getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val);
-                            iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
-                            if (val && config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                                icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff)
-                            }
-                        }
-                        if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconColor)) {
-                            iconColor = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconColor).val;
-                        }
-                        payloadString += '~' +
-                                        '~' +
-                                        icon + '~' +
-                                        iconColor + '~' +
-                                        config.indicatorScreensaverEntity[i].ScreensaverEntityText + '~' +
-                                        val + '~';
+                    if (typeof(val) == 'number') {
+                        val = (val * config.indicatorScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.indicatorScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.indicatorScreensaverEntity[i].ScreensaverEntityUnitText;
+                        iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
                     }
+                    if (typeof(val) == 'boolean') {
+                        iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
+                        if (!val && config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff != null) {
+                            icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff)
+                        }
+                    }
+                    if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconColor)) {
+                        iconColor = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconColor).val;
+                    }
+                    payloadString += '~' +
+                                    '~' +
+                                    icon + '~' +
+                                    iconColor + '~' +
+                                    config.indicatorScreensaverEntity[i].ScreensaverEntityText + '~' +
+                                    val + '~';
                 }
             }
             if (Debug) console.log('weatherUpdate~' + payloadString);
