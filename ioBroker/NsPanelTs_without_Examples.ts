@@ -6325,13 +6325,13 @@ function HandleScreensaverUpdate(): void {
                         val = (val * config.leftScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
                     }
-                    if (typeof(val) == 'boolean') {
+                    else if (typeof(val) == 'boolean') {
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
                         if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
                             icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
                         }
                     }
-                    if (typeof(val) == 'string') {
+                    else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
                         if (!isNaN(Date.parse(val))) {
                             val = formatDate(getDateObject(val), config.leftScreensaverEntity[i].ScreensaverEntityDateFormat);
@@ -6458,15 +6458,14 @@ function HandleScreensaverUpdate(): void {
                 if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
                     let val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
                     let iconColor = rgb_dec565(White);
-                    if (typeof(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val) == 'number') {
-                        val = (getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val * config.bottomScreensaverEntity[4].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[4].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[4].ScreensaverEntityUnitText;
+                    if (typeof(val) == 'number') {
+                        val = (val * config.bottomScreensaverEntity[4].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[4].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[4].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
                     }
-                    if (typeof(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val) == 'boolean') {
-                        val = (getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val);
+                    else if (typeof(val) == 'boolean') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
                     }
-                    if (typeof getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val == 'string') {
+                    else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
                         if (!isNaN(Date.parse(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val))) {
                             val = formatDate(getDateObject(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val), config.bottomScreensaverEntity[4].ScreensaverEntityDateFormat);
@@ -6503,13 +6502,13 @@ function HandleScreensaverUpdate(): void {
                         val = (val * config.bottomScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[i].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
                     }
-                    if (typeof(val) == 'boolean') {
+                    else if (typeof(val) == 'boolean') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
                         if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
                             icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
                         }
                     }
-                    if (typeof val == 'string') {
+                    else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
                         if (!isNaN(Date.parse(val))) {
                             val = formatDate(getDateObject(val), config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat);
@@ -6560,7 +6559,7 @@ function HandleScreensaverUpdate(): void {
                         val = (val * config.indicatorScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.indicatorScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.indicatorScreensaverEntity[i].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
                     }
-                    if (typeof(val) == 'boolean') {
+                    else if (typeof(val) == 'boolean') {
                         iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
                         if (!val && config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff != null) {
                             icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff)
