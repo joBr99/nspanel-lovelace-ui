@@ -13,6 +13,7 @@ key | optional | type | default | description
 `theme` | True | complex | | configuration for theme
 `defaultCard` | True | string | `None` | default page after exiting screensaver; only works with top level cards defined in cards; needs to be a navigation item, see subpages (navigate.type_key) This config option will also be evaluated as a HomeAssistant Template.
 `key` | True | string | `None` | Used by navigate items
+`type` | True | string | `screensaver` | `screensaver` or `screensaver2`
 
 Example for the a screensaver config with custom entities/overrides:
 
@@ -28,6 +29,8 @@ Example for the a screensaver config with custom entities/overrides:
           type: 2
         - entity: sensor.energy_usage
 ```
+
+
 
 Using a 6th entity will automatically activate the alternative layout.
 
@@ -49,7 +52,22 @@ Using a 6th entity will automatically activate the alternative layout.
 
 You can use override the options decribed on the [entities documentation page](https://docs.nspanel.pky.eu/entities/) to override colors, names or values of the entities. 
 
-#### Possible configuration values for screensaver theme config
+
+With Version 4.0.0 there is another alternative layout for the screensaver:
+
+Configuration is similar, you just need to add `type: screensaver2` to switch the layout.
+
+![screensaver2](img/screensaver2.png)
+
+```yaml
+    screensaver:
+	  type: screensaver2
+      entities:
+        - entity: weather.demo_weather_north
+```
+
+
+#### Possible configuration values for screensaver theme config (only normal screensaver layout not screensaver2)
 
 key | option | type | default | description
 -- | -- | -- | -- | --
@@ -67,7 +85,7 @@ key | option | type | default | description
 `tForecast3Val` | True | list | White | `[R, G, B]`
 `tForecast4Val` | True | list | White | `[R, G, B]`
 `bar` | True | list | White | `[R, G, B]`
-`tMainTextAlt` | True | list | White | `[R, G, B]`
+`tMainTextAlt2` | True | list | White | `[R, G, B]`
 `tTimeAdd` | True | list | White | `[R, G, B]`
 
 Specify colours as red green and blue values from 0-255 e.g. `[255, 0, 0]` for red or `[0, 0, 255]` for blue. These are translated internally to RGB565 (note that this has lower color depth so the colours may not appear the same). Also note that the screen has a low contrast ratio, so colors look sigificantly different at full display brightness and lowest brightness.
@@ -152,4 +170,8 @@ It is possible to increase the size of the font used for the icons by adding `al
           name: "%a %-d/%-m"
           type: 3
 ```
+
+See Babel Documentation (https://babel.pocoo.org/en/latest/dates.html#date-fields) or the Python Documenation (https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes) in case you do not have babel installed.
+
 </details>
+

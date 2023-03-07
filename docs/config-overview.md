@@ -72,7 +72,8 @@ key | optional | type | default | description
 `cards` | False | complex | | configuration for cards that are displayed on panel; see docs for cards
 `screensaver` | True | complex | | configuration for screensaver; see docs for screensaver
 `hiddenCards` | True | complex | | configuration for cards that can be accessed though navigate items; see docs for cards
-`homeButton` | True | boolean | False | show home button on subpages
+
+
 ## Details on sleepBrightness/screenBrightness and other configs related to screen brightness
 
 It is possible to schedule a brightness change for the screen at specific times.
@@ -165,3 +166,15 @@ The following example configuration is turning off the screen after sunset, but 
 | `vi_VN`       | Vietnamese          |
 | `zh_CN`       | Simplified Chinese  |
 | `zh_TW`       | Traditional Chinese |
+
+## Customize OTA URLs
+
+In case you need to change the OTA URLs to do automatic updates without internet access for tasmota, you can modify the OTA URLs:
+
+```yaml
+  config:
+    displayURL-US-L: "http://example.com/us-l.tft"
+    displayURL-US-P: "http://example.com/us-l.tft"
+    displayURL-EU: "http://example.com/us-l.tft"
+    berryURL: "http://exampe.com/autoexec.be"
+```

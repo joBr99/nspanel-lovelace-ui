@@ -86,7 +86,7 @@ Page cardEntities
             vis hSlider6,0
             vis nNum6,0
             cardEntities.bco=defaultBcoColor
-            for(sys0=0;sys0<65;sys0++)
+            for(sys0=0;sys0<90;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116||b[sys0].type==54)
                 {
@@ -2668,6 +2668,10 @@ Timer tmSerial
                                         if(tId.txt=="screensaver")
                                         {
                                             page screensaver
+                                        }
+                                        if(tId.txt=="screensaver2")
+                                        {
+                                            page screensaver2
                                         }
                                         if(tId.txt=="cardEntities")
                                         {

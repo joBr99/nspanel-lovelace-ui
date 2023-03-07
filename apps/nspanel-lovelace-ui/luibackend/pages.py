@@ -492,7 +492,7 @@ class LuiPagesGen(object):
             state_translation = get_translation(self._locale, "frontend.ui.panel.config.devices.entities.state")
             action_translation = get_translation(self._locale, "frontend.ui.card.climate.operation").replace(' ','\r\n')
             
-            detailPage = ""
+            detailPage = "1"
             if any(x in ["preset_modes", "swing_modes", "fan_modes"] for x in entity.attributes):
                 detailPage = "0"
 
@@ -695,16 +695,22 @@ class LuiPagesGen(object):
             rightBtn = "delete~~~~~"
 
         if card.nav1Override is not None:
-            leftBtn = self.generate_entities_item(Entity(card.nav1Override))[1:]
+            leftBtn = self.generate_entities_item(card.nav1Override)[1:]
 
         if card.nav2Override is not None:
-            rightBtn = self.generate_entities_item(Entity(card.nav2Override))[1:]
+            rightBtn = self.generate_entities_item(card.nav2Override)[1:]
 
         navigation = f"{leftBtn}~{rightBtn}"
 
         # Switch to page
         if send_page_type:
             self.page_type(card.cardType)
+
+        # send sleep timeout if there is one configured for the current card
+        if card.sleepTimeout is not None:
+            self._send_mqtt_msg(f"timeout~{card.sleepTimeout}")
+        else:
+            self._send_mqtt_msg(f'timeout~{self._config.get("sleepTimeout")}')
         
         temp_unit = card.raw_config.get("temperatureUnit", "celsius")
         if card.cardType in ["cardEntities", "cardGrid"]:

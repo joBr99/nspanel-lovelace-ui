@@ -50,7 +50,7 @@ You can answer this by sending theese commands to the CustomSend Topic.
 
 `pageType~cardEntities`
 
-`entityUpd~test~1|1~light~light.schreibtischlampe~X~17299~Schreibtischlampe~0~text~sensor.server_energy_power~Y~17299~Server ENERGY Power~155 W~shutter~cover.rolladenfenster_cover_1~Z~17299~Fenster Eingang~A|B|C|disable|enable|enable~switch~switch.bad~D~63142~Bad~1`
+`entityUpd~test~~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~~~light~light.schreibtischlampe~X~17299~Schreibtischlampe~0~text~sensor.server_energy_power~Y~17299~Server ENERGY Power~155 W~shutter~cover.rolladenfenster_cover_1~Z~17299~Fenster Eingang~A|B|C|disable|enable|enable~switch~switch.bad~D~63142~Bad~1`
 
 ## Messages to Nextion Display
 
@@ -2664,7 +2664,7 @@ Example: `entityUpd~Guest Wifi~button~navigate.prev~<~65535~~~button~navigate.ne
 ### cardChart Page
 `entityUpd~heading~navigation~color~yAxisLabel~yAxisTick:[yAxisTick]*[~value[:xAxisLabel]?]*`  
 
-`entityUpd~Chart Demo~1|1~6666~Gas [kWh]~20:40:60:80:100~10~7^2:00~7~6^4:00~6~7^6:00~0~7^8:00~5~1^10:00~1~10^12:00~5~6^14:00~8`
+`entityUpd~Chart Demo~~button~navigate.prev~<~65535~~~button~navigate.next~>~65535~~~~6666~Gas [kWh]~20:40:60:80:100~10~7^2:00~7~6^4:00~6~7^6:00~0~7^8:00~5~1^10:00~1~10^12:00~5~6^14:00~8`
 
 
 ### popupLight Page

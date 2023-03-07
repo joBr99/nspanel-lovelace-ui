@@ -38,8 +38,13 @@ class Card(object):
         self.cardType = card_input_config.get("type", "unknown")
         self.title =  card_input_config.get("title", "unknown")
         self.key = card_input_config.get("key", "unknown")
-        self.nav1Override = card_input_config.get("navItem1")
-        self.nav2Override = card_input_config.get("navItem2")
+        self.nav1Override = None
+        if card_input_config.get("navItem1"):
+            self.nav1Override = Entity(card_input_config.get("navItem1"))
+        self.nav2Override = None
+        if card_input_config.get("navItem2"):
+            self.nav2Override = Entity(card_input_config.get("navItem2"))
+        self.sleepTimeout  = card_input_config.get("sleepTimeout")
         self.last_update = 0
         self.cooldown = card_input_config.get("cooldown", 0)
         # for single entity card like climate or media
@@ -52,24 +57,28 @@ class Card(object):
             self.entities.append(Entity(e))
         self.id = f"{self.cardType}_{self.key}".replace(".","_").replace("~","_").replace(" ","_")
         
-    def get_entity_names(self):
-        entityIds = []
+    def get_entity_names(self, uuid=False):
+        entityIds = {}
         if self.entity is not None:
-            entityIds.append(self.entity.entityId)
+            entityIds[self.entity.uuid] = self.entity.entityId
             if self.entity.status is not None:
-                entityIds.append(self.entity.status)
+                entityIds[self.entity.uuid] = self.entity.status
         for e in self.entities:
-            entityIds.append(e.entityId)
+            entityIds[e.uuid] = e.entityId
             if e.status is not None:
-                entityIds.append(e.status)
+                entityIds[e.uuid] = e.status
 
         # additional keys to check
         add_ent_keys = ['statusIcon1', 'statusIcon2', 'alarmControl']
         for ent_key in add_ent_keys:
             val = self.raw_config.get(ent_key)
             if val is not None:
-                entityIds.append(val.get("entity"))
-        return entityIds
+                entityIds[f"{ent_key}."] = val.get("entity")
+
+        if uuid:
+            return entityIds
+        else:
+            return entityIds.values()
 
     def get_entity_list(self):
         entitys = []
@@ -78,6 +87,10 @@ class Card(object):
         if self.entities:
             for e in self.entities:
                 entitys.append(e)
+        if self.nav1Override:
+            entitys.append(self.nav1Override)
+        if self.nav2Override:
+            entitys.append(self.nav2Override)
         return entitys
 
 
@@ -115,7 +128,6 @@ class LuiBackendConfig(object):
             'dateAdditionalTemplate': "",
             'timeAdditionalTemplate': "",
             'dateFormat': "%A, %d. %B %Y",
-            'homeButton': False,
             'cards': [{
                 'type': 'cardEntities',
                 'entities': [{

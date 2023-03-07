@@ -36,6 +36,7 @@ key | optional | type | default | description
 `type` | False | string | `None` | Type of the card
 `entities` | False | complex | `None` | contains entities of the card
 `title` | True | string | `None` | Title of the Page 
+`cooldown` | True | float | `None` | Rate Limit for Entity Updates to the card in Seconds (`cooldown: 0.5`)
 `key` | True | string | `None` | Used by navigate items
 
 List of supported entitiy types for this page:
@@ -62,4 +63,3 @@ It provides the number as a negative integer, making the dot move from the middl
 ```yaml
               {{ (entity_usage | round()) }}
 ```
-Note: It appears that on the `US-P` firmware because of the orientation this is inverted i.e. negative speeds move from the entity toward the middle and positive speeds move from the middle toward the entity.
