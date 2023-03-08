@@ -11,7 +11,6 @@ class Entity(object):
     def __init__(self, entity_input_config):
         self.uuid = f"uuid.{uuid()}"
         if type(entity_input_config) is not dict:
-            #self._ha_api.log("Config error, not a dict check your entity configs")
             self.entityId = "error"
         else:
             self.entityId  = entity_input_config.get("entity", "unknown")
@@ -59,26 +58,34 @@ class Card(object):
         
     def get_entity_names(self, uuid=False):
         entityIds = {}
+        #apis.ha_api.log(f"test123 {self.entity.entityId}")
         if self.entity is not None:
-            entityIds[self.entity.uuid] = self.entity.entityId
+            #entityIds[self.entity.uuid] = self.entity.entityId
+            entityIds.setdefault(self.entity.uuid, []).append(self.entity.entityId)
             if self.entity.status is not None:
-                entityIds[self.entity.uuid] = self.entity.status
+                #entityIds[self.entity.uuid] = self.entity.status
+                entityIds.setdefault(self.entity.uuid, []).append(self.entity.status)
         for e in self.entities:
-            entityIds[e.uuid] = e.entityId
+            #entityIds[e.uuid] = e.entityId
+            entityIds.setdefault(e.uuid, []).append(e.entityId)
             if e.status is not None:
-                entityIds[e.uuid] = e.status
+                #entityIds[e.uuid] = e.status
+                entityIds.setdefault(e.uuid, []).append(e.status)
 
         # additional keys to check
         add_ent_keys = ['statusIcon1', 'statusIcon2', 'alarmControl']
         for ent_key in add_ent_keys:
             val = self.raw_config.get(ent_key)
             if val is not None:
-                entityIds[f"{ent_key}."] = val.get("entity")
-
+                #entityIds[f"{ent_key}."] = val.get("entity")
+                ntityIds.setdefault(self.entity.uuid, []).append(val.get("entity"))
         if uuid:
             return entityIds
         else:
-            return entityIds.values()
+            out = []
+            for l in entityIds.values():
+                out.extend(l)
+            return out
 
     def get_entity_list(self):
         entitys = []

@@ -144,6 +144,7 @@ class LuiController(object):
             apis.ha_api.listen_state(self.update_screensaver_brightness_state_callback, entity_id=screen_brightness_config)   
     
         items = self._config.get_all_entity_names()
+        apis.ha_api.log(f"gtest123: {items}")
         prefixes = ("navigate.")
         items = [x for x in items if not x.startswith(prefixes)]
         apis.ha_api.log(f"Registering callbacks for the following items: {items}")
@@ -152,18 +153,18 @@ class LuiController(object):
                 apis.ha_api.listen_state(self.state_change_callback, entity_id=item, attribute="all")
 
     def state_change_callback(self, entity, attribute, old, new, kwargs):
-        apis.ha_api.log(f"Got callback for: {entity}", level="DEBUG")
-        apis.ha_api.log(f"Current page has the following items: {self._current_card.get_entity_names()}", level="DEBUG")
+        #apis.ha_api.log(f"Got callback for: {entity}")
+        #apis.ha_api.log(f"Current page has the following items: {self._current_card.get_entity_names(uuid=True)}")
         entities_on_card = self._current_card.get_entity_names(uuid=True)
 
-        # lookup uuid for enity on current card
         res_uuid = "uuid.notfound"
-        if entity in entities_on_card.values():
-            for uuid, name in entities_on_card.items():
-                if entity == name:
+        if entity in sum(entities_on_card.values(), []):
+            for uuid, names in entities_on_card.items():
+                apis.ha_api.log(f"test124 items: {entities_on_card.items()} names: {names}")
+                if entity in names:
                     res_uuid = uuid
 
-            apis.ha_api.log(f"Callback Entity is on current page: {entity}", level="DEBUG")
+            #apis.ha_api.log(f"Callback Entity is on current page: {entity}")
             self._pages_gen.render_card(self._current_card, send_page_type=False)
             # send detail page update, just in case
             if self._current_card.cardType in ["cardGrid", "cardEntities", "cardMedia"]:
