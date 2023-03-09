@@ -78,7 +78,7 @@ class Card(object):
             val = self.raw_config.get(ent_key)
             if val is not None:
                 #entityIds[f"{ent_key}."] = val.get("entity")
-                ntityIds.setdefault(self.entity.uuid, []).append(val.get("entity"))
+                entityIds.setdefault(self.entity.uuid, []).append(val.get("entity"))
         if uuid:
             return entityIds
         else:
