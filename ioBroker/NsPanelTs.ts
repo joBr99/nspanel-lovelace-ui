@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.4.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.4 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -114,8 +114,9 @@ ReleaseNotes:
         - 27.02.2023 - v4.0.2   Dynamic Indicator Icons in Advanced Screensaver by Gargano
         - 27.02.2023 - v4.0.2   Upgrade TFT 50 / 4.0.2
         - 27.02.2023 - v4.0.3   Upgrade TFT 50 / 4.0.3
-	- 04.03.2023 - v4.0.4   Upgrade TFT 50 / 4.0.4
-	- 04.03.2023 - v4.0.4   Fix bExit with popupLight, popup....
+        - 04.03.2023 - v4.0.4   Upgrade TFT 50 / 4.0.4
+        - 04.03.2023 - v4.0.4   Fix bExit with popupLight, popup....
+        - 07.03.2023 - v4.0.4.1 Extend Configuration Options for Physical Buttons to enable direct state manipulation - by bembelstemmer
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -1274,8 +1275,18 @@ export const config = <Config> {
 
 
     ],
-    button1Page: button1Page,   //Beispiel-Seite auf Button 1, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null, 
-    button2Page: button2Page    //Beispiel-Seite auf Button 2, wenn Rule2 definiert - Wenn nicht definiert --> button1Page: null,
+    button1: {
+        mode: null,     // Mögliche Werte wenn Rule2 definiert: page, toggle, set - Wenn nicht definiert --> mode: null
+        page: null,     // Zielpage - Verwendet wenn mode = page (bisher button1Page)
+        entity: null,   // Zielentity - Verwendet wenn mode = set oder toggle
+        setValue: null  // Zielwert - Verwendet wenn mode = set
+    },
+    button2: {
+        mode: null,     // Mögliche Werte wenn Rule2 definiert: page, toggle, set - Wenn nicht definiert --> mode: null
+        page: null,     // Zielpage - Verwendet wenn mode = page (bisher button2Page)
+        entity: null,   // Zielentity - Verwendet wenn mode = set oder toggle
+        setValue: null  // Zielwert - Verwendet wenn mode = set
+    }
 };
 
 
@@ -2988,18 +2999,34 @@ function GeneratePage(page: Page): void {
 
 function HandleHardwareButton(method: string): void {
     try {
-        let page: (PageThermo | PageMedia | PageAlarm | PageEntities | PageGrid | PageQR | PagePower | PageChart | PageUnlock);
-        if (config.button1Page !== null && method == 'button1') {
-            page = config.button1Page;
-            pageId = -1;
-        } else if (config.button2Page !== null && method == 'button2') {
-            page = config.button2Page;
-            pageId = -2;
-        } else {
+        let buttonConfig: ConfigButtonFunction = config[method];
+        if(buttonConfig.mode === null) {
             return;
         }
 
-        GeneratePage(page);
+        switch(buttonConfig.mode) {
+            case 'page':
+                if (buttonConfig.page) {
+                    if(method == 'button1') {
+                        pageId = -1;
+                    } else if (method == 'button2') {
+                        pageId = -2;
+                    }
+                    GeneratePage(buttonConfig.page);
+                    break;
+                }
+            case 'toggle':
+                if (buttonConfig.entity) {
+                    let current = getState(buttonConfig.entity).val;
+                    setState(buttonConfig.entity, !current);
+                }
+                break;
+            case 'set':
+                if (buttonConfig.entity) {
+                    setState(buttonConfig.entity, buttonConfig.setValue);
+                }
+                break;
+        }
     } catch (err) {
         console.warn('function HandleHardwareButton: ' + err.message);
     }
@@ -3735,11 +3762,11 @@ function RegisterEntityWatcher(id: string): void {
         }
 
         subscriptions[id] = (on({ id: id, change: 'any' }, () => {
-            if (pageId == -1 && config.button1Page != undefined) {
-                SendToPanel({ payload: GeneratePageElements(config.button1Page) });
+            if (pageId == -1 && config.button1.page) {
+                SendToPanel({ payload: GeneratePageElements(config.button1.page) });
             }
-            if (pageId == -2 && config.button2Page != undefined) {
-                SendToPanel({ payload: GeneratePageElements(config.button2Page) });
+            if (pageId == -2 && config.button2.page) {
+                SendToPanel({ payload: GeneratePageElements(config.button2.page) });
             }
             if (activePage !== undefined) {
                 SendToPanel({ payload: GeneratePageElements(activePage) });
@@ -8032,6 +8059,13 @@ type DimMode = {
     timeNight: (string | undefined)
 }
 
+type ConfigButtonFunction = {
+    mode: string | null,
+    page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock | null),
+    entity: string | null,
+    setValue: string | number | null
+}
+
 type Config = {
     panelRecvTopic: string,
     panelSendTopic: string,
@@ -8047,8 +8081,8 @@ type Config = {
     defaultBackgroundColor: RGB,
     pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock )[],
     subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock)[],
-    button1Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock | null),
-    button2Page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock | null)
+    button1: ConfigButtonFunction,
+    button2: ConfigButtonFunction
 }
 
 type ScreenSaverElement = {
