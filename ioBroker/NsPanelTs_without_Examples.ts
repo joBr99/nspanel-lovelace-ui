@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.4.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.4.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.4 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -118,7 +118,8 @@ ReleaseNotes:
         - 04.03.2023 - v4.0.4   Fix bExit with popupLight, popup....
         - 07.03.2023 - v4.0.4.1 Extend Configuration Options for Physical Buttons to enable direct state manipulation - by bembelstemmer
         - 10.03.2023 - v4.0.4.2 Fix iconColor by 100% Brightness
-        
+        - 13.03.2023 - v4.0.4.3 Fix Funktion GeneratePowerPage inkl. DemoModus
+
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
 ***********************************************************************************************************
@@ -126,7 +127,7 @@ ReleaseNotes:
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 
 Tasmota Konsole:
-    Rule2 on Button1#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/%prefix%/RESULT {"CustomRecv":"event,button2"} endon
+    Rule2 on Button1#state do Publish %topic%/tele/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/tele/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
     Rule2 0 (Rule deaktivieren)
 
@@ -694,7 +695,7 @@ export const config = <Config> {
             },
             // bottomScreensaverEntity 4
             {
-                ScreensaverEntity: '0_userdata.0.wetter.Windrichtung',
+                ScreensaverEntity: 'accuweather.0.Current.WindDirection',
                 ScreensaverEntityFactor: 0,
                 ScreensaverEntityDecimalPlaces: 0,
                 ScreensaverEntityIconOn: 'windsock',
@@ -765,13 +766,13 @@ export const config = <Config> {
                     NSPanel_FirmwareNextion,            //Auto-Alias Service Page
     ],
     button1: {
-        mode: null,     // Mögliche Werte wenn Rule2 definiert: page, toggle, set - Wenn nicht definiert --> mode: null
+        mode: null,     // Mögliche Werte wenn Rule2 definiert: 'page', 'toggle', 'set' - Wenn nicht definiert --> mode: null
         page: null,     // Zielpage - Verwendet wenn mode = page (bisher button1Page)
         entity: null,   // Zielentity - Verwendet wenn mode = set oder toggle
         setValue: null  // Zielwert - Verwendet wenn mode = set
     },
     button2: {
-        mode: null,     // Mögliche Werte wenn Rule2 definiert: page, toggle, set - Wenn nicht definiert --> mode: null
+        mode: null,     // Mögliche Werte wenn Rule2 definiert: 'page', 'toggle', 'set' - Wenn nicht definiert --> mode: null
         page: null,     // Zielpage - Verwendet wenn mode = page (bisher button2Page)
         entity: null,   // Zielentity - Verwendet wenn mode = set oder toggle
         setValue: null  // Zielwert - Verwendet wenn mode = set
@@ -3229,7 +3230,7 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
                 Interpolate(
                     pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor,
                     pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor,
-                    scale(value, minValue, maxValue, 0, 1)
+                    scale(100 - value, minValue, maxValue, 0, 1)
                 )
             );
         }
@@ -4441,34 +4442,31 @@ function subscribePowerSubscriptions(id: string): void {
 
 function GeneratePowerPage(page: PagePower): Payload[] {
     try {
-        activePage = page;
-        
-        let id = page.items[0].id;
-
-        if (Debug) {
-            console.log(page.items[0].id);
-        }
-        
-        unsubscribePowerSubscriptions();
-        subscribePowerSubscriptions(id);
-        
-        let demoMode = false;
-
-        try {
-            id = page.items[0].id
-        } catch (err) {
+        let obj:object;
+        let demoMode = false;        
+        if (page.items[0].id == undefined){
             console.log("Kein PageItem definiert - cardPower Demo-Modus aktiv");
             demoMode = true;
         }
 
+        activePage = page;
+        if (Debug) {
+            console.log('GeneratePowerPage PageItem.id = ' + page.items[0].id);
+        }
+        
+
         let heading = 'cardPower Example';
         if (demoMode != true) {
+            let id = page.items[0].id
+            unsubscribePowerSubscriptions();
+            subscribePowerSubscriptions(id);
+
             let o = getObject(id);
             heading = page.heading !== undefined ? page.heading : o.common.name.de;
+
+             obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
         }
-
-        const obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
-
+        
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardPower' });
 
@@ -4483,7 +4481,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         let homeIconColor = 0;
         if (!demoMode) {
             for (let obji = 0; obji < 7; obji++) {
-                array_icon_color[obji + 1] = arrayColorScale[obj[obji].iconColor];
+                array_icon_color[obji + 1] = arrayColorScale[obj[obji].iconColor !== '' ? obj[obji].iconColor : 0];
                 array_icon[obji + 1] = obj[obji].icon;
                 array_powerspeed[obji + 1] = obj[obji].speed;
                 array_powerstate[obji + 1] = obj[obji].value + ' ' + obj[obji].unit ;
@@ -4495,7 +4493,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
 
         let power_string : any = '';
 
-        for (let i = 1; i < 7; i++ ) {
+        for (let i = 0; i < 6; i++ ) {
             power_string = power_string + '~';                                        // type (ignored)
             power_string = power_string + '~';                                        // intNameEntity (ignored)
             power_string = power_string + Icons.GetIcon(array_icon[i+1]) + '~';       // icon~
@@ -4503,10 +4501,12 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             power_string = power_string + '~';                                        // display (ignored in TS)
             power_string = power_string + array_powerstate[i+1] + '~';                // optionalValue~
             power_string = power_string + array_powerspeed[i+1] + '~';                // speed~
+
+            if (Debug) console.log(power_string);
         }
 
         power_string = power_string.substring(0, power_string.length - 1);
-
+            
         out_msgs.push({
             payload: 'entityUpd~' +                                 //entityUpd~*
                 heading                         + '~' +             //internalNameEntity*~*
@@ -4530,13 +4530,13 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             // 1st to 6th Item
                 power_string
         });
-        
+        if (Debug) console.log(out_msgs);
         return out_msgs;
 
     } catch (err) {
         console.warn('function GeneratePowerPage: ' + err.message);
     }
-}
+};
 
 function GenerateChartPage(page: PageChart): Payload[] {
     try {
@@ -6355,8 +6355,8 @@ function HandleScreensaverUpdate(): void {
                     }
                     else if (typeof(val) == 'boolean') {
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                        if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                            icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
+                        if (!val && config.leftScreensaverEntity[i].ScreensaverEntityIconOff != null) {
+                            icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOff)
                         }
                     }
                     else if (typeof(val) == 'string') {
