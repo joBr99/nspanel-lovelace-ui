@@ -6868,8 +6868,8 @@ function HandleScreensaverUpdate(): void {
                     }
                     else if (typeof(val) == 'boolean') {
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                        if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                            icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
+                        if (!val && config.leftScreensaverEntity[i].ScreensaverEntityIconOff != null) {
+                            icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOff)
                         }
                     }
                     else if (typeof(val) == 'string') {
