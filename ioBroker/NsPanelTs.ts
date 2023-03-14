@@ -119,7 +119,7 @@ ReleaseNotes:
         - 07.03.2023 - v4.0.4.1 Extend Configuration Options for Physical Buttons to enable direct state manipulation - by bembelstemmer
         - 10.03.2023 - v4.0.4.2 Fix iconColor by 100% Brightness
         - 13.03.2023 - v4.0.4.3 Fix Funktion GeneratePowerPage inkl. DemoModus
-        - xx.03.2023 - v4.0.4.4 Fix colorTempSlider Arbeitsweise(seitenverkehrt) korregiert
+        - 14.03.2023 - v4.0.4.4 Fix colorTempSlider Arbeitsweise(seitenverkehrt) korregiert
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
