@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.4.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.4.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.4 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -119,6 +119,7 @@ ReleaseNotes:
         - 07.03.2023 - v4.0.4.1 Extend Configuration Options for Physical Buttons to enable direct state manipulation - by bembelstemmer
         - 10.03.2023 - v4.0.4.2 Fix iconColor by 100% Brightness
         - 13.03.2023 - v4.0.4.3 Fix Funktion GeneratePowerPage inkl. DemoModus
+        - 14.03.2023 - v4.0.4.4 Fix colorTempSlider Arbeitsweise(seitenverkehrt) korregiert
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -4945,15 +4946,15 @@ function HandleButtonEvent(words: any): void {
                     }
                 }, 250);
                 break;
-            case 'colorTempSlider': // Armilar - Slider tickt verkehrt - Hell = 0 / Dunkel = 100 -> Korrektur
+            case 'colorTempSlider':
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                 timeoutSlider = setTimeout(async function () {
                     let pageItem = findPageItem(id);
                     if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                        let colorTempK = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
+                        let colorTempK = Math.trunc(scale(parseInt(words[4]), 100, 0, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
                         setIfExists(id + '.TEMPERATURE', (colorTempK));
                     } else {
-                        setIfExists(id + '.TEMPERATURE', 100 - words[4]);
+                        setIfExists(id + '.TEMPERATURE', parseInt(words[4]));
                     }
                 }, 250);
                 break;
@@ -5624,9 +5625,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     if (existsState(id + '.TEMPERATURE')) {
                         if (getState(id + '.TEMPERATURE').val != null) {
                             if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
                             } else {
-                                colorTemp = 100 - getState(id + '.TEMPERATURE').val;
+                                colorTemp = getState(id + '.TEMPERATURE').val;
                             }
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
@@ -5689,9 +5690,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     if (existsState(id + '.TEMPERATURE')) {
                         if (getState(id + '.TEMPERATURE').val != null) {
                             if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
-                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
                             } else {
-                                colorTemp = 100 - getState(id + '.TEMPERATURE').val;
+                                colorTemp = getState(id + '.TEMPERATURE').val;
                             }
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
@@ -5758,9 +5759,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     if (existsState(id + '.TEMPERATURE')) {
                         if (getState(id + '.TEMPERATURE').val != null) {
                             if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
                             } else {
-                                colorTemp = 100 - getState(id + '.TEMPERATURE').val;
+                                colorTemp = getState(id + '.TEMPERATURE').val;
                             }
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
@@ -5783,7 +5784,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     });
                 }
 
-                // Farbtemperatur
+                // Farbtemperatur (CT)
                 if (o.common.role == 'ct') {
 
                     if (existsState(id + '.ON')) {
@@ -5815,9 +5816,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     if (existsState(id + '.TEMPERATURE')) {
                         if (getState(id + '.TEMPERATURE').val != null) {
                             if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 0, 100));
+                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
                             } else {
-                                colorTemp = 100 - getState(id + '.TEMPERATURE').val;
+                                colorTemp = getState(id + '.TEMPERATURE').val;
                             }
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
