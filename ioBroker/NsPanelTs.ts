@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.4.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.4.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.4 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -120,6 +120,7 @@ ReleaseNotes:
         - 10.03.2023 - v4.0.4.2 Fix iconColor by 100% Brightness
         - 13.03.2023 - v4.0.4.3 Fix Funktion GeneratePowerPage inkl. DemoModus
         - 14.03.2023 - v4.0.4.4 Fix colorTempSlider Arbeitsweise(seitenverkehrt) korregiert
+        - 17.03.2023 - v4.0.4.5 Debug - Error - Log - Meldungen angepasst
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -1349,7 +1350,7 @@ async function Init_Release() {
             await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version + ' / ' + tft_version);
         }
     } catch (err) { 
-        console.warn('function Init_Release: ' + err.message); 
+        console.warn('error at function Init_Release: ' + err.message); 
     }
 }
 Init_Release();
@@ -1409,10 +1410,11 @@ async function InitConfigParameters() {
             await createAliasAsync(AliasPath + 'Config.temperatureUnitNumber.VALUE', NSPanel_Path + 'Config.temperatureUnitNumber', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'VALUE' });
         }
     } catch (err) { 
-        console.warn('function Init_Release: ' + err.message); 
+        console.warn('error at function InitConfigParameters: ' + err.message); 
     }
 }
 InitConfigParameters();
+
 on({id: [].concat(NSPanel_Path + 'Config.localeNumber')
           .concat(NSPanel_Path + 'Config.temperatureUnitNumber'), change: "ne"}, async function (obj) {
     try {
@@ -1428,9 +1430,10 @@ on({id: [].concat(NSPanel_Path + 'Config.localeNumber')
             setStateAsync(NSPanel_Path + 'Config.temperatureUnit', tempunitList[obj.state.val]);
         }
     } catch (err) { 
-        console.warn('function InitConfigParameters: ' + err.message); 
+        console.warn('error at Trigger temperatureUnitNumber + localeNumber: ' + err.message); 
     }
 });
+
 async function CheckConfigParameters() {
     try {
         if (existsObject(config.panelRecvTopic) == false) {
@@ -1485,7 +1488,7 @@ async function CheckConfigParameters() {
             console.warn('setObjects disabled - Please enable setObjects in JS-Adapter Instance - create Alias Channels not possible');
         } 
     } catch (err) { 
-        console.warn('function CheckConfigParameters: ' + err.message); 
+        console.warn('error at function CheckConfigParameters: ' + err.message); 
     }
 }
 CheckConfigParameters();
@@ -1497,7 +1500,7 @@ async function Init_ScreensaverAdvanced() {
             await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, true, { type: 'boolean' });
         }
     } catch (err) { 
-        console.warn('function Init_ScreensaverAdvanced: ' + err.message); 
+        console.warn('error at function Init_ScreensaverAdvanced: ' + err.message); 
     }
 }
 Init_ScreensaverAdvanced();
@@ -1518,7 +1521,7 @@ async function Init_ActivePageData() {
             await createStateAsync(NSPanel_Path + 'ActivePage.type', '', true, { type: 'string' });
         }
     } catch (err) { 
-        console.warn('function Init_ActivePageData: ' + err.message); 
+        console.warn('error at function Init_ActivePageData: ' + err.message); 
     }
 }
 Init_ActivePageData();
@@ -1530,7 +1533,7 @@ async function Init_Screensaver_Backckground_Color_Switch() {
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', 0, true, { type: 'number' });
         }
     } catch (err) { 
-        console.warn('function Init_Screensaver_Backckground_Color_Switch: ' + err.message); 
+        console.warn('error at function Init_Screensaver_Backckground_Color_Switch: ' + err.message); 
     }
 }
 Init_Screensaver_Backckground_Color_Switch();
@@ -1542,7 +1545,7 @@ on({id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: "ne"}, async 
             HandleScreensaverUpdate();
         }
     } catch (err) { 
-        console.warn('trigger bgColorIndicator: ' + err.message); 
+        console.warn('error at trigger bgColorIndicator: ' + err.message); 
     }
 });
 
@@ -1550,7 +1553,7 @@ on({id: NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', change: "ne"}, 
     try {
         setState(config.panelSendTopic, 'pageType~pageStartup');
     } catch (err) { 
-        console.warn('trigger Screensaver Advanced: ' + err.message); 
+        console.warn('error at trigger Screensaver Advanced: ' + err.message); 
     }
 });
 
@@ -1561,7 +1564,7 @@ async function Init_bExit_Page_Change() {
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bExitPage', null, true, { type: 'number' });
         }
     } catch (err) { 
-        console.warn('function Init_bExit_Page_Change: ' + err.message); 
+        console.warn('error at function Init_bExit_Page_Change: ' + err.message); 
     }
 }
 Init_bExit_Page_Change();
@@ -1573,7 +1576,7 @@ async function Init_Dimmode_Trigger() {
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.Trigger_Dimmode', false, true, { type: 'boolean' });
         }
     } catch (err) { 
-        console.warn('function Init_Dimmode_Trigger: ' + err.message); 
+        console.warn('error at function Init_Dimmode_Trigger: ' + err.message); 
     }
 }
 Init_Dimmode_Trigger();
@@ -1590,24 +1593,26 @@ async function InitActiveBrightness() {
         await createAliasAsync(AliasPath + 'ScreensaverInfo.activeBrightness.ACTUAL', NSPanel_Path + 'ScreensaverInfo.activeBrightness', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
         await createAliasAsync(AliasPath + 'ScreensaverInfo.activeBrightness.SET', NSPanel_Path + 'ScreensaverInfo.activeBrightness', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
     } catch (err) {
-        console.warn('function InitActiveBrightness: ' + err.message);
+        console.warn('error at function InitActiveBrightness: ' + err.message);
     }
 }
 InitActiveBrightness();
+
 on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightness'), change: "ne"}, async function (obj) {
     try {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
 
         if (obj.state.val != null) {
-            console.log(obj.state.val + ' - ' + active);
+            console.log('error at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active);
             SendToPanel({ payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
         } else {
             InitDimmode();
         }
     } catch (err) { 
-        console.warn('trigger activeBrightness: ' + err.message); 
+        console.warn('error at trigger activeDimmodeBrightness: ' + err.message); 
     }
 });
+
 on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: "ne"}, async function (obj) {
     try {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
@@ -1617,7 +1622,7 @@ on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: "ne"},
             InitDimmode();
         }
      } catch (err) { 
-        console.warn('trigger Trigger_Dimmode: ' + err.message); 
+        console.warn('error at trigger Trigger_Dimmode: ' + err.message); 
     }
 });
 
@@ -1629,10 +1634,11 @@ async function InitRebootPanel() {
             await createAliasAsync(AliasPath + 'Config.rebootNSPanel.SET', NSPanel_Path + 'Config.rebootNSPanel', true, <iobJS.StateCommon>{ type: 'boolean', role: 'state', name: 'SET' });
         }
     } catch (err) {
-        console.warn('function InitRebootPanel: ' + err.message);
+        console.warn('error at function InitRebootPanel: ' + err.message);
     }
 }
 InitRebootPanel();
+
 on({id: AliasPath + 'Config.rebootNSPanel.SET', change: "any"}, async function (obj) {
     if (obj.state.val) {
         try {
@@ -1672,10 +1678,11 @@ async function InitUpdateDatapoints() {
             await createAliasAsync(AliasPath + 'Config.Update.UpdateNextion.SET', NSPanel_Path + 'Config.Update.UpdateNextion', true, <iobJS.StateCommon>{ type: 'boolean', role: 'state', name: 'SET' });
         }
     } catch (err) {
-        console.warn('function InitRebootPanel: ' + err.message);
+        console.warn('function InitUpdateDatapoints: ' + err.message);
     }
 }
 InitUpdateDatapoints();
+
 on({id: [].concat(NSPanel_Path + 'Config.Update.UpdateTasmota')
           .concat(NSPanel_Path + 'Config.Update.UpdateBerry')
           .concat(NSPanel_Path + 'Config.Update.UpdateNextion'), change: "any"}, async function (obj) {
@@ -1715,7 +1722,7 @@ async function Init_Relays() {
         await createAliasAsync(AliasPath + 'Relay.2.ACTUAL', NSPanel_Path + 'Relay.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
         await createAliasAsync(AliasPath + 'Relay.2.SET', NSPanel_Path + 'Relay.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
     } catch (err) { 
-        console.warn('function Init_Relays: ' + err.message); 
+        console.warn('error at function Init_Relays: ' + err.message); 
     }
 }
 Init_Relays();
@@ -1737,7 +1744,7 @@ async function InitAlternateMRIconsSize() {
         await createAliasAsync(AliasPath + 'Config.MRIcons.alternateMRIconSize.2.ACTUAL', NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
         await createAliasAsync(AliasPath + 'Config.MRIcons.alternateMRIconSize.2.SET', NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
     } catch (err) { 
-        console.warn('function InitAlternateMRIconsSize: ' + err.message); 
+        console.warn('error at function InitAlternateMRIconsSize: ' + err.message); 
     }
 }
 InitAlternateMRIconsSize();
@@ -1762,7 +1769,7 @@ async function InitDateformat() {
             await createAliasAsync(AliasPath + 'Config.Dateformat.Switch.month.SET', NSPanel_Path + 'Config.Dateformat.Switch.month', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
         }
     } catch (err) { 
-        console.warn('function InitDateformat: ' + err.message); 
+        console.warn('error at function InitDateformat: ' + err.message); 
     }
 }
 InitDateformat();
@@ -1826,7 +1833,7 @@ async function SubscribeMRIcons () {
             });
         }
     } catch (err) { 
-        console.warn('function SubscribeMRIcons: ' + err.message); 
+        console.warn('error at function SubscribeMRIcons: ' + err.message); 
     }
 }
 SubscribeMRIcons();
@@ -1848,7 +1855,7 @@ async function CreateWeatherAlias () {
                         console.log('weather alias for daswetter.0. already exists');
                     }
                 } catch (err) {
-                    console.log('function InitPageNavi: ' + err.message);
+                    console.log('error at function CreateWeatherAlias daswetter.0. : ' + err.message);
                 }
             } else if (weatherAdapterInstance == 'accuweather.0.') {
                 try {
@@ -1863,12 +1870,12 @@ async function CreateWeatherAlias () {
                         console.log('weather alias for accuweather.0. already exists');
                     }
                 } catch (err) {
-                    console.log('function InitPageNavi: ' + err.message);
+                    console.log('error at function CreateWeatherAlias accuweather.0.: ' + err.message);
                 }
             }
         } 
     } catch (err) { 
-        console.warn('function CreateWeatherAlias: ' + err.message); 
+        console.warn('error at function CreateWeatherAlias: ' + err.message); 
     }  
 }
 CreateWeatherAlias();
@@ -1881,7 +1888,7 @@ async function InitPageNavi() {
             await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: {"pagetype": "page","pageId": 0}, ack: true });
         }
     } catch (err) {
-        console.log('function InitPageNavi: ' + err.message);
+        console.warn('error at function InitPageNavi: ' + err.message);
     }
 }
 InitPageNavi();
@@ -1908,28 +1915,28 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val
         let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val
         if (Debug) {
-            console.log(rgb_dec565(HMIDark));
+            console.log('function ScreensaverDimmode RGB-Wert HMIDark' + rgb_dec565(HMIDark));
         }
         if (Debug) {
-            console.log('Dimmode=' + timeDimMode.dimmodeOn);
+            console.log('function ScreensaverDimmode Dimmode=' + timeDimMode.dimmodeOn);
         }
         if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
             if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
                 if (Debug) {
-                    console.log('Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active);
+                    console.log('function ScreensaverDimmode -> Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active);
                 }
             } else {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
                 if (Debug) {
-                    console.log('Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active);
+                    console.log('function ScreensaverDimmode -> Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active);
                 }
             }
         } else {
             SendToPanel({ payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
         }
     } catch (err) {
-        console.warn('function ScreensaverDimmode: ' + err.message);
+        console.warn('error at function ScreensaverDimmode: ' + err.message);
     }
 }
 
@@ -1956,7 +1963,7 @@ async function InitWeatherForecast() {
         await createAliasAsync(AliasPath + 'ScreensaverInfo.entityChangeTime.ACTUAL', NSPanel_Path + 'ScreensaverInfo.entityChangeTime', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
         await createAliasAsync(AliasPath + 'ScreensaverInfo.entityChangeTime.SET', NSPanel_Path + 'ScreensaverInfo.entityChangeTime', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
     } catch (err) {
-        console.warn('function InitWeatherForecast: ' + err.message);
+        console.warn('error at function InitWeatherForecast: ' + err.message);
     }
 }
 InitWeatherForecast();
@@ -2019,7 +2026,7 @@ async function InitDimmode() {
 
         ScreensaverDimmode(timeDimMode);
     } catch (err) {
-        console.warn('function InitDimmode: ' + err.message);
+        console.warn('error at function InitDimmode: ' + err.message);
     }
 }
 
@@ -2127,7 +2134,7 @@ async function InitPopupNotify() {
 
         });
     } catch (err) {
-        console.warn('function InitPopupNotify: ' + err.message);
+        console.warn('error at function InitPopupNotify: ' + err.message);
     }
 }
 InitPopupNotify();
@@ -2145,7 +2152,7 @@ schedule('* * * * *', () => {
         SendTime();
         HandleScreensaverUpdate();
     } catch (err) {
-        console.warn('schedule SendTime: ' + err.message);
+        console.warn('error at schedule SendTime: ' + err.message);
     }
 });
 
@@ -2159,7 +2166,7 @@ schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val 
             setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false);
         }
     } catch (err) {
-        console.warn('schedule entityChangeTime: ' + err.message);
+        console.warn('error at schedule entityChangeTime: ' + err.message);
     }
 });
 
@@ -2171,7 +2178,7 @@ function InitHWButton1Color() {
             });
         }
     } catch (err) {
-        console.warn('function InitHWButton1Color: ' + err.message);
+        console.warn('error at function InitHWButton1Color: ' + err.message);
     }
 }
 InitHWButton1Color();
@@ -2184,7 +2191,7 @@ function InitHWButton2Color() {
             });
         }
     } catch (err) {
-        console.warn('function InitHWButton2Color: ' + err.message);
+        console.warn('error at function InitHWButton2Color: ' + err.message);
     }
 }
 InitHWButton2Color();
@@ -2195,7 +2202,7 @@ on({id: [].concat([NSPanel_Path + "ScreensaverInfo.weatherForecast"]), change: "
         weatherForecast = obj.state.val;
         HandleScreensaverUpdate();
     } catch (err) {
-        console.warn('trigger weatherForecast: ' + err.message);
+        console.warn('error at trigger weatherForecast: ' + err.message);
     }
 });
 
@@ -2205,7 +2212,7 @@ on({id: [].concat(config.weatherEntity + '.TEMP')
     try {    
         HandleScreensaverUpdate();
     } catch (err) {
-        console.warn('trigger weatherForecast: ' + err.message);
+        console.warn('error at trigger weatherForecast .TEMP + .ICON: ' + err.message);
     }
 });
 
@@ -2256,11 +2263,11 @@ function get_locales() {
                     await setStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.State>{ val: result, ack: true });
                 }
             } catch (err) {
-                console.log('get_locales: ' + err.message);
+                console.warn('error result in function get_locales: ' + err.message);
             }
         });
     } catch (err) {
-        console.error('error requesting locales in function get_locales: ' + err.message);
+        console.warn('error requesting locales in function get_locales: ' + err.message);
     }
 }
 
@@ -2394,7 +2401,7 @@ async function check_updates() {
             }
         }
     } catch (err) {
-        console.warn('function check_updates: ' + err.message);
+        console.warn('error at function check_updates: ' + err.message);
     }
 }
 
@@ -2422,7 +2429,7 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
             }
         }
     } catch (err) {
-        console.warn('Trigger popupNotifyAction: ' + err.message);
+        console.warn('error at Trigger popupNotifyAction: ' + err.message);
     }
 });
 
@@ -2446,7 +2453,7 @@ async function get_panel_update_data() {
         check_version_tft_firmware();
         check_online_display_firmware();
     } catch (err) {
-        console.warn('function get_panel_update_data: ' + err.message);
+        console.warn('error at function get_panel_update_data: ' + err.message);
     }
 }
 
@@ -2461,7 +2468,7 @@ function get_current_tasmota_ip_address() {
 
         return infoObj.Info2.IPAddress;
     } catch (err) {
-        console.warn('function get_current_tasmota_ip_address: ' + err.message);
+        console.warn('error at function get_current_tasmota_ip_address: ' + err.message);
     }
 }
 
@@ -2486,7 +2493,7 @@ function get_online_tasmota_firmware_version() {
                 await createAliasAsync(AliasPath + 'Tasmota_Firmware.onlineVersion.ACTUAL', NSPanel_Path + 'Tasmota_Firmware.onlineVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });                
                 await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.State>{ val: TasmotaVersionOnline, ack: true });
             } catch (err) {
-                console.log('get_online_tasmota_firmware_version: ' + err.message);
+                console.warn('error result in function get_online_tasmota_firmware_version: ' + err.message);
             }
         });
     } catch (err) {
@@ -2520,7 +2527,7 @@ function get_current_berry_driver_version() {
                     await createAliasAsync(AliasPath + 'Display.BerryDriver.ACTUAL', NSPanel_Path + 'Berry_Driver.currentVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                 }
             } catch (err) {
-                console.warn('get_current_berry_driver_version: ' + err.message);
+                console.warn('error result in function get_current_berry_driver_version: ' + err.message);
             }
         });
     } catch (err) {
@@ -2576,7 +2583,7 @@ function get_tasmota_status0() {
                 await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Signal, ack: true });
                 await setStateAsync(NSPanel_Path + 'Tasmota.Product', <iobJS.State>{ val: 'SONOFF NSPanel', ack: true });
             } catch (err) {
-                console.warn('get_tasmota_status0' + err.message);
+                console.warn('error setState in function get_tasmota_status0' + err.message);
             }
             if (autoCreateAlias) {
                 setObject(AliasPath + 'Tasmota.Uptime', {type: 'channel', common: {role: 'info', name: 'Uptime'}, native: {}});
@@ -2628,7 +2635,7 @@ function get_online_berry_driver_version() {
                         await createAliasAsync(AliasPath + 'Berry_Driver.onlineVersion.ACTUAL', NSPanel_Path + 'Berry_Driver.onlineVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                         await setStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.State>{ val: BerryDriverVersionOnline, ack: true });
                     } catch (err) {
-                        console.log('get_online_berry_driver_version' +  err.message);
+                        console.warn('error result in function get_online_berry_driver_version' +  err.message);
                     }
                 }
             });
@@ -2658,7 +2665,7 @@ function check_version_tft_firmware() {
                     await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: NSPanelVersion, ack: true });
                 } catch (err) {
-                    console.log('check_version_tft_firmware: ' + err.message);
+                    console.warn('error result in function check_version_tft_firmware: ' + err.message);
                 }
             }
         });
@@ -2685,7 +2692,7 @@ function check_online_display_firmware() {
                     await createStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.State>{ val: desired_display_firmware_version, ack: true });
                 } catch (err) {
-                    console.warn('check_online_display_firmware' + err.message);
+                    console.warn('error result in function check_online_display_firmware' + err.message);
                 }
             }
         });
@@ -2714,7 +2721,7 @@ on({ id: config.panelRecvTopic }, async (obj) => {
                 }
             }
         } catch (err) {
-            console.warn('error rceiving CustomRecv: ' + err.message);
+            console.warn('error at trigger rceiving CustomRecv: ' + err.message);
         }
     }
 });
@@ -2774,7 +2781,7 @@ function update_tft_firmware() {
             });
 
         } catch (err) {
-            console.warn('error at function update_tft_firmware: ' + err.message);
+            console.warn('error request in function update_tft_firmware: ' + err.message);
         }
     }
 }
@@ -2808,7 +2815,7 @@ function update_tasmota_firmware() {
             });
         }    
     } catch (err) {
-        console.warn('error at function update_tasmota_firmware: ' + err.message);
+        console.warn('error request in function update_tasmota_firmware: ' + err.message);
     }
 }
 
@@ -2826,7 +2833,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
             }
         }
     } catch (err) {
-        console.warn('error with reading senor-data: '+ err.message);
+        console.warn('error at trigger with reading senor-data: '+ err.message);
     }
 });
 
@@ -2841,11 +2848,11 @@ on({ id: config.panelRecvTopic, change: 'any' }, async function (obj) {
                 let split = json.CustomRecv.split(',');
                 HandleMessage(split[0], split[1], parseInt(split[2]), split);
             } catch (err) {
-                console.warn(err.message);
+                console.warn('error json.split in  Trigger panelRecTopic: ' + err.message);
             }
         }
     } catch (err) {
-        console.warn('Trigger panelRecTopic: ' + err.message);
+        console.warn('error at Trigger panelRecTopic: ' + err.message);
     }
 });
 
@@ -2855,7 +2862,7 @@ async function SendToPanel(val: Payload | Payload[]) {
             val.forEach(function (id) {
                 setStateAsync(config.panelSendTopic, id.payload);
                 if (Debug) {
-                    console.log(id.payload);
+                    console.log('function SendToPanel payload: ' + id.payload);
                 }
             });
         } else {
@@ -2863,7 +2870,7 @@ async function SendToPanel(val: Payload | Payload[]) {
         }
 
     } catch (err) {
-        console.warn('function SendToPanel: ' + err.message);
+        console.warn('error at function SendToPanel: ' + err.message);
     }
 }
 
@@ -2871,14 +2878,14 @@ on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) =>
     try {
         if ((obj.state ? obj.state.val : '') == 'armed' || (obj.state ? obj.state.val : '') == 'disarmed' || (obj.state ? obj.state.val : '') == 'triggered') {
             if (Debug) {
-                console.log(activePage);
+                console.log('Trigger AlarmState aktivePage: ' + activePage);
             }
             if (NSPanel_Path == getState(NSPanel_Alarm_Path + 'Alarm.PANEL').val) {
                 GeneratePage(activePage);
             }
         }
     } catch (err) {
-        console.warn('Trigger AlarmState: ' + err.message);
+        console.warn('error at Trigger AlarmState: ' + err.message);
     }
 });
 
@@ -2892,6 +2899,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     HandleStartupProcess();
                     pageId = 0;
                     GeneratePage(config.pages[0]);
+                    if (Debug) console.log('HandleMessage -> Startup');
                     break;
                 case 'sleepReached':
                     useMediaEvents = false;
@@ -2899,6 +2907,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     if (pageId < 0)
                         pageId = 0;
                     HandleScreensaver();
+                    if (Debug) console.log('HandleMessage -> sleepReached');
                     break;
                 case 'pageOpenDetail':
                     screensaverEnabled = false;
@@ -2907,7 +2916,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     let pageItem = findPageItem(tempPageItem[0]);
                     if (pageItem !== undefined) {
                         if (Debug) {
-                            console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                            console.log('HandleMessage -> pageOpenDetail ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
                         }
                         SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem));
                     }
@@ -2916,20 +2925,21 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     screensaverEnabled = false;
                     HandleButtonEvent(words);
                     if (Debug) {
-                        console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                        console.log('HandleMessage -> buttonPress2 ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
                     }
                     break;
                 case 'button1':
                 case 'button2':
                     screensaverEnabled = false;
                     HandleHardwareButton(method);
+                    if (Debug) console.log('HandleMessage -> button1 /  button2')
                     break;
                 default:
                     break;
             }
         }
     } catch (err) {
-        console.warn('function HandleMessage: ' + err.message);
+        console.warn('error at function HandleMessage: ' + err.message);
     }
 }
 
@@ -2939,6 +2949,7 @@ function findPageItem(searching: String): PageItem {
         let pageItem = activePage.items.find(e => e.id === searching);
 
         if (pageItem !== undefined) {
+            if (Debug) console.log('findPageItem -> pageItem ' + pageItem);
             return pageItem;
         }
 
@@ -2948,9 +2959,11 @@ function findPageItem(searching: String): PageItem {
             return pageItem === undefined;
         });
 
+        if (Debug) console.log('findPageItem -> pageItem SubPage ' + pageItem);
+
         return pageItem;
     } catch (err) {
-        console.warn('function findPageItem: ' + err.message);
+        console.warn('error at function findPageItem: ' + err.message);
     }
 }
 
@@ -2996,7 +3009,7 @@ function GeneratePage(page: Page): void {
         if (err.message == "Cannot read properties of undefined (reading 'type')") {
             console.log('Please wait a few seconds longer when launching the NSPanel. Not all parameters are loaded yet.');
         } else {
-            console.warn('function GeneratePage: ' + err.message);
+            console.warn('error at function GeneratePage: ' + err.message);
         }
     }
 }
@@ -3010,6 +3023,7 @@ function HandleHardwareButton(method: string): void {
 
         switch(buttonConfig.mode) {
             case 'page':
+                if (Debug) console.log('HandleHardwareButton -> Mode Page');
                 if (buttonConfig.page) {
                     if(method == 'button1') {
                         pageId = -1;
@@ -3020,19 +3034,21 @@ function HandleHardwareButton(method: string): void {
                     break;
                 }
             case 'toggle':
+                if (Debug) console.log('HandleHardwareButton -> Mode Toggle');
                 if (buttonConfig.entity) {
                     let current = getState(buttonConfig.entity).val;
                     setState(buttonConfig.entity, !current);
                 }
                 break;
             case 'set':
+                if (Debug) console.log('HandleHardwareButton -> Mode Set');
                 if (buttonConfig.entity) {
                     setState(buttonConfig.entity, buttonConfig.setValue);
                 }
                 break;
         }
     } catch (err) {
-        console.warn('function HandleHardwareButton: ' + err.message);
+        console.warn('error at function HandleHardwareButton: ' + err.message);
     }
 }
 
@@ -3058,7 +3074,7 @@ function SendDate(): void {
         if (err.message = 'Cannot convert undefined or null to object') {
             console.log('Datumsformat noch nicht initialisiert');
         } else {
-            console.warn('function SendDate: ' + err.message);
+            console.warn('error at function SendDate: ' + err.message);
         }
     }
 }
@@ -3071,7 +3087,7 @@ function SendTime(): void {
 
         SendToPanel(<Payload>{ payload: 'time~' + hr + ':' + min });
     } catch (err) {
-        console.warn('function SendTime: ' + err.message);
+        console.warn('error at function SendTime: ' + err.message);
     }
 }
 
@@ -3082,7 +3098,7 @@ function GenerateEntitiesPage(page: PageEntities): Payload[] {
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs
     } catch (err) {
-        console.warn('function GenerateEntitiesPage: ' + err.message);
+        console.warn('error at function GenerateEntitiesPage: ' + err.message);
     }
 }
 
@@ -3092,7 +3108,7 @@ function GenerateGridPage(page: PageGrid): Payload[] {
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err) {
-        console.warn('function GenerateGridPage: ' + err.message);
+        console.warn('error at function GenerateGridPage: ' + err.message);
     }
 }
 
@@ -3141,9 +3157,10 @@ function GeneratePageElements(page: Page): string {
                 pageData += CreateEntity(page.items[index], index + 1, page.useColor);
             }
         }
+        if (Debug) console.log('GeneratePageElements pageData ' + pageData);
         return pageData;
     } catch (err) {
-        console.warn('function GeneratePageElements: ' + err.message);
+        console.warn('error at function GeneratePageElements: ' + err.message);
     }
 }
 
@@ -3223,6 +3240,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
                     iconColor = GetIconColor(pageItem, true, useColors);
 
+                    if (Debug) console.log('CreateEntity statisch Icon Navi  ~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText)
                     return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;
                 } else if (pageItem.id != null && pageItem.targetPage != undefined){
                     let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
@@ -3281,13 +3299,15 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         default:
                             return '~delete~~~~~';
                     }
+                    if (Debug) console.log('CreateEntity Dynamische Icon Navi  ~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText)
                     return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;   
                 } else {
                     type = 'button';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
                     iconColor = GetIconColor(pageItem, true, useColors);
                     let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
- 
+
+                    if (Debug) console.log('CreateEntity Standard ~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText)
                     return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;                    
                 } 
             } 
@@ -3311,7 +3331,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             }
                         }
                     }
-
+                    
+                    if (Debug) console.log('CreateEntity Icon role socket/light ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'hue':
@@ -3341,6 +3362,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
 
+                    if (Debug) console.log('CreateEntity Icon role hue ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'ct':
@@ -3360,6 +3382,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
 
+                    if (Debug) console.log('CreateEntity Icon role ct ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'rgb':
@@ -3389,6 +3412,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     } 
 
+                    if (Debug) console.log('CreateEntity Icon role rgb ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'cie':
@@ -3420,6 +3444,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     } 
 
+                    if (Debug) console.log('CreateEntity Icon role cie/rgbSingle ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'dimmer':
@@ -3439,6 +3464,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
 
+                    if (Debug) console.log('CreateEntity Icon role dimmer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'blind':
@@ -3446,6 +3472,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
 
+                    if (Debug) console.log('CreateEntity Icon role blind ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~';
 
                 case 'gate':
@@ -3466,6 +3493,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     }
 
+                    if (Debug) console.log('CreateEntity Icon role gate ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
 
                 case 'door':
@@ -3485,10 +3513,10 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
 
+                    if (Debug) console.log('CreateEntity Icon role door/window ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
 
                 case 'motion': 
-                
                     type = 'text';
                     if (val === true) {
                         optVal = 'On';
@@ -3500,6 +3528,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('motion-sensor');
                     }
 
+                    if (Debug) console.log('CreateEntity Icon role motion ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'info':
@@ -3565,6 +3594,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = optVal; 
                     }
 
+                    if (Debug) console.log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat');
+                    if (Debug) console.log('CreateEntity  ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal+ ' ' + unit);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
 
                 case 'buttonSensor':
@@ -3574,6 +3605,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
                     let inSelText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
 
+                    if (Debug) console.log('CreateEntity  Icon role buttonSensor ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText;
 
                 case 'button':
@@ -3582,6 +3614,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
                     let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
 
+                    if (Debug) console.log('CreateEntity  Icon role button ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
 
                 case 'level.timer':
@@ -3595,6 +3628,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         RegisterEntityWatcher(pageItem.id + '.STATE');
                     }
 
+                    if (Debug) console.log('CreateEntity  Icon role level.timeer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText;
 
                 case 'level.mode.fan':
@@ -3615,6 +3649,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
 
+                    if (Debug) console.log('CreateEntity  Icon role level.mode.fan ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;                
                     
                 case 'lock':
@@ -3636,6 +3671,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
                     }
 
+                    if (Debug) console.log('CreateEntity  Icon role lock ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState;
 
                 case 'slider':
@@ -3644,6 +3680,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     iconColor = GetIconColor(pageItem, false, useColors);
 
+                    if (Debug) console.log('CreateEntity  Icon role slider ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
 
                 case 'volumeGroup':
@@ -3665,6 +3702,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = Icons.GetIcon('volume-mute');
                     }
 
+                    if (Debug) console.log('CreateEntity  Icon role volumeGroup/volume ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue);
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
 
                 case 'warning':
@@ -3681,20 +3719,22 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = itemInfo; 
                     }
 
+                    if (Debug) console.log('CreateEntity  Icon role warning ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo);
                     return '~' + type + '~' + itemName + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo;
 
                 default:
+                    if (Debug) console.log('CreateEntity Icon keine passende Rolle gefunden');
                     return '~delete~~~~~';
             }
             
         }
-        
+        if (Debug) console.log('CreateEntity  return ~delete~~~~~');
         return '~delete~~~~~';
     } catch (err) {
         if (err.message == "Cannot read properties of undefined (reading 'common')") {
             console.warn('Found Alias without channel: ' + pageItem.id + '! Please correct the Alias');
         } else {
-            console.warn('function CreateEntity: ' + err.message);
+            console.warn('error at function CreateEntity: ' + err.message);
         }
     }
 }
@@ -3723,7 +3763,7 @@ function findLocale(controlsObject: string, controlsState: string): string {
                 console.log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState);
             }
         } else {
-            console.warn('function findLocale: ' + err.message);
+            console.warn('error at function findLocale: ' + err.message);
         }
         return controlsState;
     }
@@ -3755,7 +3795,7 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
 
         return rgb_dec565(pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor);
     } catch (err) {
-        console.warn('function GetIconColor: ' + err.message);
+        console.warn('error at function GetIconColor: ' + err.message);
     }
 }
 
@@ -3777,7 +3817,7 @@ function RegisterEntityWatcher(id: string): void {
             }
         }));
     } catch (err) {
-        console.warn('function RegisterEntityWatcher: ' + err.message);
+        console.warn('error at function RegisterEntityWatcher: ' + err.message);
     }
 }
 
@@ -3791,7 +3831,7 @@ function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: strin
             SendToPanel(GenerateDetailPage(type, undefined, pageItem));
         }))
     } catch (err) {
-        console.warn('function RegisterDetailEntityWatcher: ' + err.message);
+        console.warn('error at function RegisterDetailEntityWatcher: ' + err.message);
     }
 }
 
@@ -3811,7 +3851,7 @@ function GetUnitOfMeasurement(id: string): string {
 
         return '';
     } catch (err) {
-        console.warn('function GetUnitOfMeasurement: ' + err.message);
+        console.warn('error at function GetUnitOfMeasurement: ' + err.message);
     }
 }
 
@@ -4128,11 +4168,11 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
         }
 
         if (Debug) {
-            console.log(out_msgs);
+            console.log('GenerateThermoPage payload: ' + out_msgs);
         }
         return out_msgs;
     } catch (err) {
-        console.warn('function GenerateThermoPage: ' + err.message);
+        console.warn('error at function GenerateThermoPage: ' + err.message);
     }
 }
 
@@ -4161,6 +4201,7 @@ function unsubscribeMediaSubscriptions(): void {
             unsubscribe(mediaID + '.SHUFFLE')
         }
     }
+    if (Debug) console.log('unsubscribeMediaSubscriptions gestartet');
 } 
 
 function subscribeMediaSubscriptions(id: string): void {
@@ -4198,7 +4239,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     await createAliasAsync(id + '.REPEAT', dpPath + '.Player.controlRepeat', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT' });
                     await createAliasAsync(id + '.SHUFFLE', dpPath + '.Player.controlShuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });        
                 } catch (err) {
-                    console.warn('function createAutoMediaAlias: ' + err.message);
+                    console.warn('error at function createAutoMediaAlias Adapter Alexa2: ' + err.message);
                 }
             }
         }
@@ -4226,7 +4267,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     await createAliasAsync(id + '.SHUFFLE', dpPath + 'player.shuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'SHUFFLE' });
                 
                 } catch (err) {
-                    console.warn('function createAutoMediaAlias: ' + err.message);
+                    console.warn('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message);
                 }
             }
         }
@@ -4253,7 +4294,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
                     await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
                 } catch (err) {
-                    console.warn('function createAutoMediaAlias: ' + err.message);
+                    console.warn('error at function createAutoMediaAlias Adapter sonos: ' + err.message);
                 }
             }
         }
@@ -4280,7 +4321,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     await createAliasAsync(id + '.SHUFFLE', dpPath + 'queue.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
                     await createAliasAsync(id + '.status', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon>{ type: 'string', role: 'media.state', name: 'status' });
                 } catch (err) {
-                    console.warn('function createAutoMediaAlias: ' + err.message);
+                    console.warn('error function createAutoMediaAlias Adapter volumio: ' + err.message);
                 }
             }
         }
@@ -4306,7 +4347,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: { id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1' }});
                     await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon>{type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
                 } catch (err) {
-                    console.warn('function createAutoMediaAlias: ' + err.message);
+                    console.warn('error at function createAutoMediaAlias Adapter Squeezebox: ' + err.message);
                 }
             }
         }
@@ -4545,9 +4586,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                             async (error, response, result) => {
                                 try { 
                                     page.items[0].playList = JSON.parse(result);
-                                    if (Debug) console.log(page.items[0].playList); 
+                                    if (Debug) console.log('volumio-playlist: ' + page.items[0].playList); 
                                 } catch (err) { 
-                                    console.log('get_volumio-playlist: ' + err.message); 
+                                    console.warn('get_volumio-playlist: ' + err.message); 
                                 }
                             } 
                         );
@@ -4572,9 +4613,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                 try { 
                                     const QUEUELIST = JSON.parse(result);
                                     page.items[0].globalTracklist = QUEUELIST.queue;
-                                    if (Debug) { for (let i_index in QUEUELIST.queue) console.log(QUEUELIST.queue[i_index]); }
+                                    if (Debug) { for (let i_index in QUEUELIST.queue) console.log('volumio-queue: ' + QUEUELIST.queue[i_index]); }
                                 } catch (err) { 
-                                    console.log('get_volumio-queue: ' + err.message); 
+                                    console.warn('get_volumio-queue: ' + err.message); 
                                 }
                             } 
                         );
@@ -4686,11 +4727,11 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             });
         }
         if (Debug) {
-            console.log(out_msgs);
+            console.log('GenerateMediaPage payload: ' + out_msgs);
         }
         return out_msgs
     } catch (err) {
-        console.warn('function GenerateMediaPage: ' + err.message);
+        console.warn('error at function GenerateMediaPage: ' + err.message);
     }
 }
 
@@ -4724,7 +4765,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             let flashing = 'disable';
 
             if (Debug) {
-                console.log(id);
+                console.log('GenerateAlarmPage pageid: ' + id);
             }
 
             if (entityState == 'armed' || entityState == 'triggered') {
@@ -4794,12 +4835,12 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             });
 
             if (Debug) {
-                console.log(out_msgs);
+                console.log('GenerateAlarmPage payload: ' + out_msgs);
             }
             return out_msgs;
         }
     } catch (err) {
-        console.warn('function GenerateAlarmPage: ' + err.message);
+        console.warn('error at function GenerateAlarmPage: ' + err.message);
     }
 }
 
@@ -4849,12 +4890,12 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
             });
 
         if (Debug) {
-            console.log(out_msgs);
+            console.log('GenerateUnlockPage payload: ' + out_msgs);
         }
         return out_msgs;
         
     } catch (err) {
-        console.warn('function GenerateAlarmPage: ' + err.message);
+        console.warn('error at function GenerateUnlockPage: ' + err.message);
     }
 }
 
@@ -4921,10 +4962,13 @@ function GenerateQRPage(page: PageQR): Payload[] {
                 optionalValue2
         });
 
+        if (Debug) {
+            console.log('GenerateQRPage payload: ' + out_msgs);
+        }
         return out_msgs;
 
     } catch (err) {
-        console.warn('function GenerateQRPage: ' + err.message);
+        console.warn('error at function GenerateQRPage: ' + err.message);
     }
 }
 
@@ -4941,6 +4985,7 @@ function unsubscribePowerSubscriptions(): void {
             unsubscribe(powerID + '.ACTUAL');
         }
     }
+    if (Debug) console.log('unsubscribePowerSubscriptions getstartet');
 } 
 
 function subscribePowerSubscriptions(id: string): void {
@@ -5044,11 +5089,11 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             // 1st to 6th Item
                 power_string
         });
-        if (Debug) console.log(out_msgs);
+        if (Debug) console.log('GeneratePowerPage payload: ' + out_msgs);
         return out_msgs;
 
     } catch (err) {
-        console.warn('function GeneratePowerPage: ' + err.message);
+        console.warn('error at function GeneratePowerPage: ' + err.message);
     }
 };
 
@@ -5076,10 +5121,11 @@ function GenerateChartPage(page: PageChart): Payload[] {
                         txt
         });     
 
+        if (Debug) console.log('GenerateChartPage payload: ' + out_msgs);
         return out_msgs;
 
     } catch (err) {
-        console.warn('function GenerateChartPage: ' + err.message);
+        console.warn('error at function GenerateChartPage: ' + err.message);
     }
 }
 
@@ -5100,7 +5146,7 @@ function setIfExists(id: string, value: any, type: string | null = null): boolea
 
         return false;
     } catch (err) {
-        console.warn('function setIfExists: ' + err.message);
+        console.warn('error at function setIfExists: ' + err.message);
     }
 }
 
@@ -5113,7 +5159,7 @@ function toggleState(id: string): boolean {
         }
         return false;
     } catch (err) {
-        console.warn('function toggleState: ' + err.message);
+        console.warn('error at function toggleState: ' + err.message);
     }
 }
 
@@ -5128,7 +5174,7 @@ function triggerButton(id: string): boolean{
 		}	
 		return false;	
 	}  catch (err) {	
-        console.warn('function triggerButton: ' + err.message);	
+        console.warn('error at function triggerButton: ' + err.message);	
     }		
 }	
 // End Monobutton
@@ -5140,7 +5186,7 @@ function HandleButtonEvent(words: any): void {
         let buttonAction = words[3];
 
         if (Debug) {
-            console.log(words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId);
+            console.log('HandleButtonEvent übergebene Werte ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId);
         }
 
         if ((words[2]).substring(0, 8) == 'navigate') {
@@ -5153,7 +5199,7 @@ function HandleButtonEvent(words: any): void {
         }
 
         if (Debug) {
-            console.log(buttonAction);
+            console.log('HandleButtonEvent buttonAction: ' + buttonAction);
         }
 
         if (buttonAction.startsWith('swipe')) {
@@ -5221,6 +5267,9 @@ function HandleButtonEvent(words: any): void {
                 GeneratePage(eval(activePage.prev));
                 break;
             case 'bExit':
+                if (Debug) {
+                    console.log('HandleButtonEvent -> bExit: ' + words[2] + ' - ' + words[4] + ' - ' + pageId);
+                }
                 if (words[2] == 'screensaver') {
                     if (getState(NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick').val) {
                         if (words[4] >= 2) {
@@ -5254,7 +5303,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'bHome':
                 if (Debug) {
-                    console.log('bExit: ' + words[4] + ' - ' + pageId);
+                    console.log('HandleButtonEvent -> bHome: ' + words[4] + ' - ' + pageId);
                 }
                 UnsubscribeWatcher();
                 if (activePage.home != undefined) {
@@ -5369,7 +5418,7 @@ function HandleButtonEvent(words: any): void {
                                                 setIfExists(id + '.REPEAT', false);
                                             }
                                         } catch (err) {
-                                            console.log('Repeat kann nicht verändert werden');
+                                            console.warn('ALEXA2: Repeat kann nicht verändert werden');
                                         }
                                         break;
                                     case 'volumio':
@@ -5390,7 +5439,7 @@ function HandleButtonEvent(words: any): void {
                                                     break;
                                             }
                                         } catch (err) {
-                                            console.log('Repeat kann nicht verändert werden');
+                                            console.warn('Squeezebox: Repeat kann nicht verändert werden');
                                         }
                                         break;
                                 }
@@ -5475,10 +5524,10 @@ function HandleButtonEvent(words: any): void {
                 let colorCoordinates = words[4].split('|');
                 let rgb = pos_to_color(colorCoordinates[0], colorCoordinates[1]);
                 if (Debug) {
-                    console.log(rgb);
+                    console.log('HandleButtonEvent colorWeel -> rgb-Wert: ' + rgb);
                 }
                 if (Debug) {
-                    console.log(getHue(rgb.red, rgb.green, rgb.blue));
+                    console.log('HandleButtonEvent colorWeel -> getHue-Werte: ' + getHue(rgb.red, rgb.green, rgb.blue));
                 }
                 let o = getObject(id);
                 switch (o.common.role) {
@@ -5496,7 +5545,7 @@ function HandleButtonEvent(words: any): void {
                             //Für z.B. Deconz XY
                             setIfExists(id + ".RGB", rgb_to_cie(rgb.red, rgb.green, rgb.blue));
                             if (Debug) {
-                                console.log(rgb_to_cie(rgb.red, rgb.green, rgb.blue));
+                                console.log('HandleButtonEvent colorWeel colorMode=xy -> rgb_to_cie Wert: ' + rgb_to_cie(rgb.red, rgb.green, rgb.blue));
                             }
                         }
                         else {
@@ -5526,7 +5575,7 @@ function HandleButtonEvent(words: any): void {
                 let adaInstanceSplit = pageItemTemp.adapterPlayerInstance.split('.');
                 if (adaInstanceSplit[0] == 'squeezeboxrpc') {
                     let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
-                    console.log(adapterPlayerInstanceStateSeceltor);
+                    if (Debug) console.log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor);
                     let stateVal = getState(adapterPlayerInstanceStateSeceltor).val;
                     if (stateVal == 0) {
                         setState(adapterPlayerInstanceStateSeceltor, 1);
@@ -5536,7 +5585,7 @@ function HandleButtonEvent(words: any): void {
                         setState(adapterPlayerInstanceStateSeceltor, 1);
                     }
                 } else {
-                    console.log(getState(id + '.STATE').val);
+                    if (Debug) console.log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val);
                     if (getState(id + '.STATE').val === true) {
                         setIfExists(id + '.PAUSE', true);
                     } else {
@@ -5575,7 +5624,7 @@ function HandleButtonEvent(words: any): void {
                         for (let i_index in i_list) {
                             let i = i_list[i_index];
                             if ((getState(i).val) === pageItem.speakerList[words[4]]) {
-                                console.log(getState(i).val + ' - ' + pageItem.speakerList[words[4]]);
+                                if (Debug) console.log('HandleButtonEvent mode-Speakerlist Alexa2: ' + getState(i).val + ' - ' + pageItem.speakerList[words[4]]);
                                 let deviceId = i;
                                 deviceId = deviceId.split('.');
                                 setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + pageItem.speakerList[words[4]]);
@@ -5601,7 +5650,7 @@ function HandleButtonEvent(words: any): void {
                 switch (deviceAdapterPL) {
                     case 'spotify-premium':
                         let strDevicePI = pageItemPL.playList[words[4]];
-                        console.log(strDevicePI);
+                        if (Debug) console.log('HandleButtonEvent mode-playlist Spotify -> strDevicePI:  ' + strDevicePI);
                         let playlistListString = (getState(adapterInstancePL + 'playlists.playlistListString').val).split(';');
                         let playlistListIds = (getState(adapterInstancePL + 'playlists.playlistListIds').val).split(';');
                         let playlistIndex = playlistListString.indexOf(strDevicePI);
@@ -5663,7 +5712,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-equalizer':
                 let pageItemEQ = findPageItem(id);
-                if (Debug) console.log(id);
+                if (Debug) console.log('HandleButtonEvent mode-equalizer -> id: ' + id);
                 let lastIndex = (id.split('.')).pop();
                 setState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', pageItemEQ.equalizerList[words[4]]);
                 setTimeout(async function () {
@@ -5848,10 +5897,10 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'D1': // Alarm-Page Alarm Deaktivieren
                 if (Debug) {
-                    console.log('D1: ' + getState(id + '.PIN').val);
+                    console.log('HandleButtonEvent Alarmpage D1 -> PIN: ' + getState(id + '.PIN').val);
                 }
                 if (Debug) {
-                    console.log(words[4]);
+                    console.log('HandleButtonEvent Alarmpage D1 -> words[4]: ' + words[4]);
                 }
                 if (words[4] != '') {
                     if (getState(id + '.PIN').val == words[4]) {
@@ -5883,7 +5932,7 @@ function HandleButtonEvent(words: any): void {
                 break;
         }
     } catch (err) {
-        console.log('function HandleButtonEvent: ' + err.message);
+        console.warn('error at function HandleButtonEvent: ' + err.message);
     }
 }
 
@@ -5892,7 +5941,7 @@ function GetNavigationString(pageId: number): string {
     try {
 
         if (Debug) {
-            console.log(pageId);
+            console.log('GetNavigationString Übergabe pageId: ' + pageId);
         }
 
         var navigationString:string = "";
@@ -5987,12 +6036,12 @@ function GetNavigationString(pageId: number): string {
         }
 
     } catch (err) {
-        console.log('function GetNavigationString: ' + err.message);
+        console.warn('error at function GetNavigationString: ' + err.message);
     }
 }
 
 function GenerateDetailPage(type: string, optional: string, pageItem: PageItem): Payload[] {
-    if (Debug) console.log(type + ' - ' + optional + ' - ' + pageItem.id);
+    if (Debug) console.log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id);
     try {
         let out_msgs: Array<Payload> = [];
         let id = pageItem.id;
@@ -6043,8 +6092,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + 'disable' + '~'   // colorMode
                             + ''        + '~'   // Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });         // Brightness-Bezeichnung
+                            + findLocale('lights', 'Brightness')          // Brightness-Bezeichnung
+                    });
                 }
 
                 // Dimmer
@@ -6069,7 +6118,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             brightness = getState(id + '.ACTUAL').val;
                         }
                     } else {
-                        console.warn('Alisas-Datenpunkt: ' + id + '.ACTUAL could not be read');
+                        console.warn('function GenerateDetailPage  role:dimmer -> Alisas-Datenpunkt: ' + id + '.ACTUAL could not be read');
                     }
 
                     if (val === true) {
@@ -6092,9 +6141,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + 'disable' + '~'   //colorMod
                             + ''        + '~'   //Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')
-                    });         //Brightness-Bezeichnung
-
+                            + findLocale('lights', 'Brightness')           //Brightness-Bezeichnung
+                    });
                 }
 
                 // HUE-Licht
@@ -6113,7 +6161,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                         RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
                     } else {
-                        console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                        console.warn('function GenerateDetailPage role:hue -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
                     }
 
                     if (val === true) {
@@ -6145,7 +6193,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
-                        console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                        console.warn('function GenerateDetailPage role:hue -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
                     out_msgs.push({
@@ -6179,7 +6227,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                         RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
                     } else {
-                        console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                        console.warn('function GenerateDetailPage role:rgb -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
                     }
 
                     if (val === true) {
@@ -6210,7 +6258,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
-                        console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                        console.warn('function GenerateDetailPage role:rgb -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
                     out_msgs.push({
@@ -6244,7 +6292,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                         RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
                     } else {
-                        console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                        console.warn('function GenerateDetailPage role:rgbSingle -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
                     }
 
                     if (val === true) {
@@ -6268,8 +6316,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                     }
 
-                    let colorTemp = 0;
+                    let colorTemp:any;
                     if (existsState(id + '.TEMPERATURE')) {
+                        colorTemp = 0;
                         if (getState(id + '.TEMPERATURE').val != null) {
                             if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
                                 colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
@@ -6279,7 +6328,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
-                        console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                        colorTemp = 'disable';
+                    //    console.warn('function GenerateDetailPage role:rgbSingle -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
                     out_msgs.push({
@@ -6313,7 +6363,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                         RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
                     } else {
-                        console.warn('Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                        console.warn('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
                     }
 
                     if (val === true) {
@@ -6336,7 +6386,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
-                        console.warn('Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                        console.warn('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
                     out_msgs.push({
@@ -6618,7 +6668,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
             
                             let tPlayList: any = []
                             for (let i = 0; i < pageItem.playList.length; i++) {
-                                console.log(pageItem.playList[i]);
+                                if (Debug) console.log('function GenerateDetailPage role:media -> Playlist ' + pageItem.playList[i]);
                                 let tempItem = pageItem.playList[i].split('.');
                                 tPlayList[i] = tempItem[1];
                             }
@@ -6675,7 +6725,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             if (temp_cut_array == undefined) {
                                 temp_cut_array = getAttr(globalTracklist, track_index + '.name');
                             }
-                            if (Debug) console.log(temp_cut_array);
+                            if (Debug) console.log('function GenerateDetailPage role:media tracklist -> ' + temp_cut_array);
                             if (temp_cut_array != undefined) {
                                 temp_cut_array = (temp_cut_array.replace('?','')).split(' -');
                                 temp_cut_array = temp_cut_array[0].split(" (");
@@ -6761,7 +6811,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
         return out_msgs;
 
     } catch (err) {
-        console.log('function GenerateDetailPage: ' + err.message);
+        console.warn('error at function GenerateDetailPage: ' + err.message);
     }
 }
 
@@ -6769,7 +6819,7 @@ function scale(number: number, inMin: number, inMax: number, outMin: number, out
     try {
         return (outMax + outMin) - ((number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin);
     } catch (err) {
-        console.log('function scale: ' + err.message);
+        console.warn('error at function scale: ' + err.message);
     }
 }
 
@@ -6780,7 +6830,7 @@ function UnsubscribeWatcher(): void {
             delete subscriptions[key];
         }
     } catch (err) {
-        console.log('function UnsubscribeWatcher: ' + err.message);
+        console.warn('error at function UnsubscribeWatcher: ' + err.message);
     }
 }
 
@@ -7118,7 +7168,7 @@ function HandleScreensaverUpdate(): void {
                                     val + '~';
                 }
             }
-            if (Debug) console.log('weatherUpdate~' + payloadString);
+            if (Debug) console.log('HandleScreensaverUpdate payload: weatherUpdate~' + payloadString);
 
             SendToPanel(<Payload>{ payload: 'weatherUpdate~' + payloadString });
 
@@ -7127,7 +7177,7 @@ function HandleScreensaverUpdate(): void {
         }
 
     } catch (err) {
-        console.log('HandleScreensaverUpdate: ' + err.message);
+        console.warn('error at function HandleScreensaverUpdate: ' + err.message);
     }
 }
 
@@ -7287,7 +7337,7 @@ function HandleScreensaverStatusIcons() : void {
         SendToPanel(<Payload>{ payload: 'statusUpdate~' + payloadString });
 
     } catch (err) {
-        console.log('HandleScreensaverStatusIcons: ' + err.message);
+        console.warn('error at function HandleScreensaverStatusIcons: ' + err.message);
     }
 }
 
@@ -7380,7 +7430,7 @@ function HandleScreensaverColors(): void {
 
         SendToPanel(<Payload>{ payload: payloadString });
     } catch (err) {
-        console.warn('HandleScreensaverColors: '+ err.message);
+        console.warn('error at function HandleScreensaverColors: '+ err.message);
     }
 }
 
@@ -7425,7 +7475,7 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
         }
         return colorReturn;
     } catch (err) {
-        console.warn('GetScreenSaverEntityColor: '+ err.message);
+        console.warn('error at function GetScreenSaverEntityColor: '+ err.message);
     }
 }
 
@@ -7506,7 +7556,7 @@ function GetAccuWeatherIcon(icon: number): string {
                 return 'alert-circle-outline';
         }
     } catch (err) {
-        console.warn('GetAccuWeatherIcon: '+ err.message);
+        console.warn('error at function GetAccuWeatherIcon: '+ err.message);
     }
 }
 
@@ -7585,7 +7635,7 @@ function GetAccuWeatherIconColor(icon: number): number {
                 return rgb_dec565(White);
         }
     } catch (err) {
-        console.warn('GetAccuWeatherIconColor: '+ err.message);
+        console.warn('error at function GetAccuWeatherIconColor: '+ err.message);
     }
 }
 
@@ -7644,7 +7694,7 @@ function GetDasWetterIcon(icon: number): string {
                 return 'alert-circle-outline';
         }
     } catch (err) {
-        console.warn('GetDasWetterIcon: '+ err.message);
+        console.warn('error at function GetDasWetterIcon: '+ err.message);
     }
 }
  
@@ -7703,7 +7753,7 @@ function GetDasWetterIconColor(icon: number): number {
                 return rgb_dec565(White);
         }
     } catch (err) {
-        console.warn('GetDasWetterIconColor: '+ err.message);
+        console.warn('error at function GetDasWetterIconColor: '+ err.message);
     }
 }
 
@@ -7739,7 +7789,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
             await createAliasAsync(AliasPath + 'Sensor.TempUnit.ACTUAL', NSPanel_Path + 'Sensor.TempUnit', true, <iobJS.StateCommon>{ type: 'string' });
         }
     } catch (err) {
-        console.warn('error with reading senor-data: '+ err.message);
+        console.warn('error Trigger reading senor-data: '+ err.message);
     }
 });
 //------------------End Read Internal Sensor Data
