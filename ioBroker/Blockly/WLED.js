@@ -29,7 +29,7 @@ on({id: userdataPath + 'Colors', change: "ne"}, async function (obj) {
     let wledObj = getObject(wledPath + 'seg.0.pal');
     let tempStringColor = colorsList[obj.state.val]
 
-    for (let i = 1; i < 71; i++) {
+    for (let i = 0; i < 71; i++) {
         if (wledObj.common.states[i] == undefined) {
             break;
         }
@@ -46,7 +46,7 @@ on({id: userdataPath + 'Effects', change: "ne"}, async function (obj) {
     let wledObj = getObject(wledPath + 'seg.0.fx');
     let tempStringEffect = effectsList[obj.state.val]
 
-    for (let i = 1; i < 118; i++) {
+    for (let i = 0; i < 118; i++) {
         if (wledObj.common.states[i] == undefined) {
             break;
         }
