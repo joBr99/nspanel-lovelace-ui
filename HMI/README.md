@@ -805,9 +805,9 @@ Possible entities on cardEntities/cardGrid:
 </tbody>
 </table>
 
-### cardGird Page
+### cardGrid Page
 
-cardGrid is using the exact same message cardEntities is using; it ignores the information supplied in optionalValue, because it isn't needed for cardGrid
+cardGrid is using the exact same messageformat like cardEntities does. The only difference is, it ignores the information supplied in optionalValue, because it isn't needed for cardGrid.
 
 <table>
 <thead>
