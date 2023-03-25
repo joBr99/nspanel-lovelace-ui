@@ -1124,7 +1124,7 @@ Text tIcon1
         Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 16
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
@@ -1154,7 +1154,7 @@ Text tIcon2
         Vertical Alignment                  : top
         Input Type                          : character
         Text                                : 
-        Max. Text Size                      : 10
+        Max. Text Size                      : 16
         Word wrap                           : disabled
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0

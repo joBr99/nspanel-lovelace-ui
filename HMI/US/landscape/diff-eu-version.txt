@@ -13,6 +13,25 @@
 │ -    lcd_dev fffb 0002 0000 0020
 │ +    //lcd_dev fffb 0002 0000 0020
 │      page pageStartup
+│   --- HMI/n2t-out/cardQR.txt
+├── +++ HMI/US/landscape/n2t-out/cardQR.txt
+│ @@ -751,15 +751,15 @@
+│              if(sleepTimeout!=0&&dimValue!=dim)
+│              {
+│                  sleepValue+=1
+│                  if(sleepTimeout<=sleepValue)
+│                  {
+│                      sleepValue=0
+│                      dim=dimValue
+│ -                    tSend.txt="event,sleepReached,cardQR"
+│ +                    tSend.txt="event,sleepReached,cardAlarm"
+│                      //send calc crc
+│                      btlen tSend.txt,sys0
+│                      crcrest 1,0xffff // reset CRC
+│                      crcputh 55 bb
+│                      crcputs sys0,2
+│                      crcputs tSend.txt,0
+│                      //send cmd
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
 │ @@ -179,15 +179,15 @@
@@ -163,6 +182,34 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
+│ @@ -442,25 +418,25 @@
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : 
+│ -        Max. Text Size                      : 16
+│ +        Max. Text Size                      : 10
+│      
+│  Text tIcon2
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : 
+│ -        Max. Text Size                      : 16
+│ +        Max. Text Size                      : 10
+│      
+│  Text tMainIcon
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
 │ @@ -614,15 +590,14 @@
 │                                          if(tTmp.txt!="")
 │                                          {

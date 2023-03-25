@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-02-27 18:57:41.462287194 +0000
++++ /dev/fd/62	2023-03-25 14:31:18.150326646 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +I/n2t-out/cardEntities.txt
@@ -800,6 +800,25 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
++I/n2t-out/cardQR.txt
+++ HMI/US/portrait/n2t-out/cardQR.txt
++15 +751,15 @@
++     if(sleepTimeout!=0&&dimValue!=dim)
++     {
++         sleepValue+=1
++         if(sleepTimeout<=sleepValue)
++         {
++             sleepValue=0
++             dim=dimValue
++             tSend.txt="event,sleepReached,cardQR"
++             tSend.txt="event,sleepReached,cardAlarm"
++             //send calc crc
++             btlen tSend.txt,sys0
++             crcrest 1,0xffff // reset CRC
++             crcputh 55 bb
++             crcputs sys0,2
++             crcputs tSend.txt,0
++             //send cmd
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 +0 +35,14 @@
@@ -935,6 +954,34 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
++25 +418,25 @@
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 16
++ Max. Text Size                      : 10
++
++con2
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 16
++ Max. Text Size                      : 10
++
++ainIcon
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
 +15 +590,14 @@
 +                                 if(tTmp.txt!="")
 +                                 {

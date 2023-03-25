@@ -10,10 +10,6 @@ popupThermo
 	44   Component(s)
 	519  Line(s) of event code
 	274  Unique line(s) of event code
-cardQR
-	34   Component(s)
-	406  Line(s) of event code
-	236  Unique line(s) of event code
 pageStartup
 	20   Component(s)
 	189  Line(s) of event code
@@ -50,6 +46,10 @@ cardThermo
 	57   Component(s)
 	536  Line(s) of event code
 	317  Unique line(s) of event code
+cardQR
+	34   Component(s)
+	406  Line(s) of event code
+	236  Unique line(s) of event code
 popupInSel
 	34   Component(s)
 	617  Line(s) of event code
@@ -66,10 +66,6 @@ cardMedia
 	59   Component(s)
 	645  Line(s) of event code
 	320  Unique line(s) of event code
-screensaver2
-	59   Component(s)
-	354  Line(s) of event code
-	251  Unique line(s) of event code
 cardPower
 	54   Component(s)
 	523  Line(s) of event code
@@ -86,9 +82,13 @@ cardEntities
 	67   Component(s)
 	1166 Line(s) of event code
 	530  Unique line(s) of event code
+screensaver2
+	59   Component(s)
+	354  Line(s) of event code
+	251  Unique line(s) of event code
 
 Total
 	21   Page(s)
 	802  Component(s)
 	9246 Line(s) of event code
-	2340 Unique line(s) of event code
+	2341 Unique line(s) of event code
