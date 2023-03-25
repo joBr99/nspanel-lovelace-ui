@@ -1,4 +1,4 @@
-# NSPanel Lovelance UI
+# NSPanel Lovelace UI
 
 The HMI Project of this project is only used to display stuff, navigation ist mostly up to the backend. This allows to be way more flexible.
 
