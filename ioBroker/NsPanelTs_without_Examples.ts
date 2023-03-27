@@ -1,13 +1,12 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.4.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
-- abgestimmt auf TFT 50 / v4.0.4 / BerryDriver 8 / Tasmota 12.4.0
+TypeScript v4.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+- abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
-
 *******************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
@@ -16,7 +15,6 @@ In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
 unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Dowengrade 
 durchführen und FlashNextion wiederholen.
 *******************************************************************************
-
 ReleaseNotes:
     Bugfixes und Erweiterungen:
         - 07.10.2022 - v3.5.0   Upgrade TFT 43
@@ -121,18 +119,16 @@ ReleaseNotes:
         - 13.03.2023 - v4.0.4.3 Fix Funktion GeneratePowerPage inkl. DemoModus
         - 14.03.2023 - v4.0.4.4 Fix colorTempSlider Arbeitsweise(seitenverkehrt) korregiert
         - 17.03.2023 - v4.0.4.5 Debug - Error - Log - Meldungen angepasst, rgbSingle benötigt nicht mehr DP .TEMPERATURE
-
+	- 27.03.2023 - v4.0.5   Upgrade TFT 50 / 4.0.5
+	- 27.03.2023 - v4.0.5   Add Strings to function HandleScreensaverStatusIcons()
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
 ***********************************************************************************************************
-
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
-
 Tasmota Konsole:
     Rule2 on Button1#state do Publish %topic%/tele/RESULT {"CustomRecv":"event,button1"} endon on Button2#state do Publish %topic%/tele/RESULT {"CustomRecv":"event,button2"} endon
     Rule2 1 (Rule aktivieren)
     Rule2 0 (Rule deaktivieren)
-
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
@@ -144,17 +140,14 @@ Mögliche Seiten-Ansichten:
     cardPower Page      - Energiefluss
     cardChart Page      - Balken-Diagramme aus History, SQL ider InfluxDB
     cardLChart Page     - Linien-Diagramme aus History, SQL ider InfluxDB
-
     Vollständige Liste zur Einrichtung unter:
     https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Card-Definitionen-(Seiten)
-
 Popup-Pages:
     popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
     popupShutter Page   - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
     popupInSel Page     - Auswahlliste (InputSelect)
-
 Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
     Schieberegler       - Slider numerische Werte (SET/ACTUAL)
@@ -183,34 +176,27 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Medien              - Steuerung von Alexa, etc. - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
     Warnung             - Abfall, etc. -- Info mit IconColor
-
     Timer (siehe Wiki)
-
     Vollständige Liste zur Einrichtung unter:
     https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-ALIAS-Definitionen
-
 Interne Sonoff-Sensoren (über Tasmota):
     ESP-Temperatur      - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden --> SetOption146 1
     Temperatur          - Raumtemperatur - wird in 0_userdata.0. abgelegt, kann als Alias importiert werden
                           (!!! Achtung: der interne Sonoff-Sensor liefert keine exakten Daten, da das NSPanel-Board und der ESP selbst Hitze produzieren !!!
                           ggf. Offset einplanen oder besser einen externen Sensor über Zigbee etc. verwenden)
     Timestamp           - wird in 0_userdata.0. Zeitpunkt der letzten Sensorübertragung
-
 Tasmota-Status0 - (zyklische Ausführung)
     liefert relevanten Tasmota-Informationen und kann bei Bedarf in "function get_tasmota_status0()" erweitert werden. Daten werden in 0_userdata.0. abgelegt
-
 Erforderliche Adapter:
-
     AccuWeather:        - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
     Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten    - Für Erstellung der Aliase
     Alias-Manager       - !!! ausschließlich für MEDIA-Alias
     MQTT-Adapter        - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
-
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.4.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.5.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
@@ -787,7 +773,7 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.0.4';
+const tft_version: string = 'v4.0.5';
 const desired_display_firmware_version = 50;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -800,7 +786,7 @@ let globalTracklist: any;
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.4','4.1.0','4.2.0']
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.0','4.2.0']
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -6702,8 +6688,12 @@ function HandleScreensaverStatusIcons() : void {
                     }
                 } 
                 if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                    payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;                        
+                    if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
+                        payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                        payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
+                    } else {
+                        payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val
+                    }                        
                 }
                 payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
             } else if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
@@ -6763,8 +6753,13 @@ function HandleScreensaverStatusIcons() : void {
                     }
                 } 
                 if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                    payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;                        
+                    console.log()
+                    if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
+                        payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                        payloadString += config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
+                    } else {
+                        payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
+                    }                        
                 }
                 payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
             } else if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
