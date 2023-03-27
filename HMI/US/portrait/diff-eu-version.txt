@@ -1383,45 +1383,6 @@
 │          Enabled    : yes
 │   --- HMI/n2t-out/cardQR.txt
 ├── +++ HMI/US/portrait/n2t-out/cardQR.txt
-│ @@ -124,15 +124,15 @@
-│          Text          : 
-│          Max. Text Size: 10
-│      
-│  Variable (string) vaQR
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│ -        Max. Text Size: 70
-│ +        Max. Text Size: 80
-│      
-│  Text tEntity1
-│      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│ @@ -602,19 +602,19 @@
-│                                              // get Text (optional Value)
-│                                              spstr strCommand.txt,bText2.txt,"~",26
-│                                          }
-│                                          if(type2.txt=="delete"||type2.txt=="")
-│                                          {
-│                                              if(type1.txt=="delete"||type1.txt=="")
-│                                              {
-│ -                                                qrcode m1.x,m1.y,200,65535,defaultBcoColor,-1,vaQR.txt
-│ +                                                qrcode m1.x,m1.y,200,defaultBcoColor,65535,-1,vaQR.txt
-│                                              }
-│                                          }else
-│                                          {
-│ -                                            qrcode m0.x,m0.y,200,65535,defaultBcoColor,-1,vaQR.txt
-│ +                                            qrcode m0.x,m0.y,200,defaultBcoColor,65535,-1,vaQR.txt
-│                                          }
-│                                      }
-│                                      if(tInstruction.txt=="time")
-│                                      {
-│                                          // get set time to global variable
-│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-│                                      }
 │ @@ -751,15 +751,15 @@
 │              if(sleepTimeout!=0&&dimValue!=dim)
 │              {
@@ -1496,25 +1457,6 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-│   --- HMI/n2t-out/popupNotify.txt
-├── +++ HMI/US/portrait/n2t-out/popupNotify.txt
-│ @@ -15,16 +15,14 @@
-│              popupNotify.bco=defaultBcoColor
-│              dim=dimValueNormal
-│              vis p0,0
-│              vis tSend,0
-│              vis tTmp,0
-│              vis tInstruction,0
-│              vis tId,0
-│ -            vis b1,0
-│ -            vis b2,0
-│              popupNotify.bco=defaultBcoColor
-│              tHeading.bco=defaultBcoColor
-│              b0.bco=defaultBcoColor
-│              tText.bco=defaultBcoColor
-│              b1.bco=defaultBcoColor
-│              b2.bco=defaultBcoColor
-│              tIcon.bco=defaultBcoColor
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver.txt
 │ @@ -29,17 +29,14 @@

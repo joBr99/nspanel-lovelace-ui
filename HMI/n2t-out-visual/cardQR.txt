@@ -149,7 +149,7 @@ Variable (string) vaQR
         ID            : 31
         Scope         : local
         Text          : 
-        Max. Text Size: 70
+        Max. Text Size: 80
     
 Text tEntity1
     Attributes

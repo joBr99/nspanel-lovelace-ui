@@ -313,9 +313,9 @@ Text e1Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 35
+        x coordinate                        : 20
         y coordinate                        : 221
-        Width                               : 40
+        Width                               : 70
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -403,9 +403,9 @@ Text e2Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 109
+        x coordinate                        : 94
         y coordinate                        : 221
-        Width                               : 40
+        Width                               : 70
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -493,9 +493,9 @@ Text e3Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 183
+        x coordinate                        : 168
         y coordinate                        : 221
-        Width                               : 40
+        Width                               : 70
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -583,9 +583,9 @@ Text e4Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 260
+        x coordinate                        : 245
         y coordinate                        : 221
-        Width                               : 40
+        Width                               : 70
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -673,9 +673,9 @@ Text e5Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 334
+        x coordinate                        : 319
         y coordinate                        : 221
-        Width                               : 40
+        Width                               : 70
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0
@@ -763,9 +763,9 @@ Text e6Icon
         Disable release event after dragging: 0
         Send Component ID                   : disabled
         Opacity                             : 127
-        x coordinate                        : 407
+        x coordinate                        : 392
         y coordinate                        : 221
-        Width                               : 40
+        Width                               : 70
         Height                              : 30
         Effect                              : load
         Effect Priority                     : 0

@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-03-27 15:57:43.735088348 +0000
++++ /dev/fd/62	2023-03-27 16:17:58.208991272 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +10,10 @@
@@ -804,45 +804,6 @@
 + Enabled    : yes
 +I/n2t-out/cardQR.txt
 ++ HMI/US/portrait/n2t-out/cardQR.txt
-+15 +124,15 @@
-+ Text          : 
-+ Max. Text Size: 10
-+
-+e (string) vaQR
-+ributes
-+ Scope         : local
-+ Text          : 
-+ Max. Text Size: 70
-+ Max. Text Size: 80
-+
-+ntity1
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+19 +602,19 @@
-+                                     // get Text (optional Value)
-+                                     spstr strCommand.txt,bText2.txt,"~",26
-+                                 }
-+                                 if(type2.txt=="delete"||type2.txt=="")
-+                                 {
-+                                     if(type1.txt=="delete"||type1.txt=="")
-+                                     {
-+                                         qrcode m1.x,m1.y,200,65535,defaultBcoColor,-1,vaQR.txt
-+                                         qrcode m1.x,m1.y,200,defaultBcoColor,65535,-1,vaQR.txt
-+                                     }
-+                                 }else
-+                                 {
-+                                     qrcode m0.x,m0.y,200,65535,defaultBcoColor,-1,vaQR.txt
-+                                     qrcode m0.x,m0.y,200,defaultBcoColor,65535,-1,vaQR.txt
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 // get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                             }
 +15 +751,15 @@
 +     if(sleepTimeout!=0&&dimValue!=dim)
 +     {
@@ -883,25 +844,6 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
-+I/n2t-out/popupNotify.txt
-++ HMI/US/portrait/n2t-out/popupNotify.txt
-+6 +15,14 @@
-+     popupNotify.bco=defaultBcoColor
-+     dim=dimValueNormal
-+     vis p0,0
-+     vis tSend,0
-+     vis tTmp,0
-+     vis tInstruction,0
-+     vis tId,0
-+     vis b1,0
-+     vis b2,0
-+     popupNotify.bco=defaultBcoColor
-+     tHeading.bco=defaultBcoColor
-+     b0.bco=defaultBcoColor
-+     tText.bco=defaultBcoColor
-+     b1.bco=defaultBcoColor
-+     b2.bco=defaultBcoColor
-+     tIcon.bco=defaultBcoColor
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 +7 +29,14 @@

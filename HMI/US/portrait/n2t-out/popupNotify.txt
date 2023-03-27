@@ -19,6 +19,8 @@ Page popupNotify
             vis tTmp,0
             vis tInstruction,0
             vis tId,0
+            vis b1,0
+            vis b2,0
             popupNotify.bco=defaultBcoColor
             tHeading.bco=defaultBcoColor
             b0.bco=defaultBcoColor
