@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -123,6 +123,7 @@ ReleaseNotes:
         - 17.03.2023 - v4.0.4.5 Debug - Error - Log - Meldungen angepasst, rgbSingle benötigt nicht mehr DP .TEMPERATURE
 	- 27.03.2023 - v4.0.5   Upgrade TFT 50 / 4.0.5
 	- 27.03.2023 - v4.0.5   Add Strings to function HandleScreensaverStatusIcons()
+	- 27.03.2023 - v4.0.5.1   Add Bool with Value to function HandleScreensaverStatusIcons()
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -7221,7 +7222,7 @@ function HandleScreensaverStatusIcons() : void {
                         payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
                         payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
                     } else {
-                        payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val
+                        payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
                     }                        
                 }
                 payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
@@ -7240,8 +7241,12 @@ function HandleScreensaverStatusIcons() : void {
                     }
                 } 
                 if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                    payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;                        
+                    if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
+                        payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                        payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
+                    } else {
+                        payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
+                    }                      
                 }
                 payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
             }
@@ -7255,8 +7260,12 @@ function HandleScreensaverStatusIcons() : void {
             }
             
             if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;                        
+                if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
+                    payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                    payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
+                } else {
+                    payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
+                }                        
             }
             payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
         }
@@ -7306,8 +7315,12 @@ function HandleScreensaverStatusIcons() : void {
                     }
                 } 
                 if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                    payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;                        
+                    if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
+                        payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                        payloadString += config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
+                    } else {
+                        payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
+                    }                        
                 }
                 payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
             }
@@ -7322,8 +7335,12 @@ function HandleScreensaverStatusIcons() : void {
             }
             
             if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                payloadString += config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;                        
+                if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
+                    payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                    payloadString += config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
+                } else {
+                    payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
+                }                                            
             }
             payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
         } else {
