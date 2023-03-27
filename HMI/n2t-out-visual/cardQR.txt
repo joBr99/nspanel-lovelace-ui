@@ -149,7 +149,7 @@ Variable (string) vaQR
         ID            : 31
         Scope         : local
         Text          : 
-        Max. Text Size: 80
+        Max. Text Size: 70
     
 Text tEntity1
     Attributes
@@ -907,11 +907,11 @@ Timer tmSerial
                                         {
                                             if(type1.txt=="delete"||type1.txt=="")
                                             {
-                                                qrcode m1.x,m1.y,200,defaultBcoColor,65535,-1,vaQR.txt
+                                                qrcode m1.x,m1.y,200,65535,defaultBcoColor,-1,vaQR.txt
                                             }
                                         }else
                                         {
-                                            qrcode m0.x,m0.y,200,defaultBcoColor,65535,-1,vaQR.txt
+                                            qrcode m0.x,m0.y,200,65535,defaultBcoColor,-1,vaQR.txt
                                         }
                                     }
                                     if(tInstruction.txt=="time")

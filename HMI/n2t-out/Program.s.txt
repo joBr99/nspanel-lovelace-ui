@@ -16,4 +16,5 @@ Program.s
     int defaultBcoColor=6371
     // fix touch offset
     lcd_dev fffb 0002 0000 0020
+    printh 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port
     page pageStartup
