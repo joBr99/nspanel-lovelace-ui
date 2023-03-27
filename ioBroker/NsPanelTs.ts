@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.4.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
-- abgestimmt auf TFT 50 / v4.0.4 / BerryDriver 8 / Tasmota 12.4.0
+TypeScript v4.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+- abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -121,6 +121,8 @@ ReleaseNotes:
         - 13.03.2023 - v4.0.4.3 Fix Funktion GeneratePowerPage inkl. DemoModus
         - 14.03.2023 - v4.0.4.4 Fix colorTempSlider Arbeitsweise(seitenverkehrt) korregiert
         - 17.03.2023 - v4.0.4.5 Debug - Error - Log - Meldungen angepasst, rgbSingle benötigt nicht mehr DP .TEMPERATURE
+	- 27.03.2023 - v4.0.5   Upgrade TFT 50 / 4.0.5
+	- 27.03.2023 - v4.0.5   Add Strings to function HandleScreensaverStatusIcons()
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -210,7 +212,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.4.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.5.tft
 ---------------------------------------------------------------------------------------
 */
 let Icons = new IconsSelector();
@@ -1300,7 +1302,7 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.0.4';
+const tft_version: string = 'v4.0.5';
 const desired_display_firmware_version = 50;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -1313,7 +1315,7 @@ let globalTracklist: any;
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.4','4.1.0','4.2.0']
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.0','4.2.0']
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -7215,8 +7217,12 @@ function HandleScreensaverStatusIcons() : void {
                     }
                 } 
                 if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                    payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;                        
+                    if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
+                        payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                        payloadString += config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
+                    } else {
+                        payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val
+                    }                        
                 }
                 payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
             } else if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
@@ -7276,8 +7282,13 @@ function HandleScreensaverStatusIcons() : void {
                     }
                 } 
                 if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                    payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;                        
+                    console.log()
+                    if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
+                        payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                        payloadString += config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
+                    } else {
+                        payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
+                    }                        
                 }
                 payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
             } else if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
