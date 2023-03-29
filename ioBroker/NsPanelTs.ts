@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -123,7 +123,8 @@ ReleaseNotes:
         - 17.03.2023 - v4.0.4.5 Debug - Error - Log - Meldungen angepasst, rgbSingle benötigt nicht mehr DP .TEMPERATURE
 	- 27.03.2023 - v4.0.5   Upgrade TFT 50 / 4.0.5
 	- 27.03.2023 - v4.0.5   Add Strings to function HandleScreensaverStatusIcons()
-	- 27.03.2023 - v4.0.5.1   Add Bool with Value to function HandleScreensaverStatusIcons()
+	- 27.03.2023 - v4.0.5.1 Add Bool with Value to function HandleScreensaverStatusIcons()
+	- 29.03.2023 - v4.0.5.2 Fix cardPower
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -5016,7 +5017,6 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             console.log('GeneratePowerPage PageItem.id = ' + page.items[0].id);
         }
         
-
         let heading = 'cardPower Example';
         if (demoMode != true) {
             let id = page.items[0].id
@@ -5035,18 +5035,18 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         //Demo Data if no pageItem present
         let array_icon_color = [White, MSGreen, MSYellow, MSGreen, MSYellow, MSGreen, MSRed];
         let array_icon = ['home', 'battery-charging-60', 'solar-power-variant', 'wind-turbine', 'shape', 'transmission-tower', 'car'];
-        let array_powerspeed = ['', '-1', '2', '4', '1', '1', '5'];
+        let array_powerspeed = ['', '10', '-20', '-40', '-10', '-10', '-50'];
         let array_powerstate = ['', '0,5 kW', '0,9 kW', '2,8 kW', '0,2 kW', '0,1 kW', '4,6 kW'];
 
         let arrayColorScale = [colorScale0, colorScale1, colorScale2, colorScale3, colorScale4, colorScale5, colorScale6, colorScale7, colorScale8, colorScale9, colorScale10];
 
         let homeIconColor = 0;
         if (!demoMode) {
-            for (let obji = 0; obji < 7; obji++) {
-                array_icon_color[obji + 1] = arrayColorScale[obj[obji].iconColor !== '' ? obj[obji].iconColor : 0];
-                array_icon[obji + 1] = obj[obji].icon;
-                array_powerspeed[obji + 1] = obj[obji].speed;
-                array_powerstate[obji + 1] = obj[obji].value + ' ' + obj[obji].unit ;
+            for (let obji = 1; obji < 7; obji++) {
+                array_icon_color[obji] = arrayColorScale[obj[obji].iconColor !== '' ? obj[obji].iconColor : 0];
+                array_icon[obji] = obj[obji].icon;
+                array_powerspeed[obji] = obj[obji].speed;
+                array_powerstate[obji] = obj[obji].value + ' ' + obj[obji].unit ;
             }
             array_icon[0] = obj[0].icon;
             array_powerstate[0] = obj[0].value + ' ' + obj[0].unit;
@@ -5065,6 +5065,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             power_string = power_string + array_powerspeed[i+1] + '~';                // speed~
 
             if (Debug) console.log(power_string);
+            console.log(power_string);
         }
 
         power_string = power_string.substring(0, power_string.length - 1);
