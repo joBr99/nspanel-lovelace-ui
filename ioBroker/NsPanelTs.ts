@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -121,10 +121,11 @@ ReleaseNotes:
         - 13.03.2023 - v4.0.4.3 Fix Funktion GeneratePowerPage inkl. DemoModus
         - 14.03.2023 - v4.0.4.4 Fix colorTempSlider Arbeitsweise(seitenverkehrt) korregiert
         - 17.03.2023 - v4.0.4.5 Debug - Error - Log - Meldungen angepasst, rgbSingle benötigt nicht mehr DP .TEMPERATURE
-	- 27.03.2023 - v4.0.5   Upgrade TFT 50 / 4.0.5
-	- 27.03.2023 - v4.0.5   Add Strings to function HandleScreensaverStatusIcons()
-	- 27.03.2023 - v4.0.5.1 Add Bool with Value to function HandleScreensaverStatusIcons()
-	- 29.03.2023 - v4.0.5.2 Fix cardPower
+	    - 27.03.2023 - v4.0.5   Upgrade TFT 50 / 4.0.5
+	    - 27.03.2023 - v4.0.5   Add Strings to function HandleScreensaverStatusIcons()
+	    - 27.03.2023 - v4.0.5.1 Add Bool with Value to function HandleScreensaverStatusIcons()
+	    - 29.03.2023 - v4.0.5.2 Fix cardPower
+        - 03.04.2023 - v4.0.5.3 Fix GetScreenSaverIconColor 
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -7490,7 +7491,11 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
                             valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0);
                         }
                     }
-                    let valueScaletemp = (Math.round(valueScale)).toFixed();
+                    //begrenzung falls valueScale kleiner/größer ist als 0-10
+                    if (valueScale > 10) valueScale = 10;
+                    if (valueScale < 0) valueScale = 0;
+
+                    let valueScaletemp = (Math.round(valueScale)).toFixed();                   
                     colorReturn = HandleColorScale(valueScaletemp);
                 }
                 if (configElement.ScreensaverEntityIconColor.val_min == undefined) {
