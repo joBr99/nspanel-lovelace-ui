@@ -121,10 +121,10 @@ ReleaseNotes:
         - 13.03.2023 - v4.0.4.3 Fix Funktion GeneratePowerPage inkl. DemoModus
         - 14.03.2023 - v4.0.4.4 Fix colorTempSlider Arbeitsweise(seitenverkehrt) korregiert
         - 17.03.2023 - v4.0.4.5 Debug - Error - Log - Meldungen angepasst, rgbSingle benötigt nicht mehr DP .TEMPERATURE
-	    - 27.03.2023 - v4.0.5   Upgrade TFT 50 / 4.0.5
-	    - 27.03.2023 - v4.0.5   Add Strings to function HandleScreensaverStatusIcons()
-	    - 27.03.2023 - v4.0.5.1 Add Bool with Value to function HandleScreensaverStatusIcons()
-	    - 29.03.2023 - v4.0.5.2 Fix cardPower
+        - 27.03.2023 - v4.0.5   Upgrade TFT 50 / 4.0.5
+        - 27.03.2023 - v4.0.5   Add Strings to function HandleScreensaverStatusIcons()
+        - 27.03.2023 - v4.0.5.1 Add Bool with Value to function HandleScreensaverStatusIcons()
+        - 29.03.2023 - v4.0.5.2 Fix cardPower
         - 03.04.2023 - v4.0.5.3 Fix GetScreenSaverIconColor 
 
 ***********************************************************************************************************
