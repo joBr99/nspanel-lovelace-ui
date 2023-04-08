@@ -1223,6 +1223,12 @@ Timer tmSerial
                                             vis tMainTextAlt,0
                                             vis tMainTextAlt2,0
                                             vis tMainIconAlt2,0
+                                            if(p0.w!=320)
+                                            {
+                                                vis tForecast1,1
+                                                vis tF1Icon,1
+                                                vis tForecast1Val,1
+                                            }
                                         }
                                     }
                                     if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")

@@ -1513,6 +1513,27 @@
 │          Disable release event after dragging: 0
 │          Send Component ID                   : disabled
 │          Associated Keyboard                 : none
+│ @@ -626,20 +602,14 @@
+│                                          {
+│                                              vis tMainIcon,1
+│                                              vis tMainIconAlt,0
+│                                              vis tMainText,1
+│                                              vis tMainTextAlt,0
+│                                              vis tMainTextAlt2,0
+│                                              vis tMainIconAlt2,0
+│ -                                            if(p0.w!=320)
+│ -                                            {
+│ -                                                vis tForecast1,1
+│ -                                                vis tF1Icon,1
+│ -                                                vis tForecast1Val,1
+│ -                                            }
+│                                          }
+│                                      }
+│                                      if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
+│                                      {
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,tTime.bco,0,0
+│                                          if(tTime.bco!=screensaver.bco)
 │   --- HMI/n2t-out/screensaver2.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver2.txt
 │ @@ -29,17 +29,14 @@

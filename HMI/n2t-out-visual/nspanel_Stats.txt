@@ -70,6 +70,10 @@ cardMedia
 	59   Component(s)
 	645  Line(s) of event code
 	320  Unique line(s) of event code
+screensaver
+	47   Component(s)
+	440  Line(s) of event code
+	314  Unique line(s) of event code
 cardPower
 	54   Component(s)
 	523  Line(s) of event code
@@ -78,10 +82,6 @@ popupTimer
 	42   Component(s)
 	512  Line(s) of event code
 	255  Unique line(s) of event code
-screensaver
-	47   Component(s)
-	434  Line(s) of event code
-	311  Unique line(s) of event code
 cardEntities
 	67   Component(s)
 	1166 Line(s) of event code
@@ -90,5 +90,5 @@ cardEntities
 Total
 	21   Page(s)
 	802  Component(s)
-	9249 Line(s) of event code
-	2342 Unique line(s) of event code
+	9255 Line(s) of event code
+	2345 Unique line(s) of event code
