@@ -1444,8 +1444,7 @@ Serial Protocol of cardThermo is about to change; table will be completed later
 <table>
 <thead>
   <tr>
-    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
-    <th>Category</th>
+    <th>Parameter Number</th>
     <th>Location</th>
     <th>Type</th>
     <th>Field</th>
@@ -1455,7 +1454,6 @@ Serial Protocol of cardThermo is about to change; table will be completed later
 <tbody>
   <tr>
     <td>0</td>
-    <td>instruction</td>
     <td></td>
     <td>instruction</td>
     <td>entityUpd</td>
@@ -1466,12 +1464,10 @@ Serial Protocol of cardThermo is about to change; table will be completed later
     <td>title</td>
     <td>title</td>
     <td>title</td>
-    <td>title</td>
     <td></td>
   </tr>
   <tr>
     <td>2</td>
-    <td rowspan="12">Navigation</td>
     <td rowspan="6">Upper Left Icon</td>
     <td rowspan="6">Entity Definition</td>
     <td>type</td>
@@ -1536,374 +1532,260 @@ Serial Protocol of cardThermo is about to change; table will be completed later
   </tr>
   <tr>
     <td>14</td>
-    <td rowspan="7">cardThermo specific</td>
     <td></td>
-    <td rowspan="7">cardThermo specific</td>
+    <td></td>
     <td>intNameEntity</td>
     <td></td>
   </tr>
   <tr>
     <td>15</td>
-    <td rowspan="2"></td>
+    <td colspan="2">2nd text box</td>
     <td>currentTemp</td>
     <td></td>
   </tr>
   <tr>
     <td>16</td>
+    <td colspan="2">target temperature</td>
     <td>dstTemp</td>
-    <td>current temp; multiplied by 10</td>
+    <td>multiplied by 10</td>
   </tr>
   <tr>
     <td>17</td>
-    <td rowspan="2">4th Text Box Left Side</td>
+    <td colspan="2">Text 4th Box Left Side</td>
     <td>status</td>
     <td></td>
   </tr>
   <tr>
     <td>18</td>
+    <td colspan="2">Min Temp</td>
     <td>minTemp</td>
-    <td>min temp; multiplied by 10</td>
+    <td>multiplied by 10</td>
   </tr>
   <tr>
     <td>19</td>
-    <td></td>
+    <td colspan="2">Max Temp</td>
     <td>maxTemp</td>
-    <td>max temp; multiplied by 10</td>
+    <td>multiplied by 10</td>
   </tr>
   <tr>
     <td>20</td>
-    <td></td>
+    <td colspan="2">Temperature Steps</td>
     <td>tempStep</td>
-    <td>temp adj per step; multiplied by 10</td>
+    <td>multiplied by 10</td>
   </tr>
   <tr>
     <td>21</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td rowspan="4">bottom hvac_action 1</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>22</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>iconColorActive</td>
     <td></td>
   </tr>
   <tr>
     <td>23</td>
-    <td rowspan="36"></td>
-    <td rowspan="6"></td>
-    <td rowspan="6"></td>
-    <td></td>
+    <td>buttonState</td>
     <td></td>
   </tr>
   <tr>
     <td>24</td>
-    <td></td>
+    <td>intName</td>
     <td></td>
   </tr>
   <tr>
     <td>25</td>
-    <td></td>
+    <td rowspan="4">bottom hvac_action 2</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>26</td>
-    <td></td>
+    <td>iconColorActive</td>
     <td></td>
   </tr>
   <tr>
     <td>27</td>
-    <td></td>
+    <td>buttonState</td>
     <td></td>
   </tr>
   <tr>
     <td>28</td>
-    <td></td>
+    <td>intName</td>
     <td></td>
   </tr>
   <tr>
     <td>29</td>
-    <td rowspan="6"></td>
-    <td rowspan="6"></td>
-    <td></td>
+    <td rowspan="4">bottom hvac_action 3</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>30</td>
-    <td></td>
+    <td>iconColorActive</td>
     <td></td>
   </tr>
   <tr>
     <td>31</td>
-    <td></td>
+    <td>buttonState</td>
     <td></td>
   </tr>
   <tr>
     <td>32</td>
-    <td></td>
+    <td>intName</td>
     <td></td>
   </tr>
   <tr>
     <td>33</td>
-    <td></td>
+    <td rowspan="4">bottom hvac_action 4</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>34</td>
-    <td></td>
+    <td>iconColorActive</td>
     <td></td>
   </tr>
   <tr>
     <td>35</td>
-    <td rowspan="6"></td>
-    <td rowspan="6"></td>
-    <td></td>
+    <td>buttonState</td>
     <td></td>
   </tr>
   <tr>
     <td>36</td>
-    <td></td>
+    <td>intName</td>
     <td></td>
   </tr>
   <tr>
     <td>37</td>
-    <td></td>
+    <td rowspan="4">bottom hvac_action 5</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>38</td>
-    <td></td>
+    <td>iconColorActive</td>
     <td></td>
   </tr>
   <tr>
     <td>39</td>
-    <td></td>
+    <td>buttonState</td>
     <td></td>
   </tr>
   <tr>
     <td>40</td>
-    <td></td>
+    <td>intName</td>
     <td></td>
   </tr>
   <tr>
     <td>41</td>
-    <td rowspan="6"></td>
-    <td rowspan="6"></td>
-    <td></td>
+    <td rowspan="4">bottom hvac_action 6</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>42</td>
-    <td></td>
+    <td>iconColorActive</td>
     <td></td>
   </tr>
   <tr>
     <td>43</td>
-    <td></td>
+    <td>buttonState</td>
     <td></td>
   </tr>
   <tr>
     <td>44</td>
-    <td></td>
+    <td>intName</td>
     <td></td>
   </tr>
   <tr>
     <td>45</td>
-    <td></td>
+    <td rowspan="4">bottom hvac_action 7</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>46</td>
-    <td></td>
+    <td>iconColorActive</td>
     <td></td>
   </tr>
   <tr>
     <td>47</td>
-    <td rowspan="6"></td>
-    <td rowspan="6"></td>
-    <td></td>
+    <td>buttonState</td>
     <td></td>
   </tr>
   <tr>
     <td>48</td>
-    <td></td>
+    <td>intName</td>
     <td></td>
   </tr>
   <tr>
     <td>49</td>
-    <td></td>
+    <td rowspan="4">bottom hvac_action 8</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
     <td></td>
   </tr>
   <tr>
     <td>50</td>
-    <td></td>
+    <td>iconColorActive</td>
     <td></td>
   </tr>
   <tr>
     <td>51</td>
-    <td></td>
+    <td>buttonState</td>
     <td></td>
   </tr>
   <tr>
     <td>52</td>
-    <td></td>
+    <td>intName</td>
     <td></td>
   </tr>
   <tr>
     <td>53</td>
-    <td rowspan="6"></td>
-    <td rowspan="6"></td>
-    <td></td>
+    <td colspan="2">Currently Label 1th Text Box</td>
+    <td>tCurTempLbl</td>
     <td></td>
   </tr>
   <tr>
     <td>54</td>
-    <td></td>
+    <td colspan="2">State Label 3th Text Box</td>
+    <td>tStateLbl</td>
     <td></td>
   </tr>
   <tr>
     <td>55</td>
     <td></td>
     <td></td>
+    <td>tALbl</td>
+    <td>deprecated; ignored</td>
   </tr>
   <tr>
     <td>56</td>
-    <td></td>
+    <td colspan="2">Temperature Unit (Celcius/Farhenheit)</td>
+    <td>tCF</td>
     <td></td>
   </tr>
   <tr>
     <td>57</td>
+    <td>Second Destination Tempature (Heat/Cool)</td>
     <td></td>
-    <td></td>
+    <td>second temp</td>
+    <td>; multiplied by 10</td>
   </tr>
   <tr>
     <td>58</td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>59</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>60</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>61</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>62</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>63</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>64</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>65</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>66</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>67</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>68</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>69</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>70</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>71</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>72</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>73</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td colspan="2">additonal detail button to open another page</td>
+    <td>btDetail</td>
+    <td>"1" to hide</td>
   </tr>
 </tbody>
 </table>
