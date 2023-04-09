@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -127,6 +127,8 @@ ReleaseNotes:
         - 29.03.2023 - v4.0.5.2 Fix cardPower
         - 03.04.2023 - v4.0.5.3 Fix GetScreenSaverIconColor
         - 03.04.2023 - v4.0.5.4 Fix HandleScreensaverStatusIcons
+        - 09.04.2023 - v4.0.5.5 Add new Role "timeTable" to function CreateEntity for Adapter "Fahrplan"
+        - 09.04.2023 - v4.0.5.5 Fix trigger popupNotifypage
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -1591,7 +1593,8 @@ async function InitPopupNotify() {
         });
 
         // popupNotify - Notification an separate Seite
-        on({ id: [popupNotifyInternalName], change: 'ne' }, async () => {
+        //on({ id: [popupNotifyInternalName], change: 'ne' }, async () => {
+        on({ id: [].concat([popupNotifyText]), change: 'any' }, async() => {
 
             let notification: string;
 
@@ -3215,6 +3218,24 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (Debug) console.log('CreateEntity  Icon role warning ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo);
                     return '~' + type + '~' + itemName + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo;
 
+                case 'timeTable':
+                    type = 'text';
+                    let itemFahrzeug:string = getState(pageItem.id + '.Fahrzeug').val;
+                    let itemUhrzeit:string = getState(pageItem.id + '.ACTUAL').val;
+                    let itemRichtung:string = getState(pageItem.id + '.Richtung').val;
+                    let itemVerspätung:boolean = getState(pageItem.id + '.Verspätung').val;
+    
+                    if (Icons.GetIcon(itemFahrzeug) != "") {
+                        iconId = Icons.GetIcon(itemFahrzeug)
+                    }else {
+                        iconId=''
+                    };
+    
+                    iconColor = (!itemVerspätung) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+    
+                    if (Debug) console.log('CreateEntity  Icon role timeTable ~' + type + '~' + itemRichtung + '~' + iconId + '~' + iconColor + '~' + itemRichtung + '~' + itemUhrzeit);
+                    return '~' + type + '~' + itemRichtung + '~' + iconId + '~' + iconColor + '~' + itemRichtung + '~' + itemUhrzeit;
+    
                 default:
                     if (Debug) console.log('CreateEntity Icon keine passende Rolle gefunden');
                     return '~delete~~~~~';
