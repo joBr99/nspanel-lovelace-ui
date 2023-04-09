@@ -34,10 +34,14 @@ services:
 	
   appdaemon:
     container_name: appdaemon
-    image: acockburn/appdaemon:latest
+    image: acockburn/appdaemon:4.2.3
     environment:
       - HA_URL=http://your-homeassistant-url:8123
       - TOKEN="xxxxxx"
+      - DASH_URL=http://localhost:5050
+      - TZ=Europe/Berlin
+    ports:
+      - 5050:5050
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./docker-data/homeassistant/appdaemon:/conf
