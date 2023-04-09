@@ -34,7 +34,7 @@ services:
 	
   appdaemon:
     container_name: appdaemon
-    image: acockburn/appdaemon:latest
+    image: acockburn/appdaemon:4.2.3
     environment:
       - HA_URL=http://your-homeassistant-url:8123
       - TOKEN="xxxxxx"
