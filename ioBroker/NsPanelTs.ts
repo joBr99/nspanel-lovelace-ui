@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -129,6 +129,7 @@ ReleaseNotes:
         - 03.04.2023 - v4.0.5.4 Fix HandleScreensaverStatusIcons
         - 09.04.2023 - v4.0.5.5 Add new Role "timeTable" to function CreateEntity for Adapter "Fahrplan"
         - 09.04.2023 - v4.0.5.5 Fix trigger popupNotifypage
+	- 11.04.2023 - v4.0.5.6 Fix function InitDimmode
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -2029,7 +2030,12 @@ async function InitDimmode() {
             ScreensaverDimmode(timeDimMode);
         });
 
-        ScreensaverDimmode(timeDimMode);
+        if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null) {
+            SendToPanel({ payload: 'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) });
+        } else {
+            ScreensaverDimmode(timeDimMode);
+        }
+	    
     } catch (err) {
         console.warn('error at function InitDimmode: ' + err.message);
     }
@@ -5119,7 +5125,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
     } catch (err) {
         console.warn('error at function GeneratePowerPage: ' + err.message);
     }
-};
+}
 
 function GenerateChartPage(page: PageChart): Payload[] {
     try {
