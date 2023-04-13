@@ -86,20 +86,20 @@ Page popupLight
         
 Variable (string) entn
     Attributes
-        ID            : 20
+        ID            : 18
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (int32) mode
     Attributes
-        ID   : 22
+        ID   : 20
         Scope: local
         Value: 1
     
 Variable (int32) mode_temp
     Attributes
-        ID   : 23
+        ID   : 21
         Scope: local
         Value: 0
     
@@ -110,16 +110,30 @@ Variable (string) strCommand
         Text          : 
         Max. Text Size: 500
     
-Variable (string) tSend
+Variable (string) tId
+    Attributes
+        ID            : 27
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tInstruction
     Attributes
         ID            : 26
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tSend
+    Attributes
+        ID            : 24
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Text t0
     Attributes
-        ID                                  : 24
+        ID                                  : 22
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -327,66 +341,6 @@ Text tIcon1
         Horizontal Spacing                  : 0
         Vertical Spacing                    : 0
     
-Text tId
-    Attributes
-        ID                                  : 18
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 100
-        y coordinate                        : 290
-        Width                               : 100
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
-Text tInstruction
-    Attributes
-        ID                                  : 17
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 290
-        Width                               : 100
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 20
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
-    
 Text tTmp
     Attributes
         ID                                  : 12
@@ -526,7 +480,7 @@ Slider hBrightness
         
 Slider hTempSlider
     Attributes
-        ID                                  : 19
+        ID                                  : 17
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -618,7 +572,7 @@ Button b0
         
 Button bColor
     Attributes
-        ID                                  : 21
+        ID                                  : 19
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -675,7 +629,7 @@ Button bColor
         
 Button bEffect
     Attributes
-        ID                                  : 27
+        ID                                  : 25
         Scope                               : local
         Dragging                            : 0
         Disable release event after dragging: 0
@@ -760,7 +714,7 @@ Dual-state Button btOnOff1
         
 Timer tmCooldown
     Attributes
-        ID         : 25
+        ID         : 23
         Scope      : local
         Period (ms): 100
         Enabled    : no

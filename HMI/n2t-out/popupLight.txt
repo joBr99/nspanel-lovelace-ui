@@ -98,6 +98,18 @@ Variable (string) strCommand
         Text          : 
         Max. Text Size: 500
     
+Variable (string) tId
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tInstruction
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
 Variable (string) tSend
     Attributes
         Scope         : local
@@ -173,26 +185,6 @@ Text tIcon1
         Associated Keyboard                 : none
         Text                                : î´
         Max. Text Size                      : 10
-    
-Text tId
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text tInstruction
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
     
 Text tTmp
     Attributes

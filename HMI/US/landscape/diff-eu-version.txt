@@ -52,6 +52,146 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
+│   --- HMI/n2t-out/popupFan.txt
+├── +++ HMI/US/landscape/n2t-out/popupFan.txt
+│ @@ -210,15 +210,15 @@
+│          Send Component ID                   : disabled
+│          State                               : unpressed
+│          Text                                : î
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│ -            tSend.txt="event,buttonPress2,popupTimer,bExit"
+│ +            tSend.txt="event,buttonPress2,popupLight,bExit"
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
+│   --- HMI/n2t-out/popupInSel.txt
+├── +++ HMI/US/landscape/n2t-out/popupInSel.txt
+│ @@ -158,15 +158,15 @@
+│          Send Component ID                   : disabled
+│          State                               : unpressed
+│          Text                                : î
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│ -            tSend.txt="event,buttonPress2,popupInSel,bExit"
+│ +            tSend.txt="event,buttonPress2,popupLight,bExit"
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
+│   --- HMI/n2t-out/popupLight.txt
+├── +++ HMI/US/landscape/n2t-out/popupLight.txt
+│ @@ -94,26 +94,14 @@
+│      
+│  Variable (string) strCommand
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 500
+│      
+│ -Variable (string) tId
+│ -    Attributes
+│ -        Scope         : local
+│ -        Text          : 
+│ -        Max. Text Size: 20
+│ -    
+│ -Variable (string) tInstruction
+│ -    Attributes
+│ -        Scope         : local
+│ -        Text          : 
+│ -        Max. Text Size: 20
+│ -    
+│  Variable (string) tSend
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 200
+│      
+│  Text t0
+│ @@ -182,14 +170,34 @@
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│          Text                                : î´
+│          Max. Text Size                      : 10
+│      
+│ +Text tId
+│ +    Attributes
+│ +        Scope                               : local
+│ +        Dragging                            : 0
+│ +        Disable release event after dragging: 0
+│ +        Send Component ID                   : disabled
+│ +        Associated Keyboard                 : none
+│ +        Text                                : 
+│ +        Max. Text Size                      : 20
+│ +    
+│ +Text tInstruction
+│ +    Attributes
+│ +        Scope                               : local
+│ +        Dragging                            : 0
+│ +        Disable release event after dragging: 0
+│ +        Send Component ID                   : disabled
+│ +        Associated Keyboard                 : none
+│ +        Text                                : 
+│ +        Max. Text Size                      : 20
+│ +    
+│  Text tTmp
+│      Attributes
+│          Scope                               : local
+│          Dragging                            : 0
+│          Disable release event after dragging: 0
+│          Send Component ID                   : disabled
+│          Associated Keyboard                 : none
+│   --- HMI/n2t-out/popupThermo.txt
+├── +++ HMI/US/landscape/n2t-out/popupThermo.txt
+│ @@ -236,15 +236,15 @@
+│          Send Component ID                   : disabled
+│          State                               : unpressed
+│          Text                                : î
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│ -            tSend.txt="event,buttonPress2,popupThermo,bExit"
+│ +            tSend.txt="event,buttonPress2,popupLight,bExit"
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
+│   --- HMI/n2t-out/popupTimer.txt
+├── +++ HMI/US/landscape/n2t-out/popupTimer.txt
+│ @@ -308,15 +308,15 @@
+│          Send Component ID                   : disabled
+│          State                               : unpressed
+│          Text                                : î
+│          Max. Text Size                      : 10
+│      
+│      Events
+│          Touch Press Event
+│ -            tSend.txt="event,buttonPress2,popupTimer,bExit"
+│ +            tSend.txt="event,buttonPress2,popupLight,bExit"
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/landscape/n2t-out/screensaver.txt
 │ @@ -29,17 +29,14 @@
