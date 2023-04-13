@@ -50,7 +50,7 @@ Using a 6th entity will automatically activate the alternative layout.
           icon: mdi:home-thermometer-outline
 ```
 
-You can use override the options decribed on the [entities documentation page](https://docs.nspanel.pky.eu/entities/) to override colors, names or values of the entities. 
+You can use override the options described on the [entities documentation page](https://docs.nspanel.pky.eu/entities/) to override colors, names or values of the entities. 
 
 
 With Version 4.0.0 there is another alternative layout for the screensaver:
