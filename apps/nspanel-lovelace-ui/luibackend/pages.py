@@ -369,7 +369,7 @@ class LuiPagesGen(object):
             entityTypePanel = "text"
             unit = get_attr_safe(entity, "temperature_unit", "")
             if type(item.stype) == int and len(entity.attributes.forecast) >= item.stype:
-                fdate = dp.parse(entity.attributes.forecast[item.stype]['datetime']).astimezone()
+                fdate = dp.parse(entity.attributes.forecast[item.stype]['datetime'])
                 global babel_spec
                 if babel_spec is not None:
                     dateformat = "E" if item.nameOverride is None else item.nameOverride
