@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-04-13 19:25:07.506299793 +0000
++++ /dev/fd/62	2023-04-16 20:10:37.417588148 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +10,10 @@
@@ -57,13 +57,13 @@
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +186,26 @@
 +e (string) type6
@@ -804,6 +804,383 @@
 + Enabled    : yes
 +I/n2t-out/cardQR.txt
 ++ HMI/US/portrait/n2t-out/cardQR.txt
++ +1,18 @@
++rdQR
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Locked             : no
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Locked                              : no
++ Swide up page ID                    : disabled
++ Swide down page ID                  : disabled
++ Swide left page ID                  : disabled
++ Swide right page ID                 : disabled
++
++nts
++ Preinitialize Event
++     dim=dimValueNormal
++     vis p0,0
++     vis tSend,0
++     vis tInstruction,0
++71 +128,78 @@
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 80
++
++ntity1
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : tEntity1
++ Max. Text Size     : 30
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : tEntity1
++ Max. Text Size                      : 30
++
++ntity2
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : tEntity1
++ Max. Text Size     : 30
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : tEntity1
++ Max. Text Size                      : 30
++
++eading
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 40
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 40
++
++con1
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : î°
++ Max. Text Size     : 5
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : î°
++ Max. Text Size                      : 5
++
++con2
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : î°
++ Max. Text Size     : 5
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : î°
++ Max. Text Size                      : 5
++
++ p0
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++bNext
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : î³
++ Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : î³
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tSend.txt="event,buttonPress2,"+nent2.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++20 +210,21 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++bPrev
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : î°
++ Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : î°
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tSend.txt="event,buttonPress2,"+nent1.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++20 +235,21 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++bText1
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : 
++ Max. Text Size   : 30
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 
++ Max. Text Size                      : 30
++
++nts
++ Touch Press Event
++     tSend.txt="event,buttonPress2,"+entn1.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++20 +260,21 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++bText2
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : 
++ Max. Text Size   : 30
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 
++ Max. Text Size                      : 30
++
++nts
++ Touch Press Event
++     tSend.txt="event,buttonPress2,"+entn1.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++20 +285,21 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++ate Button btOnOff1
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : 
++ Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
++     covx btOnOff1.val,tTmp.txt,0,0
++     tSend.txt+=tTmp.txt
++     //send calc crc
++20 +312,21 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++ate Button btOnOff2
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : 
++ Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tSend.txt="event,buttonPress2,"+entn2.txt+",OnOff,"
++     covx btOnOff2.val,tTmp.txt,0,0
++     tSend.txt+=tTmp.txt
++     //send calc crc
++49 +339,54 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++ m0
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++ m1
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++ mSwipeNext
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++nts
++ Touch Press Event
++     click bNext,1
++ 
++ mSwipePrev
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++nts
++ Touch Press Event
++     click bPrev,1
++ 
++ mSwipeUp
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++nts
++ Touch Press Event
++     click bPrev,1
++ 
++mSerial
++ributes
++19 +602,19 @@
++                                     // get Text (optional Value)
++                                     spstr strCommand.txt,bText2.txt,"~",26
++                                 }
++                                 if(type2.txt=="delete"||type2.txt=="")
++                                 {
++                                     if(type1.txt=="delete"||type1.txt=="")
++                                     {
++                                         qrcode m1.x,m1.y,200,65535,defaultBcoColor,-1,8,vaQR.txt
++                                         qrcode m1.x,m1.y,200,65535,defaultBcoColor,-1,vaQR.txt
++                                     }
++                                 }else
++                                 {
++                                     qrcode m0.x,m0.y,200,65535,defaultBcoColor,-1,8,vaQR.txt
++                                     qrcode m0.x,m0.y,200,65535,defaultBcoColor,-1,vaQR.txt
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
 +15 +751,15 @@
 +     if(sleepTimeout!=0&&dimValue!=dim)
 +     {
@@ -823,7 +1200,34 @@
 +             //send cmd
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
-+0 +35,14 @@
++ +1,18 @@
++geStartup
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Locked             : no
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Locked                              : no
++ Swide up page ID                    : disabled
++ Swide down page ID                  : disabled
++ Swide left page ID                  : disabled
++ Swide right page ID                 : disabled
++
++nts
++ Preinitialize Event
++     vis p0,0
++     recmod=1
++     bauds=115200
++     vis tSend,0
++62 +35,171 @@
 + 
 +e (string) strCommand
 +ributes
@@ -839,11 +1243,218 @@
 +
 +frame_ptr
 +ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Value              : 0
 + Scope                               : local
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
++ Value                               : 0
++
++frapic_w
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Value              : 1960
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Value                               : 1960
++
++spinner_w
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Value              : 140
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Value                               : 140
++
++usual_cnt
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Value              : 0
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Value                               : 0
++
++d
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 20
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 20
++
++nstruction
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 20
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 20
++
++sg1
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : Waiting for content ...
++ Max. Text Size     : 40
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : Waiting for content ...
++ Max. Text Size                      : 40
++
++sg2
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : This is taking longer than usual,
++ Max. Text Size     : 100
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : This is taking longer than usual,
++ Max. Text Size                      : 100
++
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : please check your backend configuration
++ Max. Text Size     : 100
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : newtxt
++ Max. Text Size     : 100
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : newtxt
++ Max. Text Size                      : 100
++
++mp
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 30
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 30
++
++ersion
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 50
++ Max. Text Size     : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 50
++ Max. Text Size                      : 10
++
++ p0
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++bSendStartup
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : startup
++ Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : startup
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++ mSpinner
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++nts
++ Touch Press Event
++     sys2=sys2+1
++     sys2%=10
++     //n0.val=sys2
++     if(sys2==9)
 +I/n2t-out/popupFan.txt
 ++ HMI/US/portrait/n2t-out/popupFan.txt
 +15 +210,15 @@
@@ -884,7 +1495,106 @@
 +     //send cmd
 +I/n2t-out/popupLight.txt
 ++ HMI/US/portrait/n2t-out/popupLight.txt
-+6 +94,14 @@
++ +1,27 @@
++pupLight
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Locked             : no
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Locked                              : no
++ Swide up page ID                    : disabled
++ Swide down page ID                  : disabled
++ Swide left page ID                  : disabled
++ Swide right page ID                 : disabled
++
++nts
++ Preinitialize Event
++     dim=dimValueNormal
++     //get entitiy name
++     tEntity.txt=pageIcons.tTmp1.txt
++     //get entity id
++     entn.txt=pageIcons.tTmp2.txt
++     tIcon1.txt=pageIcons.tTmp3.txt
++     vis p0,0
++     vis tSend,0
++     vis tTmp,0
++     vis tInstruction,0
++     vis tId,0
++     vis bEffect,0
++     //page open event
++4 +36,24 @@
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     //disable brightness by default
++     //vis t1,0
++     //vis t2,0
++     vis hBrightness,1
++     vis t1,0
++     vis t2,0
++     vis hBrightness,0
++     //disable color temp by default
++     //vis t4,0
++     //vis t3,0
++     vis t4,0
++     vis t3,0
++     vis hTempSlider,0
++     //disable color wheel components by default
++     vis bColor,0
++     //vis t0,0
++     vis t0,0
++     vis pColorWheel,0
++     //vis t0,0
++     popupLight.bco=defaultBcoColor
++     for(sys0=0;sys0<27;sys0++)
++     {
++         if(b[sys0].type==98||b[sys0].type==116)
++         {
++6 +64,22 @@
++         {
++             b[sys0].pic=10
++             b[sys0].pic2=11
++         }
++     }
++     if(defaultBcoColor==0)
++     {
++         hBrightness.pic=14
++         hBrightness.pic1=13
++         hBrightness.pic2=15
++         hTempSlider.pic=16
++         hTempSlider.pic1=16
++         hTempSlider.pic1=17
++         hTempSlider.pic2=15
++     }
++ 
++ Postinitialize Event
++     xstr hBrightness.x,hBrightness.y,100,250,7,BLACK,6371,0,0,1,"a"
++ 
++e (int32) col
++ributes
++ Scope: local
++ Value: 65504
++
++e (string) entn
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 80
++
++e (int32) mode
++8 +94,133 @@
 +
 +e (string) strCommand
 +ributes
@@ -910,8 +1620,79 @@
 + Text          : 
 + Max. Text Size: 200
 +
++e (string) tTmp
 +
-+14 +170,34 @@
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 80
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : Color
++ Max. Text Size                      : 50
++
++
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : Brightness
++ Max. Text Size                      : 50
++
++
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : î
++ Max. Text Size                      : 10
++
++
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : î
++ Max. Text Size                      : 10
++
++
++ributes
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : Temperature
++ Max. Text Size                      : 50
++
++ntity
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : tEntity1
++ Max. Text Size     : 25
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : tEntity1
++ Max. Text Size                      : 25
++
++con1
++ributes
++ Scope                               : local
 + Dragging                            : 0
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
@@ -946,6 +1727,352 @@
 + Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 80
++
++ p0
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++ pColorWheel
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++
++nts
++ Touch Press Event
++     //craft command
++     tSend.txt="event,buttonPress2,"+entn.txt+",colorWheel,"
++     sys0=tch0
++     sys0=sys0-pColorWheel.x
++37 +244,24 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++hBrightness
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Position         : 50
++ Upper range limit: 100
++ Lower range limit: 0
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Position                            : 50
++ Upper range limit                   : 100
++ Lower range limit                   : 0
++
++nts
++ Touch Release Event
++     //draw black background
++     xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,BLACK,6371,0,0,1,"a"
++     //draw draw colored bar at the position of the current brightness value
++     xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,BLACK,2,4,1,"a"
++     //paint an inverse of the character over everything, this rounds the corner at the bottom
++     xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,6371,0,0,0,3,"b"
++     if(hBrightness.val>7)
++     {
++         //draw cursor
++         fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
++     }
++     //draw black strip to the right of the slider
++     //force a redraw of the slider, to ensure it is on top
++     vis hBrightness,1
++     tmCooldown.en=1
++     tmCooldown.tim=2500
++     //craft command
++     tSend.txt="event,buttonPress2,"+entn.txt+",brightnessSlider,"
++     covx hBrightness.val,tTmp.txt,0,0
++     tSend.txt+=tTmp.txt
++     //send calc crc
++20 +274,21 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++hTempSlider
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Position         : 50
++ Upper range limit: 100
++ Lower range limit: 0
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Position                            : 50
++ Upper range limit                   : 100
++ Lower range limit                   : 0
++
++nts
++ Touch Release Event
++     tmCooldown.en=1
++     tmCooldown.tim=2500
++     //craft command
++     tSend.txt="event,buttonPress2,"+entn.txt+",colorTempSlider,"
++20 +304,21 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++b0
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : î
++ Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : î
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     tSend.txt="event,buttonPress2,popupLight,bExit"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++69 +329,73 @@
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++bColor
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : î
++ Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : î
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     if(mode.val==1)
++     {
++         mode.val=0
++         //enable color wheel
++         vis pColorWheel,1
++         //disable color temp
++         //vis t4,0
++         //vis t3,0
++         vis t4,0
++         vis t3,0
++         vis hTempSlider,0
++     }else
++     {
++         mode.val=1
++         //disable color wheel
++         vis pColorWheel,0
++         if(mode_temp.val==1)
++         {
++             //enable color temp
++             //vis t4,1
++             //vis t3,1
++             vis t4,1
++             vis t3,1
++             vis hTempSlider,1
++         }
++     }
++ 
++bEffect
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : î¸¯
++ Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : î¸¯
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     pageIcons.tTmp1.txt=tEntity.txt
++     pageIcons.tTmp2.txt=entn.txt
++     pageIcons.tTmp3.txt=tIcon1.txt
++     page popupInSel
++ 
++ate Button btOnOff1
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : 
++ Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ State                               : unpressed
++ Text                                : 
++ Max. Text Size                      : 10
++
++nts
++ Touch Press Event
++     //craft command
++     tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
++     covx btOnOff1.val,tTmp.txt,0,0
++     tSend.txt+=tTmp.txt
++50 +473,48 @@
++                             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
++                             spstr strCommand.txt,tInstruction.txt,"~",0
++                             spstr strCommand.txt,tTmp.txt,"~",1
++                             if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
++                             {
++                                 // change icon
++                                 //spstr strCommand.txt,tIcon1.txt,"~",2
++                                 //vis tIcon1,1
++                                 vis tIcon1,1
++                                 // change icon color
++                                 spstr strCommand.txt,tTmp.txt,"~",3
++                                 covx tTmp.txt,sys0,0,0
++                                 col.val=sys0
++                                 click hBrightness,0
++                                 //tEntity.pco=sys0
++                                 tIcon1.pco=sys0
++                                 // get Button State
++                                 spstr strCommand.txt,tTmp.txt,"~",4
++                                 covx tTmp.txt,sys0,0,0
++                                 btOnOff1.val=sys0
++                                 // get Brightness value
++                                 spstr strCommand.txt,tTmp.txt,"~",5
++                                 if(tTmp.txt=="disable")
++                                 {
++                                     //vis t1,0
++                                     //vis t2,0
++                                     vis t1,0
++                                     vis t2,0
++                                     vis hBrightness,0
++                                 }else
++                                 {
++                                     //vis t1,1
++                                     //vis t2,1
++                                     vis t1,1
++                                     vis t2,1
++                                     vis hBrightness,1
++                                     covx tTmp.txt,sys0,0,0
++                                     if(tmCooldown.en==0)
++                                     {
++                                         hBrightness.val=sys0
++                                     }
++                                 }
++                                 // get ColorTemp value
++                                 spstr strCommand.txt,tTmp.txt,"~",6
++                                 if(tTmp.txt=="disable")
++                                 {
++                                     vis hTempSlider,0
++                                     //vis t3,0
++                                     //vis t4,0
++                                     vis t3,0
++                                     vis t4,0
++                                     mode_temp.val=0
++                                     // mode == 1 is temp controls currently shown
++                                     if(mode.val==1)
++                                     {
++                                         // switch mode
++                                         click bColor,1
++                                         click bColor,0
++16 +529,16 @@
++                                         click bColor,1
++                                         click bColor,0
++                                     }
++                                 }else
++                                 {
++                                     mode_temp.val=1
++                                     vis hTempSlider,1
++                                     //vis t3,1
++                                     //vis t4,1
++                                     vis t3,1
++                                     vis t4,1
++                                     if(tmCooldown.en==0)
++                                     {
++                                         covx tTmp.txt,sys0,0,0
++                                         hTempSlider.val=sys0
++                                     }
++                                     // mode == 0 is rgb controls currently shown
++                                     if(mode.val==0)
++36 +549,36 @@
++                                     }
++                                 }
++                                 // get Color value
++                                 spstr strCommand.txt,tTmp.txt,"~",7
++                                 // disable -> isn't supported
++                                 if(tTmp.txt=="disable")
++                                 {
++                                     //vis t0,0
++                                     vis t0,0
++                                     vis bColor,0
++                                     vis pColorWheel,0
++                                 }else
++                                 {
++                                     //vis t0,1
++                                     vis t0,1
++                                     //only enable bColor button if color temp is also supported
++                                     if(mode_temp.val==1)
++                                     {
++                                         vis bColor,1
++                                     }
++                                     if(mode.val==0)
++                                     {
++                                         vis pColorWheel,1
++                                     }
++                                 }
++                                 // set t0 Color (Localization)
++                                 //spstr strCommand.txt,t0.txt,"~",8
++                                 spstr strCommand.txt,t0.txt,"~",8
++                                 // set t4 Temperature (Localization)
++                                 //spstr strCommand.txt,t4.txt,"~",9
++                                 spstr strCommand.txt,t4.txt,"~",9
++                                 // set t1 Brightness (Localization)
++                                 //spstr strCommand.txt,t1.txt,"~",10
++                                 spstr strCommand.txt,t1.txt,"~",10
++                                 // activate effect button
++                                 spstr strCommand.txt,tTmp.txt,"~",11
++                                 if(tTmp.txt=="enable")
++                                 {
++                                     vis bEffect,1
++                                 }else
++                                 {
 +I/n2t-out/popupThermo.txt
 ++ HMI/US/portrait/n2t-out/popupThermo.txt
 +15 +236,15 @@
