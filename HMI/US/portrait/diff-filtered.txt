@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-04-16 20:10:37.417588148 +0000
++++ /dev/fd/62	2023-04-17 17:53:22.299449942 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +10,10 @@
@@ -1580,7 +1580,7 @@
 +     }
 + 
 + Postinitialize Event
-+     xstr hBrightness.x,hBrightness.y,100,250,7,BLACK,6371,0,0,1,"a"
++     //xstr hBrightness.x,hBrightness.y,100,250,7,BLACK,6371,0,0,1,"a"
 + 
 +e (int32) col
 +ributes
@@ -1756,7 +1756,7 @@
 +     tSend.txt="event,buttonPress2,"+entn.txt+",colorWheel,"
 +     sys0=tch0
 +     sys0=sys0-pColorWheel.x
-+37 +244,24 @@
++38 +244,24 @@
 +     printh 55 bb
 +     prints sys0,2
 +     prints tSend.txt,0
@@ -1781,11 +1781,12 @@
 +nts
 + Touch Release Event
 +     //draw black background
-+     xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,BLACK,6371,0,0,1,"a"
++     //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
++     xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
 +     //draw draw colored bar at the position of the current brightness value
-+     xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,BLACK,2,4,1,"a"
++     xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
 +     //paint an inverse of the character over everything, this rounds the corner at the bottom
-+     xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,6371,0,0,0,3,"b"
++     xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
 +     if(hBrightness.val>7)
 +     {
 +         //draw cursor
@@ -1793,7 +1794,7 @@
 +     }
 +     //draw black strip to the right of the slider
 +     //force a redraw of the slider, to ensure it is on top
-+     vis hBrightness,1
++     //vis hBrightness,1
 +     tmCooldown.en=1
 +     tmCooldown.tim=2500
 +     //craft command
@@ -1953,7 +1954,7 @@
 +     tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
 +     covx btOnOff1.val,tTmp.txt,0,0
 +     tSend.txt+=tTmp.txt
-+50 +473,48 @@
++61 +473,48 @@
 +                             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
 +                             spstr strCommand.txt,tInstruction.txt,"~",0
 +                             spstr strCommand.txt,tTmp.txt,"~",1
@@ -1967,7 +1968,6 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",3
 +                                 covx tTmp.txt,sys0,0,0
 +                                 col.val=sys0
-+                                 click hBrightness,0
 +                                 //tEntity.pco=sys0
 +                                 tIcon1.pco=sys0
 +                                 // get Button State
@@ -1994,6 +1994,18 @@
 +                                     if(tmCooldown.en==0)
 +                                     {
 +                                         hBrightness.val=sys0
++                                         //draw black background
++                                         //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
++                                         xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
++                                         //draw draw colored bar at the position of the current brightness value
++                                         xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
++                                         //paint an inverse of the character over everything, this rounds the corner at the bottom
++                                         xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
++                                         if(hBrightness.val>7)
++                                         {
++                                             //draw cursor
++                                             fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
++                                         }
 +                                     }
 +                                 }
 +                                 // get ColorTemp value

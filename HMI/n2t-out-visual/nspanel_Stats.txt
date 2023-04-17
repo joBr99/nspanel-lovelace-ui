@@ -28,8 +28,8 @@ screensaver2
 	251  Unique line(s) of event code
 popupLight
 	23   Component(s)
-	395  Line(s) of event code
-	204  Unique line(s) of event code
+	399  Line(s) of event code
+	208  Unique line(s) of event code
 cardChart
 	33   Component(s)
 	433  Line(s) of event code
@@ -90,5 +90,5 @@ cardEntities
 Total
 	21   Page(s)
 	798  Component(s)
-	9242 Line(s) of event code
-	2334 Unique line(s) of event code
+	9246 Line(s) of event code
+	2336 Unique line(s) of event code
