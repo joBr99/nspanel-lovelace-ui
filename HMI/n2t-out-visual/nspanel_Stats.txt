@@ -3,9 +3,17 @@ Program.s
 	14   Line(s) of event code
 	14   Unique line(s) of event code
 pageIcons
-	7    Component(s)
-	0    Line(s) of event code
-	0    Unique line(s) of event code
+	9    Component(s)
+	9    Line(s) of event code
+	9    Unique line(s) of event code
+pageTest
+	27   Component(s)
+	68   Line(s) of event code
+	66   Unique line(s) of event code
+popupLight
+	22   Component(s)
+	406  Line(s) of event code
+	214  Unique line(s) of event code
 popupNotify
 	19   Component(s)
 	263  Line(s) of event code
@@ -26,18 +34,10 @@ screensaver2
 	59   Component(s)
 	354  Line(s) of event code
 	251  Unique line(s) of event code
-popupLight
-	23   Component(s)
-	399  Line(s) of event code
-	208  Unique line(s) of event code
 cardChart
 	33   Component(s)
 	433  Line(s) of event code
 	294  Unique line(s) of event code
-pageTest
-	27   Component(s)
-	68   Line(s) of event code
-	66   Unique line(s) of event code
 cardAlarm
 	43   Component(s)
 	496  Line(s) of event code
@@ -89,6 +89,6 @@ cardEntities
 
 Total
 	21   Page(s)
-	798  Component(s)
-	9246 Line(s) of event code
-	2336 Unique line(s) of event code
+	799  Component(s)
+	9262 Line(s) of event code
+	2348 Unique line(s) of event code

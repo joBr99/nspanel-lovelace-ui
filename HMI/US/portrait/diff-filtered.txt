@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-04-17 17:53:22.299449942 +0000
++++ /dev/fd/62	2023-04-18 22:17:40.643093312 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +10,10 @@
@@ -1198,6 +1198,116 @@
 +             crcputs sys0,2
 +             crcputs tSend.txt,0
 +             //send cmd
++I/n2t-out/pageIcons.txt
+++ HMI/US/portrait/n2t-out/pageIcons.txt
++ +1,18 @@
++geIcons
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Locked             : no
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Locked                              : no
++ Swide up page ID                    : disabled
++ Swide down page ID                  : disabled
++ Swide left page ID                  : disabled
++ Swide right page ID                 : disabled
++
++e (string) vaDate
++ributes
++ Scope         : global
++ Text          : 
++ Max. Text Size: 35
++
++6 +20,42 @@
++ributes
++ Scope         : global
++ Text          : 
++ Max. Text Size: 15
++
++mp1
++ributes
++ Scope              : global
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 80
++ Scope                               : global
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 80
++
++mp2
++ributes
++ Scope              : global
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 80
++ Scope                               : global
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 80
++
++mp3
++ributes
++ Scope              : global
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 10
++ Scope                               : global
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
++ Associated Keyboard                 : none
++ Text                                : 
++ Max. Text Size                      : 10
++
++ p0
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++
++h0
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Position         : 50
++ Upper range limit: 100
++ Lower range limit: 0
++
++hBrightness
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ Position         : 50
++ Upper range limit: 100
++ Lower range limit: 0
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
++ Send Component ID                   : disabled
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 + +1,18 @@
@@ -1373,6 +1483,9 @@
 + Associated Keyboard: none
 + Text               : newtxt
 + Max. Text Size     : 100
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
 + Text                                : newtxt
@@ -1428,9 +1541,6 @@
 + State            : unpressed
 + Text             : startup
 + Max. Text Size   : 10
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + State                               : unpressed
 + Text                                : startup
@@ -1495,7 +1605,7 @@
 +     //send cmd
 +I/n2t-out/popupLight.txt
 ++ HMI/US/portrait/n2t-out/popupLight.txt
-+ +1,27 @@
++ +1,33 @@
 +pupLight
 +ributes
 + Scope              : local
@@ -1530,7 +1640,14 @@
 +     vis tInstruction,0
 +     vis tId,0
 +     vis bEffect,0
++     vis hBrightness,0
 +     //page open event
++     // event,pageOpenDetail,typeOfPage,tEntityName
++     // craft command
++     tSend.txt="event,pageOpenDetail,popupLight,"+entn.txt
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
 +4 +36,24 @@
 +     crcputs tSend.txt,0
 +     //send cmd
@@ -1580,7 +1697,7 @@
 +     }
 + 
 + Postinitialize Event
-+     //xstr hBrightness.x,hBrightness.y,100,250,7,BLACK,6371,0,0,1,"a"
++     fill hBrightness.x,hBrightness.y,100,250,defaultBcoColor
 + 
 +e (int32) col
 +ributes
@@ -1594,7 +1711,7 @@
 + Max. Text Size: 80
 +
 +e (int32) mode
-+8 +94,133 @@
++2 +94,133 @@
 +
 +e (string) strCommand
 +ributes
@@ -1732,9 +1849,6 @@
 +
 + p0
 +ributes
-+ Scope            : local
-+ Dragging         : 0
-+ Send Component ID: disabled
 + Scope                               : local
 + Dragging                            : 0
 + Disable release event after dragging: 0
@@ -1756,7 +1870,7 @@
 +     tSend.txt="event,buttonPress2,"+entn.txt+",colorWheel,"
 +     sys0=tch0
 +     sys0=sys0-pColorWheel.x
-+38 +244,24 @@
++37 +244,24 @@
 +     printh 55 bb
 +     prints sys0,2
 +     prints tSend.txt,0
@@ -1781,20 +1895,19 @@
 +nts
 + Touch Release Event
 +     //draw black background
-+     //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
-+     xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
++     fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
 +     //draw draw colored bar at the position of the current brightness value
-+     xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
-+     //paint an inverse of the character over everything, this rounds the corner at the bottom
-+     xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
++     fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
 +     if(hBrightness.val>7)
 +     {
 +         //draw cursor
 +         fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
++         //paint corner
++         xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
 +     }
-+     //draw black strip to the right of the slider
-+     //force a redraw of the slider, to ensure it is on top
-+     //vis hBrightness,1
++     //paint corners
++     xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
++     xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
 +     tmCooldown.en=1
 +     tmCooldown.tim=2500
 +     //craft command
@@ -1954,7 +2067,7 @@
 +     tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
 +     covx btOnOff1.val,tTmp.txt,0,0
 +     tSend.txt+=tTmp.txt
-+61 +473,48 @@
++63 +473,48 @@
 +                             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
 +                             spstr strCommand.txt,tInstruction.txt,"~",0
 +                             spstr strCommand.txt,tTmp.txt,"~",1
@@ -1991,21 +2104,24 @@
 +                                     vis t2,1
 +                                     vis hBrightness,1
 +                                     covx tTmp.txt,sys0,0,0
++                                     if(tmCooldown.en==0&&hBrightness.val!=sys0)
 +                                     if(tmCooldown.en==0)
 +                                     {
 +                                         hBrightness.val=sys0
 +                                         //draw black background
-+                                         //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
-+                                         xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
++                                         fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
 +                                         //draw draw colored bar at the position of the current brightness value
-+                                         xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
-+                                         //paint an inverse of the character over everything, this rounds the corner at the bottom
-+                                         xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
++                                         fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
 +                                         if(hBrightness.val>7)
 +                                         {
 +                                             //draw cursor
 +                                             fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
++                                             //paint corner
++                                             xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
 +                                         }
++                                         //paint corners
++                                         xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
++                                         xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
 +                                     }
 +                                 }
 +                                 // get ColorTemp value
