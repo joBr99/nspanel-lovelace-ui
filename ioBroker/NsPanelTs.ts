@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -129,7 +129,8 @@ ReleaseNotes:
         - 03.04.2023 - v4.0.5.4 Fix HandleScreensaverStatusIcons
         - 09.04.2023 - v4.0.5.5 Add new Role "timeTable" to function CreateEntity for Adapter "Fahrplan"
         - 09.04.2023 - v4.0.5.5 Fix trigger popupNotifypage
-	- 11.04.2023 - v4.0.5.6 Fix function InitDimmode
+        - 11.04.2023 - v4.0.5.6 Fix function InitDimmode
+        - 18.04.2023 - v4.0.5.7 Fix Function check_updates
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -2317,11 +2318,11 @@ async function check_updates() {
                         const Timeout = 0;
 
                         await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
-                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
                         await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
                         await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
                         await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
                         await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
                     }
                 }
             } else {
@@ -2358,11 +2359,11 @@ async function check_updates() {
                         const Timeout = 0;
 
                         await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
-                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
                         await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
                         await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
                         await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
                         await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
                     }
                 }
             } else {
@@ -2399,11 +2400,11 @@ async function check_updates() {
                         const Timeout = 0;
 
                         await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
-                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
                         await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
                         await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
                         await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
                         await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
                     }
                 }
             } else {
