@@ -511,6 +511,31 @@ Timer tmCooldown
         Timer Event
             tmCooldown.en=0
         
+Timer tmDrawCooldown
+    Attributes
+        ID         : 22
+        Scope      : local
+        Period (ms): 500
+        Enabled    : no
+    
+    Events
+        Timer Event
+            //draw black background
+            fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
+            //draw draw colored bar at the position of the current brightness value
+            fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
+            if(hBrightness.val>7)
+            {
+                //draw cursor
+                fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
+                //paint corner
+                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
+            }
+            //paint corners
+            xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
+            xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
+            tmDrawCooldown.en=0
+        
 Timer tmSerial
     Attributes
         ID         : 8
@@ -591,24 +616,9 @@ Timer tmSerial
                                             //vis t2,1
                                             vis hBrightness,1
                                             covx tTmp.txt,sys0,0,0
-                                            if(tmCooldown.en==0&&hBrightness.val!=sys0)
-                                            {
-                                                hBrightness.val=sys0
-                                                //draw black background
-                                                fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
-                                                //draw draw colored bar at the position of the current brightness value
-                                                fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
-                                                if(hBrightness.val>7)
-                                                {
-                                                    //draw cursor
-                                                    fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
-                                                    //paint corner
-                                                    xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
-                                                }
-                                                //paint corners
-                                                xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
-                                                xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
-                                            }
+                                            hBrightness.val=sys0
+                                            tmDrawCooldown.en=1
+                                            tmDrawCooldown.tim=500
                                         }
                                         // get ColorTemp value
                                         spstr strCommand.txt,tTmp.txt,"~",6
