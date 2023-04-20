@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -131,6 +131,7 @@ ReleaseNotes:
         - 09.04.2023 - v4.0.5.5 Fix trigger popupNotifypage
         - 11.04.2023 - v4.0.5.6 Fix function InitDimmode
         - 18.04.2023 - v4.0.5.7 Fix Function check_updates
+        - 20.04.2023 - v4.0.5.8 Fix Layout Update message for TFT, Berry-Driver and Tasmota
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -1128,7 +1129,7 @@ export const config = <Config> {
                 ScreensaverEntityUnitText: '°',
                 ScreensaverEntityIconColor: White
             },
-            // bottomScreensaverEntity 5 (only Advanced Screensaver)
+            // bottomScreensaverEntity 5 (for Alternative and Advanced Screensaver)
             {
                 ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity',
                 ScreensaverEntityFactor: 1,
@@ -2116,10 +2117,10 @@ async function InitPopupNotify() {
             let notification: string;
 
             let v_popupNotifyHeadingColor = (getState(popupNotifyHeadingColor).val != null) ? getState(popupNotifyHeadingColor).val  : '65504'// Farbe Headline - gelb 65504
-            let v_popupNotifyButton1TextColor = (getState(popupNotifyButton1TextColor).val != null) ? getState(popupNotifyButton1TextColor).val  : '63488'// Farbe Headline - gelb 65504
-            let v_popupNotifyButton2TextColor = (getState(popupNotifyButton2TextColor).val != null) ? getState(popupNotifyButton2TextColor).val  : '2016'// Farbe Headline - gelb 65504
-            let v_popupNotifyTextColor = (getState(popupNotifyTextColor).val != null) ? getState(popupNotifyTextColor).val : '65535'// Farbe Headline - gelb 65504
-            let v_popupNotifyIconColor = (getState(popupNotifyIconColor).val != null) ? getState(popupNotifyIconColor).val  : '65535'// Farbe Headline - gelb 65504
+            let v_popupNotifyButton1TextColor = (getState(popupNotifyButton1TextColor).val != null) ? getState(popupNotifyButton1TextColor).val  : '63488'// Farbe Button 1 - rot 63488
+            let v_popupNotifyButton2TextColor = (getState(popupNotifyButton2TextColor).val != null) ? getState(popupNotifyButton2TextColor).val  : '2016'// Farbe Button 2 - grün 2016
+            let v_popupNotifyTextColor = (getState(popupNotifyTextColor).val != null) ? getState(popupNotifyTextColor).val : '65535'// Farbe Text - weiss 65535
+            let v_popupNotifyIconColor = (getState(popupNotifyIconColor).val != null) ? getState(popupNotifyIconColor).val  : '65535'// Farbe Icon - weiss 65535
             let v_popupNotifyFontIdText = (getState(popupNotifyFontIdText).val != null) ? getState(popupNotifyFontIdText).val  : '1'
             let v_popupNotifyIcon = (getState(popupNotifyIcon).val != null) ? getState(popupNotifyIcon).val : 'alert'
 
@@ -2286,9 +2287,22 @@ function get_locales() {
 
 async function check_updates() {
     try {
-        if (Debug) {
-            console.log('Check-Updates');
-        }
+        if (Debug) console.log('Check-Updates');
+
+        let Update: boolean = false;
+
+        let InternalName: string = '';
+        let Headline: string = '';
+        let Text: string = '';
+
+        const HeadlineColor: string = '63488'; // Farbe Rot
+        const Button1: string = 'Nein';
+        const Button1Color: string = '63488';  // Farbe Rot
+        const Button2: string = 'Ja';
+        const Button2Color: string = '2016';   // Farbe Grün
+        const Timeout: number = 0;
+        const Layout: number = 1;
+        
         // Tasmota-Firmware-Vergleich
         if (existsObject(NSPanel_Path + 'Tasmota_Firmware.currentVersion') && existsObject(NSPanel_Path + 'Tasmota_Firmware.onlineVersion')) {
             let splitTasmotaVersion = (getState(NSPanel_Path + 'Tasmota_Firmware.currentVersion').val).split('.');
@@ -2296,9 +2310,9 @@ async function check_updates() {
             if (shortTasmoataVersion !== getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val) {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
-                        if (Debug) {
-                            console.log('Auto-Updates eingeschaltet - Update wird durchgeführt');
-                        }
+
+                        if (Debug) console.log('Auto-Updates eingeschaltet - Update Tasmota wird durchgeführt');
+
                         // Tasmota Upgrade durchführen
                         update_tasmota_firmware();
                         // Aktuelle Tasmota Version = Online Tasmota Version
@@ -2306,29 +2320,16 @@ async function check_updates() {
                         await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val, ack: true });
                     } else {
                         // Auf Tasmota-Updates hinweisen
-                        if (Debug) {
-                            console.log('Automatische Updates aus');
-                        }
+                        if (Debug) console.log('Tasmota-Firmware => Automatische Updates aus, manuelles Update nötig');
 
-                        const InternalName = 'TasmotaFirmwareUpdate';
-                        const Headline = 'Tasmota-Firmware Update';
-                        const Text = ['Es ist eine neue Version der Tasmota-Firmware', '\r\n', 'verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.onlineVersion')).val), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
-                        const Button1 = 'Nein';
-                        const Button2 = 'Ja';
-                        const Timeout = 0;
-
-                        await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
-                        await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
-                        await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
-                        await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
-                        await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
-                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
+                        InternalName = 'TasmotaFirmwareUpdate';
+                        Headline = 'Tasmota-Firmware Update';
+                        Text = ['Es ist eine neue Version der Tasmota-Firmware', '\r\n', 'verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(getState((String(NSPanel_Path) + 'Tasmota_Firmware.onlineVersion')).val), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
+                        Update = true;
                     }
                 }
             } else {
-                if (Debug) {
-                    console.log('Tasmota-Version auf NSPanel aktuell');
-                }
+                if (Debug) console.log('Tasmota-Version auf NSPanel aktuell');
             }
         }
 
@@ -2337,39 +2338,28 @@ async function check_updates() {
             if (parseFloat(getState(NSPanel_Path + 'Berry_Driver.currentVersion').val) < berry_driver_version) {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
+
+                        if (Debug) console.log('Auto-Updates eingeschaltet - Update Berry-Driver wird durchgeführt');
+
                         // Tasmota Berry-Driver Update durchführen
                         update_berry_driver_version();
                         // Aktuelle Berry-Driver Version = Online Berry-Driver Version
                         await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Berry_Driver.onlineVersion').val, ack: true });
 
-                        if (Debug) {
-                            console.log('Berry-Driver automatisch aktualisiert');
-                        }
+                        if (Debug) console.log('Berry-Driver automatisch aktualisiert');
+
                     } else {
                         //Auf BerryDriver-Update hinweisen
-                        if (Debug) {
-                            console.log('Automatische Updates aus');
-                        }
+                        if (Debug) console.log('Berry-Driver => Automatische Updates aus, manuelles Update nötig');
 
-                        const InternalName = 'BerryDriverUpdate';
-                        const Headline = 'Berry-Driver Update';
-                        const Text = ['Es ist eine neue Version des Berry-Drivers', '\r\n', '(Tasmota) verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Berry_Driver.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(berry_driver_version), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
-                        const Button1 = 'Nein';
-                        const Button2 = 'Ja';
-                        const Timeout = 0;
-
-                        await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
-                        await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
-                        await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
-                        await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
-                        await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
-                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
+                        InternalName = 'BerryDriverUpdate';
+                        Headline = 'Berry-Driver Update';
+                        Text = ['Es ist eine neue Version des Berry-Drivers', '\r\n', '(Tasmota) verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Berry_Driver.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(berry_driver_version), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
+                        Update = true;
                     }
                 }
             } else {
-                if (Debug) {
-                    console.log('Berry-Driver auf NSPanel aktuell');
-                }
+                if (Debug) console.log('Berry-Driver auf NSPanel aktuell');
             }
         }
 
@@ -2378,41 +2368,43 @@ async function check_updates() {
             if (parseInt(getState(NSPanel_Path + 'Display_Firmware.currentVersion').val) < desired_display_firmware_version) {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
+
+                        if (Debug) console.log('Auto-Updates eingeschaltet - Update TFT-Firmware wird durchgeführt');
+
                         // TFT-Firmware Update durchführen
                         update_tft_firmware();
                         // Aktuelle TFT-Firmware Version = Online TFT-Firmware Version
                         await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Display_Firmware.onlineVersion').val, ack: true });
 
-                        if (Debug) {
-                            console.log('Display_Firmware automatisch aktualisiert');
-                        }
+                        if (Debug) console.log('Display_Firmware automatisch aktualisiert');
+
                     } else {
                         // Auf TFT-Firmware hinweisen
-                        if (Debug) {
-                            console.log('Automatische Updates aus');
-                        }
+                        if (Debug) console.log('Display-Firmware => Automatische Updates aus, manuelles Update nötig');
 
-                        const InternalName = 'TFTFirmwareUpdate';
-                        const Headline = 'TFT-Firmware Update';
-                        const Text = ['Es ist eine neue Version der TFT-Firmware', '\r\n', 'verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Display_Firmware.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(desired_display_firmware_version), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
-                        const Button1 = 'Nein';
-                        const Button2 = 'Ja';
-                        const Timeout = 0;
-
-                        await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
-                        await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
-                        await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
-                        await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
-                        await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
-                        await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
+                        InternalName = 'TFTFirmwareUpdate';
+                        Headline = 'TFT-Firmware Update';
+                        Text = ['Es ist eine neue Version der TFT-Firmware', '\r\n', 'verfügbar', '\r\n', '\r\n', 'Installierte Version: ' + String(getState((String(NSPanel_Path) + 'Display_Firmware.currentVersion')).val), '\r\n', 'Verfügbare Version: ' + String(desired_display_firmware_version), '\r\n', '\r\n', 'Upgrade durchführen?'].join('');
+                        Update = true;
                     }
                 }
             } else {
-                if (Debug) {
-                    console.log('Display_Firmware auf NSPanel aktuell');
-                }
+                if (Debug) console.log('Display_Firmware auf NSPanel aktuell');
             }
         }
+        if (Update) {
+            await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
+            await setStateAsync(popupNotifyHeadingColor, <iobJS.State>{ val: HeadlineColor, ack: false });
+            await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
+            await setStateAsync(popupNotifyButton1TextColor, <iobJS.State>{ val: Button1Color, ack: false });
+            await setStateAsync(popupNotifyButton2Text, <iobJS.State>{ val: Button2, ack: false });
+            await setStateAsync(popupNotifyButton2TextColor, <iobJS.State>{ val: Button2Color, ack: false });
+            await setStateAsync(popupNotifySleepTimeout, <iobJS.State>{ val: Timeout, ack: false });
+            await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
+            await setStateAsync(popupNotifyLayout, <iobJS.State>{ val: Layout, ack: false });
+            await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
+        }
+
     } catch (err) {
         console.warn('error at function check_updates: ' + err.message);
     }
@@ -2505,6 +2497,7 @@ function get_online_tasmota_firmware_version() {
                 setObject(AliasPath + 'Tasmota_Firmware.onlineVersion', {type: 'channel', common: {role: 'info', name:'onlineVersion'}, native: {}});
                 await createAliasAsync(AliasPath + 'Tasmota_Firmware.onlineVersion.ACTUAL', NSPanel_Path + 'Tasmota_Firmware.onlineVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });                
                 await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.State>{ val: TasmotaVersionOnline, ack: true });
+                if (Debug) console.log('online tasmota firmware version => ' + TasmotaVersionOnline);
             } catch (err) {
                 console.warn('error result in function get_online_tasmota_firmware_version: ' + err.message);
             }
@@ -2533,12 +2526,14 @@ function get_current_berry_driver_version() {
             }
         }, async (error, response, result) => {
             try {
+                const BerryDriverVersionCurrent: string = JSON.parse(result).nlui_driver_version;
                 await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'string' });
                 await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: JSON.parse(result).nlui_driver_version, ack: true });
                 if (autoCreateAlias) {
                     setObject(AliasPath + 'Display.BerryDriver', {type: 'channel', common: {role: 'info', name: 'Berry Driver'}, native: {}});
                     await createAliasAsync(AliasPath + 'Display.BerryDriver.ACTUAL', NSPanel_Path + 'Berry_Driver.currentVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                 }
+                if (Debug) console.log('current berry driver version => ' + BerryDriverVersionCurrent);
             } catch (err) {
                 console.warn('error result in function get_current_berry_driver_version: ' + err.message);
             }
@@ -2595,6 +2590,7 @@ function get_tasmota_status0() {
                 await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.RSSI', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.RSSI, ack: true });
                 await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Signal, ack: true });
                 await setStateAsync(NSPanel_Path + 'Tasmota.Product', <iobJS.State>{ val: 'SONOFF NSPanel', ack: true });
+                if (Debug) console.log('current tasmota firmware version => ' + tasmoVersion);
             } catch (err) {
                 console.warn('error setState in function get_tasmota_status0' + err.message);
             }
@@ -2647,6 +2643,7 @@ function get_online_berry_driver_version() {
                         setObject(AliasPath + 'Berry_Driver.onlineVersion', {type: 'channel', common: {role: 'info', name:'onlineVersion'}, native: {}});
                         await createAliasAsync(AliasPath + 'Berry_Driver.onlineVersion.ACTUAL', NSPanel_Path + 'Berry_Driver.onlineVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                         await setStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.State>{ val: BerryDriverVersionOnline, ack: true });
+                        if (Debug) console.log('online berry driver version => ' + BerryDriverVersionOnline);
                     } catch (err) {
                         console.warn('error result in function get_online_berry_driver_version' +  err.message);
                     }
@@ -2677,6 +2674,7 @@ function check_version_tft_firmware() {
 
                     await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: NSPanelVersion, ack: true });
+                    if (Debug) console.log('online TFT firmware version => ' + NSPanelVersion);
                 } catch (err) {
                     console.warn('error result in function check_version_tft_firmware: ' + err.message);
                 }
@@ -2704,6 +2702,7 @@ function check_online_display_firmware() {
 
                     await createStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.State>{ val: desired_display_firmware_version, ack: true });
+                    if (Debug) console.log('online display firmware version => ' + desired_display_firmware_version);
                 } catch (err) {
                     console.warn('error result in function check_online_display_firmware' + err.message);
                 }
@@ -2842,7 +2841,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
             } else {
                 console.log('Tasmota upgrade complete. New Version: ' + Tasmota_JSON.Info1.Version);
                 get_tasmota_status0();
-                check_updates();
+                //check_updates();
             }
         }
     } catch (err) {
@@ -5092,7 +5091,6 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             power_string = power_string + array_powerspeed[i+1] + '~';                // speed~
 
             if (Debug) console.log(power_string);
-            console.log(power_string);
         }
 
         power_string = power_string.substring(0, power_string.length - 1);
