@@ -6898,6 +6898,7 @@ icons = {
 }
 
 import apis
+import re
 
 def get_icon_id(ma_name):
     if isinstance(ma_name, re.Match):
