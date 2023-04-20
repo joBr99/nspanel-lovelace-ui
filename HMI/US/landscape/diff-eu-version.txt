@@ -410,6 +410,116 @@
 │                      crcputs sys0,2
 │                      crcputs tSend.txt,0
 │                      //send cmd
+│   --- HMI/n2t-out/pageIcons.txt
+├── +++ HMI/US/landscape/n2t-out/pageIcons.txt
+│ @@ -1,17 +1,18 @@
+│  Page pageIcons
+│      Attributes
+│ -        Scope              : local
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Locked             : no
+│ -        Swide up page ID   : disabled
+│ -        Swide down page ID : disabled
+│ -        Swide left page ID : disabled
+│ -        Swide right page ID: disabled
+│ +        Scope                               : local
+│ +        Dragging                            : 0
+│ +        Disable release event after dragging: 0
+│ +        Send Component ID                   : disabled
+│ +        Locked                              : no
+│ +        Swide up page ID                    : disabled
+│ +        Swide down page ID                  : disabled
+│ +        Swide left page ID                  : disabled
+│ +        Swide right page ID                 : disabled
+│      
+│  Variable (string) vaDate
+│      Attributes
+│          Scope         : global
+│          Text          : 
+│          Max. Text Size: 35
+│      
+│ @@ -19,56 +20,42 @@
+│      Attributes
+│          Scope         : global
+│          Text          : 
+│          Max. Text Size: 15
+│      
+│  Text tTmp1
+│      Attributes
+│ -        Scope              : global
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 80
+│ +        Scope                               : global
+│ +        Dragging                            : 0
+│ +        Disable release event after dragging: 0
+│ +        Send Component ID                   : disabled
+│ +        Associated Keyboard                 : none
+│ +        Text                                : 
+│ +        Max. Text Size                      : 80
+│      
+│  Text tTmp2
+│      Attributes
+│ -        Scope              : global
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 80
+│ +        Scope                               : global
+│ +        Dragging                            : 0
+│ +        Disable release event after dragging: 0
+│ +        Send Component ID                   : disabled
+│ +        Associated Keyboard                 : none
+│ +        Text                                : 
+│ +        Max. Text Size                      : 80
+│      
+│  Text tTmp3
+│      Attributes
+│ -        Scope              : global
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 10
+│ +        Scope                               : global
+│ +        Dragging                            : 0
+│ +        Disable release event after dragging: 0
+│ +        Send Component ID                   : disabled
+│ +        Associated Keyboard                 : none
+│ +        Text                                : 
+│ +        Max. Text Size                      : 10
+│      
+│  Picture p0
+│      Attributes
+│ -        Scope            : local
+│ -        Dragging         : 0
+│ -        Send Component ID: disabled
+│ -    
+│ -Slider h0
+│ -    Attributes
+│ -        Scope            : local
+│ -        Dragging         : 0
+│ -        Send Component ID: disabled
+│ -        Position         : 50
+│ -        Upper range limit: 100
+│ -        Lower range limit: 0
+│ -    
+│ -Slider hBrightness
+│ -    Attributes
+│ -        Scope            : local
+│ -        Dragging         : 0
+│ -        Send Component ID: disabled
+│ -        Position         : 50
+│ -        Upper range limit: 100
+│ -        Lower range limit: 0
+│ +        Scope                               : local
+│ +        Dragging                            : 0
+│ +        Disable release event after dragging: 0
+│ +        Send Component ID                   : disabled
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
 │ @@ -1,17 +1,18 @@
@@ -730,7 +840,7 @@
 │              //send cmd
 │   --- HMI/n2t-out/popupLight.txt
 ├── +++ HMI/US/landscape/n2t-out/popupLight.txt
-│ @@ -1,25 +1,27 @@
+│ @@ -1,31 +1,33 @@
 │  Page popupLight
 │      Attributes
 │ -        Scope              : local
@@ -759,13 +869,20 @@
 │              //get entity id
 │              entn.txt=pageIcons.tTmp2.txt
 │ +            tIcon1.txt=pageIcons.tTmp3.txt
-│              vis p0,0
+│ +            vis p0,0
 │              vis tSend,0
 │              vis tTmp,0
 │              vis tInstruction,0
 │              vis tId,0
 │              vis bEffect,0
+│ -            vis hBrightness,0
 │              //page open event
+│              // event,pageOpenDetail,typeOfPage,tEntityName
+│              // craft command
+│              tSend.txt="event,pageOpenDetail,popupLight,"+entn.txt
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
 │ @@ -34,24 +36,24 @@
 │              crcputs tSend.txt,0
 │              //send cmd
@@ -815,7 +932,7 @@
 │              }
 │          
 │ -        Postinitialize Event
-│ -            //xstr hBrightness.x,hBrightness.y,100,250,7,BLACK,6371,0,0,1,"a"
+│ -            fill hBrightness.x,hBrightness.y,100,250,defaultBcoColor
 │ -        
 │ -Variable (int32) col
 │ -    Attributes
@@ -829,7 +946,7 @@
 │          Max. Text Size: 80
 │      
 │  Variable (int32) mode
-│ @@ -96,58 +94,133 @@
+│ @@ -96,52 +94,133 @@
 │      
 │  Variable (string) strCommand
 │      Attributes
@@ -964,12 +1081,9 @@
 │ +        Associated Keyboard                 : none
 │ +        Text                                : 
 │ +        Max. Text Size                      : 80
-│      
-│  Picture p0
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
+│ +    
+│ +Picture p0
+│ +    Attributes
 │ +        Scope                               : local
 │ +        Dragging                            : 0
 │ +        Disable release event after dragging: 0
@@ -991,7 +1105,7 @@
 │              tSend.txt="event,buttonPress2,"+entn.txt+",colorWheel,"
 │              sys0=tch0
 │              sys0=sys0-pColorWheel.x
-│ @@ -171,38 +244,24 @@
+│ @@ -165,37 +244,24 @@
 │              printh 55 bb
 │              prints sys0,2
 │              prints tSend.txt,0
@@ -1016,20 +1130,19 @@
 │      Events
 │          Touch Release Event
 │ -            //draw black background
-│ -            //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
-│ -            xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
+│ -            fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
 │ -            //draw draw colored bar at the position of the current brightness value
-│ -            xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
-│ -            //paint an inverse of the character over everything, this rounds the corner at the bottom
-│ -            xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
+│ -            fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
 │ -            if(hBrightness.val>7)
 │ -            {
 │ -                //draw cursor
 │ -                fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
+│ -                //paint corner
+│ -                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
 │ -            }
-│ -            //draw black strip to the right of the slider
-│ -            //force a redraw of the slider, to ensure it is on top
-│ -            //vis hBrightness,1
+│ -            //paint corners
+│ -            xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
+│ -            xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
 │              tmCooldown.en=1
 │              tmCooldown.tim=2500
 │              //craft command
@@ -1037,7 +1150,7 @@
 │              covx hBrightness.val,tTmp.txt,0,0
 │              tSend.txt+=tTmp.txt
 │              //send calc crc
-│ @@ -215,20 +274,21 @@
+│ @@ -208,20 +274,21 @@
 │              printh 55 bb
 │              prints sys0,2
 │              prints tSend.txt,0
@@ -1065,7 +1178,7 @@
 │              tmCooldown.tim=2500
 │              //craft command
 │              tSend.txt="event,buttonPress2,"+entn.txt+",colorTempSlider,"
-│ @@ -244,20 +304,21 @@
+│ @@ -237,20 +304,21 @@
 │              printh 55 bb
 │              prints sys0,2
 │              prints tSend.txt,0
@@ -1093,7 +1206,7 @@
 │              //send calc crc
 │              btlen tSend.txt,sys0
 │              crcrest 1,0xffff // reset CRC
-│ @@ -268,69 +329,73 @@
+│ @@ -261,69 +329,73 @@
 │              printh 55 bb
 │              prints sys0,2
 │              prints tSend.txt,0
@@ -1189,7 +1302,46 @@
 │              tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
 │              covx btOnOff1.val,tTmp.txt,0,0
 │              tSend.txt+=tTmp.txt
-│ @@ -408,61 +473,48 @@
+│ @@ -345,38 +417,14 @@
+│          Period (ms): 100
+│          Enabled    : no
+│      
+│      Events
+│          Timer Event
+│              tmCooldown.en=0
+│          
+│ -Timer tmDrawCooldown
+│ -    Attributes
+│ -        Scope      : local
+│ -        Period (ms): 500
+│ -        Enabled    : no
+│ -    
+│ -    Events
+│ -        Timer Event
+│ -            //draw black background
+│ -            fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
+│ -            //draw draw colored bar at the position of the current brightness value
+│ -            fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
+│ -            if(hBrightness.val>7)
+│ -            {
+│ -                //draw cursor
+│ -                fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
+│ -                //paint corner
+│ -                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
+│ -            }
+│ -            //paint corners
+│ -            xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
+│ -            xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
+│ -            tmDrawCooldown.en=0
+│ -        
+│  Timer tmSerial
+│      Attributes
+│          Scope      : local
+│          Period (ms): 50
+│          Enabled    : yes
+│      
+│      Events
+│ @@ -425,48 +473,48 @@
 │                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
 │                                      spstr strCommand.txt,tInstruction.txt,"~",0
 │                                      spstr strCommand.txt,tTmp.txt,"~",1
@@ -1226,22 +1378,13 @@
 │ +                                            vis t2,1
 │                                              vis hBrightness,1
 │                                              covx tTmp.txt,sys0,0,0
-│                                              if(tmCooldown.en==0)
-│                                              {
-│                                                  hBrightness.val=sys0
-│ -                                                //draw black background
-│ -                                                //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
-│ -                                                xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
-│ -                                                //draw draw colored bar at the position of the current brightness value
-│ -                                                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
-│ -                                                //paint an inverse of the character over everything, this rounds the corner at the bottom
-│ -                                                xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
-│ -                                                if(hBrightness.val>7)
-│ -                                                {
-│ -                                                    //draw cursor
-│ -                                                    fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
-│ -                                                }
-│                                              }
+│ -                                            hBrightness.val=sys0
+│ -                                            tmDrawCooldown.en=1
+│ -                                            tmDrawCooldown.tim=500
+│ +                                            if(tmCooldown.en==0)
+│ +                                            {
+│ +                                                hBrightness.val=sys0
+│ +                                            }
 │                                          }
 │                                          // get ColorTemp value
 │                                          spstr strCommand.txt,tTmp.txt,"~",6
@@ -1259,7 +1402,7 @@
 │                                                  // switch mode
 │                                                  click bColor,1
 │                                                  click bColor,0
-│ @@ -477,16 +529,16 @@
+│ @@ -481,16 +529,16 @@
 │                                                  click bColor,1
 │                                                  click bColor,0
 │                                              }
@@ -1278,7 +1421,7 @@
 │                                              }
 │                                              // mode == 0 is rgb controls currently shown
 │                                              if(mode.val==0)
-│ @@ -497,36 +549,36 @@
+│ @@ -501,36 +549,36 @@
 │                                              }
 │                                          }
 │                                          // get Color value

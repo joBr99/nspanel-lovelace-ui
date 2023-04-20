@@ -24,12 +24,12 @@ Page popupLight
             tEntity.txt=pageIcons.tTmp1.txt
             //get entity id
             entn.txt=pageIcons.tTmp2.txt
-            vis p0,0
             vis tSend,0
             vis tTmp,0
             vis tInstruction,0
             vis tId,0
             vis bEffect,0
+            vis hBrightness,0
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
@@ -79,71 +79,71 @@ Page popupLight
             }
         
         Postinitialize Event
-            //xstr hBrightness.x,hBrightness.y,100,250,7,BLACK,6371,0,0,1,"a"
+            fill hBrightness.x,hBrightness.y,100,250,defaultBcoColor
         
 Variable (int32) col
     Attributes
-        ID   : 19
+        ID   : 18
         Scope: local
         Value: 65504
     
 Variable (string) entn
     Attributes
-        ID            : 12
+        ID            : 11
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Variable (int32) mode
     Attributes
-        ID   : 14
+        ID   : 13
         Scope: local
         Value: 1
     
 Variable (int32) mode_temp
     Attributes
-        ID   : 15
+        ID   : 14
         Scope: local
         Value: 0
     
 Variable (string) strCommand
     Attributes
-        ID            : 10
+        ID            : 9
         Scope         : local
         Text          : 
         Max. Text Size: 500
     
 Variable (string) tId
     Attributes
-        ID            : 21
+        ID            : 20
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tInstruction
     Attributes
-        ID            : 20
+        ID            : 19
         Scope         : local
         Text          : 
         Max. Text Size: 20
     
 Variable (string) tSend
     Attributes
-        ID            : 17
+        ID            : 16
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
 Variable (string) tTmp
     Attributes
-        ID            : 22
+        ID            : 21
         Scope         : local
         Text          : 
         Max. Text Size: 80
     
 Text tEntity
     Attributes
-        ID                  : 3
+        ID                  : 2
         Scope               : local
         Dragging            : 0
         Send Component ID   : disabled
@@ -170,25 +170,9 @@ Text tEntity
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
     
-Picture p0
-    Attributes
-        ID               : 1
-        Scope            : local
-        Dragging         : 0
-        Send Component ID: disabled
-        Opacity          : 127
-        x coordinate     : 0
-        y coordinate     : 0
-        Width            : 480
-        Height           : 320
-        Effect           : load
-        Effect Priority  : 0
-        Effect Time      : 300
-        Picture ID       : 0
-    
 Picture pColorWheel
     Attributes
-        ID               : 2
+        ID               : 1
         Scope            : local
         Dragging         : 0
         Send Component ID: disabled
@@ -232,7 +216,7 @@ Picture pColorWheel
         
 Slider hBrightness
     Attributes
-        ID                     : 5
+        ID                     : 4
         Scope                  : local
         Dragging               : 0
         Send Component ID      : disabled
@@ -257,20 +241,19 @@ Slider hBrightness
     Events
         Touch Release Event
             //draw black background
-            //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
-            xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
+            fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
             //draw draw colored bar at the position of the current brightness value
-            xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
-            //paint an inverse of the character over everything, this rounds the corner at the bottom
-            xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
+            fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
             if(hBrightness.val>7)
             {
                 //draw cursor
                 fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
+                //paint corner
+                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
             }
-            //draw black strip to the right of the slider
-            //force a redraw of the slider, to ensure it is on top
-            //vis hBrightness,1
+            //paint corners
+            xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
+            xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
             tmCooldown.en=1
             tmCooldown.tim=2500
             //craft command
@@ -291,7 +274,7 @@ Slider hBrightness
         
 Slider hTempSlider
     Attributes
-        ID                     : 11
+        ID                     : 10
         Scope                  : local
         Dragging               : 0
         Send Component ID      : disabled
@@ -335,7 +318,7 @@ Slider hTempSlider
         
 Button b0
     Attributes
-        ID                        : 4
+        ID                        : 3
         Scope                     : local
         Dragging                  : 0
         Send Component ID         : disabled
@@ -381,7 +364,7 @@ Button b0
         
 Button bColor
     Attributes
-        ID                        : 13
+        ID                        : 12
         Scope                     : local
         Dragging                  : 0
         Send Component ID         : disabled
@@ -437,7 +420,7 @@ Button bColor
         
 Button bEffect
     Attributes
-        ID                        : 18
+        ID                        : 17
         Scope                     : local
         Dragging                  : 0
         Send Component ID         : disabled
@@ -474,7 +457,7 @@ Button bEffect
         
 Dual-state Button btOnOff1
     Attributes
-        ID                               : 6
+        ID                               : 5
         Scope                            : local
         Dragging                         : 0
         Send Component ID                : disabled
@@ -519,7 +502,7 @@ Dual-state Button btOnOff1
         
 Timer tmCooldown
     Attributes
-        ID         : 16
+        ID         : 15
         Scope      : local
         Period (ms): 100
         Enabled    : no
@@ -528,9 +511,34 @@ Timer tmCooldown
         Timer Event
             tmCooldown.en=0
         
+Timer tmDrawCooldown
+    Attributes
+        ID         : 22
+        Scope      : local
+        Period (ms): 500
+        Enabled    : no
+    
+    Events
+        Timer Event
+            //draw black background
+            fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
+            //draw draw colored bar at the position of the current brightness value
+            fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
+            if(hBrightness.val>7)
+            {
+                //draw cursor
+                fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
+                //paint corner
+                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
+            }
+            //paint corners
+            xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
+            xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
+            tmDrawCooldown.en=0
+        
 Timer tmSerial
     Attributes
-        ID         : 9
+        ID         : 8
         Scope      : local
         Period (ms): 50
         Enabled    : yes
@@ -608,22 +616,9 @@ Timer tmSerial
                                             //vis t2,1
                                             vis hBrightness,1
                                             covx tTmp.txt,sys0,0,0
-                                            if(tmCooldown.en==0)
-                                            {
-                                                hBrightness.val=sys0
-                                                //draw black background
-                                                //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
-                                                xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
-                                                //draw draw colored bar at the position of the current brightness value
-                                                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
-                                                //paint an inverse of the character over everything, this rounds the corner at the bottom
-                                                xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
-                                                if(hBrightness.val>7)
-                                                {
-                                                    //draw cursor
-                                                    fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
-                                                }
-                                            }
+                                            hBrightness.val=sys0
+                                            tmDrawCooldown.en=1
+                                            tmDrawCooldown.tim=500
                                         }
                                         // get ColorTemp value
                                         spstr strCommand.txt,tTmp.txt,"~",6
@@ -826,7 +821,7 @@ Timer tmSerial
         
 Timer tmSleep
     Attributes
-        ID         : 8
+        ID         : 7
         Scope      : local
         Period (ms): 1000
         Enabled    : yes
@@ -846,7 +841,7 @@ Timer tmSleep
         
 TouchCap tc0
     Attributes
-        ID   : 7
+        ID   : 6
         Scope: local
         Value: 0
     

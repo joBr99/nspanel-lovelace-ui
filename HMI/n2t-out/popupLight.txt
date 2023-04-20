@@ -16,12 +16,12 @@ Page popupLight
             tEntity.txt=pageIcons.tTmp1.txt
             //get entity id
             entn.txt=pageIcons.tTmp2.txt
-            vis p0,0
             vis tSend,0
             vis tTmp,0
             vis tInstruction,0
             vis tId,0
             vis bEffect,0
+            vis hBrightness,0
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
@@ -71,7 +71,7 @@ Page popupLight
             }
         
         Postinitialize Event
-            //xstr hBrightness.x,hBrightness.y,100,250,7,BLACK,6371,0,0,1,"a"
+            fill hBrightness.x,hBrightness.y,100,250,defaultBcoColor
         
 Variable (int32) col
     Attributes
@@ -133,12 +133,6 @@ Text tEntity
         Text               : tEntity1
         Max. Text Size     : 25
     
-Picture p0
-    Attributes
-        Scope            : local
-        Dragging         : 0
-        Send Component ID: disabled
-    
 Picture pColorWheel
     Attributes
         Scope            : local
@@ -185,20 +179,19 @@ Slider hBrightness
     Events
         Touch Release Event
             //draw black background
-            //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
-            xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
+            fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
             //draw draw colored bar at the position of the current brightness value
-            xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
-            //paint an inverse of the character over everything, this rounds the corner at the bottom
-            xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
+            fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
             if(hBrightness.val>7)
             {
                 //draw cursor
                 fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
+                //paint corner
+                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
             }
-            //draw black strip to the right of the slider
-            //force a redraw of the slider, to ensure it is on top
-            //vis hBrightness,1
+            //paint corners
+            xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
+            xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
             tmCooldown.en=1
             tmCooldown.tim=2500
             //craft command
@@ -356,6 +349,30 @@ Timer tmCooldown
         Timer Event
             tmCooldown.en=0
         
+Timer tmDrawCooldown
+    Attributes
+        Scope      : local
+        Period (ms): 500
+        Enabled    : no
+    
+    Events
+        Timer Event
+            //draw black background
+            fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
+            //draw draw colored bar at the position of the current brightness value
+            fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
+            if(hBrightness.val>7)
+            {
+                //draw cursor
+                fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
+                //paint corner
+                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
+            }
+            //paint corners
+            xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
+            xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
+            tmDrawCooldown.en=0
+        
 Timer tmSerial
     Attributes
         Scope      : local
@@ -435,22 +452,9 @@ Timer tmSerial
                                             //vis t2,1
                                             vis hBrightness,1
                                             covx tTmp.txt,sys0,0,0
-                                            if(tmCooldown.en==0)
-                                            {
-                                                hBrightness.val=sys0
-                                                //draw black background
-                                                //xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,GREEN,6371,0,0,1,"a"
-                                                xstr hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,7,8484,6371,0,0,1,"a"
-                                                //draw draw colored bar at the position of the current brightness value
-                                                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,7,col.val,8484,2,4,1,"a"
-                                                //paint an inverse of the character over everything, this rounds the corner at the bottom
-                                                xstr hBrightness.x,hBrightness.y+1,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
-                                                if(hBrightness.val>7)
-                                                {
-                                                    //draw cursor
-                                                    fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
-                                                }
-                                            }
+                                            hBrightness.val=sys0
+                                            tmDrawCooldown.en=1
+                                            tmDrawCooldown.tim=500
                                         }
                                         // get ColorTemp value
                                         spstr strCommand.txt,tTmp.txt,"~",6

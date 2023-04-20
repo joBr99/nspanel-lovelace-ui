@@ -6898,14 +6898,22 @@ icons = {
 }
 
 import apis
+import re
 
 def get_icon_id(ma_name):
+    if isinstance(ma_name, re.Match):
+        ma_name = ma_name.group(0).replace('<I>', '').replace('</I>', '')
+
     if "text:" in ma_name:
         return ma_name.replace("text:","")
     if "ha:" in ma_name:
-        return apis.ha_api.render_template(ma_name.replace("ha:",""))
-    if "ha-i:" in ma_name:
-        ma_name = apis.ha_api.render_template(ma_name.replace("ha-i:",""))
+        splitted_string = ma_name.replace("ha:","").rpartition('}')
+        template_string = f"{splitted_string[0]}{splitted_string[1]}"
+        templates_result = apis.ha_api.render_template(template_string)
+        if isinstance(templates_result, str):
+            templates_result = re.sub(r"<I>.+?<\/I>", get_icon_id, templates_result)
+        return f"{templates_result}{splitted_string[2]}"
+
     ma_name = ma_name.replace("mdi:","")
     if ma_name in icons:
         return icons[ma_name]
