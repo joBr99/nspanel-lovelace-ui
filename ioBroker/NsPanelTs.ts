@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
-- abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.4.0
+TypeScript v4.0.5.9 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+- abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -132,6 +132,7 @@ ReleaseNotes:
         - 11.04.2023 - v4.0.5.6 Fix function InitDimmode
         - 18.04.2023 - v4.0.5.7 Fix Function check_updates
         - 20.04.2023 - v4.0.5.8 Fix Layout Update message for TFT, Berry-Driver and Tasmota
+	- 21.04.2023 - v4.0.5.9 Add Parameter pageitem id0 to ActivePages (0_userdata) 
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -224,6 +225,7 @@ Upgrades in Konsole:
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.5.tft
 ---------------------------------------------------------------------------------------
 */
+
 let Icons = new IconsSelector();
 let timeoutSlider: any;
 let vwIconColor = [];
@@ -1302,7 +1304,6 @@ export const config = <Config> {
     }
 };
 
-
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
 const request = require('request');
@@ -1527,6 +1528,9 @@ async function Init_ActivePageData() {
         }
         if (existsState(NSPanel_Path + 'ActivePage.type') == false ) { 
             await createStateAsync(NSPanel_Path + 'ActivePage.type', '', true, { type: 'string' });
+        }
+        if (existsState(NSPanel_Path + 'ActivePage.id0') == false ) { 
+            await createStateAsync(NSPanel_Path + 'ActivePage.id0', '', true, { type: 'string' });
         }
     } catch (err) { 
         console.warn('error at function Init_ActivePageData: ' + err.message); 
@@ -2984,6 +2988,7 @@ function GeneratePage(page: Page): void {
         activePage = page;
         setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type);
         setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading);
+        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage.items[0].id);
         switch (page.type) {
             case 'cardEntities':
                 SendToPanel(GenerateEntitiesPage(<PageEntities>page));
@@ -6865,6 +6870,7 @@ function UnsubscribeWatcher(): void {
 
 function HandleScreensaver(): void {
     setIfExists(NSPanel_Path + 'ActivePage.type', 'screensaver');
+    setIfExists(NSPanel_Path + 'ActivePage.id0', 'screensaver');
     setIfExists(NSPanel_Path + 'ActivePage.heading', 'Screensaver');
     if (existsObject(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced')) {
         if (getState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced').val) {
