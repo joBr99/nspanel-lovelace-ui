@@ -5071,17 +5071,17 @@ function GeneratePowerPage(page: PagePower): Payload[] {
 
         let arrayColorScale = [colorScale0, colorScale1, colorScale2, colorScale3, colorScale4, colorScale5, colorScale6, colorScale7, colorScale8, colorScale9, colorScale10];
 
-        let homeIconColor = 0;
         if (!demoMode) {
             for (let obji = 1; obji < 7; obji++) {
-                array_icon_color[obji] = arrayColorScale[obj[obji].iconColor !== '' ? obj[obji].iconColor : 0];
+                const color = obj[obji].iconColor !== '' ? obj[obji].iconColor : 0;
+                array_icon_color[obji] = arrayColorScale[color];
                 array_icon[obji] = obj[obji].icon;
                 array_powerspeed[obji] = obj[obji].speed;
                 array_powerstate[obji] = obj[obji].value + ' ' + obj[obji].unit ;
             }
             array_icon[0] = obj[0].icon;
             array_powerstate[0] = obj[0].value + ' ' + obj[0].unit;
-            homeIconColor = obj[0].iconColor;
+            array_icon_color[0] = arrayColorScale[obj[0].iconColor];
         }
 
         let power_string : any = '';
@@ -5108,7 +5108,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
                 '' + '~' +                                          // type (ignored)
                 '' + '~' +                                          // intNameEntity (ignored)
                 Icons.GetIcon(array_icon[0])    + '~' +             // icon
-                rgb_dec565(array_icon_color[homeIconColor]) + '~' + // icon_color
+                rgb_dec565(array_icon_color[0]) + '~' +             // icon_color
                 '' + '~' +                                          // display (ignored in TS)
                 array_powerstate[0]             + '~' +             // optionalValue
                 '' + '~' +                                          // speed
