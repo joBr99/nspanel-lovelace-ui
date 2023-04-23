@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.9 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.10 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -133,6 +133,7 @@ ReleaseNotes:
         - 18.04.2023 - v4.0.5.7 Fix Function check_updates
         - 20.04.2023 - v4.0.5.8 Fix Layout Update message for TFT, Berry-Driver and Tasmota
 	- 21.04.2023 - v4.0.5.9 Add Parameter pageitem id0 to ActivePages (0_userdata) 
+	- 21.04.2023 - v4.0.5.10 Fixed error wrong icon index in GeneratePowerPage by fre4242
 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -4572,17 +4573,17 @@ function GeneratePowerPage(page: PagePower): Payload[] {
 
         let arrayColorScale = [colorScale0, colorScale1, colorScale2, colorScale3, colorScale4, colorScale5, colorScale6, colorScale7, colorScale8, colorScale9, colorScale10];
 
-        let homeIconColor = 0;
         if (!demoMode) {
             for (let obji = 1; obji < 7; obji++) {
-                array_icon_color[obji] = arrayColorScale[obj[obji].iconColor !== '' ? obj[obji].iconColor : 0];
+                const color = obj[obji].iconColor !== '' ? obj[obji].iconColor : 0;
+                array_icon_color[obji] = arrayColorScale[color];
                 array_icon[obji] = obj[obji].icon;
                 array_powerspeed[obji] = obj[obji].speed;
                 array_powerstate[obji] = obj[obji].value + ' ' + obj[obji].unit ;
             }
             array_icon[0] = obj[0].icon;
             array_powerstate[0] = obj[0].value + ' ' + obj[0].unit;
-            homeIconColor = obj[0].iconColor;
+            array_icon_color[0] = arrayColorScale[obj[0].iconColor];
         }
 
         let power_string : any = '';
@@ -4609,7 +4610,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
                 '' + '~' +                                          // type (ignored)
                 '' + '~' +                                          // intNameEntity (ignored)
                 Icons.GetIcon(array_icon[0])    + '~' +             // icon
-                rgb_dec565(array_icon_color[homeIconColor]) + '~' + // icon_color
+                rgb_dec565(array_icon_color[0]) + '~' +             // icon_color
                 '' + '~' +                                          // display (ignored in TS)
                 array_powerstate[0]             + '~' +             // optionalValue
                 '' + '~' +                                          // speed
