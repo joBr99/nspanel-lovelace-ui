@@ -655,8 +655,8 @@ class LuiPagesGen(object):
             speed = 0
             if apis.ha_api.entity_exists(item.entityId):
                 entity = apis.ha_api.get_entity(item.entityId)
-                if float(entity.state) > 0:
-                    speed = str(item.entity_input_config.get("speed", 1))
+                speed = str(item.entity_input_config.get("speed", 0))
+                if isinstance(speed, str):
                     speed = apis.ha_api.render_template(speed)
             command += f"~{speed}"
         self._send_mqtt_msg(command)

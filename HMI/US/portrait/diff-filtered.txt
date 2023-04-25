@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-04-18 22:17:40.643093312 +0000
++++ /dev/fd/62	2023-04-19 16:16:22.100652931 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +10,10 @@
@@ -57,13 +57,13 @@
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +186,26 @@
 +e (string) type6
@@ -1483,9 +1483,6 @@
 + Associated Keyboard: none
 + Text               : newtxt
 + Max. Text Size     : 100
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + Associated Keyboard                 : none
 + Text                                : newtxt
@@ -1541,6 +1538,9 @@
 + State            : unpressed
 + Text             : startup
 + Max. Text Size   : 10
++ Scope                               : local
++ Dragging                            : 0
++ Disable release event after dragging: 0
 + Send Component ID                   : disabled
 + State                               : unpressed
 + Text                                : startup
@@ -2067,7 +2067,46 @@
 +     tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
 +     covx btOnOff1.val,tTmp.txt,0,0
 +     tSend.txt+=tTmp.txt
-+63 +473,48 @@
++38 +417,14 @@
++ Period (ms): 100
++ Enabled    : no
++
++nts
++ Timer Event
++     tmCooldown.en=0
++ 
++mDrawCooldown
++ributes
++ Scope      : local
++ Period (ms): 500
++ Enabled    : no
++
++nts
++ Timer Event
++     //draw black background
++     fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
++     //draw draw colored bar at the position of the current brightness value
++     fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
++     if(hBrightness.val>7)
++     {
++         //draw cursor
++         fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
++         //paint corner
++         xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
++     }
++     //paint corners
++     xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
++     xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
++     tmDrawCooldown.en=0
++ 
++mSerial
++ributes
++ Scope      : local
++ Period (ms): 50
++ Enabled    : yes
++
++nts
++48 +473,48 @@
 +                             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
 +                             spstr strCommand.txt,tInstruction.txt,"~",0
 +                             spstr strCommand.txt,tTmp.txt,"~",1
@@ -2104,24 +2143,12 @@
 +                                     vis t2,1
 +                                     vis hBrightness,1
 +                                     covx tTmp.txt,sys0,0,0
-+                                     if(tmCooldown.en==0&&hBrightness.val!=sys0)
++                                     hBrightness.val=sys0
++                                     tmDrawCooldown.en=1
++                                     tmDrawCooldown.tim=500
 +                                     if(tmCooldown.en==0)
 +                                     {
 +                                         hBrightness.val=sys0
-+                                         //draw black background
-+                                         fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
-+                                         //draw draw colored bar at the position of the current brightness value
-+                                         fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
-+                                         if(hBrightness.val>7)
-+                                         {
-+                                             //draw cursor
-+                                             fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
-+                                             //paint corner
-+                                             xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
-+                                         }
-+                                         //paint corners
-+                                         xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
-+                                         xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
 +                                     }
 +                                 }
 +                                 // get ColorTemp value
