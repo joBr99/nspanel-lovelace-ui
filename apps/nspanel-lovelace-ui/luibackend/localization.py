@@ -29,7 +29,8 @@ def lookup(path_frontend_file, path_backend_file, lookupstr):
             if k in res:
                 res = res[k]
         if type(res) is not str:
-            res = "error_tnf"
+            #res = "error_tnf"
+            res = lookupstr
         return res
 
 def get_translation(locale, lookupstr):
