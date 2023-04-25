@@ -1,14 +1,13 @@
 Page popupLight
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Locked                              : no
-        Swide up page ID                    : disabled
-        Swide down page ID                  : disabled
-        Swide left page ID                  : disabled
-        Swide right page ID                 : disabled
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
     
     Events
         Preinitialize Event
@@ -17,13 +16,12 @@ Page popupLight
             tEntity.txt=pageIcons.tTmp1.txt
             //get entity id
             entn.txt=pageIcons.tTmp2.txt
-            tIcon1.txt=pageIcons.tTmp3.txt
-            vis p0,0
             vis tSend,0
             vis tTmp,0
             vis tInstruction,0
             vis tId,0
             vis bEffect,0
+            vis hBrightness,0
             //page open event
             // event,pageOpenDetail,typeOfPage,tEntityName
             // craft command
@@ -40,16 +38,16 @@ Page popupLight
             prints tSend.txt,0
             prints crcval,2
             //disable brightness by default
-            vis t1,0
-            vis t2,0
-            vis hBrightness,0
+            //vis t1,0
+            //vis t2,0
+            vis hBrightness,1
             //disable color temp by default
-            vis t4,0
-            vis t3,0
+            //vis t4,0
+            //vis t3,0
             vis hTempSlider,0
             //disable color wheel components by default
             vis bColor,0
-            vis t0,0
+            //vis t0,0
             vis pColorWheel,0
             //vis t0,0
             popupLight.bco=defaultBcoColor
@@ -68,14 +66,18 @@ Page popupLight
             }
             if(defaultBcoColor==0)
             {
-                hBrightness.pic=14
-                hBrightness.pic1=13
-                hBrightness.pic2=15
                 hTempSlider.pic=16
-                hTempSlider.pic1=17
-                hTempSlider.pic2=15
+                hTempSlider.pic1=16
             }
         
+        Postinitialize Event
+            fill hBrightness.x,hBrightness.y,100,250,defaultBcoColor
+        
+Variable (int32) col
+    Attributes
+        Scope: local
+        Value: 65504
+    
 Variable (string) entn
     Attributes
         Scope         : local
@@ -98,125 +100,44 @@ Variable (string) strCommand
         Text          : 
         Max. Text Size: 500
     
+Variable (string) tId
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
+Variable (string) tInstruction
+    Attributes
+        Scope         : local
+        Text          : 
+        Max. Text Size: 20
+    
 Variable (string) tSend
     Attributes
         Scope         : local
         Text          : 
         Max. Text Size: 200
     
-Text t0
+Variable (string) tTmp
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : Color
-        Max. Text Size                      : 50
-    
-Text t1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : Brightness
-        Max. Text Size                      : 50
-    
-Text t2
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î
-        Max. Text Size                      : 10
-    
-Text t3
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î
-        Max. Text Size                      : 10
-    
-Text t4
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : Temperature
-        Max. Text Size                      : 50
+        Scope         : local
+        Text          : 
+        Max. Text Size: 80
     
 Text tEntity
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity1
-        Max. Text Size                      : 25
-    
-Text tIcon1
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î´
-        Max. Text Size                      : 10
-    
-Text tId
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text tInstruction
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
-    
-Text tTmp
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 80
-    
-Picture p0
-    Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : tEntity1
+        Max. Text Size     : 25
     
 Picture pColorWheel
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
@@ -248,16 +169,29 @@ Picture pColorWheel
         
 Slider hBrightness
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
-        Lower range limit                   : 0
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Position         : 50
+        Upper range limit: 100
+        Lower range limit: 0
     
     Events
         Touch Release Event
+            //draw black background
+            fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
+            //draw draw colored bar at the position of the current brightness value
+            fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
+            if(hBrightness.val>7)
+            {
+                //draw cursor
+                fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
+                //paint corner
+                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
+            }
+            //paint corners
+            xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
+            xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
             tmCooldown.en=1
             tmCooldown.tim=2500
             //craft command
@@ -278,13 +212,12 @@ Slider hBrightness
         
 Slider hTempSlider
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Position                            : 50
-        Upper range limit                   : 100
-        Lower range limit                   : 0
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Position         : 50
+        Upper range limit: 100
+        Lower range limit: 0
     
     Events
         Touch Release Event
@@ -308,13 +241,12 @@ Slider hTempSlider
         
 Button b0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -333,13 +265,12 @@ Button b0
         
 Button bColor
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -349,8 +280,8 @@ Button bColor
                 //enable color wheel
                 vis pColorWheel,1
                 //disable color temp
-                vis t4,0
-                vis t3,0
+                //vis t4,0
+                //vis t3,0
                 vis hTempSlider,0
             }else
             {
@@ -360,38 +291,35 @@ Button bColor
                 if(mode_temp.val==1)
                 {
                     //enable color temp
-                    vis t4,1
-                    vis t3,1
+                    //vis t4,1
+                    //vis t3,1
                     vis hTempSlider,1
                 }
             }
         
 Button bEffect
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î¸¯
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î¸¯
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
             pageIcons.tTmp1.txt=tEntity.txt
             pageIcons.tTmp2.txt=entn.txt
-            pageIcons.tTmp3.txt=tIcon1.txt
             page popupInSel
         
 Dual-state Button btOnOff1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : 
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : 
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -420,6 +348,30 @@ Timer tmCooldown
     Events
         Timer Event
             tmCooldown.en=0
+        
+Timer tmDrawCooldown
+    Attributes
+        Scope      : local
+        Period (ms): 500
+        Enabled    : no
+    
+    Events
+        Timer Event
+            //draw black background
+            fill hBrightness.x,hBrightness.y,100,hBrightness.val*-25/10+250,8484
+            //draw draw colored bar at the position of the current brightness value
+            fill hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.val*25/10,col.val
+            if(hBrightness.val>7)
+            {
+                //draw cursor
+                fill hBrightness.x+25,hBrightness.val*-25/10+322,50,4,WHITE
+                //paint corner
+                xstr hBrightness.x,hBrightness.val*-25/10+314,100,hBrightness.h,7,8484,0,0,0,3,"a"
+            }
+            //paint corners
+            xstr hBrightness.x,hBrightness.y,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"a"
+            xstr hBrightness.x,hBrightness.y+hBrightness.h-15,100,hBrightness.h,7,defaultBcoColor,0,0,0,3,"b"
+            tmDrawCooldown.en=0
         
 Timer tmSerial
     Attributes
@@ -477,11 +429,12 @@ Timer tmSerial
                                     {
                                         // change icon
                                         //spstr strCommand.txt,tIcon1.txt,"~",2
-                                        vis tIcon1,1
+                                        //vis tIcon1,1
                                         // change icon color
                                         spstr strCommand.txt,tTmp.txt,"~",3
                                         covx tTmp.txt,sys0,0,0
-                                        tIcon1.pco=sys0
+                                        col.val=sys0
+                                        //tEntity.pco=sys0
                                         // get Button State
                                         spstr strCommand.txt,tTmp.txt,"~",4
                                         covx tTmp.txt,sys0,0,0
@@ -490,27 +443,26 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",5
                                         if(tTmp.txt=="disable")
                                         {
-                                            vis t1,0
-                                            vis t2,0
+                                            //vis t1,0
+                                            //vis t2,0
                                             vis hBrightness,0
                                         }else
                                         {
-                                            vis t1,1
-                                            vis t2,1
+                                            //vis t1,1
+                                            //vis t2,1
                                             vis hBrightness,1
                                             covx tTmp.txt,sys0,0,0
-                                            if(tmCooldown.en==0)
-                                            {
-                                                hBrightness.val=sys0
-                                            }
+                                            hBrightness.val=sys0
+                                            tmDrawCooldown.en=1
+                                            tmDrawCooldown.tim=500
                                         }
                                         // get ColorTemp value
                                         spstr strCommand.txt,tTmp.txt,"~",6
                                         if(tTmp.txt=="disable")
                                         {
                                             vis hTempSlider,0
-                                            vis t3,0
-                                            vis t4,0
+                                            //vis t3,0
+                                            //vis t4,0
                                             mode_temp.val=0
                                             // mode == 1 is temp controls currently shown
                                             if(mode.val==1)
@@ -533,8 +485,8 @@ Timer tmSerial
                                         {
                                             mode_temp.val=1
                                             vis hTempSlider,1
-                                            vis t3,1
-                                            vis t4,1
+                                            //vis t3,1
+                                            //vis t4,1
                                             if(tmCooldown.en==0)
                                             {
                                                 covx tTmp.txt,sys0,0,0
@@ -553,12 +505,12 @@ Timer tmSerial
                                         // disable -> isn't supported
                                         if(tTmp.txt=="disable")
                                         {
-                                            vis t0,0
+                                            //vis t0,0
                                             vis bColor,0
                                             vis pColorWheel,0
                                         }else
                                         {
-                                            vis t0,1
+                                            //vis t0,1
                                             //only enable bColor button if color temp is also supported
                                             if(mode_temp.val==1)
                                             {
@@ -570,11 +522,11 @@ Timer tmSerial
                                             }
                                         }
                                         // set t0 Color (Localization)
-                                        spstr strCommand.txt,t0.txt,"~",8
+                                        //spstr strCommand.txt,t0.txt,"~",8
                                         // set t4 Temperature (Localization)
-                                        spstr strCommand.txt,t4.txt,"~",9
+                                        //spstr strCommand.txt,t4.txt,"~",9
                                         // set t1 Brightness (Localization)
-                                        spstr strCommand.txt,t1.txt,"~",10
+                                        //spstr strCommand.txt,t1.txt,"~",10
                                         // activate effect button
                                         spstr strCommand.txt,tTmp.txt,"~",11
                                         if(tTmp.txt=="enable")

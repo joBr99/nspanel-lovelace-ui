@@ -1,7 +1,11 @@
 Program.s
 	0    Component(s)
-	12   Line(s) of event code
-	12   Unique line(s) of event code
+	13   Line(s) of event code
+	13   Unique line(s) of event code
+cardQR
+	34   Component(s)
+	406  Line(s) of event code
+	236  Unique line(s) of event code
 pageIcons
 	7    Component(s)
 	0    Line(s) of event code
@@ -54,10 +58,6 @@ cardMedia
 	59   Component(s)
 	645  Line(s) of event code
 	320  Unique line(s) of event code
-popupLight
-	28   Component(s)
-	408  Line(s) of event code
-	225  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	512  Line(s) of event code
@@ -78,10 +78,10 @@ screensaver2
 	58   Component(s)
 	344  Line(s) of event code
 	243  Unique line(s) of event code
-cardQR
-	34   Component(s)
+popupLight
+	23   Component(s)
 	406  Line(s) of event code
-	236  Unique line(s) of event code
+	207  Unique line(s) of event code
 cardEntities
 	67   Component(s)
 	1166 Line(s) of event code
@@ -89,6 +89,6 @@ cardEntities
 
 Total
 	21   Page(s)
-	800  Component(s)
-	9224 Line(s) of event code
-	2331 Unique line(s) of event code
+	795  Component(s)
+	9223 Line(s) of event code
+	2322 Unique line(s) of event code
