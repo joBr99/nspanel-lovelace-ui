@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.10 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.11 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -132,9 +132,10 @@ ReleaseNotes:
         - 11.04.2023 - v4.0.5.6 Fix function InitDimmode
         - 18.04.2023 - v4.0.5.7 Fix Function check_updates
         - 20.04.2023 - v4.0.5.8 Fix Layout Update message for TFT, Berry-Driver and Tasmota
-	- 21.04.2023 - v4.0.5.9 Add Parameter pageitem id0 to ActivePages (0_userdata) 
-	- 21.04.2023 - v4.0.5.10 Fixed error wrong icon index in GeneratePowerPage by fre4242
-
+	    - 21.04.2023 - v4.0.5.9 Add Parameter pageitem id0 to ActivePages (0_userdata)
+	    - 23.04.2023 - v4.0.5.10 Fixed error wrong icon index in GeneratePowerPage by fre4242
+        - 28.04.2023 - v4.0.5.11 light 'hue' and light 'rgb' have '.TEMPERATURE' optional
+	
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
 ***********************************************************************************************************
@@ -5717,9 +5718,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
                         }
                     }
-
-                    let colorTemp = 0;
+                    let colorTemp: any;
                     if (existsState(id + '.TEMPERATURE')) {
+                        colorTemp = 0;
                         if (getState(id + '.TEMPERATURE').val != null) {
                             if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
                                 colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
@@ -5729,7 +5730,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
-                        console.warn('function GenerateDetailPage role:hue -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                        colorTemp = 'disable';
+                        //console.warn('function GenerateDetailPage role:hue -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
                     out_msgs.push({
@@ -5782,9 +5784,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
                         }
                     }
-
-                    let colorTemp = 0;
+                    let colorTemp: any;
                     if (existsState(id + '.TEMPERATURE')) {
+                        colorTemp = 0;
                         if (getState(id + '.TEMPERATURE').val != null) {
                             if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
                                 colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
@@ -5794,7 +5796,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
-                        console.warn('function GenerateDetailPage role:rgb -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                        colorTemp = 'disable';                        
+                        //console.warn('function GenerateDetailPage role:rgb -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
                     out_msgs.push({
