@@ -132,8 +132,8 @@ ReleaseNotes:
         - 11.04.2023 - v4.0.5.6 Fix function InitDimmode
         - 18.04.2023 - v4.0.5.7 Fix Function check_updates
         - 20.04.2023 - v4.0.5.8 Fix Layout Update message for TFT, Berry-Driver and Tasmota
-	    - 21.04.2023 - v4.0.5.9 Add Parameter pageitem id0 to ActivePages (0_userdata)
-	    - 23.04.2023 - v4.0.5.10 Fixed error wrong icon index in GeneratePowerPage by fre4242
+        - 21.04.2023 - v4.0.5.9 Add Parameter pageitem id0 to ActivePages (0_userdata)
+        - 23.04.2023 - v4.0.5.10 Fixed error wrong icon index in GeneratePowerPage by fre4242
         - 28.04.2023 - v4.0.5.11 light 'hue' and light 'rgb' have '.TEMPERATURE' optional
 	
 ***********************************************************************************************************
