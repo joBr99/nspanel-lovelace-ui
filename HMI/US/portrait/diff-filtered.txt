@@ -1,7 +1,7 @@
-+++ /dev/fd/62	2023-04-29 14:51:43.982371793 +0000
++++ /dev/fd/62	2023-04-29 14:58:06.204485629 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
-+1 +10,10 @@
++1 +10,11 @@
 +nth 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
@@ -1587,27 +1587,7 @@
 +     //send cmd
 +I/n2t-out/popupLight.txt
 ++ HMI/US/portrait/n2t-out/popupLight.txt
-+ +1,33 @@
-+pupLight
-+ributes
-+ Scope              : local
-+ Dragging           : 0
-+ Send Component ID  : disabled
-+ Locked             : no
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Locked                              : no
-+ Swide up page ID                    : disabled
-+ Swide down page ID                  : disabled
-+ Swide left page ID                  : disabled
-+ Swide right page ID                 : disabled
-+
++0 +12,21 @@
 +nts
 + Preinitialize Event
 +     dim=dimValueNormal
@@ -1630,7 +1610,7 @@
 +     //send calc crc
 +     btlen tSend.txt,sys0
 +     crcrest 1,0xffff // reset CRC
-+4 +36,24 @@
++4 +35,24 @@
 +     crcputs tSend.txt,0
 +     //send cmd
 +     printh 55 bb
@@ -1661,7 +1641,7 @@
 +     {
 +         if(b[sys0].type==98||b[sys0].type==116)
 +         {
-+6 +64,22 @@
++6 +63,22 @@
 +         {
 +             b[sys0].pic=10
 +             b[sys0].pic2=11
@@ -1693,7 +1673,7 @@
 + Max. Text Size: 80
 +
 +e (int32) mode
-+2 +94,133 @@
++7 +93,116 @@
 +
 +e (string) strCommand
 +ributes
@@ -1702,22 +1682,38 @@
 + Max. Text Size: 500
 +
 +e (string) tId
-+ributes
-+ Scope         : local
-+ Text          : 
-+ Max. Text Size: 20
-+
-+e (string) tInstruction
-+ributes
-+ Scope         : local
-+ Text          : 
-+ Max. Text Size: 20
-+
 +e (string) tSend
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 20
 + Max. Text Size: 200
++
++e (string) tInstruction
++
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 20
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : Color
++ Max. Text Size     : 50
++
++e (string) tSend
++
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 200
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : Brightness
++ Max. Text Size     : 50
 +
 +e (string) tTmp
 +
@@ -1725,53 +1721,30 @@
 + Scope         : local
 + Text          : 
 + Max. Text Size: 80
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : Color
-+ Max. Text Size                      : 50
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : î
++ Max. Text Size     : 10
 +
 +
 +ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : Brightness
-+ Max. Text Size                      : 50
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : î
++ Max. Text Size     : 10
 +
 +
 +ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : î
-+ Max. Text Size                      : 10
-+
-+
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : î
-+ Max. Text Size                      : 10
-+
-+
-+ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : Temperature
-+ Max. Text Size                      : 50
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : Temperature
++ Max. Text Size     : 50
 +
 +ntity
 +ributes
@@ -1781,98 +1754,61 @@
 + Associated Keyboard: none
 + Text               : tEntity1
 + Max. Text Size     : 25
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : tEntity1
-+ Max. Text Size                      : 25
 +
 +con1
 +ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : î´
-+ Max. Text Size                      : 10
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : î´
++ Max. Text Size     : 10
 +
 +d
 +ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 
-+ Max. Text Size                      : 20
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 20
 +
 +nstruction
 +ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 
-+ Max. Text Size                      : 20
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 20
 +
 +mp
 +ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Associated Keyboard                 : none
-+ Text                                : 
-+ Max. Text Size                      : 80
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 80
 +
 + p0
 +ributes
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
 +
 + pColorWheel
 +ributes
 + Scope            : local
 + Dragging         : 0
 + Send Component ID: disabled
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
 +
 +nts
-+ Touch Press Event
-+     //craft command
-+     tSend.txt="event,buttonPress2,"+entn.txt+",colorWheel,"
-+     sys0=tch0
-+     sys0=sys0-pColorWheel.x
-+37 +244,24 @@
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+hBrightness
-+ributes
-+ Scope            : local
-+ Dragging         : 0
++28 +240,14 @@
 + Send Component ID: disabled
 + Position         : 50
 + Upper range limit: 100
 + Lower range limit: 0
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Position                            : 50
-+ Upper range limit                   : 100
-+ Lower range limit                   : 0
 +
 +nts
 + Touch Release Event
@@ -1897,85 +1833,7 @@
 +     covx hBrightness.val,tTmp.txt,0,0
 +     tSend.txt+=tTmp.txt
 +     //send calc crc
-+20 +274,21 @@
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+hTempSlider
-+ributes
-+ Scope            : local
-+ Dragging         : 0
-+ Send Component ID: disabled
-+ Position         : 50
-+ Upper range limit: 100
-+ Lower range limit: 0
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ Position                            : 50
-+ Upper range limit                   : 100
-+ Lower range limit                   : 0
-+
-+nts
-+ Touch Release Event
-+     tmCooldown.en=1
-+     tmCooldown.tim=2500
-+     //craft command
-+     tSend.txt="event,buttonPress2,"+entn.txt+",colorTempSlider,"
-+20 +304,21 @@
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+b0
-+ributes
-+ Scope            : local
-+ Dragging         : 0
-+ Send Component ID: disabled
-+ State            : unpressed
-+ Text             : î
-+ Max. Text Size   : 10
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ State                               : unpressed
-+ Text                                : î
-+ Max. Text Size                      : 10
-+
-+nts
-+ Touch Press Event
-+     tSend.txt="event,buttonPress2,popupLight,bExit"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+69 +329,73 @@
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+bColor
-+ributes
-+ Scope            : local
-+ Dragging         : 0
-+ Send Component ID: disabled
-+ State            : unpressed
-+ Text             : î
-+ Max. Text Size   : 10
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ State                               : unpressed
-+ Text                                : î
-+ Max. Text Size                      : 10
-+
-+nts
++27 +328,27 @@
 + Touch Press Event
 +     if(mode.val==1)
 +     {
@@ -2007,18 +1865,9 @@
 +bEffect
 +ributes
 + Scope            : local
-+ Dragging         : 0
-+ Send Component ID: disabled
-+ State            : unpressed
++14 +358,15 @@
 + Text             : î¸¯
 + Max. Text Size   : 10
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ State                               : unpressed
-+ Text                                : î¸¯
-+ Max. Text Size                      : 10
 +
 +nts
 + Touch Press Event
@@ -2032,24 +1881,7 @@
 + Scope            : local
 + Dragging         : 0
 + Send Component ID: disabled
-+ State            : unpressed
-+ Text             : 
-+ Max. Text Size   : 10
-+ Scope                               : local
-+ Dragging                            : 0
-+ Disable release event after dragging: 0
-+ Send Component ID                   : disabled
-+ State                               : unpressed
-+ Text                                : 
-+ Max. Text Size                      : 10
-+
-+nts
-+ Touch Press Event
-+     //craft command
-+     tSend.txt="event,buttonPress2,"+entn.txt+","+"OnOff,"
-+     covx btOnOff1.val,tTmp.txt,0,0
-+     tSend.txt+=tTmp.txt
-+38 +417,14 @@
++38 +398,14 @@
 + Period (ms): 100
 + Enabled    : no
 +
@@ -2088,7 +1920,7 @@
 + Enabled    : yes
 +
 +nts
-+48 +473,48 @@
++48 +454,48 @@
 +                             // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
 +                             spstr strCommand.txt,tInstruction.txt,"~",0
 +                             spstr strCommand.txt,tTmp.txt,"~",1
@@ -2149,7 +1981,7 @@
 +                                         // switch mode
 +                                         click bColor,1
 +                                         click bColor,0
-+16 +529,16 @@
++16 +510,16 @@
 +                                         click bColor,1
 +                                         click bColor,0
 +                                     }
@@ -2168,7 +2000,7 @@
 +                                     }
 +                                     // mode == 0 is rgb controls currently shown
 +                                     if(mode.val==0)
-+36 +549,36 @@
++36 +530,36 @@
 +                                     }
 +                                 }
 +                                 // get Color value
