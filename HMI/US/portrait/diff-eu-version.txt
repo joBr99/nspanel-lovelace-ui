@@ -1806,7 +1806,7 @@
 │          Text          : 
 │          Max. Text Size: 35
 │      
-│ @@ -19,56 +20,42 @@
+│ @@ -19,38 +20,42 @@
 │      Attributes
 │          Scope         : global
 │          Text          : 
@@ -1865,24 +1865,6 @@
 │ -        Scope            : local
 │ -        Dragging         : 0
 │ -        Send Component ID: disabled
-│ -    
-│ -Slider h0
-│ -    Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ -        Position         : 50
-│ -        Upper range limit: 100
-│ -        Lower range limit: 0
-│ -    
-│ -Slider hBrightness
-│ -    Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ -        Position         : 50
-│ -        Upper range limit: 100
-│ -        Lower range limit: 0
 │ +        Scope                               : local
 │ +        Dragging                            : 0
 │ +        Disable release event after dragging: 0

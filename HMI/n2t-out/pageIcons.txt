@@ -54,21 +54,3 @@ Picture p0
         Dragging         : 0
         Send Component ID: disabled
     
-Slider h0
-    Attributes
-        Scope            : local
-        Dragging         : 0
-        Send Component ID: disabled
-        Position         : 50
-        Upper range limit: 100
-        Lower range limit: 0
-    
-Slider hBrightness
-    Attributes
-        Scope            : local
-        Dragging         : 0
-        Send Component ID: disabled
-        Position         : 50
-        Upper range limit: 100
-        Lower range limit: 0
-    
