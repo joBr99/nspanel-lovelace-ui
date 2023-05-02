@@ -6874,7 +6874,6 @@ function HandleScreensaverStatusIcons() : void {
                     }
                 } 
                 if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                    console.log()
                     if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
                         payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
                         payloadString += (config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
