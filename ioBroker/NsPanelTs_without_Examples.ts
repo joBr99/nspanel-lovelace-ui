@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.11 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.12 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -135,6 +135,7 @@ ReleaseNotes:
         - 21.04.2023 - v4.0.5.9 Add Parameter pageitem id0 to ActivePages (0_userdata)
         - 23.04.2023 - v4.0.5.10 Fixed error wrong icon index in GeneratePowerPage by fre4242
         - 28.04.2023 - v4.0.5.11 light 'hue' and light 'rgb' have '.TEMPERATURE' optional
+        - 02.05.2023 - v4.0.5.12 Add new Function Debug mode from script activatable via panel
 	
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -232,10 +233,9 @@ let Icons = new IconsSelector();
 let timeoutSlider: any;
 let vwIconColor = [];
 let weatherForecast: boolean;
+let Debug: boolean = false;
 
 // Ab hier Anpassungen vornehmen
-
-const Debug = false;
 
 const autoCreateAlias = true;                               // Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.  
 const weatherAdapterInstance: string = 'accuweather.0.';    // Möglich 'accuweather.0.' oder 'daswetter.0.'
@@ -459,7 +459,7 @@ let NSPanel_Service = <PageEntities>
                     modeList: ['en-US', 'de-DE', 'nl-NL', 'da-DK', 'es-ES', 'fr-FR', 'it-IT', 'ru-RU', 'nb-NO', 'nn-NO', 'pl-PL', 'pt-PT', 'af-ZA', 'ar-SY', 
                                'bg-BG', 'ca-ES', 'cs-CZ', 'el-GR', 'et-EE', 'fa-IR', 'fi-FI', 'he-IL', 'hr-xx', 'hu-HU', 'hy-AM', 'id-ID', 'is-IS', 'lb-xx', 
                                'lt-LT', 'ro-RO', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR', 'uk-UA', 'vi-VN', 'zh-CN', 'zh-TW']},
-                                
+                   <PageItem>{ navigate: true, id: 'NSPanel_Script', icon: 'code-json',offColor: Menu, onColor: Menu, name: 'Script', buttonText: 'mehr...'},            
                 ]
             };
 
@@ -592,6 +592,20 @@ let NSPanel_Service = <PageEntities>
                     ]
                 };
 
+                //Level_2
+                let NSPanel_Script = <PageEntities>
+                {
+                    'type': 'cardEntities',
+                    'heading': 'Script',
+                    'useColor': true,
+                    'subPage': true,
+                    'parent': NSPanel_Einstellungen,
+                    'home': 'NSPanel_Service',
+                    'items': [
+                        <PageItem>{ id: AliasPath + 'Config.ScripgtDebugStatus', name: 'Debugmodus (aus/an)' ,icon: 'code-tags-check', offColor: HMIOff, onColor: HMIOn},
+                    ]
+                };
+
         //Level_1
         let NSPanel_Firmware = <PageEntities>
             {
@@ -713,7 +727,7 @@ export const config = <Config> {
             // bottomScreensaverEntity 4
             {
                 ScreensaverEntity: 'accuweather.0.Current.WindDirection',
-                ScreensaverEntityFactor: 0,
+                ScreensaverEntityFactor: 1,
                 ScreensaverEntityDecimalPlaces: 0,
                 ScreensaverEntityIconOn: 'windsock',
                 ScreensaverEntityIconOff: null,
@@ -788,6 +802,7 @@ export const config = <Config> {
                         NSPanel_ScreensaverDateformat,  //Auto-Alias Service Page
                         NSPanel_ScreensaverIndicators,  //Auto-Alias Service Page
                     NSPanel_Relays,                     //Auto-Alias Service Page
+                    NSPanel_Script,                     //Auto-Alias Service Page
                 NSPanel_Firmware,                       //Auto-Alias Service Page
                     NSPanel_FirmwareTasmota,            //Auto-Alias Service Page
                     NSPanel_FirmwareBerry,              //Auto-Alias Service Page
@@ -921,11 +936,26 @@ async function InitConfigParameters() {
             setObject(AliasPath + 'Config.temperatureUnitNumber', {type: 'channel', common: {role: 'buttonSensor', name:'temperatureUnitNumber'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.temperatureUnitNumber.VALUE', NSPanel_Path + 'Config.temperatureUnitNumber', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'VALUE' });
         }
+        // Script Debug - Medlungen socket
+        if (existsObject(NSPanel_Path + 'Config.ScripgtDebugStatus') == false) {
+            await createStateAsync(NSPanel_Path + 'Config.ScripgtDebugStatus', false, { type: 'boolean' });
+            setObject(AliasPath + 'Config.ScripgtDebugStatus', {type: 'channel', common: {role: 'socket', name:'ScripgtDebugStatus'}, native: {}});
+            await createAliasAsync(AliasPath + 'Config.ScripgtDebugStatus.ACTUAL', NSPanel_Path + 'Config.ScripgtDebugStatus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
+            await createAliasAsync(AliasPath + 'Config.ScripgtDebugStatus.SET', NSPanel_Path + 'Config.ScripgtDebugStatus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
+        }
     } catch (err) { 
         console.warn('error at function InitConfigParameters: ' + err.message); 
     }
 }
 InitConfigParameters();
+
+on({id: [].concat(NSPanel_Path + 'Config.ScripgtDebugStatus'), change: "ne"}, async function (obj) {
+    try {
+        Debug = obj.state.val
+    } catch (err) { 
+        console.warn('error at Trigger ScripgtDebugStatus: ' + err.message); 
+    }
+});
 
 on({id: [].concat(NSPanel_Path + 'Config.localeNumber')
           .concat(NSPanel_Path + 'Config.temperatureUnitNumber'), change: "ne"}, async function (obj) {
