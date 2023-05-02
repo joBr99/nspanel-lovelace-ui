@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.12 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.13 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -136,6 +136,7 @@ ReleaseNotes:
         - 23.04.2023 - v4.0.5.10 Fixed error wrong icon index in GeneratePowerPage by fre4242
         - 28.04.2023 - v4.0.5.11 light 'hue' and light 'rgb' have '.TEMPERATURE' optional
         - 02.05.2023 - v4.0.5.12 Add new Function Debug mode from script activatable via panel
+	- 02.05.2023 - v4.0.5.13 Fix Problems with weather-instances-number !="0" #876
 	
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -837,6 +838,7 @@ let timeoutMedia: any;
 let timeoutPower: any;
 let bgColorScrSaver: number = 0;
 let globalTracklist: any;
+let weatherAdapterInstanceNumber: number = 0;
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52]
@@ -994,6 +996,10 @@ async function CheckConfigParameters() {
                 console.error('Wetter-Adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!');
             }
         }
+
+        let weatherAdapterInstanceArray: any = weatherAdapterInstance.split(".");
+        weatherAdapterInstanceNumber = weatherAdapterInstanceArray[1];
+        if (Debug) console.log('Number of weatherAdapterInstance: ' + weatherAdapterInstanceNumber);
 
         const adapterList = $('system.adapter.*.alive');
         adapterList.each(function(id, i) {
@@ -1387,35 +1393,35 @@ SubscribeMRIcons();
 async function CreateWeatherAlias () {
     try {
         if (autoCreateAlias) {
-            if (weatherAdapterInstance == 'daswetter.0.') {
+            if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
                 try {
-                    if (!existsState(config.weatherEntity + '.ICON') && existsState('daswetter.0.NextHours.Location_1.Day_1.current.symbol_value')) {
-                        console.log('Weather alias for daswetter.0. does not exist yet, will be created now'); 
+                    if (!existsState(config.weatherEntity + '.ICON') && existsState('daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value')) {
+                        console.log('Weather alias for daswetter.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now'); 
                         setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
-                        await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.0.NextHours.Location_1.Day_1.current.symbol_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
-                        await createAliasAsync(config.weatherEntity + '.TEMP', 'daswetter.0.NextHours.Location_1.Day_1.current.temp_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
-                        await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'daswetter.0.NextDays.Location_1.Day_1.Minimale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
-                        await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'daswetter.0.NextDays.Location_1.Day_1.Maximale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
+                        await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
+                        await createAliasAsync(config.weatherEntity + '.TEMP', 'daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.temp_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
+                        await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_1.Minimale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
+                        await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_1.Maximale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
                     } else {
-                        console.log('weather alias for daswetter.0. already exists');
+                        console.log('weather alias for daswetter.' + weatherAdapterInstanceNumber + '. already exists');
                     }
                 } catch (err) {
-                    console.log('error at function CreateWeatherAlias daswetter.0. : ' + err.message);
+                    console.log('error at function CreateWeatherAlias daswetter.' + weatherAdapterInstanceNumber + '. : ' + err.message);
                 }
-            } else if (weatherAdapterInstance == 'accuweather.0.') {
+            } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
                 try {
-                    if (!existsState(config.weatherEntity + '.ICON') && existsState('accuweather.0.Current.WeatherIcon')) {
-                        console.log('Weather alias for accuweather.0. does not exist yet, will be created now'); 
+                    if (!existsState(config.weatherEntity + '.ICON') && existsState('accuweather.' + weatherAdapterInstanceNumber + '.Current.WeatherIcon')) {
+                        console.log('Weather alias for accuweather.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now'); 
                         setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
-                        await createAliasAsync(config.weatherEntity + '.ICON', 'accuweather.0.Current.WeatherIcon', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
-                        await createAliasAsync(config.weatherEntity + '.TEMP', 'accuweather.0.Current.Temperature', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
-                        await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'accuweather.0.Daily.Day1.Temperature.Minimum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
-                        await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'accuweather.0.Daily.Day1.Temperature.Maximum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
+                        await createAliasAsync(config.weatherEntity + '.ICON', 'accuweather.' + weatherAdapterInstanceNumber + '.Current.WeatherIcon', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
+                        await createAliasAsync(config.weatherEntity + '.TEMP', 'accuweather.' + weatherAdapterInstanceNumber + '.Current.Temperature', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
+                        await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Temperature.Minimum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
+                        await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Temperature.Maximum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
                     } else {
-                        console.log('weather alias for accuweather.0. already exists');
+                        console.log('weather alias for accuweather.' + weatherAdapterInstanceNumber + '. already exists');
                     }
                 } catch (err) {
-                    console.log('error at function CreateWeatherAlias accuweather.0.: ' + err.message);
+                    console.log('error at function CreateWeatherAlias accuweather.' + weatherAdapterInstanceNumber + '.: ' + err.message);
                 }
             }
         } 
@@ -6451,10 +6457,10 @@ function HandleScreensaverUpdate(): void {
                 let optionalValue = temperature + ' ' + temperatureUnit;
                 let entityIcon = '';
                 let entityIconCol = 0;
-                if (weatherAdapterInstance == 'daswetter.0.') {
+                if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetDasWetterIcon(parseInt(icon)));
                     entityIconCol = GetDasWetterIconColor(parseInt(icon));
-                } else if (weatherAdapterInstance == 'accuweather.0.') {
+                } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon)));
                     entityIconCol = GetAccuWeatherIconColor(parseInt(icon));
                 }
@@ -6540,30 +6546,30 @@ function HandleScreensaverUpdate(): void {
                     let WeatherIcon = '0';
                     let WheatherColor = 0;
 
-                    if (weatherAdapterInstance == 'daswetter.0.') {
-                        TempMin = getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value').val;
-                        TempMax = getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value').val;
-                        DayOfWeek = (getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Tag_value').val).substring(0,2);
-                        WeatherIcon = GetDasWetterIcon(getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
-                        WheatherColor = GetDasWetterIconColor(getState('daswetter.0.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
+                    if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
+                        TempMin = getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value').val;
+                        TempMax = getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value').val;
+                        DayOfWeek = (getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Tag_value').val).substring(0,2);
+                        WeatherIcon = GetDasWetterIcon(getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
+                        WheatherColor = GetDasWetterIconColor(getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
 
-                        RegisterScreensaverEntityWatcher('daswetter.0.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value');
-                        RegisterScreensaverEntityWatcher('daswetter.0.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value');
-                        RegisterScreensaverEntityWatcher('daswetter.0.NextDays.Location_1.Day_' + i + '.Tag_value');
-                        RegisterScreensaverEntityWatcher('daswetter.0.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id');
-                    } else if (weatherAdapterInstance == 'accuweather.0.') {
+                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value');
+                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value');
+                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Tag_value');
+                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id');
+                    } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
                         if (i < 6) {
                             //Maximal 5 Tage bei accuweather
-                            TempMin = (existsObject('accuweather.0.Summary.TempMin_d' + i)) ? getState('accuweather.0.Summary.TempMin_d' + i).val : 0;
-                            TempMax = (existsObject('accuweather.0.Summary.TempMax_d' + i)) ? getState('accuweather.0.Summary.TempMax_d' + i).val : 0;
-                            DayOfWeek = (existsObject('accuweather.0.Summary.DayOfWeek_d' + i)) ? getState('accuweather.0.Summary.DayOfWeek_d' + i).val : 0;
-                            WeatherIcon = (existsObject('accuweather.0.Summary.WeatherIcon_d' + i)) ? GetAccuWeatherIcon(getState('accuweather.0.Summary.WeatherIcon_d' + i).val) : '';
-                            WheatherColor = (existsObject('accuweather.0.Summary.WeatherIcon_d' + i)) ? GetAccuWeatherIconColor(getState('accuweather.0.Summary.WeatherIcon_d' + i).val) : 0;
+                            TempMin = (existsObject('accuweather.' + weatherAdapterInstanceNumber + '.Summary.TempMin_d' + i)) ? getState('accuweather.' + weatherAdapterInstanceNumber + '.Summary.TempMin_d' + i).val : 0;
+                            TempMax = (existsObject('accuweather.' + weatherAdapterInstanceNumber + '.Summary.TempMax_d' + i)) ? getState('accuweather.' + weatherAdapterInstanceNumber + '.Summary.TempMax_d' + i).val : 0;
+                            DayOfWeek = (existsObject('accuweather.' + weatherAdapterInstanceNumber + '.Summary.DayOfWeek_d' + i)) ? getState('accuweather.' + weatherAdapterInstanceNumber + '.Summary.DayOfWeek_d' + i).val : 0;
+                            WeatherIcon = (existsObject('accuweather.' + weatherAdapterInstanceNumber + '.Summary.WeatherIcon_d' + i)) ? GetAccuWeatherIcon(getState('accuweather.' + weatherAdapterInstanceNumber + '.Summary.WeatherIcon_d' + i).val) : '';
+                            WheatherColor = (existsObject('accuweather.' + weatherAdapterInstanceNumber + '.Summary.WeatherIcon_d' + i)) ? GetAccuWeatherIconColor(getState('accuweather.' + weatherAdapterInstanceNumber + '.Summary.WeatherIcon_d' + i).val) : 0;
 
-                            RegisterScreensaverEntityWatcher('accuweather.0.Summary.TempMin_d' + i);
-                            RegisterScreensaverEntityWatcher('accuweather.0.Summary.TempMax_d' + i);
-                            RegisterScreensaverEntityWatcher('accuweather.0.Summary.DayOfWeek_d' + i);
-                            RegisterScreensaverEntityWatcher('accuweather.0.Summary.WeatherIcon_d' + i);
+                            RegisterScreensaverEntityWatcher('accuweather.' + weatherAdapterInstanceNumber + '.Summary.TempMin_d' + i);
+                            RegisterScreensaverEntityWatcher('accuweather.' + weatherAdapterInstanceNumber + '.Summary.TempMax_d' + i);
+                            RegisterScreensaverEntityWatcher('accuweather.' + weatherAdapterInstanceNumber + '.Summary.DayOfWeek_d' + i);
+                            RegisterScreensaverEntityWatcher('accuweather.' + weatherAdapterInstanceNumber + '.Summary.WeatherIcon_d' + i);
                         }
                     }
 
@@ -6576,15 +6582,17 @@ function HandleScreensaverUpdate(): void {
                         tempMinMaxString = Math.round(TempMin) + '° ' + Math.round(TempMax) + '°';
                     }
                     
-                    if (weatherAdapterInstance == 'accuweather.0.' && i == 6)  {
+                    console.log('hier');
+
+                    if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.' && i == 6)  {
 
                         let nextSunEvent = 0
                         let valDateNow = new Date;
                         let arraySunEvent = [];
 
-                        arraySunEvent[0] = getDateObject(getState("accuweather.0.Daily.Day1.Sunrise").val).getTime();
-                        arraySunEvent[1] = getDateObject(getState("accuweather.0.Daily.Day1.Sunset").val).getTime();
-                        arraySunEvent[2] = getDateObject(getState("accuweather.0.Daily.Day2.Sunrise").val).getTime();
+                        arraySunEvent[0] = getDateObject(getState('accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Sunrise').val).getTime();
+                        arraySunEvent[1] = getDateObject(getState('accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Sunset').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day2.Sunrise').val).getTime();
                         
                         let j = 0;
                         for (j = 0; j < 3; j++) {
