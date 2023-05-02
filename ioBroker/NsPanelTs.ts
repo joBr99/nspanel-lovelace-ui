@@ -7080,8 +7080,6 @@ function HandleScreensaverUpdate(): void {
                     } else if (weatherScreensaverTempMinMax == 'MinMax') {
                         tempMinMaxString = Math.round(TempMin) + '° ' + Math.round(TempMax) + '°';
                     }
-                    
-                    console.log('hier');
 
                     if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.' && i == 6)  {
 
