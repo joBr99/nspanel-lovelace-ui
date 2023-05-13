@@ -1395,6 +1395,23 @@
 │          Scope              : local
 │          Dragging           : 0
 │          Send Component ID  : disabled
+│ @@ -141,15 +135,15 @@
+│      
+│  Text tVersion
+│      Attributes
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│ -        Text               : 50
+│ +        Text               : 51
+│          Max. Text Size     : 10
+│      
+│  Picture p0
+│      Attributes
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
 │ @@ -164,15 +158,15 @@
 │          Max. Text Size   : 10
 │      
@@ -1405,44 +1422,6 @@
 │              // startup event
 │ -            tSend.txt="event,startup,"+tVersion.txt+",eu"
 │ +            tSend.txt="event,startup,"+tVersion.txt+",us-p"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│   --- HMI/n2t-out/popupFan.txt
-├── +++ HMI/US/portrait/n2t-out/popupFan.txt
-│ @@ -200,15 +200,15 @@
-│          Send Component ID: disabled
-│          State            : unpressed
-│          Text             : î
-│          Max. Text Size   : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,popupFan,bExit"
-│ +            tSend.txt="event,buttonPress2,popupLight,bExit"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
-│   --- HMI/n2t-out/popupInSel.txt
-├── +++ HMI/US/portrait/n2t-out/popupInSel.txt
-│ @@ -153,15 +153,15 @@
-│          Send Component ID: disabled
-│          State            : unpressed
-│          Text             : î
-│          Max. Text Size   : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,popupInSel,bExit"
-│ +            tSend.txt="event,buttonPress2,popupLight,bExit"
 │              //send calc crc
 │              btlen tSend.txt,sys0
 │              crcrest 1,0xffff // reset CRC

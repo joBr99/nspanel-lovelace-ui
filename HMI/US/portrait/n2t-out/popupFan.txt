@@ -204,7 +204,7 @@ Button b0
     
     Events
         Touch Press Event
-            tSend.txt="event,buttonPress2,popupLight,bExit"
+            tSend.txt="event,buttonPress2,popupFan,bExit"
             //send calc crc
             btlen tSend.txt,sys0
             crcrest 1,0xffff // reset CRC
