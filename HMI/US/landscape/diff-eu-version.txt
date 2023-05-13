@@ -33,25 +33,6 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-│   --- HMI/n2t-out/popupFan.txt
-├── +++ HMI/US/landscape/n2t-out/popupFan.txt
-│ @@ -200,15 +200,15 @@
-│          Send Component ID: disabled
-│          State            : unpressed
-│          Text             : î
-│          Max. Text Size   : 10
-│      
-│      Events
-│          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,popupTimer,bExit"
-│ +            tSend.txt="event,buttonPress2,popupFan,bExit"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/landscape/n2t-out/screensaver.txt
 │ @@ -28,17 +28,14 @@
@@ -162,33 +143,6 @@
 │          Send Component ID  : disabled
 │          Associated Keyboard: none
 │          Text               : PM
-│ @@ -408,24 +385,24 @@
-│  Text tIcon1
-│      Attributes
-│          Scope              : local
-│          Dragging           : 0
-│          Send Component ID  : disabled
-│          Associated Keyboard: none
-│          Text               : 
-│ -        Max. Text Size     : 16
-│ +        Max. Text Size     : 10
-│      
-│  Text tIcon2
-│      Attributes
-│          Scope              : local
-│          Dragging           : 0
-│          Send Component ID  : disabled
-│          Associated Keyboard: none
-│          Text               : 
-│ -        Max. Text Size     : 16
-│ +        Max. Text Size     : 10
-│      
-│  Text tMainIcon
-│      Attributes
-│          Scope              : local
-│          Dragging           : 0
-│          Send Component ID  : disabled
-│          Associated Keyboard: none
 │ @@ -572,15 +549,14 @@
 │                                          if(tTmp.txt!="")
 │                                          {

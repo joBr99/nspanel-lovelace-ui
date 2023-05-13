@@ -10,14 +10,14 @@ pageTest
 	27   Component(s)
 	68   Line(s) of event code
 	66   Unique line(s) of event code
-popupNotify
-	19   Component(s)
-	263  Line(s) of event code
-	170  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	351  Line(s) of event code
 	204  Unique line(s) of event code
+popupNotify
+	19   Component(s)
+	263  Line(s) of event code
+	170  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	512  Line(s) of event code
@@ -91,4 +91,4 @@ Total
 	21   Page(s)
 	798  Component(s)
 	9253 Line(s) of event code
-	2338 Unique line(s) of event code
+	2339 Unique line(s) of event code

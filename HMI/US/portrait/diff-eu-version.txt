@@ -1463,7 +1463,7 @@
 │      
 │      Events
 │          Touch Press Event
-│ -            tSend.txt="event,buttonPress2,popupTimer,bExit"
+│ -            tSend.txt="event,buttonPress2,popupFan,bExit"
 │ +            tSend.txt="event,buttonPress2,popupLight,bExit"
 │              //send calc crc
 │              btlen tSend.txt,sys0

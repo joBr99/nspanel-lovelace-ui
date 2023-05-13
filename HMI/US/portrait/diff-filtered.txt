@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-05-13 09:07:31.593800900 +0000
++++ /dev/fd/62	2023-05-13 09:17:23.360441539 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +10,11 @@
@@ -1001,7 +1001,7 @@
 +
 +nts
 + Touch Press Event
-+     tSend.txt="event,buttonPress2,popupTimer,bExit"
++     tSend.txt="event,buttonPress2,popupFan,bExit"
 +     tSend.txt="event,buttonPress2,popupLight,bExit"
 +     //send calc crc
 +     btlen tSend.txt,sys0
