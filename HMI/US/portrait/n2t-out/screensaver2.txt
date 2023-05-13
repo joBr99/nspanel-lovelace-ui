@@ -389,7 +389,7 @@ Text tIcon1
         Send Component ID  : disabled
         Associated Keyboard: none
         Text               : 
-        Max. Text Size     : 10
+        Max. Text Size     : 16
     
 Text tIcon2
     Attributes
@@ -398,7 +398,7 @@ Text tIcon2
         Send Component ID  : disabled
         Associated Keyboard: none
         Text               : 
-        Max. Text Size     : 10
+        Max. Text Size     : 16
     
 Text tMainIcon
     Attributes
