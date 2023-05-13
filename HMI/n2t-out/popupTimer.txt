@@ -1,14 +1,13 @@
 Page popupTimer
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Locked                              : no
-        Swide up page ID                    : disabled
-        Swide down page ID                  : disabled
-        Swide left page ID                  : disabled
-        Swide right page ID                 : disabled
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
     
     Events
         Preinitialize Event
@@ -167,12 +166,11 @@ Variable (string) vaType
     
 Number n1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Value              : 0
     
     Events
         Touch Press Event
@@ -206,12 +204,11 @@ Number n1
         
 Number n2
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Value              : 0
     
     Events
         Touch Press Event
@@ -245,70 +242,63 @@ Number n2
         
 Text t0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                :  +/- 1      +/- 5      +/- 10    +/- 15
-        Max. Text Size                      : 60
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               :  +/- 1      +/- 5      +/- 10    +/- 15
+        Max. Text Size     : 60
     
 Text tDP
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : :
-        Max. Text Size                      : 15
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : :
+        Max. Text Size     : 15
     
 Text tEntity
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 25
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 25
     
 Text tIcon1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 10
     
 Text tTime
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 21:32
-        Max. Text Size                      : 15
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 21:32
+        Max. Text Size     : 15
     
 Picture p0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
 Button b0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -327,13 +317,12 @@ Button b0
         
 Button b1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : START
-        Max. Text Size                      : 45
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : START
+        Max. Text Size   : 45
     
     Events
         Touch Press Event
@@ -354,13 +343,12 @@ Button b1
         
 Button b2
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : CANCEL
-        Max. Text Size                      : 45
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : CANCEL
+        Max. Text Size   : 45
     
     Events
         Touch Press Event
@@ -381,13 +369,12 @@ Button b2
         
 Button b3
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : PAUSE
-        Max. Text Size                      : 45
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : PAUSE
+        Max. Text Size   : 45
     
     Events
         Touch Press Event
@@ -408,13 +395,12 @@ Button b3
         
 Button bZ1M
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î¿
-        Max. Text Size                      : 5
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î¿
+        Max. Text Size   : 5
     
     Events
         Touch Press Event
@@ -437,13 +423,12 @@ Button bZ1M
         
 Button bZ1P
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 5
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 5
     
     Events
         Touch Press Event
@@ -466,13 +451,12 @@ Button bZ1P
         
 Button bZ2M
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î¿
-        Max. Text Size                      : 5
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î¿
+        Max. Text Size   : 5
     
     Events
         Touch Press Event
@@ -495,13 +479,12 @@ Button bZ2M
         
 Button bZ2P
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 5
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 5
     
     Events
         Touch Press Event
@@ -524,13 +507,12 @@ Button bZ2P
         
 Button bZ3M
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î¿
-        Max. Text Size                      : 5
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î¿
+        Max. Text Size   : 5
     
     Events
         Touch Press Event
@@ -553,13 +535,12 @@ Button bZ3M
         
 Button bZ3P
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 5
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 5
     
     Events
         Touch Press Event
@@ -582,13 +563,12 @@ Button bZ3P
         
 Button bZ4M
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î¿
-        Max. Text Size                      : 5
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î¿
+        Max. Text Size   : 5
     
     Events
         Touch Press Event
@@ -611,13 +591,12 @@ Button bZ4M
         
 Button bZ4P
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 5
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 5
     
     Events
         Touch Press Event
@@ -640,13 +619,12 @@ Button bZ4P
         
 Button fToggleEdit
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : hidden
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : hidden
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
