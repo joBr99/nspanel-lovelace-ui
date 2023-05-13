@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-05-13 09:27:24.610159768 +0000
++++ /dev/fd/62	2023-05-13 10:11:16.737208392 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +10,11 @@
@@ -57,13 +57,13 @@
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 40
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 40
 +14 +185,26 @@
 +e (string) type6
@@ -913,47 +913,6 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
-+I/n2t-out/cardQR.txt
-++ HMI/US/portrait/n2t-out/cardQR.txt
-+19 +584,19 @@
-+                                     // get Text (optional Value)
-+                                     spstr strCommand.txt,bText2.txt,"~",26
-+                                 }
-+                                 if(type2.txt=="delete"||type2.txt=="")
-+                                 {
-+                                     if(type1.txt=="delete"||type1.txt=="")
-+                                     {
-+                                         qrcode m1.x,m1.y,200,65535,defaultBcoColor,-1,8,vaQR.txt
-+                                         qrcode m1.x,m1.y,200,65535,defaultBcoColor,-1,vaQR.txt
-+                                     }
-+                                 }else
-+                                 {
-+                                     qrcode m0.x,m0.y,200,65535,defaultBcoColor,-1,8,vaQR.txt
-+                                     qrcode m0.x,m0.y,200,65535,defaultBcoColor,-1,vaQR.txt
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="time")
-+                             {
-+                                 // get set time to global variable
-+                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
-+                             }
-+15 +733,15 @@
-+     if(sleepTimeout!=0&&dimValue!=dim)
-+     {
-+         sleepValue+=1
-+         if(sleepTimeout<=sleepValue)
-+         {
-+             sleepValue=0
-+             dim=dimValue
-+             tSend.txt="event,sleepReached,cardQR"
-+             tSend.txt="event,sleepReached,cardAlarm"
-+             //send calc crc
-+             btlen tSend.txt,sys0
-+             crcrest 1,0xffff // reset CRC
-+             crcputh 55 bb
-+             crcputs sys0,2
-+             crcputs tSend.txt,0
-+             //send cmd
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 +0 +34,14 @@

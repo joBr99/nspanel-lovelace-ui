@@ -38,6 +38,10 @@ popupShutter
 	25   Component(s)
 	398  Line(s) of event code
 	218  Unique line(s) of event code
+cardQR
+	34   Component(s)
+	406  Line(s) of event code
+	236  Unique line(s) of event code
 cardAlarm
 	43   Component(s)
 	496  Line(s) of event code
@@ -62,10 +66,6 @@ cardMedia
 	59   Component(s)
 	645  Line(s) of event code
 	320  Unique line(s) of event code
-cardQR
-	34   Component(s)
-	406  Line(s) of event code
-	236  Unique line(s) of event code
 screensaver
 	46   Component(s)
 	425  Line(s) of event code
@@ -91,4 +91,4 @@ Total
 	22   Page(s)
 	806  Component(s)
 	9627 Line(s) of event code
-	2446 Unique line(s) of event code
+	2447 Unique line(s) of event code
