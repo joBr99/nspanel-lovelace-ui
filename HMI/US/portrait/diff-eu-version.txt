@@ -18,7 +18,7 @@
 │      page pageStartup
 │   --- HMI/n2t-out/cardEntities.txt
 ├── +++ HMI/US/portrait/n2t-out/cardEntities.txt
-│ @@ -61,16 +61,36 @@
+│ @@ -60,16 +60,36 @@
 │              vis tIcon4,0
 │              vis tEntity4,0
 │              vis bText4,0
@@ -56,7 +56,7 @@
 │                      b[sys0].pco=defaultFontColor
 │                  }
 │                  if(b[sys0].type==53&&defaultBcoColor==0)
-│ @@ -86,45 +106,57 @@
+│ @@ -85,45 +105,57 @@
 │                  }
 │              }
 │          
@@ -120,7 +120,7 @@
 │          Text          : 
 │          Max. Text Size: 500
 │      
-│ @@ -154,14 +186,26 @@
+│ @@ -153,14 +185,26 @@
 │      
 │  Variable (string) type4
 │      Attributes
@@ -142,115 +142,109 @@
 │ +    
 │  Number nNum1
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -190,14 +234,32 @@
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Value                               : 0
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Value              : 0
+│ @@ -185,14 +229,30 @@
+│      Attributes
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Value              : 0
 │      
 │ +Number nNum5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Value                               : 0
+│ +        Scope              : local
+│ +        Dragging           : 0
+│ +        Send Component ID  : disabled
+│ +        Associated Keyboard: none
+│ +        Value              : 0
 │ +    
 │ +Number nNum6
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Value                               : 0
+│ +        Scope              : local
+│ +        Dragging           : 0
+│ +        Send Component ID  : disabled
+│ +        Associated Keyboard: none
+│ +        Value              : 0
 │ +    
 │  Text tEntity1
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -230,14 +292,34 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : tEntity4
-│          Max. Text Size                      : 30
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : tEntity1
+│ @@ -221,14 +281,32 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : tEntity4
+│          Max. Text Size     : 30
 │      
 │ +Text tEntity5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : tEntity5
-│ +        Max. Text Size                      : 30
+│ +        Scope              : local
+│ +        Dragging           : 0
+│ +        Send Component ID  : disabled
+│ +        Associated Keyboard: none
+│ +        Text               : tEntity5
+│ +        Max. Text Size     : 30
 │ +    
 │ +Text tEntity6
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : tEntity5
-│ +        Max. Text Size                      : 30
+│ +        Scope              : local
+│ +        Dragging           : 0
+│ +        Send Component ID  : disabled
+│ +        Associated Keyboard: none
+│ +        Text               : tEntity5
+│ +        Max. Text Size     : 30
 │ +    
 │  Text tHeading
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -280,14 +362,34 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î°
-│          Max. Text Size                      : 5
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ @@ -266,14 +344,32 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : î°
+│          Max. Text Size     : 5
 │      
 │ +Text tIcon5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : î°
-│ +        Max. Text Size                      : 5
+│ +        Scope              : local
+│ +        Dragging           : 0
+│ +        Send Component ID  : disabled
+│ +        Associated Keyboard: none
+│ +        Text               : î°
+│ +        Max. Text Size     : 5
 │ +    
 │ +Text tIcon6
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : î°
-│ +        Max. Text Size                      : 5
+│ +        Scope              : local
+│ +        Dragging           : 0
+│ +        Send Component ID  : disabled
+│ +        Associated Keyboard: none
+│ +        Text               : î°
+│ +        Max. Text Size     : 5
 │ +    
 │  Text tId
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -429,14 +531,70 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ @@ -407,14 +503,68 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -260,13 +254,12 @@
 │          
 │ +Slider hSlider5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Position                            : 50
-│ +        Upper range limit                   : 100
-│ +        Lower range limit                   : 0
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        Position         : 50
+│ +        Upper range limit: 100
+│ +        Lower range limit: 0
 │ +    
 │ +    Events
 │ +        Touch Release Event
@@ -288,13 +281,12 @@
 │ +        
 │ +Slider hSlider6
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Position                            : 50
-│ +        Upper range limit                   : 100
-│ +        Lower range limit                   : 0
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        Position         : 50
+│ +        Upper range limit: 100
+│ +        Lower range limit: 0
 │ +    
 │ +    Events
 │ +        Touch Release Event
@@ -316,12 +308,12 @@
 │ +        
 │  Button bDown1
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│ @@ -529,14 +687,64 @@
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : î
+│ @@ -503,14 +653,62 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -331,13 +323,12 @@
 │          
 │ +Button bDown5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : î
-│ +        Max. Text Size                      : 10
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : î
+│ +        Max. Text Size   : 10
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -356,13 +347,12 @@
 │ +        
 │ +Button bDown6
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : î
-│ +        Max. Text Size                      : 10
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : î
+│ +        Max. Text Size   : 10
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -381,12 +371,12 @@
 │ +        
 │  Button bNext
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│ @@ -679,14 +887,64 @@
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : î³
+│ @@ -647,14 +845,62 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -396,13 +386,12 @@
 │          
 │ +Button bStop5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : î
-│ +        Max. Text Size                      : 10
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : î
+│ +        Max. Text Size   : 10
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -421,13 +410,12 @@
 │ +        
 │ +Button bStop6
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : î
-│ +        Max. Text Size                      : 10
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : î
+│ +        Max. Text Size   : 10
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -446,12 +434,12 @@
 │ +        
 │  Button bText1
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│ @@ -779,14 +1037,64 @@
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : 
+│ @@ -743,14 +989,62 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -461,13 +449,12 @@
 │          
 │ +Button bText5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : 
-│ +        Max. Text Size                      : 45
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : 
+│ +        Max. Text Size   : 45
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -486,13 +473,12 @@
 │ +        
 │ +Button bText6
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : 
-│ +        Max. Text Size                      : 45
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : 
+│ +        Max. Text Size   : 45
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -511,12 +497,12 @@
 │ +        
 │  Button bUp1
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│ @@ -879,14 +1187,64 @@
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : î
+│ @@ -839,14 +1133,62 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -526,13 +512,12 @@
 │          
 │ +Button bUp5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : î
-│ +        Max. Text Size                      : 10
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : î
+│ +        Max. Text Size   : 10
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -551,13 +536,12 @@
 │ +        
 │ +Button bUp6
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : î
-│ +        Max. Text Size                      : 10
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : î
+│ +        Max. Text Size   : 10
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -576,12 +560,12 @@
 │ +        
 │  Dual-state Button btOnOff1
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│ @@ -987,14 +1345,68 @@
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : 
+│ @@ -943,14 +1285,66 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -591,13 +575,12 @@
 │          
 │ +Dual-state Button btOnOff5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : 
-│ +        Max. Text Size                      : 10
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : 
+│ +        Max. Text Size   : 10
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -618,13 +601,12 @@
 │ +        
 │ +Dual-state Button btOnOff6
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : 
-│ +        Max. Text Size                      : 10
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : 
+│ +        Max. Text Size   : 10
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -645,12 +627,12 @@
 │ +        
 │  Hotspot m0
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
 │      
-│ @@ -1127,14 +1539,84 @@
+│      Events
+│ @@ -1079,14 +1473,82 @@
 │                  page popupInSel
 │              }
 │              if(type4.txt=="timer")
@@ -660,10 +642,9 @@
 │          
 │ +Hotspot m4
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -695,10 +676,9 @@
 │ +        
 │ +Hotspot m5
 │ +    Attributes
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
 │ +    
 │ +    Events
 │ +        Touch Press Event
@@ -730,12 +710,12 @@
 │ +        
 │  Hotspot mSpecial
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
 │      
-│ @@ -1862,14 +2344,312 @@
+│      Events
+│ @@ -1810,14 +2272,312 @@
 │                                              covx tTmp.txt,sys0,0,0
 │                                              hSlider4.minval=sys0
 │                                              //third value is max value
@@ -1050,7 +1030,7 @@
 │                                          spstr strCommand.txt,tId.txt,"~",1
 │   --- HMI/n2t-out/cardPower.txt
 ├── +++ HMI/US/portrait/n2t-out/cardPower.txt
-│ @@ -46,16 +46,16 @@
+│ @@ -45,16 +45,16 @@
 │                      b[sys0].bco=defaultBcoColor
 │                      b[sys0].pco=defaultFontColor
 │                  }
@@ -1069,7 +1049,7 @@
 │          
 │  Variable (string) nent1
 │      Attributes
-│ @@ -76,39 +76,75 @@
+│ @@ -75,39 +75,75 @@
 │          Max. Text Size: 1000
 │      
 │  Variable (int32) t0Speed
@@ -1145,157 +1125,151 @@
 │          Max. Text Size: 20
 │      
 │  Variable (string) tInstruction
-│ @@ -135,24 +171,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î¢
-│          Max. Text Size                      : 5
+│ @@ -133,23 +169,14 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : î¢
+│          Max. Text Size     : 5
 │      
 │ -Text t0o
 │ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
+│ -        Scope              : local
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 20
 │ -    
 │  Text t0u
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -175,24 +201,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î¶
-│          Max. Text Size                      : 5
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ @@ -169,23 +196,14 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : î¶
+│          Max. Text Size     : 5
 │      
 │ -Text t1o
 │ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
+│ -        Scope              : local
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 20
 │ -    
 │  Text t1u
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -205,24 +221,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î °
-│          Max. Text Size                      : 5
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ @@ -196,23 +214,14 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : î °
+│          Max. Text Size     : 5
 │      
 │ -Text t2o
 │ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
+│ -        Scope              : local
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 20
 │ -    
 │  Text t2u
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -235,24 +241,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î °
-│          Max. Text Size                      : 5
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ @@ -223,23 +232,14 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : î °
+│          Max. Text Size     : 5
 │      
 │ -Text t3o
 │ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
+│ -        Scope              : local
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 20
 │ -    
 │  Text t3u
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -265,24 +261,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î´½
-│          Max. Text Size                      : 5
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ @@ -250,23 +250,14 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : î´½
+│          Max. Text Size     : 5
 │      
 │ -Text t4o
 │ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
+│ -        Scope              : local
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 20
 │ -    
 │  Text t4u
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -295,24 +281,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : î
-│          Max. Text Size                      : 5
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ @@ -277,23 +268,14 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : î
+│          Max. Text Size     : 5
 │      
 │ -Text t5o
 │ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 20
+│ -        Scope              : local
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 20
 │ -    
 │  Text t5u
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -535,85 +511,79 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ @@ -498,85 +480,79 @@
 │                      h0.val=h0.minval
 │                  }
 │                  if(sys0<h0.minval)
@@ -1383,362 +1357,7 @@
 │          Enabled    : yes
 │   --- HMI/n2t-out/cardQR.txt
 ├── +++ HMI/US/portrait/n2t-out/cardQR.txt
-│ @@ -1,17 +1,18 @@
-│  Page cardQR
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Locked             : no
-│ -        Swide up page ID   : disabled
-│ -        Swide down page ID : disabled
-│ -        Swide left page ID : disabled
-│ -        Swide right page ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Locked                              : no
-│ +        Swide up page ID                    : disabled
-│ +        Swide down page ID                  : disabled
-│ +        Swide left page ID                  : disabled
-│ +        Swide right page ID                 : disabled
-│      
-│      Events
-│          Preinitialize Event
-│              dim=dimValueNormal
-│              vis p0,0
-│              vis tSend,0
-│              vis tInstruction,0
-│ @@ -127,71 +128,78 @@
-│      Attributes
-│          Scope         : local
-│          Text          : 
-│          Max. Text Size: 80
-│      
-│  Text tEntity1
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : tEntity1
-│ -        Max. Text Size     : 30
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : tEntity1
-│ +        Max. Text Size                      : 30
-│      
-│  Text tEntity2
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : tEntity1
-│ -        Max. Text Size     : 30
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : tEntity1
-│ +        Max. Text Size                      : 30
-│      
-│  Text tHeading
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : 
-│ -        Max. Text Size     : 40
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : 
-│ +        Max. Text Size                      : 40
-│      
-│  Text tIcon1
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : î°
-│ -        Max. Text Size     : 5
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : î°
-│ +        Max. Text Size                      : 5
-│      
-│  Text tIcon2
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : î°
-│ -        Max. Text Size     : 5
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : î°
-│ +        Max. Text Size                      : 5
-│      
-│  Picture p0
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│      
-│  Button bNext
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ -        State            : unpressed
-│ -        Text             : î³
-│ -        Max. Text Size   : 10
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : î³
-│ +        Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│              tSend.txt="event,buttonPress2,"+nent2.txt+",button"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│ @@ -202,20 +210,21 @@
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│          
-│  Button bPrev
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ -        State            : unpressed
-│ -        Text             : î°
-│ -        Max. Text Size   : 10
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : î°
-│ +        Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│              tSend.txt="event,buttonPress2,"+nent1.txt+",button"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│ @@ -226,20 +235,21 @@
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│          
-│  Button bText1
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ -        State            : unpressed
-│ -        Text             : 
-│ -        Max. Text Size   : 30
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : 
-│ +        Max. Text Size                      : 30
-│      
-│      Events
-│          Touch Press Event
-│              tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│ @@ -250,20 +260,21 @@
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│          
-│  Button bText2
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ -        State            : unpressed
-│ -        Text             : 
-│ -        Max. Text Size   : 30
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : 
-│ +        Max. Text Size                      : 30
-│      
-│      Events
-│          Touch Press Event
-│              tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│ @@ -274,20 +285,21 @@
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│          
-│  Dual-state Button btOnOff1
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ -        State            : unpressed
-│ -        Text             : 
-│ -        Max. Text Size   : 10
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : 
-│ +        Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│              tSend.txt="event,buttonPress2,"+entn1.txt+",OnOff,"
-│              covx btOnOff1.val,tTmp.txt,0,0
-│              tSend.txt+=tTmp.txt
-│              //send calc crc
-│ @@ -300,20 +312,21 @@
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│          
-│  Dual-state Button btOnOff2
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ -        State            : unpressed
-│ -        Text             : 
-│ -        Max. Text Size   : 10
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : 
-│ +        Max. Text Size                      : 10
-│      
-│      Events
-│          Touch Press Event
-│              tSend.txt="event,buttonPress2,"+entn2.txt+",OnOff,"
-│              covx btOnOff2.val,tTmp.txt,0,0
-│              tSend.txt+=tTmp.txt
-│              //send calc crc
-│ @@ -326,49 +339,54 @@
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│          
-│  Hotspot m0
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│      
-│  Hotspot m1
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│      
-│  Hotspot mSwipeNext
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│      
-│      Events
-│          Touch Press Event
-│              click bNext,1
-│          
-│  Hotspot mSwipePrev
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│      
-│      Events
-│          Touch Press Event
-│              click bPrev,1
-│          
-│  Hotspot mSwipeUp
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│      
-│      Events
-│          Touch Press Event
-│              click bPrev,1
-│          
-│  Timer tmSerial
-│      Attributes
-│ @@ -584,19 +602,19 @@
+│ @@ -584,19 +584,19 @@
 │                                              // get Text (optional Value)
 │                                              spstr strCommand.txt,bText2.txt,"~",26
 │                                          }
@@ -1760,7 +1379,7 @@
 │                                          // get set time to global variable
 │                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 │                                      }
-│ @@ -733,15 +751,15 @@
+│ @@ -733,15 +733,15 @@
 │              if(sleepTimeout!=0&&dimValue!=dim)
 │              {
 │                  sleepValue+=1
@@ -1777,128 +1396,9 @@
 │                      crcputs sys0,2
 │                      crcputs tSend.txt,0
 │                      //send cmd
-│   --- HMI/n2t-out/pageIcons.txt
-├── +++ HMI/US/portrait/n2t-out/pageIcons.txt
-│ @@ -1,17 +1,18 @@
-│  Page pageIcons
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Locked             : no
-│ -        Swide up page ID   : disabled
-│ -        Swide down page ID : disabled
-│ -        Swide left page ID : disabled
-│ -        Swide right page ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Locked                              : no
-│ +        Swide up page ID                    : disabled
-│ +        Swide down page ID                  : disabled
-│ +        Swide left page ID                  : disabled
-│ +        Swide right page ID                 : disabled
-│      
-│  Variable (string) vaDate
-│      Attributes
-│          Scope         : global
-│          Text          : 
-│          Max. Text Size: 35
-│      
-│ @@ -19,38 +20,42 @@
-│      Attributes
-│          Scope         : global
-│          Text          : 
-│          Max. Text Size: 15
-│      
-│  Text tTmp1
-│      Attributes
-│ -        Scope              : global
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : 
-│ -        Max. Text Size     : 80
-│ +        Scope                               : global
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : 
-│ +        Max. Text Size                      : 80
-│      
-│  Text tTmp2
-│      Attributes
-│ -        Scope              : global
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : 
-│ -        Max. Text Size     : 80
-│ +        Scope                               : global
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : 
-│ +        Max. Text Size                      : 80
-│      
-│  Text tTmp3
-│      Attributes
-│ -        Scope              : global
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : 
-│ -        Max. Text Size     : 10
-│ +        Scope                               : global
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : 
-│ +        Max. Text Size                      : 10
-│      
-│  Picture p0
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/portrait/n2t-out/pageStartup.txt
-│ @@ -1,17 +1,18 @@
-│  Page pageStartup
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Locked             : no
-│ -        Swide up page ID   : disabled
-│ -        Swide down page ID : disabled
-│ -        Swide left page ID : disabled
-│ -        Swide right page ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Locked                              : no
-│ +        Swide up page ID                    : disabled
-│ +        Swide down page ID                  : disabled
-│ +        Swide left page ID                  : disabled
-│ +        Swide right page ID                 : disabled
-│      
-│      Events
-│          Preinitialize Event
-│              vis p0,0
-│              recmod=1
-│              bauds=115200
-│              vis tSend,0
-│ @@ -34,162 +35,171 @@
+│ @@ -34,20 +34,14 @@
 │          
 │  Variable (string) strCommand
 │      Attributes
@@ -1914,213 +1414,30 @@
 │ -    
 │  Number frame_ptr
 │      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Value              : 0
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Value                               : 0
-│      
-│  Number frapic_w
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Value              : 1960
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Value                               : 1960
-│      
-│  Number spinner_w
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Value              : 140
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Value                               : 140
-│      
-│  Number usual_cnt
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Value              : 0
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Value                               : 0
-│      
-│  Text tId
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : 
-│ -        Max. Text Size     : 20
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : 
-│ +        Max. Text Size                      : 20
-│      
-│  Text tInstruction
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : 
-│ -        Max. Text Size     : 20
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : 
-│ +        Max. Text Size                      : 20
-│      
-│  Text tMsg1
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : Waiting for content ...
-│ -        Max. Text Size     : 40
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : Waiting for content ...
-│ +        Max. Text Size                      : 40
-│      
-│  Text tMsg2
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : This is taking longer than usual,
-│ -        Max. Text Size     : 100
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : This is taking longer than usual,
-│ +        Max. Text Size                      : 100
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Value              : 0
+│ @@ -114,15 +108,15 @@
 │      
 │  Text tMsg3
 │      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
 │ -        Text               : please check your backend configuration
-│ -        Max. Text Size     : 100
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : pls check your backend configuration
-│ +        Max. Text Size                      : 100
+│ +        Text               : pls check your backend configuration
+│          Max. Text Size     : 100
 │      
 │  Text tSend
 │      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : newtxt
-│ -        Max. Text Size     : 100
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : newtxt
-│ +        Max. Text Size                      : 100
-│      
-│  Text tTmp
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : 
-│ -        Max. Text Size     : 30
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : 
-│ +        Max. Text Size                      : 30
-│      
-│  Text tVersion
-│      Attributes
-│ -        Scope              : local
-│ -        Dragging           : 0
-│ -        Send Component ID  : disabled
-│ -        Associated Keyboard: none
-│ -        Text               : 50
-│ -        Max. Text Size     : 10
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        Associated Keyboard                 : none
-│ +        Text                                : 50
-│ +        Max. Text Size                      : 10
-│      
-│  Picture p0
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│      
-│  Button bSendStartup
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ -        State            : unpressed
-│ -        Text             : startup
-│ -        Max. Text Size   : 10
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│ +        State                               : unpressed
-│ +        Text                                : startup
-│ +        Max. Text Size                      : 10
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│ @@ -164,15 +158,15 @@
+│          Max. Text Size   : 10
 │      
 │      Events
 │          Touch Press Event
@@ -2136,34 +1453,13 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│          
-│  Hotspot mSpinner
-│      Attributes
-│ -        Scope            : local
-│ -        Dragging         : 0
-│ -        Send Component ID: disabled
-│ +        Scope                               : local
-│ +        Dragging                            : 0
-│ +        Disable release event after dragging: 0
-│ +        Send Component ID                   : disabled
-│      
-│      Events
-│          Touch Press Event
-│              sys2=sys2+1
-│              sys2%=10
-│              //n0.val=sys2
-│              if(sys2==9)
 │   --- HMI/n2t-out/popupFan.txt
 ├── +++ HMI/US/portrait/n2t-out/popupFan.txt
-│ @@ -210,15 +210,15 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î
-│          Max. Text Size                      : 10
+│ @@ -200,15 +200,15 @@
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : î
+│          Max. Text Size   : 10
 │      
 │      Events
 │          Touch Press Event
@@ -2178,11 +1474,11 @@
 │              //send cmd
 │   --- HMI/n2t-out/popupInSel.txt
 ├── +++ HMI/US/portrait/n2t-out/popupInSel.txt
-│ @@ -158,15 +158,15 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î
-│          Max. Text Size                      : 10
+│ @@ -153,15 +153,15 @@
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : î
+│          Max. Text Size   : 10
 │      
 │      Events
 │          Touch Press Event
@@ -2654,11 +1950,11 @@
 │                                          {
 │   --- HMI/n2t-out/popupThermo.txt
 ├── +++ HMI/US/portrait/n2t-out/popupThermo.txt
-│ @@ -236,15 +236,15 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î
-│          Max. Text Size                      : 10
+│ @@ -228,15 +228,15 @@
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : î
+│          Max. Text Size   : 10
 │      
 │      Events
 │          Touch Press Event
@@ -2673,11 +1969,11 @@
 │              //send cmd
 │   --- HMI/n2t-out/popupTimer.txt
 ├── +++ HMI/US/portrait/n2t-out/popupTimer.txt
-│ @@ -308,15 +308,15 @@
-│          Send Component ID                   : disabled
-│          State                               : unpressed
-│          Text                                : î
-│          Max. Text Size                      : 10
+│ @@ -298,15 +298,15 @@
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : î
+│          Max. Text Size   : 10
 │      
 │      Events
 │          Touch Press Event
@@ -2692,7 +1988,7 @@
 │              //send cmd
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver.txt
-│ @@ -29,17 +29,14 @@
+│ @@ -28,17 +28,14 @@
 │              }
 │              tDate.txt=pageIcons.vaDate.txt
 │              dim=dimValue
@@ -2710,7 +2006,7 @@
 │          Max. Text Size: 600
 │      
 │  Variable (string) strTmp
-│ @@ -103,35 +100,14 @@
+│ @@ -102,34 +99,14 @@
 │          Value: 0
 │      
 │  Variable (int32) ycR
@@ -2720,13 +2016,12 @@
 │      
 │ -Text m0
 │ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 10
+│ -        Scope              : local
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 10
 │ -    
 │ -    Events
 │ -        Touch Press Event
@@ -2741,12 +2036,12 @@
 │ -        
 │  Text t10
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -626,20 +602,14 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : |
+│ @@ -596,20 +573,14 @@
 │                                          {
 │                                              vis tMainIcon,1
 │                                              vis tMainIconAlt,0
@@ -2769,7 +2064,7 @@
 │                                          if(tTime.bco!=screensaver.bco)
 │   --- HMI/n2t-out/screensaver2.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver2.txt
-│ @@ -29,17 +29,14 @@
+│ @@ -28,17 +28,14 @@
 │              }
 │              tDate.txt=pageIcons.vaDate.txt
 │              dim=dimValue
@@ -2787,23 +2082,22 @@
 │          Max. Text Size: 1979
 │      
 │  Variable (string) strTmp
-│ @@ -393,35 +390,14 @@
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│          Max. Text Size                      : 4
+│ @@ -363,34 +360,14 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│          Max. Text Size     : 4
 │      
 │ -Text m0
 │ -    Attributes
-│ -        Scope                               : local
-│ -        Dragging                            : 0
-│ -        Disable release event after dragging: 0
-│ -        Send Component ID                   : disabled
-│ -        Associated Keyboard                 : none
-│ -        Text                                : 
-│ -        Max. Text Size                      : 10
+│ -        Scope              : local
+│ -        Dragging           : 0
+│ -        Send Component ID  : disabled
+│ -        Associated Keyboard: none
+│ -        Text               : 
+│ -        Max. Text Size     : 10
 │ -    
 │ -    Events
 │ -        Touch Press Event
@@ -2818,40 +2112,39 @@
 │ -        
 │  Text tAMPM
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│ @@ -442,25 +418,25 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : PM
+│ @@ -408,24 +385,24 @@
+│  Text tIcon1
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│ -        Max. Text Size                      : 16
-│ +        Max. Text Size                      : 10
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ -        Max. Text Size     : 16
+│ +        Max. Text Size     : 10
 │      
 │  Text tIcon2
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│          Associated Keyboard                 : none
-│          Text                                : 
-│ -        Max. Text Size                      : 16
-│ +        Max. Text Size                      : 10
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ -        Max. Text Size     : 16
+│ +        Max. Text Size     : 10
 │      
 │  Text tMainIcon
 │      Attributes
-│          Scope                               : local
-│          Dragging                            : 0
-│          Disable release event after dragging: 0
-│          Send Component ID                   : disabled
-│ @@ -614,15 +590,14 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│ @@ -572,15 +549,14 @@
 │                                          if(tTmp.txt!="")
 │                                          {
 │                                              covx tTmp.txt,defaultFontColor,0,0

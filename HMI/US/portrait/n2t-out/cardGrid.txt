@@ -1,14 +1,13 @@
 Page cardGrid
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Locked                              : no
-        Swide up page ID                    : disabled
-        Swide down page ID                  : disabled
-        Swide left page ID                  : disabled
-        Swide right page ID                 : disabled
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
     
     Events
         Preinitialize Event
@@ -144,120 +143,108 @@ Variable (string) type6
     
 Text tEntity1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity1
-        Max. Text Size                      : 30
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : tEntity1
+        Max. Text Size     : 30
     
 Text tEntity2
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity2
-        Max. Text Size                      : 30
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : tEntity2
+        Max. Text Size     : 30
     
 Text tEntity3
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity3
-        Max. Text Size                      : 30
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : tEntity3
+        Max. Text Size     : 30
     
 Text tEntity4
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity4
-        Max. Text Size                      : 30
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : tEntity4
+        Max. Text Size     : 30
     
 Text tEntity5
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity5
-        Max. Text Size                      : 30
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : tEntity5
+        Max. Text Size     : 30
     
 Text tEntity6
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : tEntity6
-        Max. Text Size                      : 30
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : tEntity6
+        Max. Text Size     : 30
     
 Text tHeading
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 40
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 40
     
 Text tId
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 50
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 50
     
 Text tInstruction
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 20
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 20
     
 Text tTmp
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 10
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 10
     
 Picture p0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
 Button bEntity1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î´
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -296,13 +283,12 @@ Button bEntity1
         
 Button bEntity2
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î´
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -341,13 +327,12 @@ Button bEntity2
         
 Button bEntity3
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î´
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -386,13 +371,12 @@ Button bEntity3
         
 Button bEntity4
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î´
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -431,13 +415,12 @@ Button bEntity4
         
 Button bEntity5
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î´
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -476,13 +459,12 @@ Button bEntity5
         
 Button bEntity6
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î´
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î´
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -521,13 +503,12 @@ Button bEntity6
         
 Button bNext
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î³
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î³
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -546,13 +527,12 @@ Button bNext
         
 Button bPrev
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î°
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î°
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -571,10 +551,9 @@ Button bPrev
         
 Hotspot mSpecial
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
@@ -588,10 +567,9 @@ Hotspot mSpecial
         
 Hotspot mSwipeNext
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
@@ -599,10 +577,9 @@ Hotspot mSwipeNext
         
 Hotspot mSwipePrev
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
@@ -610,10 +587,9 @@ Hotspot mSwipePrev
         
 Hotspot mSwipeUp
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event

@@ -1,14 +1,13 @@
 Page cardThermo
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Locked                              : no
-        Swide up page ID                    : disabled
-        Swide down page ID                  : disabled
-        Swide left page ID                  : disabled
-        Swide right page ID                 : disabled
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
     
     Events
         Preinitialize Event
@@ -155,154 +154,138 @@ Variable (string) va7
     
 XFloat xTempDest
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Value              : 0
     
 XFloat xTempDest1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Value              : 0
     
 XFloat xTempDest2
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Value              : 0
     
 XFloat xTempMax1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Value              : 0
     
 XFloat xTempMin1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Value              : 0
     
 XFloat xTempStep1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Value              : 0
     
 Text tCF
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : î
+        Max. Text Size     : 10
     
 Text tCF1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : î
+        Max. Text Size     : 10
     
 Text tCF2
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : î
+        Max. Text Size     : 10
     
 Text tCurTemp
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 30
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 30
     
 Text tCurTempLbl
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : Currently
-        Max. Text Size                      : 30
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : Currently
+        Max. Text Size     : 30
     
 Text tHeading
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 40
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 40
     
 Text tStateLbl
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : State
-        Max. Text Size                      : 30
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : State
+        Max. Text Size     : 30
     
 Text tStatus
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 40
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 40
     
 Picture p0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
 Button bNext
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î³
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î³
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -321,13 +304,12 @@ Button bNext
         
 Button bPrev
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î°
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î°
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -346,13 +328,12 @@ Button bPrev
         
 Dual-state Button bDown2
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î¿
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î¿
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -364,13 +345,12 @@ Dual-state Button bDown2
         
 Dual-state Button bUp2
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -382,13 +362,12 @@ Dual-state Button bUp2
         
 Dual-state Button bt0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -409,13 +388,12 @@ Dual-state Button bt0
         
 Dual-state Button bt1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : pressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : pressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -436,13 +414,12 @@ Dual-state Button bt1
         
 Dual-state Button bt2
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -463,13 +440,12 @@ Dual-state Button bt2
         
 Dual-state Button bt3
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : pressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : pressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -490,13 +466,12 @@ Dual-state Button bt3
         
 Dual-state Button bt4
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -517,13 +492,12 @@ Dual-state Button bt4
         
 Dual-state Button bt5
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : pressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : pressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -544,13 +518,12 @@ Dual-state Button bt5
         
 Dual-state Button bt6
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -571,13 +544,12 @@ Dual-state Button bt6
         
 Dual-state Button bt7
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : pressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : pressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -598,13 +570,12 @@ Dual-state Button bt7
         
 Dual-state Button btDetail
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -614,13 +585,12 @@ Dual-state Button btDetail
         
 Dual-state Button btDown
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î¿
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î¿
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -632,13 +602,12 @@ Dual-state Button btDown
         
 Dual-state Button btDown1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î¿
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î¿
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -650,13 +619,12 @@ Dual-state Button btDown1
         
 Dual-state Button btUp
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -668,13 +636,12 @@ Dual-state Button btUp
         
 Dual-state Button btUp1
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -686,10 +653,9 @@ Dual-state Button btUp1
         
 Hotspot mSwipeNext
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
@@ -697,10 +663,9 @@ Hotspot mSwipeNext
         
 Hotspot mSwipePrev
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
@@ -708,10 +673,9 @@ Hotspot mSwipePrev
         
 Hotspot mSwipeUp
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event

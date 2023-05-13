@@ -1,14 +1,13 @@
 Page cardChart
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Locked                              : no
-        Swide up page ID                    : disabled
-        Swide down page ID                  : disabled
-        Swide left page ID                  : disabled
-        Swide right page ID                 : disabled
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
     
     Events
         Preinitialize Event
@@ -155,39 +154,35 @@ Variable (int32) vaYUnit
     
 XFloat x0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Value                               : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Value              : 0
     
 Text tHeading
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Associated Keyboard                 : none
-        Text                                : 
-        Max. Text Size                      : 40
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Associated Keyboard: none
+        Text               : 
+        Max. Text Size     : 40
     
 Picture p0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
 Button bNext
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î³
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î³
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -206,13 +201,12 @@ Button bNext
         
 Button bPrev
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        State                               : unpressed
-        Text                                : î°
-        Max. Text Size                      : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : î°
+        Max. Text Size   : 10
     
     Events
         Touch Press Event
@@ -231,10 +225,9 @@ Button bPrev
         
 Hotspot m0
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
@@ -313,10 +306,9 @@ Hotspot m0
         
 Hotspot mSwipeNext
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
@@ -324,10 +316,9 @@ Hotspot mSwipeNext
         
 Hotspot mSwipePrev
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
@@ -335,10 +326,9 @@ Hotspot mSwipePrev
         
 Hotspot mSwipeUp
     Attributes
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
     
     Events
         Touch Press Event
