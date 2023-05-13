@@ -11,17 +11,21 @@ pageTest
 	14   Line(s) of event code
 	14   Unique line(s) of event code
 popupLight
-	28   Component(s)
-	408  Line(s) of event code
-	225  Unique line(s) of event code
-screensaver2
-	58   Component(s)
-	344  Line(s) of event code
-	243  Unique line(s) of event code
+	23   Component(s)
+	406  Line(s) of event code
+	207  Unique line(s) of event code
+popupTimer
+	42   Component(s)
+	512  Line(s) of event code
+	255  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	351  Line(s) of event code
 	204  Unique line(s) of event code
+popupThermo
+	44   Component(s)
+	519  Line(s) of event code
+	274  Unique line(s) of event code
 cardPower
 	54   Component(s)
 	517  Line(s) of event code
@@ -34,10 +38,6 @@ popupShutter
 	25   Component(s)
 	398  Line(s) of event code
 	218  Unique line(s) of event code
-popupThermo
-	44   Component(s)
-	519  Line(s) of event code
-	274  Unique line(s) of event code
 cardAlarm
 	43   Component(s)
 	496  Line(s) of event code
@@ -66,10 +66,6 @@ cardQR
 	34   Component(s)
 	406  Line(s) of event code
 	236  Unique line(s) of event code
-popupTimer
-	42   Component(s)
-	512  Line(s) of event code
-	255  Unique line(s) of event code
 screensaver
 	46   Component(s)
 	425  Line(s) of event code
@@ -86,9 +82,13 @@ cardEntities
 	91   Component(s)
 	1626 Line(s) of event code
 	703  Unique line(s) of event code
+screensaver2
+	58   Component(s)
+	344  Line(s) of event code
+	243  Unique line(s) of event code
 
 Total
 	22   Page(s)
-	811  Component(s)
-	9629 Line(s) of event code
-	2454 Unique line(s) of event code
+	806  Component(s)
+	9627 Line(s) of event code
+	2446 Unique line(s) of event code
