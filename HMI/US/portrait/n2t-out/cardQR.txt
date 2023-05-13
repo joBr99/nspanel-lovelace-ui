@@ -588,11 +588,11 @@ Timer tmSerial
                                         {
                                             if(type1.txt=="delete"||type1.txt=="")
                                             {
-                                                qrcode m1.x,m1.y,200,65535,defaultBcoColor,-1,vaQR.txt
+                                                qrcode m1.x,m1.y,200,65535,defaultBcoColor,-1,8,vaQR.txt
                                             }
                                         }else
                                         {
-                                            qrcode m0.x,m0.y,200,65535,defaultBcoColor,-1,vaQR.txt
+                                            qrcode m0.x,m0.y,200,65535,defaultBcoColor,-1,8,vaQR.txt
                                         }
                                     }
                                     if(tInstruction.txt=="time")
@@ -737,7 +737,7 @@ Timer tmSleep
                 {
                     sleepValue=0
                     dim=dimValue
-                    tSend.txt="event,sleepReached,cardAlarm"
+                    tSend.txt="event,sleepReached,cardQR"
                     //send calc crc
                     btlen tSend.txt,sys0
                     crcrest 1,0xffff // reset CRC
