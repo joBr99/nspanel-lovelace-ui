@@ -52,7 +52,7 @@ jobs:
     - name: Run n2t US P DIFF
       continue-on-error: true
       run: |
-        echo "YXR0cmlidXRlcyA9IHsKICAgICJpZCI6IHsKICAgICAgICAiaWdub3JlIjogVHJ1ZSwKICAgICAgICAibmFtZSI6ICJJRCIsCiAgICAgICAgInN0cnVjdCI6ICJpIiwKICAgIH0KfQ==" | base64 -d > ignore-id.py
+        echo "YXR0cmlidXRlcyA9IHsKICAgICJpZCI6IHsKICAgICAgICAiaWdub3JlIjogVHJ1ZSwKICAgICAgICAibmFtZSI6ICJJRCIsCiAgICAgICAgInN0cnVjdCI6ICJpIiwKICAgIH0sCiAgICAiZGlzdXAiOiB7CiAgICAgICAgImlnbm9yZSI6IFRydWUsCiAgICAgICAgIm5hbWUiOiAiRGlzYWJsZSByZWxlYXNlIGV2ZW50IGFmdGVyIGRyYWdnaW5nIiwKICAgICAgICAic3RydWN0IjogImkiLAogICAgfSwKfQ==" | base64 -d > ignore-id.py
         python Nextion2Text.py -c ignore-id.py -p font -d -i HMI/nspanel.HMI -o HMI/n2t-out
         
         echo portrait
