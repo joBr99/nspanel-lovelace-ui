@@ -396,7 +396,7 @@ Text tVersion
         Horizontal Alignment: center
         Vertical Alignment  : center
         Input Type          : character
-        Text                : 50
+        Text                : 51
         Max. Text Size      : 10
         Word wrap           : disabled
         Horizontal Spacing  : 0
@@ -615,6 +615,10 @@ Timer tmSerial
                                         if(tId.txt=="cardGrid")
                                         {
                                             page cardGrid
+                                        }
+                                        if(tId.txt=="cardGrid2")
+                                        {
+                                            page cardGrid2
                                         }
                                         if(tId.txt=="popupLight")
                                         {
