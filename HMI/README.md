@@ -6,6 +6,24 @@ Messages to the Panel can be send through the Command `CustomSend`, which is imp
 You can issue this command through MQTT by sending messages to the `cmnd/XXX/CustomSend` Topic.
 Messages from the Panel are send to the `tele/XXX/RESULT` Topic, encoded in json `{"CustomRecv":"message_from_screen"}`
 
+
+# Table of contents
+
+  - [Startup](#startup)
+    - [Some preperation before we are acually navigating away:](#some-preperation-before-we-are-acually-navigating-away)
+    - [Navigate from the startup page to the screensaver, by sending this command to the CustomSend Topic.](#navigate-from-the-startup-page-to-the-screensaver-by-sending-this-command-to-the-customsend-topic)
+    - [Exit Screensaver](#exit-screensaver)
+  - [Messages to Nextion Display](#messages-to-nextion-display)
+    - [General Commands, implemented on all pages](#general-commands-implemented-on-all-pages)
+    - [screensaver page](#screensaver-page)
+    - [cardEntities Page](#cardentities-page)
+    - [cardGrid Page](#cardgrid-page)
+    - [cardMedia](#cardmedia)
+    - [cardThermo](#cardthermo)
+    - [cardAlarm](#cardalarm)
+    - [cardQR](#cardqr)
+    - [cardPower](#cardpower)
+
 ## Startup
 
 On startup the panel will send `{"CustomRecv":"event,startup,39,eu"}` every few seconds.
