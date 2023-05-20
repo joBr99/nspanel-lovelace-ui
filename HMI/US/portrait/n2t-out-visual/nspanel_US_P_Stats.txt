@@ -14,14 +14,14 @@ popupNotify
 	19   Component(s)
 	267  Line(s) of event code
 	172  Unique line(s) of event code
-cardGrid2
-	56   Component(s)
-	657  Line(s) of event code
-	332  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	516  Line(s) of event code
 	257  Unique line(s) of event code
+cardGrid2
+	56   Component(s)
+	657  Line(s) of event code
+	332  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	355  Line(s) of event code
@@ -95,4 +95,4 @@ Total
 	22   Page(s)
 	862  Component(s)
 	10360 Line(s) of event code
-	2491 Unique line(s) of event code
+	2492 Unique line(s) of event code

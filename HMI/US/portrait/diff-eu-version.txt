@@ -1030,7 +1030,7 @@
 │                                          spstr strCommand.txt,tId.txt,"~",1
 │   --- HMI/n2t-out/cardGrid2.txt
 ├── +++ HMI/US/portrait/n2t-out/cardGrid2.txt
-│ @@ -25,22 +25,24 @@
+│ @@ -25,26 +25,28 @@
 │              vis bEntity2,0
 │              vis bEntity3,0
 │              vis bEntity4,0
@@ -1051,10 +1051,15 @@
 │              vis bPrev,0
 │              vis bNext,0
 │              cardGrid2.bco=defaultBcoColor
-│              for(sys0=0;sys0<42;sys0++)
+│ -            for(sys0=0;sys0<48;sys0++)
+│ +            for(sys0=0;sys0<50;sys0++)
 │              {
 │                  if(b[sys0].type==98||b[sys0].type==116)
 │                  {
+│                      b[sys0].bco=defaultBcoColor
+│                      b[sys0].pco=defaultFontColor
+│                  }
+│              }
 │ @@ -93,14 +95,20 @@
 │      
 │  Variable (string) entn8

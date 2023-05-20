@@ -48,7 +48,7 @@ Page cardGrid2
             vis bPrev,0
             vis bNext,0
             cardGrid2.bco=defaultBcoColor
-            for(sys0=0;sys0<42;sys0++)
+            for(sys0=0;sys0<48;sys0++)
             {
                 if(b[sys0].type==98||b[sys0].type==116)
                 {
