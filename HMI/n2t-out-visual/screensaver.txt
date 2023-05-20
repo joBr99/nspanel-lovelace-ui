@@ -1,22 +1,21 @@
 Page screensaver
     Attributes
-        ID                                  : 0
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        Width                               : 480
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Locked                              : no
-        Swide up page ID                    : disabled
-        Swide down page ID                  : disabled
-        Swide left page ID                  : disabled
-        Swide right page ID                 : disabled
-        Fill                                : solid color
-        Back. Color                         : 0
+        ID                 : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Opacity            : 127
+        Width              : 480
+        Effect             : load
+        Effect Priority    : 0
+        Effect Time        : 300
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
+        Fill               : solid color
+        Back. Color        : 0
     
     Events
         Preinitialize Event
@@ -130,33 +129,32 @@ Variable (int32) ycR
     
 Text m0
     Attributes
-        ID                                  : 42
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 462
-        y coordinate                        : 0
-        Width                               : 18
-        Height                              : 320
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 63488
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 42
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 462
+        y coordinate        : 0
+        Width               : 18
+        Height              : 320
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 63488
+        Font Color          : 0
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
     Events
         Touch Press Event
@@ -171,830 +169,802 @@ Text m0
         
 Text t10
     Attributes
-        ID                                  : 15
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 46
-        y coordinate                        : 201
-        Width                               : 360
-        Height                              : 2
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 65535
-        Font Color                          : 0
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : |
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 15
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 46
+        y coordinate        : 201
+        Width               : 360
+        Height              : 2
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 65535
+        Font Color          : 0
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : |
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tAMPM
     Attributes
-        ID                                  : 17
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 343
-        y coordinate                        : 56
-        Width                               : 104
-        Height                              : 57
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 4
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : PM
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 17
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 343
+        y coordinate        : 56
+        Width               : 104
+        Height              : 57
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 4
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : PM
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tDate
     Attributes
-        ID                                  : 6
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 165
-        Width                               : 450
-        Height                              : 32
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 2
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : bottom
-        Input Type                          : character
-        Text                                : Tuesday, 08. March 2022
-        Max. Text Size                      : 40
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 6
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 0
+        y coordinate        : 165
+        Width               : 450
+        Height              : 32
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 2
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : bottom
+        Input Type          : character
+        Text                : Tuesday, 08. March 2022
+        Max. Text Size      : 40
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tF1Icon
     Attributes
-        ID                                  : 11
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 146
-        y coordinate                        : 245
-        Width                               : 40
-        Height                              : 35
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 11
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 146
+        y coordinate        : 245
+        Width               : 40
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 1
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tF2Icon
     Attributes
-        ID                                  : 13
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 228
-        y coordinate                        : 245
-        Width                               : 40
-        Height                              : 35
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 13
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 228
+        y coordinate        : 245
+        Width               : 40
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 1
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tF3Icon
     Attributes
-        ID                                  : 19
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 309
-        y coordinate                        : 245
-        Width                               : 40
-        Height                              : 35
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 19
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 309
+        y coordinate        : 245
+        Width               : 40
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 1
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tF4Icon
     Attributes
-        ID                                  : 22
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 390
-        y coordinate                        : 245
-        Width                               : 40
-        Height                              : 35
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 5
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 22
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 390
+        y coordinate        : 245
+        Width               : 40
+        Height              : 35
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 1
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 5
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tForecast1
     Attributes
-        ID                                  : 9
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 128
-        y coordinate                        : 216
-        Width                               : 72
-        Height                              : 26
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 9
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 128
+        y coordinate        : 216
+        Width               : 72
+        Height              : 26
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tForecast1Val
     Attributes
-        ID                                  : 10
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 125
-        y coordinate                        : 282
-        Width                               : 71
-        Height                              : 25
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 10
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 125
+        y coordinate        : 282
+        Width               : 71
+        Height              : 25
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tForecast2
     Attributes
-        ID                                  : 12
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 212
-        y coordinate                        : 216
-        Width                               : 72
-        Height                              : 25
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 12
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 212
+        y coordinate        : 216
+        Width               : 72
+        Height              : 25
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tForecast2Val
     Attributes
-        ID                                  : 14
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 212
-        y coordinate                        : 283
-        Width                               : 72
-        Height                              : 25
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 14
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 212
+        y coordinate        : 283
+        Width               : 72
+        Height              : 25
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tForecast3
     Attributes
-        ID                                  : 20
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 293
-        y coordinate                        : 216
-        Width                               : 72
-        Height                              : 25
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 20
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 293
+        y coordinate        : 216
+        Width               : 72
+        Height              : 25
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tForecast3Val
     Attributes
-        ID                                  : 18
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 292
-        y coordinate                        : 283
-        Width                               : 71
-        Height                              : 25
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 18
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 292
+        y coordinate        : 283
+        Width               : 71
+        Height              : 25
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tForecast4
     Attributes
-        ID                                  : 21
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 374
-        y coordinate                        : 216
-        Width                               : 72
-        Height                              : 25
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 21
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 374
+        y coordinate        : 216
+        Width               : 72
+        Height              : 25
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tForecast4Val
     Attributes
-        ID                                  : 23
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 374
-        y coordinate                        : 283
-        Width                               : 72
-        Height                              : 25
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 23
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 374
+        y coordinate        : 283
+        Width               : 72
+        Height              : 25
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tIcon1
     Attributes
-        ID                                  : 31
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 0
-        Width                               : 85
-        Height                              : 45
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 0
-        Font Color                          : 17299
-        Horizontal Alignment                : left
-        Vertical Alignment                  : top
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 31
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 0
+        y coordinate        : 0
+        Width               : 85
+        Height              : 45
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 1
+        Back. Color         : 0
+        Font Color          : 17299
+        Horizontal Alignment: left
+        Vertical Alignment  : top
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tIcon2
     Attributes
-        ID                                  : 32
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 365
-        y coordinate                        : 0
-        Width                               : 85
-        Height                              : 45
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 1
-        Back. Color                         : 0
-        Font Color                          : 17299
-        Horizontal Alignment                : right
-        Vertical Alignment                  : top
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 32
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 365
+        y coordinate        : 0
+        Width               : 85
+        Height              : 45
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 1
+        Back. Color         : 0
+        Font Color          : 17299
+        Horizontal Alignment: right
+        Vertical Alignment  : top
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tMainIcon
     Attributes
-        ID                                  : 7
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 26
-        y coordinate                        : 208
-        Width                               : 70
-        Height                              : 66
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 4
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 7
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 26
+        y coordinate        : 208
+        Width               : 70
+        Height              : 66
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 4
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tMainIconAlt
     Attributes
-        ID                                  : 27
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 11
-        y coordinate                        : 216
-        Width                               : 54
-        Height                              : 45
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 3
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : right
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 27
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 11
+        y coordinate        : 216
+        Width               : 54
+        Height              : 45
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 3
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: right
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tMainIconAlt2
     Attributes
-        ID                                  : 45
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 11
-        y coordinate                        : 265
-        Width                               : 54
-        Height                              : 45
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 3
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : right
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 45
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 11
+        y coordinate        : 265
+        Width               : 54
+        Height              : 45
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 3
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: right
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tMainText
     Attributes
-        ID                                  : 8
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 7
-        y coordinate                        : 273
-        Width                               : 110
-        Height                              : 43
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 3
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 8
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 7
+        y coordinate        : 273
+        Width               : 110
+        Height              : 43
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 3
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tMainTextAlt
     Attributes
-        ID                                  : 26
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 69
-        y coordinate                        : 215
-        Width                               : 135
-        Height                              : 45
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 3
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : right
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 26
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 69
+        y coordinate        : 215
+        Width               : 135
+        Height              : 45
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 3
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: right
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tMainTextAlt2
     Attributes
-        ID                                  : 43
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 69
-        y coordinate                        : 265
-        Width                               : 135
-        Height                              : 45
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 3
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : right
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 43
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 69
+        y coordinate        : 265
+        Width               : 135
+        Height              : 45
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 3
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: right
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 10
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tNotifyHead
     Attributes
-        ID                                  : 44
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 207
-        Width                               : 450
-        Height                              : 58
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 3
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : top
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 35
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 44
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 0
+        y coordinate        : 207
+        Width               : 450
+        Height              : 58
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 3
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : top
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 35
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tNotifyText
     Attributes
-        ID                                  : 46
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 264
-        Width                               : 450
-        Height                              : 47
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 0
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : top
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 120
-        Word wrap                           : enabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 46
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 0
+        y coordinate        : 264
+        Width               : 450
+        Height              : 47
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 0
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : top
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 120
+        Word wrap           : enabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tTime
     Attributes
-        ID                                  : 5
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 37
-        y coordinate                        : 25
-        Width                               : 376
-        Height                              : 112
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 5
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 21:32
-        Max. Text Size                      : 15
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 5
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 37
+        y coordinate        : 25
+        Width               : 376
+        Height              : 112
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 5
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 21:32
+        Max. Text Size      : 15
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Text tTimeAdd
     Attributes
-        ID                                  : 33
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 134
-        Width                               : 450
-        Height                              : 32
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 2
-        Back. Color                         : 0
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : bottom
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 40
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 33
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 0
+        y coordinate        : 134
+        Width               : 450
+        Height              : 32
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 2
+        Back. Color         : 0
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : bottom
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 40
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Picture p0
     Attributes
-        ID                                  : 1
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 1
-        Width                               : 479
-        Height                              : 319
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Picture ID                          : 0
+        ID               : 1
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 0
+        y coordinate     : 1
+        Width            : 479
+        Height           : 319
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+        Picture ID       : 0
     
 Timer tm0
     Attributes
@@ -1362,6 +1332,10 @@ Timer tmSerial
                                         if(tId.txt=="cardGrid")
                                         {
                                             page cardGrid
+                                        }
+                                        if(tId.txt=="cardGrid2")
+                                        {
+                                            page cardGrid2
                                         }
                                         if(tId.txt=="popupLight")
                                         {
