@@ -26,8 +26,8 @@ NsPanel needs to be flashed with Tasmota (or through a 3rd-party Component with 
 
 ## Features
 
-- Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light, input_text (read-only), lock, fan and automation
-- Grid Page with support for cover, switch, input_boolean, button, scenes, light, lock and automation
+- Entities Page with support for cover, switch, input_boolean, binary_sensor, sensor, button, number, scenes, script, input_button and light, input_text (read-only), lock, fan, timer and automation
+- Grid Page with support for cover, switch, input_boolean, button, scenes, light, lock, timer and automation
 - Detail Pages for Lights (Brightness, Temperature and Color of the Light) and Covers (Position)
 - Thermostat Page 
 - Media Player Card
