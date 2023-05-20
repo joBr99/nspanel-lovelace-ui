@@ -35,12 +35,16 @@ Page cardGrid2
             vis bEntity4,0
             vis bEntity5,0
             vis bEntity6,0
+            vis bEntity7,0
+            vis bEntity8,0
             vis tEntity1,0
             vis tEntity2,0
             vis tEntity3,0
             vis tEntity4,0
             vis tEntity5,0
             vis tEntity6,0
+            vis tEntity7,0
+            vis tEntity8,0
             vis bPrev,0
             vis bNext,0
             cardGrid2.bco=defaultBcoColor

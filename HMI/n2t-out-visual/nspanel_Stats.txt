@@ -50,6 +50,10 @@ cardChart
 	33   Component(s)
 	437  Line(s) of event code
 	296  Unique line(s) of event code
+cardGrid2
+	52   Component(s)
+	611  Line(s) of event code
+	319  Unique line(s) of event code
 cardAlarm
 	43   Component(s)
 	500  Line(s) of event code
@@ -74,10 +78,6 @@ popupInSel
 	34   Component(s)
 	621  Line(s) of event code
 	297  Unique line(s) of event code
-cardGrid2
-	52   Component(s)
-	607  Line(s) of event code
-	315  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	516  Line(s) of event code
@@ -94,5 +94,5 @@ cardEntities
 Total
 	22   Page(s)
 	850  Component(s)
-	9936 Line(s) of event code
-	2364 Unique line(s) of event code
+	9940 Line(s) of event code
+	2368 Unique line(s) of event code
