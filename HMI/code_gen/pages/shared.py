@@ -79,6 +79,10 @@ sharedfoot = """
               {
                 page cardGrid
               }
+              if(tId.txt=="cardGrid2")
+              {
+                page cardGrid2
+              }
               if(tId.txt=="popupLight")
               {
                 pageIcons.tTmp1.txt=tTmp.txt
