@@ -145,7 +145,7 @@ Text tVersion
         Dragging           : 0
         Send Component ID  : disabled
         Associated Keyboard: none
-        Text               : 50
+        Text               : 51
         Max. Text Size     : 10
     
 Picture p0
@@ -319,6 +319,10 @@ Timer tmSerial
                                         if(tId.txt=="cardGrid")
                                         {
                                             page cardGrid
+                                        }
+                                        if(tId.txt=="cardGrid2")
+                                        {
+                                            page cardGrid2
                                         }
                                         if(tId.txt=="popupLight")
                                         {
