@@ -112,9 +112,6 @@ change the page type:
 
 ### screensaver page
 
-Example default layout: `weatherUpdate~~~A~21130~~-0.7C~~~B~63469~Sat~3.6C~~~C~35957~Sun~3.9C~~~D~31728~Mon~4.3C~~~E~35957~Tue~3.6C`
-Example alternative layout: `weatherUpdate~~~A~21130~~-0.7C~~~B~63469~Sat~3.6C~~~C~35957~Sun~3.9C~~~D~31728~Mon~4.3C~~~E~35957~Tue~3.6C~~~F~21130~~23.6C`
-
 <table>
 <thead>
   <tr>
