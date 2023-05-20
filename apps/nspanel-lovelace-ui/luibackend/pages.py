@@ -704,6 +704,8 @@ class LuiPagesGen(object):
 
         # Switch to page
         if send_page_type:
+            if card.cardType == "cardGrid" and len(card.entities) > 6:
+                card.cardType = "cardGrid2"
             self.page_type(card.cardType)
 
         # send sleep timeout if there is one configured for the current card
@@ -713,7 +715,7 @@ class LuiPagesGen(object):
             self._send_mqtt_msg(f'timeout~{self._config.get("sleepTimeout")}')
         
         temp_unit = card.raw_config.get("temperatureUnit", "celsius")
-        if card.cardType in ["cardEntities", "cardGrid"]:
+        if card.cardType in ["cardEntities", "cardGrid", "cardGrid2"]:
             self.generate_entities_page(navigation, card.title, card.entities, card.cardType, temp_unit)
             return
         if card.cardType == "cardThermo":
