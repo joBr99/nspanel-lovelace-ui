@@ -1,20 +1,5 @@
 --- HMI/n2t-out
 +++ HMI/US/portrait/n2t-out
-├── file list
-│ @@ -1,13 +1,12 @@
-│  Program.s.txt
-│  cardAlarm.txt
-│  cardChart.txt
-│  cardEntities.txt
-│  cardGrid.txt
-│ -cardGrid2.txt
-│  cardLChart.txt
-│  cardMedia.txt
-│  cardPower.txt
-│  cardQR.txt
-│  cardThermo.txt
-│  pageIcons.txt
-│  pageStartup.txt
 │   --- HMI/n2t-out/Program.s.txt
 ├── +++ HMI/US/portrait/n2t-out/Program.s.txt
 │ @@ -10,11 +10,11 @@
@@ -31,48 +16,6 @@
 │ +    //lcd_dev fffb 0002 0000 0020
 │      printh 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port
 │      page pageStartup
-│   --- HMI/n2t-out/cardAlarm.txt
-├── +++ HMI/US/portrait/n2t-out/cardAlarm.txt
-│ @@ -885,18 +885,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/cardChart.txt
-├── +++ HMI/US/portrait/n2t-out/cardChart.txt
-│ @@ -637,18 +637,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
 │   --- HMI/n2t-out/cardEntities.txt
 ├── +++ HMI/US/portrait/n2t-out/cardEntities.txt
 │ @@ -60,16 +60,36 @@
@@ -1085,88 +1028,211 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
-│ @@ -1845,18 +2605,14 @@
-│                                          {
-│                                              page cardEntities
+│   --- HMI/n2t-out/cardGrid2.txt
+├── +++ HMI/US/portrait/n2t-out/cardGrid2.txt
+│ @@ -25,22 +25,24 @@
+│              vis bEntity2,0
+│              vis bEntity3,0
+│              vis bEntity4,0
+│              vis bEntity5,0
+│              vis bEntity6,0
+│              vis bEntity7,0
+│              vis bEntity8,0
+│ +            vis bEntity9,0
+│              vis tEntity1,0
+│              vis tEntity2,0
+│              vis tEntity3,0
+│              vis tEntity4,0
+│              vis tEntity5,0
+│              vis tEntity6,0
+│              vis tEntity7,0
+│              vis tEntity8,0
+│ +            vis tEntity9,0
+│              vis bPrev,0
+│              vis bNext,0
+│              cardGrid2.bco=defaultBcoColor
+│              for(sys0=0;sys0<42;sys0++)
+│              {
+│                  if(b[sys0].type==98||b[sys0].type==116)
+│                  {
+│ @@ -93,14 +95,20 @@
+│      
+│  Variable (string) entn8
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 80
+│      
+│ +Variable (string) entn9
+│ +    Attributes
+│ +        Scope         : local
+│ +        Text          : 
+│ +        Max. Text Size: 80
+│ +    
+│  Variable (string) nent1
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 80
+│      
+│  Variable (string) nent2
+│ @@ -165,14 +173,20 @@
+│      
+│  Variable (string) type8
+│      Attributes
+│          Scope         : local
+│          Text          : 
+│          Max. Text Size: 10
+│      
+│ +Variable (string) type9
+│ +    Attributes
+│ +        Scope         : local
+│ +        Text          : 
+│ +        Max. Text Size: 10
+│ +    
+│  Text tEntity1
+│      Attributes
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : tEntity1
+│ @@ -237,14 +251,23 @@
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : tEntity8
+│          Max. Text Size     : 30
+│      
+│ +Text tEntity9
+│ +    Attributes
+│ +        Scope              : local
+│ +        Dragging           : 0
+│ +        Send Component ID  : disabled
+│ +        Associated Keyboard: none
+│ +        Text               : tEntity9
+│ +        Max. Text Size     : 30
+│ +    
+│  Text tHeading
+│      Attributes
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│          Text               : 
+│ @@ -555,14 +578,58 @@
+│          State            : unpressed
+│          Text             : î´
+│          Max. Text Size   : 10
+│      
+│      Events
+│          Touch Press Event
+│              tmLP.en=1
+│ +            tTmp.txt=type2.txt
+│ +            pageIcons.tTmp1.txt=tEntity2.txt
+│ +            pageIcons.tTmp2.txt=entn2.txt
+│ +            pageIcons.tTmp3.txt=bEntity2.txt
+│ +            if(type2.txt=="shutter")
+│ +            {
+│ +                page popupShutter
+│ +            }
+│ +            if(type2.txt=="input_sel")
+│ +            {
+│ +                page popupInSel
+│ +            }
+│ +            if(type2.txt=="timer")
+│ +            {
+│ +                page popupTimer
+│ +            }
+│ +        
+│ +        Touch Release Event
+│ +            tmLP.en=0
+│ +            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
+│ +            //send calc crc
+│ +            btlen tSend.txt,sys0
+│ +            crcrest 1,0xffff // reset CRC
+│ +            crcputh 55 bb
+│ +            crcputs sys0,2
+│ +            crcputs tSend.txt,0
+│ +            //send cmd
+│ +            printh 55 bb
+│ +            prints sys0,2
+│ +            prints tSend.txt,0
+│ +            prints crcval,2
+│ +        
+│ +Button bEntity8
+│ +    Attributes
+│ +        Scope            : local
+│ +        Dragging         : 0
+│ +        Send Component ID: disabled
+│ +        State            : unpressed
+│ +        Text             : î´
+│ +        Max. Text Size   : 10
+│ +    
+│ +    Events
+│ +        Touch Press Event
+│ +            tmLP.en=1
+│              tTmp.txt=type6.txt
+│              pageIcons.tTmp1.txt=tEntity6.txt
+│              pageIcons.tTmp2.txt=entn6.txt
+│              pageIcons.tTmp3.txt=bEntity6.txt
+│              if(type6.txt=="shutter")
+│              {
+│                  page popupShutter
+│ @@ -587,15 +654,15 @@
+│              crcputs tSend.txt,0
+│              //send cmd
+│              printh 55 bb
+│              prints sys0,2
+│              prints tSend.txt,0
+│              prints crcval,2
+│          
+│ -Button bEntity8
+│ +Button bEntity9
+│      Attributes
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : î´
+│          Max. Text Size   : 10
+│ @@ -999,14 +1066,35 @@
+│                                              spstr strCommand.txt,tTmp.txt,"~",59
+│                                              covx tTmp.txt,sys0,0,0
+│                                              bEntity8.pco=sys0
+│                                              // set name
+│                                              spstr strCommand.txt,tEntity8.txt,"~",60
+│                                              vis tEntity8,1
 │                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/cardGrid.txt
-├── +++ HMI/US/portrait/n2t-out/cardGrid.txt
-│ @@ -858,18 +858,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/cardLChart.txt
-├── +++ HMI/US/portrait/n2t-out/cardLChart.txt
-│ @@ -619,18 +619,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/cardMedia.txt
-├── +++ HMI/US/portrait/n2t-out/cardMedia.txt
-│ @@ -1141,18 +1141,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
+│ +                                        // get Type
+│ +                                        spstr strCommand.txt,type9.txt,"~",62
+│ +                                        // get internal name
+│ +                                        spstr strCommand.txt,entn9.txt,"~",63
+│ +                                        if(type9.txt=="delete"||type9.txt=="")
+│ +                                        {
+│ +                                            vis tEntity9,0
+│ +                                            vis bEntity9,0
+│ +                                        }else
+│ +                                        {
+│ +                                            // change icon
+│ +                                            spstr strCommand.txt,bEntity9.txt,"~",64
+│ +                                            vis bEntity9,1
+│ +                                            // change icon color
+│ +                                            spstr strCommand.txt,tTmp.txt,"~",65
+│ +                                            covx tTmp.txt,sys0,0,0
+│ +                                            bEntity9.pco=sys0
+│ +                                            // set name
+│ +                                            spstr strCommand.txt,tEntity9.txt,"~",66
+│ +                                            vis tEntity9,1
+│ +                                        }
+│                                      }
+│                                      if(tInstruction.txt=="pageType")
+│                                      {
+│                                          sleepValue=0
+│                                          //command format pageType,specialPageName
+│                                          //write name of speical page to tId
+│                                          spstr strCommand.txt,tId.txt,"~",1
 │   --- HMI/n2t-out/cardPower.txt
 ├── +++ HMI/US/portrait/n2t-out/cardPower.txt
 │ @@ -45,16 +45,16 @@
@@ -1494,67 +1560,6 @@
 │          Scope      : local
 │          Period (ms): 50
 │          Enabled    : yes
-│ @@ -918,18 +894,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/cardQR.txt
-├── +++ HMI/US/portrait/n2t-out/cardQR.txt
-│ @@ -663,18 +663,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/cardThermo.txt
-├── +++ HMI/US/portrait/n2t-out/cardThermo.txt
-│ @@ -1047,18 +1047,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/portrait/n2t-out/pageStartup.txt
 │ @@ -34,20 +34,14 @@
@@ -1612,172 +1617,6 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-│ @@ -316,18 +310,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/popupFan.txt
-├── +++ HMI/US/portrait/n2t-out/popupFan.txt
-│ @@ -570,18 +570,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/popupInSel.txt
-├── +++ HMI/US/portrait/n2t-out/popupInSel.txt
-│ @@ -925,18 +925,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/popupLight.txt
-├── +++ HMI/US/portrait/n2t-out/popupLight.txt
-│ @@ -600,18 +600,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/popupNotify.txt
-├── +++ HMI/US/portrait/n2t-out/popupNotify.txt
-│ @@ -397,18 +397,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/popupShutter.txt
-├── +++ HMI/US/portrait/n2t-out/popupShutter.txt
-│ @@ -621,18 +621,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/popupThermo.txt
-├── +++ HMI/US/portrait/n2t-out/popupThermo.txt
-│ @@ -888,18 +888,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
-│   --- HMI/n2t-out/popupTimer.txt
-├── +++ HMI/US/portrait/n2t-out/popupTimer.txt
-│ @@ -857,18 +857,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver.txt
 │ @@ -28,17 +28,14 @@
@@ -1854,25 +1693,6 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",1
 │                                          covx tTmp.txt,tTime.bco,0,0
 │                                          if(tTime.bco!=screensaver.bco)
-│ @@ -736,18 +707,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {
 │   --- HMI/n2t-out/screensaver2.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver2.txt
 │ @@ -28,17 +28,14 @@
@@ -1944,22 +1764,3 @@
 │                                          if(tAMPM.txt=="")
 │                                          {
 │                                              vis tAMPM,0
-│ @@ -782,18 +758,14 @@
-│                                          {
-│                                              page cardEntities
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│ -                                        if(tId.txt=="cardGrid2")
-│ -                                        {
-│ -                                            page cardGrid2
-│ -                                        }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
-│                                          {

@@ -1,65 +1,8 @@
-+++ /dev/fd/62	2023-05-20 12:50:41.304444488 +0000
-+le list
-+ +1,12 @@
-+.s.txt
-+rm.txt
-+rt.txt
-+ities.txt
-+d.txt
-+d2.txt
-+art.txt
-+ia.txt
-+er.txt
-+txt
-+rmo.txt
-+ns.txt
-+rtup.txt
++++ /dev/fd/62	2023-05-20 13:06:19.296059656 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +10,11 @@
 +nth 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port
-+I/n2t-out/cardAlarm.txt
-++ HMI/US/portrait/n2t-out/cardAlarm.txt
-+18 +885,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/cardChart.txt
-++ HMI/US/portrait/n2t-out/cardChart.txt
-+18 +637,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
 +6 +60,36 @@
@@ -643,88 +586,211 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+,18 +2605,14 @@
-+                                 {
-+                                     page cardEntities
++I/n2t-out/cardGrid2.txt
+++ HMI/US/portrait/n2t-out/cardGrid2.txt
++2 +25,24 @@
++     vis bEntity2,0
++     vis bEntity3,0
++     vis bEntity4,0
++     vis bEntity5,0
++     vis bEntity6,0
++     vis bEntity7,0
++     vis bEntity8,0
++     vis bEntity9,0
++     vis tEntity1,0
++     vis tEntity2,0
++     vis tEntity3,0
++     vis tEntity4,0
++     vis tEntity5,0
++     vis tEntity6,0
++     vis tEntity7,0
++     vis tEntity8,0
++     vis tEntity9,0
++     vis bPrev,0
++     vis bNext,0
++     cardGrid2.bco=defaultBcoColor
++     for(sys0=0;sys0<42;sys0++)
++     {
++         if(b[sys0].type==98||b[sys0].type==116)
++         {
++4 +95,20 @@
++
++e (string) entn8
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 80
++
++e (string) entn9
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 80
++
++e (string) nent1
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 80
++
++e (string) nent2
++14 +173,20 @@
++
++e (string) type8
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 10
++
++e (string) type9
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 10
++
++ntity1
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : tEntity1
++14 +251,23 @@
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : tEntity8
++ Max. Text Size     : 30
++
++ntity9
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : tEntity9
++ Max. Text Size     : 30
++
++eading
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++14 +578,58 @@
++ State            : unpressed
++ Text             : î´
++ Max. Text Size   : 10
++
++nts
++ Touch Press Event
++     tmLP.en=1
++     tTmp.txt=type2.txt
++     pageIcons.tTmp1.txt=tEntity2.txt
++     pageIcons.tTmp2.txt=entn2.txt
++     pageIcons.tTmp3.txt=bEntity2.txt
++     if(type2.txt=="shutter")
++     {
++         page popupShutter
++     }
++     if(type2.txt=="input_sel")
++     {
++         page popupInSel
++     }
++     if(type2.txt=="timer")
++     {
++         page popupTimer
++     }
++ 
++ Touch Release Event
++     tmLP.en=0
++     tSend.txt="event,buttonPress2,"+entn2.txt+",button"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++bEntity8
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : î´
++ Max. Text Size   : 10
++
++nts
++ Touch Press Event
++     tmLP.en=1
++     tTmp.txt=type6.txt
++     pageIcons.tTmp1.txt=tEntity6.txt
++     pageIcons.tTmp2.txt=entn6.txt
++     pageIcons.tTmp3.txt=bEntity6.txt
++     if(type6.txt=="shutter")
++     {
++         page popupShutter
++15 +654,15 @@
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++ 
++bEntity8
++bEntity9
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
++ State            : unpressed
++ Text             : î´
++ Max. Text Size   : 10
++14 +1066,35 @@
++                                     spstr strCommand.txt,tTmp.txt,"~",59
++                                     covx tTmp.txt,sys0,0,0
++                                     bEntity8.pco=sys0
++                                     // set name
++                                     spstr strCommand.txt,tEntity8.txt,"~",60
++                                     vis tEntity8,1
 +                                 }
-+                                 if(tId.txt=="cardGrid")
++                                 // get Type
++                                 spstr strCommand.txt,type9.txt,"~",62
++                                 // get internal name
++                                 spstr strCommand.txt,entn9.txt,"~",63
++                                 if(type9.txt=="delete"||type9.txt=="")
 +                                 {
-+                                     page cardGrid
++                                     vis tEntity9,0
++                                     vis bEntity9,0
++                                 }else
++                                 {
++                                     // change icon
++                                     spstr strCommand.txt,bEntity9.txt,"~",64
++                                     vis bEntity9,1
++                                     // change icon color
++                                     spstr strCommand.txt,tTmp.txt,"~",65
++                                     covx tTmp.txt,sys0,0,0
++                                     bEntity9.pco=sys0
++                                     // set name
++                                     spstr strCommand.txt,tEntity9.txt,"~",66
++                                     vis tEntity9,1
 +                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/cardGrid.txt
-++ HMI/US/portrait/n2t-out/cardGrid.txt
-+18 +858,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/cardLChart.txt
-++ HMI/US/portrait/n2t-out/cardLChart.txt
-+18 +619,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/cardMedia.txt
-++ HMI/US/portrait/n2t-out/cardMedia.txt
-+,18 +1141,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
++                             }
++                             if(tInstruction.txt=="pageType")
++                             {
++                                 sleepValue=0
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
 +I/n2t-out/cardPower.txt
 ++ HMI/US/portrait/n2t-out/cardPower.txt
 +6 +45,16 @@
@@ -1052,67 +1118,6 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
-+18 +894,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/cardQR.txt
-++ HMI/US/portrait/n2t-out/cardQR.txt
-+18 +663,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/cardThermo.txt
-++ HMI/US/portrait/n2t-out/cardThermo.txt
-+,18 +1047,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 +0 +34,14 @@
@@ -1150,172 +1155,6 @@
 + Send Component ID  : disabled
 +15 +158,15 @@
 + Max. Text Size   : 10
-+18 +310,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/popupFan.txt
-++ HMI/US/portrait/n2t-out/popupFan.txt
-+18 +570,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/popupInSel.txt
-++ HMI/US/portrait/n2t-out/popupInSel.txt
-+18 +925,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/popupLight.txt
-++ HMI/US/portrait/n2t-out/popupLight.txt
-+18 +600,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/popupNotify.txt
-++ HMI/US/portrait/n2t-out/popupNotify.txt
-+18 +397,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/popupShutter.txt
-++ HMI/US/portrait/n2t-out/popupShutter.txt
-+18 +621,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/popupThermo.txt
-++ HMI/US/portrait/n2t-out/popupThermo.txt
-+18 +888,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
-+I/n2t-out/popupTimer.txt
-++ HMI/US/portrait/n2t-out/popupTimer.txt
-+18 +857,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 +7 +28,14 @@
@@ -1392,25 +1231,6 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",1
 +                                 covx tTmp.txt,tTime.bco,0,0
 +                                 if(tTime.bco!=screensaver.bco)
-+18 +707,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {
 +I/n2t-out/screensaver2.txt
 ++ HMI/US/portrait/n2t-out/screensaver2.txt
 +7 +28,14 @@
@@ -1482,22 +1302,3 @@
 +                                 if(tAMPM.txt=="")
 +                                 {
 +                                     vis tAMPM,0
-+18 +758,14 @@
-+                                 {
-+                                     page cardEntities
-+                                 }
-+                                 if(tId.txt=="cardGrid")
-+                                 {
-+                                     page cardGrid
-+                                 }
-+                                 if(tId.txt=="cardGrid2")
-+                                 {
-+                                     page cardGrid2
-+                                 }
-+                                 if(tId.txt=="popupLight")
-+                                 {
-+                                     pageIcons.tTmp1.txt=tTmp.txt
-+                                     page popupLight
-+                                 }
-+                                 if(tId.txt=="popupShutter")
-+                                 {

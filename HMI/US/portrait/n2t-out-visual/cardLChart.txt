@@ -1,22 +1,21 @@
 Page cardLChart
     Attributes
-        ID                                  : 0
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        Width                               : 320
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Locked                              : no
-        Swide up page ID                    : disabled
-        Swide down page ID                  : disabled
-        Swide left page ID                  : disabled
-        Swide right page ID                 : disabled
-        Fill                                : solid color
-        Back. Color                         : 6371
+        ID                 : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Opacity            : 127
+        Width              : 320
+        Effect             : load
+        Effect Priority    : 0
+        Effect Time        : 300
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
+        Fill               : solid color
+        Back. Color        : 6371
     
     Events
         Preinitialize Event
@@ -188,82 +187,79 @@ Variable (int32) vaYUnit
     
 Text tHeading
     Attributes
-        ID                                  : 16
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 66
-        y coordinate                        : 26
-        Width                               : 184
-        Height                              : 30
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Associated Keyboard                 : none
-        Font ID                             : 2
-        Back. Color                         : 6371
-        Font Color                          : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        Input Type                          : character
-        Text                                : 
-        Max. Text Size                      : 40
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                  : 16
+        Scope               : local
+        Dragging            : 0
+        Send Component ID   : disabled
+        Opacity             : 127
+        x coordinate        : 66
+        y coordinate        : 26
+        Width               : 184
+        Height              : 30
+        Effect              : load
+        Effect Priority     : 0
+        Effect Time         : 300
+        Fill                : solid color
+        Style               : flat
+        Associated Keyboard : none
+        Font ID             : 2
+        Back. Color         : 6371
+        Font Color          : 65535
+        Horizontal Alignment: center
+        Vertical Alignment  : center
+        Input Type          : character
+        Text                : 
+        Max. Text Size      : 40
+        Word wrap           : disabled
+        Horizontal Spacing  : 0
+        Vertical Spacing    : 0
     
 Picture p0
     Attributes
-        ID                                  : 1
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 0
-        Width                               : 319
-        Height                              : 479
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Picture ID                          : 0
+        ID               : 1
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 0
+        y coordinate     : 0
+        Width            : 319
+        Height           : 479
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
+        Picture ID       : 0
     
 Button bNext
     Attributes
-        ID                                  : 2
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 262
-        y coordinate                        : 16
-        Width                               : 50
-        Height                              : 50
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Font ID                             : 3
-        Back. Color                         : 6371
-        Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 14823
-        Font Color (Unpressed)              : 65535
-        Font Color (Pressed)                : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        State                               : unpressed
-        Text                                : î³
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                        : 2
+        Scope                     : local
+        Dragging                  : 0
+        Send Component ID         : disabled
+        Opacity                   : 127
+        x coordinate              : 262
+        y coordinate              : 16
+        Width                     : 50
+        Height                    : 50
+        Effect                    : load
+        Effect Priority           : 0
+        Effect Time               : 300
+        Fill                      : solid color
+        Style                     : flat
+        Font ID                   : 3
+        Back. Color               : 6371
+        Back. Picture ID (Pressed): 65535
+        Back. Color (Pressed)     : 14823
+        Font Color (Unpressed)    : 65535
+        Font Color (Pressed)      : 65535
+        Horizontal Alignment      : center
+        Vertical Alignment        : center
+        State                     : unpressed
+        Text                      : î³
+        Max. Text Size            : 10
+        Word wrap                 : disabled
+        Horizontal Spacing        : 0
+        Vertical Spacing          : 0
     
     Events
         Touch Press Event
@@ -282,35 +278,34 @@ Button bNext
         
 Button bPrev
     Attributes
-        ID                                  : 3
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 9
-        y coordinate                        : 16
-        Width                               : 50
-        Height                              : 50
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
-        Fill                                : solid color
-        Style                               : flat
-        Font ID                             : 3
-        Back. Color                         : 6371
-        Back. Picture ID (Pressed)          : 65535
-        Back. Color (Pressed)               : 14823
-        Font Color (Unpressed)              : 65535
-        Font Color (Pressed)                : 65535
-        Horizontal Alignment                : center
-        Vertical Alignment                  : center
-        State                               : unpressed
-        Text                                : î°
-        Max. Text Size                      : 10
-        Word wrap                           : disabled
-        Horizontal Spacing                  : 0
-        Vertical Spacing                    : 0
+        ID                        : 3
+        Scope                     : local
+        Dragging                  : 0
+        Send Component ID         : disabled
+        Opacity                   : 127
+        x coordinate              : 9
+        y coordinate              : 16
+        Width                     : 50
+        Height                    : 50
+        Effect                    : load
+        Effect Priority           : 0
+        Effect Time               : 300
+        Fill                      : solid color
+        Style                     : flat
+        Font ID                   : 3
+        Back. Color               : 6371
+        Back. Picture ID (Pressed): 65535
+        Back. Color (Pressed)     : 14823
+        Font Color (Unpressed)    : 65535
+        Font Color (Pressed)      : 65535
+        Horizontal Alignment      : center
+        Vertical Alignment        : center
+        State                     : unpressed
+        Text                      : î°
+        Max. Text Size            : 10
+        Word wrap                 : disabled
+        Horizontal Spacing        : 0
+        Vertical Spacing          : 0
     
     Events
         Touch Press Event
@@ -329,19 +324,18 @@ Button bPrev
         
 Hotspot m0
     Attributes
-        ID                                  : 19
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 20
-        y coordinate                        : 90
-        Width                               : 280
-        Height                              : 370
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
+        ID               : 19
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 20
+        y coordinate     : 90
+        Width            : 280
+        Height           : 370
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
     
     Events
         Touch Press Event
@@ -349,19 +343,18 @@ Hotspot m0
         
 Hotspot mSwipeNext
     Attributes
-        ID                                  : 10
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 313
-        y coordinate                        : 5
-        Width                               : 7
-        Height                              : 475
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
+        ID               : 10
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 313
+        y coordinate     : 5
+        Width            : 7
+        Height           : 475
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
     
     Events
         Touch Press Event
@@ -369,19 +362,18 @@ Hotspot mSwipeNext
         
 Hotspot mSwipePrev
     Attributes
-        ID                                  : 12
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 0
-        y coordinate                        : 5
-        Width                               : 9
-        Height                              : 310
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
+        ID               : 12
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 0
+        y coordinate     : 5
+        Width            : 9
+        Height           : 310
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
     
     Events
         Touch Press Event
@@ -389,19 +381,18 @@ Hotspot mSwipePrev
         
 Hotspot mSwipeUp
     Attributes
-        ID                                  : 11
-        Scope                               : local
-        Dragging                            : 0
-        Disable release event after dragging: 0
-        Send Component ID                   : disabled
-        Opacity                             : 127
-        x coordinate                        : 12
-        y coordinate                        : 0
-        Width                               : 300
-        Height                              : 9
-        Effect                              : load
-        Effect Priority                     : 0
-        Effect Time                         : 300
+        ID               : 11
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        Opacity          : 127
+        x coordinate     : 12
+        y coordinate     : 0
+        Width            : 300
+        Height           : 9
+        Effect           : load
+        Effect Priority  : 0
+        Effect Time      : 300
     
     Events
         Touch Press Event
@@ -771,6 +762,10 @@ Timer tmSerial
                                         if(tId.txt=="cardGrid")
                                         {
                                             page cardGrid
+                                        }
+                                        if(tId.txt=="cardGrid2")
+                                        {
+                                            page cardGrid2
                                         }
                                         if(tId.txt=="popupLight")
                                         {
