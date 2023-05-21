@@ -178,7 +178,10 @@ class LuiPagesGen(object):
             name = apis.ha_api.render_template(item.nameOverride)
         
         # type of the item is the string before the "." in the entityId
-        entityType = entityId.split(".")[0]
+        if entityId is not None:
+            entityType = entityId.split(".")[0]
+        else
+            entityType = "delete"
 
         apis.ha_api.log(f"Generating item for {entityId} with type {entityType}", level="DEBUG")
 
