@@ -146,7 +146,7 @@ class LuiController(object):
         items = self._config.get_all_entity_names()
         apis.ha_api.log(f"gtest123: {items}")
         prefixes = ("navigate.", "delete", "iText")
-        items = [x for x in items if not (x.startswith(prefixes) or x is None)]
+        items = [x for x in items if not (x is None or x.startswith(prefixes))]
         apis.ha_api.log(f"Registering callbacks for the following items: {items}")
         for item in items:
             if apis.ha_api.entity_exists(item):
