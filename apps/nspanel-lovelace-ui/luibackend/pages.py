@@ -180,7 +180,7 @@ class LuiPagesGen(object):
         # type of the item is the string before the "." in the entityId
         if entityId is not None:
             entityType = entityId.split(".")[0]
-        else
+        else:
             entityType = "delete"
 
         apis.ha_api.log(f"Generating item for {entityId} with type {entityType}", level="DEBUG")
