@@ -14,6 +14,27 @@
 │ +    //lcd_dev fffb 0002 0000 0020
 │      printh 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port
 │      page pageStartup
+│   --- HMI/n2t-out/cardPower.txt
+├── +++ HMI/US/landscape/n2t-out/cardPower.txt
+│ @@ -960,18 +960,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="time")
+│                                      {
+│                                          // get set time to global variable
+│                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
+│                                      }
+│                                      if(tInstruction.txt=="date")
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
 │ @@ -164,15 +164,15 @@
