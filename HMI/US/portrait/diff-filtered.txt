@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-05-21 07:42:40.316901599 +0000
++++ /dev/fd/62	2023-05-23 19:25:50.449149755 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +10,11 @@
@@ -586,13 +586,6 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+                             }
-+                             if(tInstruction.txt=="pageType")
-+                             {
-+                                 sleepValue=0
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
 +I/n2t-out/cardGrid2.txt
 ++ HMI/US/portrait/n2t-out/cardGrid2.txt
 +6 +25,28 @@
@@ -796,6 +789,13 @@
 +                                     spstr strCommand.txt,tEntity9.txt,"~",66
 +                                     vis tEntity9,1
 +                                 }
++                             }
++                             if(tInstruction.txt=="pageType")
++                             {
++                                 sleepValue=0
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
 +I/n2t-out/cardPower.txt
 ++ HMI/US/portrait/n2t-out/cardPower.txt
 +6 +45,16 @@
@@ -1123,6 +1123,25 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
++18 +936,14 @@
++                                 {
++                                     page cardPower
++                                 }
++                                 if(tId.txt=="cardChart")
++                                 {
++                                     page cardChart
++                                 }
++                                 if(tId.txt=="cardLChart")
++                                 {
++                                     page cardLChart
++                                 }
++                             }
++                             if(tInstruction.txt=="time")
++                             {
++                                 // get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                             }
++                             if(tInstruction.txt=="date")
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 +0 +34,14 @@
