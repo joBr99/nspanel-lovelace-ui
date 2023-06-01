@@ -34,6 +34,10 @@ popupNotify
 	19   Component(s)
 	267  Line(s) of event code
 	172  Unique line(s) of event code
+cardGrid2
+	52   Component(s)
+	611  Line(s) of event code
+	335  Unique line(s) of event code
 pageStartup
 	20   Component(s)
 	193  Line(s) of event code
@@ -70,10 +74,6 @@ popupInSel
 	34   Component(s)
 	621  Line(s) of event code
 	297  Unique line(s) of event code
-cardGrid2
-	52   Component(s)
-	611  Line(s) of event code
-	319  Unique line(s) of event code
 cardPower
 	54   Component(s)
 	531  Line(s) of event code
@@ -95,4 +95,4 @@ Total
 	22   Page(s)
 	850  Component(s)
 	9944 Line(s) of event code
-	2369 Unique line(s) of event code
+	2385 Unique line(s) of event code

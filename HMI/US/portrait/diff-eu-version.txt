@@ -1126,7 +1126,7 @@
 │          Send Component ID  : disabled
 │          Associated Keyboard: none
 │          Text               : 
-│ @@ -555,14 +578,58 @@
+│ @@ -555,34 +578,34 @@
 │          State            : unpressed
 │          Text             : î´
 │          Max. Text Size   : 10
@@ -1134,26 +1134,74 @@
 │      Events
 │          Touch Press Event
 │              tmLP.en=1
+│ -            tTmp.txt=type7.txt
+│ -            pageIcons.tTmp1.txt=tEntity7.txt
+│ -            pageIcons.tTmp2.txt=entn7.txt
+│ -            pageIcons.tTmp3.txt=bEntity7.txt
+│ -            if(type7.txt=="shutter")
 │ +            tTmp.txt=type2.txt
 │ +            pageIcons.tTmp1.txt=tEntity2.txt
 │ +            pageIcons.tTmp2.txt=entn2.txt
 │ +            pageIcons.tTmp3.txt=bEntity2.txt
 │ +            if(type2.txt=="shutter")
+│              {
+│                  page popupShutter
+│              }
+│ -            if(type7.txt=="input_sel")
+│ +            if(type2.txt=="input_sel")
+│              {
+│                  page popupInSel
+│              }
+│ -            if(type7.txt=="timer")
+│ +            if(type2.txt=="timer")
+│              {
+│                  page popupTimer
+│              }
+│          
+│          Touch Release Event
+│              tmLP.en=0
+│ -            tSend.txt="event,buttonPress2,"+entn7.txt+",button"
+│ +            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
+│              crcputs tSend.txt,0
+│              //send cmd
+│ @@ -599,34 +622,78 @@
+│          State            : unpressed
+│          Text             : î´
+│          Max. Text Size   : 10
+│      
+│      Events
+│          Touch Press Event
+│              tmLP.en=1
+│ -            tTmp.txt=type8.txt
+│ -            pageIcons.tTmp1.txt=tEntity8.txt
+│ -            pageIcons.tTmp2.txt=entn8.txt
+│ -            pageIcons.tTmp3.txt=bEntity8.txt
+│ -            if(type8.txt=="shutter")
+│ +            tTmp.txt=type6.txt
+│ +            pageIcons.tTmp1.txt=tEntity6.txt
+│ +            pageIcons.tTmp2.txt=entn6.txt
+│ +            pageIcons.tTmp3.txt=bEntity6.txt
+│ +            if(type6.txt=="shutter")
 │ +            {
 │ +                page popupShutter
 │ +            }
-│ +            if(type2.txt=="input_sel")
+│ +            if(type6.txt=="input_sel")
 │ +            {
 │ +                page popupInSel
 │ +            }
-│ +            if(type2.txt=="timer")
+│ +            if(type6.txt=="timer")
 │ +            {
 │ +                page popupTimer
 │ +            }
 │ +        
 │ +        Touch Release Event
 │ +            tmLP.en=0
-│ +            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
+│ +            tSend.txt="event,buttonPress2,"+entn6.txt+",button"
 │ +            //send calc crc
 │ +            btlen tSend.txt,sys0
 │ +            crcrest 1,0xffff // reset CRC
@@ -1166,7 +1214,7 @@
 │ +            prints tSend.txt,0
 │ +            prints crcval,2
 │ +        
-│ +Button bEntity8
+│ +Button bEntity9
 │ +    Attributes
 │ +        Scope            : local
 │ +        Dragging         : 0
@@ -1178,30 +1226,36 @@
 │ +    Events
 │ +        Touch Press Event
 │ +            tmLP.en=1
-│              tTmp.txt=type6.txt
-│              pageIcons.tTmp1.txt=tEntity6.txt
-│              pageIcons.tTmp2.txt=entn6.txt
-│              pageIcons.tTmp3.txt=bEntity6.txt
-│              if(type6.txt=="shutter")
+│ +            tTmp.txt=type6.txt
+│ +            pageIcons.tTmp1.txt=tEntity6.txt
+│ +            pageIcons.tTmp2.txt=entn6.txt
+│ +            pageIcons.tTmp3.txt=bEntity6.txt
+│ +            if(type6.txt=="shutter")
 │              {
 │                  page popupShutter
-│ @@ -587,15 +654,15 @@
+│              }
+│ -            if(type8.txt=="input_sel")
+│ +            if(type6.txt=="input_sel")
+│              {
+│                  page popupInSel
+│              }
+│ -            if(type8.txt=="timer")
+│ +            if(type6.txt=="timer")
+│              {
+│                  page popupTimer
+│              }
+│          
+│          Touch Release Event
+│              tmLP.en=0
+│ -            tSend.txt="event,buttonPress2,"+entn8.txt+",button"
+│ +            tSend.txt="event,buttonPress2,"+entn6.txt+",button"
+│              //send calc crc
+│              btlen tSend.txt,sys0
+│              crcrest 1,0xffff // reset CRC
+│              crcputh 55 bb
+│              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-│              printh 55 bb
-│              prints sys0,2
-│              prints tSend.txt,0
-│              prints crcval,2
-│          
-│ -Button bEntity8
-│ +Button bEntity9
-│      Attributes
-│          Scope            : local
-│          Dragging         : 0
-│          Send Component ID: disabled
-│          State            : unpressed
-│          Text             : î´
-│          Max. Text Size   : 10
 │ @@ -999,14 +1066,35 @@
 │                                              spstr strCommand.txt,tTmp.txt,"~",59
 │                                              covx tTmp.txt,sys0,0,0
