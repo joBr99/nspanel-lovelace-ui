@@ -160,21 +160,22 @@ class LuiController(object):
         res_uuid = "uuid.notfound"
         if entity in sum(entities_on_card.values(), []):
             for uuid, names in entities_on_card.items():
-                apis.ha_api.log(f"test124 items: {entities_on_card.items()} names: {names}")
+                #apis.ha_api.log(f"test124 items: {entities_on_card.items()} names: {names}")
+                #apis.ha_api.log(f"State change callback matched for entity on current page: {names}")
                 if entity in names:
                     res_uuid = uuid
 
             #apis.ha_api.log(f"Callback Entity is on current page: {entity}")
             self._pages_gen.render_card(self._current_card, send_page_type=False)
             # send detail page update, just in case
-            if self._current_card.cardType in ["cardGrid", "cardEntities", "cardMedia"]:
+            if self._current_card.cardType in ["cardGrid", "cardGrid2", "cardEntities", "cardMedia"]:
                 if entity.startswith("light"):
                     self._pages_gen.generate_light_detail_page(res_uuid)
                 if entity.startswith("cover"):
                     self._pages_gen.generate_shutter_detail_page(entity)
                 if entity.startswith("fan"):
                     self._pages_gen.generate_fan_detail_page(entity)
-                if entity.startswith("input_select"):
+                if entity.startswith("input_select") or entity.startswith("select"):
                     self._pages_gen.generate_input_select_detail_page(entity)
                 if entity.startswith("media_player"):
                     self._pages_gen.generate_input_select_detail_page(entity)
