@@ -390,7 +390,10 @@ class LuiPagesGen(object):
         # Overwrite for value
         ovalue = item.value
         if ovalue is not None:
-            value = apis.ha_api.render_template(ovalue)
+            splitted_string = value.rpartition('}')
+            template_string = f"{splitted_string[0]}{splitted_string[1]}"
+            templates_result = apis.ha_api.render_template(template_string)
+            value = f"{templates_result}{splitted_string[2]}"
         if self._locale == "he_IL" and any("\u0590" <= c <= "\u05EA" for c in name):
             name = name[::-1]
         # use uuid instead for some types and probably expand on this in future
