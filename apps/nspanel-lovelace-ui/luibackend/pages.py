@@ -390,7 +390,7 @@ class LuiPagesGen(object):
         # Overwrite for value
         ovalue = item.value
         if ovalue is not None:
-            splitted_string = value.rpartition('}')
+            splitted_string = ovalue.rpartition('}')
             template_string = f"{splitted_string[0]}{splitted_string[1]}"
             templates_result = apis.ha_api.render_template(template_string)
             value = f"{templates_result}{splitted_string[2]}"
