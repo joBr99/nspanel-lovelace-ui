@@ -516,6 +516,9 @@
                 "last_triggered": "Naposledy spustené",
                 "trigger": "Spustiť akcie"
             },
+            "button": {
+                "press": "stlač"
+            },
             "camera": {
                 "not_available": "Obrázok nie je k dispozícii"
             },
