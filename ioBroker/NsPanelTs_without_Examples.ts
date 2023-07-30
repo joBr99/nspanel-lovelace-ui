@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.14 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.0.5.15 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -138,7 +138,8 @@ ReleaseNotes:
         - 02.05.2023 - v4.0.5.12 Add new Function Debug mode from script activatable via panel
 	- 02.05.2023 - v4.0.5.13 Fix Problems with weather-instances-number !="0" #876
 	- 02.05.2023 - v4.0.5.14 Fix: Remove empty log statements (PR #883)
-	
+	- 30.07.2023 - v4.0.5.15 Improved screensaverAdvanced icon handling: option to load from iobroker object #944	
+ 
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
 ***********************************************************************************************************
@@ -6488,7 +6489,13 @@ function HandleScreensaverUpdate(): void {
 
                     let val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
                     let iconColor = rgb_dec565(White);
-                    let icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
+                    let icon;
+                    if (existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconOn)) {
+                        let iconName = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                        icon = Icons.GetIcon(iconName);
+                    } else {
+                        icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
+                    } 
 
                     if (typeof(val) == 'number') {
                         val = (val * config.leftScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
@@ -6665,7 +6672,13 @@ function HandleScreensaverUpdate(): void {
                     
                     let val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
                     let iconColor = rgb_dec565(White);
-                    let icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn);
+		    let icon;
+                    if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn)) {
+                        let iconName = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                        icon = Icons.GetIcon(iconName);
+                    } else {
+                        icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn);
+                    }    
 
                     if (typeof(val) == 'number') {
                         val = (val * config.bottomScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[i].ScreensaverEntityUnitText;
@@ -6716,7 +6729,7 @@ function HandleScreensaverUpdate(): void {
                     let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
                     let iconColor = rgb_dec565(White);
             
-                    let icon = null;
+                    let icon;
                     if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn)) {
                         let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn).val;
                         icon = Icons.GetIcon(iconName);
