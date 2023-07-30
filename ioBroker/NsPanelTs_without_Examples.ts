@@ -6488,7 +6488,13 @@ function HandleScreensaverUpdate(): void {
 
                     let val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
                     let iconColor = rgb_dec565(White);
-                    let icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
+                    let icon;
+                    if (existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconOn)) {
+                        let iconName = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                        icon = Icons.GetIcon(iconName);
+                    } else {
+                        icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
+                    } 
 
                     if (typeof(val) == 'number') {
                         val = (val * config.leftScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
@@ -6665,7 +6671,13 @@ function HandleScreensaverUpdate(): void {
                     
                     let val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
                     let iconColor = rgb_dec565(White);
-                    let icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn);
+		    let icon;
+                    if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn)) {
+                        let iconName = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                        icon = Icons.GetIcon(iconName);
+                    } else {
+                        icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn);
+                    }    
 
                     if (typeof(val) == 'number') {
                         val = (val * config.bottomScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[i].ScreensaverEntityUnitText;
@@ -6716,7 +6728,7 @@ function HandleScreensaverUpdate(): void {
                     let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
                     let iconColor = rgb_dec565(White);
             
-                    let icon = null;
+                    let icon;
                     if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn)) {
                         let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn).val;
                         icon = Icons.GetIcon(iconName);
