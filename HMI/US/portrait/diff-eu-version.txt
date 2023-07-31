@@ -1842,3 +1842,22 @@
 │                                          if(tAMPM.txt=="")
 │                                          {
 │                                              vis tAMPM,0
+│ @@ -824,18 +800,14 @@
+│                                          {
+│                                              page cardPower
+│                                          }
+│                                          if(tId.txt=="cardChart")
+│                                          {
+│                                              page cardChart
+│                                          }
+│ -                                        if(tId.txt=="cardLChart")
+│ -                                        {
+│ -                                            page cardLChart
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│                                      }

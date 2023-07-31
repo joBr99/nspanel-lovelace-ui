@@ -50,6 +50,10 @@ cardChart
 	33   Component(s)
 	437  Line(s) of event code
 	296  Unique line(s) of event code
+screensaver2
+	59   Component(s)
+	362  Line(s) of event code
+	255  Unique line(s) of event code
 cardAlarm
 	43   Component(s)
 	500  Line(s) of event code
@@ -62,10 +66,6 @@ cardThermo
 	57   Component(s)
 	540  Line(s) of event code
 	319  Unique line(s) of event code
-screensaver2
-	59   Component(s)
-	358  Line(s) of event code
-	253  Unique line(s) of event code
 cardMedia
 	59   Component(s)
 	649  Line(s) of event code
@@ -94,5 +94,5 @@ cardEntities
 Total
 	22   Page(s)
 	850  Component(s)
-	9944 Line(s) of event code
+	9948 Line(s) of event code
 	2385 Unique line(s) of event code
