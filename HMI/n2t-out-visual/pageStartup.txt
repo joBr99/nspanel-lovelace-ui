@@ -575,6 +575,12 @@ Timer tmSerial
                                         {
                                             covx tTmp.txt,defaultFontColor,0,0
                                         }
+                                        // get feature flag popup
+                                        spstr strCommand.txt,tTmp.txt,"~",5
+                                        if(tTmp.txt!="")
+                                        {
+                                            covx tTmp.txt,featNewSliders,0,0
+                                        }
                                     }
                                     if(tInstruction.txt=="timeout")
                                     {

@@ -1,7 +1,9 @@
-+++ /dev/fd/62	2023-06-23 18:14:46.258673287 +0000
++++ /dev/fd/62	2023-07-31 16:25:23.356512733 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
-+1 +10,11 @@
++1 +12,11 @@
++eature flags
++ featNewSliders=0
 +nth 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
@@ -29,42 +31,42 @@
 + Scope         : local
 + Text          : 
 + Max. Text Size: 80
-+ Max. Text Size: 65
++ Max. Text Size: 64
 +
 +e (string) entn2
 +ributes
 + Scope         : local
 + Text          : 
 + Max. Text Size: 80
-+ Max. Text Size: 65
++ Max. Text Size: 64
 +
 +e (string) entn3
 +ributes
 + Scope         : local
 + Text          : 
 + Max. Text Size: 80
-+ Max. Text Size: 65
-+ Max. Text Size: 65
-+ Max. Text Size: 65
++ Max. Text Size: 64
++ Max. Text Size: 64
++ Max. Text Size: 64
 +
 +e (string) entn6
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 65
++ Max. Text Size: 64
 +
 +e (string) nent1
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 40
++ Max. Text Size: 80
++ Max. Text Size: 38
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
-+ Max. Text Size: 40
++ Max. Text Size: 38
 +14 +185,26 @@
 +e (string) type6
 +ributes
@@ -376,13 +378,20 @@
 + Dragging         : 0
 + Send Component ID: disabled
 +nts
-+,14 +1473,82 @@
++,14 +1493,92 @@
 +         page popupInSel
 +     if(type4.txt=="timer")
 +         page popupTimer
 + Scope            : local
 + Dragging         : 0
 + Send Component ID: disabled
++         if(featNewSliders==1)
++         {
++             page popupLightNew
++         }else
++         {
++             page popupLight
++         }
 +     if(type5.txt=="timer")
 +     {
 +         page popupTimer
@@ -406,8 +415,13 @@
 +     }
 +     if(type6.txt=="light")
 +     {
-+         //popupLight.tEntity.txt=tEntity5.txt
-+         page popupLight
++         if(featNewSliders==1)
++         {
++             page popupLightNew
++         }else
++         {
++             page popupLight
++         }
 +     }
 +     if(type6.txt=="fan")
 +     {
@@ -425,7 +439,7 @@
 + Dragging         : 0
 + Send Component ID: disabled
 +nts
-+,14 +2272,312 @@
++,14 +2302,312 @@
 +                                 spstr strCommand.txt,type5.txt,"~",38
 +                                 spstr strCommand.txt,entn5.txt,"~",39
 +                                     spstr strCommand.txt,tIcon5.txt,"~",40
@@ -814,7 +828,7 @@
 +     crcputs sys0,2
 +     crcputs tSend.txt,0
 +     //send cmd
-+14 +1066,35 @@
++,14 +1072,35 @@
 +                                     spstr strCommand.txt,tTmp.txt,"~",59
 +                                     covx tTmp.txt,sys0,0,0
 +                                     bEntity8.pco=sys0
@@ -1233,6 +1247,63 @@
 + Send Component ID  : disabled
 +15 +158,15 @@
 + Max. Text Size   : 10
++20 +269,14 @@
++                                 }
++                                 // get font color
++                                 spstr strCommand.txt,tTmp.txt,"~",4
++                                 if(tTmp.txt!="")
++                                 {
++                                     covx tTmp.txt,defaultFontColor,0,0
++                                 }
++                                 // get feature flag popup
++                                 spstr strCommand.txt,tTmp.txt,"~",5
++                                 if(tTmp.txt!="")
++                                 {
++                                     covx tTmp.txt,featNewSliders,0,0
++                                 }
++                             }
++                             if(tInstruction.txt=="timeout")
++                             {
++                                 //set timeout to global var
++                                 spstr strCommand.txt,tTmp.txt,"~",1
++                                 covx tTmp.txt,sleepTimeout,0,0
++                             }
++I/n2t-out/popupLight.txt
+++ HMI/US/portrait/n2t-out/popupLight.txt
++5 +48,15 @@
++     vis hTempSlider,0
++     //disable color wheel components by default
++     vis bColor,0
++     vis t0,0
++     vis pColorWheel,0
++     //vis t0,0
++     popupLight.bco=defaultBcoColor
++     for(sys0=0;sys0<27;sys0++)
++     for(sys0=0;sys0<28;sys0++)
++     {
++         if(b[sys0].type==98||b[sys0].type==116)
++         {
++             b[sys0].bco=defaultBcoColor
++             b[sys0].pco=defaultFontColor
++         }
++         if(b[sys0].type==53&&defaultBcoColor==0)
++5 +66,15 @@
++         }
++     }
++     if(defaultBcoColor==0)
++     {
++         hBrightness.pic=14
++         hBrightness.pic1=13
++         hBrightness.pic2=15
++         hTempSlider.pic=16
++         hTempSlider.pic=23
++         hTempSlider.pic1=17
++         hTempSlider.pic2=15
++     }
++ 
++e (string) entn
++ributes
++ Scope         : local
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 +7 +28,14 @@

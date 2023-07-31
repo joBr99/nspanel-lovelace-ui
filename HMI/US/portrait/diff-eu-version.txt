@@ -2,14 +2,14 @@
 +++ HMI/US/portrait/n2t-out
 │   --- HMI/n2t-out/Program.s.txt
 ├── +++ HMI/US/portrait/n2t-out/Program.s.txt
-│ @@ -10,11 +10,11 @@
-│      int sleepValue=0
-│      // dim value
+│ @@ -12,11 +12,11 @@
 │      int dimValue=40
 │      int dimValueNormal=100
 │      //color vars
 │      int defaultFontColor=65535
 │      int defaultBcoColor=6371
+│      //feature flags
+│      int featNewSliders=0
 │ -    // fix touch offset
 │ -    lcd_dev fffb 0002 0000 0020
 │ +    // fix touch offset (Removed for US version)
@@ -65,54 +65,54 @@
 │          Scope         : local
 │          Text          : 
 │ -        Max. Text Size: 80
-│ +        Max. Text Size: 65
+│ +        Max. Text Size: 64
 │      
 │  Variable (string) entn2
 │      Attributes
 │          Scope         : local
 │          Text          : 
 │ -        Max. Text Size: 80
-│ +        Max. Text Size: 65
+│ +        Max. Text Size: 64
 │      
 │  Variable (string) entn3
 │      Attributes
 │          Scope         : local
 │          Text          : 
 │ -        Max. Text Size: 80
-│ +        Max. Text Size: 65
+│ +        Max. Text Size: 64
 │      
 │  Variable (string) entn4
 │      Attributes
 │          Scope         : local
 │          Text          : 
 │ -        Max. Text Size: 80
-│ +        Max. Text Size: 65
+│ +        Max. Text Size: 64
 │ +    
 │ +Variable (string) entn5
 │ +    Attributes
 │ +        Scope         : local
 │ +        Text          : 
-│ +        Max. Text Size: 65
+│ +        Max. Text Size: 64
 │ +    
 │ +Variable (string) entn6
 │ +    Attributes
 │ +        Scope         : local
 │ +        Text          : 
-│ +        Max. Text Size: 65
+│ +        Max. Text Size: 64
 │      
 │  Variable (string) nent1
 │      Attributes
 │          Scope         : local
 │          Text          : 
 │ -        Max. Text Size: 80
-│ +        Max. Text Size: 40
+│ +        Max. Text Size: 38
 │      
 │  Variable (string) nent2
 │      Attributes
 │          Scope         : local
 │          Text          : 
 │ -        Max. Text Size: 80
-│ +        Max. Text Size: 40
+│ +        Max. Text Size: 38
 │      
 │  Variable (string) strCommand
 │      Attributes
@@ -632,7 +632,7 @@
 │          Send Component ID: disabled
 │      
 │      Events
-│ @@ -1079,14 +1473,82 @@
+│ @@ -1099,14 +1493,92 @@
 │                  page popupInSel
 │              }
 │              if(type4.txt=="timer")
@@ -658,8 +658,13 @@
 │ +            }
 │ +            if(type5.txt=="light")
 │ +            {
-│ +                //popupLight.tEntity.txt=tEntity5.txt
-│ +                page popupLight
+│ +                if(featNewSliders==1)
+│ +                {
+│ +                    page popupLightNew
+│ +                }else
+│ +                {
+│ +                    page popupLight
+│ +                }
 │ +            }
 │ +            if(type5.txt=="fan")
 │ +            {
@@ -692,8 +697,13 @@
 │ +            }
 │ +            if(type6.txt=="light")
 │ +            {
-│ +                //popupLight.tEntity.txt=tEntity5.txt
-│ +                page popupLight
+│ +                if(featNewSliders==1)
+│ +                {
+│ +                    page popupLightNew
+│ +                }else
+│ +                {
+│ +                    page popupLight
+│ +                }
 │ +            }
 │ +            if(type6.txt=="fan")
 │ +            {
@@ -715,7 +725,7 @@
 │          Send Component ID: disabled
 │      
 │      Events
-│ @@ -1810,14 +2272,312 @@
+│ @@ -1830,14 +2302,312 @@
 │                                              covx tTmp.txt,sys0,0,0
 │                                              hSlider4.minval=sys0
 │                                              //third value is max value
@@ -1256,7 +1266,7 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-│ @@ -999,14 +1066,35 @@
+│ @@ -1005,14 +1072,35 @@
 │                                              spstr strCommand.txt,tTmp.txt,"~",59
 │                                              covx tTmp.txt,sys0,0,0
 │                                              bEntity8.pco=sys0
@@ -1695,6 +1705,63 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
+│ @@ -275,20 +269,14 @@
+│                                          }
+│                                          // get font color
+│                                          spstr strCommand.txt,tTmp.txt,"~",4
+│                                          if(tTmp.txt!="")
+│                                          {
+│                                              covx tTmp.txt,defaultFontColor,0,0
+│                                          }
+│ -                                        // get feature flag popup
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",5
+│ -                                        if(tTmp.txt!="")
+│ -                                        {
+│ -                                            covx tTmp.txt,featNewSliders,0,0
+│ -                                        }
+│                                      }
+│                                      if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│                                      }
+│   --- HMI/n2t-out/popupLight.txt
+├── +++ HMI/US/portrait/n2t-out/popupLight.txt
+│ @@ -48,15 +48,15 @@
+│              vis hTempSlider,0
+│              //disable color wheel components by default
+│              vis bColor,0
+│              vis t0,0
+│              vis pColorWheel,0
+│              //vis t0,0
+│              popupLight.bco=defaultBcoColor
+│ -            for(sys0=0;sys0<27;sys0++)
+│ +            for(sys0=0;sys0<28;sys0++)
+│              {
+│                  if(b[sys0].type==98||b[sys0].type==116)
+│                  {
+│                      b[sys0].bco=defaultBcoColor
+│                      b[sys0].pco=defaultFontColor
+│                  }
+│                  if(b[sys0].type==53&&defaultBcoColor==0)
+│ @@ -66,15 +66,15 @@
+│                  }
+│              }
+│              if(defaultBcoColor==0)
+│              {
+│                  hBrightness.pic=14
+│                  hBrightness.pic1=13
+│                  hBrightness.pic2=15
+│ -                hTempSlider.pic=16
+│ +                hTempSlider.pic=23
+│                  hTempSlider.pic1=17
+│                  hTempSlider.pic2=15
+│              }
+│          
+│  Variable (string) entn
+│      Attributes
+│          Scope         : local
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver.txt
 │ @@ -28,17 +28,14 @@

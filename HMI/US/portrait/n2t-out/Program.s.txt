@@ -14,6 +14,8 @@ Program.s
     //color vars
     int defaultFontColor=65535
     int defaultBcoColor=6371
+    //feature flags
+    int featNewSliders=0
     // fix touch offset (Removed for US version)
     //lcd_dev fffb 0002 0000 0020
     printh 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port

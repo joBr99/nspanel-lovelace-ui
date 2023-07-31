@@ -259,7 +259,7 @@ Text tEntity4
         Dragging            : 0
         Send Component ID   : disabled
         Opacity             : 127
-        x coordinate        : 16
+        x coordinate        : 22
         y coordinate        : 274
         Width               : 140
         Height              : 30

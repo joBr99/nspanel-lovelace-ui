@@ -109,49 +109,49 @@ Variable (string) entn1
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 65
+        Max. Text Size: 64
     
 Variable (string) entn2
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 65
+        Max. Text Size: 64
     
 Variable (string) entn3
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 65
+        Max. Text Size: 64
     
 Variable (string) entn4
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 65
+        Max. Text Size: 64
     
 Variable (string) entn5
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 65
+        Max. Text Size: 64
     
 Variable (string) entn6
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 65
+        Max. Text Size: 64
     
 Variable (string) nent1
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 40
+        Max. Text Size: 38
     
 Variable (string) nent2
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 40
+        Max. Text Size: 38
     
 Variable (string) strCommand
     Attributes
@@ -1359,8 +1359,13 @@ Hotspot m0
             }
             if(type1.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity1.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type1.txt=="fan")
             {
@@ -1393,8 +1398,13 @@ Hotspot m1
             }
             if(type2.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity2.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type2.txt=="fan")
             {
@@ -1427,8 +1437,13 @@ Hotspot m2
             }
             if(type3.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity3.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type3.txt=="fan")
             {
@@ -1461,8 +1476,13 @@ Hotspot m3
             }
             if(type4.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity4.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type4.txt=="fan")
             {
@@ -1495,8 +1515,13 @@ Hotspot m4
             }
             if(type5.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity5.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type5.txt=="fan")
             {
@@ -1529,8 +1554,13 @@ Hotspot m5
             }
             if(type6.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity5.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type6.txt=="fan")
             {
