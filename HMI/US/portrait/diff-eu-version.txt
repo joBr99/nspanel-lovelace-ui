@@ -290,9 +290,9 @@
 │ +    
 │ +    Events
 │ +        Touch Release Event
-│ +            nNum5.val=hSlider5.val
+│ +            nNum6.val=hSlider6.val
 │ +            tSend.txt="event,buttonPress2,"+entn6.txt+",number-set,"
-│ +            covx nNum5.val,tTmp.txt,0,0
+│ +            covx nNum6.val,tTmp.txt,0,0
 │ +            tSend.txt+=tTmp.txt
 │ +            //send calc crc
 │ +            btlen tSend.txt,sys0
@@ -611,7 +611,7 @@
 │ +    Events
 │ +        Touch Press Event
 │ +            tSend.txt="event,buttonPress2,"+entn6.txt+",OnOff,"
-│ +            covx btOnOff5.val,tTmp.txt,0,0
+│ +            covx btOnOff6.val,tTmp.txt,0,0
 │ +            tSend.txt+=tTmp.txt
 │ +            //send calc crc
 │ +            btlen tSend.txt,sys0

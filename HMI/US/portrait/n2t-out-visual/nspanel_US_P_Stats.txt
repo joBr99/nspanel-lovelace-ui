@@ -22,14 +22,18 @@ popupTimer
 	42   Component(s)
 	516  Line(s) of event code
 	257  Unique line(s) of event code
-popupLightNew
-	23   Component(s)
-	412  Line(s) of event code
-	209  Unique line(s) of event code
+popupLight
+	28   Component(s)
+	408  Line(s) of event code
+	225  Unique line(s) of event code
 popupFan
 	27   Component(s)
 	355  Line(s) of event code
 	206  Unique line(s) of event code
+popupLightNew
+	23   Component(s)
+	412  Line(s) of event code
+	209  Unique line(s) of event code
 pageStartup
 	19   Component(s)
 	193  Line(s) of event code
@@ -46,10 +50,6 @@ cardLChart
 	33   Component(s)
 	402  Line(s) of event code
 	266  Unique line(s) of event code
-popupLight
-	28   Component(s)
-	408  Line(s) of event code
-	225  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	402  Line(s) of event code
@@ -93,10 +93,10 @@ screensaver
 cardEntities
 	91   Component(s)
 	1666 Line(s) of event code
-	708  Unique line(s) of event code
+	711  Unique line(s) of event code
 
 Total
 	23   Page(s)
 	890  Component(s)
 	10819 Line(s) of event code
-	2524 Unique line(s) of event code
+	2527 Unique line(s) of event code
