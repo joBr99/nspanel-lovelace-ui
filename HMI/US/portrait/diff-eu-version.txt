@@ -1688,6 +1688,23 @@
 │          Scope              : local
 │          Dragging           : 0
 │          Send Component ID  : disabled
+│ @@ -141,15 +135,15 @@
+│      
+│  Text tVersion
+│      Attributes
+│          Scope              : local
+│          Dragging           : 0
+│          Send Component ID  : disabled
+│          Associated Keyboard: none
+│ -        Text               : 52
+│ +        Text               : 51
+│          Max. Text Size     : 10
+│      
+│  Picture p0
+│      Attributes
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
 │ @@ -164,15 +158,15 @@
 │          Max. Text Size   : 10
 │      

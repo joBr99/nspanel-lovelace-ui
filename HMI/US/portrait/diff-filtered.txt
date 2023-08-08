@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-08-06 20:32:34.816279572 +0000
++++ /dev/fd/62	2023-08-08 19:45:29.806219470 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -1245,6 +1245,23 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
++15 +135,15 @@
++
++ersion
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 52
++ Text               : 51
++ Max. Text Size     : 10
++
++ p0
++ributes
++ Scope            : local
++ Dragging         : 0
++ Send Component ID: disabled
 +15 +158,15 @@
 + Max. Text Size   : 10
 +20 +269,14 @@
