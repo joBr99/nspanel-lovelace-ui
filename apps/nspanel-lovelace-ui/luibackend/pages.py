@@ -198,8 +198,8 @@ class LuiPagesGen(object):
                 return ""
             if item.condStateNot is not None and item.condStateNot == state:
                 return ""
-            if item.condTemplate is not None and apis.ha_api.render_template(item.condTemplate):
-                return ""
+        if item.condTemplate is not None and apis.ha_api.render_template(item.condTemplate):
+            return ""
 
         # Internal types
         if entityType == "delete":
