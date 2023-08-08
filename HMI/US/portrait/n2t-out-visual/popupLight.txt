@@ -743,7 +743,7 @@ Timer tmCooldown
     Attributes
         ID         : 25
         Scope      : local
-        Period (ms): 100
+        Period (ms): 300
         Enabled    : no
     
     Events

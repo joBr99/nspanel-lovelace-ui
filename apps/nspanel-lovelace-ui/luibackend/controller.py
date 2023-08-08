@@ -169,8 +169,8 @@ class LuiController(object):
             self._pages_gen.render_card(self._current_card, send_page_type=False)
             # send detail page update, just in case
             if self._current_card.cardType in ["cardGrid", "cardGrid2", "cardEntities", "cardMedia"]:
-                if entity.startswith("light"):
-                    self._pages_gen.generate_light_detail_page(res_uuid)
+                #if entity.startswith("light"):
+                #    self._pages_gen.generate_light_detail_page(res_uuid)
                 if entity.startswith("cover"):
                     self._pages_gen.generate_shutter_detail_page(entity)
                 if entity.startswith("fan"):

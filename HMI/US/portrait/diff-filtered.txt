@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-07-31 16:25:23.356512733 +0000
++++ /dev/fd/62	2023-08-06 20:32:34.816279572 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -59,13 +59,13 @@
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 38
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 38
 +14 +185,26 @@
 +e (string) type6
@@ -176,9 +176,9 @@
 +
 +nts
 + Touch Release Event
-+     nNum5.val=hSlider5.val
++     nNum6.val=hSlider6.val
 +     tSend.txt="event,buttonPress2,"+entn6.txt+",number-set,"
-+     covx nNum5.val,tTmp.txt,0,0
++     covx nNum6.val,tTmp.txt,0,0
 +     tSend.txt+=tTmp.txt
 +     //send calc crc
 +     btlen tSend.txt,sys0
@@ -360,7 +360,7 @@
 +nts
 + Touch Press Event
 +     tSend.txt="event,buttonPress2,"+entn6.txt+",OnOff,"
-+     covx btOnOff5.val,tTmp.txt,0,0
++     covx btOnOff6.val,tTmp.txt,0,0
 +     tSend.txt+=tTmp.txt
 +     //send calc crc
 +     btlen tSend.txt,sys0
@@ -600,6 +600,13 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
++                             }
++                             if(tInstruction.txt=="pageType")
++                             {
++                                 sleepValue=0
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
 +I/n2t-out/cardGrid2.txt
 ++ HMI/US/portrait/n2t-out/cardGrid2.txt
 +6 +25,28 @@
@@ -857,13 +864,6 @@
 +                                     spstr strCommand.txt,tEntity9.txt,"~",66
 +                                     vis tEntity9,1
 +                                 }
-+                             }
-+                             if(tInstruction.txt=="pageType")
-+                             {
-+                                 sleepValue=0
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
 +I/n2t-out/cardPower.txt
 ++ HMI/US/portrait/n2t-out/cardPower.txt
 +6 +45,16 @@

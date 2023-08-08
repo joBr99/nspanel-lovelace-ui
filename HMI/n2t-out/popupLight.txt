@@ -395,7 +395,7 @@ Dual-state Button btOnOff1
 Timer tmCooldown
     Attributes
         Scope      : local
-        Period (ms): 100
+        Period (ms): 300
         Enabled    : no
     
     Events
