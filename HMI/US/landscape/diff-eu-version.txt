@@ -240,6 +240,28 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",1
 │                                          covx tTmp.txt,sleepTimeout,0,0
 │                                      }
+│   --- HMI/n2t-out/popupNotify.txt
+├── +++ HMI/US/landscape/n2t-out/popupNotify.txt
+│ @@ -295,19 +295,14 @@
+│                                          covx tTmp.txt,sys0,0,0
+│                                          tText.pco=sys0
+│                                          //preserve old sleepTimeout
+│                                          vaOldSleepT.val=sleepTimeout
+│                                          // sleep timeout
+│                                          spstr strCommand.txt,tTmp.txt,"~",10
+│                                          covx tTmp.txt,sys0,0,0
+│ -                                        if(sys0==0)
+│ -                                        {
+│ -                                            //0 is buggy, a years is permanent enough
+│ -                                            sys0=31536000
+│ -                                        }
+│                                          sleepTimeout=sys0
+│                                          //font size
+│                                          spstr strCommand.txt,tTmp.txt,"~",11
+│                                          covx tTmp.txt,sys0,0,0
+│                                          tTextAlt.font=sys0
+│                                          tText.font=sys0
+│                                          //icon
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/landscape/n2t-out/screensaver.txt
 │ @@ -28,17 +28,14 @@

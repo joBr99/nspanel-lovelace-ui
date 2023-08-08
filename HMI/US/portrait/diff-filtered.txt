@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-08-08 19:45:29.806219470 +0000
++++ /dev/fd/62	2023-08-08 20:49:02.082432386 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -1321,6 +1321,28 @@
 +e (string) entn
 +ributes
 + Scope         : local
++I/n2t-out/popupNotify.txt
+++ HMI/US/portrait/n2t-out/popupNotify.txt
++19 +295,14 @@
++                                 covx tTmp.txt,sys0,0,0
++                                 tText.pco=sys0
++                                 //preserve old sleepTimeout
++                                 vaOldSleepT.val=sleepTimeout
++                                 // sleep timeout
++                                 spstr strCommand.txt,tTmp.txt,"~",10
++                                 covx tTmp.txt,sys0,0,0
++                                 if(sys0==0)
++                                 {
++                                     //0 is buggy, a years is permanent enough
++                                     sys0=31536000
++                                 }
++                                 sleepTimeout=sys0
++                                 //font size
++                                 spstr strCommand.txt,tTmp.txt,"~",11
++                                 covx tTmp.txt,sys0,0,0
++                                 tTextAlt.font=sys0
++                                 tText.font=sys0
++                                 //icon
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 +7 +28,14 @@
