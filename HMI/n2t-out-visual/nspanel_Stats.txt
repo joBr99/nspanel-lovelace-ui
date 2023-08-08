@@ -18,10 +18,10 @@ popupFan
 	27   Component(s)
 	355  Line(s) of event code
 	206  Unique line(s) of event code
-pageStartup
-	20   Component(s)
-	198  Line(s) of event code
-	137  Unique line(s) of event code
+popupNotify
+	19   Component(s)
+	267  Line(s) of event code
+	172  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	402  Line(s) of event code
@@ -34,14 +34,14 @@ popupLight
 	28   Component(s)
 	408  Line(s) of event code
 	225  Unique line(s) of event code
-popupNotify
-	19   Component(s)
-	267  Line(s) of event code
-	172  Unique line(s) of event code
 cardGrid
 	44   Component(s)
 	529  Line(s) of event code
 	298  Unique line(s) of event code
+pageStartup
+	20   Component(s)
+	198  Line(s) of event code
+	137  Unique line(s) of event code
 cardQR
 	34   Component(s)
 	410  Line(s) of event code
