@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.1.4.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
-- abgestimmt auf TFT 51 / v4.1.0 / BerryDriver 8 / Tasmota 13.0.0
+TypeScript v4.1.4.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+- abgestimmt auf TFT 51 / v4.1.4 / BerryDriver 8 / Tasmota 13.0.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -146,9 +146,10 @@ ReleaseNotes:
         - 12.08.2023 - v4.1.4.1  Fix Label CANCEL for popupTimer
         - 12.08.2023 - v4.1.4.1  Fix TypeScript Error (JS-Adapter > 7.1.X) by Gargano
         - 12.08.2023 - v4.1.4.1  CardGRid with maxItems = 8
+        - 12.08.2023 - v4.1.4.2  Add onStop function() to Schedules
         
-        - Todo       - v4.1.4.2  Add InSel to popUpLight
-        - Todo       - v4.1.4.2  Add onStop (function() to Schedules
+        - Todo       - v4.1.4.3  Add InSel to popUpLight
+
 	
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -1339,7 +1340,7 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.1.0';
+const tft_version: string = 'v4.1.4';
 const desired_display_firmware_version = 51;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -1351,9 +1352,22 @@ let bgColorScrSaver: number = 0;
 let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 
+let scheduleInitDimModeDay: any;
+let scheduleInitDimModeNight: any; 
+
+onStop (function scriptStop () {
+    if (scheduleSendTime!=null) clearSchedule(scheduleSendTime);
+    if (scheduleSendDate!=null) clearSchedule(scheduleSendDate);
+    if (scheduleSwichScreensaver!=null) clearSchedule(scheduleSwichScreensaver);
+    if (scheduleStartup!=null) clearSchedule(scheduleStartup);
+    if (scheduleCheckUpdates!=null) clearSchedule(scheduleCheckUpdates);
+    if (scheduleInitDimModeDay!=null) clearSchedule(scheduleInitDimModeDay);
+    if (scheduleInitDimModeNight!=null) clearSchedule(scheduleInitDimModeNight);
+}, 1000);
+
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.0','4.2.0','4.3.0']
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.0','4.3.0']
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -2032,6 +2046,7 @@ InitWeatherForecast();
 
 async function InitDimmode() {
     try {
+
         // Screensaver nachts auf dunkel ("brightnessNight: z.B. 2") oder aus ("brightnessNight:0")
         if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay')) {
             await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.StateCommon>{ type: 'number' });
@@ -2077,12 +2092,12 @@ async function InitDimmode() {
         };
 
         // timeDimMode Day
-        schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val, minute: 0 }, () => {
+        scheduleInitDimModeDay = schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val, minute: 0 }, () => {
             ScreensaverDimmode(timeDimMode);
         });
 
         // timeDimMode Night
-        schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, () => {
+        scheduleInitDimModeNight = schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, () => {
             ScreensaverDimmode(timeDimMode);
         });
 
@@ -2215,7 +2230,7 @@ let pageId = 0;
 let activePage = undefined;
 
 //Uhrzeit an NSPanel senden
-schedule('* * * * *', () => {
+let scheduleSendTime = schedule('* * * * *', () => {
     try {
         SendTime();
         HandleScreensaverUpdate();
@@ -2225,7 +2240,7 @@ schedule('* * * * *', () => {
 });
 
 //Wechsel zwischen Screensaver Entities und WeatherForecast
-schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val +  ' * * * * *', () => {
+let scheduleSwichScreensaver = schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val +  ' * * * * *', () => {
     try {
         //WeatherForecast true/false Umschaltung verzögert
         if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
@@ -2284,17 +2299,17 @@ on({id: [].concat(config.weatherEntity + '.TEMP')
     }
 });
 
-schedule('0 * * * *', () => {
+let scheduleSendDate = schedule('0 * * * *', () => {
     SendDate();
 });
 
 // 3:30 Uhr Startup durchführen und aktuelle TFT-Version empfangen
-schedule({ hour: 3, minute: 30 }, async () => {
+let scheduleStartup = schedule({ hour: 3, minute: 30 }, async () => {
     await setStateAsync(config.panelSendTopic, 'pageType~pageStartup');
 });
 
 // Updates vergleichen aktuell alle 12 Stunden
-schedule('{"time":{"start":"00:00","end":"23:59","mode":"hours","interval":12},"period":{"days":1}}', () => {
+let scheduleCheckUpdates = schedule('{"time":{"start":"00:00","end":"23:59","mode":"hours","interval":12},"period":{"days":1}}', () => {
     get_tasmota_status0();
     get_panel_update_data();
     check_updates();
