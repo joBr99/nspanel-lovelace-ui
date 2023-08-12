@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.0.5.15 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
-- abgestimmt auf TFT 50 / v4.0.5 / BerryDriver 8 / Tasmota 12.5.0
+TypeScript v4.1.4.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+- abgestimmt auf TFT 51 / v4.1.0 / BerryDriver 8 / Tasmota 13.0.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -15,6 +15,9 @@ Achtung Änderung des Sonoff ESP-Temperatursensors
 In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
 unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Dowengrade 
 durchführen und FlashNextion wiederholen.
+*******************************************************************************
+Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
+https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota-update-probleme
 *******************************************************************************
 
 ReleaseNotes:
@@ -137,9 +140,16 @@ ReleaseNotes:
         - 28.04.2023 - v4.0.5.11 light 'hue' and light 'rgb' have '.TEMPERATURE' optional
         - 02.05.2023 - v4.0.5.12 Add new Function Debug mode from script activatable via panel
 	- 02.05.2023 - v4.0.5.13 Fix Problems with weather-instances-number !="0" #876
-	- 02.05.2023 - v4.0.5.14 Fix: Remove empty log statements (PR #883)
-	- 30.07.2023 - v4.0.5.15 Improved screensaverAdvanced icon handling: option to load from iobroker object #944	
- 
+	- 02.05.2023 - v4.0.5.14 Fix: Remove empty log statements #883
+        - 30.07.2023 - v4.0.5.15 Improved screensaverAdvanced icon handling: option to load from iobroker object #944
+        - 12.08.2023 - v4.1.4    Upgrade TFT 51 / 4.1.4
+        - 12.08.2023 - v4.1.4.1  Fix Label CANCEL for popupTimer
+        - 12.08.2023 - v4.1.4.1  Fix TypeScript Error (JS-Adapter > 7.1.X) by Gargano
+        - 12.08.2023 - v4.1.4.1  CardGRid with maxItems = 8
+        
+        - Todo       - v4.1.4.2  Add InSel to popUpLight
+        - Todo       - v4.1.4.2  Add onStop (function() to Schedules
+	
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
 ***********************************************************************************************************
@@ -228,7 +238,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.0.5.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.1.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -830,8 +840,8 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.0.5';
-const desired_display_firmware_version = 50;
+const tft_version: string = 'v4.1.0';
+const desired_display_firmware_version = 51;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 
@@ -843,8 +853,8 @@ let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 
 async function Init_Release() {
-    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.0','4.2.0']
+    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53]
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.0','4.2.0','4.3.0']
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -2704,7 +2714,7 @@ function GeneratePageElements(page: Page): string {
                 }
                 break;
             case 'cardGrid':
-                maxItems = 6;
+                maxItems = 8;
                 break;
         }
 
@@ -3365,7 +3375,7 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
             );
         }
 
-        if ((pageItem.useColor || useColors) && ((typeof (value) === 'boolean' && value) || value > (pageItem.minValueBrightness !== undefined ? pageItem.minValueBrightness : 0))) {
+        if ((pageItem.useColor || useColors) && (typeof (value) === 'boolean' && value) || ((typeof (value) === 'number') && (value > (pageItem.minValueBrightness !== undefined ? pageItem.minValueBrightness : 0)))) {
             return rgb_dec565(pageItem.onColor !== undefined ? pageItem.onColor : config.defaultOnColor);
         }
 
@@ -6137,7 +6147,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         action2 = 'cancle';
                         action3 = 'finish';
                         label1  = 'PAUSE';
-                        label2  = 'CANCLE';
+                        label2  = 'CANCEL';
                         label3  = 'FINISH';
                     }
 
