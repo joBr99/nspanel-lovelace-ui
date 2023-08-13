@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.1.4.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
+TypeScript v4.1.4.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 51 / v4.1.4 / BerryDriver 8 / Tasmota 13.0.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -147,7 +147,8 @@ ReleaseNotes:
         - 12.08.2023 - v4.1.4.1  Fix TypeScript Error (JS-Adapter > 7.1.X) by Gargano
         - 12.08.2023 - v4.1.4.1  CardGRid with maxItems = 8
         - 12.08.2023 - v4.1.4.2  Add onStop function() to Schedules
-        - 12.08.2023 - v4.1.4.3  Add InSel to popUpLight
+        - 13.08.2023 - v4.1.4.3  Add InSel to popUpLight
+        - 13.08.2023 - v4.1.4.4  Add Parameter inSel_ChoiceState to InSel to show/hide Focus
 
 	
 ***********************************************************************************************************
@@ -6923,11 +6924,14 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 } else if (o.common.role == 'buttonSensor') {
 
                     let actualValue: string = '';
-                    if (existsObject(pageItem.id + '.VALUE')) {
-                        actualValue = formatInSelText(pageItem.modeList[getState(pageItem.id + '.VALUE').val]);
-                        RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type);
-                    }
 
+                    if (pageItem.inSel_ChoiceState || pageItem.inSel_ChoiceState == undefined) {
+                        if (existsObject(pageItem.id + '.VALUE')) {
+                            actualValue = formatInSelText(pageItem.modeList[getState(pageItem.id + '.VALUE').val]);
+                            RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type);
+                        }
+                    }
+                    
                     let tempModeList = [];
                     for (let i = 0; i < pageItem.modeList.length; i++) {
                         tempModeList[i] = formatInSelText(pageItem.modeList[i]);
@@ -6953,11 +6957,14 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     if (pageItem.modeList != undefined) {
 
                         let actualValue: string = '';
-                        if (existsObject(pageItem.id + '.VALUE')) {
-                            actualValue = formatInSelText(pageItem.modeList[getState(pageItem.id + '.VALUE').val]);
-                            RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type);
+
+                        if (pageItem.inSel_ChoiceState || pageItem.inSel_ChoiceState == undefined) {
+                            if (existsObject(pageItem.id + '.VALUE')) {
+                                actualValue = formatInSelText(pageItem.modeList[getState(pageItem.id + '.VALUE').val]);
+                                RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type);
+                            }
                         }
-                        
+
                         let tempModeList = [];
                         for (let i = 0; i < pageItem.modeList.length; i++) {
                             tempModeList[i] = formatInSelText(pageItem.modeList[i]);
@@ -8305,6 +8312,7 @@ type PageItem = {
     popupOptions: (string[] | undefined),
     useValue: (boolean | undefined),
     monobutton: (boolean | undefined)
+    inSel_ChoiceState: (boolean | undefined)
 }
 
 type DimMode = {
