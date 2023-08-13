@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.1.4.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.1.4.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
 - abgestimmt auf TFT 51 / v4.1.4 / BerryDriver 8 / Tasmota 13.0.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -147,8 +147,7 @@ ReleaseNotes:
         - 12.08.2023 - v4.1.4.1  Fix TypeScript Error (JS-Adapter > 7.1.X) by Gargano
         - 12.08.2023 - v4.1.4.1  CardGRid with maxItems = 8
         - 12.08.2023 - v4.1.4.2  Add onStop function() to Schedules
-        
-        - Todo       - v4.1.4.3  Add InSel to popUpLight
+        - 12.08.2023 - v4.1.4.3  Add InSel to popUpLight
 
 	
 ***********************************************************************************************************
@@ -239,7 +238,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.1.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.1.4.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -6180,6 +6179,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         iconColor = GetIconColor(pageItem, false, true);
                     }
 
+                    let effect_supported = 'disable';
+                    if (pageItem.modeList != undefined) {
+                        effect_supported = 'enable';
+                    }
+                    
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   // entityUpdateDetail
                             + id + '~'
@@ -6191,7 +6195,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + 'disable' + '~'   // colorMode
                             + ''        + '~'   // Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')          // Brightness-Bezeichnung
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + effect_supported
                     });
                 }
 
@@ -6229,6 +6234,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
 
                     RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
 
+                    let effect_supported = 'disable';
+                    if (pageItem.modeList != undefined) {
+                        effect_supported = 'enable';
+                    }
+
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
                             + id + '~'
@@ -6240,7 +6250,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + 'disable' + '~'   //colorMod
                             + ''        + '~'   //Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')           //Brightness-Bezeichnung
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + effect_supported
                     });
                 }
 
@@ -6296,6 +6307,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         //console.warn('function GenerateDetailPage role:hue -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
+                    let effect_supported = 'disable';
+                    if (pageItem.modeList != undefined) {
+                        effect_supported = 'enable';
+                    }
+
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
@@ -6307,7 +6323,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
                             + 'Color'   + '~'                           //Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + effect_supported
                     });
                 }
 
@@ -6362,6 +6379,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         //console.warn('function GenerateDetailPage role:rgb -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
+                    let effect_supported = 'disable';
+                    if (pageItem.modeList != undefined) {
+                        effect_supported = 'enable';
+                    }
+                    
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
@@ -6373,7 +6395,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
                             + 'Color' + '~'                             //Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + effect_supported
                     });
                 }
 
@@ -6433,6 +6456,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     //    console.warn('function GenerateDetailPage role:rgbSingle -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
+                    let effect_supported = 'disable';
+                    if (pageItem.modeList != undefined) {
+                        effect_supported = 'enable';
+                    }
+
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
@@ -6444,7 +6472,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
                             + 'Color' + '~'                             //Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + effect_supported
                     });
                 }
 
@@ -6490,6 +6519,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         console.warn('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
+                    let effect_supported = 'disable';
+                    if (pageItem.modeList != undefined) {
+                        effect_supported = 'enable';
+                    }
+
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
@@ -6501,7 +6535,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
                             + 'Color' + '~'                             //Color-Bezeichnung
                             + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness')        //Brightness-Bezeichnung
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + effect_supported
                     });
                 }
             }
@@ -6726,6 +6761,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
             }
 
             if (type == 'popupInSel') {
+                //console.log(o.common.role);
                 if (o.common.role == 'media') {
                     let actualState: any = '';
                     let optionalString: string = 'Kein Eintrag';
@@ -6906,6 +6942,39 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + actualValue + '~'
                             + valueList
                     });
+                } else if (o.common.role == 'light' ||
+                           o.common.role == 'dimmer' ||
+                           o.common.role == 'hue' ||
+                           o.common.role == 'rgb' ||
+                           o.common.role == 'rgbSingle' ||
+                           o.common.role == 'ct') {
+                               
+                    //console.log(pageItem.id);
+                    if (pageItem.modeList != undefined) {
+
+                        let actualValue: string = '';
+                        if (existsObject(pageItem.id + '.VALUE')) {
+                            actualValue = formatInSelText(pageItem.modeList[getState(pageItem.id + '.VALUE').val]);
+                            RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type);
+                        }
+                        
+                        let tempModeList = [];
+                        for (let i = 0; i < pageItem.modeList.length; i++) {
+                            tempModeList[i] = formatInSelText(pageItem.modeList[i]);
+                        }
+                        let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
+
+                        //console.log(valueList);
+
+                        out_msgs.push({
+                            payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
+                                + id + '~~'                          //{entity_id}
+                                + rgb_dec565(White) + '~'            //{icon_color}~
+                                + 'insel' + '~'
+                                + actualValue + '~'
+                                + valueList
+                        });
+                    }
                 }
             }
         }
