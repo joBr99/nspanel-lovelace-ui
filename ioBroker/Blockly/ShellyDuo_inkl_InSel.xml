@@ -1,0 +1,80 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="on_ext" id="9wNX|e1Wa60!I31/|Aof" x="913" y="63">
+    <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+    <field name="CONDITION">ne</field>
+    <field name="ACK_CONDITION"></field>
+    <value name="OID0">
+      <shadow type="field_oid" id="~B8g0Vza1w3gwwUhg-XE">
+        <field name="oid">0_userdata.0.NSPanelOwn.ShellyDuo01</field>
+      </shadow>
+    </value>
+    <statement name="STATEMENT">
+      <block type="controls_if" id="2y2I?U.?._?Rs8VVTg8s">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="logic_compare" id="wd}~gZNYgMWH;Vpyt.Z!">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="on_source" id="I5I|Z_(%zsp.Tt/^{MXJ">
+                <field name="ATTR">state.val</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number" id="_}(Q_GkaH$I2Ed4Hh$cS">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="control" id="!vF}Wk3uRk!VIa@alREh">
+            <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="false"></mutation>
+            <field name="OID">shelly.0.SHCB-1#3494546E9445#1.Sys.deviceMode</field>
+            <field name="WITH_DELAY">FALSE</field>
+            <value name="VALUE">
+              <block type="text" id="1S}JM+$=zl|.zMfSo15r">
+                <field name="TEXT">color</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="control" id="g=*}TwhDS]r^Zh(2{K/.">
+            <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="false"></mutation>
+            <field name="OID">shelly.0.SHCB-1#3494546E9445#1.Sys.deviceMode</field>
+            <field name="WITH_DELAY">FALSE</field>
+            <value name="VALUE">
+              <block type="text" id="=8fpx/Lj~EFU=mD!y3rp">
+                <field name="TEXT">white</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+      </block>
+    </statement>
+    <next>
+      <block type="on_ext" id="lBx%I5ZiCY@{8lAQrv|t">
+        <mutation xmlns="http://www.w3.org/1999/xhtml" items="1"></mutation>
+        <field name="CONDITION">ne</field>
+        <field name="ACK_CONDITION"></field>
+        <value name="OID0">
+          <shadow type="field_oid" id="/{L5e|w2A:u!Co672?8w">
+            <field name="oid">shelly.0.SHCB-1#3494546E9445#1.lights.brightness</field>
+          </shadow>
+        </value>
+        <statement name="STATEMENT">
+          <block type="control" id="~%_(9UX1b5y]D6wSHo6L">
+            <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="false"></mutation>
+            <field name="OID">shelly.0.SHCB-1#3494546E9445#1.lights.gain</field>
+            <field name="WITH_DELAY">FALSE</field>
+            <value name="VALUE">
+              <block type="on_source" id="E?2yJP9CJB0]:9a!GAt6">
+                <field name="ATTR">state.val</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+      </block>
+    </next>
+  </block>
+</xml>
