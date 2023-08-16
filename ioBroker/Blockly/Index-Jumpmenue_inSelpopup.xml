@@ -1,0 +1,73 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="8.MeiSf}G,~KvGdz(Y[*">VAR_JSON</variable>
+  </variables>
+  <block type="on" id="HKT1p7BI4woOVmm17T8m" x="-613" y="-87">
+    <field name="OID">0_userdata.0.NSPanelOwn.Index_Panel_0</field>
+    <field name="CONDITION">any</field>
+    <field name="ACK_CONDITION"></field>
+    <statement name="STATEMENT">
+      <block type="variables_set" id="r1+[uN0%M;-wa|l`%v6G">
+        <field name="VAR" id="8.MeiSf}G,~KvGdz(Y[*">VAR_JSON</field>
+        <value name="VALUE">
+          <block type="text" id="ju}XvP0?t2=24ucjUz7m">
+            <field name="TEXT"></field>
+          </block>
+        </value>
+        <next>
+          <block type="text_append" id="Q}NVo%Ty,+r`UfRxS={%" inline="false">
+            <field name="VAR" id="8.MeiSf}G,~KvGdz(Y[*">VAR_JSON</field>
+            <value name="TEXT">
+              <shadow type="text" id="fX~KkbKvyq8jGR8z2i-g">
+                <field name="TEXT"></field>
+              </shadow>
+              <block type="text_join" id="SCPmp{Y5SLU-hG{0R#-v">
+                <mutation items="3"></mutation>
+                <value name="ADD0">
+                  <block type="text" id="AH4evE[%N4=aL,#[Jv*2">
+                    <field name="TEXT">{"pagetype": "page", "pageId": </field>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="on_source" id=",hw],YkR(T-J4%ID7zT^">
+                    <field name="ATTR">state.val</field>
+                  </block>
+                </value>
+                <value name="ADD2">
+                  <block type="text" id="FHXU)xy3L$KsU0:_SnTT">
+                    <field name="TEXT">}</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="control" id="FqLcGX!aLp~ZPS;al0Eq">
+                <mutation xmlns="http://www.w3.org/1999/xhtml" delay_input="false"></mutation>
+                <field name="OID">0_userdata.0.NSPanel.1.PageNavi</field>
+                <field name="WITH_DELAY">FALSE</field>
+                <value name="VALUE">
+                  <block type="variables_get" id="jA(/eL:E0n!XK6LF(s+i">
+                    <field name="VAR" id="8.MeiSf}G,~KvGdz(Y[*">VAR_JSON</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="debug" id="VrBlp!NGe/!s#*A=[+;e">
+                    <field name="Severity">log</field>
+                    <value name="TEXT">
+                      <shadow type="text" id="FdI3^B=0$R!A-U}A95_u">
+                        <field name="TEXT">test</field>
+                      </shadow>
+                      <block type="variables_get" id="#Wi?__q?}F5PyH=^Wg8N">
+                        <field name="VAR" id="8.MeiSf}G,~KvGdz(Y[*">VAR_JSON</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>
