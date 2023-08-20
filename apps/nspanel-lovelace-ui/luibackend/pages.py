@@ -376,10 +376,10 @@ class LuiPagesGen(object):
                 global babel_spec
                 if babel_spec is not None:
                     dateformat = "E" if item.nameOverride is None else item.nameOverride
-                    name = babel.dates.format_datetime(fdate, dateformat, locale=self._locale)
+                    name = babel.dates.format_datetime(fdate.astimezone(), dateformat, locale=self._locale)
                 else:
                     dateformat = "%a" if item.nameOverride is None else item.nameOverride
-                    name = fdate.strftime(dateformat)
+                    name = fdate.astimezone().strftime(dateformat)
                 icon_id = get_icon_ha(entityId, stateOverwrite=entity.attributes.forecast[item.stype]['condition'])
                 value = f'{entity.attributes.forecast[item.stype].get("temperature", "")}{unit}'
                 color = self.get_entity_color(entity, ha_type=entityType, stateOverwrite=entity.attributes.forecast[item.stype]['condition'], overwrite=colorOverride)
