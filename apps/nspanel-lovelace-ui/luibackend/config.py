@@ -126,6 +126,7 @@ class LuiBackendConfig(object):
             'sleepBrightness': 20,
             'screenBrightness': 100,
             'defaultBackgroundColor': "ha-dark",
+            'featureExperimentalSliders': False,
             'sleepTracking': None,
             'sleepTrackingZones': ["not_home", "off"],
             'sleepOverride': None,

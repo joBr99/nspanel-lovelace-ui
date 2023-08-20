@@ -85,7 +85,11 @@ class LuiController(object):
         elif type(defaultBackgroundColor) is list:
             dbc = rgb_dec565(defaultBackgroundColor)
 
-        self._send_mqtt_msg(f"dimmode~{sleepBrightness}~{brightness}~{dbc}")
+        featureExperimentalSliders=0
+        if self._config.get("featureExperimentalSliders"):
+            featureExperimentalSliders=1
+
+        self._send_mqtt_msg(f"dimmode~{sleepBrightness}~{brightness}~{dbc}~~{featureExperimentalSliders}")
         
     def calc_current_brightness(self, sleep_brightness_config):
         current_screensaver_brightness = 20
