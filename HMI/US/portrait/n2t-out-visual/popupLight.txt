@@ -984,7 +984,7 @@ Timer tmSerial
                                         }
                                         if(tId.txt=="cardGrid2")
                                         {
-                                            page cardGrid
+                                            page cardGrid2
                                         }
                                         if(tId.txt=="popupLight")
                                         {

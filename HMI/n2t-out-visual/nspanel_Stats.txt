@@ -28,8 +28,8 @@ popupLightNew
 	209  Unique line(s) of event code
 popupNotify
 	19   Component(s)
-	271  Line(s) of event code
-	174  Unique line(s) of event code
+	267  Line(s) of event code
+	172  Unique line(s) of event code
 cardGrid
 	44   Component(s)
 	529  Line(s) of event code
@@ -98,5 +98,5 @@ cardEntities
 Total
 	23   Page(s)
 	878  Component(s)
-	10408 Line(s) of event code
-	2418 Unique line(s) of event code
+	10404 Line(s) of event code
+	2417 Unique line(s) of event code

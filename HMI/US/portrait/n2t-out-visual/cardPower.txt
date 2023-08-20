@@ -1514,6 +1514,10 @@ Timer tmSerial
                                         {
                                             page cardChart
                                         }
+                                        if(tId.txt=="cardLChart")
+                                        {
+                                            page cardChart
+                                        }
                                     }
                                     if(tInstruction.txt=="time")
                                     {

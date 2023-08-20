@@ -1136,94 +1136,14 @@
 │          Send Component ID  : disabled
 │          Associated Keyboard: none
 │          Text               : 
-│ @@ -555,34 +578,34 @@
-│          State            : unpressed
-│          Text             : î´
-│          Max. Text Size   : 10
-│      
-│      Events
-│          Touch Press Event
-│              tmLP.en=1
-│ -            tTmp.txt=type7.txt
-│ -            pageIcons.tTmp1.txt=tEntity7.txt
-│ -            pageIcons.tTmp2.txt=entn7.txt
-│ -            pageIcons.tTmp3.txt=bEntity7.txt
-│ -            if(type7.txt=="shutter")
-│ +            tTmp.txt=type2.txt
-│ +            pageIcons.tTmp1.txt=tEntity2.txt
-│ +            pageIcons.tTmp2.txt=entn2.txt
-│ +            pageIcons.tTmp3.txt=bEntity2.txt
-│ +            if(type2.txt=="shutter")
-│              {
-│                  page popupShutter
-│              }
-│ -            if(type7.txt=="input_sel")
-│ +            if(type2.txt=="input_sel")
-│              {
-│                  page popupInSel
-│              }
-│ -            if(type7.txt=="timer")
-│ +            if(type2.txt=="timer")
-│              {
-│                  page popupTimer
-│              }
-│          
-│          Touch Release Event
-│              tmLP.en=0
-│ -            tSend.txt="event,buttonPress2,"+entn7.txt+",button"
-│ +            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
+│ @@ -631,14 +654,58 @@
 │              crcputs tSend.txt,0
 │              //send cmd
-│ @@ -599,34 +622,78 @@
-│          State            : unpressed
-│          Text             : î´
-│          Max. Text Size   : 10
-│      
-│      Events
-│          Touch Press Event
-│              tmLP.en=1
-│ -            tTmp.txt=type8.txt
-│ -            pageIcons.tTmp1.txt=tEntity8.txt
-│ -            pageIcons.tTmp2.txt=entn8.txt
-│ -            pageIcons.tTmp3.txt=bEntity8.txt
-│ -            if(type8.txt=="shutter")
-│ +            tTmp.txt=type6.txt
-│ +            pageIcons.tTmp1.txt=tEntity6.txt
-│ +            pageIcons.tTmp2.txt=entn6.txt
-│ +            pageIcons.tTmp3.txt=bEntity6.txt
-│ +            if(type6.txt=="shutter")
-│ +            {
-│ +                page popupShutter
-│ +            }
-│ +            if(type6.txt=="input_sel")
-│ +            {
-│ +                page popupInSel
-│ +            }
-│ +            if(type6.txt=="timer")
-│ +            {
-│ +                page popupTimer
-│ +            }
-│ +        
-│ +        Touch Release Event
-│ +            tmLP.en=0
-│ +            tSend.txt="event,buttonPress2,"+entn6.txt+",button"
-│ +            //send calc crc
-│ +            btlen tSend.txt,sys0
-│ +            crcrest 1,0xffff // reset CRC
-│ +            crcputh 55 bb
-│ +            crcputs sys0,2
-│ +            crcputs tSend.txt,0
-│ +            //send cmd
-│ +            printh 55 bb
-│ +            prints sys0,2
-│ +            prints tSend.txt,0
-│ +            prints crcval,2
-│ +        
+│              printh 55 bb
+│              prints sys0,2
+│              prints tSend.txt,0
+│              prints crcval,2
+│          
 │ +Button bEntity9
 │ +    Attributes
 │ +        Scope            : local
@@ -1236,36 +1156,45 @@
 │ +    Events
 │ +        Touch Press Event
 │ +            tmLP.en=1
-│ +            tTmp.txt=type6.txt
-│ +            pageIcons.tTmp1.txt=tEntity6.txt
-│ +            pageIcons.tTmp2.txt=entn6.txt
-│ +            pageIcons.tTmp3.txt=bEntity6.txt
-│ +            if(type6.txt=="shutter")
-│              {
-│                  page popupShutter
-│              }
-│ -            if(type8.txt=="input_sel")
-│ +            if(type6.txt=="input_sel")
-│              {
-│                  page popupInSel
-│              }
-│ -            if(type8.txt=="timer")
-│ +            if(type6.txt=="timer")
-│              {
-│                  page popupTimer
-│              }
-│          
-│          Touch Release Event
-│              tmLP.en=0
-│ -            tSend.txt="event,buttonPress2,"+entn8.txt+",button"
-│ +            tSend.txt="event,buttonPress2,"+entn6.txt+",button"
-│              //send calc crc
-│              btlen tSend.txt,sys0
-│              crcrest 1,0xffff // reset CRC
-│              crcputh 55 bb
-│              crcputs sys0,2
-│              crcputs tSend.txt,0
-│              //send cmd
+│ +            tTmp.txt=type9.txt
+│ +            pageIcons.tTmp1.txt=tEntity9.txt
+│ +            pageIcons.tTmp2.txt=entn9.txt
+│ +            pageIcons.tTmp3.txt=bEntity9.txt
+│ +            if(type9.txt=="shutter")
+│ +            {
+│ +                page popupShutter
+│ +            }
+│ +            if(type9.txt=="input_sel")
+│ +            {
+│ +                page popupInSel
+│ +            }
+│ +            if(type9.txt=="timer")
+│ +            {
+│ +                page popupTimer
+│ +            }
+│ +        
+│ +        Touch Release Event
+│ +            tmLP.en=0
+│ +            tSend.txt="event,buttonPress2,"+entn9.txt+",button"
+│ +            //send calc crc
+│ +            btlen tSend.txt,sys0
+│ +            crcrest 1,0xffff // reset CRC
+│ +            crcputh 55 bb
+│ +            crcputs sys0,2
+│ +            crcputs tSend.txt,0
+│ +            //send cmd
+│ +            printh 55 bb
+│ +            prints sys0,2
+│ +            prints tSend.txt,0
+│ +            prints crcval,2
+│ +        
+│  Button bNext
+│      Attributes
+│          Scope            : local
+│          Dragging         : 0
+│          Send Component ID: disabled
+│          State            : unpressed
+│          Text             : î³
 │ @@ -1005,14 +1072,35 @@
 │                                              spstr strCommand.txt,tTmp.txt,"~",59
 │                                              covx tTmp.txt,sys0,0,0
@@ -1629,25 +1558,23 @@
 │          Scope      : local
 │          Period (ms): 50
 │          Enabled    : yes
-│ @@ -960,18 +936,14 @@
-│                                          {
-│                                              page cardPower
+│ @@ -962,15 +938,15 @@
 │                                          }
 │                                          if(tId.txt=="cardChart")
 │                                          {
 │                                              page cardChart
 │                                          }
-│ -                                        if(tId.txt=="cardLChart")
-│ -                                        {
+│                                          if(tId.txt=="cardLChart")
+│                                          {
 │ -                                            page cardLChart
-│ -                                        }
+│ +                                            page cardChart
+│                                          }
 │                                      }
 │                                      if(tInstruction.txt=="time")
 │                                      {
 │                                          // get set time to global variable
 │                                          spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 │                                      }
-│                                      if(tInstruction.txt=="date")
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/portrait/n2t-out/pageStartup.txt
 │ @@ -34,20 +34,14 @@
@@ -1705,27 +1632,23 @@
 │              crcputs sys0,2
 │              crcputs tSend.txt,0
 │              //send cmd
-│ @@ -275,20 +269,14 @@
-│                                          }
-│                                          // get font color
-│                                          spstr strCommand.txt,tTmp.txt,"~",4
+│ @@ -282,15 +276,15 @@
+│                                          // get feature flag popup
+│                                          spstr strCommand.txt,tTmp.txt,"~",5
 │                                          if(tTmp.txt!="")
 │                                          {
-│                                              covx tTmp.txt,defaultFontColor,0,0
+│                                              covx tTmp.txt,featNewSliders,0,0
 │                                          }
-│ -                                        // get feature flag popup
-│ -                                        spstr strCommand.txt,tTmp.txt,"~",5
-│ -                                        if(tTmp.txt!="")
-│ -                                        {
-│ -                                            covx tTmp.txt,featNewSliders,0,0
-│ -                                        }
 │                                      }
-│                                      if(tInstruction.txt=="timeout")
+│ -                                    if(tInstruction.txt=="timeout")
+│ +                                    if(tInstruction.txt=="timeout2")
 │                                      {
 │                                          //set timeout to global var
 │                                          spstr strCommand.txt,tTmp.txt,"~",1
 │                                          covx tTmp.txt,sleepTimeout,0,0
 │                                      }
+│                                      if(tInstruction.txt=="pageType")
+│                                      {
 │   --- HMI/n2t-out/popupLight.txt
 ├── +++ HMI/US/portrait/n2t-out/popupLight.txt
 │ @@ -48,33 +48,33 @@
@@ -1766,45 +1689,25 @@
 │  Variable (string) entn
 │      Attributes
 │          Scope         : local
-│ @@ -631,15 +631,15 @@
-│                                          }
-│                                          if(tId.txt=="cardGrid")
-│                                          {
-│                                              page cardGrid
-│                                          }
-│                                          if(tId.txt=="cardGrid2")
-│                                          {
-│ -                                            page cardGrid2
-│ +                                            page cardGrid
-│                                          }
-│                                          if(tId.txt=="popupLight")
-│                                          {
-│                                              pageIcons.tTmp1.txt=tTmp.txt
-│                                              page popupLight
-│                                          }
-│                                          if(tId.txt=="popupShutter")
 │   --- HMI/n2t-out/popupNotify.txt
 ├── +++ HMI/US/portrait/n2t-out/popupNotify.txt
-│ @@ -295,19 +295,14 @@
-│                                          covx tTmp.txt,sys0,0,0
-│                                          tText.pco=sys0
-│                                          //preserve old sleepTimeout
-│                                          vaOldSleepT.val=sleepTimeout
-│                                          // sleep timeout
-│                                          spstr strCommand.txt,tTmp.txt,"~",10
-│                                          covx tTmp.txt,sys0,0,0
-│ -                                        if(sys0==0)
-│ -                                        {
-│ -                                            //0 is buggy, a years is permanent enough
-│ -                                            sys0=31536000
-│ -                                        }
-│                                          sleepTimeout=sys0
-│                                          //font size
-│                                          spstr strCommand.txt,tTmp.txt,"~",11
-│                                          covx tTmp.txt,sys0,0,0
-│                                          tTextAlt.font=sys0
-│                                          tText.font=sys0
-│                                          //icon
+│ @@ -348,15 +348,15 @@
+│                                          // get font color
+│                                          spstr strCommand.txt,tTmp.txt,"~",4
+│                                          if(tTmp.txt!="")
+│                                          {
+│                                              covx tTmp.txt,defaultFontColor,0,0
+│                                          }
+│                                      }
+│ -                                    if(tInstruction.txt=="timeout2")
+│ +                                    if(tInstruction.txt=="timeout")
+│                                      {
+│                                          //set timeout to global var
+│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│                                          covx tTmp.txt,sleepTimeout,0,0
+│                                      }
+│                                      if(tInstruction.txt=="exitPopup")
+│                                      {
 │   --- HMI/n2t-out/screensaver.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver.txt
 │ @@ -28,17 +28,14 @@
@@ -1952,22 +1855,3 @@
 │                                          if(tAMPM.txt=="")
 │                                          {
 │                                              vis tAMPM,0
-│ @@ -824,18 +800,14 @@
-│                                          {
-│                                              page cardPower
-│                                          }
-│                                          if(tId.txt=="cardChart")
-│                                          {
-│                                              page cardChart
-│                                          }
-│ -                                        if(tId.txt=="cardLChart")
-│ -                                        {
-│ -                                            page cardLChart
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│                                      }
