@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-08-08 20:49:02.082432386 +0000
++++ /dev/fd/62	2023-08-20 12:32:07.109670758 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -1245,23 +1245,6 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
-+15 +135,15 @@
-+
-+ersion
-+ributes
-+ Scope              : local
-+ Dragging           : 0
-+ Send Component ID  : disabled
-+ Associated Keyboard: none
-+ Text               : 52
-+ Text               : 51
-+ Max. Text Size     : 10
-+
-+ p0
-+ributes
-+ Scope            : local
-+ Dragging         : 0
-+ Send Component ID: disabled
 +15 +158,15 @@
 + Max. Text Size   : 10
 +20 +269,14 @@
@@ -1321,6 +1304,23 @@
 +e (string) entn
 +ributes
 + Scope         : local
++15 +631,15 @@
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++                                 }
++                                 if(tId.txt=="cardGrid2")
++                                 {
++                                     page cardGrid2
++                                     page cardGrid
++                                 }
++                                 if(tId.txt=="popupLight")
++                                 {
++                                     pageIcons.tTmp1.txt=tTmp.txt
++                                     page popupLight
++                                 }
++                                 if(tId.txt=="popupShutter")
 +I/n2t-out/popupNotify.txt
 ++ HMI/US/portrait/n2t-out/popupNotify.txt
 +19 +295,14 @@
@@ -1419,6 +1419,36 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",1
 +                                 covx tTmp.txt,tTime.bco,0,0
 +                                 if(tTime.bco!=screensaver.bco)
++29 +673,14 @@
++                                 }
++                                 spstr strCommand.txt,tTmp.txt,"~",4
++                                 if(tTmp.txt!="")
++                                 {
++                                     covx tTmp.txt,tNotifyText.pco,0,0
++                                 }
++                             }
++                             if(tInstruction.txt=="getBrightness")
++                             {
++                                 tSend.txt="event,getBrightnessResponse,"
++                                 //send calc crc
++                                 btlen tSend.txt,sys0
++                                 crcrest 1,0xffff // reset CRC
++                                 crcputh 55 bb
++                                 crcputs sys0,2
++                                 crcputs dim,0
++                                 //send cmd
++                                 printh 55 bb
++                                 prints sys0,2
++                                 prints tSend.txt,0
++                                 prints crcval,2
++                             }
++                             if(tInstruction.txt=="pageType")
++                             {
++                                 dim=100
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++                                 //save second arg if there's one
 +I/n2t-out/screensaver2.txt
 ++ HMI/US/portrait/n2t-out/screensaver2.txt
 +7 +28,14 @@
