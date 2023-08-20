@@ -185,23 +185,6 @@
 │                                      if(tInstruction.txt=="date")
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
-│ @@ -141,15 +141,15 @@
-│      
-│  Text tVersion
-│      Attributes
-│          Scope              : local
-│          Dragging           : 0
-│          Send Component ID  : disabled
-│          Associated Keyboard: none
-│ -        Text               : 52
-│ +        Text               : 51
-│          Max. Text Size     : 10
-│      
-│  Picture p0
-│      Attributes
-│          Scope            : local
-│          Dragging         : 0
-│          Send Component ID: disabled
 │ @@ -164,15 +164,15 @@
 │          Max. Text Size   : 10
 │      
@@ -240,6 +223,25 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",1
 │                                          covx tTmp.txt,sleepTimeout,0,0
 │                                      }
+│   --- HMI/n2t-out/popupLight.txt
+├── +++ HMI/US/landscape/n2t-out/popupLight.txt
+│ @@ -631,15 +631,15 @@
+│                                          }
+│                                          if(tId.txt=="cardGrid")
+│                                          {
+│                                              page cardGrid
+│                                          }
+│                                          if(tId.txt=="cardGrid2")
+│                                          {
+│ -                                            page cardGrid2
+│ +                                            page cardGrid
+│                                          }
+│                                          if(tId.txt=="popupLight")
+│                                          {
+│                                              pageIcons.tTmp1.txt=tTmp.txt
+│                                              page popupLight
+│                                          }
+│                                          if(tId.txt=="popupShutter")
 │   --- HMI/n2t-out/popupNotify.txt
 ├── +++ HMI/US/landscape/n2t-out/popupNotify.txt
 │ @@ -295,19 +295,14 @@
@@ -317,6 +319,36 @@
 │          Send Component ID  : disabled
 │          Associated Keyboard: none
 │          Text               : |
+│ @@ -702,29 +679,14 @@
+│                                          }
+│                                          spstr strCommand.txt,tTmp.txt,"~",4
+│                                          if(tTmp.txt!="")
+│                                          {
+│                                              covx tTmp.txt,tNotifyText.pco,0,0
+│                                          }
+│                                      }
+│ -                                    if(tInstruction.txt=="getBrightness")
+│ -                                    {
+│ -                                        tSend.txt="event,getBrightnessResponse,"
+│ -                                        //send calc crc
+│ -                                        btlen tSend.txt,sys0
+│ -                                        crcrest 1,0xffff // reset CRC
+│ -                                        crcputh 55 bb
+│ -                                        crcputs sys0,2
+│ -                                        crcputs dim,0
+│ -                                        //send cmd
+│ -                                        printh 55 bb
+│ -                                        prints sys0,2
+│ -                                        prints tSend.txt,0
+│ -                                        prints crcval,2
+│ -                                    }
+│                                      if(tInstruction.txt=="pageType")
+│                                      {
+│                                          dim=100
+│                                          //command format pageType,specialPageName
+│                                          //write name of speical page to tId
+│                                          spstr strCommand.txt,tId.txt,"~",1
+│                                          //save second arg if there's one
 │   --- HMI/n2t-out/screensaver2.txt
 ├── +++ HMI/US/landscape/n2t-out/screensaver2.txt
 │ @@ -28,17 +28,14 @@

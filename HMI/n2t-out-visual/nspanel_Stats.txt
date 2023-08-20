@@ -26,10 +26,6 @@ popupLightNew
 	23   Component(s)
 	412  Line(s) of event code
 	209  Unique line(s) of event code
-popupLight
-	28   Component(s)
-	408  Line(s) of event code
-	225  Unique line(s) of event code
 popupNotify
 	19   Component(s)
 	271  Line(s) of event code
@@ -58,10 +54,10 @@ cardAlarm
 	43   Component(s)
 	500  Line(s) of event code
 	273  Unique line(s) of event code
-screensaver
-	47   Component(s)
-	444  Line(s) of event code
-	316  Unique line(s) of event code
+popupLight
+	28   Component(s)
+	412  Line(s) of event code
+	227  Unique line(s) of event code
 cardThermo
 	57   Component(s)
 	540  Line(s) of event code
@@ -78,6 +74,10 @@ popupInSel
 	34   Component(s)
 	621  Line(s) of event code
 	297  Unique line(s) of event code
+screensaver
+	47   Component(s)
+	457  Line(s) of event code
+	327  Unique line(s) of event code
 cardPower
 	54   Component(s)
 	531  Line(s) of event code
@@ -98,5 +98,5 @@ cardEntities
 Total
 	23   Page(s)
 	878  Component(s)
-	10404 Line(s) of event code
-	2418 Unique line(s) of event code
+	10421 Line(s) of event code
+	2421 Unique line(s) of event code
