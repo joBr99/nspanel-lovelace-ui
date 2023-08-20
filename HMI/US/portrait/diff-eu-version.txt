@@ -1728,7 +1728,7 @@
 │                                      }
 │   --- HMI/n2t-out/popupLight.txt
 ├── +++ HMI/US/portrait/n2t-out/popupLight.txt
-│ @@ -48,15 +48,15 @@
+│ @@ -48,33 +48,33 @@
 │              vis hTempSlider,0
 │              //disable color wheel components by default
 │              vis bColor,0
@@ -1745,13 +1745,17 @@
 │                      b[sys0].pco=defaultFontColor
 │                  }
 │                  if(b[sys0].type==53&&defaultBcoColor==0)
-│ @@ -66,15 +66,15 @@
+│                  {
+│                      b[sys0].pic=10
+│                      b[sys0].pic2=11
 │                  }
 │              }
 │              if(defaultBcoColor==0)
 │              {
-│                  hBrightness.pic=14
-│                  hBrightness.pic1=13
+│ -                hBrightness.pic=24
+│ -                hBrightness.pic1=25
+│ +                hBrightness.pic=14
+│ +                hBrightness.pic1=13
 │                  hBrightness.pic2=15
 │ -                hTempSlider.pic=16
 │ +                hTempSlider.pic=23
@@ -1877,36 +1881,6 @@
 │                                          spstr strCommand.txt,tTmp.txt,"~",1
 │                                          covx tTmp.txt,tTime.bco,0,0
 │                                          if(tTime.bco!=screensaver.bco)
-│ @@ -702,29 +673,14 @@
-│                                          }
-│                                          spstr strCommand.txt,tTmp.txt,"~",4
-│                                          if(tTmp.txt!="")
-│                                          {
-│                                              covx tTmp.txt,tNotifyText.pco,0,0
-│                                          }
-│                                      }
-│ -                                    if(tInstruction.txt=="getBrightness")
-│ -                                    {
-│ -                                        tSend.txt="event,getBrightnessResponse,"
-│ -                                        //send calc crc
-│ -                                        btlen tSend.txt,sys0
-│ -                                        crcrest 1,0xffff // reset CRC
-│ -                                        crcputh 55 bb
-│ -                                        crcputs sys0,2
-│ -                                        crcputs dim,0
-│ -                                        //send cmd
-│ -                                        printh 55 bb
-│ -                                        prints sys0,2
-│ -                                        prints tSend.txt,0
-│ -                                        prints crcval,2
-│ -                                    }
-│                                      if(tInstruction.txt=="pageType")
-│                                      {
-│                                          dim=100
-│                                          //command format pageType,specialPageName
-│                                          //write name of speical page to tId
-│                                          spstr strCommand.txt,tId.txt,"~",1
-│                                          //save second arg if there's one
 │   --- HMI/n2t-out/screensaver2.txt
 ├── +++ HMI/US/portrait/n2t-out/screensaver2.txt
 │ @@ -28,17 +28,14 @@

@@ -67,8 +67,8 @@ Page popupLight
             }
             if(defaultBcoColor==0)
             {
-                hBrightness.pic=14
-                hBrightness.pic1=13
+                hBrightness.pic=24
+                hBrightness.pic1=25
                 hBrightness.pic2=15
                 hTempSlider.pic=16
                 hTempSlider.pic1=17
@@ -635,7 +635,7 @@ Timer tmSerial
                                         }
                                         if(tId.txt=="cardGrid2")
                                         {
-                                            page cardGrid
+                                            page cardGrid2
                                         }
                                         if(tId.txt=="popupLight")
                                         {

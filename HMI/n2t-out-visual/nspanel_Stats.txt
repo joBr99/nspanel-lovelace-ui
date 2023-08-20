@@ -74,14 +74,14 @@ popupInSel
 	34   Component(s)
 	621  Line(s) of event code
 	297  Unique line(s) of event code
-screensaver
-	47   Component(s)
-	457  Line(s) of event code
-	327  Unique line(s) of event code
 cardPower
 	54   Component(s)
 	531  Line(s) of event code
 	349  Unique line(s) of event code
+screensaver
+	47   Component(s)
+	444  Line(s) of event code
+	316  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	516  Line(s) of event code
@@ -98,5 +98,5 @@ cardEntities
 Total
 	23   Page(s)
 	878  Component(s)
-	10421 Line(s) of event code
-	2421 Unique line(s) of event code
+	10408 Line(s) of event code
+	2418 Unique line(s) of event code

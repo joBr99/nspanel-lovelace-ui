@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-08-20 12:32:07.109670758 +0000
++++ /dev/fd/62	2023-08-20 12:42:27.830750069 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -59,13 +59,13 @@
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 38
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 38
 +14 +185,26 @@
 +e (string) type6
@@ -1270,7 +1270,7 @@
 +                             }
 +I/n2t-out/popupLight.txt
 ++ HMI/US/portrait/n2t-out/popupLight.txt
-+5 +48,15 @@
++3 +48,33 @@
 +     vis hTempSlider,0
 +     //disable color wheel components by default
 +     vis bColor,0
@@ -1287,11 +1287,15 @@
 +             b[sys0].pco=defaultFontColor
 +         }
 +         if(b[sys0].type==53&&defaultBcoColor==0)
-+5 +66,15 @@
++         {
++             b[sys0].pic=10
++             b[sys0].pic2=11
 +         }
 +     }
 +     if(defaultBcoColor==0)
 +     {
++         hBrightness.pic=24
++         hBrightness.pic1=25
 +         hBrightness.pic=14
 +         hBrightness.pic1=13
 +         hBrightness.pic2=15
@@ -1419,36 +1423,6 @@
 +                                 spstr strCommand.txt,tTmp.txt,"~",1
 +                                 covx tTmp.txt,tTime.bco,0,0
 +                                 if(tTime.bco!=screensaver.bco)
-+29 +673,14 @@
-+                                 }
-+                                 spstr strCommand.txt,tTmp.txt,"~",4
-+                                 if(tTmp.txt!="")
-+                                 {
-+                                     covx tTmp.txt,tNotifyText.pco,0,0
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="getBrightness")
-+                             {
-+                                 tSend.txt="event,getBrightnessResponse,"
-+                                 //send calc crc
-+                                 btlen tSend.txt,sys0
-+                                 crcrest 1,0xffff // reset CRC
-+                                 crcputh 55 bb
-+                                 crcputs sys0,2
-+                                 crcputs dim,0
-+                                 //send cmd
-+                                 printh 55 bb
-+                                 prints sys0,2
-+                                 prints tSend.txt,0
-+                                 prints crcval,2
-+                             }
-+                             if(tInstruction.txt=="pageType")
-+                             {
-+                                 dim=100
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
-+                                 //save second arg if there's one
 +I/n2t-out/screensaver2.txt
 ++ HMI/US/portrait/n2t-out/screensaver2.txt
 +7 +28,14 @@

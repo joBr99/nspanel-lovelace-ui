@@ -965,8 +965,13 @@ Hotspot m0
             }
             if(type1.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity1.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type1.txt=="fan")
             {
@@ -999,8 +1004,13 @@ Hotspot m1
             }
             if(type2.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity2.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type2.txt=="fan")
             {
@@ -1033,8 +1043,13 @@ Hotspot m2
             }
             if(type3.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity3.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type3.txt=="fan")
             {
@@ -1067,8 +1082,13 @@ Hotspot m3
             }
             if(type4.txt=="light")
             {
-                //popupLight.tEntity.txt=tEntity4.txt
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(type4.txt=="fan")
             {

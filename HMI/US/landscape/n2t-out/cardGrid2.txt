@@ -739,7 +739,13 @@ Timer tmLP
         Timer Event
             if(tTmp.txt=="light")
             {
-                page popupLight
+                if(featNewSliders==1)
+                {
+                    page popupLightNew
+                }else
+                {
+                    page popupLight
+                }
             }
             if(tTmp.txt=="fan")
             {
