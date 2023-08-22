@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.2.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 52 / v4.2.0 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -149,9 +149,9 @@ ReleaseNotes:
         - 12.08.2023 - v4.1.4.2  Add onStop function() to Schedules
         - 13.08.2023 - v4.1.4.3  Add InSel to popUpLight
         - 13.08.2023 - v4.1.4.4  Add Parameter inSel_ChoiceState to InSel to show/hide Focus
-	- 12.08.2023 - v4.2.0    Upgrade TFT 52 / 4.2.0
+	- 21.08.2023 - v4.2.0    Upgrade TFT 52 / 4.2.0
         - 21.08.2023 - v4.2.0    Add new alias state for iconcolor and buttontext for icon for subpages
-
+	- 22.08.2023 - v4.2.0.1  Add iconArray to Alias "Klimaanlage" (airCondition)
 	
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -685,6 +685,7 @@ let Buero_Klimaanlage = <PageThermo>
                 minValue: 50, 
                 maxValue: 250,
                 stepValue: 5,
+                iconArray: ['power-standby','air-conditioner','snowflake','fire','alpha-e-circle-outline','fan','water-percent','swap-vertical-bold'],
                 popupThermoMode1: ['Auto','0','1','2','3'],
                 popupThermoMode2: ['Auto','0','1','2','3','4','5'],
                 popupThermoMode3: ['Auto','Manual','Boost',],
@@ -692,6 +693,21 @@ let Buero_Klimaanlage = <PageThermo>
                 icon: 'fan',
                 setThermoAlias: ['MODE1','MODE2','MODE3'],
                 //setThermoDestTemp2: 'ACTUAL2'
+             }]
+};
+
+let Pool_Waermepumpe = <PageThermo>
+{
+    'type': 'cardThermo',
+    'heading': 'Pool Wärmepumpe',
+    'useColor': true,
+    'items': [<PageItem>{   
+                id: 'alias.0.NSPanel_1.Pool_Waermepumpe', 
+                minValue: 100, 
+                maxValue: 300,
+                stepValue: 5,
+                iconArray: ['power-standby','alpha-a-circle-outline','snowflake','fire'],
+                //iconArray: ['power-standby','air-conditioner','snowflake','fire','alpha-e-circle-outline','fan','water-percent','swap-vertical-bold'],
              }]
 };
 
@@ -3346,9 +3362,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                     iconColor = GetIconColor(pageItem, false, useColors);
                                 } else {
                                     iconColor = GetIconColor(pageItem, true, useColors);
-                                };
-                            };
-                            if (val === true || val === 'true') { iconId = iconId2; };
+                                }
+                            }
+                            if (val === true || val === 'true') { iconId = iconId2 };
                             break;
 
                         case 'blind':
@@ -3370,9 +3386,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                     iconColor = GetIconColor(pageItem, false, useColors);
                                 } else {
                                     iconColor = GetIconColor(pageItem, true, useColors);
-                                };
-                            };
-                            if (val === true || val === 'true') { iconId = iconId2; }                       
+                                }
+                            }
+                            if (val === true || val === 'true') { iconId = iconId2 };                       
                             break;
 
                         case 'info':
@@ -3387,9 +3403,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                     iconColor = GetIconColor(pageItem, false, useColors);
                                 } else {
                                     iconColor = GetIconColor(pageItem, true, useColors);
-                                };
-                            };
-                            if (val === true || val === 'true') { iconId = iconId2; }
+                                }
+                            }
+                            if (val === true || val === 'true') { iconId = iconId2 };
                             break;
 
                         case 'warning':
@@ -3986,7 +4002,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
         let id = page.items[0].id
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardThermo' });
-
+        
         // ioBroker
         if (existsObject(id)) {
             let o = getObject(id);
@@ -4023,6 +4039,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             //Attribute hinzufügen, wenn im Alias definiert
             let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
             let bt = ['~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~'];
+            
+            let tempIcon: string = '';
+            
             if ((i_list.length - 3) != 0) {
 
                 let i = 0;
@@ -4176,47 +4195,78 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                             if(stateKeyNumber == Mode) {
                                 statusStr = stateName.replace('_', ' ');
                             }
+
                             switch(stateName) {
                                 case 'AUTO':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[1] !== '') {
+                                        tempIcon = page.items[0].iconArray[1];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
+                                        tempIcon = 'air-conditioner';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~1024~1~' + 'AUTO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'AUTO' + '~';
                                     }
                                     break;
                                 case 'COOL':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[2] !== '') {
+                                        tempIcon = page.items[0].iconArray[2];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
+                                        tempIcon = 'snowflake';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'COOL' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'COOL' + '~';
                                     }
                                     break;
                                 case 'HEAT':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[3] !== '') {
+                                        tempIcon = page.items[0].iconArray[3];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
+                                        tempIcon = 'fire';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~64512~1~' + 'HEAT' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'HEAT' + '~';
                                     }
                                     break;
                                 case 'ECO':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
+                                        tempIcon = page.items[0].iconArray[4];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                                        tempIcon = 'alpha-e-circle-outline';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
                                     }
                                     break;
                                 case 'FAN_ONLY':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN_ONLY' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[5] !== '') {
+                                        tempIcon = page.items[0].iconArray[5];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN_ONLY' + '~';
+                                        tempIcon = 'fan';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'FAN_ONLY' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'FAN_ONLY' + '~';
                                     }
                                     break;
                                 case 'DRY':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[6] !== '') {
+                                        tempIcon = page.items[0].iconArray[6];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
+                                        tempIcon = 'water-percent';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~60897~1~' + 'DRY' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'DRY' + '~';
                                     }
                                     break;
                             }
@@ -4224,32 +4274,47 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                         }
                         
                         if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
+                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
+                                tempIcon = page.items[0].iconArray[4];
+                            } else {
+                                tempIcon = 'alpha-e-circle-outline';
+                            }
                             if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
-                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
                                 statusStr = 'ECO';
                             } else {
-                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
                             }
                             iconIndex++;
                         }
 
                         if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
-                            if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
-                                bt[7] = Icons.GetIcon('swap-vertical-bold') + '~2016~1~' + 'SWING' + '~';
+                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[7] !== '') {
+                                tempIcon = page.items[0].iconArray[7];
                             } else {
-                                bt[7] = Icons.GetIcon('swap-vertical-bold') + '~35921~0~' + 'SWING' + '~';
+                                tempIcon = 'swap-vertical-bold';
+                            }
+                            if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
+                                bt[7] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'SWING' + '~';
+                            } else {
+                                bt[7] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'SWING' + '~';
                             }
                             iconIndex++;
                         }
 
                         // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
                         if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[0] !== '') {
+                                tempIcon = page.items[0].iconArray[0];
+                            } else {
+                                tempIcon = 'power-standby';
+                            }
                             if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
-                                bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
+                                bt[0] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'POWER' + '~';
                                 statusStr = 'OFF';
                             }
                             else {
-                                bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
+                                bt[0] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'POWER' + '~';
                             }
                         }
                     }
@@ -4282,10 +4347,10 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                     + minTemp + '~'                                     // Thermostat Min-Temperatur
                     + maxTemp + '~'                                     // Thermostat Max-Temperatur
                     + stepTemp + '~'                                    // Schritte für Soll (5°C)
-                    + icon_res                                      // Icons Status
+                    + icon_res                                      	// Icons Status
                     + findLocale('thermostat', 'Currently') + '~'       // Bezeichner vor Aktueller Raumtemperatur
-                    + findLocale('thermostat', 'State') + '~~'           // Bezeichner vor State
-                    + temperatureUnit + '~'                      // iconTemperature dstTempTwoTempMode
+                    + findLocale('thermostat', 'State') + '~~'          // Bezeichner vor State
+                    + temperatureUnit + '~'                      	// iconTemperature dstTempTwoTempMode
                     + destTemp2 + '~'                                   // dstTempTwoTempMode --> Wenn Wert, dann 2 Temp
                     + thermoPopup                                       // PopUp
 
@@ -8337,8 +8402,9 @@ type PageItem = {
     popupType: (string | undefined),
     popupOptions: (string[] | undefined),
     useValue: (boolean | undefined),
-    monobutton: (boolean | undefined)
-    inSel_ChoiceState: (boolean | undefined)
+    monobutton: (boolean | undefined),
+    inSel_ChoiceState: (boolean | undefined),
+    iconArray: (string[] | undefined)
 }
 
 type DimMode = {
