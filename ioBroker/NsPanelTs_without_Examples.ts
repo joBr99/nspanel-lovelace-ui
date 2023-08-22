@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
-- abgestimmt auf TFT 51 / v4.1.4 / BerryDriver 8 / Tasmota 13.0.0
+TypeScript v4.2.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+- abgestimmt auf TFT 52 / v4.2.0 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -149,6 +149,7 @@ ReleaseNotes:
         - 12.08.2023 - v4.1.4.2  Add onStop function() to Schedules
         - 13.08.2023 - v4.1.4.3  Add InSel to popUpLight
         - 13.08.2023 - v4.1.4.4  Add Parameter inSel_ChoiceState to InSel to show/hide Focus
+	- 21.08.2023 - v4.2.0    Upgrade TFT 52 / 4.2.0
         - 21.08.2023 - v4.2.0    Add new alias state for iconcolor and buttontext for icon for subpages
 
 	
@@ -240,7 +241,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.1.4.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.2.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -842,8 +843,8 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.1.4';
-const desired_display_firmware_version = 51;
+const tft_version: string = 'v4.2.0';
+const desired_display_firmware_version = 52;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 
