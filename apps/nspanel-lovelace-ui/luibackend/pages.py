@@ -299,7 +299,7 @@ class LuiPagesGen(object):
             value = entity.state
             
             # limit value to 4 chars on us-p
-            if self._config.get("model") == "us-p":
+            if self._config.get("model") == "us-p" and cardType in ["cardGrid", "cardGrid2", "cardEntities"]:
                 value = entity.state[:4]
                 if value[-1] == ".":
                     value = value[:-1]
