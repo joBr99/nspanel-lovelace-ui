@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.2.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 52 / v4.2.0 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -152,6 +152,7 @@ ReleaseNotes:
 	- 21.08.2023 - v4.2.0    Upgrade TFT 52 / 4.2.0
         - 21.08.2023 - v4.2.0    Add new alias state for iconcolor and buttontext for icon for subpages
 	- 22.08.2023 - v4.2.0.1  Add iconArray to Alias "Klimaanlage" (airCondition)
+ 	- 23.08.2023 - v4.2.0.2  Add CardGrid2 with maxItems = 8
 	
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -169,6 +170,7 @@ Mögliche Seiten-Ansichten:
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
     cardEntities Page   - 4 vertikale angeordnete Steuerelemente - auch als Subpage
     cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
+    cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente - auch als Subpage    
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
@@ -2567,6 +2569,9 @@ function GeneratePage(page: Page): void {
             case 'cardGrid':
                 SendToPanel(GenerateGridPage(<PageGrid>page));
                 break;
+            case 'cardGrid2':
+                SendToPanel(GenerateGridPage2(<PageGrid2>page));
+                break;
             case 'cardMedia':
                 useMediaEvents = true;
                 SendToPanel(GenerateMediaPage(<PageMedia>page));
@@ -2697,6 +2702,16 @@ function GenerateGridPage(page: PageGrid): Payload[] {
     }
 }
 
+function GenerateGridPage2(page: PageGrid2): Payload[] {
+    try {
+        let out_msgs: Array<Payload> = [{ payload: 'pageType~cardGrid2' }];
+        out_msgs.push({ payload: GeneratePageElements(page) });
+        return out_msgs;
+    } catch (err) {
+        console.warn('error at function GenerateGridPage2: ' + err.message);
+    }
+}
+
 function GeneratePageElements(page: Page): string {
     try {
         activePage = page;
@@ -2731,6 +2746,9 @@ function GeneratePageElements(page: Page): string {
                 }
                 break;
             case 'cardGrid':
+                maxItems = 6;
+                break;
+            case 'cardGrid2':
                 maxItems = 8;
                 break;
         }
@@ -2873,7 +2891,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                     iconColor = GetIconColor(pageItem, true, useColors);
                                 }
                             }
-                            if (val === true || val === 'true') { iconId = iconId2 }                       
+                            if (val === true || val === 'true') { iconId = iconId2 };                       
                             break;
 
                         case 'info':
@@ -2890,7 +2908,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                     iconColor = GetIconColor(pageItem, true, useColors);
                                 }
                             }
-                            if (val === true || val === 'true') { iconId = iconId2 }
+                            if (val === true || val === 'true') { iconId = iconId2 };
                             break;
 
                         case 'warning':
@@ -7802,6 +7820,11 @@ interface PageGrid extends Page {
     items: PageItem[],
 }
 
+interface PageGrid2 extends Page {
+    type: 'cardGrid2',
+    items: PageItem[],
+}
+
 interface PageThermo extends Page {
     type: 'cardThermo',
     items: PageItem[],
@@ -7902,7 +7925,7 @@ type DimMode = {
 
 type ConfigButtonFunction = {
     mode: string | null,
-    page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock | null),
+    page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null),
     entity: string | null,
     setValue: string | number | null
 }
@@ -7920,8 +7943,8 @@ type Config = {
     defaultOnColor: RGB,
     defaultOffColor: RGB,
     defaultBackgroundColor: RGB,
-    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock )[],
-    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock)[],
+    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock )[],
+    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock)[],
     button1: ConfigButtonFunction,
     button2: ConfigButtonFunction
 }
