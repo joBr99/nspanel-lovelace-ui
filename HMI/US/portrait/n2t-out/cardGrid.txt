@@ -719,6 +719,17 @@ Timer tmSerial
                                         {
                                             // change icon
                                             spstr strCommand.txt,bEntity1.txt,"~",16
+                                            // way to get force font adjustment
+                                            strlen bEntity1.txt,sys0
+                                            //check 2nd last char for Â¬
+                                            substr bEntity1.txt,tTmp.txt,sys0-2,1
+                                            if(tTmp.txt=="Â¬")
+                                            {
+                                                substr bEntity1.txt,tTmp.txt,sys0-1,1
+                                                covx tTmp.txt,sys1,0,0
+                                                bEntity1.font=sys1
+                                                substr bEntity1.txt,bEntity1.txt,0,sys0-2
+                                            }
                                             vis bEntity1,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",17
@@ -740,6 +751,17 @@ Timer tmSerial
                                         {
                                             // change icon
                                             spstr strCommand.txt,bEntity2.txt,"~",22
+                                            // way to get force font adjustment
+                                            strlen bEntity2.txt,sys0
+                                            //check 2nd last char for Â¬
+                                            substr bEntity2.txt,tTmp.txt,sys0-2,1
+                                            if(tTmp.txt=="Â¬")
+                                            {
+                                                substr bEntity2.txt,tTmp.txt,sys0-1,1
+                                                covx tTmp.txt,sys1,0,0
+                                                bEntity2.font=sys1
+                                                substr bEntity2.txt,bEntity2.txt,0,sys0-2
+                                            }
                                             vis bEntity2,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",23
@@ -761,6 +783,17 @@ Timer tmSerial
                                         {
                                             // change icon
                                             spstr strCommand.txt,bEntity3.txt,"~",28
+                                            // way to get force font adjustment
+                                            strlen bEntity3.txt,sys0
+                                            //check 2nd last char for Â¬
+                                            substr bEntity3.txt,tTmp.txt,sys0-2,1
+                                            if(tTmp.txt=="Â¬")
+                                            {
+                                                substr bEntity3.txt,tTmp.txt,sys0-1,1
+                                                covx tTmp.txt,sys1,0,0
+                                                bEntity3.font=sys1
+                                                substr bEntity3.txt,bEntity3.txt,0,sys0-2
+                                            }
                                             vis bEntity3,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",29
@@ -782,6 +815,17 @@ Timer tmSerial
                                         {
                                             // change icon
                                             spstr strCommand.txt,bEntity4.txt,"~",34
+                                            // way to get force font adjustment
+                                            strlen bEntity4.txt,sys0
+                                            //check 2nd last char for Â¬
+                                            substr bEntity4.txt,tTmp.txt,sys0-2,1
+                                            if(tTmp.txt=="Â¬")
+                                            {
+                                                substr bEntity4.txt,tTmp.txt,sys0-1,1
+                                                covx tTmp.txt,sys1,0,0
+                                                bEntity4.font=sys1
+                                                substr bEntity4.txt,bEntity4.txt,0,sys0-2
+                                            }
                                             vis bEntity4,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",35
@@ -803,6 +847,17 @@ Timer tmSerial
                                         {
                                             // change icon
                                             spstr strCommand.txt,bEntity5.txt,"~",40
+                                            // way to get force font adjustment
+                                            strlen bEntity5.txt,sys0
+                                            //check 2nd last char for Â¬
+                                            substr bEntity5.txt,tTmp.txt,sys0-2,1
+                                            if(tTmp.txt=="Â¬")
+                                            {
+                                                substr bEntity5.txt,tTmp.txt,sys0-1,1
+                                                covx tTmp.txt,sys1,0,0
+                                                bEntity5.font=sys1
+                                                substr bEntity5.txt,bEntity5.txt,0,sys0-2
+                                            }
                                             vis bEntity5,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",41
@@ -824,6 +879,17 @@ Timer tmSerial
                                         {
                                             // change icon
                                             spstr strCommand.txt,bEntity6.txt,"~",46
+                                            // way to get force font adjustment
+                                            strlen bEntity6.txt,sys0
+                                            //check 2nd last char for Â¬
+                                            substr bEntity6.txt,tTmp.txt,sys0-2,1
+                                            if(tTmp.txt=="Â¬")
+                                            {
+                                                substr bEntity6.txt,tTmp.txt,sys0-1,1
+                                                covx tTmp.txt,sys1,0,0
+                                                bEntity6.font=sys1
+                                                substr bEntity6.txt,bEntity6.txt,0,sys0-2
+                                            }
                                             vis bEntity6,1
                                             // change icon color
                                             spstr strCommand.txt,tTmp.txt,"~",47
@@ -909,10 +975,6 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
-                                        }
-                                        if(tId.txt=="cardLChart")
-                                        {
-                                            page cardLChart
                                         }
                                     }
                                     if(tInstruction.txt=="time")
