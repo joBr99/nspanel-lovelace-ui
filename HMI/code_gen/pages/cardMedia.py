@@ -71,6 +71,19 @@ for i in range(1,7):
                 // change icon
                 spstr strCommand.txt,bEntity{i}.txt,"~",{idxstart+2}
                 vis bEntity{i},1
+
+                // way to get force font adjustment
+                strlen bEntity{i}.txt,sys0
+                //check 2nd last char for ¬
+                substr bEntity{i}.txt,tTmp.txt,sys0-2,1
+                if(tTmp.txt=="¬")
+                {{
+                  substr bEntity{i}.txt,tTmp.txt,sys0-1,1
+                  covx tTmp.txt,sys1,0,0
+                  bEntity{i}.font=sys1
+                  substr bEntity{i}.txt,bEntity{i}.txt,0,sys0-2
+                }}
+
                 // change icon color
                 spstr strCommand.txt,tTmp.txt,"~",{idxstart+3}
                 covx tTmp.txt,sys0,0,0
@@ -79,6 +92,7 @@ for i in range(1,7):
                 spstr strCommand.txt,tEntity{i}.txt,"~",{idxstart+4}
                 vis tEntity{i},1
               }}
+
 """
     print(item)
 foot = """
