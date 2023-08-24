@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.1.4.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @Sternmiere / @Britzelpuf / @ravenS0ne / @TT-Tom
-- abgestimmt auf TFT 51 / v4.1.4 / BerryDriver 8 / Tasmota 13.0.0
+TypeScript v4.2.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+- abgestimmt auf TFT 52 / v4.2.1 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -8,17 +8,17 @@ ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
 
-*******************************************************************************
+************************************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
-*******************************************************************************
+************************************************************************************************
 In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
 unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Dowengrade 
 durchführen und FlashNextion wiederholen.
-*******************************************************************************
+************************************************************************************************
 Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota-update-probleme
-*******************************************************************************
+************************************************************************************************
 
 ReleaseNotes:
     Bugfixes und Erweiterungen:
@@ -149,6 +149,12 @@ ReleaseNotes:
         - 12.08.2023 - v4.1.4.2  Add onStop function() to Schedules
         - 13.08.2023 - v4.1.4.3  Add InSel to popUpLight
         - 13.08.2023 - v4.1.4.4  Add Parameter inSel_ChoiceState to InSel to show/hide Focus
+	- 21.08.2023 - v4.2.0    Upgrade TFT 52 / 4.2.0
+        - 21.08.2023 - v4.2.0    Add new alias state for iconcolor and buttontext for icon for subpages
+	- 22.08.2023 - v4.2.0.1  Add iconArray to Alias "Klimaanlage" (airCondition)
+ 	- 23.08.2023 - v4.2.0.2  Add CardGrid2 with maxItems = 8
+        - 23.08.2023 - v4.2.1    Upgrade TFT 52 / 4.2.1
+ 	- 23.08.2023 - v4.2.1.1  Add WINDOWOPEN to cardThermo (Thermostat)
 
 	
 ***********************************************************************************************************
@@ -167,6 +173,7 @@ Mögliche Seiten-Ansichten:
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
     cardEntities Page   - 4 vertikale angeordnete Steuerelemente - auch als Subpage
     cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
+    cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente - auch als Subpage    
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
@@ -239,7 +246,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.1.4.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.2.1.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -841,8 +848,8 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.1.4';
-const desired_display_firmware_version = 51;
+const tft_version: string = 'v4.2.1';
+const desired_display_firmware_version = 52;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 
@@ -868,7 +875,7 @@ onStop (function scriptStop () {
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.0','4.3.0']
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.0']
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -2565,6 +2572,9 @@ function GeneratePage(page: Page): void {
             case 'cardGrid':
                 SendToPanel(GenerateGridPage(<PageGrid>page));
                 break;
+            case 'cardGrid2':
+                SendToPanel(GenerateGridPage2(<PageGrid2>page));
+                break;
             case 'cardMedia':
                 useMediaEvents = true;
                 SendToPanel(GenerateMediaPage(<PageMedia>page));
@@ -2695,6 +2705,16 @@ function GenerateGridPage(page: PageGrid): Payload[] {
     }
 }
 
+function GenerateGridPage2(page: PageGrid2): Payload[] {
+    try {
+        let out_msgs: Array<Payload> = [{ payload: 'pageType~cardGrid2' }];
+        out_msgs.push({ payload: GeneratePageElements(page) });
+        return out_msgs;
+    } catch (err) {
+        console.warn('error at function GenerateGridPage2: ' + err.message);
+    }
+}
+
 function GeneratePageElements(page: Page): string {
     try {
         activePage = page;
@@ -2729,6 +2749,9 @@ function GeneratePageElements(page: Page): string {
                 }
                 break;
             case 'cardGrid':
+                maxItems = 6;
+                break;
+            case 'cardGrid2':
                 maxItems = 8;
                 break;
         }
@@ -2756,6 +2779,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         }
 
         let name: string;
+        let buttonText: string = 'PRESS';
         let type: string;
 
         // ioBroker
@@ -2817,83 +2841,106 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
             
             if (pageItem.navigate) {
 
-                if (pageItem.id == null && pageItem.targetPage != undefined){
-                    let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+                if (pageItem.id == null && pageItem.targetPage != undefined) {
+                    buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
                     type = 'button';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
                     iconColor = GetIconColor(pageItem, true, useColors);
 
                     if (Debug) console.log('CreateEntity statisch Icon Navi  ~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText)
                     return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;
-                } else if (pageItem.id != null && pageItem.targetPage != undefined){
-                    let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+
+                } else if (pageItem.id != null && pageItem.targetPage != undefined) {
+
                     type = 'button';
-                    
+
                     switch (o.common.role) {
                         case 'socket':
                         case 'light':
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-                            optVal = '0';
+                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
 
-                            if (val === true || val === 'true') {
-                                optVal = '1';
-                                iconColor = GetIconColor(pageItem, true, useColors);
+                            buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
+                            if (existsState(pageItem.id + '.COLORDEC')) {
+                                iconColor = getState(pageItem.id + '.COLORDEC').val;
                             } else {
-                                iconColor = GetIconColor(pageItem, false, useColors);
-                                if (pageItem.icon !== undefined) {
-                                    if (pageItem.icon2 !== undefined) {
-                                        iconId = iconId2;
-                                    }
-                                }
-                            }
-                            break;                   
-                        case 'blind':
-                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
-                            iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
-                            break;
-                        case 'door':
-                        case 'window':
-                            if (existsState(pageItem.id + '.ACTUAL')) {
-                                if (getState(pageItem.id + '.ACTUAL').val) {
-                                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
+                                if (val === true || val === 'true') {
                                     iconColor = GetIconColor(pageItem, false, useColors);
                                 } else {
-                                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
                                     iconColor = GetIconColor(pageItem, true, useColors);
                                 }
                             }
+                            if (val === true || val === 'true') { iconId = iconId2 };
                             break;
+
+                        case 'blind':
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
+                            iconColor = existsState(pageItem.id + '.COLORDEC') ? getState(pageItem.id + '.COLORDEC').val : GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
+                            buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
+                            break;
+
+                        case 'door':
+                        case 'window':
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
+                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
+
+                            buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
+                            if (existsState(pageItem.id + '.COLORDEC')) {
+                                iconColor = getState(pageItem.id + '.COLORDEC').val;
+                            } else {
+                                if (val === true || val === 'true') {
+                                    iconColor = GetIconColor(pageItem, false, useColors);
+                                } else {
+                                    iconColor = GetIconColor(pageItem, true, useColors);
+                                }
+                            }
+                            if (val === true || val === 'true') { iconId = iconId2 };                       
+                            break;
+
                         case 'info':
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
-                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('gesture-tap-button');
-                            iconColor = GetIconColor(pageItem, true, useColors);
-                            if (val === true || val === 'true') {
-                                iconColor = GetIconColor(pageItem, true, useColors);
+                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
+
+                            buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
+                            if (existsState(pageItem.id + '.COLORDEC')) {
+                                iconColor = getState(pageItem.id + '.COLORDEC').val;
                             } else {
-                                iconColor = GetIconColor(pageItem, false, useColors);
-                                if (pageItem.icon !== undefined) {
-                                    if (pageItem.icon2 !== undefined) {
-                                        iconId = iconId2;
-                                    }
+                                if (val === true || val === 'true') {
+                                    iconColor = GetIconColor(pageItem, false, useColors);
+                                } else {
+                                    iconColor = GetIconColor(pageItem, true, useColors);
                                 }
-                            };
+                            }
+                            if (val === true || val === 'true') { iconId = iconId2 };
                             break;
+
+                        case 'warning':
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
+                            iconColor = pageItem.onColor !== undefined ? GetIconColor(pageItem, true, useColors) : getState(pageItem.id + '.LEVEL').val;
+                            name = pageItem.name !== undefined ? pageItem.name : getState(pageItem.id + '.INFO').val;
+                            break;
+
                         default:
-                            return '~delete~~~~~';
+                            buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
+                            iconColor = pageItem.onColor !== undefined ? GetIconColor(pageItem, true, useColors) : existsState(pageItem.id + '.COLORDEC') ? getState(pageItem.id + '.COLORDEC').val : 65535;
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
+                            break;
+                        //      return '~delete~~~~~';
                     }
+
                     if (Debug) console.log('CreateEntity Dynamische Icon Navi  ~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText)
-                    return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;   
+                    return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
+
                 } else {
                     type = 'button';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
                     iconColor = GetIconColor(pageItem, true, useColors);
-                    let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
+                    buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
 
                     if (Debug) console.log('CreateEntity Standard ~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText)
-                    return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;                    
-                } 
-            } 
+                    return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
+                }
+            }
  
             switch (o.common.role) {
                 case 'socket':
@@ -3461,7 +3508,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
         let id = page.items[0].id
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardThermo' });
-
+        
         // ioBroker
         if (existsObject(id)) {
             let o = getObject(id);
@@ -3498,6 +3545,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             //Attribute hinzufügen, wenn im Alias definiert
             let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
             let bt = ['~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~'];
+            
+            let tempIcon: string = '';
+            
             if ((i_list.length - 3) != 0) {
 
                 let i = 0;
@@ -3624,6 +3674,15 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                                         }
                                     } else i--;
                                     break;
+                                case 'WINDOWOPEN':
+                                    if (existsState(id + '.WINDOWOPEN') && getState(id + '.WINDOWOPEN').val != null) {
+                                        if (getState(id + '.WINDOWOPEN').val) {
+                                            bt[i - 1] = Icons.GetIcon('window-open-variant') + '~63488~1~' + 'WIN' + '~';
+                                        } else {
+                                            bt[i - 1] = Icons.GetIcon('window-closed-variant') + '~2016~1~' + 'WIN' + '~';
+                                        }
+                                    } else i--;
+                                    break;
                                 default:
                                     i--;
                                     break;
@@ -3651,47 +3710,78 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                             if(stateKeyNumber == Mode) {
                                 statusStr = stateName.replace('_', ' ');
                             }
+
                             switch(stateName) {
                                 case 'AUTO':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~1024~1~' + 'AUTO' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[1] !== '') {
+                                        tempIcon = page.items[0].iconArray[1];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('air-conditioner') + '~35921~0~' + 'AUTO' + '~';
+                                        tempIcon = 'air-conditioner';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~1024~1~' + 'AUTO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'AUTO' + '~';
                                     }
                                     break;
                                 case 'COOL':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~11487~1~' + 'COOL' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[2] !== '') {
+                                        tempIcon = page.items[0].iconArray[2];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('snowflake') + '~35921~0~' + 'COOL' + '~';
+                                        tempIcon = 'snowflake';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'COOL' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'COOL' + '~';
                                     }
                                     break;
                                 case 'HEAT':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('fire') + '~64512~1~' + 'HEAT' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[3] !== '') {
+                                        tempIcon = page.items[0].iconArray[3];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('fire') + '~35921~0~' + 'HEAT' + '~';
+                                        tempIcon = 'fire';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~64512~1~' + 'HEAT' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'HEAT' + '~';
                                     }
                                     break;
                                 case 'ECO':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
+                                        tempIcon = page.items[0].iconArray[4];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                                        tempIcon = 'alpha-e-circle-outline';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
                                     }
                                     break;
                                 case 'FAN_ONLY':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('fan') + '~11487~1~' + 'FAN_ONLY' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[5] !== '') {
+                                        tempIcon = page.items[0].iconArray[5];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('fan') + '~35921~0~' + 'FAN_ONLY' + '~';
+                                        tempIcon = 'fan';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'FAN_ONLY' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'FAN_ONLY' + '~';
                                     }
                                     break;
                                 case 'DRY':
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~60897~1~' + 'DRY' + '~';
+                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[6] !== '') {
+                                        tempIcon = page.items[0].iconArray[6];
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon('water-percent') + '~35921~0~' + 'DRY' + '~';
+                                        tempIcon = 'water-percent';
+                                    }
+                                    if(stateKeyNumber == Mode) {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~60897~1~' + 'DRY' + '~';
+                                    } else {
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'DRY' + '~';
                                     }
                                     break;
                             }
@@ -3699,32 +3789,47 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                         }
                         
                         if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
+                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
+                                tempIcon = page.items[0].iconArray[4];
+                            } else {
+                                tempIcon = 'alpha-e-circle-outline';
+                            }
                             if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
-                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~2016~1~' + 'ECO' + '~';
+                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
                                 statusStr = 'ECO';
                             } else {
-                                bt[iconIndex] = Icons.GetIcon('alpha-e-circle-outline') + '~35921~0~' + 'ECO' + '~';
+                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
                             }
                             iconIndex++;
                         }
 
                         if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
-                            if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
-                                bt[7] = Icons.GetIcon('swap-vertical-bold') + '~2016~1~' + 'SWING' + '~';
+                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[7] !== '') {
+                                tempIcon = page.items[0].iconArray[7];
                             } else {
-                                bt[7] = Icons.GetIcon('swap-vertical-bold') + '~35921~0~' + 'SWING' + '~';
+                                tempIcon = 'swap-vertical-bold';
+                            }
+                            if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
+                                bt[7] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'SWING' + '~';
+                            } else {
+                                bt[7] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'SWING' + '~';
                             }
                             iconIndex++;
                         }
 
                         // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
                         if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[0] !== '') {
+                                tempIcon = page.items[0].iconArray[0];
+                            } else {
+                                tempIcon = 'power-standby';
+                            }
                             if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
-                                bt[0] = Icons.GetIcon('power-standby') + '~35921~0~' + 'POWER' + '~';
+                                bt[0] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'POWER' + '~';
                                 statusStr = 'OFF';
                             }
                             else {
-                                bt[0] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
+                                bt[0] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'POWER' + '~';
                             }
                         }
                     }
@@ -3757,10 +3862,10 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                     + minTemp + '~'                                     // Thermostat Min-Temperatur
                     + maxTemp + '~'                                     // Thermostat Max-Temperatur
                     + stepTemp + '~'                                    // Schritte für Soll (5°C)
-                    + icon_res                                      // Icons Status
+                    + icon_res                                      	// Icons Status
                     + findLocale('thermostat', 'Currently') + '~'       // Bezeichner vor Aktueller Raumtemperatur
-                    + findLocale('thermostat', 'State') + '~~'           // Bezeichner vor State
-                    + temperatureUnit + '~'                      // iconTemperature dstTempTwoTempMode
+                    + findLocale('thermostat', 'State') + '~~'          // Bezeichner vor State
+                    + temperatureUnit + '~'                      	// iconTemperature dstTempTwoTempMode
                     + destTemp2 + '~'                                   // dstTempTwoTempMode --> Wenn Wert, dann 2 Temp
                     + thermoPopup                                       // PopUp
 
@@ -7727,6 +7832,11 @@ interface PageGrid extends Page {
     items: PageItem[],
 }
 
+interface PageGrid2 extends Page {
+    type: 'cardGrid2',
+    items: PageItem[],
+}
+
 interface PageThermo extends Page {
     type: 'cardThermo',
     items: PageItem[],
@@ -7812,8 +7922,9 @@ type PageItem = {
     popupType: (string | undefined),
     popupOptions: (string[] | undefined),
     useValue: (boolean | undefined),
-    monobutton: (boolean | undefined)
-    inSel_ChoiceState: (boolean | undefined)
+    monobutton: (boolean | undefined),
+    inSel_ChoiceState: (boolean | undefined),
+    iconArray: (string[] | undefined)
 }
 
 type DimMode = {
@@ -7826,7 +7937,7 @@ type DimMode = {
 
 type ConfigButtonFunction = {
     mode: string | null,
-    page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock | null),
+    page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null),
     entity: string | null,
     setValue: string | number | null
 }
@@ -7844,8 +7955,8 @@ type Config = {
     defaultOnColor: RGB,
     defaultOffColor: RGB,
     defaultBackgroundColor: RGB,
-    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock )[],
-    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PagePower | PageChart | PageUnlock)[],
+    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock )[],
+    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock)[],
     button1: ConfigButtonFunction,
     button2: ConfigButtonFunction
 }
