@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
-- abgestimmt auf TFT 52 / v4.2.0 / BerryDriver 8 / Tasmota 13.1.0
+TypeScript v4.2.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+- abgestimmt auf TFT 52 / v4.2.1 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -8,17 +8,17 @@ ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
 WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
 
-*******************************************************************************
+************************************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
-*******************************************************************************
+************************************************************************************************
 In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
 unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Dowengrade 
 durchführen und FlashNextion wiederholen.
-*******************************************************************************
+************************************************************************************************
 Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota-update-probleme
-*******************************************************************************
+************************************************************************************************
 
 ReleaseNotes:
     Bugfixes und Erweiterungen:
@@ -153,6 +153,9 @@ ReleaseNotes:
         - 21.08.2023 - v4.2.0    Add new alias state for iconcolor and buttontext for icon for subpages
 	- 22.08.2023 - v4.2.0.1  Add iconArray to Alias "Klimaanlage" (airCondition)
  	- 23.08.2023 - v4.2.0.2  Add CardGrid2 with maxItems = 8
+        - 23.08.2023 - v4.2.1    Upgrade TFT 52 / 4.2.1
+ 	- 23.08.2023 - v4.2.1.1  Add WINDOWOPEN to cardThermo (Thermostat)
+
 	
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -243,7 +246,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.2.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.2.1.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -845,7 +848,7 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.2.0';
+const tft_version: string = 'v4.2.1';
 const desired_display_firmware_version = 52;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -872,7 +875,7 @@ onStop (function scriptStop () {
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.0','4.3.0']
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.0']
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -3668,6 +3671,15 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                                             bt[i - 1] = Icons.GetIcon('briefcase-check') + '~2016~1~' + 'WORK' + '~';
                                         } else {
                                             bt[i - 1] = Icons.GetIcon('briefcase-check') + '~33840~1~' + 'WORK' + '~';
+                                        }
+                                    } else i--;
+                                    break;
+                                case 'WINDOWOPEN':
+                                    if (existsState(id + '.WINDOWOPEN') && getState(id + '.WINDOWOPEN').val != null) {
+                                        if (getState(id + '.WINDOWOPEN').val) {
+                                            bt[i - 1] = Icons.GetIcon('window-open-variant') + '~63488~1~' + 'WIN' + '~';
+                                        } else {
+                                            bt[i - 1] = Icons.GetIcon('window-closed-variant') + '~2016~1~' + 'WIN' + '~';
                                         }
                                     } else i--;
                                     break;
