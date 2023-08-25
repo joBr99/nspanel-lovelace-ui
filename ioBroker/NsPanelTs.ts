@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.2.1.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 52 / v4.2.1 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -155,6 +155,9 @@ ReleaseNotes:
  	- 23.08.2023 - v4.2.0.2  Add CardGrid2 with maxItems = 8
         - 23.08.2023 - v4.2.1    Upgrade TFT 52 / 4.2.1
  	- 23.08.2023 - v4.2.1.1  Add WINDOWOPEN to cardThermo (Thermostat)
+
+  	Next Release od DEV (always implemented)
+  	- 25.08.2023 - v4.3.0  Add Parameter fontSize (0-4) to cardGrid (with useValue)
 
 	
 ***********************************************************************************************************
@@ -3736,7 +3739,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     }
 
                     if (pageItem.useValue) {
-                        iconId = optVal; 
+                        if (pageItem.fontSize != undefined) {
+                            iconId = optVal + '¬' + pageItem.fontSize; 
+                        } else {
+                            iconId = optVal; 
+                        }
                     }
 
                     if (Debug) console.log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat');
@@ -8439,7 +8446,8 @@ type PageItem = {
     useValue: (boolean | undefined),
     monobutton: (boolean | undefined),
     inSel_ChoiceState: (boolean | undefined),
-    iconArray: (string[] | undefined)
+    iconArray: (string[] | undefined),
+    fontSize: (number | undefined),
 }
 
 type DimMode = {
