@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.1.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.2.1.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 52 / v4.2.1 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -155,9 +155,12 @@ ReleaseNotes:
  	- 23.08.2023 - v4.2.0.2  Add CardGrid2 with maxItems = 8
         - 23.08.2023 - v4.2.1    Upgrade TFT 52 / 4.2.1
  	- 23.08.2023 - v4.2.1.1  Add WINDOWOPEN to cardThermo (Thermostat)
+        - 25.08.2023 - v4.2.1.2  Add Parameter fontSize for v4.3.0
+        - 27.08.2023 - v4.2.1.3  Add MQTT-Port-Check (use with exec) --> function CheckMQTTPorts()
+        - 27.08.2023 - v4.2.1.3  Add MQTT-Port-Check for ServiceMenu
 
-  	Next Release od DEV (always implemented)
-  	- 25.08.2023 - v4.3.0  Add Parameter fontSize (0-4) to cardGrid (with useValue)
+        Next Release with TFT DEV (always implemented)
+        - 25.08.2023 - v4.3.0  Add Parameter fontSize (0-4) to cardGrid (with useValue)
 
 	
 ***********************************************************************************************************
@@ -626,7 +629,8 @@ let NSPanel_Service = <PageEntities>
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'Config.ScripgtDebugStatus', name: 'Debugmodus (aus/an)' ,icon: 'code-tags-check', offColor: HMIOff, onColor: HMIOn},
+                        <PageItem>{ id: AliasPath + 'Config.ScripgtDebugStatus', name: 'Debugmode (aus/an)' ,icon: 'code-tags-check', offColor: HMIOff, onColor: HMIOn},
+                        <PageItem>{ id: AliasPath + 'Config.MQTT.portCheck', name: 'Port-Check (aus/an)' ,icon: 'check-network', offColor: HMIOff, onColor: HMIOn},
                     ]
                 };
 
@@ -875,6 +879,56 @@ onStop (function scriptStop () {
     if (scheduleInitDimModeDay!=null) clearSchedule(scheduleInitDimModeDay);
     if (scheduleInitDimModeNight!=null) clearSchedule(scheduleInitDimModeNight);
 }, 1000);
+
+async function CheckMQTTPorts() {
+    try {
+        let instanceName: string = config.panelRecvTopic.substring(0,6);
+        
+        await createStateAsync(NSPanel_Path + 'Config.MQTT.portCheck', true, { type: 'boolean' });
+        setObject(AliasPath + 'Config.MQTT.portCheck', {type: 'channel', common: {role: 'socket', name:'mqttPortCheck'}, native: {}});
+        await createAliasAsync(AliasPath + 'Config.MQTT.portCheck.ACTUAL', NSPanel_Path + 'Config.MQTT.portCheck', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
+        await createAliasAsync(AliasPath + 'Config.MQTT.portCheck.SET', NSPanel_Path + 'Config.MQTT.portCheck', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
+
+        if (getState(NSPanel_Path + 'Config.MQTT.portCheck').val) {
+            let adapterArray: any = [];
+            let portArray: any = [];
+            exec('iob l i --port --enabled', async (error, result, stderr) => {
+                if (error == null){
+                    if (result != undefined) {
+                        console.log('Start MQTT-Port-Check -------------------------------------');
+                        let resultString1 = result.split('+');
+                        for (let i: number = 1; i < resultString1.length -1; i++) {
+                            let resultString2: any = resultString1[i].split(':')
+                            let adapterInstanceName: string = resultString2[0].substring(16);
+                            let adapterInstancePort: string = resultString2[3].substring(1,5);
+                            console.log('-- '+ adapterInstanceName + ' - ' +  adapterInstancePort);
+                            adapterArray[i] = adapterInstanceName.trim();
+                            portArray[i] = adapterInstancePort.trim();
+                        }
+                        let mqttInstance = adapterArray.indexOf(instanceName);
+                        for (let j: number = 1; j < portArray.length; j++) {
+                            if (portArray[j] == portArray[mqttInstance] && adapterArray[j] == adapterArray[mqttInstance]) {
+                                console.log('- MQTT-Port-Check OK: Instance of Adapter: ' + adapterArray[j] + ' is running on Port:' + portArray[j]);
+                            } else if (portArray[j] == portArray[mqttInstance] && adapterArray[j] != adapterArray[mqttInstance]) {     
+                                console.warn('Instance of Adapter: ' + adapterArray[j] + ' is running on same Port:' + portArray[j] + ' as ' + adapterArray[mqttInstance]);
+                                console.warn('Please Change Port of Instance: ' + adapterArray[j]);
+                            }
+                        }
+                        console.log('End MQTT-Port-Check ---------------------------------------');
+                    }
+                    
+                } else if (error.toString().substring(0,21) == 'exec is not available') {
+                    console.warn('MQTT-Portcheck not possible - exec is not available. Please enable exec option in JS-Adapter instance settings');
+                    console.warn('MQTT-Portcheck nicht möglich - exec ist nicht verfügbar. Bitte Haken bei -- Kommando Exec erlauben -- in JS-Adapter-Instanz setzen');
+                }   
+            });
+        }
+    } catch (err) { 
+        console.warn('error at function CheckMQTTPorts: ' + err.message); 
+    }
+}
+
+CheckMQTTPorts();
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53]
