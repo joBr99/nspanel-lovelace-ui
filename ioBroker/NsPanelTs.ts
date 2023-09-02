@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.1.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.2.1.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 52 / v4.2.1 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -158,9 +158,15 @@ ReleaseNotes:
         - 25.08.2023 - v4.2.1.2  Add Parameter fontSize for v4.3.0
         - 27.08.2023 - v4.2.1.3  Add MQTT-Port-Check (use with exec) --> function CheckMQTTPorts()
         - 27.08.2023 - v4.2.1.3  Add MQTT-Port-Check for ServiceMenu
+        - 01.09.2023 - v4.2.1.4  Fix iconId2 in Alias door/window
+        - 02.09.2023 - v4.2.1.4  Add dynamically USERICON to Alias info
+
+        Todo
+        - XX.XX.XXXX - v4.3.0    Fix Debug with 0_userdata.0... 
+        - XX.XX.XXXX - v4.3.0    Add minValue/maxValue to Blinds
 
         Next Release with TFT DEV (always implemented)
-        - 25.08.2023 - v4.3.0  Add Parameter fontSize (0-4) to cardGrid (with useValue)
+        - 25.08.2023 - v4.3.0    Add Parameter fontSize (0-4) to cardGrid (with useValue)
 
 	
 ***********************************************************************************************************
@@ -3710,6 +3716,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             windowState = findLocale('window', 'opened');
                         } else {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
+                            iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
                             iconColor = GetIconColor(pageItem, true, useColors);
                             windowState = findLocale('window', 'closed');
                         }
@@ -3749,7 +3756,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                 case 'thermostat':
                     type = 'text';
+
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
+     
                     let unit = '';
                     optVal = '0';
 
@@ -3790,6 +3799,12 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             let valueScaletemp = (Math.round(valueScale)).toFixed();
                             iconColor = HandleColorScale(valueScaletemp);
                         }
+                    }
+
+                    if (existsState(pageItem.id + '.USERICON')) {
+                        iconId = Icons.GetIcon(getState(pageItem.id + '.USERICON').val);
+                        console.log(iconId);
+                        RegisterEntityWatcher(pageItem.id + '.USERICON');
                     }
 
                     if (pageItem.useValue) {
