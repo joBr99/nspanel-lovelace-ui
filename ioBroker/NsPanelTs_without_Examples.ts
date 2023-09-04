@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.1.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.2.1.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 52 / v4.2.1 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -160,10 +160,8 @@ ReleaseNotes:
         - 27.08.2023 - v4.2.1.3  Add MQTT-Port-Check for ServiceMenu
         - 01.09.2023 - v4.2.1.4  Fix iconId2 in Alias door/window
         - 02.09.2023 - v4.2.1.4  Add dynamically USERICON to Alias info
-
-        Todo
-        - XX.XX.XXXX - v4.3.0    Fix Debug with 0_userdata.0... 
-        - XX.XX.XXXX - v4.3.0    Add minValue/maxValue to Blinds
+        - 04.09.2023 - v4.2.1.5    Fix Debug with 0_userdata.0... 
+        - 04.09.2023 - v4.2.1.5    Add minValue/maxValue to Blinds
 
         Next Release with TFT DEV (always implemented)
         - 25.08.2023 - v4.3.0    Add Parameter fontSize (0-4) to cardGrid (with useValue)
@@ -266,7 +264,7 @@ let Icons = new IconsSelector();
 let timeoutSlider: any;
 let vwIconColor = [];
 let weatherForecast: boolean;
-let Debug: boolean = false;
+let Debug: boolean;
 
 // Ab hier Anpassungen vornehmen
 
@@ -886,6 +884,28 @@ onStop (function scriptStop () {
     if (scheduleInitDimModeNight!=null) clearSchedule(scheduleInitDimModeNight);
 }, 1000);
 
+async function CheckDebugMode() {
+    try {
+
+        await createStateAsync(NSPanel_Path + 'Config.ScripgtDebugStatus', false, { type: 'boolean' });
+        setObject(AliasPath + 'Config.ScripgtDebugStatus', {type: 'channel', common: {role: 'socket', name:'ScripgtDebugStatus'}, native: {}});
+        await createAliasAsync(AliasPath + 'Config.ScripgtDebugStatus.ACTUAL', NSPanel_Path + 'Config.ScripgtDebugStatus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
+        await createAliasAsync(AliasPath + 'Config.ScripgtDebugStatus.SET', NSPanel_Path + 'Config.ScripgtDebugStatus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
+
+        if(getState(NSPanel_Path + 'Config.ScripgtDebugStatus').val){
+            Debug = true;
+            console.log('Debugmodus aktiviert');
+        }else{
+            Debug = false;
+            console.log('Debugmodus deaktiviert');
+        }
+
+    } catch (err) {
+        console.warn('error at function CheckDebugModus: ' + err.message); 
+    } 
+}
+CheckDebugMode();
+
 async function CheckMQTTPorts() {
     try {
         let instanceName: string = config.panelRecvTopic.substring(0,6);
@@ -1034,13 +1054,6 @@ async function InitConfigParameters() {
             setObject(AliasPath + 'Config.temperatureUnitNumber', {type: 'channel', common: {role: 'buttonSensor', name:'temperatureUnitNumber'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.temperatureUnitNumber.VALUE', NSPanel_Path + 'Config.temperatureUnitNumber', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'VALUE' });
         }
-        // Script Debug - Medlungen socket
-        if (existsObject(NSPanel_Path + 'Config.ScripgtDebugStatus') == false) {
-            await createStateAsync(NSPanel_Path + 'Config.ScripgtDebugStatus', false, { type: 'boolean' });
-            setObject(AliasPath + 'Config.ScripgtDebugStatus', {type: 'channel', common: {role: 'socket', name:'ScripgtDebugStatus'}, native: {}});
-            await createAliasAsync(AliasPath + 'Config.ScripgtDebugStatus.ACTUAL', NSPanel_Path + 'Config.ScripgtDebugStatus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
-            await createAliasAsync(AliasPath + 'Config.ScripgtDebugStatus.SET', NSPanel_Path + 'Config.ScripgtDebugStatus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
-        }
     } catch (err) { 
         console.warn('error at function InitConfigParameters: ' + err.message); 
     }
@@ -1049,6 +1062,7 @@ InitConfigParameters();
 
 on({id: [].concat(NSPanel_Path + 'Config.ScripgtDebugStatus'), change: "ne"}, async function (obj) {
     try {
+        obj.state.val ? console.log('Debugmodus aktiviert') : console.log('Debugmodus deaktiviert');
         Debug = obj.state.val
     } catch (err) { 
         console.warn('error at Trigger ScripgtDebugStatus: ' + err.message); 
@@ -5240,7 +5254,14 @@ function HandleButtonEvent(words: any): void {
             case 'positionSlider':
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                 timeoutSlider = setTimeout(async function () {
-                    setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                    let pageItem = findPageItem(id);
+                    if (pageItem.minValueLevel != undefined && pageItem.maxValueLevel != undefined) {
+                        let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueLevel, pageItem.minValueLevel));
+                        setIfExists(id + '.SET', sliderPos) ? true : setIfExists(id + '.ACTUAL', sliderPos);
+                    } else {
+                        setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                    }
+                //    setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
                 }, 250);
                 break;
             case 'tiltOpen':
@@ -5255,7 +5276,14 @@ function HandleButtonEvent(words: any): void {
             case 'tiltSlider':
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                 timeoutSlider = setTimeout(async function () {
-                    setIfExists(id + '.TILT_SET', parseInt(words[4])) ? true : setIfExists(id + '.TILT_ACTUAL', parseInt(words[4]));
+                    let pageItem = findPageItem(id);
+                    if (pageItem.minValueTilt != undefined && pageItem.maxValueTilt != undefined) {
+                        let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueTilt, pageItem.minValueTilt));
+                        setIfExists(id + '.TILT_SET', sliderPos) ? true : setIfExists(id + '.TILT_ACTUAL', sliderPos);
+                    } else {
+                        setIfExists(id + '.TILT_SET', parseInt(words[4])) ? true : setIfExists(id + '.TILT_ACTUAL', parseInt(words[4]));
+                    }
+                    //    setIfExists(id + '.TILT_SET', parseInt(words[4])) ? true : setIfExists(id + '.TILT_ACTUAL', parseInt(words[4]));
                 }, 250);
                 break;
             case 'brightnessSlider':
@@ -6241,15 +6269,33 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     tilt_position = getState(id + '.TILT_SET').val;
                     RegisterDetailEntityWatcher(id + '.TILT_SET', pageItem, type);
                 }
+                
+                let min_Level: number = 0;
+                let max_Level: number = 100;
+                if (pageItem.minValueLevel !== undefined && pageItem.maxValueLevel !== undefined) {
+                    min_Level = pageItem.minValueLevel;
+                    max_Level = pageItem.maxValueLevel;
+                    val = Math.trunc(scale(getState(id + '.ACTUAL').val, pageItem.minValueLevel, pageItem.maxValueLevel, 100, 0));
+                }
+                let min_Tilt: number = 0; 
+                let max_Tilt: number = 100;  
+                if (pageItem.minValueTilt !== undefined && pageItem.maxValueTilt !== undefined) {
+                    min_Tilt = pageItem.minValueTilt;
+                    max_Tilt = pageItem.maxValueTilt;
+                    tilt_position = Math.trunc(scale(getState(id + '.TILT_ACTUAL').val, pageItem.minValueTilt, pageItem.maxValueTilt, 100, 0));
+                }
+
+                if (Debug) console.log ('minLevel '+ min_Level + ' maxLevel ' + max_Level + ' Level ' + val);
+                if (Debug) console.log ('minTilt '+ min_Tilt + ' maxTilt ' + max_Tilt + ' TiltPosition ' + tilt_position);
 
                 let textSecondRow = '';
                 let icon_id = icon;
                 let icon_up = Icons.GetIcon('arrow-up');
                 let icon_stop = Icons.GetIcon('stop');
                 let icon_down = Icons.GetIcon('arrow-down');
-                let icon_up_status = getState(id + '.ACTUAL').val != 100 ? 'enable' : 'disable';
+                let icon_up_status = getState(id + '.ACTUAL').val != max_Level ? 'enable' : 'disable';
                 let icon_stop_status = 'enable';
-                let icon_down_status = getState(id + '.ACTUAL').val != 0 ? 'enable' : 'disable';
+                let icon_down_status = getState(id + '.ACTUAL').val != min_Level ? 'enable' : 'disable';
                 let textTilt = '';
                 let iconTiltLeft = '';
                 let iconTiltStop = '';
@@ -6264,9 +6310,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     iconTiltLeft = Icons.GetIcon('arrow-top-right');
                     iconTiltStop = Icons.GetIcon('stop');
                     iconTiltRight = Icons.GetIcon('arrow-bottom-left');
-                    iconTiltLeftStatus = getState(id + '.TILT_ACTUAL').val != 100 ? 'enable' : 'disable';
+                    iconTiltLeftStatus = getState(id + '.TILT_ACTUAL').val != max_Tilt ? 'enable' : 'disable';
                     iconTiltStopStatus = 'enable';
-                    iconTiltRightStatus = getState(id + '.TILT_ACTUAL').val != 0 ? 'enable' : 'disable';
+                    iconTiltRightStatus = getState(id + '.TILT_ACTUAL').val != min_Tilt ? 'enable' : 'disable';
                     tilt_pos = tilt_position;
                 }
 
@@ -7960,6 +8006,10 @@ type PageItem = {
     maxValueBrightness: (number | undefined),
     minValueColorTemp: (number | undefined),
     maxValueColorTemp: (number | undefined),
+    minValueLevel: (number | undefined),
+    maxValueLevel: (number | undefined),
+    minValueTilt: (number | undefined),
+    maxValueTilt: (number | undefined),
     minValue: (number | undefined),
     maxValue: (number | undefined),
     stepValue: (number | undefined),
