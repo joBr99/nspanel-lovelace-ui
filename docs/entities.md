@@ -18,6 +18,7 @@ key | optional | type | default | description
 `status` | True | string | `None` | Only valid for navigate and service items, adds a entity to track state for the icon
 `assumed_state` | True | string | `None` | Only for cover items, up, down and stop buttons are always shown
 `action_name` | True | string | `None` | Only valid for script; Button label
+`font` | True | string | `None` | Used to change the font for cardGrid Icons; valid values are (`small`, `medium-icon` and `medium`). Currently only supported for homeassistant entities and not for internal ones.
 `effectList` | True | string | `None` | Only valid for light; for example `[Android, Aurora` (fav list for effects)
 
 
