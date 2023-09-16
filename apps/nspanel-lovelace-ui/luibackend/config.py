@@ -24,6 +24,7 @@ class Entity(object):
         self.assumedState  = entity_input_config.get("assumed_state", False)
         self.stype         = entity_input_config.get("type")
         self.value         = entity_input_config.get("value")
+        self.font          = entity_input_config.get("font")
         self.data  = entity_input_config.get("data", {})
         self.entity_input_config = entity_input_config
 
