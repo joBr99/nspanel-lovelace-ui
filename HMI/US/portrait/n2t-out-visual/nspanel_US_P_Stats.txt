@@ -14,6 +14,10 @@ popupNotify
 	19   Component(s)
 	267  Line(s) of event code
 	172  Unique line(s) of event code
+pageStartup
+	19   Component(s)
+	198  Line(s) of event code
+	137  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	516  Line(s) of event code
@@ -42,10 +46,6 @@ cardLChart
 	33   Component(s)
 	402  Line(s) of event code
 	266  Unique line(s) of event code
-pageStartup
-	19   Component(s)
-	198  Line(s) of event code
-	137  Unique line(s) of event code
 popupShutter
 	25   Component(s)
 	402  Line(s) of event code

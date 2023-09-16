@@ -389,7 +389,7 @@ Text tVersion
         Horizontal Alignment: center
         Vertical Alignment  : center
         Input Type          : character
-        Text                : 52
+        Text                : 53
         Max. Text Size      : 10
         Word wrap           : disabled
         Horizontal Spacing  : 0
