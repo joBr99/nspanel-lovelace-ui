@@ -405,6 +405,20 @@ class LuiPagesGen(object):
                 entityTypePanel = ""
             if "entityId" in mask:
                 entityId = ""
+        # change font on cardgrid
+        if item.font:
+            font = 0
+            if item.font == "small":
+                font = 0
+            else if item.font == "medium-icon":
+                font = 1
+            else if item.font == "medium":
+                font = 2
+            else if item.font == "large":
+                font = 3
+            else if isinstance(item.font, int):
+                font = item.font
+            icon_id += f'{icon_id}¬{font}'
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
     def generate_entities_page(self, navigation, heading, items, cardType, tempUnit):
