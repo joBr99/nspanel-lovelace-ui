@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.1.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
-- abgestimmt auf TFT 52 / v4.2.1 / BerryDriver 8 / Tasmota 13.1.0
+TypeScript v4.3.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+- abgestimmt auf TFT 53 / v4.3.1 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -165,9 +165,8 @@ ReleaseNotes:
         - 15.09.2023 - v4.2.1.6  Fix ServicePage Dimmode 'next' -> 'home'
         - 15.09.2023 - v4.2.1.6  Fix Log '.USERICON' to Debug.log
         - 15.09.2023 - v4.2.1.6  Fix Link PowerIcon to Alias (Thermocard)
-
-        Next Release with TFT DEV (always implemented)
-        - xx.xx.2023 - v4.3.0    Add Parameter fontSize (0-4) to cardGrid (with useValue)
+        - 17.09.2023 - v4.3.1    Upgrade TFT 53 / 4.3.1
+        - 17.09.2023 - v4.3.1.1  Add Parameter fontSize (0-4) to cardGrid (with useValue)
 
 	
 ***********************************************************************************************************
@@ -259,7 +258,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.2.1.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.1.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -1377,8 +1376,8 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.2.1';
-const desired_display_firmware_version = 52;
+const tft_version: string = 'v4.3.1';
+const desired_display_firmware_version = 53;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 
@@ -1475,8 +1474,8 @@ async function CheckMQTTPorts() {
 CheckMQTTPorts();
 
 async function Init_Release() {
-    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.0']
+    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53,54,55];
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.1','4.4.0','4.5.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
