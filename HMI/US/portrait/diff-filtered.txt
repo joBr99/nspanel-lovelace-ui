@@ -1,4 +1,3 @@
-+++ /dev/fd/62	2023-09-16 10:55:16.569411880 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
