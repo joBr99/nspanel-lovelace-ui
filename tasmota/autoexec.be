@@ -109,7 +109,7 @@ class Nextion : Driver
         log("FLH: Read block",3)
         while size(self.flash_buff)<self.flash_block_size && self.tcp.connected()
             if self.tcp.available()>0
-                self.flash_buff += self.tcp.readbytes()
+                self.flash_buff += self.tcp.readbytes(4096)
             else
                 tasmota.delay(50)
                 log("FLH: Wait for available...",3)
@@ -321,7 +321,7 @@ tasmota.add_driver(nextion)
 
 def get_current_version(cmd, idx, payload, payload_json)
     import string
-    var version_of_this_script = 8
+    var version_of_this_script = 9
     var jm = string.format("{\"nlui_driver_version\":\"%s\"}", version_of_this_script)
     tasmota.publish_result(jm, "RESULT")
 end
