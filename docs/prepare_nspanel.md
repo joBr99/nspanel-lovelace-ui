@@ -27,10 +27,13 @@ After a reboot of tasmota your screen will light up with the stock display firmw
 Go to `Consoles` > `Console` in Tasmota and execute the following command:
 
 ```
-Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
+Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; SetOption151 0;Restart 1
 ```
 
 This will download the autoexec.be file from the repository and restart tasmota.
+
+Note: The command is also disabling matter to free up memory, as it's most likely not used by any homeassistant users anyway.
+(Matter could cause memory issues during flashing of the Nextion Screen, but you can still enable it if you need to.)
 
 ## Flash Firmware to Nextion Screen
 
