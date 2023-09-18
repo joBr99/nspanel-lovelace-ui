@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.2.1.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
-- abgestimmt auf TFT 52 / v4.2.1 / BerryDriver 8 / Tasmota 13.1.0
+TypeScript v4.3.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+- abgestimmt auf TFT 53 / v4.3.1 / BerryDriver 8 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -139,8 +139,8 @@ ReleaseNotes:
         - 23.04.2023 - v4.0.5.10 Fixed error wrong icon index in GeneratePowerPage by fre4242
         - 28.04.2023 - v4.0.5.11 light 'hue' and light 'rgb' have '.TEMPERATURE' optional
         - 02.05.2023 - v4.0.5.12 Add new Function Debug mode from script activatable via panel
-	- 02.05.2023 - v4.0.5.13 Fix Problems with weather-instances-number !="0" #876
-	- 02.05.2023 - v4.0.5.14 Fix: Remove empty log statements #883
+        - 02.05.2023 - v4.0.5.13 Fix Problems with weather-instances-number !="0" #876
+        - 02.05.2023 - v4.0.5.14 Fix: Remove empty log statements #883
         - 30.07.2023 - v4.0.5.15 Improved screensaverAdvanced icon handling: option to load from iobroker object #944
         - 12.08.2023 - v4.1.4    Upgrade TFT 51 / 4.1.4
         - 12.08.2023 - v4.1.4.1  Fix Label CANCEL for popupTimer
@@ -149,22 +149,24 @@ ReleaseNotes:
         - 12.08.2023 - v4.1.4.2  Add onStop function() to Schedules
         - 13.08.2023 - v4.1.4.3  Add InSel to popUpLight
         - 13.08.2023 - v4.1.4.4  Add Parameter inSel_ChoiceState to InSel to show/hide Focus
-	- 21.08.2023 - v4.2.0    Upgrade TFT 52 / 4.2.0
+        - 21.08.2023 - v4.2.0    Upgrade TFT 52 / 4.2.0
         - 21.08.2023 - v4.2.0    Add new alias state for iconcolor and buttontext for icon for subpages
-	- 22.08.2023 - v4.2.0.1  Add iconArray to Alias "Klimaanlage" (airCondition)
- 	- 23.08.2023 - v4.2.0.2  Add CardGrid2 with maxItems = 8
+        - 22.08.2023 - v4.2.0.1  Add iconArray to Alias "Klimaanlage" (airCondition)
+        - 23.08.2023 - v4.2.0.2  Add CardGrid2 with maxItems = 8
         - 23.08.2023 - v4.2.1    Upgrade TFT 52 / 4.2.1
- 	- 23.08.2023 - v4.2.1.1  Add WINDOWOPEN to cardThermo (Thermostat)
+        - 23.08.2023 - v4.2.1.1  Add WINDOWOPEN to cardThermo (Thermostat)
         - 25.08.2023 - v4.2.1.2  Add Parameter fontSize for v4.3.0
         - 27.08.2023 - v4.2.1.3  Add MQTT-Port-Check (use with exec) --> function CheckMQTTPorts()
         - 27.08.2023 - v4.2.1.3  Add MQTT-Port-Check for ServiceMenu
         - 01.09.2023 - v4.2.1.4  Fix iconId2 in Alias door/window
         - 02.09.2023 - v4.2.1.4  Add dynamically USERICON to Alias info
-        - 04.09.2023 - v4.2.1.5    Fix Debug with 0_userdata.0... 
-        - 04.09.2023 - v4.2.1.5    Add minValue/maxValue to Blinds
-
-        Next Release with TFT DEV (always implemented)
-        - 25.08.2023 - v4.3.0    Add Parameter fontSize (0-4) to cardGrid (with useValue)
+        - 04.09.2023 - v4.2.1.5  Fix Debug with 0_userdata.0... 
+        - 04.09.2023 - v4.2.1.5  Add minValue/maxValue to Blinds
+        - 15.09.2023 - v4.2.1.6  Fix ServicePage Dimmode 'next' -> 'home'
+        - 15.09.2023 - v4.2.1.6  Fix Log '.USERICON' to Debug.log
+        - 15.09.2023 - v4.2.1.6  Fix Link PowerIcon to Alias (Thermocard)
+        - 17.09.2023 - v4.3.1    Upgrade TFT 53 / 4.3.1
+        - 17.09.2023 - v4.3.1.1  Add Parameter fontSize (0-4) to cardGrid (with useValue)
 
 	
 ***********************************************************************************************************
@@ -256,7 +258,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.2.1.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.1.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -913,11 +915,11 @@ let NSPanel_Service = <PageEntities>
                         let NSPanel_ScreensaverDimmode = <PageEntities>
                         {
                             'type': 'cardEntities',
-                            'heading': 'Dimmode (1)',
+                            'heading': 'Dimmode',
                             'useColor': true,
                             'subPage': true,
                             'parent': NSPanel_Screensaver,
-                            'next': 'NSPanel_ScreensaverOther',
+                            'home': 'NSPanel_Service',
                             'items': [
                                 <PageItem>{ id: AliasPath + 'Dimmode.brightnessDay', name: 'Brightness Tag', icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 5, maxValue: 10},
                                 <PageItem>{ id: AliasPath + 'Dimmode.brightnessNight', name: 'Brightness Nacht', icon: 'brightness-4', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 4},
@@ -1187,7 +1189,7 @@ export const config = <Config> {
             // bottomScreensaverEntity 4
             {
                 ScreensaverEntity: 'accuweather.0.Current.WindDirection',
-                ScreensaverEntityFactor: 0,
+                ScreensaverEntityFactor: 1,
                 ScreensaverEntityDecimalPlaces: 0,
                 ScreensaverEntityIconOn: 'windsock',
                 ScreensaverEntityIconOff: null,
@@ -1374,8 +1376,8 @@ export const config = <Config> {
 const request = require('request');
 
 //Desired Firmware
-const tft_version: string = 'v4.2.1';
-const desired_display_firmware_version = 52;
+const tft_version: string = 'v4.3.1';
+const desired_display_firmware_version = 53;
 const berry_driver_version = 8;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 
@@ -1412,7 +1414,7 @@ async function CheckDebugMode() {
             console.log('Debugmodus aktiviert');
         }else{
             Debug = false;
-            console.log('Debugmodus deaktiviert')
+            console.log('Debugmodus deaktiviert');
         }
 
     } catch (err) {
@@ -1472,8 +1474,8 @@ async function CheckMQTTPorts() {
 CheckMQTTPorts();
 
 async function Init_Release() {
-    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53]
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.0']
+    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53,54,55];
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.1','4.4.0','4.5.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -3817,7 +3819,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     if (existsState(pageItem.id + '.USERICON')) {
                         iconId = Icons.GetIcon(getState(pageItem.id + '.USERICON').val);
-                        console.log(iconId);
+                        if (Debug) console.log('iconid von ' + pageItem.id + '.USERICON: ' + getState(pageItem.id + '.USERICON').val);
                         RegisterEntityWatcher(pageItem.id + '.USERICON');
                     }
 
@@ -4255,9 +4257,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                                 case 'POWER':
                                     if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
                                         if (getState(id + '.POWER').val) {
-                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POW' + '~';
+                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
                                         } else {
-                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POW' + '~';
+                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POWER' + '~';
                                         }
                                     } else i--;
                                     break;

@@ -27,8 +27,8 @@ class NsPanelLovelaceUIManager(hass.Hass):
         controller = LuiController(cfg, mqttsend.send_mqtt_msg)
         
         desired_tasmota_driver_version   = 8
-        desired_display_firmware_version = 52
-        version     = "v4.2.0"
+        desired_display_firmware_version = 53
+        version     = "v4.3.1"
         
         model       = cfg.get("model")
         if model == "us-l":
