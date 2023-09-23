@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.3.1 / BerryDriver 8 / Tasmota 13.1.0
+TypeScript v4.3.1.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+- abgestimmt auf TFT 53 / v4.3.1 / BerryDriver 9 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -167,6 +167,10 @@ ReleaseNotes:
         - 15.09.2023 - v4.2.1.6  Fix Link PowerIcon to Alias (Thermocard)
         - 17.09.2023 - v4.3.1    Upgrade TFT 53 / 4.3.1
         - 17.09.2023 - v4.3.1.1  Add Parameter fontSize (0-4) to cardGrid (with useValue)
+        - 23.09.2023 - v4.3.1.2  Upgrade BerryDriver v9
+
+        Todo:
+        - XX.XX.XXXX - Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined
 
 	
 ***********************************************************************************************************
@@ -863,7 +867,7 @@ const request = require('request');
 //Desired Firmware
 const tft_version: string = 'v4.3.1';
 const desired_display_firmware_version = 53;
-const berry_driver_version = 8;
+const berry_driver_version = 9;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 
 let useMediaEvents: boolean = false;
