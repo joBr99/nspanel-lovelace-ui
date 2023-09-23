@@ -168,9 +168,10 @@ ReleaseNotes:
         - 17.09.2023 - v4.3.1    Upgrade TFT 53 / 4.3.1
         - 17.09.2023 - v4.3.1.1  Add Parameter fontSize (0-4) to cardGrid (with useValue)
         - 23.09.2023 - v4.3.1.2  Upgrade BerryDriver v9
-
+        - 23.09.2023 - v4.3.1.3  Fix - Change ServivceMenu from Fake-SSId to real Tasmota-SSIdParam
+ 
         Todo:
-        - XX.XX.XXXX - Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined
+        - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
 
 	
 ***********************************************************************************************************
@@ -439,7 +440,7 @@ let NSPanel_Service = <PageEntities>
                     'prev': 'NSPanel_Wifi_Info_1',
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: 'alias.0.Test.Wiki_SSID', name: 'SSId', icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
+                        <PageItem>{ id: AliasPath + 'Tasmota.Wifi.SSId', name: 'SSId', icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
                         <PageItem>{ id: AliasPath + 'Tasmota.Wifi.Mode', name: 'Modus', icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
                         <PageItem>{ id: AliasPath + 'Tasmota.Wifi.Channel', name: 'Kanal', icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
                         <PageItem>{ id: AliasPath + 'Tasmota.Wifi.AP', name: 'AP', icon: 'router-wireless-settings', offColor: Menu, onColor: Menu },
