@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.1.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.1.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.1 / BerryDriver 9 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -169,10 +169,11 @@ ReleaseNotes:
         - 17.09.2023 - v4.3.1.1  Add Parameter fontSize (0-4) to cardGrid (with useValue)
         - 23.09.2023 - v4.3.1.2  Upgrade BerryDriver v9
         - 23.09.2023 - v4.3.1.3  Fix - Change ServivceMenu from Fake-SSId to real Tasmota-SSIdParam
+	- 03.10.2023 - v4.3.1.4  Removing the examples from the NSPanelTs.ts --> https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
+        - 03.10.2023 - v4.3.1.4  Delete NsPanelTs_without_Examples.ts
  
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
-
 	
 ***********************************************************************************************************
 * Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
@@ -254,11 +255,10 @@ Tasmota-Status0 - (zyklische Ausführung)
 
 Erforderliche Adapter:
 
-    AccuWeather:        - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
-    Alexa2:             - Bei Nutzung der dynamischen SpeakerList in der cardMedia
-    Geräte verwalten    - Für Erstellung der Aliase
-    Alias-Manager       - !!! ausschließlich für MEDIA-Alias
-    MQTT-Adapter        - Für Kommunikation zwischen Skript und Tasmota
+    AccuWeather oder DasWetter: - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
+    Alexa2:                     - Bei Nutzung der dynamischen SpeakerList in der cardMedia
+    Geräte verwalten            - Für Erstellung der Aliase
+    MQTT-Adapter                - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
 
 Upgrades in Konsole:
@@ -378,402 +378,6 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
 //-- Anfang der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich ----------------
 
-let Test_Licht1 = <PageEntities>
-{
-    'type': 'cardEntities',
-    'heading': 'Color Aliase 1',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestRGBLichteinzeln', name: 'RGB-Licht Hex-Color', interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestRGBLicht', name: 'RGB-Licht', minValueBrightness: 0, maxValueBrightness: 100, interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestCTmitHUE', name: 'HUE-Licht-CT', minValueBrightness: 0, maxValueBrightness: 70, minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestHUELicht', name: 'HUE-Licht-Color', minValueColorTemp: 500, maxValueColorTemp: 6500, interpolateColor: true}
-    ]
-};
-
-let CardChartExample = <PageChart>
-{
-    'type': 'cardChart',
-    'heading': 'Stromzähler L1+L2+L3',
-    'useColor': true,
-    'items': [<PageItem>{ 
-                id: 'alias.0.NSPanel_1.cardChart', 
-                yAxis: 'Leistung [kW]', 
-                yAxisTicks: [2,4,6,8,10,2,4,6,8,20,2], 
-                onColor: Yellow
-             }]
-};
-
-//Only DEV --> Test
-let CardLChartExample = <PageChart>
-{
-    'type': 'cardLChart',
-    'heading': 'Büro Temperatur',
-    'useColor': true,
-    'items': [<PageItem>{ 
-                id: 'alias.0.Haus.Erdgeschoss.Buero.Charts.Temperatur',
-                yAxis: 'Temperatur [°C]',
-                yAxisTicks: [-250, -200, -150, -100,-50, 0, 50, 100, 150, 200, 250, 300],
-                onColor: Yellow
-             }]
-};
-
-let CardPowerExample = <PagePower>
-{
-    'type': 'cardPower',
-    'heading': 'cardPower Emulator',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Power.PowerCard' },
-//        <PageItem>{ }       // aktivieren für Demomodus der PowerCard, dafür ersten PageItem auskommentieren
-    ]
-};
-
-let Test_Licht2 = <PageEntities>
-{
-    'type': 'cardEntities',
-    'heading': 'Color Aliase 2',
-    'useColor': true,
-    'items': [
-        //Beispiel für RGB Light mit neuem PageItem-Parameter colormode: "xy" alternativ colormode: "rgb" oder weglassen
-        //Steuert im z.B. DeConz Adapter unter Lampen die Farben per CIE (XY)
-        <PageItem>{ id: "alias.0.NSPanel_2.WZ_E14_Fenster_rechts", name: 'Fensterbank rechts', minValueBrightness: 0, maxValueBrightness: 100, minValueColorTemp: 500, maxValueColorTemp: 150, interpolateColor: true, colormode: 'xy'},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", name: 'Farbtemperatur', interpolateColor: true},
-        <PageItem>{ id: "alias.0.NSPanel_1.TestFarbtemperatur", prefixName: 'Büro: ', name: "getState('0_userdata.0.Test.Wiki_Router').val", suffixName: '%', interpolateColor: true},
-    ]
-};
-
-let Test_Funktionen = <PageEntities>
-{
-    'type': 'cardEntities',
-    'heading': 'Sonstige Aliase',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestLautstärke', offColor: MSRed, onColor: MSGreen, name: 'Echo Spot Büro', minValue: 0, maxValue: 100 },
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestTemperatur',name: 'Temperatur außen', icon: 'thermometer', onColor: White , colorScale: {'val_min': -20, 'val_max': 40, 'val_best': 20} },
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestFeuchtigkeit', name: 'Luftfeuchte außen', icon: 'water-percent', unit: '%H', onColor: White, colorScale: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
-        //<PageItem>{ id: 'alias.0.NSPanel_1.TestInfo', name: 'Windstärke', icon: 'wind-power-outline', offColor: MSRed, onColor: MSGreen, unit: 'bft', minValue: 0, maxValue: 12, interpolateColor: true, useColor: true },
-        <PageItem>{ id: 'alias.0.NSPanel_1.Ventilator.Fan_1',name: 'Ventilator', icon: 'fan', onColor: On, offColor: HMIOff, modeList: ['Low', 'Medium', 'High', 'Move', 'Sleep', 'Auto', 'Manual']},
-    ]
-};
-
-let Buero_Seite_1 = <PageEntities>
-{
-    'type': 'cardEntities',
-    'heading': 'Büro',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe', interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung', interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Testlampe2', name: 'Filamentlampe', minValueBrightness: 0, maxValueBrightness: 70, interpolateColor: true},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Luftreiniger', icon: 'power', icon2: 'power',offColor: MSRed, onColor: MSGreen}
-    ]
-};
-
-let Fenster_1 = <PageEntities>
-{
-    'type': 'cardEntities',
-    'heading': 'Fenster und Türen',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestFenster', offColor: MSRed, onColor: MSGreen, name: 'Büro Fenster'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Haustuer', offColor: MSRed, onColor: MSGreen, name: 'Haustür'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestBlind', icon: "blinds-horizontal", offColor: White, onColor: Yellow, name: 'Büro', secondRow: 'Hier Text für 2. Zeile'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestDoorlock', offColor: MSRed, onColor: MSGreen, name: 'Türschloss'},
-    ]
-};
-
-let Button_1 = <PageEntities>
-{
-    'type': 'cardEntities',
-    'heading': 'Button Aliase',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestTastensensor', name: 'Tastensensor (FFN)'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.NDR2', icon: 'radio', name: 'Taste (NDR2)', onColor: colorRadio, buttonText: 'starten'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestVentil1', icon: 'valve-open', icon2: 'valve-closed',offColor: MSRed, onColor: MSGreen, name: 'Test-Ventil 1'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.NDR2', icon: 'alarm-light', name: 'Alert mit Zielseite', offColor: MSGreen, onColor: MSRed, targetPage: 'Abfall', buttonText: 'Popup'},
-    ]
-};
-
-let Subpages_1 = <PageEntities>
-{
-    'type': 'cardEntities',
-    'heading': 'Test Subpages',
-    'useColor': true,
-    'items': [
-        <PageItem>{ navigate: true, id: 'alias.0.NSPanel_1.Abfall.event1', targetPage: 'Abfall', name: 'Abfallkalender'},
-        <PageItem>{ navigate: true, id: null, targetPage: 'WLAN', onColor: White, name: 'Gäste WLAN'},
-    ]
-};
-
-        //Subpage 1 von Subpages_1
-        let Abfall = <PageEntities>
-        {
-            'type': 'cardEntities',
-            'heading': 'Abfallkalender',
-            'useColor': true,
-            'subPage': true,
-            'parent': Subpages_1,
-            'items': [
-                <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event1',icon: 'trash-can'},
-                <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event2',icon: 'trash-can'},
-                <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event3',icon: 'trash-can'},
-                <PageItem>{ id: 'alias.0.NSPanel_1.Abfall.event4',icon: 'trash-can'}
-            ]
-        };
-
-        //Subpage 2 von Subpages_1
-        let WLAN = <PageQR> 
-        {
-            'type': 'cardQR',
-            'heading': 'Gäste WLAN',
-            'useColor': true,
-            'subPage': true,
-            'parent': Subpages_1,
-            'items': [<PageItem>{ id: 'alias.0.NSPanel_1.Guest_Wifi', hidePassword: false }]
-        };
-
-let Buero_Seite_2 = <PageGrid2>
-{
-    'type': 'cardGrid2',
-    'heading': 'Büro 2',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe', name: 'Schreibtisch'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung', name: 'Deckenlampe'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestFenster', offColor: MSRed, onColor: MSGreen, name: 'Büro Fenster'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Luftreiniger', icon: 'power', offColor: MSRed, onColor: MSGreen},
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestBlind', icon: 'projector-screen', onColor: White, name: 'Beamer', secondRow: 'auch Text'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Kippfenster', useValue: true },
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Bob', icon: 'play', onColor: White, name: 'TuneIn'}
-    ]
-};
-
-let Radiosender = <PageGrid>
-{
-    'type': 'cardGrid',
-    'heading': 'Büro 2',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Bob', icon: 'radio', name: 'Radio BOB', onColor: colorRadio},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Countdown', icon: 'timer-outline', name: 'Timer', onColor: White}
-    ]
-};
-
-let WLED = <PageGrid>
-{
-    'type': 'cardGrid',
-    'heading': 'WLED Stripes WZ',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.WLED.Example.On', name: 'Power', icon: 'power', onColor: HMIOn, offColor: HMIOff},
-        <PageItem>{ id: 'alias.0.NSPanel_1.WLED.Example.Sync', name: 'Sync', icon: 'sync', onColor: HMIOn, offColor: White},
-        <PageItem>{ id: 'alias.0.NSPanel_1.WLED.Example.Presets', icon: 'heart-outline', name: 'Presets', onColor: White, modeList: ['Preset 0', 'Add Preset']},
-        <PageItem>{ id: 'alias.0.NSPanel_1.WLED.Example.Colors', icon: 'palette', name: 'Colors', onColor: White, 
-                    modeList: ['Default', '* Color 1', '* Color Gradient', '* Colors 1&2', '* Colors Only', '* Random Cycle', 'Analogus','April Night', 'Aqua Flash', 'Atlantica', 'Aurora', 
-                               'Beach', 'Beech', 'Blink Red', 'Breeze', 'C9', 'C9 New', 'Candy', 'Candy2', 'Cloud', 
-                               'Cyane', 'Departure', 'Drywet', 'Fairy Reaf', 'Fire', 'Forest', 'etc'
-                              ]},
-        <PageItem>{ id: 'alias.0.NSPanel_1.WLED.Example.Effects', icon: 'emoticon-outline', name: 'Effects', onColor: White, 
-                    modeList: ['Solid', 'Android', 'Aurora', 'Blends', 'Blink', 'Blink Rainbow', 'Bouncing Balls','Bpm', 'Breathe', 'Candle', 'Candle Multi', 
-                               'Candy Cane', 'Chase', 'Chase 1', 'Chase 2', 'Chase 3', 'Chase Flash', 'Chase Flash Rnd', 'Chase Rainbow', 'Chase Random', 
-                               'Chunchun', 'Colorful', 'Colorloop', 'Colortwinkles', 'Colorwaves', 'Dancing Shadows', 'etc'
-                              ]},
-        <PageItem>{ id: 'alias.0.NSPanel_1.WLED.Example.Segments', icon: 'layers', name: 'Segments', onColor: White, modeList: ['Segment 0', 'Add Segment']},
-    ]
-};
-
-let SensorGrid = <PageGrid>
-{
-    'type': 'cardGrid',
-    'heading': 'Sensor Werte',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestTemperatur', name: 'Außentemp. °C', offColor: MSRed, onColor: MSGreen, useValue: true, colorScale: {'val_min': -20, 'val_max': 40, 'val_best': 20} },
-        <PageItem>{ id: 'alias.0.NSPanel_1.TestFeuchtigkeit', name: 'Luftfeuchte %', offColor: MSYellow, onColor: MSYellow , useValue: true, colorScale: {'val_min': 0, 'val_max': 100, 'val_best': 65} },
-        <PageItem>{ id: 'alias.0.NSPanel_1.Taupunkt', name: 'Taupunkt °C', offColor: MSRed, onColor: MSGreen, useValue: true, colorScale: {'val_min': -20, 'val_max': 40, 'val_best': 20} },
-        <PageItem>{ id: 'alias.0.NSPanel_1.UV_Index', name: 'UV Index', offColor: White , onColor: White, useValue: true, colorScale: {'val_min': 0, 'val_max': 12} },
-        <PageItem>{ id: 'alias.0.NSPanel_1.Windstaerke', name: 'Windstärke bft', offColor: White , onColor: White, useValue: true, colorScale: {'val_min': 0, 'val_max': 9} },
-        <PageItem>{ id: 'alias.0.NSPanel_1.Luftdruck', name: 'Luftdruck hPa', offColor: White , onColor: White, useValue: true, colorScale: {'val_min': 950, 'val_max': 1050, 'val_best': 1013} },
-    ]
-};
-
-// NEW: Neue Definition von Medien-Aliasen
-// adapterPlayerInstance = alexa2.0. or spotify-premium.0. or sonos.0. or chromecast.0.
-let Alexa = <PageMedia> 
-{
-    'type': 'cardMedia',
-    'heading': 'Alexa',
-    'useColor': true,
-    'items': [<PageItem>{   
-                id: AliasPath + 'Media.PlayerAlexa', 
-                adapterPlayerInstance: 'alexa2.0.',
-                mediaDevice: 'G0XXXXXXXXXXXXXX', 
-                speakerList: ['Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche','Echo Spot Buero'],
-                //analog alexa2 Music-Provider
-                playList: ['Spotify-Playlist.PartyPlaylist',
-                           'Amazon-Music-Playlist.Mein Discovery Mix',
-                           'My-Library-Playlist.2020',
-                           'My-Library-Playlist.2021',
-                           'TuneIn.Radio Bob Rock',
-                           'TuneIn.NDR2',
-                           'Spotify-Playlist.Sabaton Radio',
-                           'Spotify-Playlist.Rock Party',
-                           'Spotify-Playlist.This Is Nightwish',
-                           'Spotify-Playlist.Metal Christmas'],
-                equalizerList: ['Bassboost','Klassik','Dance', 'Deep', 'Electronic', 'Flat', 'Hip-Hop', 'Rock', 
-                                'Metal', 'Jazz', 'Latin', 'Tonstärke', 'Lounge', 'Piano'],
-                colorMediaIcon: colorAlexa,
-                colorMediaArtist: Yellow,
-                colorMediaTitle: Yellow,
-                autoCreateALias : true
-             }]
-};
-
-let Sonos = <PageMedia>
-{
-    'type': 'cardMedia',
-    'heading': 'Sonos',
-    'useColor': true,
-    'items': [<PageItem>{   
-                id: AliasPath + 'Media.PlayerSonos', 
-                adapterPlayerInstance: 'sonos.0.',
-                mediaDevice: '192_168_1_212',
-                speakerList: ['Terrasse'],
-                colorMediaIcon: colorSpotify,
-                colorMediaArtist: Yellow,
-                colorMediaTitle: Yellow,
-                autoCreateALias : true
-             }]
-};
-
-let SpotifyPremium = <PageMedia>
-{
-    'type': 'cardMedia',
-    'heading': 'Spotify-Premium',
-    'useColor': true,
-    'items': [<PageItem>{ 
-                id: AliasPath + 'Media.PlayerSpotifyPremium', 
-                adapterPlayerInstance: "spotify-premium.0.",
-                speakerList: ['LENOVO-W11-01', 'Terrasse','Überall','Gartenhaus','Esszimmer','Heimkino','Echo Dot Küche',
-                              'Echo Spot Buero'],
-                playList: ['PartyPlaylist','Sabaton Radio','Rock Party','This Is Nightwish','Metal Christmas'],
-                repeatList: ['off','context','track'],
-                equalizerList: ['Bassboost','Klassik','Dance', 'Deep', 'Electronic', 'Flat', 'Hip-Hop', 'Rock', 
-                                'Metal', 'Jazz', 'Latin', 'Tonstärke', 'Lounge', 'Piano'],
-                colorMediaIcon: colorSpotify,
-                colorMediaArtist: Yellow,
-                colorMediaTitle: Yellow,
-                autoCreateALias : true
-             }]
-};
-
-let SqueezeboxRPC = <PageMedia>
-{
-    'type': 'cardMedia',
-    'heading': 'SqueezeboxRPC',
-    'useColor': true,
-    'items': [<PageItem>{ 
-                id: 'alias.0.Media.LMS', 
-                adapterPlayerInstance: 'squeezeboxrpc.0',
-                speakerList: ['SqueezePlay'],
-                mediaDevice: 'SqueezePlay',
-                playList: ['Playlist'],
-                autoCreateALias : true
-             }]
-};
-
-let Buero_Themostat = <PageThermo>
-{
-    'type': 'cardThermo',
-    'heading': 'Test Thermostat',
-    'useColor': true,
-    'items': [<PageItem>{ 
-                id: 'alias.0.NSPanel_1.Thermostat_Buero', 
-                minValue: 50, 
-                maxValue: 300,
-                stepValue: 5
-             }]
-};
-
-let Buero_Klimaanlage = <PageThermo>
-{
-    'type': 'cardThermo',
-    'heading': 'Test Klimaanlage',
-    'useColor': true,
-    'items': [<PageItem>{   
-                id: 'alias.0.NSPanel_1.TestKlimaanlage', 
-                minValue: 50, 
-                maxValue: 250,
-                stepValue: 5,
-                iconArray: ['power-standby','air-conditioner','snowflake','fire','alpha-e-circle-outline','fan','water-percent','swap-vertical-bold'],
-                popupThermoMode1: ['Auto','0','1','2','3'],
-                popupThermoMode2: ['Auto','0','1','2','3','4','5'],
-                popupThermoMode3: ['Auto','Manual','Boost',],
-                popUpThermoName: ['Schwenk-Modus', 'Speed', 'Temperatur'],
-                icon: 'fan',
-                setThermoAlias: ['MODE1','MODE2','MODE3'],
-                //setThermoDestTemp2: 'ACTUAL2'
-             }]
-};
-
-let Pool_Waermepumpe = <PageThermo>
-{
-    'type': 'cardThermo',
-    'heading': 'Pool Wärmepumpe',
-    'useColor': true,
-    'items': [<PageItem>{   
-                id: 'alias.0.NSPanel_1.Pool_Waermepumpe', 
-                minValue: 100, 
-                maxValue: 300,
-                stepValue: 5,
-                iconArray: ['power-standby','alpha-a-circle-outline','snowflake','fire'],
-                //iconArray: ['power-standby','air-conditioner','snowflake','fire','alpha-e-circle-outline','fan','water-percent','swap-vertical-bold'],
-             }]
-};
-
-let Buero_Alarm = <PageAlarm>
-{
-    'type': 'cardAlarm',
-    'heading': 'Alarmanlage',
-    'useColor': true,
-    'items': [<PageItem>{ id: 'alias.0.Alarm' }]
-};
-
-let Unlock_Service = <PageUnlock>
-{
-    'type': 'cardUnlock',
-    'heading': 'Service Pages',
-    'useColor': true,
-    'items': [<PageItem>{ id: 'alias.0.Unlock', targetPage: 'NSPanel_Service' }]
-};
-
-let button1Page = <PageGrid>
-{
-    'type': 'cardGrid',
-    'heading': 'Radio',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.FFN', icon: 'radio', name: 'FFN', onColor: colorRadio},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Antenne' , icon: 'radio', name: 'Antenne Nds.', onColor: colorRadio},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.NDR2', icon: 'radio', name: 'NDR2', onColor: colorRadio},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Bob', icon: 'radio', name: 'Radio BOB', onColor: colorRadio},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Spotify', icon: 'spotify', name: 'Party Playlist', onColor: colorSpotify},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Radio.Alexa', icon: 'playlist-music', name: 'Playlist 2021', onColor: colorAlexa}
-    ]
-};
-
-let button2Page = <PageEntities>
-{
-    'type': 'cardEntities',
-    'heading': 'Büro',
-    'useColor': true,
-    'items': [
-        <PageItem>{ id: 'alias.0.NSPanel_1.Schreibtischlampe'},
-        <PageItem>{ id: 'alias.0.NSPanel_1.Deckenbeleuchtung'}
-    ]
-};
 
 //-- ENDE der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich ------------------
 
@@ -1120,39 +724,7 @@ export const config = <Config> {
 
     leftScreensaverEntity:
         [
-            // leftScreensaverEntity 1 (only Advanced Screensaver)
-            {
-                ScreensaverEntity: NSPanel_Path + 'Sensor.ANALOG.Temperature',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 1,
-                ScreensaverEntityIconOn: 'thermometer',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Temperatur',
-                ScreensaverEntityUnitText: '°C',
-                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 35, 'val_best': 22}
-            },
-            // leftScreensaverEntity 2 (only Advanced Screensaver)
-            {
-                ScreensaverEntity: 'sonoff.0.DZG_DWSB20_2H.DZG_Leistung_Aktuell',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityIconOn: 'counter',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'L1-L3',
-                ScreensaverEntityUnitText: ' W',
-                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 5000}
-            },
-            // leftScreensaverEntity 3 (only Advanced Screensaver)
-        	{
-                ScreensaverEntity: '0_userdata.0.Abfallkalender.1.date',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityIconOn: 'trash-can',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Abfall',
-                ScreensaverEntityUnitText: '',
-                ScreensaverEntityIconColor: '0_userdata.0.Abfallkalender.1.color'
-            },
+		// Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 	
         ],
 
     bottomScreensaverEntity :  
@@ -1213,76 +785,12 @@ export const config = <Config> {
                 ScreensaverEntityUnitText: '%',
                 ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65}
             },
-            // bottomScreensaverEntity 6 (only Advanced Screensaver)
-            {
-                ScreensaverEntity: 'accuweather.0.Current.UVIndex',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityIconOn: 'solar-power',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'UV',
-                ScreensaverEntityUnitText: '',
-                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 9}
-            }
+ 	        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
         ],
 
     indicatorScreensaverEntity:
         [
-            // indicatorScreensaverEntity 1 (only Advanced Screensaver)
-            { 
-                ScreensaverEntity: '0_userdata.0.NSPanel.Indicators.Haus',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityIconOn: 'window-closed-variant',
-                ScreensaverEntityIconOff: 'window-open-variant',
-                ScreensaverEntityText: 'Fenster',
-                ScreensaverEntityUnitText: '%',
-                ScreensaverEntityIconColor: { 'val_min': 0, 'val_max': 1 }
-            },
-            // indicatorScreensaverEntity 2 (only Advanced Screensaver)
-            { 
-                ScreensaverEntity: 'alias.0.Haus.Erdgeschoss.Buero.Sensoren.Bewegung.ACTUAL',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityIconOn: 'motion-sensor',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Bewegung',
-                ScreensaverEntityUnitText: '',
-                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 1}
-            },
-            // indicatorScreensaverEntity 3 (only Advanced Screensaver)
-            { 
-                ScreensaverEntity: '0_userdata.0.NSPanel.Indicators.Garage',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityIconOn: 'garage-variant-lock',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Garage',
-                ScreensaverEntityUnitText: '',
-                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 1}
-            },
-            // indicatorScreensaverEntity 4 (only Advanced Screensaver)
-            { 
-                ScreensaverEntity: 'worx.0.202130267302000866BF.mower.state',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityIconOn: 'robot-mower-outline',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Mäher',
-                ScreensaverEntityUnitText: '%',
-                ScreensaverEntityIconColor: { 'val_min': 0, 'val_max': 1 }
-            },
-            // indicatorScreensaverEntity 5 (only Advanced Screensaver)
-            { 
-                ScreensaverEntity: '0_userdata.0.Wasserstand.KNOCK.Wert',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 1,
-                ScreensaverEntityIconOn: 'waves-arrow-up',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Feuchte',
-                ScreensaverEntityUnitText: '%',
-                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 985, 'val_best': 500}
-            }
+		// Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
         ],
 
     mrIcon1ScreensaverEntity: 
@@ -1298,14 +806,14 @@ export const config = <Config> {
         },
     mrIcon2ScreensaverEntity: 
         { 
-            ScreensaverEntity: 'deconz.0.Sensors.5.open', 
-            ScreensaverEntityIconOn: 'heat-wave',
+            ScreensaverEntity: NSPanel_Path + 'Relay.2', 
+            ScreensaverEntityIconOn: 'lightbulb',
             ScreensaverEntityIconOff: null, 
-            ScreensaverEntityValue: 'deconz.0.Sensors.65.temperature',
-            ScreensaverEntityValueDecimalPlace : 1,
-            ScreensaverEntityValueUnit: '°', 
-            ScreensaverEntityOnColor: MSRed, 
-            ScreensaverEntityOffColor: Yellow 
+            ScreensaverEntityValue: null,
+            ScreensaverEntityValueDecimalPlace : 0,
+            ScreensaverEntityValueUnit: null, 
+            ScreensaverEntityOnColor: On, 
+            ScreensaverEntityOffColor: HMIOff 
         },
 
     weatherEntity: 'alias.0.Wetter',    // Dieser Alias wird automatisch für den gewählten Wetter erstellt und kann entsprechend angepasst werden
@@ -1314,33 +822,10 @@ export const config = <Config> {
     defaultColor: Off,
     defaultBackgroundColor: HMIDark,    // Default-Hintergrundfarbe HMIDark oder Black
     pages: [
-            Buero_Seite_1,          //Beispiel-Seite
-            WLED,                   //Beispiel-Seite
-            Radiosender,            //Beispiel-Seite
-            SensorGrid,             //Beispiel-Seite
-            CardLChartExample,      //Beispiel-Seite
-            CardChartExample,       //Beispiel-Seite
-            CardPowerExample,       //Beispiel-Seite
-            //SqueezeboxRPC,        //Beispiel-Seite
-            Sonos,                  //Beispiel-Seite
-            SpotifyPremium,         //Beispiel-Seite
-            Alexa,                  //Beispiel-Seite
-            Buero_Seite_2,          //Beispiel-Seite
-            Buero_Klimaanlage,      //Beispiel-Seite 
-            Button_1,               //Beispiel-Seite
-            Test_Licht1,            //Beispiel-Seite
-            Test_Licht2,            //Beispiel-Seite
-            Test_Funktionen,        //Beispiel-Seite    
-            Fenster_1,              //Beispiel-Seite
-            Subpages_1,             //Beispiel-Seite
-            Buero_Themostat,        //Beispiel-Seite
-            Buero_Alarm,            //Beispiel-Seite
-	    //Unlock_Service,
-            NSPanel_Service         //Auto-Alias Service Page
+
+            NSPanel_Service         	//Auto-Alias Service Page
     ],
     subPages: [
-                Abfall,                                 //Beispiel-Unterseite
-                WLAN,                                   //Beispiel-Unterseite
                 
                 NSPanel_Infos,                          //Auto-Alias Service Page
                     NSPanel_Wifi_Info_1,                //Auto-Alias Service Page
