@@ -5,7 +5,13 @@ TypeScript v4.3.1.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armila
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
 ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
-WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
+@Kuckuckmann: WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
+
+***************************************************************************************************************
+Achtung: Keine Beispiele mehr im Script. Die Beispiele sind jetzt unter nachfolgendem Link zu finden:
+-  https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
+***************************************************************************************************************
+
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
 
 ************************************************************************************************
@@ -376,10 +382,10 @@ const swSnowyRainy:     RGB = { red: 150, green: 150, blue: 255};
 const swSunny:          RGB = { red: 255, green: 255, blue:   0};
 const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
-//-- Anfang der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich ----------------
+//-- Anfang der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -----------------------
+  //-- siehe https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
 
-
-//-- ENDE der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich ------------------
+//-- ENDE der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -------------------------
 
 
 /***********************************************************************************************
