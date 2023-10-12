@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.1.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.1.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.1 / BerryDriver 9 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -175,8 +175,9 @@ ReleaseNotes:
         - 17.09.2023 - v4.3.1.1  Add Parameter fontSize (0-4) to cardGrid (with useValue)
         - 23.09.2023 - v4.3.1.2  Upgrade BerryDriver v9
         - 23.09.2023 - v4.3.1.3  Fix - Change ServivceMenu from Fake-SSId to real Tasmota-SSIdParam
-	- 03.10.2023 - v4.3.1.4  Removing the examples from the NSPanelTs.ts --> https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
+        - 03.10.2023 - v4.3.1.4  Removing the examples from the NSPanelTs.ts --> https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
         - 03.10.2023 - v4.3.1.4  Delete NsPanelTs_without_Examples.ts
+        - 12.10.2023 - v4.3.1.5  Fix Datapoint for Role timetable -> Attention use new script from TT-Tom https://github.com/tt-tom17/MyScripts/blob/main/Sonoff_NSPanel/Fahrplan_to_NSPanel.ts
  
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -3457,10 +3458,10 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                 case 'timeTable':
                     type = 'text';
-                    let itemFahrzeug:string = getState(pageItem.id + '.Fahrzeug').val;
+                    let itemFahrzeug:string = getState(pageItem.id + '.VEHICLE').val;
                     let itemUhrzeit:string = getState(pageItem.id + '.ACTUAL').val;
-                    let itemRichtung:string = getState(pageItem.id + '.Richtung').val;
-                    let itemVerspätung:boolean = getState(pageItem.id + '.Verspätung').val;
+                    let itemRichtung:string = getState(pageItem.id + '.DIRECTION').val;
+                    let itemVerspätung:boolean = getState(pageItem.id + '.DELAY').val;
     
                     if (Icons.GetIcon(itemFahrzeug) != "") {
                         iconId = Icons.GetIcon(itemFahrzeug)
