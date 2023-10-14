@@ -72,20 +72,20 @@ cardThermo
 	319  Unique line(s) of event code
 cardGrid
 	44   Component(s)
-	579  Line(s) of event code
-	330  Unique line(s) of event code
-cardMedia
-	59   Component(s)
-	699  Line(s) of event code
-	354  Unique line(s) of event code
+	583  Line(s) of event code
+	332  Unique line(s) of event code
+cardGrid2
+	52   Component(s)
+	693  Line(s) of event code
+	384  Unique line(s) of event code
 popupLight
 	28   Component(s)
 	412  Line(s) of event code
 	227  Unique line(s) of event code
-cardGrid2
-	52   Component(s)
-	689  Line(s) of event code
-	382  Unique line(s) of event code
+cardMedia
+	59   Component(s)
+	703  Line(s) of event code
+	356  Unique line(s) of event code
 cardEntities
 	67   Component(s)
 	1194 Line(s) of event code
@@ -98,5 +98,5 @@ screensaver2
 Total
 	23   Page(s)
 	875  Component(s)
-	10556 Line(s) of event code
+	10568 Line(s) of event code
 	2450 Unique line(s) of event code
