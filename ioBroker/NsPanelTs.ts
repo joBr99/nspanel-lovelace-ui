@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.1.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.1.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.1 / BerryDriver 9 / Tasmota 13.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -179,6 +179,7 @@ ReleaseNotes:
         - 03.10.2023 - v4.3.1.4  Delete NsPanelTs_without_Examples.ts
         - 12.10.2023 - v4.3.1.5  Fix Datapoint for Role timetable -> Attention use new script from TT-Tom https://github.com/tt-tom17/MyScripts/blob/main/Sonoff_NSPanel/Fahrplan_to_NSPanel.ts
         - 19.10.2023 - v4.3.1.6  Add more Alias Device-Types to Navigation (createEntity) / Minor Fixes
+        - 22.10.2023 - v4.3.1.7  Fix CreateEntity (navigate) role 'light' and 'socket' and 'temperature'
  
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -2957,9 +2958,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                 iconColor = getState(pageItem.id + '.COLORDEC').val;
                             } else {
                                 if (val === true || val === 'true') {
-                                    iconColor = GetIconColor(pageItem, false, useColors);
-                                } else {
                                     iconColor = GetIconColor(pageItem, true, useColors);
+                                } else {
+                                    iconColor = GetIconColor(pageItem, false, useColors);
                                 }
                             }
                             if (val === true || val === 'true') { iconId = iconId2 };
@@ -3019,9 +3020,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         case 'sensor.window':
  
                         case 'thermostat':
-                            type = 'text';
  
-                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'temperature' || o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
             
                             let unit = '';
                             optVal = '0';
@@ -3033,10 +3033,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                 optVal = getState(pageItem.id + '.ACTUAL').val;
                                 unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ACTUAL');
                             } 
-                            
-                            if (o.common.role == 'value.temperature') {
-                                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('thermometer');
-                            }
                             
                             iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
  
@@ -3078,10 +3074,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                     iconId = optVal; 
                                 }
                             }
- 
-                            if (Debug) console.log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat');
-                            if (Debug) console.log('CreateEntity  ~' + type + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit);
-                            return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
+
+                            buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
+                            break;
  
                         case 'warning':
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
@@ -3348,7 +3343,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 case 'thermostat':
                     type = 'text';
  
-                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'temperature' || o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
      
                     let unit = '';
                     optVal = '0';
@@ -3360,11 +3355,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         optVal = getState(pageItem.id + '.ACTUAL').val;
                         unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ACTUAL');
                     }
- 
-                    if (o.common.role == 'value.temperature') {
-                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('thermometer');
-                    }
- 
+  
                     iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
  
                     if (pageItem.colorScale != undefined) {
