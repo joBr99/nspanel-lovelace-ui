@@ -418,7 +418,7 @@ class LuiPagesGen(object):
                 font = 3
             elif isinstance(item.font, int):
                 font = item.font
-            icon_id += f'{icon_id}¬{font}'
+            icon_id = f'{icon_id}¬{font}'
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
     def generate_entities_page(self, navigation, heading, items, cardType, tempUnit):
