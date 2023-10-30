@@ -3024,9 +3024,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         case 'sensor.window':
  
                         case 'thermostat':
-                            type = 'text';
  
-                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'temperature' || o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
             
                             let unit = '';
                             optVal = '0';
@@ -3038,10 +3037,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                 optVal = getState(pageItem.id + '.ACTUAL').val;
                                 unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ACTUAL');
                             } 
-                            
-                            if (o.common.role == 'value.temperature') {
-                                iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('thermometer');
-                            }
                             
                             iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
  
@@ -3083,10 +3078,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                     iconId = optVal; 
                                 }
                             }
- 
-                            if (Debug) console.log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat');
-                            if (Debug) console.log('CreateEntity  ~' + type + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit);
-                            return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
+
+                            buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
+                            break;
  
                         case 'warning':
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
@@ -3353,7 +3347,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 case 'thermostat':
                     type = 'text';
  
-                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'temperature' || o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
      
                     let unit = '';
                     optVal = '0';
@@ -3365,11 +3359,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         optVal = getState(pageItem.id + '.ACTUAL').val;
                         unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ACTUAL');
                     }
- 
-                    if (o.common.role == 'value.temperature') {
-                        iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('thermometer');
-                    }
- 
+  
                     iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
  
                     if (pageItem.colorScale != undefined) {
