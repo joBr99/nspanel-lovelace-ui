@@ -179,6 +179,7 @@ ReleaseNotes:
         - 03.10.2023 - v4.3.1.4  Delete NsPanelTs_without_Examples.ts
         - 12.10.2023 - v4.3.1.5  Fix Datapoint for Role timetable -> Attention use new script from TT-Tom https://github.com/tt-tom17/MyScripts/blob/main/Sonoff_NSPanel/Fahrplan_to_NSPanel.ts
         - 19.10.2023 - v4.3.1.6  Add more Alias Device-Types to Navigation / Minor Fixes
+	- 22.10.2023 - v4.3.1.7 Fix CreateEntity (navigate) role 'light' and 'socket' and 'temperature'
         - 30.10.2023 - v4.3.2    Upgrade TFT 53 / 4.3.2
         - 30.10.2023 - v4.3.2.1  Fix formatDate/Date.parse with moment.js (Bugs in JS-Methodes)
         
