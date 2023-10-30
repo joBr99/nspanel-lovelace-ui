@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.1.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.3.1 / BerryDriver 9 / Tasmota 13.1.0
+TypeScript v4.3.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+- abgestimmt auf TFT 53 / v4.3.2 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -19,7 +19,7 @@ Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
 ************************************************************************************************
 In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
-unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Dowengrade 
+unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Downgrade 
 durchführen und FlashNextion wiederholen.
 ************************************************************************************************
 Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
@@ -178,9 +178,11 @@ ReleaseNotes:
         - 03.10.2023 - v4.3.1.4  Removing the examples from the NSPanelTs.ts --> https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
         - 03.10.2023 - v4.3.1.4  Delete NsPanelTs_without_Examples.ts
         - 12.10.2023 - v4.3.1.5  Fix Datapoint for Role timetable -> Attention use new script from TT-Tom https://github.com/tt-tom17/MyScripts/blob/main/Sonoff_NSPanel/Fahrplan_to_NSPanel.ts
-        - 19.10.2023 - v4.3.1.6  Add more Alias Device-Types to Navigation (createEntity) / Minor Fixes
-        - 22.10.2023 - v4.3.1.7  Fix CreateEntity (navigate) role 'light' and 'socket' and 'temperature'
- 
+        - 19.10.2023 - v4.3.1.6  Add more Alias Device-Types to Navigation / Minor Fixes
+	- 22.10.2023 - v4.3.1.7 Fix CreateEntity (navigate) role 'light' and 'socket' and 'temperature'
+        - 30.10.2023 - v4.3.2    Upgrade TFT 53 / 4.3.2
+        - 30.10.2023 - v4.3.2.1  Fix formatDate/Date.parse with moment.js (Bugs in JS-Methodes)
+        
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
 	
@@ -272,7 +274,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.1.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.2.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -743,7 +745,7 @@ export const config = <Config> {
                 ScreensaverEntity: 'accuweather.0.Daily.Day1.Sunrise',
                 ScreensaverEntityFactor: 1,
                 ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityDateFormat: 'hh:mm',   // like DD.MM or DD.MM.YY or YYYY/MM/DD or hh:mm
+                ScreensaverEntityDateFormat: { hour: '2-digit', minute: '2-digit' }, // Description at Wiki-Pages
                 ScreensaverEntityIconOn: 'weather-sunset-up',
                 ScreensaverEntityIconOff: null,
                 ScreensaverEntityText: 'Sonne',
@@ -873,9 +875,12 @@ export const config = <Config> {
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
 const request = require('request');
+const moment  = require('moment');
+const parseFormat = require('moment-parseformat');
+moment.locale(getState(NSPanel_Path + 'Config.locale').val);
 
 //Desired Firmware
-const tft_version: string = 'v4.3.1';
+const tft_version: string = 'v4.3.2';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -974,7 +979,7 @@ CheckMQTTPorts();
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53,54,55];
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.1','4.4.0','4.5.0'];
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.2','4.4.0','4.5.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -6919,8 +6924,15 @@ function HandleScreensaverUpdate(): void {
                     }
                     else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                        if (!isNaN(Date.parse(val))) {
-                            val = formatDate(getDateObject(val), config.leftScreensaverEntity[i].ScreensaverEntityDateFormat);
+                        let pformat = parseFormat(val);
+                        if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
+                        if (moment(val, pformat, true).isValid()) { 
+                            let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+                            if (config.leftScreensaverEntity[i].ScreensaverEntityDateFormat !== undefined) {
+                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, config.leftScreensaverEntity[i].ScreensaverEntityDateFormat);
+                            } else {
+                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
+                            }
                         }                
                     }
 
@@ -7053,10 +7065,15 @@ function HandleScreensaverUpdate(): void {
                     }
                     else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
-                        if (!isNaN(Date.parse(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val))) {
-                            val = formatDate(getDateObject(getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val), config.bottomScreensaverEntity[4].ScreensaverEntityDateFormat);
-                        } else {
-                            val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
+                        let pformat = parseFormat(val);
+                        if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
+                        if (moment(val, pformat, true).isValid()) { 
+                            let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+                            if (config.bottomScreensaverEntity[4].ScreensaverEntityDateFormat !== undefined) {
+                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, config.bottomScreensaverEntity[4].ScreensaverEntityDateFormat);
+                            } else {
+                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
+                            }
                         }                
                     }
                     if (existsObject(config.bottomScreensaverEntity[4].ScreensaverEntityIconColor)) {
@@ -7102,10 +7119,18 @@ function HandleScreensaverUpdate(): void {
                     }
                     else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
-                        if (!isNaN(Date.parse(val))) {
-                            val = formatDate(getDateObject(val), config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat);
+                        let pformat = parseFormat(val);
+                        if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
+                        if (moment(val, pformat, true).isValid()) { 
+                            let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+                            if (config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat !== undefined) {
+                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat);
+                            } else {
+                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
+                            }
                         }                
                     }
+
                     if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor)) {
                         iconColor = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor).val;
                     }
@@ -8174,7 +8199,7 @@ type ScreenSaverElement = {
     ScreensaverEntity: string | null,
     ScreensaverEntityFactor: number | 1,
     ScreensaverEntityDecimalPlaces: number | 0,
-    ScreensaverEntityDateFormat: string | null,
+    ScreensaverEntityDateFormat: any | null,
     ScreensaverEntityIconOn: string | null,
     ScreensaverEntityIconOff: string | null,
     ScreensaverEntityText: string | null,
