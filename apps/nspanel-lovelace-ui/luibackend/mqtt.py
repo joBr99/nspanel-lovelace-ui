@@ -96,3 +96,9 @@ class LuiMqttSender(object):
             if topic is None:
                 topic = self._topic_send
             apis.mqtt_api.mqtt_publish(topic, msg)
+
+    def request_berry_driver_version(self):
+        if self._use_api:
+            apis.ha_api.call_service(service="esphome/" + self._api_panel_name + "_app_getdriverversion")
+        else:
+            apis.mqtt_api.mqtt_publish(self._topic_send.replace("CustomSend", "GetDriverVersion"), "x")

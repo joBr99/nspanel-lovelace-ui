@@ -1,5 +1,5 @@
 class Updater:
-    def __init__(self, log, send_mqtt_msg, topic_send, mode, desired_display_firmware_version, desired_display_firmware_model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
+    def __init__(self, log, send_mqtt_msg, request_berry_driver_version, topic_send, mode, desired_display_firmware_version, desired_display_firmware_model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
         
         self._log = log
         
@@ -11,6 +11,7 @@ class Updater:
         
         self.mode = mode
         self._send_mqtt_msg = send_mqtt_msg
+        self._request_berry_driver_version = request_berry_driver_version
         self.topic_send = topic_send
         self.current_tasmota_driver_version   = None
         self.current_display_firmware_version = None
@@ -80,9 +81,7 @@ class Updater:
 
     def request_berry_driver_version(self):
         self.current_tasmota_driver_version = None
-        topic = self.topic_send.replace("CustomSend", "GetDriverVersion")
-        self._send_mqtt_msg("X", topic=topic)
-
+        self._request_berry_driver_version()
     def update_berry_driver(self):
         topic = self.topic_send.replace("CustomSend", "Backlog")
         self._send_mqtt_msg(f"UpdateDriverVersion {self.desired_tasmota_driver_url}; Restart 1", topic=topic)
