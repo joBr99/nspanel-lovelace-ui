@@ -10,7 +10,7 @@ class LuiMqttListener(object):
 
         # Setup, mqtt subscription and callback
         if use_api:
-            apis.ha_api.listen_event(self.api_event_callback, "esphome.nspanel_data")
+            apis.ha_api.listen_event(self.api_event_callback, "esphome.nspanel.data")
         else:
             apis.mqtt_api.mqtt_subscribe(topic=topic)
             apis.mqtt_api.listen_event(self.mqtt_event_callback, "MQTT_MESSAGE", topic=topic, namespace='mqtt')
