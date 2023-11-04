@@ -1,6 +1,5 @@
 class Updater:
-    def __init__(self, log, send_mqtt_msg, topic_send, mode, desired_display_firmware_version, desired_display_firmware_model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
-        
+    def __init__(self, log, mqttsend, topic_send, mode, desired_display_firmware_version, desired_display_firmware_model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url):
         self._log = log
         
         self.desired_display_firmware_version = desired_display_firmware_version
@@ -10,7 +9,7 @@ class Updater:
         self.desired_tasmota_driver_url       = desired_tasmota_driver_url
         
         self.mode = mode
-        self._send_mqtt_msg = send_mqtt_msg
+        self.mqttsend = mqttsend
         self.topic_send = topic_send
         self.current_tasmota_driver_version   = None
         self.current_display_firmware_version = None
@@ -18,6 +17,7 @@ class Updater:
 
     def set_tasmota_driver_version(self, driver_version):
         self.current_tasmota_driver_version   = driver_version
+
     def set_current_display_firmware_version(self, panel_version, panel_model=None):
         self.current_display_firmware_version = panel_version
         self.current_display_model            = panel_model
@@ -33,8 +33,8 @@ class Updater:
             return False
 
     def send_message_page(self, id, heading, msg, b1, b2):
-        self._send_mqtt_msg(f"pageType~popupNotify")
-        self._send_mqtt_msg(f"entityUpdateDetail~{id}~{heading}~65535~{b1}~65535~{b2}~65535~{msg}~65535~0")
+        self.mqttsend.send_mqtt_msg(f"pageType~popupNotify")
+        self.mqttsend.send_mqtt_msg(f"entityUpdateDetail~{id}~{heading}~65535~{b1}~65535~{b2}~65535~{msg}~65535~0")
 
     def check_updates(self):
         # return's true if a notification was send to the panel
@@ -80,12 +80,11 @@ class Updater:
 
     def request_berry_driver_version(self):
         self.current_tasmota_driver_version = None
-        topic = self.topic_send.replace("CustomSend", "GetDriverVersion")
-        self._send_mqtt_msg("X", topic=topic)
+        self.mqttsend.request_berry_driver_version()
 
     def update_berry_driver(self):
         topic = self.topic_send.replace("CustomSend", "Backlog")
-        self._send_mqtt_msg(f"UpdateDriverVersion {self.desired_tasmota_driver_url}; Restart 1", topic=topic)
+        self.mqttsend.send_mqtt_msg(f"UpdateDriverVersion {self.desired_tasmota_driver_url}; Restart 1", topic=topic)
+
     def update_panel_driver(self):
-        topic = self.topic_send.replace("CustomSend", "FlashNextion")
-        self._send_mqtt_msg(self.desired_display_firmware_url, topic=topic)
+        self.mqttsend.flash_nextion(self.desired_display_firmware_url)

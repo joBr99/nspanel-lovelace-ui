@@ -3,19 +3,37 @@ import apis
 
 class LuiMqttListener(object):
 
-    def __init__(self, topic, controller, updater):
+    def __init__(self, use_api, topic, api_panel_name, api_device_id, controller, updater):
         self._controller = controller
         self._updater = updater
+        self._api_device_id = api_device_id
 
         # Setup, mqtt subscription and callback
-        apis.mqtt_api.mqtt_subscribe(topic=topic)
-        apis.mqtt_api.listen_event(self.mqtt_event_callback, "MQTT_MESSAGE", topic=topic, namespace='mqtt')
+        if use_api:
+            apis.ha_api.listen_event(self.api_event_callback, "esphome.nspanel.data")
+        else:
+            apis.mqtt_api.mqtt_subscribe(topic=topic)
+            apis.mqtt_api.listen_event(self.mqtt_event_callback, "MQTT_MESSAGE", topic=topic, namespace='mqtt')
 
+    def api_event_callback(self, event_name, data, kwargs):
+        if not "device_id" in data:
+            return
+        if not data["device_id"] == self._api_device_id:
+            return
+
+        apis.ha_api.log(f'API callback for: {data}')
+
+        self.customrecv_event_callback(event_name, data, kwargs)
 
     def mqtt_event_callback(self, event_name, data, kwargs):
-        apis.mqtt_api.log(f'MQTT callback for: {data}')
+        apis.ha_api.log(f'MQTT callback for: {data}')
+
         # Parse Json Message from Tasmota and strip out message from nextion display
         data = json.loads(data["payload"])
+
+        self.customrecv_event_callback(event_name, data, kwargs)
+
+    def customrecv_event_callback(self, event_name, data, kwargs):
         if("nlui_driver_version" in data):
             msg = data["nlui_driver_version"]
             self._updater.set_tasmota_driver_version(int(msg))
@@ -23,7 +41,7 @@ class LuiMqttListener(object):
         if("CustomRecv" not in data):
             return
         msg = data["CustomRecv"]
-        apis.mqtt_api.log(f"Received Message from Screen: {msg}")
+        apis.ha_api.log(f"Received Message from Screen: {msg}")
         # Split message into parts seperated by ","
         msg = msg.split(",")
         # run action based on received command
@@ -59,17 +77,35 @@ class LuiMqttListener(object):
                 self._controller.detail_open(msg[2], msg[3])
 
 class LuiMqttSender(object):
-    def __init__(self, api, topic_send):
+    def __init__(self, api, use_api, topic_send, api_panel_name):
         self._ha_api = api
+        self._use_api = use_api
         self._topic_send = topic_send
+        self._api_panel_name = api_panel_name
         self._prev_msg = ""
 
     def send_mqtt_msg(self, msg, topic=None, force=False):
         if not force and self._prev_msg == msg:
-            self._ha_api.log(f"Dropping identical consecutive message: {msg}")
+            apis.ha_api.log(f"Dropping identical consecutive message: {msg}")
             return
         self._prev_msg = msg
-        if topic is None:
-            topic = self._topic_send
-        self._ha_api.log(f"Sending MQTT Message: {msg}")
-        apis.mqtt_api.mqtt_publish(topic, msg)
+
+        apis.ha_api.log(f"Sending Message: {msg}")
+        if self._use_api:
+            apis.ha_api.call_service(service="esphome/" + self._api_panel_name + "_nspanelui_api_call", command=2, data=msg)
+        else:
+            if topic is None:
+                topic = self._topic_send
+            apis.mqtt_api.mqtt_publish(topic, msg)
+
+    def request_berry_driver_version(self):
+        if self._use_api:
+            apis.ha_api.call_service(service="esphome/" + self._api_panel_name + "_nspanelui_api_call", command=1, data="x")
+        else:
+            apis.mqtt_api.mqtt_publish(self._topic_send.replace("CustomSend", "GetDriverVersion"), "x")
+
+    def flash_nextion(self, url):
+        if self._use_api:
+            apis.ha_api.call_service(service="esphome/" + self._api_panel_name + "_nspanelui_api_call", command=255, data=url)
+        else:
+            apis.mqtt_api.mqtt_publish(self._topic_send.replace("CustomSend", "FlashNextion"), url)
