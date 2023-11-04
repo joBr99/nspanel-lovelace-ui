@@ -141,6 +141,19 @@ Button b13
         Touch Press Event
             showqq
         
+Button b14
+    Attributes
+        Scope            : local
+        Dragging         : 0
+        Send Component ID: disabled
+        State            : unpressed
+        Text             : burntest
+        Max. Text Size   : 10
+    
+    Events
+        Touch Press Event
+            page cardBurnRec
+        
 Button b15
     Attributes
         Scope            : local
