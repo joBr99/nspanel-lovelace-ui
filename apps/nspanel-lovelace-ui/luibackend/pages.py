@@ -96,15 +96,16 @@ class LuiPagesGen(object):
                 if state == "sunny":
                     icon_color = 65504 #bright-yellow
 
-            if "rgb_color" in attr:
+            if "rgb_color" in attr and attr.rgb_color:
                 color = attr.rgb_color
-                if "brightness" in attr:
+                if "brightness" in attr and attr.brightness:
                     color = rgb_brightness(color, attr.brightness)
                 icon_color = rgb_dec565(color)
-            elif "brightness" in attr:
+            elif "brightness" in attr and attr.brightness:
                 color = rgb_brightness([253, 216, 53], attr.brightness)
                 icon_color = rgb_dec565(color)
             return icon_color
+
 
     def update_time(self, kwargs):
         time = datetime.datetime.now().strftime(self._config.get("timeFormat"))
@@ -418,7 +419,7 @@ class LuiPagesGen(object):
                 font = 3
             elif isinstance(item.font, int):
                 font = item.font
-            icon_id += f'{icon_id}¬{font}'
+            icon_id = f'{icon_id}¬{font}'
         return f"~{entityTypePanel}~{entityId}~{icon_id}~{color}~{name}~{value}"
 
     def generate_entities_page(self, navigation, heading, items, cardType, tempUnit):
@@ -787,13 +788,13 @@ class LuiPagesGen(object):
         if "onoff" not in entity.attributes.supported_color_modes:
             brightness = 0
         if entity.state == "on":
-            if "brightness" in entity.attributes:
+            if "brightness" in entity.attributes and entity.attributes.brightness:
                 # scale 0-255 brightness from ha to 0-100
                 brightness = int(scale(entity.attributes.brightness,(0,255),(0,100)))
             else:
                 brightness = "disable"
-            if "color_temp" in entity.attributes.supported_color_modes:
-                if "color_temp" in entity.attributes:
+            if "color_temp" in entity.attributes.supported_color_modes and entity.attributes.supported_color_modes:
+                if "color_temp" in entity.attributes and entity.attributes.color_temp:
                     # scale ha color temp range to 0-100
                     color_temp = int(scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100)))
                 else:
