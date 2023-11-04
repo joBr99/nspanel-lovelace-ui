@@ -1,0 +1,53 @@
+Page cardBurnRec
+    Attributes
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
+    
+Timer tm0
+    Attributes
+        Scope      : local
+        Period (ms): 4000
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            dim=100
+            sys0=0
+            sys1=0
+            if(sys2==WHITE)
+            {
+                sys2=BLACK
+            }else
+            {
+                sys2=WHITE
+            }
+            sya1=sys2
+            while(sys0<8)
+            {
+                sya0=sys0%2
+                if(sya1==WHITE)
+                {
+                    sya1=BLACK
+                }else
+                {
+                    sya1=WHITE
+                }
+                fill 0,40*sys0,480,40,sya1
+                sys0++
+            }
+        
+TouchCap tc0
+    Attributes
+        Scope: local
+        Value: 0
+    
+    Events
+        Touch Press Event
+            page pageStartup
+        

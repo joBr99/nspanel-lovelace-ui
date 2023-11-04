@@ -54,7 +54,7 @@ Text tTmp
         Dragging           : 0
         Send Component ID  : disabled
         Associated Keyboard: none
-        Text               : test123test123
+        Text               : x
         Max. Text Size     : 30
     
 Picture p0
@@ -141,15 +141,6 @@ Button b13
         Touch Press Event
             showqq
         
-Button b14
-    Attributes
-        Scope            : local
-        Dragging         : 0
-        Send Component ID: disabled
-        State            : unpressed
-        Text             : newtxt
-        Max. Text Size   : 10
-    
 Button b15
     Attributes
         Scope            : local
@@ -281,12 +272,6 @@ Button b9
         Touch Press Event
             page popupNotify
         
-Hotspot m0
-    Attributes
-        Scope            : local
-        Dragging         : 0
-        Send Component ID: disabled
-    
 Timer tmSerial
     Attributes
         Scope      : local

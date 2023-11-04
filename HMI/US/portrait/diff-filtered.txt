@@ -1,4 +1,16 @@
-+++ /dev/fd/62	2023-10-14 14:36:40.102098093 +0000
++++ /dev/fd/62	2023-11-04 20:26:09.601109365 +0000
++le list
++ +1,9 @@
++.s.txt
++rm.txt
++nRec.txt
++rt.txt
++ities.txt
++d.txt
++d2.txt
++art.txt
++ia.txt
++er.txt
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@

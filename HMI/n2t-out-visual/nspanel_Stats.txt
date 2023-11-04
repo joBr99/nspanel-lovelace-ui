@@ -2,12 +2,16 @@ Program.s
 	0    Component(s)
 	15   Line(s) of event code
 	15   Unique line(s) of event code
+cardBurnRec
+	3    Component(s)
+	25   Line(s) of event code
+	21   Unique line(s) of event code
 pageIcons
 	7    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
 pageTest
-	27   Component(s)
+	25   Component(s)
 	68   Line(s) of event code
 	66   Unique line(s) of event code
 cardLChart
@@ -96,7 +100,7 @@ cardEntities
 	535  Unique line(s) of event code
 
 Total
-	23   Page(s)
-	878  Component(s)
-	10588 Line(s) of event code
-	2459 Unique line(s) of event code
+	24   Page(s)
+	879  Component(s)
+	10613 Line(s) of event code
+	2472 Unique line(s) of event code

@@ -1,0 +1,63 @@
+Page cardBurnRec
+    Attributes
+        ID                 : 0
+        Scope              : local
+        Dragging           : 0
+        Send Component ID  : disabled
+        Opacity            : 127
+        Width              : 480
+        Effect             : load
+        Effect Priority    : 0
+        Effect Time        : 300
+        Locked             : no
+        Swide up page ID   : disabled
+        Swide down page ID : disabled
+        Swide left page ID : disabled
+        Swide right page ID: disabled
+        Fill               : solid color
+        Back. Color        : 65535
+    
+Timer tm0
+    Attributes
+        ID         : 1
+        Scope      : local
+        Period (ms): 4000
+        Enabled    : yes
+    
+    Events
+        Timer Event
+            dim=100
+            sys0=0
+            sys1=0
+            if(sys2==WHITE)
+            {
+                sys2=BLACK
+            }else
+            {
+                sys2=WHITE
+            }
+            sya1=sys2
+            while(sys0<8)
+            {
+                sya0=sys0%2
+                if(sya1==WHITE)
+                {
+                    sya1=BLACK
+                }else
+                {
+                    sya1=WHITE
+                }
+                fill 0,40*sys0,480,40,sya1
+                sys0++
+            }
+        
+TouchCap tc0
+    Attributes
+        ID   : 2
+        Scope: local
+        Value: 0
+    
+    Events
+        Touch Press Event
+            page pageStartup
+        

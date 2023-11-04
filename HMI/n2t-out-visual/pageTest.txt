@@ -32,7 +32,7 @@ Variable (string) strCommand
     
 Variable (string) strTmp
     Attributes
-        ID            : 25
+        ID            : 24
         Scope         : local
         Text          : 
         Max. Text Size: 2
@@ -58,9 +58,9 @@ Text tBench
         Dragging            : 0
         Send Component ID   : disabled
         Opacity             : 127
-        x coordinate        : 288
-        y coordinate        : 90
-        Width               : 152
+        x coordinate        : 207
+        y coordinate        : 287
+        Width               : 88
         Height              : 30
         Effect              : load
         Effect Priority     : 0
@@ -82,14 +82,14 @@ Text tBench
     
 Text tTmp
     Attributes
-        ID                  : 24
+        ID                  : 23
         Scope               : local
         Dragging            : 0
         Send Component ID   : disabled
         Opacity             : 127
-        x coordinate        : 49
-        y coordinate        : 48
-        Width               : 257
+        x coordinate        : 212
+        y coordinate        : 253
+        Width               : 71
         Height              : 30
         Effect              : load
         Effect Priority     : 0
@@ -103,7 +103,7 @@ Text tTmp
         Horizontal Alignment: center
         Vertical Alignment  : center
         Input Type          : character
-        Text                : test123test123
+        Text                : x
         Max. Text Size      : 30
         Word wrap           : disabled
         Horizontal Spacing  : 0
@@ -135,7 +135,7 @@ Button b0
         x coordinate              : 0
         y coordinate              : 0
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -203,9 +203,9 @@ Button b10
         Send Component ID         : disabled
         Opacity                   : 127
         x coordinate              : 100
-        y coordinate              : 98
+        y coordinate              : 81
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -238,9 +238,9 @@ Button b11
         Send Component ID         : disabled
         Opacity                   : 127
         x coordinate              : 100
-        y coordinate              : 145
+        y coordinate              : 121
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -273,9 +273,9 @@ Button b12
         Send Component ID         : disabled
         Opacity                   : 127
         x coordinate              : 0
-        y coordinate              : 242
+        y coordinate              : 202
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -335,46 +335,15 @@ Button b13
         Touch Press Event
             showqq
         
-Button b14
+Button b15
     Attributes
         ID                        : 21
         Scope                     : local
         Dragging                  : 0
         Send Component ID         : disabled
         Opacity                   : 127
-        x coordinate              : 0
-        y coordinate              : 0
-        Width                     : 100
-        Height                    : 50
-        Effect                    : load
-        Effect Priority           : 0
-        Effect Time               : 300
-        Fill                      : solid color
-        Style                     : 3D auto
-        Font ID                   : 0
-        Back. Color               : 50712
-        Back. Picture ID (Pressed): 65535
-        Back. Color (Pressed)     : 1024
-        Font Color (Unpressed)    : 0
-        Font Color (Pressed)      : 65535
-        Horizontal Alignment      : center
-        Vertical Alignment        : center
-        State                     : unpressed
-        Text                      : newtxt
-        Max. Text Size            : 10
-        Word wrap                 : disabled
-        Horizontal Spacing        : 0
-        Vertical Spacing          : 0
-    
-Button b15
-    Attributes
-        ID                        : 22
-        Scope                     : local
-        Dragging                  : 0
-        Send Component ID         : disabled
-        Opacity                   : 127
-        x coordinate              : 236
-        y coordinate              : 263
+        x coordinate              : 99
+        y coordinate              : 270
         Width                     : 100
         Height                    : 50
         Effect                    : load
@@ -403,13 +372,13 @@ Button b15
         
 Button b16
     Attributes
-        ID                        : 23
+        ID                        : 22
         Scope                     : local
         Dragging                  : 0
         Send Component ID         : disabled
         Opacity                   : 127
-        x coordinate              : 135
-        y coordinate              : 263
+        x coordinate              : 0
+        y coordinate              : 270
         Width                     : 100
         Height                    : 50
         Effect                    : load
@@ -444,9 +413,9 @@ Button b2
         Send Component ID         : disabled
         Opacity                   : 127
         x coordinate              : 0
-        y coordinate              : 195
+        y coordinate              : 162
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -514,9 +483,9 @@ Button b4
         Send Component ID         : disabled
         Opacity                   : 127
         x coordinate              : 0
-        y coordinate              : 96
+        y coordinate              : 82
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -551,7 +520,7 @@ Button b5
         x coordinate              : 100
         y coordinate              : 0
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -584,9 +553,9 @@ Button b6
         Send Component ID         : disabled
         Opacity                   : 127
         x coordinate              : 0
-        y coordinate              : 49
+        y coordinate              : 41
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -619,9 +588,9 @@ Button b7
         Send Component ID         : disabled
         Opacity                   : 127
         x coordinate              : 100
-        y coordinate              : 49
+        y coordinate              : 41
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -653,10 +622,10 @@ Button b8
         Dragging                  : 0
         Send Component ID         : disabled
         Opacity                   : 127
-        x coordinate              : 341
-        y coordinate              : 9
+        x coordinate              : 94
+        y coordinate              : 161
         Width                     : 106
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -690,9 +659,9 @@ Button b9
         Send Component ID         : disabled
         Opacity                   : 127
         x coordinate              : 0
-        y coordinate              : 146
+        y coordinate              : 122
         Width                     : 100
-        Height                    : 50
+        Height                    : 40
         Effect                    : load
         Effect Priority           : 0
         Effect Time               : 300
@@ -717,21 +686,6 @@ Button b9
         Touch Press Event
             page popupNotify
         
-Hotspot m0
-    Attributes
-        ID               : 26
-        Scope            : local
-        Dragging         : 0
-        Send Component ID: disabled
-        Opacity          : 127
-        x coordinate     : 213
-        y coordinate     : 115
-        Width            : 210
-        Height           : 191
-        Effect           : load
-        Effect Priority  : 0
-        Effect Time      : 300
-    
 Timer tmSerial
     Attributes
         ID         : 14
