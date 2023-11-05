@@ -528,11 +528,12 @@ class LuiPagesGen(object):
             entity       = apis.ha_api.get_entity(item)
             heading      = title if title != "unknown" else entity.attributes.friendly_name
 
+            color = 6666
             ydesc = "Leistung [kW]"
             yscale = "0:10:20:30"
             datapoints = "19^22:00~17~12~8~7^2:00~6~6~5~5^6:00~5~15~19~12^10:00~17~24~18~12^14:00~13~13~13~15^18:00~25~28~26"
 
-            command = f"entityUpd~{heading}~{navigation}~{ydesc}~{yscale}~{datapoints}"
+            command = f"entityUpd~{heading}~{navigation}~{color}~{ydesc}~{yscale}~{datapoints}"
         self._send_mqtt_msg(command)
 
     def generate_media_page(self, navigation, title, entity, entities, mediaBtn):
