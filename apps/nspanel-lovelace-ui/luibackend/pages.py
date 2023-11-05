@@ -520,6 +520,21 @@ class LuiPagesGen(object):
             command = f"entityUpd~{heading}~{navigation}~{item}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
         self._send_mqtt_msg(command)
 
+    def generate_chart_page(self, navigation, title, entity):
+        item = entity.entityId
+        if not apis.ha_api.entity_exists(item):
+            command = f"entityUpd~Not found~{navigation}"
+        else:
+            entity       = apis.ha_api.get_entity(item)
+            heading      = title if title != "unknown" else entity.attributes.friendly_name
+
+            ydesc = "Leistung [kW]"
+            yscale = "0:10:20:30"
+            datapoints = "19^22:00~17~12~8~7^2:00~6~6~5~5^6:00~5~15~19~12^10:00~17~24~18~12^14:00~13~13~13~15^18:00~25~28~26"
+
+            command = f"entityUpd~{heading}~{navigation}~{ydesc}~{yscale}~{datapoints}"
+        self._send_mqtt_msg(command)
+
     def generate_media_page(self, navigation, title, entity, entities, mediaBtn):
         entityId = entity.entityId
         if entity.status is not None:
@@ -771,6 +786,10 @@ class LuiPagesGen(object):
         if card.cardType == "cardPower":
             self.generate_power_page(navigation, card.title, card.entities)
             return
+        if card.cardType == "cardChart":
+            self.generate_chart_page(navigation, card.title, card.entity)
+            return
+
 
     def generate_light_detail_page(self, entity_id, is_open_detail=False):
         if entity_id.startswith('uuid'):
