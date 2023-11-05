@@ -528,10 +528,38 @@ class LuiPagesGen(object):
             entity       = apis.ha_api.get_entity(item)
             heading      = title if title != "unknown" else entity.attributes.friendly_name
 
-            color = 6666
-            ydesc = "Leistung [kW]"
-            yscale = "0:10:20:30"
-            datapoints = "19^22:00~17~12~8~7^2:00~6~6~5~5^6:00~5~15~19~12^10:00~17~24~18~12^14:00~13~13~13~15^18:00~25~28~26"
+            # get data from homeassistant
+            data_raw = apis.ha_api.get_history(entity_id = item, days = 7)
+            data = [(d.get('last_updated', None),d.get('state', None)) for d in data_raw[0]]
+            data = dict(data)
+
+            # Parse timestamps and convert to datetime objects, excluding 'unavailable' values
+            time_temp_pairs = [(datetime.datetime.fromisoformat(timestamp), int(val)) for timestamp, val in data.items() if val != 'unavailable']
+            # Sort the data based on timestamps
+            time_temp_pairs.sort(key=lambda x: x[0])
+            # Calculate the time span
+            start_time = time_temp_pairs[0][0]
+            end_time = time_temp_pairs[-1][0]
+            time_span = end_time - start_time
+            # Calculate time intervals for evenly spaced data points
+            num_data_points = 24
+            time_intervals = [start_time + i * time_span / (num_data_points - 1) for i in range(num_data_points)]
+            # Find the closest data points for these time intervals
+            evenly_spaced_data = []
+            for interval in time_intervals:
+                closest_pair = min(time_temp_pairs, key=lambda x: abs(x[0] - interval))
+                time, val = closest_pair
+                val = int(val)
+                evenly_spaced_data.append((time, val))
+
+            datapoints = ""
+            for idx, (time, val) in enumerate(evenly_spaced_data):
+                datapoints += f"{val}~"
+
+            color = 65504
+            ydesc = "Akku [%]"
+            yscale = "25:50:75:100"
+            #datapoints = "19^22:00~17~12~8~7^2:00~6~6~5~5^6:00~5~15~19~12^10:00~17~24~18~12^14:00~13~13~13~15^18:00~25~28~26"
 
             command = f"entityUpd~{heading}~{navigation}~{color}~{ydesc}~{yscale}~{datapoints}"
         self._send_mqtt_msg(command)
