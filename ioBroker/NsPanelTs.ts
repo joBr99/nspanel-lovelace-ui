@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.2.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.2 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -179,9 +179,10 @@ ReleaseNotes:
         - 03.10.2023 - v4.3.1.4  Delete NsPanelTs_without_Examples.ts
         - 12.10.2023 - v4.3.1.5  Fix Datapoint for Role timetable -> Attention use new script from TT-Tom https://github.com/tt-tom17/MyScripts/blob/main/Sonoff_NSPanel/Fahrplan_to_NSPanel.ts
         - 19.10.2023 - v4.3.1.6  Add more Alias Device-Types to Navigation / Minor Fixes
-	- 22.10.2023 - v4.3.1.7 Fix CreateEntity (navigate) role 'light' and 'socket' and 'temperature'
+        - 22.10.2023 - v4.3.1.7  Fix CreateEntity (navigate) role 'light' and 'socket' and 'temperature'
         - 30.10.2023 - v4.3.2    Upgrade TFT 53 / 4.3.2
         - 30.10.2023 - v4.3.2.1  Fix formatDate/Date.parse with moment.js (Bugs in JS-Methodes)
+        - 07.11.2023 - v4.3.2.2  Fix Selection of screensaver layout (alternative / advanced)
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -1231,11 +1232,22 @@ on({id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: "ne"}, async 
     }
 });
 
+// switch selection of screensaver layout
 on({id: NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', change: "ne"}, async function (obj) {
     try {
-        setState(config.panelSendTopic, 'pageType~pageStartup');
+        if (obj.state.val) setState( NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', false );
+        //setState(config.panelSendTopic, 'pageType~pageStartup');
     } catch (err) { 
         console.warn('error at trigger Screensaver Advanced: ' + err.message); 
+    }
+});
+
+on({id: NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', change: "ne"}, async function (obj) {
+    try {
+        if (obj.state.val) setState( NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false );
+        //setState(config.panelSendTopic, 'pageType~pageStartup');
+    } catch (err) { 
+        console.warn('error at trigger Screensaver Alternativ: ' + err.message); 
     }
 });
 
