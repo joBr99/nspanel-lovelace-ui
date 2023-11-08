@@ -883,7 +883,7 @@ const parseFormat = require('moment-parseformat');
 moment.locale(getState(NSPanel_Path + 'Config.locale').val);
 
 //Desired Firmware
-const tft_version: string = 'v4.3.2';
+const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
