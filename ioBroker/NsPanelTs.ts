@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.2.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.3.2 / BerryDriver 9 / Tasmota 13.2.0
+TypeScript v4.3.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+- abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -183,6 +183,8 @@ ReleaseNotes:
         - 30.10.2023 - v4.3.2    Upgrade TFT 53 / 4.3.2
         - 30.10.2023 - v4.3.2.1  Fix formatDate/Date.parse with moment.js (Bugs in JS-Methodes)
         - 07.11.2023 - v4.3.2.2  Fix Selection of screensaver layout (alternative / advanced)
+        - 08.11.2023 - v4.3.2.3  Fix Issues #1013 by laluz742 -> Parameter count mismatch: screensaver color
+        - 08.11.2023 - v4.3.3    Upgrade TFT 53 / 4.3.3
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -275,7 +277,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.2.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.3.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -980,7 +982,7 @@ CheckMQTTPorts();
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53,54,55];
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.2','4.4.0','4.5.0'];
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.3','4.4.0','4.5.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
@@ -7486,18 +7488,13 @@ function HandleScreensaverColors(): void {
                             rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
                             rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
                             rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
-                            rgb_dec565(White)           + '~' +      //tF1Icon~         rgb_dec565(sctF1Icon)
-                            rgb_dec565(White)           + '~' +      //tF2Icon~         rgb_dec565(sctF2Icon)
-                            rgb_dec565(White)           + '~' +      //tF3Icon~         rgb_dec565(sctF3Icon)
-                            rgb_dec565(White)           + '~' +      //tF4Icon~         rgb_dec565(sctF4Icon)
                             rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
                             rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
                             rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
                             rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
                             rgb_dec565(scbar)           + '~' +      //bar~
                             rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
-                            rgb_dec565(White)           + '~' +
-                            rgb_dec565(sctTimeAdd);
+                            rgb_dec565(sctTimeAdd);                  //tTimeAdd
 
         SendToPanel(<Payload>{ payload: payloadString });
     } catch (err) {
