@@ -68,6 +68,8 @@ key | optional | type | default | description
 `dateAdditionalTemplate` | True | string | `""` | Addional Text dispayed after Date, can contain a Homeassistant Template Example `" - {{ states('sun.sun') }}"`
 `timeAdditionalTemplate` | True | string | `""` | Addional Text dispayed below Time, can contain a Homeassistant Template
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
+`timeTzOrig` | True | string | "" | Timezone of the App Daemon server, like `UTC`
+`timeTzDest` | True | string | "" | Timezone of the NSPanel, like `CEST`
 `defaultBackgroundColor` | True | string | ha-dark | backgroud color of all cards, valid values: `black`, `ha-dark`
 `cards` | False | complex | | configuration for cards that are displayed on panel; see docs for cards
 `screensaver` | True | complex | | configuration for screensaver; see docs for screensaver
