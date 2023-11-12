@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -30,152 +30,9 @@ Ab Script Version 4.3.2.1 muss in der JavaScript Instanz die npm Module 'moment'
 
 *****************************************************************************************************************************
 
-
 ReleaseNotes:
     Bugfixes und Erweiterungen:
-        - 07.10.2022 - v3.5.0   Upgrade TFT 43
-        - 07.10.2022 - v3.5.0   Add Backgroundcolor to Pages
-        - 08.10.2022 - v3.5.0   Add Tilt-Slider and TILT_Functions (Open/Stop/Close) to Blinds/Cover/Shutter popUp
-        - 12.10.2022 - v3.5.0   Add PageNavigation via Datapoint
-        - 25.10.2022 - v3.5.0   Add New Parameters to popUpNotify / Layout 2
-        - 26.10.2022 - v3.5.0.1 Fix Thermostat for tado Support (by Sternmiere)
-        - 27.10.2022 - v3.5.0.1 Add VirtualDevice Gate
-        - 27.10.2022 - v3.5.0.2 Applied Boy Scout Rule (Fixed some typos, changed var to let, fixed min/max colorTemp Bug)
-        - 30.10.2022 - v3.5.0.3 Fixed Media Play/Pause icon for alexa (and others) devices
-        - 31.10.2022 - v3.5.0.4 Reengineering Media Subscriptions
-        - 02.11.2022 - v3.5.0.5 Page navigation continues with page 0 from the last page
-        - 04.11.2022 - v3.5.0.5 Create Auto-Alias for Service Pages
-        - 07.11.2022 - v3.5.0.5 Create Auto-Alias for Alexa2, Spotify-Premium, Sonos
-        - 08.11.2022 - v3.5.0.5 Create Auto-Alias for Wheather-Forcast (Screensaver Big-Icon)
-        - 07.10.2022 - v3.6.0   Upgrade TFT 45
-        - 09.11.2022 - v3.6.0   Add new Alias-DeviceTyp cie (control colors with XY)
-        - 16.11.2022 - v3.6.0   Control Relay 1 + 2 via Datapoints
-        - 17.11.2022 - v3.6.0   Add Datapoint to Control Screensaver-Dimmode
-        - 17.11.2022 - v3.6.0   Change to Page after bExit 
-        - 18.11.2022 - v3.6.0   Add cardChart by fumanchi (only on DEV)
-        - 24.11.2022 - v3.6.0   Add Background Color Switch via DP
-        - 26.11.2022 - v3.6.0   Add cardMedia Colors
-        - 26.11.2022 - v3.6.0   Add cardThermostat Popup 
-        - 28.11.2022 - v3.6.0.1 Bugfix in bExit
-        - 29.11.2022 - v3.6.0.2 Update Berry Version 6
-        - 30.11.2022 - v3.6.0.3 Bugfix string/number compare current BerryDriver (DP as string)
-        - 05.12.2022 - v3.6.0.4 Add bHome to Navigation
-        - 05.12.2022 - v3.6.0.4 Add changeable Center-Icon in cardPower with Color and Value
-        - 08.12.2022 - v3.6.0.4 Bugfix - Use MRIcons in Screensaver with null
-        - 13.12.2022 - v3.6.0.4 Add Sensor-Values to cardGrid
-        - 13.12.2022 - v3.6.0.4 Hotfix - Update screensaver temperature without weather forecast
-        - 14.12.2022 - v3.7.0   Move Config "active" to DP activeBrightness and add DP activeDimmodeBrightness
-        - 19.12.2022 - v3.7.0   Change weather icons for exceptional (window-close)
-        - 19.12.2022 - v3.7.0   Add DasWetter / Add DasWetter in create AutoAlias / Const MinMax
-        - 19.11.2022 - v3.7.0   Add cardChart on PROD (implemented but working with v3.7.0 --> next TFT)
-        - 10.12.2022 - v3.7.0   Add Shuffle to Media Player
-        - 10.12.2022 - v3.7.0   Remove Old Speakerlist and Add 5 GridCard Control PageItems
-        - 10.12.2022 - v3.7.0   Add In_Sel PopUp to cardMedia
-        - 15.12.2022 - v3.7.0   Add alternate MRIcon Size
-        - 20.12.2022 - v3.7.0   Add popUpTimer / New ALIAS Type level.timer
-        - 21.12.2022 - v3.7.0   Add Fan / New ALIAS Type level.mode.fan
-        - 22.12.2022 - v3.7.0   Add InSel - InputSelector with Alias Type buttonSensor (DP .VALUE)
-        - 23.10.2022 - v3.7.0   Upgrade TFT 46
-        - 28.12.2022 - v3.7.3.0 Hotfix - bUp case
-        - 28.12.2022 - v3.7.3.0 Update Berry Version 8
-        - 29.12.2022 - v3.7.3.1 Hotfix - us-p - DateString - Use long/short Weekday and long/short Month
-        - 29.12.2022 - v3.7.3.2 Add pageItem.id to Submenu; New Parameter targetPage by TT-TOM / @tt-tom17
-        - 30.12.2022 - v3.8.0   Add New HMI-Navi
-        - 01.01.2023 - v3.8.0   Add Tasmota "Web Admin Password"
-        - 02.01.2023 - v3.8.0   Add Navigation bSubPrev and bSubNext and Subpages for bHome
-        - 03.01.2023 - v3.8.0   Bugfix for cardThermostat - Payload (Minor)
-        - 04.01.2023 - v3.8.0   Add Volumio-Player to cardMedia by @egal
-        - 05.01.2023 - v3.8.0   Upgrade TFT 47
-        - 06.01.2023 - v3.8.0   Add Volumio Tracklist by @egal
-        - 06.01.2023 - v3.8.1   HMI-Hotfix
-        - 06.01.2023 - v3.8.2   Add globalTracklist for every Volumio-Player by @egal 
-        - 07.01.2023 - v3.8.3   Upgrade TFT 48
-        - 08.01.2023 - v3.8.3   Add cardLChart for Line diagrams
-        - 09.01.2023 - v3.8.3   Add new monobutton Functions by @ronny130286 
-        - 10.01.2023 - v3.8.3   Add Repeat-Button and external Tracklists/Queues to Volumio Media-Player by @egal
-        - 11.01.2023 - v3.8.3   Add configurable navigation buttons by @ravenst0ne (v3.8.1.1)
-        - 11.01.2023 - v3.8.3   Add Char"€" to HMI
-        - 11.01.2023 - v3.8.3   Fix Switch-Off for Color Lights
-        - 15.01.2023 - v3.9.0   Fix bExit if externel bExit page is set in DP
-        - 16.01.2023 - v3.9.0   Add Values, Decimal Places to mrIcons
-        - 16.01.2023 - v3.9.0   Preparation of the cardPower for TFT 3.9.0 --> New Payload
-        - 16.01.2023 - v3.9.0   Preparation of the cardAlarm for TFT 3.9.0 --> New Payload and Add heading
-        - 16.01.2023 - v3.9.0   Add configurable navigation buttons for top level pages and icon colors by @ravenst0ne (v3.8.3.1)
-        - 18.01.2023 - v3.9.0   Add new ServicePages, Reboot and Update DP's inlc. Auto-Alias
-        - 19.01.2023 - v3.9.0   Add Indicator Color Scales to Info Aliases
-        - 20.01.2023 - v3.9.0   Move TS-Config-Parameters to 0_userdata NSPanel-Config
-        - 22.01.2023 - v3.9.0   Refactoring Screensaver (HMI)
-        - 24.01.2023 - v3.9.0   New Function "Check Config Parameters"
-        - 25.01.2023 - v3.9.0   Fix Tasmota- Firmware-Upgrade with Safeboot
-        - 27.01.2023 - v3.9.0   Add getState in PageItem.name with prefix and suffix
-        - 28.01.2023 - v3.9.0   Fix TFT-Version Path in function update_tft_firmware (drop ".")
-        - 29.01.2023 - v3.9.0   Upgrade TFT 49
-        - 03.02.2023 - v3.9.0.1 Hotfix - Catch exception for missing sensor values separately
-        - 03.02.2023 - v3.9.0.2 Hotfix - Screensaver bExit
-        - 06.02.2023 - v3.9.0.3 Hotfix - PR #754 - added missing 'tempUpdHighLow' ButtonEvent handling - by @fre4242
-        - 07.02.2023 - v3.9.0.4 Hotfix - PR #760 - Open activepage again after closing popupLight or popupShutter - by @ravenst0ne
-        - 01.02.2023 - v4.0.0   Add new HMI Serial-Protocol to cardPower
-        - 07.02.2023 - v4.0.0   Check whether setObjects is set
-        - 08.02.2023 - v4.0.0   Add Screensaver2 - Renew all Screensaver functions
-        - 09.02.2023 - v4.0.0   Fix bExit - to much notify~~ events outside of screensaver --> Black Screens
-        - 10.02.2023 - v4.0.0   Add Screensaver2 Parameter to Service Pages
-        - 12.02.2023 - v4.0.0   Add cardUnlock
-        - 17.02.2023 - v4.0.0   Extension of the Squeezebox player by bembelstemmer
-        - 19.02.2023 - v4.0.0   cardChart/cardLChart YAxisTicks from a datapoint by bembelstemmer
-        - 19.02.2023 - v4.0.0   Make Temperature Steps configurable by bembelstemmer
-        - 20.02.2023 - v4.0.0   Hotfix cardThermo Status by Gargano
-        - 26.02.2023 - v4.0.1   Optimize cardThermo by bembelstemmer
-        - 27.02.2023 - v4.0.2   Dynamic Indicator Icons in Advanced Screensaver by Gargano
-        - 27.02.2023 - v4.0.2   Upgrade TFT 50 / 4.0.2
-        - 27.02.2023 - v4.0.3   Upgrade TFT 50 / 4.0.3
-        - 04.03.2023 - v4.0.4   Upgrade TFT 50 / 4.0.4
-        - 04.03.2023 - v4.0.4   Fix bExit with popupLight, popup....
-        - 07.03.2023 - v4.0.4.1 Extend Configuration Options for Physical Buttons to enable direct state manipulation - by bembelstemmer
-        - 10.03.2023 - v4.0.4.2 Fix iconColor by 100% Brightness
-        - 13.03.2023 - v4.0.4.3 Fix Funktion GeneratePowerPage inkl. DemoModus
-        - 14.03.2023 - v4.0.4.4 Fix colorTempSlider Arbeitsweise(seitenverkehrt) korregiert
-        - 17.03.2023 - v4.0.4.5 Debug - Error - Log - Meldungen angepasst, rgbSingle benötigt nicht mehr DP .TEMPERATURE
-        - 27.03.2023 - v4.0.5   Upgrade TFT 50 / 4.0.5
-        - 27.03.2023 - v4.0.5   Add Strings to function HandleScreensaverStatusIcons()
-        - 27.03.2023 - v4.0.5.1 Add Bool with Value to function HandleScreensaverStatusIcons()
-        - 29.03.2023 - v4.0.5.2 Fix cardPower
-        - 03.04.2023 - v4.0.5.3 Fix GetScreenSaverIconColor
-        - 03.04.2023 - v4.0.5.4 Fix HandleScreensaverStatusIcons
-        - 09.04.2023 - v4.0.5.5 Add new Role "timeTable" to function CreateEntity for Adapter "Fahrplan"
-        - 09.04.2023 - v4.0.5.5 Fix trigger popupNotifypage
-        - 11.04.2023 - v4.0.5.6 Fix function InitDimmode
-        - 18.04.2023 - v4.0.5.7 Fix Function check_updates
-        - 20.04.2023 - v4.0.5.8 Fix Layout Update message for TFT, Berry-Driver and Tasmota
-        - 21.04.2023 - v4.0.5.9 Add Parameter pageitem id0 to ActivePages (0_userdata)
-        - 23.04.2023 - v4.0.5.10 Fixed error wrong icon index in GeneratePowerPage by fre4242
-        - 28.04.2023 - v4.0.5.11 light 'hue' and light 'rgb' have '.TEMPERATURE' optional
-        - 02.05.2023 - v4.0.5.12 Add new Function Debug mode from script activatable via panel
-        - 02.05.2023 - v4.0.5.13 Fix Problems with weather-instances-number !="0" #876
-        - 02.05.2023 - v4.0.5.14 Fix: Remove empty log statements #883
-        - 30.07.2023 - v4.0.5.15 Improved screensaverAdvanced icon handling: option to load from iobroker object #944
-        - 12.08.2023 - v4.1.4    Upgrade TFT 51 / 4.1.4
-        - 12.08.2023 - v4.1.4.1  Fix Label CANCEL for popupTimer
-        - 12.08.2023 - v4.1.4.1  Fix TypeScript Error (JS-Adapter > 7.1.X) by Gargano
-        - 12.08.2023 - v4.1.4.1  CardGRid with maxItems = 8
-        - 12.08.2023 - v4.1.4.2  Add onStop function() to Schedules
-        - 13.08.2023 - v4.1.4.3  Add InSel to popUpLight
-        - 13.08.2023 - v4.1.4.4  Add Parameter inSel_ChoiceState to InSel to show/hide Focus
-        - 21.08.2023 - v4.2.0    Upgrade TFT 52 / 4.2.0
-        - 21.08.2023 - v4.2.0    Add new alias state for iconcolor and buttontext for icon for subpages
-        - 22.08.2023 - v4.2.0.1  Add iconArray to Alias "Klimaanlage" (airCondition)
-        - 23.08.2023 - v4.2.0.2  Add CardGrid2 with maxItems = 8
-        - 23.08.2023 - v4.2.1    Upgrade TFT 52 / 4.2.1
-        - 23.08.2023 - v4.2.1.1  Add WINDOWOPEN to cardThermo (Thermostat)
-        - 25.08.2023 - v4.2.1.2  Add Parameter fontSize for v4.3.0
-        - 27.08.2023 - v4.2.1.3  Add MQTT-Port-Check (use with exec) --> function CheckMQTTPorts()
-        - 27.08.2023 - v4.2.1.3  Add MQTT-Port-Check for ServiceMenu
-        - 01.09.2023 - v4.2.1.4  Fix iconId2 in Alias door/window
-        - 02.09.2023 - v4.2.1.4  Add dynamically USERICON to Alias info
-        - 04.09.2023 - v4.2.1.5  Fix Debug with 0_userdata.0... 
-        - 04.09.2023 - v4.2.1.5  Add minValue/maxValue to Blinds
-        - 15.09.2023 - v4.2.1.6  Fix ServicePage Dimmode 'next' -> 'home'
-        - 15.09.2023 - v4.2.1.6  Fix Log '.USERICON' to Debug.log
-        - 15.09.2023 - v4.2.1.6  Fix Link PowerIcon to Alias (Thermocard)
+
         - 17.09.2023 - v4.3.1    Upgrade TFT 53 / 4.3.1
         - 17.09.2023 - v4.3.1.1  Add Parameter fontSize (0-4) to cardGrid (with useValue)
         - 23.09.2023 - v4.3.1.2  Upgrade BerryDriver v9
@@ -191,7 +48,7 @@ ReleaseNotes:
         - 08.11.2023 - v4.3.2.3  Fix Issues #1013 by laluz742 -> Parameter count mismatch: screensaver color
         - 08.11.2023 - v4.3.3    Upgrade TFT 53 / 4.3.3
         - 11.11.2023 - v4.3.3.1  Fix for Issues #1020 HandleHardwareButton buttonConfig.mode -> 'toggle' and 'set'
-        
+        - 12.11.2023 - v4.3.3.2  Add autoCreateALias to cardUnlock
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -1158,8 +1015,8 @@ async function CheckConfigParameters() {
         const hostList = $('system.host.*.nodeCurrent');
         hostList.each(function(id, i) {
             let nodeJSVersion = (getState(id).val).split('.');
-            if (parseInt(nodeJSVersion[0]) < 16) {
-                console.warn('nodeJS must be at least v16.X.X. Currently: v' + getState(id).val + '! Please Update your System!');
+            if (parseInt(nodeJSVersion[0]) < 18) {
+                console.warn('nodeJS must be at least v18.X.X. Currently: v' + getState(id).val + '! Please Update your System! --> iob nodejs-update 18');
             }
             if (parseInt(nodeJSVersion[0])%2 != 0) {
                 console.warn('nodeJS does not have an even version number. An odd version number is a developer version. Please correct nodeJS version');
@@ -2732,7 +2589,6 @@ function HandleHardwareButton(method: string): void {
         if(buttonConfig.mode === null) {
             return;
         }
-
         switch(buttonConfig.mode) {
             case 'page':
                 if (Debug) console.log('HandleHardwareButton -> Mode Page');
@@ -4750,6 +4606,21 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
     }
 }
 
+async function createAutoUnlockAlias(id: string, dpPath: string) {
+    if (autoCreateAlias) {    
+        if (existsState(dpPath + 'UnlockPin') == false) {            
+            createState(dpPath + 'UnlockPin', '0000', { type: 'string' }, function () { setState(dpPath + 'UnlockPin', '0000') });
+        }
+        if (existsState(dpPath + 'Access') == false) {
+            createState(dpPath + 'Access', 'false', { type: 'boolean' }, function () { setState(dpPath + 'Access', 'false') });
+        }
+
+        setObject(id, {_id: id, type: 'channel', common: {role: 'sensor.fire.alarm', name:'sensor.fire.alarm'}, native: {}});
+        await createAliasAsync(id + '.PIN', dpPath + 'UnlockPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN'});
+        await createAliasAsync(id + '.ACTUAL', dpPath + 'Access', true, <iobJS.StateCommon>{ type: 'boolean', role: 'sensor.fire.alarm', name: 'ACTUAL'});
+    }
+}
+
 function GenerateUnlockPage(page: PageUnlock): Payload[] {
     try {
         activePage = page;
@@ -4758,14 +4629,16 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
 
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
-        let nsPath = NSPanel_Path + 'Unlock.';
 
-        if (existsState(nsPath + 'UnlockPin') == false) {
-            createState(nsPath + 'UnlockPin', '0000', { type: 'string' }, function () { setState(nsPath + 'UnlockPin', '0000') });
-        }
+        let dpPath : string = ''
+        let dpTempPath: any = NSPanel_Path.split('.');
+        for (let i=0; i < dpTempPath.length - 2; i++) {
+            dpPath = dpPath + dpTempPath[i] + '.';
+        } 
+        dpPath = (dpPath + 'Unlock.');
 
-        if (existsState(nsPath + 'Access') == false) {
-            createState(nsPath + 'Access', 'false', { type: 'boolean' }, function () { setState(nsPath + 'Access', 'false') });
+        if (page.items[0].autoCreateALias) {
+            createAutoUnlockAlias(id, dpPath)            
         }
 
         let unlock1 = 'Entsprerren';                                    //unlock1*~*
