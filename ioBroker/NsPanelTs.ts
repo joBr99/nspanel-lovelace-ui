@@ -190,7 +190,8 @@ ReleaseNotes:
         - 07.11.2023 - v4.3.2.2  Fix Selection of screensaver layout (alternative / advanced)
         - 08.11.2023 - v4.3.2.3  Fix Issues #1013 by laluz742 -> Parameter count mismatch: screensaver color
         - 08.11.2023 - v4.3.3    Upgrade TFT 53 / 4.3.3
-        - 11.11.2023 - v$.3.3.1  Fix for Issues #1020 HandleHardwareButton buttonConfig.mode -> 'toggle' and 'set'
+        - 11.11.2023 - v4.3.3.1  Fix for Issues #1020 HandleHardwareButton buttonConfig.mode -> 'toggle' and 'set'
+        
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
