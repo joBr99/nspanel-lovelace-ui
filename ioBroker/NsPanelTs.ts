@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -24,7 +24,12 @@ durchführen und FlashNextion wiederholen.
 ************************************************************************************************
 Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota-update-probleme
-************************************************************************************************
+*****************************************************************************************************************************
+
+Ab Script Version 4.3.2.1 muss in der JavaScript Instanz die npm Module 'moment' und 'moment-parseformat' eingetragen sein
+
+*****************************************************************************************************************************
+
 
 ReleaseNotes:
     Bugfixes und Erweiterungen:
@@ -185,6 +190,8 @@ ReleaseNotes:
         - 07.11.2023 - v4.3.2.2  Fix Selection of screensaver layout (alternative / advanced)
         - 08.11.2023 - v4.3.2.3  Fix Issues #1013 by laluz742 -> Parameter count mismatch: screensaver color
         - 08.11.2023 - v4.3.3    Upgrade TFT 53 / 4.3.3
+        - 11.11.2023 - v4.3.3.1  Fix for Issues #1020 HandleHardwareButton buttonConfig.mode -> 'toggle' and 'set'
+        
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -2744,12 +2751,14 @@ function HandleHardwareButton(method: string): void {
                     let current = getState(buttonConfig.entity).val;
                     setState(buttonConfig.entity, !current);
                 }
+                screensaverEnabled = true;
                 break;
             case 'set':
                 if (Debug) console.log('HandleHardwareButton -> Mode Set');
                 if (buttonConfig.entity) {
                     setState(buttonConfig.entity, buttonConfig.setValue);
                 }
+                screensaverEnabled = true;
                 break;
         }
     } catch (err) {
