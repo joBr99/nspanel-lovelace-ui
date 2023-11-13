@@ -304,8 +304,8 @@ let NSPanel_Service_SubPage = <PageEntities>
     'heading': 'NSPanel Service',
     'useColor': true,
     'subPage': true,
-    'parent': NSPanel_Service,
-    'home': 'NSPanel_Service', 
+    'parent': Unlock_Service,
+    'home': 'Unlock_Service', 
     'items': [
         <PageItem>{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: 'Infos', buttonText: 'mehr...'},
         <PageItem>{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: 'Einstellungen', buttonText: 'mehr...'},
