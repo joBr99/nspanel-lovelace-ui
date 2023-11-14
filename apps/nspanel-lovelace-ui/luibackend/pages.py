@@ -111,8 +111,8 @@ class LuiPagesGen(object):
     def update_time(self, kwargs):
         time = None
         # get current time, with timezone if set
-        if self._config.get("timeTz"):
-            timezone = tz.gettz(self._config.get("timeTz"))
+        if self._config.get("timezone"):
+            timezone = tz.gettz(self._config.get("timezone"))
             time = datetime.datetime.now(tz=timezone)
         else:
             time = datetime.datetime.now()
