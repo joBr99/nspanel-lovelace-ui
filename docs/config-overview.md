@@ -68,7 +68,7 @@ key | optional | type | default | description
 `dateAdditionalTemplate` | True | string | `""` | Addional Text dispayed after Date, can contain a Homeassistant Template Example `" - {{ states('sun.sun') }}"`
 `timeAdditionalTemplate` | True | string | `""` | Addional Text dispayed below Time, can contain a Homeassistant Template
 `dateFormat` | True | string | `%A, %d. %B %Y` | date format used if babel is not installed
-`timezone` | True | string | "" | Timezone for the time on the panel: `Europe/Berlin` - See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for a list of TZ Identifiers
+`timezone` | True | string | "" | Timezone for the time on the panel: `Europe/Berlin` - See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for a list of TZ Identifiers (supported from upcoming version v4.4)
 `defaultBackgroundColor` | True | string | ha-dark | backgroud color of all cards, valid values: `black`, `ha-dark`
 `cards` | False | complex | | configuration for cards that are displayed on panel; see docs for cards
 `screensaver` | True | complex | | configuration for screensaver; see docs for screensaver
