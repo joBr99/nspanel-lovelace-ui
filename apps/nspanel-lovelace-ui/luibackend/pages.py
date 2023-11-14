@@ -1,4 +1,5 @@
 import datetime
+from dateutil import tz
 import dateutil.parser as dp
 import time
 
@@ -108,10 +109,17 @@ class LuiPagesGen(object):
 
 
     def update_time(self, kwargs):
-        time = datetime.datetime.now().strftime(self._config.get("timeFormat"))
+        time = None
+        # get current time, with timezone if set
+        if self._config.get("timeTz"):
+            timezone = tz.gettz(self._config.get("timeTz"))
+            time = datetime.datetime.now(tz=timezone)
+        else:
+            time = datetime.datetime.now()
+        nice_time = time.strftime(self._config.get("timeFormat"))
         addTemplate = self._config.get("timeAdditionalTemplate")
         addTimeText = apis.ha_api.render_template(addTemplate)
-        self._send_mqtt_msg(f"time~{time}~{addTimeText}")
+        self._send_mqtt_msg(f"time~{nice_time}~{addTimeText}")
 
     def update_date(self, kwargs):
         global babel_spec
