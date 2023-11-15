@@ -15,6 +15,9 @@ The configuration has been moved out of the config folder from homeassistant. Th
 
 ![image](https://github.com/joBr99/nspanel-lovelace-ui/assets/29555657/ddf75cac-fca1-48e7-9e84-646e7a80d38a)
 
+![image](https://github.com/joBr99/nspanel-lovelace-ui/assets/29555657/6b19180a-b637-4c22-9ec0-c7a4fd304b27)
+
+
 # Configure MQTT Connection on AppDaemon
 
 For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml` Restart your AppDaemon Container (not HomeAssistant) after adding the MQTT Configuration.
