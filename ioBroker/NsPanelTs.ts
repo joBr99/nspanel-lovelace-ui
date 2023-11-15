@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -27,7 +27,7 @@ https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota
 *****************************************************************************************************************************
 
 Ab Script Version 4.3.2.1 muss in der JavaScript Instanz die npm Module 'moment' und 'moment-parseformat' eingetragen sein
-
+https://github.com/joBr99/nspanel-lovelace-ui/wiki/iobroker---Basisinstallation#8--einstellungen-in-js-adapter-instanz
 *****************************************************************************************************************************
 
 ReleaseNotes:
@@ -51,6 +51,7 @@ ReleaseNotes:
         - 12.11.2023 - v4.3.3.2  Add autoCreateALias to cardUnlock
         - 12.11.2023 - v4.3.3.2  Change NodeJS to at least v18.X.X
         - 13.11.2023 - v4.3.3.3  if setOption = false, do not create autoAlias (Functional/Servicemenu) and Datapoints
+        - 15.11.2023 - v4.3.3.4  New Service Page -> IoBroker Info 
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -326,7 +327,8 @@ let NSPanel_Service_SubPage = <PageEntities>
             'home': 'NSPanel_Service',        
             'items': [
                 <PageItem>{ navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: 'Wifi/WLAN', buttonText: 'mehr...'},
-                <PageItem>{ navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: 'Sensoren/Hardware', buttonText: 'mehr...'}
+                <PageItem>{ navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: 'Sensoren/Hardware', buttonText: 'mehr...'},
+                <PageItem>{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: 'Info zu IoBroker', buttonText: 'mehr...'}
             ]
         };
                 //Level_2
@@ -391,6 +393,21 @@ let NSPanel_Service_SubPage = <PageEntities>
                         <PageItem>{ id: AliasPath + 'Tasmota.Hardware', name: 'ESP32 Hardware', icon: 'memory', offColor: Menu, onColor: Menu },
                         <PageItem>{ id: AliasPath + 'Display.Model', name: 'NSPanel Version', offColor: Menu, onColor: Menu },
                         <PageItem>{ id: AliasPath + 'Tasmota.Uptime', name: 'Betriebszeit', icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
+                    ]
+                };
+
+                let NSPanel_IoBroker = <PageEntities>
+                {
+                    'type': 'cardEntities',
+                    'heading': 'IoBroker',
+                    'useColor': true,
+                    'subPage': true,
+                    'parent': NSPanel_Infos,
+                    'home': 'NSPanel_Service',
+                    'items': [
+                        <PageItem>{ id: AliasPath + 'IoBroker.ScriptVersion', name: 'Script NSPanelTS', offColor: Menu, onColor: Menu },
+                        <PageItem>{ id: AliasPath + 'IoBroker.NodeJSVersion', name: 'NodeJS', offColor: Menu, onColor: Menu },
+                        <PageItem>{ id: AliasPath + 'IoBroker.JavaScriptVersion', name: 'JavaScript Instanz', offColor: Menu, onColor: Menu },
                     ]
                 };
 
@@ -749,6 +766,7 @@ export const config = <Config> {
                     NSPanel_Wifi_Info_2,                //Auto-Alias Service Page
                     NSPanel_Sensoren,                   //Auto-Alias Service Page
                     NSPanel_Hardware,                   //Auto-Alias Service Page
+                    NSPanel_IoBroker,                   //Auot-Alias Service Page
                 NSPanel_Einstellungen,                  //Auto-Alias Service Page
                     NSPanel_Screensaver,                //Auto-Alias Service Page
                         NSPanel_ScreensaverDimmode,     //Auto-Alias Service Page
@@ -799,6 +817,11 @@ let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 let isSetOptionActive: boolean = false;
 
+const scriptVersion: string = 'v4.3.3.4';
+let nodeVersion: string = '';
+let javaScriptVersion: string = '';
+
+
 let scheduleInitDimModeDay: any;
 let scheduleInitDimModeNight: any; 
 
@@ -841,6 +864,8 @@ async function CheckConfigParameters() {
             if(existsObject(id)) {
                 let common = getObject(id).common;
                 if (common.name == 'javascript') {
+                    javaScriptVersion = common.version;
+                    setIfExists(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion);
                     let jsVersion = common.version.split('.');
                     let jsV = 10*parseInt(jsVersion[0]) + parseInt(jsVersion[1]);
                     if (jsV<61) console.error('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version);
@@ -850,6 +875,8 @@ async function CheckConfigParameters() {
         
         const hostList = $('system.host.*.nodeCurrent');
         hostList.each(function(id, i) {
+            nodeVersion = getState(id).val;
+            setIfExists(NSPanel_Path + 'IoBroker.NodeJSVersion',  'v' + nodeVersion);
             let nodeJSVersion = (getState(id).val).split('.');
             if (parseInt(nodeJSVersion[0]) < 18) {
                 console.warn('nodeJS must be at least v18.X.X. Currently: v' + getState(id).val + '! Please Update your System! --> iob nodejs-update 18');
@@ -875,6 +902,29 @@ async function CheckConfigParameters() {
     }
 }
 CheckConfigParameters();
+
+async function InitIoBrokerInfo() {
+    try {
+        if (isSetOptionActive) {
+            // Script Version
+            await createStateAsync(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion, { type: 'string' });
+            setObject(AliasPath + 'IoBroker.ScriptVersion', {type: 'channel', common: {role: 'info', name:'Version NSPanelTS'}, native: {}});
+            await createAliasAsync(AliasPath + 'IoBroker.ScriptVersion.ACTUAL', NSPanel_Path + 'IoBroker.ScriptVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+            // NodeJS Verion
+            await createStateAsync(NSPanel_Path + 'IoBroker.NodeJSVersion', 'v' + nodeVersion, { type: 'string' });
+            setObject(AliasPath + 'IoBroker.NodeJSVersion', {type: 'channel', common: {role: 'info', name:'Version NodeJS'}, native: {}});
+            await createAliasAsync(AliasPath + 'IoBroker.NodeJSVersion.ACTUAL', NSPanel_Path + 'IoBroker.NodeJSVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+            // JavaScript Version
+            await createStateAsync(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion, { type: 'string' });
+            setObject(AliasPath + 'IoBroker.JavaScriptVersion', {type: 'channel', common: {role: 'info', name:'Version JavaScript Instanz'}, native: {}});
+            await createAliasAsync(AliasPath + 'IoBroker.JavaScriptVersion.ACTUAL', NSPanel_Path + 'IoBroker.JavaScriptVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+        }
+        setIfExists(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion);
+    } catch (err) {
+        console.log('error at funktion InitIoBrokerInfo ' + err.message);
+    }
+}
+InitIoBrokerInfo();
 
 async function CheckDebugMode() {
     try {
