@@ -32,6 +32,7 @@ appdaemon:
   longitude: 4.0
   elevation: 2
   time_zone: Europe/Berlin
+  app_dir: /homeassistant/appdaemon/apps/ # !!! This is really important for AppDaemon HA Addon >= 15
   plugins:
     HASS:
       type: hass
