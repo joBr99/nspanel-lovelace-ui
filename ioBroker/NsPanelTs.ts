@@ -51,7 +51,7 @@ ReleaseNotes:
         - 12.11.2023 - v4.3.3.2  Add autoCreateALias to cardUnlock
         - 12.11.2023 - v4.3.3.2  Change NodeJS to at least v18.X.X
         - 13.11.2023 - v4.3.3.3  if setOption = false, do not create autoAlias (Functional/Servicemenu) and Datapoints
-        - 15.11.2023 - v4.3.3.4  New Service Page -> IoBroker Info 
+        - 15.11.2023 - v4.3.3.4  New Service Page -> ioBroker Info 
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -328,7 +328,7 @@ let NSPanel_Service_SubPage = <PageEntities>
             'items': [
                 <PageItem>{ navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: 'Wifi/WLAN', buttonText: 'mehr...'},
                 <PageItem>{ navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: 'Sensoren/Hardware', buttonText: 'mehr...'},
-                <PageItem>{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: 'Info zu IoBroker', buttonText: 'mehr...'}
+                <PageItem>{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: 'Info zu ioBroker', buttonText: 'mehr...'}
             ]
         };
                 //Level_2
@@ -399,7 +399,7 @@ let NSPanel_Service_SubPage = <PageEntities>
                 let NSPanel_IoBroker = <PageEntities>
                 {
                     'type': 'cardEntities',
-                    'heading': 'IoBroker',
+                    'heading': 'ioBroker',
                     'useColor': true,
                     'subPage': true,
                     'parent': NSPanel_Infos,
