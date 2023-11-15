@@ -47,6 +47,15 @@ services:
 ```
 </details>
 
+### Required configuration for AppDaemon Addon => 15
+
+The new appdamon addon moved the folder where AppDaemon is located this resuls into appdaemon no longer beeing able to access the folder where HACS is downloading the app into. The following workaround is fixing the issue.
+
+Add this to the init config of your appdaemon addon: `rm -rf /config/apps/apps-from-hacs && cp -R /homeassistant/appdaemon/apps/ /config/apps/apps-from-hacs/`
+
+![image](https://github.com/joBr99/nspanel-lovelace-ui/assets/29555657/5c32b558-2c7b-429c-96ee-a96c757ae6b2)
+
+Note: If you've updated from an ealier appdaemon version, you need to manually delete the `/addon_configs/a0d7b954_appdaemon/apps/nspanel-lovelace-ui` Folder.
 
 ### Add babel package to AppDaemon Container (Optional)
 
