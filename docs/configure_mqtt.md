@@ -9,6 +9,12 @@ Please leave the Full Topic as it is in default configuration (and on the screen
 
 Change the topic to something unique for your panel, you will need this topic later in the configuration of your panel in appdaemon / apps.yaml
 
+# Note for Appdeamon Addon Version >= 15
+
+The configuration has been moved out of the config folder from homeassistant. This is how you can access it with the VSCode Addon.
+
+![image](https://github.com/joBr99/nspanel-lovelace-ui/assets/29555657/ddf75cac-fca1-48e7-9e84-646e7a80d38a)
+
 # Configure MQTT Connection on AppDaemon
 
 For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml` Restart your AppDaemon Container (not HomeAssistant) after adding the MQTT Configuration.
