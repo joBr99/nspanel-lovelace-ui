@@ -1263,12 +1263,12 @@
       "de-DE":"Display-Version"
    },
    "nodejs_version":{
-      "en-US":"NodeJS",
-      "de-DE":"NodeJS"
+      "en-US":"NodeJS Version",
+      "de-DE":"NodeJS Version"
    },
    "script_version_nspanelts":{
-      "en-US":"NodeJS",
-      "de-DE":"NodeJS"
+      "en-US":"NSPanelTs.ts Version",
+      "de-DE":"NSPanelTs.ts Version"
    },
    "alternative_layout":{
       "en-US":"Alternative Layout",
