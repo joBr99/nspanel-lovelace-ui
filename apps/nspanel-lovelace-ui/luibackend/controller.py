@@ -324,7 +324,7 @@ class LuiController(object):
                     apis.ha_api.get_entity(entity_id).call_service("lock")
             elif entity_id.startswith('button') or entity_id.startswith('input_button'):
                 apis.ha_api.get_entity(entity_id).call_service("press")
-            elif entity_id.startswith('input_select'):
+            elif entity_id.startswith('input_select') or entity_id.startswith('select'):
                 apis.ha_api.get_entity(entity_id).call_service("select_next")
             elif entity_id.startswith('vacuum'):
                 if apis.ha_api.get_entity(entity_id).state == "docked":
