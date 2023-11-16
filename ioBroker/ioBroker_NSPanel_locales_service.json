@@ -867,7 +867,7 @@
     "es-ES": "señal wifi",
     "fr-FR": "Signal Wi-Fi",
     "it-IT": "Segnale Wi-Fi",
-    "ru-RU": "Segnale Wi-Fi",
+    "ru-RU": "сигнал Wi-Fi",
     "nb-NO": "Wifi-signal",
     "nn-NO": "Wifi-signal",
     "pl-PL": "Sygnał Wi-Fi",
@@ -1145,5 +1145,241 @@
     "vi-VN": "Thời tiết",
     "zh-CN": "天气",
     "zh-TW": "天氣"
+  },
+  "info_iobroker": {
+    "en-US": "ioBroker infos",
+    "de-DE": "Infos zu ioBroker",
+  },
+  "instance_javascript": {
+    "en-US": "Instance JS Atdapter",
+    "de-DE": "JS-Adapter Instanz",
+  },
+  "script": {
+    "en-US": "Script",
+    "de-DE": "Skript",
+  },
+  "temp_unit": {
+    "en-US": "Temp. unit",
+    "de-DE": "Temp. Einheit",
+  },
+  "dimmode": {
+    "en-US": "Dimmode",
+    "de-DE": "Dimmmodus",
+  },
+  "brightness": {
+    "en-US": "Brightness",
+    "de-DE": "Helligkeit",
+  },
+  "layout": {
+    "en-US": "Layout",
+    "de-DE": "Layout",
+  },
+  "date_format": {
+    "en-US": "Date format",
+    "de-DE": "Datumsformat",
+  },
+  "date_format": {
+    "en-US": "Date format",
+    "de-DE": "Datumsformat",
+  },
+  "indicators": {
+    "en-US": "Date format",
+    "de-DE": "Datumsformat",
+  },
+  "brightness_day": {
+    "en-US": "Brightness (day)",
+    "de-DE": "Helligkeit (Tag)",
+  },
+  "brightness_night": {
+    "en-US": "Brightness (night)",
+    "de-DE": "Helligkeit (Nacht)",
+  },
+  "brightness_night": {
+    "en-US": "Brightness (night)",
+    "de-DE": "Helligkeit (Nacht)",
+  },
+  "hour_day": {
+    "en-US": "Hour (day)",
+    "de-DE": "Stunde (Tag)",
+  },
+  "hour_night": {
+    "en-US": "Hour (night)",
+    "de-DE": "Stunde (Nacht)",
+  },
+  "relay1_onoff": {
+    "en-US": "Relay 1 (off/on)",
+    "de-DE": "Relais 1 (aus/an)",
+  },
+  "relay2_onoff": {
+    "en-US": "Relay 2 (off/on)",
+    "de-DE": "Relais 2 (aus/an)",
+  },
+  "debugmode_offon": {
+    "en-US": "Debugmode (off/on)",
+    "de-DE": "Debugmodus (aus/an)",
+  },
+  "port_check_offon": {
+    "en-US": "Portscan (off/on)",
+    "de-DE": "Port-Check (aus/an)",
+  },
+  "weather_parameters": {
+    "en-US": "Weather Parameters",
+    "de-DE": "Wetterparameter",
+  },
+  "brightness_activ": {
+    "en-US": "Active brightness",
+    "de-DE": "Helligkeit Aktiv",
+  },
+  "screensaver_timeout": {
+    "en-US": "Timeout Screensaver",
+    "de-DE": "Screensaver Timeout",
+  },
+  "wakeup_doublecklick": {
+    "en-US": "Wakeup on doubleclick",
+    "de-DE": "Doppelklick Weakup",
+  },
+  "nspanel_infos": {
+    "en-US": "NSPanel Infos",
+    "de-DE": "NSPanel Info's",
+  },
+  "nspanel_wifi1": {
+    "en-US": "NSPanel Wifi (1)",
+    "de-DE": "NSPanel WLAN (1)",
+  },
+  "nspanel_wifi2": {
+    "en-US": "NSPanel Wifi (2)",
+    "de-DE": "NSPanel WLAN (2)",
+  },
+  "ssid": {
+    "en-US": "SSId",
+    "de-DE": "SSId",
+  },
+  "ssid": {
+    "en-US": "SSId",
+    "de-DE": "SSId",
+  },
+  "accesspoint": {
+    "en-US": "AP",
+    "de-DE": "AP",
+  },
+  "wifi": {
+    "en-US": "Wifi",
+    "de-DE": "WLAN",
+  },
+  "esp32_hardware": {
+    "en-US": "ESP32 Hardware",
+    "de-DE": "ESP32-Hardware",
+  },
+  "nspanel_version": {
+    "en-US": "Display Version",
+    "de-DE": "Display-Version",
+  },
+  "nodejs_version": {
+    "en-US": "NodeJS",
+    "de-DE": "NodeJS",
+  },
+  "script_version_nspanelts": {
+    "en-US": "NodeJS",
+    "de-DE": "NodeJS",
+  },
+  "alternative_layout": {
+    "en-US": "Alternative Layout",
+    "de-DE": "Alternativ Layout",
+  },
+  "advanced_layout": {
+    "en-US": "Advanced Layout",
+    "de-DE": "Advanced Layout",
+  },
+  "weather_forecast_offon": {
+    "en-US": "Forecast Off/On",
+    "de-DE": "Vorhersage Aus/An",
+  },
+  "weather_forecast_change_switch": {
+    "en-US": "Changing Forecast",
+    "de-DE": "Vorhersage Wechsel",
+  },
+  "weather_forecast_change_time": {
+    "en-US": "Changetime/s",
+    "de-DE": "Wechselzeit/s",
+  },
+  "weather_forecast_icon_colors": {
+    "en-US": "Icon Colored",
+    "de-DE": "Symbolfarben",
+  },
+  "weekday_large": {
+    "en-US": "Weekday (large)",
+    "de-DE": "Wochentag (lang)",
+  },
+  "month_large": {
+    "en-US": "Month (large)",
+    "de-DE": "Monat (lang)",
+  },
+  "mr_icon1_size": {
+    "en-US": "Icon 1 (small/large)",
+    "de-DE": "Icon 1 (klein/groß)",
+  },
+  "mr_icon2_size": {
+    "en-US": "Icon 2 (small/large)",
+    "de-DE": "Icon 2 (klein/groß)",
+  },
+  "firmware": {
+    "en-US": "Firmware",
+    "de-DE": "Firmware",
+  },
+  "automatically_updates": {
+    "en-US": "Autom. Updates",
+    "de-DE": "Auto-Updates",
+  },
+  "tasmota_firmware": {
+    "en-US": "Tasmota Firmware",
+    "de-DE": "Tasmota-Firmware",
+  },
+  "berry_driver": {
+    "en-US": "Berry Driver",
+    "de-DE": "Berry-Driver",
+  },
+  "nextion_tft_firmware": {
+    "en-US": "Nextion TFT",
+    "de-DE": "Nextion-TFT",
+  },
+  "tasmota": {
+    "en-US": "Tasmota",
+    "de-DE": "Tasmota",
+  },
+  "installed_release": {
+    "en-US": "Installed Release",
+    "de-DE": "Installierte Version",
+  },
+  "available_release": {
+    "en-US": "Available Release",
+    "de-DE": "Verfügbare Version",
+  },
+  "update_tasmota": {
+    "en-US": "Update Tasmota",
+    "de-DE": "Tasmota Update",
+  },
+  "berry_driver": {
+    "en-US": "Berry Driver",
+    "de-DE": "Berry-Driver",
+  },
+  "update_berry_driver": {
+    "en-US": "Update Berry Driver",
+    "de-DE": "Berry-Driver Update",
+  },
+  "nextion_tft": {
+    "en-US": "Nextion TFT",
+    "de-DE": "Nextion-TFT",
+  },
+  "nspanel_model": {
+    "en-US": "NSPanel Model",
+    "de-DE": "NSPanel Version",
+  },
+  "desired_release": {
+    "en-US": "Desired Version",
+    "de-DE": "Benötigte Version",
+  },
+  "update_nextion_tft": {
+    "en-US": "Update Nextion TFT",
+    "de-DE": "Nextion TFT Update",
   }
 }
