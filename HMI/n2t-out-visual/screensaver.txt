@@ -1069,6 +1069,9 @@ Timer tmSerial
                                         if(tAMPM.txt=="")
                                         {
                                             vis tAMPM,0
+                                        }else
+                                        {
+                                            vis tAMPM,1
                                         }
                                         spstr strCommand.txt,tTimeAdd.txt,"~",2
                                         ref tIcon1

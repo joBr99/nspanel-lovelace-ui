@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-11-04 20:34:35.187236495 +0000
++++ /dev/fd/62	2023-11-16 17:40:27.196451243 +0000
 +le list
 + +1,9 @@
 +.s.txt
@@ -1328,6 +1328,24 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : |
++17 +449,14 @@
++                                 //get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                                 spstr pageIcons.vaTime.txt,tTime.txt,"?",0
++                                 spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
++                                 if(tAMPM.txt=="")
++                                 {
++                                     vis tAMPM,0
++                                 }else
++                                 {
++                                     vis tAMPM,1
++                                 }
++                                 spstr strCommand.txt,tTimeAdd.txt,"~",2
++                                 ref tIcon1
++                                 ref tIcon2
++                             }
++                             if(tInstruction.txt=="date")
++                             {
 +20 +573,14 @@
 +                                 {
 +                                     vis tMainIcon,1

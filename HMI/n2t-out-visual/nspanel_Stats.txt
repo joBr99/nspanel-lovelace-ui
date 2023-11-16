@@ -2,14 +2,14 @@ Program.s
 	0    Component(s)
 	15   Line(s) of event code
 	15   Unique line(s) of event code
-cardBurnRec
-	3    Component(s)
-	25   Line(s) of event code
-	21   Unique line(s) of event code
 pageIcons
 	7    Component(s)
 	0    Line(s) of event code
 	0    Unique line(s) of event code
+cardBurnRec
+	3    Component(s)
+	25   Line(s) of event code
+	21   Unique line(s) of event code
 cardLChart
 	33   Component(s)
 	402  Line(s) of event code
@@ -74,14 +74,14 @@ popupInSel
 	34   Component(s)
 	621  Line(s) of event code
 	297  Unique line(s) of event code
+screensaver
+	47   Component(s)
+	447  Line(s) of event code
+	317  Unique line(s) of event code
 cardPower
 	54   Component(s)
 	531  Line(s) of event code
 	349  Unique line(s) of event code
-screensaver
-	47   Component(s)
-	444  Line(s) of event code
-	316  Unique line(s) of event code
 popupTimer
 	42   Component(s)
 	516  Line(s) of event code
@@ -102,5 +102,5 @@ cardEntities
 Total
 	24   Page(s)
 	880  Component(s)
-	10614 Line(s) of event code
-	2473 Unique line(s) of event code
+	10617 Line(s) of event code
+	2474 Unique line(s) of event code

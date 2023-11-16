@@ -12,7 +12,7 @@ Page cardBurnRec
 Timer tm0
     Attributes
         Scope      : local
-        Period (ms): 4000
+        Period (ms): 1001
         Enabled    : yes
     
     Events
