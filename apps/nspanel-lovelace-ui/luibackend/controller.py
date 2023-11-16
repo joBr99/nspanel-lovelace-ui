@@ -424,7 +424,7 @@ class LuiController(object):
             fan_mode = entity.attributes.fan_modes[int(value)]
             entity.call_service("set_fan_mode", fan_mode=fan_mode)
 
-        if button_type == "mode-input_select":
+        if button_type in ["mode-input_select", "mode-select"]:
             entity = apis.ha_api.get_entity(entity_id)
             option = entity.attributes.options[int(value)]
             entity.call_service("select_option", option=option)
