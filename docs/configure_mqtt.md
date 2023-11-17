@@ -26,7 +26,7 @@ You will find this file in the following location: `/addon_configs/a0d7b954_appd
 
 ```yaml
 ---
-secrets: /config/secrets.yaml
+secrets: /homeassistant/secrets.yaml
 appdaemon:
   latitude: 52.0
   longitude: 4.0
