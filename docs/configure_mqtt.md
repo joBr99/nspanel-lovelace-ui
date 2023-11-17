@@ -22,7 +22,7 @@ The configuration has been moved out of the config folder from homeassistant. Th
 
 For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml` Restart your AppDaemon Container (not HomeAssistant) after adding the MQTT Configuration.
 
-You will find this file in the following location: `config/appdaemon/appdeamon.yaml`
+You will find this file in the following location: `/addon_configs/a0d7b954_appdaemon/appdeamon.yaml`
 
 ```yaml
 ---
