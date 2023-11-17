@@ -1970,6 +1970,9 @@ function get_locales_servicemenu() {
                 if (result) {
                     await createStateAsync(NSPanel_Path + 'NSPanel_locales_service_json', <iobJS.StateCommon>{ type: 'string', role: 'json' });
                     await setStateAsync(NSPanel_Path + 'NSPanel_locales_service_json', <iobJS.State>{ val: result, ack: true });
+                    if (Debug) {
+                        console.log('Requesting locales Service Menu... done');
+                    }
                 }
             } catch (err) {
                 console.warn('error result in function get_locales_servicemenu: ' + err.message);
@@ -4898,13 +4901,13 @@ function GenerateQRPage(page: PageQR): Payload[] {
         }
 
         let type1 = 'text';
-        let internalName1 = 'SSID';
+        let internalName1 = findLocale('qr', 'ssid');
         let iconId1 = Icons.GetIcon('wifi');
-        let displayName1 = 'SSID';
+        let displayName1 = findLocale('qr', 'ssid');
         let type2 = 'text';
-        let internalName2 = 'Passwort';
+        let internalName2 = findLocale('qr', 'password');
         let iconId2 = Icons.GetIcon('key');
-        let displayName2 = 'Passwort';
+        let displayName2 = findLocale('qr', 'password');
 
         if (hiddenPWD) {
             type2 = 'disable';
@@ -6589,7 +6592,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         sec_remaining = timer_actual % 60;
                         editable = 1;
                         action2 = 'start';
-                        label2 = 'START';
+                        label2 = findLocale('timer', 'start');
                     } else {
                         min_remaining = Math.floor(timer_actual / 60);
                         sec_remaining = timer_actual % 60;
@@ -6597,9 +6600,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         action1 = 'pause';
                         action2 = 'cancle';
                         action3 = 'finish';
-                        label1  = 'PAUSE';
-                        label2  = 'CANCEL';
-                        label3  = 'FINISH';
+                        label1  = findLocale('timer', 'pause');
+                        label2  = findLocale('timer', 'cancel');
+                        label3  = findLocale('timer', 'finish');
                     }
 
                     out_msgs.push({
@@ -6655,7 +6658,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + switchVal + '~'                   // buttonState
                             + actualSpeed + '~'   
                             + maxSpeed + '~'   
-                            + 'Speed' + '~'   
+                            + findLocale('fan', 'speed') + '~'   
                             + actualMode + '~'   
                             + modeList    
                     });
