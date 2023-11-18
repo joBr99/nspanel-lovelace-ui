@@ -4689,27 +4689,26 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
     }
 }
 
-async function createAutoAlarmAlias (nsPath: string){
+async function createAutoAlarmAlias (id: string, nsPath: string){
     try {
-        let Alias_Alarm_Path = 'alias.0.' + nsPath.substring(13, nsPath.length)
         if (Debug){
-            console.log('Alarm Alias Path: ' + Alias_Alarm_Path);
+            console.log('Alarm Alias Path: ' + id);
             console.log('Alarm 0_userdata Path: ' + nsPath);
         }
         if (autoCreateAlias) {
             if (isSetOptionActive) {
-                if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
-                    await createStateAsync(nsPath + 'AlarmPin', '0000', { type: 'string' });
-                    await createStateAsync(nsPath + 'AlarmState', 'disarmed', { type: 'string' });
-                    await createStateAsync(nsPath + 'AlarmType', 'D1', { type: 'string' });
-                    await createStateAsync(nsPath + 'PIN_Failed', 0, { type: 'number' });
-                    await createStateAsync(nsPath + 'PANEL', NSPanel_Path, { type: 'string' });     
-                    setObject(Alias_Alarm_Path + 'Alarm', {type: 'channel', common: {role: 'sensor.alarm.fire', name:'Alarm'}, native: {}});
-                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.ACTUAL', nsPath + 'AlarmState', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
-                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.PIN', nsPath + 'AlarmPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN' });
-                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.TYPE', nsPath + 'AlarmType', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'TYPE' });
-                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.PIN_Failed', nsPath + 'PIN_Failed', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN_Failed' });
-                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.PANEL', nsPath + 'PANEL', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PANEL' });
+                if (existsState(nsPath + '.AlarmPin') == false || existsState(nsPath + '.AlarmState') == false || existsState(nsPath + '.AlarmType') == false || existsState(nsPath + '.PIN_Failed') == false || existsState(nsPath + '.PANEL') == false) {
+                    await createStateAsync(nsPath + '.AlarmPin', '0000', { type: 'string' });
+                    await createStateAsync(nsPath + '.AlarmState', 'disarmed', { type: 'string' });
+                    await createStateAsync(nsPath + '.AlarmType', 'D1', { type: 'string' });
+                    await createStateAsync(nsPath + '.PIN_Failed', 0, { type: 'number' });
+                    await createStateAsync(nsPath + '.PANEL', NSPanel_Path, { type: 'string' });     
+                    setObject(id, {_id: id, type: 'channel', common: {role: 'sensor.fire.alarm', name:'alarm'}, native: {}});
+                    await createAliasAsync(id + '.ACTUAL', nsPath + '.AlarmState', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                    await createAliasAsync(id + '.PIN', nsPath + '.AlarmPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN' });
+                    await createAliasAsync(id + '.TYPE', nsPath + '.AlarmType', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'TYPE' });
+                    await createAliasAsync(id + '.PIN_Failed', nsPath + '.PIN_Failed', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN_Failed' });
+                    await createAliasAsync(id + '.PANEL', nsPath + '.PANEL', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PANEL' });
                 }
             }
         }
@@ -4726,13 +4725,15 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
 
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
-        let nsPath = NSPanel_Alarm_Path + 'Alarm.';
+        let nsPath = NSPanel_Alarm_Path + 'Alarm';
 
-        createAutoAlarmAlias(nsPath);
+        if (page.items[0].autoCreateALias) {
+            createAutoAlarmAlias(id, nsPath);
+        }
 
-        if (existsState(nsPath + 'AlarmPin') && existsState(nsPath + 'AlarmState') && existsState(nsPath + 'AlarmType')) {
+        if (existsState(nsPath + '.AlarmPin') && existsState(nsPath + '.AlarmState') && existsState(nsPath + '.AlarmType')) {
             //let entityPin = getState(nsPath + 'AlarmPin').val;
-            let entityState = getState(nsPath + 'AlarmState').val;
+            let entityState = getState(nsPath + '.AlarmState').val;
             //let entityType = getState(nsPath + 'AlarmType').val;
             let arm1: string, arm2: string, arm3: string, arm4: string;
             let arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
