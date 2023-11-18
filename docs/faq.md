@@ -27,6 +27,18 @@ Please don't modify the Full Topic in your Tasmota Config, unless you know the i
     - the appdaemon log, after restarting the container
   
 
+## This isn't working since AppDaemon v0.15.x
+
+There has been an upstream change made to AppDaemon which changes where the configuration files are stored.
+
+You may need to change your yaml files to reflect this:
+
+filename | Home Assistant Share | Docker Container Location 
+-- | -- | -- 
+appdaemon.yaml | /addon_configs/a0d7b954_appdaemon/appdaemon.yaml | /config/appdaemon.yaml  
+apps.yaml | /addon_configs/a0d7b954_appdaemon/apps/apps.yaml | /config/apps/apps.yaml 
+secrets.yaml | /config/secrets.yaml | /homeassistant/secrets.yaml
+
 ## How to update
 
 ### Update AppDaemon Script
