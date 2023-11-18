@@ -4689,6 +4689,35 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
     }
 }
 
+async function createAutoAlarmAlias (nsPath: string){
+    try {
+        let Alias_Alarm_Path = 'alias.0.' + nsPath.substring(13, nsPath.length)
+        if (Debug){
+            console.log('Alarm Alias Path: ' + Alias_Alarm_Path);
+            console.log('Alarm 0_userdata Path: ' + nsPath);
+        }
+        if (autoCreateAlias) {
+            if (isSetOptionActive) {
+                if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
+                    await createStateAsync(nsPath + 'AlarmPin', '0000', { type: 'string' });
+                    await createStateAsync(nsPath + 'AlarmState', 'disarmed', { type: 'string' });
+                    await createStateAsync(nsPath + 'AlarmType', 'D1', { type: 'string' });
+                    await createStateAsync(nsPath + 'PIN_Failed', 0, { type: 'number' });
+                    await createStateAsync(nsPath + 'PANEL', NSPanel_Path, { type: 'string' });     
+                    setObject(Alias_Alarm_Path + 'Alarm', {type: 'channel', common: {role: 'sensor.alarm.fire', name:'Alarm'}, native: {}});
+                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.ACTUAL', nsPath + 'AlarmState', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.PIN', nsPath + 'AlarmPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN' });
+                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.TYPE', nsPath + 'AlarmType', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'TYPE' });
+                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.PIN_Failed', nsPath + 'PIN_Failed', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN_Failed' });
+                    await createAliasAsync(Alias_Alarm_Path + 'Alarm.PANEL', nsPath + 'PANEL', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PANEL' });
+                }
+            }
+        }
+    } catch (err) {
+        console.warn('error at function createAutoAlarmAlias: ' + err.message);
+    }
+}
+
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
     try {
         activePage = page;
@@ -4699,24 +4728,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
         out_msgs.push({ payload: 'pageType~cardAlarm' });
         let nsPath = NSPanel_Alarm_Path + 'Alarm.';
 
-        if (isSetOptionActive) {
-            if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
-                createState(nsPath + 'AlarmPin', '0000', { type: 'string' }, function () { setState(nsPath + 'AlarmPin', '0000') });
-                createState(nsPath + 'AlarmState', 'disarmed', { type: 'string' }, function () { setState(nsPath + 'AlarmState', 'disarmed') });
-                createState(nsPath + 'AlarmType', 'D1', { type: 'string' }, function () { setState(nsPath + 'AlarmType', 'D1') });
-                createState(nsPath + 'PIN_Failed', 0, { type: 'number' }, function () { setState(nsPath + 'PIN_Failed', 0) });
-                createState(nsPath + 'PANEL', NSPanel_Path, { type: 'string' }, function () { setState(nsPath + 'PANEL', NSPanel_Path) });     
-                if (autoCreateAlias) {
-                    setObject(AliasPath + 'Alarm', {type: 'channel', common: {role: 'sensor.alarm.fire', name:'Alarm'}, native: {}});
-                    await createAliasAsync(AliasPath + 'Alarm.ACTUAL', nsPath + 'AlarmState', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
-                    await createAliasAsync(AliasPath + 'Alarm.PIN', nsPath + 'AlarmPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN' });
-                    await createAliasAsync(AliasPath + 'Alarm.TYPE', nsPath + 'AlarmType', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'TYPE' });
-                    await createAliasAsync(AliasPath + 'Alarm.PIN_Failed', nsPath + 'PIN_Failed', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN_Failed' });
-                    await createAliasAsync(AliasPath + 'Alarm.PANEL', nsPath + 'PANEL', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PANEL' });
-                }
-            }
-        }
-
+        createAutoAlarmAlias(nsPath);
 
         if (existsState(nsPath + 'AlarmPin') && existsState(nsPath + 'AlarmState') && existsState(nsPath + 'AlarmType')) {
             //let entityPin = getState(nsPath + 'AlarmPin').val;
