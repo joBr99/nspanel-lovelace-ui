@@ -1,5 +1,5 @@
 ---
-secrets: /config/secrets.yaml
+secrets: /homeassistant/secrets.yaml
 appdaemon:
   latitude: 52.0
   longitude: 4.0
