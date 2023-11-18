@@ -7,7 +7,7 @@ nspanel-1:
     panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
     screensaver:
       entity: weather.k3ll3r
-      theme: !include /config/appdaemon/apps/screensaver-theme.yaml
+      theme: !include /config/apps/screensaver-theme.yaml
         #background:       [220, 0, 0]
         #time:             [220, 0, 255]
         #timeAMPM:         [220, 0, 255]
