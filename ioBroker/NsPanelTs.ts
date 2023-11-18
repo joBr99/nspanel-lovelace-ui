@@ -805,6 +805,47 @@ const request = require('request');
 const moment  = require('moment');
 const parseFormat = require('moment-parseformat');
 moment.locale(getState(NSPanel_Path + 'Config.locale').val);
+const dayjs = require('dayjs');
+require('dayjs/locale/en');
+require('dayjs/locale/de');
+require('dayjs/locale/nl');
+require('dayjs/locale/da');
+require('dayjs/locale/es');
+require('dayjs/locale/fr');
+require('dayjs/locale/it');
+require('dayjs/locale/ru');
+require('dayjs/locale/nb');
+require('dayjs/locale/nn');
+require('dayjs/locale/pl');
+require('dayjs/locale/pt');
+require('dayjs/locale/af');
+require('dayjs/locale/ar');
+require('dayjs/locale/bg');
+require('dayjs/locale/ca');
+require('dayjs/locale/cs');
+require('dayjs/locale/el');
+require('dayjs/locale/et');
+require('dayjs/locale/fa');
+require('dayjs/locale/fi');
+require('dayjs/locale/he');
+require('dayjs/locale/hr');
+require('dayjs/locale/hu');
+require('dayjs/locale/hy-am');
+require('dayjs/locale/id');
+require('dayjs/locale/is');
+require('dayjs/locale/lb');
+require('dayjs/locale/lt');
+require('dayjs/locale/ro');
+require('dayjs/locale/sk');
+require('dayjs/locale/sl');
+require('dayjs/locale/sv');
+require('dayjs/locale/th');
+require('dayjs/locale/tr');
+require('dayjs/locale/uk');
+require('dayjs/locale/vi');
+require('dayjs/locale/zh-cn');
+require('dayjs/locale/zh-tw');
+dayjs.locale(getDayjsLocale());
 
 //Desired Firmware
 const tft_version: string = 'v4.3.3';
@@ -1931,6 +1972,14 @@ setTimeout(async function () {
 
 //------------------Begin Update Functions
 
+function getDayjsLocale(): String {
+	let locale = getState(NSPanel_Path + 'Config.locale').val;
+	if (locale == "hy-AM" || locale == "zh-CN" || locale == "zh-TW")
+		return locale.toLowerCase();
+	else
+		return locale.substring(0, 2);
+}
+
 function get_locales() {
     try {
         if (Debug) {
@@ -2791,10 +2840,11 @@ function SendDate(): void {
         if (existsObject(NSPanel_Path + 'Config.locale')) {
             let dpWeekday = existsObject(NSPanel_Path + 'Config.Dateformat.weekday') ? getState(NSPanel_Path + 'Config.Dateformat.weekday').val : 'short';
             let dpMonth = existsObject(NSPanel_Path + 'Config.Dateformat.month') ? getState(NSPanel_Path + 'Config.Dateformat.month').val : 'short';
+			let dpCustomFormat = existsObject(NSPanel_Path + 'Config.Dateformat.customFormat') ? getState(NSPanel_Path + 'Config.Dateformat.customFormat').val : '';
 
             const date = new Date();
             const options: any = { weekday: dpWeekday, year: 'numeric', month: dpMonth, day: 'numeric' };
-            const _SendDate = date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
+            const _SendDate = dpCustomFormat != '' ? dayjs().format(dpCustomFormat) : date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
 
             SendToPanel(<Payload>{ payload: 'date~' + _SendDate });
         }
