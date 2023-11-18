@@ -22,17 +22,16 @@ The configuration has been moved out of the config folder from homeassistant. Th
 
 For the app to work you need a working MQTT Configuration in AppDaemon. Please add the configuration of your mqtt server, user and password to your existing `appdaemon.yaml` Restart your AppDaemon Container (not HomeAssistant) after adding the MQTT Configuration.
 
-You will find this file in the following location: `/addon_configs/a0d7b954_appdaemon/appdeamon.yaml`
+You will find this file in the following location: `/addon_configs/a0d7b954_appdaemon/appdaemon.yaml` (if using Home Assistant Addon)
 
 ```yaml
 ---
-secrets: /homeassistant/secrets.yaml
+secrets: /homeassistant/secrets.yaml # !!! Note this has changed for AppDaemon Addon >= v 0.15.0
 appdaemon:
   latitude: 52.0
   longitude: 4.0
   elevation: 2
   time_zone: Europe/Berlin
-  app_dir: /homeassistant/appdaemon/apps/ # !!! This is really important for AppDaemon HA Addon >= 15
   plugins:
     HASS:
       type: hass
@@ -52,10 +51,16 @@ admin:
 api:
 hadashboard:
 ```
+If you are migrating from AppDaemon Addon < v 0.15.0, your configuration folders should have been automatically moved by the addon. However, if it wasn't or if you prefer to have your configuration files stored elsewhere include the following yaml:
+
+```yaml
+appdaemon:
+  app_dir: /homeassistant/appdaemon/apps/ # !!! This would point to /config/appdaemon/apps in your Home Assistant instance.
+```
 
 # Configure NsPanel on AppDaemon
 
-Please add the following minimal configuration to your apps.yaml, which is located in `config/appdaemon/apps/apps.yaml`
+Please add the following minimal configuration to your apps.yaml, which is located in `/addon_configs/a0d7b954_appdaemon/apps/apps.yaml` (if using Home Assistant Addon).
 
 ```yaml
 ---
