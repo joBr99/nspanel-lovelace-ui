@@ -8,7 +8,7 @@ nspanel-1:
     updateMode: "auto-notify"
     screensaver:
       entity: weather.k3ll3r
-      theme: !include /config/appdaemon/apps/screensaver-theme.yaml
+      theme: !include /config/apps/screensaver-theme.yaml
     cards:
       - type: cardEntities
         entities:
