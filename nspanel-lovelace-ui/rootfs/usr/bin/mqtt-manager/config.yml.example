@@ -1,7 +1,6 @@
 nspanels:
   tasmota_nspdev2:
     name: test
-    mac: AA:BB:CC:DD:EE:FF
     panelRecvTopic: "tele/tasmota_nspdev2/RESULT"
     panelSendTopic: "cmnd/tasmota_nspdev2/CustomSend"
     timeFormat: "%H:%M"

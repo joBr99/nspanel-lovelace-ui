@@ -30,6 +30,8 @@ def on_connect(client, userdata, flags, rc):
     #    client.subscribe(panel["panelRecvTopic"])
     client.subscribe("tele/tasmota_nspdev2/RESULT")
 
+def on_ha_update(entity_id):
+    logging.debug(f"{entity_id} updated/state changed")
 
 def on_message(client, userdata, msg):
     try:
@@ -78,9 +80,13 @@ def get_config():
     if not settings.get("mqtt_server"):
         settings["mqtt_server"] = environment('MQTT_SERVER')
 
+    settings["is_addon"] = False
     if "SUPERVISOR_TOKEN" in environment:
         settings["home_assistant_token"] = environment('SUPERVISOR_TOKEN')
+        print(settings["home_assistant_token"])
         settings["home_assistant_address"] = "http://supervisor"
+        settings["is_addon"] = True
+
 
 
 def connect_and_loop():
@@ -106,7 +112,7 @@ def connect_and_loop():
 
     # MQTT Connected, start APIs if configured
     if settings["home_assistant_address"] != "" and settings["home_assistant_token"] != "":
-        libs.home_assistant.init(settings, client)
+        libs.home_assistant.init(settings, on_ha_update)
         libs.home_assistant.connect()
     else:
         logging.info("Home Assistant values not configured, will not connect.")
@@ -121,7 +127,6 @@ def connect_and_loop():
 
     # Loop MQTT
     client.loop_forever()
-
 
 if __name__ == '__main__':
     get_config()

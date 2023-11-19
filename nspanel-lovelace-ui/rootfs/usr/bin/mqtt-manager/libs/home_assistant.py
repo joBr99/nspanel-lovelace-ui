@@ -19,10 +19,10 @@ ON_CONNECT_HANDLER = None
 ON_DISCONNECT_HANDLER = None
 
 
-def init(settings_from_manager, mqtt_client_from_manager):
-    global home_assistant_url, home_assistant_token, settings, mqtt_client
+def init(settings_from_manager, on_ha_update_from_manager):
+    global home_assistant_url, home_assistant_token, settings, on_ha_update
     settings = settings_from_manager
-    mqtt_client = mqtt_client_from_manager
+    on_ha_update = on_ha_update_from_manager
     home_assistant_url = settings["home_assistant_address"]
     home_assistant_token = settings["home_assistant_token"]
     # Disable logging from underlying "websocket"
@@ -92,11 +92,10 @@ def connect():
 
 
 def _do_connection():
-    global home_assistant_url, ws
+    global home_assistant_url, ws, settings
     ws_url = home_assistant_url.replace(
         "https://", "wss://").replace("http://", "ws://")
-    environment = environ.Env()
-    if "IS_HOME_ASSISTANT_ADDON" in environment and environment("IS_HOME_ASSISTANT_ADDON") == "true":
+    if settings["is_addon"]:
         ws_url += "/core/websocket"
     else:
         ws_url += "/api/websocket"
@@ -142,11 +141,9 @@ def _get_all_states():
 # Got new value from Home Assistant, publish to MQTT
 
 
-def send_entity_update(json_msg):
-    global mqtt_client
-    # Check if the light is used on any nspanel and if so, send MQTT state update
-    # mqtt_client.publish(f"cmnd/tasmota_nspdev2/CustomSend", "page~screensaver")
-
+def send_entity_update(entity_id):
+    global on_ha_update
+    on_ha_update(entity_id)
 
 def set_entity_brightness(home_assistant_name: str, light_level: int, color_temp: int) -> bool:
     """Set entity brightness"""

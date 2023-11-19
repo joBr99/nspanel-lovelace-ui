@@ -21,15 +21,16 @@ def on_off(entity_id, value):
 
 
 def button_press(entity_id, value):
-    etype = entity_id.split["."][0]
+    etype = entity_id.split(".")[0]
     match etype:
-        case 'scene':
+        case 'scene' | 'script':
             libs.home_assistant.call_service(
                 entity_name=entity_id,
-                domain="scene",
+                domain=etype,
                 service="turn_on",
                 service_data={}
             )
+
 
     # apis.ha_api.log(
     #     f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
@@ -73,41 +74,6 @@ def button_press(entity_id, value):
     #          "set_cover_tilt_position", tilt_position=pos)
     #
     #  if button_type == "button":
-    #      if entity_id.startswith('navigate'):
-    #          # internal navigation for next/prev
-    #          if entity_id.startswith('navigate.uuid'):
-    #              dstCard = self._config.get_card_by_uuid(
-    #                  entity_id.replace('navigate.', ''))
-    #          # internal for navigation to nested pages
-    #          else:
-    #              dstCard = self._config.search_card(entity_id)
-    #          if dstCard is not None:
-    #              if dstCard.hidden:
-    #                  self._previous_cards.append(self._current_card)
-    #              self._current_card = dstCard
-    #              self._pages_gen.render_card(self._current_card)
-    #          else:
-    #              apis.ha_api.log(f"No page with key {entity_id} found")
-    #      if entity_id.startswith('navUp'):
-    #          if self._previous_cards:
-    #              self._current_card = self._previous_cards.pop()
-    #          else:
-    #              self._current_card = self._config.get_default_card()
-    #          self._pages_gen.render_card(self._current_card)
-    #      if entity_id.startswith('navPrev'):
-    #          if self._current_card.uuid_prev:
-    #              self._current_card = self._config.get_card_by_uuid(
-    #                  self._current_card.uuid_prev)
-    #              self._pages_gen.render_card(self._current_card)
-    #      if entity_id.startswith('navNext'):
-    #          if self._current_card.uuid_next:
-    #              self._current_card = self._config.get_card_by_uuid(
-    #                  self._current_card.uuid_next)
-    #              self._pages_gen.render_card(self._current_card)
-    #      elif entity_id.startswith('scene'):
-    #          apis.ha_api.get_entity(entity_id).call_service("turn_on")
-    #      elif entity_id.startswith('script'):
-    #          apis.ha_api.get_entity(entity_id).call_service("turn_on")
     #      elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean') or entity_id.startswith('automation') or entity_id.startswith('fan'):
     #          apis.ha_api.get_entity(entity_id).call_service("toggle")
     #      elif entity_id.startswith('lock'):
