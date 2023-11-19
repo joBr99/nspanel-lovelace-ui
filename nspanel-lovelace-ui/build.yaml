@@ -1,14 +1,11 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
 build_from:
-  aarch64: "ghcr.io/home-assistant/aarch64-base:3.15"
-  amd64: "ghcr.io/home-assistant/amd64-base:3.15"
-  armhf: "ghcr.io/home-assistant/armhf-base:3.15"
-  armv7: "ghcr.io/home-assistant/armv7-base:3.15"
-  i386: "ghcr.io/home-assistant/i386-base:3.15"
+  aarch64: "ghcr.io/hassio-addons/base-python/aarch64:12.0.2"
+  amd64: "ghcr.io/hassio-addons/base-python/amd64:12.0.2"
+  armhf: "ghcr.io/hassio-addons/base-python/armhf:12.0.2"
+  armv7: "ghcr.io/hassio-addons/base-python/armv7:12.0.2"
+  i386: "ghcr.io/hassio-addons/base-python/i386:12.0.2"
 labels:
-  org.opencontainers.image.title: "Home Assistant Add-on: Example add-on"
-  org.opencontainers.image.description: "Example add-on to use as a blueprint for new add-ons."
-  org.opencontainers.image.source: "https://github.com/home-assistant/addons-example"
-  org.opencontainers.image.licenses: "Apache License 2.0"
-args:
-  TEMPIO_VERSION: "2021.09.0"
+  org.opencontainers.image.title: "Home Assistant Add-on: NSPanel Lovelace UI"
+  org.opencontainers.image.description: ""
+  org.opencontainers.image.source: "https://github.com/joBr99/nspanel-lovelace-ui"
