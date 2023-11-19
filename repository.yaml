@@ -1,0 +1,4 @@
+# https://developers.home-assistant.io/docs/add-ons/repository#repository-configuration
+name: NSPanel Lovelace UI add-on repository
+url: 'https://github.com/joBr99/nspanel-lovelace-ui'
+maintainer: Johannes

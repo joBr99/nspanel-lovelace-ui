@@ -1,0 +1,36 @@
+nspanels:
+  tasmota_nspdev2:
+    name: test
+    mac: AA:BB:CC:DD:EE:FF
+    panelRecvTopic: "tele/tasmota_nspdev2/RESULT"
+    panelSendTopic: "cmnd/tasmota_nspdev2/CustomSend"
+    timeFormat: "%H:%M"
+    dateFormat: "full"
+    locale: "en_US"
+    screensaver:
+      entities:
+        - entity: switch.decorative_lights
+    cards:
+      - type: cardEntities
+        title: Test Entities Card
+        entities:
+          - entity: light.bed_light
+          - entity: switch.decorative_lights
+          - entity: lock.front_door
+          - entity: scene.test
+      - type: cardEntities
+        title: Test Entities Card2
+        entities:
+          - entity: vacuum.5_fifth_floor
+      - type: cardGrid
+        title: Test Entities Card3
+        entities:
+          - entity: vacuum.5_fifth_floor
+          - entity: navigate.test
+    hiddenCards:
+      - type: cardEntities
+        key: test
+        title: Hidden Entities Card
+        entities:
+          - entity: light.bed_light
+          - entity: switch.decorative_lights
