@@ -141,11 +141,36 @@ def setup_panels():
         libs.panel_cmd.page_type(
             settings_panel["panelSendTopic"], "pageStartup")
 
-if __name__ == '__main__':
-    CONFIG_FILE = os.getenv('CONFIG_FILE')
-    if not CONFIG_FILE:
-        CONFIG_FILE = 'config.yml'
-    get_config(CONFIG_FILE)
+#if __name__ == '__main__':
+#    CONFIG_FILE = os.getenv('CONFIG_FILE')
+#    if not CONFIG_FILE:
+#        CONFIG_FILE = 'config.yml'
+#    get_config(CONFIG_FILE)
+    #connect()
+    #loop()
+import time
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
-    connect()
-    loop()
+class  MyHandler(FileSystemEventHandler):
+    def  on_modified(self,  event):
+         print(f'event type: {event.event_type} path : {event.src_path}')
+    def  on_created(self,  event):
+         print(f'event type: {event.event_type} path : {event.src_path}')
+    def  on_deleted(self,  event):
+         print(f'event type: {event.event_type} path : {event.src_path}')
+
+if __name__ ==  "__main__":
+    event_handler = MyHandler()
+    observer = Observer()
+    observer.schedule(event_handler,  path='config.yml',  recursive=False)
+    observer.start()
+
+    try:
+        while  True:
+            time.sleep(1)
+    except  KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
+

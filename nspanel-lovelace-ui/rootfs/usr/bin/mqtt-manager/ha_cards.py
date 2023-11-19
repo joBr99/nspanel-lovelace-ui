@@ -143,7 +143,6 @@ class HAEntity(panel_cards.Entity):
                 if device_class != "temperature":
                     value = value + " "
                 value = value + unit_of_measurement
-                print(f"fuck {cardType} {value} {self.icon_overwrite}")
                 if cardType in ["cardGrid", "cardGrid2"] and not self.icon_overwrite:
                     icon_char = value
 
