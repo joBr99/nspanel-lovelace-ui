@@ -91,6 +91,11 @@ class LovelaceUIPanel:
         if iid in self.hidden_cards:
             return self.hidden_cards[iid]
 
+    def on_ha_update(entity_id):
+        logging.debug(f"{entity_id} updated/state changed")
+        # TODO: Check if entity is on current card
+        libs.panel_cmd.entityUpd(self.sendTopic, self.current_card.render())
+
     def customrecv_event_callback(self, msg):
         logging.debug("Recv Message from NsPanel: %s", msg)
         msg = msg.split(",")

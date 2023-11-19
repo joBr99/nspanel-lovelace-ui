@@ -31,7 +31,8 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("tele/tasmota_nspdev2/RESULT")
 
 def on_ha_update(entity_id):
-    logging.debug(f"{entity_id} updated/state changed")
+    for panel in panels:
+        panel.ha_event_callback(entity_id)s
 
 def on_message(client, userdata, msg):
     try:
@@ -41,10 +42,8 @@ def on_message(client, userdata, msg):
         if msg.topic == "tele/tasmota_nspdev2/RESULT":
             data = json.loads(msg.payload.decode('utf-8'))
             if "CustomRecv" in data:
-                # print(data["CustomRecv"])
                 if parts[1] in panels:
-                    panels[parts[1]].customrecv_event_callback(
-                        data["CustomRecv"])
+                    panels[parts[1]].customrecv_event_callback(data["CustomRecv"])
                 else:
                     logging.error(
                         "Got message for unknown panel: %s - %s", parts[1], data["CustomRecv"])
