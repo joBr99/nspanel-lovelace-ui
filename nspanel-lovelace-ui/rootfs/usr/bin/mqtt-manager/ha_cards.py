@@ -243,6 +243,24 @@ class QRCard(HACard):
             result += e.render()
         return result
 
+class PowerCard(HACard):
+    def __init__(self, locale, config, panel):
+        super().__init__(locale, config, panel)
+
+    def render(self):
+        result = f"{self.title}~{self.gen_nav()}"
+        for e in self.entities:
+            result += e.render()
+            speed = 0
+            # TODO: Implement speed card power
+            #if apis.ha_api.entity_exists(item.entityId):
+            #    entity = apis.ha_api.get_entity(item.entityId)
+            #    speed = str(item.entity_input_config.get("speed", 0))
+            #    if isinstance(speed, str):
+            #        speed = apis.ha_api.render_template(speed)
+            result += f"~{speed}"
+        return result
+
 class Screensaver(panel_cards.Card):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
@@ -262,6 +280,8 @@ def card_factory(locale, settings, panel):
             card = EntitiesCard(locale, settings, panel)
         case 'cardQR':
             card = QRCard(locale, settings, panel)
+        case 'cardPower':
+            card = PowerCard(locale, settings, panel)
         case _:
             logging.error("card type %s not implemented", settings["type"])
             return "NotImplemented", None
