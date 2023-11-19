@@ -124,8 +124,8 @@ def connect_and_loop():
 
     # Create NsPanel object
     for name, settings_panel in settings["nspanels"].items():
-        if "timezone" not in settings_panel:
-            settings_panel["timezone"] = settings.get("timezone", "Europe/Berlin")
+        if "timeZone" not in settings_panel:
+            settings_panel["timeZone"] = settings.get("timeZone", "Europe/Berlin")
         if "locale" not in settings_panel:
             settings_panel["timezone"] = settings.get("locale", "en_US")
 
