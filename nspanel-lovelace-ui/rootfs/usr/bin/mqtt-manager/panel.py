@@ -75,7 +75,7 @@ class LovelaceUIPanel:
             time.sleep(1)
 
     def update_time(self):
-        use_timezone = tz.gettz("Europe/Berlin")
+        use_timezone = tz.gettz(self.settings["timeZone"])
         time_string = datetime.datetime.now(
             use_timezone).strftime(self.settings["timeFormat"])
         libs.panel_cmd.send_time(self.sendTopic, time_string)
