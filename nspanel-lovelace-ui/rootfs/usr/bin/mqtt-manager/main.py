@@ -59,6 +59,12 @@ def on_message(client, userdata, msg):
 
 def get_config():
     global settings
+
+    settings["mqtt_username"] = os.getenv('MQTT_USER')
+    settings["mqtt_password"] = os.getenv('MQTT_PASS')
+    settings["mqtt_port"] = os.getenv('MQTT_PORT')
+    settings["mqtt_server"] = os.getenv('MQTT_SERVER')
+
     CONFIG_FILE = os.getenv('CONFIG_FILE')
     if not CONFIG_FILE:
         CONFIG_FILE = 'config.yml'
