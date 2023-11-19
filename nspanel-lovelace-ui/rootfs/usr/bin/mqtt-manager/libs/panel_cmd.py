@@ -28,3 +28,6 @@ def send_date(topic, date):
 
 def entityUpd(topic, data):
     custom_send(topic, f"entityUpd~{data}")
+
+def weatherUpdate(topic, data):
+    custom_send(topic, f"weatherUpdate~{data}")

@@ -113,15 +113,14 @@ class LovelaceUIPanel:
                 libs.panel_cmd.page_type(self.sendTopic, "screensaver")
                 self.current_card = Screensaver(
                     self.settings["locale"], self.settings["screensaver"], self)
-                libs.panel_cmd.entityUpd(
+                libs.panel_cmd.weatherUpdate(
                     self.sendTopic, self.current_card.render())
-
             if msg[1] == "sleepReached":
                 self.privious_cards.append(self.current_card)
                 libs.panel_cmd.page_type(self.sendTopic, "screensaver")
                 self.current_card = Screensaver(
                     self.settings["locale"], self.settings["screensaver"], self)
-                libs.panel_cmd.entityUpd(
+                libs.panel_cmd.weatherUpdate(
                     self.sendTopic, self.current_card.render())
             if msg[1] == "buttonPress2":
                 entity_id = msg[2]

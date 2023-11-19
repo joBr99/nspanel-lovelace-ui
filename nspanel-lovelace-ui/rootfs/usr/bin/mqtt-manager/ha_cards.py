@@ -258,17 +258,15 @@ class PowerCard(HACard):
             result += f"~{speed}"
         return result
 
-class Screensaver(panel_cards.Card):
+class Screensaver(HACard):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
-        if "entities" in config:
-            for e in config.get("entities"):
-                # print(e)
-                HAEntity(locale, e, panel)
-        # elif "entity" in config:
 
     def render(self):
-        return ""
+        result = ""
+        for e in self.entities:
+            result += e.render(cardType=self.type)
+        return result[1:]
 
 
 def card_factory(locale, settings, panel):
