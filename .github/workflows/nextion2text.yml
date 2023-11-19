@@ -80,7 +80,7 @@ jobs:
         find -name "**.txt"
         rm Nextion2Text.py* ignore-id.py out.txt
         
-    - uses: stefanzweifel/git-auto-commit-action@v4
+    - uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: ${{ steps.last-commit-message.outputs.msg }} (add nextion2text)
         #file_pattern: "**.txt"
