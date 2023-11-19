@@ -31,7 +31,7 @@ def on_connect(client, userdata, flags, rc):
 
 def on_ha_update(entity_id):
     for panel in panels:
-        panel.ha_event_callback(entity_id)s
+        panel.ha_event_callback(entity_id)
 
 def on_message(client, userdata, msg):
     try:
