@@ -157,6 +157,8 @@ class LovelaceUIPanel:
                             ha_control.button_press(entity_id, value)
                 if btype == "OnOff":
                     ha_control.on_off(entity_id, value)
+                if btype == "number-set":
+                    ha_control.number_set(entity_id, value)
 
             if msg[1] == "pageOpenDetail":
                 print("pageOpenDetail")

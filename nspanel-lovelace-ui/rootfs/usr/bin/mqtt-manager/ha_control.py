@@ -30,17 +30,31 @@ def button_press(entity_id, value):
                 service="turn_on",
                 service_data={}
             )
+    #  if button_type == "button":
+    #      elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean') or entity_id.startswith('automation') or entity_id.startswith('fan'):
+    #          apis.ha_api.get_entity(entity_id).call_service("toggle")
+    #      elif entity_id.startswith('lock'):
+    #          if apis.ha_api.get_entity(entity_id).state == "locked":
+    #              apis.ha_api.get_entity(entity_id).call_service("unlock")
+    #          else:
+    #              apis.ha_api.get_entity(entity_id).call_service("lock")
+    #      elif entity_id.startswith('button') or entity_id.startswith('input_button'):
+    #          apis.ha_api.get_entity(entity_id).call_service("press")
+    #      elif entity_id.startswith('input_select') or entity_id.startswith('select'):
+    #          apis.ha_api.get_entity(entity_id).call_service("select_next")
+    #      elif entity_id.startswith('vacuum'):
+    #          if apis.ha_api.get_entity(entity_id).state == "docked":
+    #              apis.ha_api.get_entity(entity_id).call_service("start")
+    #          else:
+    #              apis.ha_api.get_entity(
+    #                  entity_id).call_service("return_to_base")
+    #      elif entity_id.startswith('service'):
+    #          apis.ha_api.call_service(entity_id.replace(
+    #              'service.', '', 1).replace('.', '/', 1), **entity_config.data)
 
 
-    # apis.ha_api.log(
-    #     f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
-    #  # buttons with actions on HA
-    #  if button_type == "OnOff":
-    #      if value == "1":
-    #          apis.ha_api.turn_on(entity_id)
-    #      else:
-    #          apis.ha_api.turn_off(entity_id)
-    #
+def number_set(entity_id, value):
+    logging.error("number-set not implemented")
     #  if button_type == "number-set":
     #      if entity_id.startswith('fan'):
     #          entity = apis.ha_api.get_entity(entity_id)
@@ -50,7 +64,14 @@ def button_press(entity_id, value):
     #      else:
     #          apis.ha_api.get_entity(entity_id).call_service(
     #              "set_value", value=value)
-    #
+
+
+
+
+
+
+
+
     #  # for shutter / covers
     #  if button_type == "up":
     #      apis.ha_api.get_entity(entity_id).call_service("open_cover")
@@ -73,27 +94,7 @@ def button_press(entity_id, value):
     #      apis.ha_api.get_entity(entity_id).call_service(
     #          "set_cover_tilt_position", tilt_position=pos)
     #
-    #  if button_type == "button":
-    #      elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean') or entity_id.startswith('automation') or entity_id.startswith('fan'):
-    #          apis.ha_api.get_entity(entity_id).call_service("toggle")
-    #      elif entity_id.startswith('lock'):
-    #          if apis.ha_api.get_entity(entity_id).state == "locked":
-    #              apis.ha_api.get_entity(entity_id).call_service("unlock")
-    #          else:
-    #              apis.ha_api.get_entity(entity_id).call_service("lock")
-    #      elif entity_id.startswith('button') or entity_id.startswith('input_button'):
-    #          apis.ha_api.get_entity(entity_id).call_service("press")
-    #      elif entity_id.startswith('input_select') or entity_id.startswith('select'):
-    #          apis.ha_api.get_entity(entity_id).call_service("select_next")
-    #      elif entity_id.startswith('vacuum'):
-    #          if apis.ha_api.get_entity(entity_id).state == "docked":
-    #              apis.ha_api.get_entity(entity_id).call_service("start")
-    #          else:
-    #              apis.ha_api.get_entity(
-    #                  entity_id).call_service("return_to_base")
-    #      elif entity_id.startswith('service'):
-    #          apis.ha_api.call_service(entity_id.replace(
-    #              'service.', '', 1).replace('.', '/', 1), **entity_config.data)
+
     #
     #  # for media page
     #  if button_type == "media-next":
