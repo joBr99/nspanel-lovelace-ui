@@ -123,10 +123,15 @@ def connect_and_loop():
     libs.panel_cmd.init(client)
 
     # Create NsPanel object
-    for name, settings in settings["nspanels"].items():
-        panels[name] = LovelaceUIPanel(client, name, settings)
+    for name, settings_panel in settings["nspanels"].items():
+        if "timezone" not in settings_panel:
+            settings_panel["timezone"] = settings.get("timezone", "Europe/Berlin")
+        if "locale" not in settings_panel:
+            settings_panel["timezone"] = settings.get("locale", "en_US")
+
+        panels[name] = LovelaceUIPanel(client, name, settings_panel)
         libs.panel_cmd.page_type(
-            settings["panelSendTopic"], "pageStartup")
+            settings_panel["panelSendTopic"], "pageStartup")
 
     # Loop MQTT
     client.loop_forever()

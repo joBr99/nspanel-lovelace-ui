@@ -18,6 +18,8 @@ class LovelaceUIPanel:
         self.name = name_panel
         self.settings = settings_panel
         self.sendTopic = self.settings["panelSendTopic"]
+        self.model = self.settings.get("model", "eu")
+
 
         self.current_card = None
         self.privious_cards = []

@@ -9,7 +9,7 @@ class HAEntity(panel_cards.Entity):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
 
-    def render(self):
+    def render(self, cardType=""):
         # get data from HA
         data = libs.home_assistant.get_entity_data(self.entity_id)
         if data:
@@ -130,32 +130,29 @@ class HAEntity(panel_cards.Entity):
                         etype=self.etype, action="stop", device_class=device_class)
                     icon_stop_status = "enable"
                 value = f"{icon_up}|{icon_stop}|{icon_down}|{icon_up_status}|{icon_stop_status}|{icon_down_status}"
+            case 'sensor':
+                device_class = self.attributes.get("device_class", "")
+                unit_of_measurement = self.attributes.get("unit_of_measurement", "")
+                value = self.state
+                # limit value to 4 chars on us-p
+                if self.panel.model == "us-p" and cardType == "cardEntities":
+                    value = self.state[:4]
+                    if value[-1] == ".":
+                        value = value[:-1]
+
+                if device_class != "temperature":
+                    value = value + " "
+                value = value + unit_of_measurement
+                print(f"fuck {cardType} {value} {self.icon_overwrite}")
+                if cardType in ["cardGrid", "cardGrid2"] and not self.icon_overwrite:
+                    icon_char = value
+
+            case 'binary_sensor':
+                device_class = self.attributes.get("device_class", "")
+                value = get_translation(self.locale, f"backend.component.binary_sensor.state.{device_class}.{entity.state}")
+
             case _:
                 name = "unsupported"
-
-        # elif entityType in ["sensor", "binary_sensor"]:
-        #    entityTypePanel = "text"
-        #    device_class = entity.attributes.get("device_class", "")
-        #    unit_of_measurement = entity.attributes.get(
-        #        "unit_of_measurement", "")
-        #    value = entity.state
-        #    # limit value to 4 chars on us-p
-        #    if self._config.get("model") == "us-p" and cardType == "cardEntities":
-        #        value = entity.state[:4]
-        #        if value[-1] == ".":
-        #            value = value[:-1]
-        #    if device_class != "temperature":
-        #        value = value + " "
-        #    value = value + unit_of_measurement
-        #    if entityType == "binary_sensor":
-        #        value = get_translation(
-        #            self._locale, f"backend.component.binary_sensor.state.{device_class}.{entity.state}")
-        #    if (cardType == "cardGrid" or cardType == "cardGrid2") and entityType == "sensor" and icon is None:
-        #        icon_id = entity.state[:4]
-        #        if icon_id[-1] == ".":
-        #            icon_id = icon_id[:-1]
-        #    else:
-        #        icon_id = get_icon_ha(entityId, overwrite=icon)
 
         # elif entityType == "weather":
         #    entityTypePanel = "text"
@@ -228,7 +225,7 @@ class EntitiesCard(HACard):
     def render(self):
         result = f"{self.title}~{self.gen_nav()}"
         for e in self.entities:
-            result += e.render()
+            result += e.render(cardType=self.type)
         return result
 
 class QRCard(HACard):
@@ -290,7 +287,7 @@ def card_factory(locale, settings, panel):
 
 def entity_factory(locale, settings, panel):
     etype = settings["entity"].split(".")[0]
-    if etype in ["delete", "navigate"]:
+    if etype in ["delete", "navigate", "iText"]:
         entity = panel_cards.Entity(locale, settings, panel)
     else:
         entity = HAEntity(locale, settings, panel)
