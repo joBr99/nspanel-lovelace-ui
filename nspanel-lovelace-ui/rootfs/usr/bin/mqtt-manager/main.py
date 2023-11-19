@@ -10,6 +10,7 @@ import yaml
 from uuid import getnode as get_mac
 from panel import LovelaceUIPanel
 import os
+import environ
 
 settings = {}
 panels = {}
@@ -60,16 +61,26 @@ def on_message(client, userdata, msg):
 def get_config():
     global settings
 
-    settings["mqtt_username"] = os.getenv('MQTT_USER')
-    settings["mqtt_password"] = os.getenv('MQTT_PASS')
-    settings["mqtt_port"] = os.getenv('MQTT_PORT')
-    settings["mqtt_server"] = os.getenv('MQTT_SERVER')
-
     CONFIG_FILE = os.getenv('CONFIG_FILE')
     if not CONFIG_FILE:
         CONFIG_FILE = 'config.yml'
     with open(CONFIG_FILE, 'r', encoding="utf8") as file:
         settings = yaml.safe_load(file)
+
+
+    environment = environ.Env()
+    if not settings.get("mqtt_username"):
+        settings["mqtt_username"] = environment('MQTT_USER')
+    if not settings.get("mqtt_password"):
+        settings["mqtt_password"] = environment('MQTT_PASS')
+    if not settings.get("mqtt_port"):
+        settings["mqtt_port"] = environment('MQTT_PORT')
+    if not settings.get("mqtt_server"):
+        settings["mqtt_server"] = environment('MQTT_SERVER')
+
+    if "SUPERVISOR_TOKEN" in environment:
+        settings["home_assistant_token"] = environment('SUPERVISOR_TOKEN')
+        settings["home_assistant_address"] = "http://supervisor"
 
 
 def connect_and_loop():

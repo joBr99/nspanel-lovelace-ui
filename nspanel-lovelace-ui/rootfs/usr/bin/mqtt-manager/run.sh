@@ -8,7 +8,6 @@ if [ -z ${STANDALONE+x} ]; then
 else
   echo "RUNNING IN STANDALONE MODE"
 fi
-
 export CONFIG_FILE=/share/config.yml
 if test -f "$CONFIG_FILE"; then
     echo "$CONFIG_FILE exists."
