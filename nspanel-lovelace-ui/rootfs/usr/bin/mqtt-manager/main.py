@@ -22,6 +22,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def on_connect(client, userdata, flags, rc):
+    global panels
     # global settings
     logging.info("Connected to MQTT Server")
     # for panel in settings["nspanels"].values():
@@ -30,10 +31,11 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("tele/tasmota_nspdev2/RESULT")
 
 def on_ha_update(entity_id):
-    for panel in panels:
+    for panel in panels.values():
         panel.ha_event_callback(entity_id)
 
 def on_message(client, userdata, msg):
+    global panels
     try:
         if msg.payload.decode() == "":
             return
@@ -87,7 +89,7 @@ def get_config():
 
 
 def connect_and_loop():
-    global settings, home_assistant
+    global settings, home_assistant, panels
     client.on_connect = on_connect
     client.on_message = on_message
     client.username_pw_set(

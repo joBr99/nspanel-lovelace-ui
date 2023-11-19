@@ -91,7 +91,7 @@ class LovelaceUIPanel:
         if iid in self.hidden_cards:
             return self.hidden_cards[iid]
 
-    def on_ha_update(entity_id):
+    def ha_event_callback(self, entity_id):
         logging.debug(f"{entity_id} updated/state changed")
         # TODO: Check if entity is on current card
         libs.panel_cmd.entityUpd(self.sendTopic, self.current_card.render())
