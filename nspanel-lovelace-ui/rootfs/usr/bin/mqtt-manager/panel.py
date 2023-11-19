@@ -143,22 +143,29 @@ class LovelaceUIPanel:
                     if iid in self.entity_iids:
                         entity_id = self.entity_iids[iid]
 
-                if btype == "button":
-                    match entity_id.split(".")[0]:
-                        case 'navigate':
-                            iid = entity_id.split(".")[1]
-                            self.privious_cards.append(self.current_card)
-                            self.current_card = self.searchCard(iid)
-                            libs.panel_cmd.page_type(
-                                self.sendTopic, self.current_card.type)
-                            libs.panel_cmd.entityUpd(
-                                self.sendTopic, self.current_card.render())
-                        case _:
-                            ha_control.button_press(entity_id, value)
-                if btype == "OnOff":
-                    ha_control.on_off(entity_id, value)
-                if btype == "number-set":
-                    ha_control.number_set(entity_id, value)
+                match btype:
+                    case 'button':
+                        match entity_id.split(".")[0]:
+                            case 'navigate':
+                                iid = entity_id.split(".")[1]
+                                self.privious_cards.append(self.current_card)
+                                self.current_card = self.searchCard(iid)
+                                libs.panel_cmd.page_type(
+                                    self.sendTopic, self.current_card.type)
+                                libs.panel_cmd.entityUpd(
+                                    self.sendTopic, self.current_card.render())
+                            case _:
+                                ha_control.button_press(entity_id, value)
+                    case 'OnOff':
+                        ha_control.on_off(entity_id, value)
+                    case 'number-set':
+                        ha_control.number_set(entity_id, value)
+                    case 'up' | 'stop' | 'down' | 'tiltOpen' | 'tiltStop' | 'tiltClose':
+                        ha_control.cover_control(entity_id, btype)
+                    case 'positionSlider':
+                        ha_control.cover_control_pos(entity_id, value)
+                    case 'tiltSlider':
+                        ha_control.cover_control_tilt(entity_id, value)
 
             if msg[1] == "pageOpenDetail":
                 print("pageOpenDetail")

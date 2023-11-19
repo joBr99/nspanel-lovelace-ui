@@ -64,46 +64,55 @@ def number_set(entity_id, value):
     #      else:
     #          apis.ha_api.get_entity(entity_id).call_service(
     #              "set_value", value=value)
+def cover_control(entity_id, action):
+    action_service_mapping = {
+        'up': 'open_cover',
+        'stop': 'stop_cover',
+        'down': 'close_cover',
+        'tiltOpen': 'open_cover_tilt',
+        'tiltStop': 'stop_cover_tilt',
+        'tiltClose': 'close_cover_tilt',
+    }
+    if action in action_service_mapping:
+        service = action_service_mapping[action]
+        libs.home_assistant.call_service(
+            entity_name=entity_id,
+            domain="cover",
+            service=service,
+            service_data={}
+        )
+def cover_control_pos(entity_id, action):
+    logging.error("positionSlider not implemented")
 
-
-
-
-
-
-
-
-    #  # for shutter / covers
-    #  if button_type == "up":
-    #      apis.ha_api.get_entity(entity_id).call_service("open_cover")
-    #  if button_type == "stop":
-    #      apis.ha_api.get_entity(entity_id).call_service("stop_cover")
-    #  if button_type == "down":
-    #      apis.ha_api.get_entity(entity_id).call_service("close_cover")
     #  if button_type == "positionSlider":
     #      pos = int(value)
     #      apis.ha_api.get_entity(entity_id).call_service(
     #          "set_cover_position", position=pos)
-    #  if button_type == "tiltOpen":
-    #      apis.ha_api.get_entity(entity_id).call_service("open_cover_tilt")
-    #  if button_type == "tiltStop":
-    #      apis.ha_api.get_entity(entity_id).call_service("stop_cover_tilt")
-    #  if button_type == "tiltClose":
-    #      apis.ha_api.get_entity(entity_id).call_service("close_cover_tilt")
+
+def cover_control_tilt(entity_id, action):
+    logging.error("tiltSlider not implemented")
+
     #  if button_type == "tiltSlider":
     #      pos = int(value)
     #      apis.ha_api.get_entity(entity_id).call_service(
     #          "set_cover_tilt_position", tilt_position=pos)
-    #
 
-    #
-    #  # for media page
-    #  if button_type == "media-next":
-    #      apis.ha_api.get_entity(entity_id).call_service("media_next_track")
-    #  if button_type == "media-back":
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "media_previous_track")
-    #  if button_type == "media-pause":
-    #      apis.ha_api.get_entity(entity_id).call_service("media_play_pause")
+def media_control(entity_id, action):
+    action_service_mapping = {
+        'media-next': 'media_next_track',
+        'media-back': 'media_previous_track',
+        'media-pause': 'media_play_pause',
+    }
+    if action in action_service_mapping:
+        service = action_service_mapping[action]
+        libs.home_assistant.call_service(
+            entity_name=entity_id,
+            domain="media",
+            service=service,
+            service_data={}
+        )
+
+
     #  if button_type == "media-OnOff":
     #      if apis.ha_api.get_entity(entity_id).state == "off":
     #          apis.ha_api.get_entity(entity_id).call_service("turn_on")
