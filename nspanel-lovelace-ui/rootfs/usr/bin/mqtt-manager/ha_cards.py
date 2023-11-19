@@ -3,7 +3,7 @@ import ha_icons
 import ha_colors
 from libs.localization import get_translation
 import panel_cards
-
+import logging
 
 class HAEntity(panel_cards.Entity):
     def __init__(self, locale, config, panel):
@@ -183,21 +183,23 @@ class HAEntity(panel_cards.Entity):
 
         return f"~{entity_type_panel}~iid.{self.iid}~{icon_char}~{color}~{name}~{value}"
 
-
-class EntitiesCard(panel_cards.Card):
+class HACard(panel_cards.Card):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
+        # Generate Entity for each Entity in Config
         self.entities = []
         if "entities" in config:
             for e in config.get("entities"):
-                # print(e)
                 iid, entity = entity_factory(locale, e, panel)
                 self.entities.append(entity)
 
     def get_iid_entities(self):
         return [(e.iid, e.entity_id) for e in self.entities]
 
-    def render(self):
+    def get_entities(self):
+        return [e.entity_id for e in self.entities]
+
+    def gen_nav(self):
         leftBtn = "delete~~~~~"
         if self.iid_prev:
             leftBtn = panel_cards.Entity(self.locale,
@@ -216,11 +218,30 @@ class EntitiesCard(panel_cards.Card):
                                               'color': [255, 255, 255],
                                           }, self.panel
                                           ).render()[1:]
-        result = f"{self.title}~{leftBtn}~{rightBtn}"
+        result = f"{leftBtn}~{rightBtn}"
+        return result
+
+class EntitiesCard(HACard):
+    def __init__(self, locale, config, panel):
+        super().__init__(locale, config, panel)
+
+    def render(self):
+        result = f"{self.title}~{self.gen_nav()}"
         for e in self.entities:
             result += e.render()
         return result
 
+class QRCard(HACard):
+    def __init__(self, locale, config, panel):
+        super().__init__(locale, config, panel)
+        self.qrcode = config.get("qrCode", "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    def render(self):
+        # TODO: Render QRCode as HomeAssistant Template
+        #qrcode = apis.ha_api.render_template(qrcode)
+        result = f"{self.title}~{self.gen_nav()}~{self.qrcode}"
+        for e in self.entities:
+            result += e.render()
+        return result
 
 class Screensaver(panel_cards.Card):
     def __init__(self, locale, config, panel):
@@ -239,8 +260,11 @@ def card_factory(locale, settings, panel):
     match settings["type"]:
         case 'cardEntities' | 'cardGrid':
             card = EntitiesCard(locale, settings, panel)
+        case 'cardQR':
+            card = QRCard(locale, settings, panel)
         case _:
-            card = panel_cards.Card(locale, settings, panel)
+            logging.error("card type %s not implemented", settings["type"])
+            return "NotImplemented", None
     return card.iid, card
 
 

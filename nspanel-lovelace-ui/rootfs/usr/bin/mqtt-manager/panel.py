@@ -29,13 +29,15 @@ class LovelaceUIPanel:
         # generate cards for input settings
         for c in self.settings.get("cards"):
             iid, card = card_factory(self.settings["locale"], c, self)
-            self.cards[iid] = card
-            # collect nav keys of cards
-            if card.navigate_key:
-                self.navigate_keys[card.navigate_key] = iid
-            # collect iids of entities
-            for e in card.get_iid_entities():
-                self.entity_iids[e[0]] = e[1]
+             # Check if we acually got a card
+            if card:
+                self.cards[iid] = card
+                # collect nav keys of cards
+                if card.navigate_key:
+                    self.navigate_keys[card.navigate_key] = iid
+                # collect iids of entities
+                for e in card.get_iid_entities():
+                    self.entity_iids[e[0]] = e[1]
 
         # setup prev and next iids
         top_level_cards = list(self.cards.values())
@@ -92,9 +94,9 @@ class LovelaceUIPanel:
             return self.hidden_cards[iid]
 
     def ha_event_callback(self, entity_id):
-        logging.debug(f"{entity_id} updated/state changed")
-        # TODO: Check if entity is on current card
-        libs.panel_cmd.entityUpd(self.sendTopic, self.current_card.render())
+        #logging.debug(f"{entity_id} updated/state changed")
+        if entity_id in self.current_card.get_entities():
+            libs.panel_cmd.entityUpd(self.sendTopic, self.current_card.render())
 
     def customrecv_event_callback(self, msg):
         logging.debug("Recv Message from NsPanel: %s", msg)
