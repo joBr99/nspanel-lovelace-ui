@@ -11,8 +11,6 @@ from uuid import getnode as get_mac
 from panel import LovelaceUIPanel
 import os
 
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
 
 
 settings = {}
