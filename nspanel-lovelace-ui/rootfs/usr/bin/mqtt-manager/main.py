@@ -11,6 +11,10 @@ from uuid import getnode as get_mac
 from panel import LovelaceUIPanel
 import os
 
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+
+
 settings = {}
 panels = {}
 last_settings_file_mtime = 0
@@ -60,13 +64,10 @@ def on_message(client, userdata, msg):
                 "Something went wrong when processing the exception message, couldn't decode payload to utf-8.")
 
 
-def get_config():
+def get_config(file):
     global settings
 
-    CONFIG_FILE = os.getenv('CONFIG_FILE')
-    if not CONFIG_FILE:
-        CONFIG_FILE = 'config.yml'
-    with open(CONFIG_FILE, 'r', encoding="utf8") as file:
+    with open(file, 'r', encoding="utf8") as file:
         settings = yaml.safe_load(file)
 
     if not settings.get("mqtt_username"):
@@ -92,8 +93,8 @@ def get_config():
     print(settings["home_assistant_address"])
     print(settings["is_addon"])
 
-def connect_and_loop():
-    global settings, home_assistant, panels
+def connect():
+    global settings, home_assistant, client
     client.on_connect = on_connect
     client.on_message = on_message
     client.username_pw_set(
@@ -122,6 +123,15 @@ def connect_and_loop():
 
     libs.panel_cmd.init(client)
 
+    setup_panels()
+
+def loop():
+    global client
+    # Loop MQTT
+    client.loop_forever()
+
+def setup_panels():
+    global settings, panels
     # Create NsPanel object
     for name, settings_panel in settings["nspanels"].items():
         if "timeZone" not in settings_panel:
@@ -133,10 +143,11 @@ def connect_and_loop():
         libs.panel_cmd.page_type(
             settings_panel["panelSendTopic"], "pageStartup")
 
-    # Loop MQTT
-    client.loop_forever()
-
 if __name__ == '__main__':
-    get_config()
-    # print(settings)
-    connect_and_loop()
+    CONFIG_FILE = os.getenv('CONFIG_FILE')
+    if not CONFIG_FILE:
+        CONFIG_FILE = 'config.yml'
+    get_config(CONFIG_FILE)
+
+    connect()
+    loop()
