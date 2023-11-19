@@ -15,5 +15,4 @@ if test -f "$CONFIG_FILE"; then
 else
     cp /usr/bin/mqtt-manager/config.yml.example $CONFIG_FILE
 fi
-sleep 100000
 python /usr/bin/mqtt-manager/main.py
