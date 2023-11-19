@@ -90,6 +90,7 @@ def get_config():
 
     print(settings["home_assistant_token"])
     print(settings["home_assistant_address"])
+    print(settings["is_addon"])
 
 def connect_and_loop():
     global settings, home_assistant, panels
