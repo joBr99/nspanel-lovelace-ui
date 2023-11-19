@@ -4,7 +4,7 @@ import logging
 import json
 from threading import Thread
 import time
-import environ
+import os
 
 home_assistant_url = ""
 home_assistant_token = ""

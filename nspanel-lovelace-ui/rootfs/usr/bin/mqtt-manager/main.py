@@ -10,7 +10,6 @@ import yaml
 from uuid import getnode as get_mac
 from panel import LovelaceUIPanel
 import os
-import environ
 
 settings = {}
 panels = {}
@@ -69,20 +68,19 @@ def get_config():
     with open(CONFIG_FILE, 'r', encoding="utf8") as file:
         settings = yaml.safe_load(file)
 
-
-    environment = environ.Env()
     if not settings.get("mqtt_username"):
-        settings["mqtt_username"] = environment('MQTT_USER')
+        settings["mqtt_username"] = os.getenv('MQTT_USER')
     if not settings.get("mqtt_password"):
-        settings["mqtt_password"] = environment('MQTT_PASS')
+        settings["mqtt_password"] = os.getenv('MQTT_PASS')
     if not settings.get("mqtt_port"):
-        settings["mqtt_port"] = environment('MQTT_PORT')
+        settings["mqtt_port"] = os.getenv('MQTT_PORT')
     if not settings.get("mqtt_server"):
-        settings["mqtt_server"] = environment('MQTT_SERVER')
+        settings["mqtt_server"] = os.getenv('MQTT_SERVER')
 
+    st = os.getenv('SUPERVISOR_TOKEN')
     settings["is_addon"] = False
-    if "SUPERVISOR_TOKEN" in environment:
-        settings["home_assistant_token"] = environment('SUPERVISOR_TOKEN')
+    if st is not None:
+        settings["home_assistant_token"] = st
         print(settings["home_assistant_token"])
         settings["home_assistant_address"] = "http://supervisor"
         settings["is_addon"] = True
