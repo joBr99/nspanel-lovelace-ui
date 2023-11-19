@@ -1,0 +1,8 @@
+paho-mqtt
+pyyaml
+websockets
+websocket-client
+django-environ
+python-dateutil
+scheduler
+babel
