@@ -17,4 +17,4 @@ options:
   message: "Hello world..."
 schema:
   message: "str?"
-image: "ghcr.io/joBr99/{arch}-nspanel-lovelace-ui"
+image: "ghcr.io/jobr99/{arch}-nspanel-lovelace-ui"
