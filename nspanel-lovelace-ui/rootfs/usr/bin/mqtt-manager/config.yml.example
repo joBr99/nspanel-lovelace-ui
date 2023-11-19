@@ -4,6 +4,7 @@ nspanels:
     panelRecvTopic: "tele/tasmota_nspdev2/RESULT"
     panelSendTopic: "cmnd/tasmota_nspdev2/CustomSend"
     timeFormat: "%H:%M"
+    timeZone: "Europe/Berlin"
     dateFormat: "full"
     locale: "en_US"
     screensaver:
