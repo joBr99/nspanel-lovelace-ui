@@ -78,15 +78,18 @@ def get_config():
     if not settings.get("mqtt_server"):
         settings["mqtt_server"] = os.getenv('MQTT_SERVER')
 
-    st = os.getenv('SUPERVISOR_TOKEN')
+
     settings["is_addon"] = False
-    if st is not None:
-        settings["home_assistant_token"] = st
-        print(settings["home_assistant_token"])
-        settings["home_assistant_address"] = "http://supervisor"
-        settings["is_addon"] = True
 
+    if not settings.get("home_assistant_token"):
+        st = os.getenv('SUPERVISOR_TOKEN')
+        if st is not None:
+            settings["home_assistant_token"] = st
+            settings["home_assistant_address"] = "http://supervisor"
+            settings["is_addon"] = True
 
+    print(settings["home_assistant_token"])
+    print(settings["home_assistant_address"])
 
 def connect_and_loop():
     global settings, home_assistant, panels
