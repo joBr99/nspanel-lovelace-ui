@@ -146,6 +146,7 @@ class LovelaceUIPanel:
                 match btype:
                     case 'button':
                         match entity_id.split(".")[0]:
+                            # handle internal stuff
                             case 'navigate':
                                 iid = entity_id.split(".")[1]
                                 self.privious_cards.append(self.current_card)
@@ -154,18 +155,11 @@ class LovelaceUIPanel:
                                     self.sendTopic, self.current_card.type)
                                 libs.panel_cmd.entityUpd(
                                     self.sendTopic, self.current_card.render())
+                            # send ha stuff to ha
                             case _:
-                                ha_control.button_press(entity_id, value)
-                    case 'OnOff':
-                        ha_control.on_off(entity_id, value)
-                    case 'number-set':
-                        ha_control.number_set(entity_id, value)
-                    case 'up' | 'stop' | 'down' | 'tiltOpen' | 'tiltStop' | 'tiltClose':
-                        ha_control.cover_control(entity_id, btype)
-                    case 'positionSlider':
-                        ha_control.cover_control_pos(entity_id, value)
-                    case 'tiltSlider':
-                        ha_control.cover_control_tilt(entity_id, value)
+                                ha_control.handle_buttons(entity_id, btype, value)
+                    case _:
+                        ha_control.handle_buttons(entity_id, btype, value)
 
             if msg[1] == "pageOpenDetail":
                 print("pageOpenDetail")

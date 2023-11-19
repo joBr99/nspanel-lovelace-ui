@@ -1,6 +1,96 @@
 import libs.home_assistant
 import logging
 
+def handle_buttons(entity_id, btype, value):
+   match btype:
+       case 'button':
+           button_press(entity_id, value)
+       case 'OnOff':
+           on_off(entity_id, value)
+       case 'number-set':
+            if entity_id.startswith('fan'):
+                logging.error("nuber-set fan not implemented")
+                #          entity = apis.ha_api.get_entity(entity_id)
+                #          value = float(value) * \
+                #              float(entity.attributes.get("percentage_step", 0))
+                #          entity.call_service("set_percentage", percentage=value)
+            else:
+                service_data = {
+                    "value": int(value)
+                }
+                call_ha_service(entity_id, "set_value", service_data=service_data)
+
+       case 'up' | 'stop' | 'down' | 'tiltOpen' | 'tiltStop' | 'tiltClose' | 'media-next' | 'media-back' | 'media-pause' | 'timer-cancel' | 'timer-pause' | 'timer-finish':
+            action_service_mapping = {
+                'up': 'open_cover',
+                'stop': 'stop_cover',
+                'down': 'close_cover',
+                'tiltOpen': 'open_cover_tilt',
+                'tiltStop': 'stop_cover_tilt',
+                'tiltClose': 'close_cover_tilt',
+                'media-next': 'media_next_track',
+                'media-back': 'media_previous_track',
+                'media-pause': 'media_play_pause',
+                'timer-cancel': 'cancel',
+                'timer-pause': 'pause',
+                'timer-finish': 'finish',
+            }
+            service = action_service_mapping[btype]
+            call_ha_service(entity_id, service)
+
+       case 'positionSlider':
+            service_data = {
+                "position": int(value)
+            }
+            call_ha_service(entity_id, "set_cover_position", service_data=service_data)
+       case 'tiltSlider':
+            service_data = {
+                "tilt_position": int(value)
+            }
+            call_ha_service(entity_id, "set_cover_tilt_position", service_data=service_data)
+
+       case _:
+          logging.error("Not implemented: %s", btype)
+
+def call_ha_service(entity_id, service, service_data = {}):
+    etype = entity_id.split(".")[0]
+    libs.home_assistant.call_service(
+        entity_name=entity_id,
+        domain=etype,
+        service=service,
+        service_data=service_data
+    )
+
+def button_press(entity_id, value):
+    etype = entity_id.split(".")[0]
+    match etype:
+        case 'scene' | 'script':
+            call_ha_service(entity_id, "turn_on")
+        case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan':
+            call_ha_service(entity_id, "toggle")
+        #case 'lock':
+    #      elif entity_id.startswith('lock'):
+    #          if apis.ha_api.get_entity(entity_id).state == "locked":
+    #              apis.ha_api.get_entity(entity_id).call_service("unlock")
+    #          else:
+    #              apis.ha_api.get_entity(entity_id).call_service("lock")
+        case 'button' | 'input_button':
+            call_ha_service(entity_id, "press")
+        case 'input_select' | 'select':
+            call_ha_service(entity_id, "select_next")
+        #case 'vacuum':
+    #      elif entity_id.startswith('vacuum'):
+    #          if apis.ha_api.get_entity(entity_id).state == "docked":
+    #              apis.ha_api.get_entity(entity_id).call_service("start")
+    #          else:
+    #              apis.ha_api.get_entity(
+    #                  entity_id).call_service("return_to_base")
+        case _:
+            logging.error("buttonpress for entity type %s not implemented", etype)
+
+    #      elif entity_id.startswith('service'):
+    #          apis.ha_api.call_service(entity_id.replace(
+    #              'service.', '', 1).replace('.', '/', 1), **entity_config.data)
 
 def on_off(entity_id, value):
     etype = entity_id.split(".")[0]
@@ -18,99 +108,6 @@ def on_off(entity_id, value):
         case _:
             logging.error(
                 "Control action on_off not implemented for %s", entity_id)
-
-
-def button_press(entity_id, value):
-    etype = entity_id.split(".")[0]
-    match etype:
-        case 'scene' | 'script':
-            libs.home_assistant.call_service(
-                entity_name=entity_id,
-                domain=etype,
-                service="turn_on",
-                service_data={}
-            )
-    #  if button_type == "button":
-    #      elif entity_id.startswith('light') or entity_id.startswith('switch') or entity_id.startswith('input_boolean') or entity_id.startswith('automation') or entity_id.startswith('fan'):
-    #          apis.ha_api.get_entity(entity_id).call_service("toggle")
-    #      elif entity_id.startswith('lock'):
-    #          if apis.ha_api.get_entity(entity_id).state == "locked":
-    #              apis.ha_api.get_entity(entity_id).call_service("unlock")
-    #          else:
-    #              apis.ha_api.get_entity(entity_id).call_service("lock")
-    #      elif entity_id.startswith('button') or entity_id.startswith('input_button'):
-    #          apis.ha_api.get_entity(entity_id).call_service("press")
-    #      elif entity_id.startswith('input_select') or entity_id.startswith('select'):
-    #          apis.ha_api.get_entity(entity_id).call_service("select_next")
-    #      elif entity_id.startswith('vacuum'):
-    #          if apis.ha_api.get_entity(entity_id).state == "docked":
-    #              apis.ha_api.get_entity(entity_id).call_service("start")
-    #          else:
-    #              apis.ha_api.get_entity(
-    #                  entity_id).call_service("return_to_base")
-    #      elif entity_id.startswith('service'):
-    #          apis.ha_api.call_service(entity_id.replace(
-    #              'service.', '', 1).replace('.', '/', 1), **entity_config.data)
-
-
-def number_set(entity_id, value):
-    logging.error("number-set not implemented")
-    #  if button_type == "number-set":
-    #      if entity_id.startswith('fan'):
-    #          entity = apis.ha_api.get_entity(entity_id)
-    #          value = float(value) * \
-    #              float(entity.attributes.get("percentage_step", 0))
-    #          entity.call_service("set_percentage", percentage=value)
-    #      else:
-    #          apis.ha_api.get_entity(entity_id).call_service(
-    #              "set_value", value=value)
-def cover_control(entity_id, action):
-    action_service_mapping = {
-        'up': 'open_cover',
-        'stop': 'stop_cover',
-        'down': 'close_cover',
-        'tiltOpen': 'open_cover_tilt',
-        'tiltStop': 'stop_cover_tilt',
-        'tiltClose': 'close_cover_tilt',
-    }
-    if action in action_service_mapping:
-        service = action_service_mapping[action]
-        libs.home_assistant.call_service(
-            entity_name=entity_id,
-            domain="cover",
-            service=service,
-            service_data={}
-        )
-def cover_control_pos(entity_id, action):
-    logging.error("positionSlider not implemented")
-
-    #  if button_type == "positionSlider":
-    #      pos = int(value)
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "set_cover_position", position=pos)
-
-def cover_control_tilt(entity_id, action):
-    logging.error("tiltSlider not implemented")
-
-    #  if button_type == "tiltSlider":
-    #      pos = int(value)
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "set_cover_tilt_position", tilt_position=pos)
-
-def media_control(entity_id, action):
-    action_service_mapping = {
-        'media-next': 'media_next_track',
-        'media-back': 'media_previous_track',
-        'media-pause': 'media_play_pause',
-    }
-    if action in action_service_mapping:
-        service = action_service_mapping[action]
-        libs.home_assistant.call_service(
-            entity_name=entity_id,
-            domain="media",
-            service=service,
-            service_data={}
-        )
 
 
     #  if button_type == "media-OnOff":
@@ -240,9 +237,4 @@ def media_control(entity_id, action):
     #              "start", duration=value)
     #      else:
     #          apis.ha_api.get_entity(entity_id).call_service("start")
-    #  if button_type == "timer-cancel":
-    #      apis.ha_api.get_entity(entity_id).call_service("cancel")
-    #  if button_type == "timer-pause":
-    #      apis.ha_api.get_entity(entity_id).call_service("pause")
-    #  if button_type == "timer-finish":
-    #      apis.ha_api.get_entity(entity_id).call_service("finish")
+
