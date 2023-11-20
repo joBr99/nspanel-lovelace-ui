@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -53,7 +53,10 @@ ReleaseNotes:
         - 13.11.2023 - v4.3.3.3  if setOption = false, do not create autoAlias (Functional/Servicemenu) and Datapoints
         - 15.11.2023 - v4.3.3.4  New Service Page -> ioBroker Info 
         - 16.11.2023 - v4.3.3.5  Add Multilingualism to Service Menu (39 languages)
-	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardQR, popupFan, popupTimer (39 languages)
+    	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardQR, popupFan, popupTimer (39 languages)
+        - 18.11.2023 - v4.3.3.6  Add autoCreateALias to PageAlarm
+        - 20.11.2023 - v4.3.3.6  Add actionStringArray to PageAlarm
+
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -261,7 +264,18 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
 //-- Anfang der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -----------------------
   //-- siehe https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
-
+  let Alarmseite = <PageAlarm>
+  {
+      "type": "cardAlarm",
+      "heading": "Alarm",
+      "useColor": true,
+      "subPage": false,
+      "items": [
+          <PageItem>{ id: 'alias.0.NSPanel.Alarm',
+          actionStringArray: ['Vollschutz','Zuhause','Nacht','Besuch','Ausschalten'],
+          autoCreateALias: true }
+      ]
+  }
 //-- ENDE der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -------------------------
 
 
@@ -757,7 +771,7 @@ export const config = <Config> {
     defaultColor: Off,
     defaultBackgroundColor: HMIDark,    // Default-Hintergrundfarbe HMIDark oder Black
     pages: [
-
+            Alarmseite,
             NSPanel_Service         	//Auto-Alias Service Page
 	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
@@ -820,7 +834,7 @@ let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 let isSetOptionActive: boolean = false;
 
-const scriptVersion: string = 'v4.3.3.5';
+const scriptVersion: string = 'v4.3.3.6';
 let nodeVersion: string = '';
 let javaScriptVersion: string = '';
 
@@ -4689,6 +4703,34 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
     }
 }
 
+async function createAutoAlarmAlias (id: string, nsPath: string){
+    try {
+        if (Debug){
+            console.log('Alarm Alias Path: ' + id);
+            console.log('Alarm 0_userdata Path: ' + nsPath);
+        }
+        if (autoCreateAlias) {
+            if (isSetOptionActive) {
+                if (existsState(nsPath + '.AlarmPin') == false || existsState(nsPath + '.AlarmState') == false || existsState(nsPath + '.AlarmType') == false || existsState(nsPath + '.PIN_Failed') == false || existsState(nsPath + '.PANEL') == false) {
+                    await createStateAsync(nsPath + '.AlarmPin', '0000', { type: 'string' });
+                    await createStateAsync(nsPath + '.AlarmState', 'disarmed', { type: 'string' });
+                    await createStateAsync(nsPath + '.AlarmType', 'D1', { type: 'string' });
+                    await createStateAsync(nsPath + '.PIN_Failed', 0, { type: 'number' });
+                    await createStateAsync(nsPath + '.PANEL', NSPanel_Path, { type: 'string' });     
+                    setObject(id, {_id: id, type: 'channel', common: {role: 'sensor.fire.alarm', name:'alarm'}, native: {}});
+                    await createAliasAsync(id + '.ACTUAL', nsPath + '.AlarmState', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                    await createAliasAsync(id + '.PIN', nsPath + '.AlarmPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN' });
+                    await createAliasAsync(id + '.TYPE', nsPath + '.AlarmType', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'TYPE' });
+                    await createAliasAsync(id + '.PIN_Failed', nsPath + '.PIN_Failed', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'PIN_Failed' });
+                    await createAliasAsync(id + '.PANEL', nsPath + '.PANEL', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PANEL' });
+                }
+            }
+        }
+    } catch (err) {
+        console.warn('error at function createAutoAlarmAlias: ' + err.message);
+    }
+}
+
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
     try {
         activePage = page;
@@ -4697,19 +4739,15 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
 
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
-        let nsPath = NSPanel_Alarm_Path + 'Alarm.';
+        let nsPath = NSPanel_Alarm_Path + 'Alarm';
 
-        if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
-            createState(nsPath + 'AlarmPin', '0000', { type: 'string' }, function () { setState(nsPath + 'AlarmPin', '0000') });
-            createState(nsPath + 'AlarmState', 'disarmed', { type: 'string' }, function () { setState(nsPath + 'AlarmState', 'disarmed') });
-            createState(nsPath + 'AlarmType', 'D1', { type: 'string' }, function () { setState(nsPath + 'AlarmType', 'D1') });
-            createState(nsPath + 'PIN_Failed', 0, { type: 'number' }, function () { setState(nsPath + 'PIN_Failed', 0) });
-            createState(nsPath + 'PANEL', NSPanel_Path, { type: 'string' }, function () { setState(nsPath + 'PANEL', NSPanel_Path) });
+        if (page.items[0].autoCreateALias) {
+            createAutoAlarmAlias(id, nsPath);
         }
 
-        if (existsState(nsPath + 'AlarmPin') && existsState(nsPath + 'AlarmState') && existsState(nsPath + 'AlarmType')) {
+        if (existsState(nsPath + '.AlarmPin') && existsState(nsPath + '.AlarmState') && existsState(nsPath + '.AlarmType')) {
             //let entityPin = getState(nsPath + 'AlarmPin').val;
-            let entityState = getState(nsPath + 'AlarmState').val;
+            let entityState = getState(nsPath + '.AlarmState').val;
             //let entityType = getState(nsPath + 'AlarmType').val;
             let arm1: string, arm2: string, arm3: string, arm4: string;
             let arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
@@ -4723,7 +4761,11 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'armed' || entityState == 'triggered') {
-                arm1 = 'Deaktivieren';                                      //arm1*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[4] !== '') {
+                    arm1 = page.items[0].actionStringArray[4];
+                } else {
+                    arm1 = findLocale('alarm_control_panel', 'disarm');      //'Deaktivieren'; //arm1*~*
+                } 
                 arm1ActionName = 'D1';                                      //arm1ActionName*~*
                 arm2 = '';                                                  //arm2*~*
                 arm2ActionName = '';                                        //arm2ActionName*~*
@@ -4734,14 +4776,34 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'disarmed' || entityState == 'arming' || entityState == 'pending') {
-                arm1 = 'Vollschutz';                                        //arm1*~*
-                arm1ActionName = 'A1';                                      //arm1ActionName*~*
-                arm2 = 'Zuhause';                                           //arm2*~*
-                arm2ActionName = 'A2';                                      //arm2ActionName*~*
-                arm3 = 'Nacht';                                             //arm3*~*
-                arm3ActionName = 'A3';                                      //arm3ActionName*~*
-                arm4 = 'Besuch';                                            //arm4*~*
-                arm4ActionName = 'A4';                                      //arm4ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[0] !== '') {
+                    arm1 = page.items[0].actionStringArray[0];
+                } else {
+                    arm1 = findLocale('alarm_control_panel', 'arm_away');                                           //'Vollschutz' //arm1*~*
+                }
+                arm1ActionName = 'A1';                                                                              //arm1ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[1] !== '') {
+                    arm2 = page.items[0].actionStringArray[1];
+                } else {
+                    arm2 = findLocale('alarm_control_panel', 'arm_home');                                           //'Zuhause';   //arm2*~*
+                }    
+                arm2ActionName = 'A2';                                                                              //arm2ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[2] !== '') {
+                    arm3 = page.items[0].actionStringArray[2];
+                } else {
+                    arm3 = findLocale('alarm_control_panel', 'arm_night');                                          //'Nacht';     //arm3*~*
+                }
+                arm3ActionName = 'A3';                                                                              //arm3ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[3] !== '') {
+                    arm4 = page.items[0].actionStringArray[3];
+                } else {
+                    arm4 = findLocale('alarm_control_panel', 'arm_vacation');                                       //'Besuch';    //arm4*~*
+                }
+                arm4ActionName = 'A4';                                                                              //arm4ActionName*~*
+            }
+
+            if (Debug) {
+                console.log('GenerateAlarmPage String for arm1: ' + arm1 + ', arm2: ' + arm2 + ', arm3: ' + arm3 + ', arm4: ' + arm4);
             }
 
             if (entityState == 'armed') {
@@ -8244,6 +8306,7 @@ type PageItem = {
     inSel_ChoiceState: (boolean | undefined),
     iconArray: (string[] | undefined),
     fontSize: (number | undefined),
+    actionStringArray: (string[] | undefined),    
 }
 
 type DimMode = {
