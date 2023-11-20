@@ -2497,8 +2497,8 @@
          "de-DE":"Keine Musik zum Steuern"
       },
       "speaker":{
-         "en-US":"Equalizer",
-         "de-DE":"Equalizer"
+         "en-US":"Speaker",
+         "de-DE":"Lautsprecher"
       },
       "playlist":{
          "en-US":"Playlist",
