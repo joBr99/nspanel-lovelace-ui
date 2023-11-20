@@ -97,7 +97,25 @@ class LovelaceUIPanel:
     def ha_event_callback(self, entity_id):
         #logging.debug(f"{entity_id} updated/state changed")
         if entity_id in self.current_card.get_entities():
+            self.render_current_page()
+
+    def render_current_page(self, switchPages=False):
+        if switchPages:
+            libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
+
+        if self.current_card.type in ["screensaver", "screensaver2"]:
+            libs.panel_cmd.weatherUpdate(self.sendTopic, self.current_card.render())
+        else:
             libs.panel_cmd.entityUpd(self.sendTopic, self.current_card.render())
+        # send sleepTimeout
+        sleepTimeout = self.settings.get("sleepTimeout", 20)
+        if self.current_card.config.get("sleepTimeout"):
+            sleepTimeout = self.current_card.config.get("sleepTimeout")
+        libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
+
+        # send dimmode
+        #libs.panel_cmd.dimmode(self.sendTopic, 10, 100, )
+
 
     def customrecv_event_callback(self, msg):
         logging.debug("Recv Message from NsPanel: %s", msg)
@@ -113,13 +131,11 @@ class LovelaceUIPanel:
                 ha_control.wait_for_ha_cache()
 
                 self.current_card = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
-                libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
-                libs.panel_cmd.weatherUpdate(self.sendTopic, self.current_card.render())
+                self.render_current_page(switchPages=True)
             if msg[1] == "sleepReached":
                 self.privious_cards.append(self.current_card)
                 self.current_card = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
-                libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
-                libs.panel_cmd.weatherUpdate(self.sendTopic, self.current_card.render())
+                self.render_current_page(switchPages=True)
             if msg[1] == "buttonPress2":
                 entity_id = msg[2]
                 btype = msg[3]
@@ -133,8 +149,7 @@ class LovelaceUIPanel:
                         self.privious_cards.append(
                             list(self.cards.values())[0]) # TODO: Impelement default card config
                     self.current_card = self.privious_cards.pop()
-                    libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
-                    libs.panel_cmd.entityUpd(self.sendTopic, self.current_card.render())
+                    self.render_current_page(switchPages=True)
                     return
 
                 # replace iid with real entity id
@@ -151,10 +166,8 @@ class LovelaceUIPanel:
                                 iid = entity_id.split(".")[1]
                                 self.privious_cards.append(self.current_card)
                                 self.current_card = self.searchCard(iid)
-                                libs.panel_cmd.page_type(
-                                    self.sendTopic, self.current_card.type)
-                                libs.panel_cmd.entityUpd(
-                                    self.sendTopic, self.current_card.render())
+                                self.render_current_page(switchPages=True)
+
                             # send ha stuff to ha
                             case _:
                                 ha_control.handle_buttons(entity_id, btype, value)

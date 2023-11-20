@@ -1,6 +1,5 @@
 import logging
 
-
 def init(mqtt_client_from_manager):
     global mqtt_client
     mqtt_client = mqtt_client_from_manager
@@ -31,3 +30,9 @@ def entityUpd(topic, data):
 
 def weatherUpdate(topic, data):
     custom_send(topic, f"weatherUpdate~{data}")
+
+def timeout(topic, timeout):
+    custom_send(topic, f"timeout~{timeout}")
+
+def dimmode(topic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders):
+    custom_send(topic, f"dimmode~{dimValue}~{dimValueNormal}~{backgroundColor}~{fontColor}~{featExperimentalSliders}")

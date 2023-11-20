@@ -12,6 +12,7 @@ class Card:
         self.locale = locale
         self.title = config.get("title", "")
         self.type = config.get("type", "")
+        self.config = config
         self.panel = panel
 
     def render(self):
