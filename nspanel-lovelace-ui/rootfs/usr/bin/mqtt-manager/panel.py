@@ -99,6 +99,18 @@ class LovelaceUIPanel:
         if entity_id in self.current_card.get_entities():
             self.render_current_page()
 
+        involved_entities = ha_control.calculate_dim_values(
+            self.settings.get("sleepTracking"),
+            self.settings.get("sleepTrackingZones", ["not_home", "off"]),
+            self.settings.get("sleepBrightness"),
+            self.settings.get("screenBrightness"),
+            self.settings.get("sleepOverride"),
+            return_involved_entities=True
+        )
+        if entity_id in involved_entities:
+            dimmode()
+
+
     def render_current_page(self, switchPages=False):
         if switchPages:
             libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
@@ -112,9 +124,26 @@ class LovelaceUIPanel:
         if self.current_card.config.get("sleepTimeout"):
             sleepTimeout = self.current_card.config.get("sleepTimeout")
         libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
+        dimmode()
 
+    def dimmode():
         # send dimmode
-        #libs.panel_cmd.dimmode(self.sendTopic, 10, 100, )
+        dimValue, dimValueNormal = ha_control.calculate_dim_values(
+            self.settings.get("sleepTracking"),
+            self.settings.get("sleepTrackingZones", ["not_home", "off"]),
+            self.settings.get("sleepBrightness"),
+            self.settings.get("screenBrightness"),
+            self.settings.get("sleepOverride"),
+        )
+
+        backgroundColor = self.settings.get("defaultBackgroundColor", "ha-dark")
+        if backgroundColor == "ha-dark":
+            backgroundColor = 6371
+        elif backgroundColor == "black":
+            backgroundColor = 0
+        fontColor = ""
+        featExperimentalSliders = self.settings.get("featExperimentalSliders", 0)
+        libs.panel_cmddimmode(self.sendTopic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders)
 
 
     def customrecv_event_callback(self, msg):

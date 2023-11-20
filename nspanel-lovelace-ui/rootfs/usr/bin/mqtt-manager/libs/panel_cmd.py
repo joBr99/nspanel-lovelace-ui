@@ -35,4 +35,6 @@ def timeout(topic, timeout):
     custom_send(topic, f"timeout~{timeout}")
 
 def dimmode(topic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders):
+    if dimValue==dimValueNormal:
+        dimValue=dimValue-1
     custom_send(topic, f"dimmode~{dimValue}~{dimValueNormal}~{backgroundColor}~{fontColor}~{featExperimentalSliders}")

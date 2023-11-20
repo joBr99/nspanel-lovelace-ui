@@ -208,6 +208,11 @@ def get_entity_data(entity_id: str):
         return home_assistant_entity_state_cache[entity_id]
     else:
         return None
+def is_existent(entity_id: str):
+    if entity_id in home_assistant_entity_state_cache:
+        return True
+    else:
+        return False
 
 
 def send_message(message):

@@ -8,6 +8,48 @@ def wait_for_ha_cache():
         if len(libs.home_assistant.home_assistant_entity_state_cache) == 0:
             time.sleep(0.1)
 
+def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, screenBrightness, sleepOverride, return_involved_entities=False):
+    dimmode = 10
+    dimValueNormal = 100
+    involved_entities = []
+
+    if sleepBrightness:
+        if isinstance(sleepBrightness, int):
+            dimmode = sleepBrightness
+        elif libs.home_assistant.is_existent(sleepBrightness):
+            involved_entities.append(sleepBrightness)
+            dimValueNormal = int(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10))
+
+    if screenBrightness:
+        if isinstance(screenBrightness, int):
+            dimValueNormal = screenBrightness
+        elif libs.home_assistant.is_existent(screenBrightness):
+            involved_entities.append(screenBrightness)
+            dimValueNormal = int(libs.home_assistant.get_entity_data(screenBrightness).get('state', 100))
+
+    # force sleep brightness to zero in case sleepTracking is active
+    if sleepTracking:
+        if libs.home_assistant.is_existent(sleepTracking):
+            involved_entities.append(sleepTracking)
+            state = libs.home_assistant.get_entity_data(sleepTracking).get('state', '')
+            if state in sleepTrackingZones:
+                logging.info("sleepTracking active forcing brightnesss to 0")
+                dimmode = 0
+
+    # overwrite everything with sleepOverwrite
+    if sleepOverride and isinstance(sleepOverride, dict) and sleepOverride.get("entity") and sleepOverride.get("brightness"):
+        entity = sleepOverride.get("entity")
+        if libs.home_assistant.is_existent(entity):
+            involved_entities.append(entity)
+            state = libs.home_assistant.get_entity_data(entity).get('state', '')
+            if state in ["on", "true", "home"]:
+                dimmode = sleepOverride.get("brightness")
+
+    if return_involved_entities:
+        return involved_entities
+    else:
+        return dimmode, dimValueNormal
+
 def handle_buttons(entity_id, btype, value):
    match btype:
        case 'button':
