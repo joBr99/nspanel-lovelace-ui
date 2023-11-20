@@ -64,7 +64,7 @@ def on_message(client, userdata, msg):
 def get_config_file():
     CONFIG_FILE = os.getenv('CONFIG_FILE')
     if not CONFIG_FILE:
-        CONFIG_FILE = './config.yml'
+        CONFIG_FILE = './panels.yaml'
     return CONFIG_FILE
 
 def get_config(file):

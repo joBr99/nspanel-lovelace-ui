@@ -8,10 +8,10 @@ if [ -z ${STANDALONE+x} ]; then
 else
   echo "RUNNING IN STANDALONE MODE"
 fi
-export CONFIG_FILE=/share/config.yml
+export CONFIG_FILE=/config/panels.yaml
 if test -f "$CONFIG_FILE"; then
     echo "$CONFIG_FILE exists."
 else
-    cp /usr/bin/mqtt-manager/config.yml.example $CONFIG_FILE
+    cp /usr/bin/mqtt-manager/panels.yaml.example $CONFIG_FILE
 fi
 python /usr/bin/mqtt-manager/main.py

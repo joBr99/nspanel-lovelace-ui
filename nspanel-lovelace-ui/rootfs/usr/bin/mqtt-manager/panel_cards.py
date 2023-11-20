@@ -43,7 +43,7 @@ class Entity:
                 page_search_res = self.panel.searchCard(
                     self.entity_id.split(".")[1])
                 if page_search_res is not None:
-                    if name is "":
+                    if name == "":
                         name = page_search_res.title
                     value = get_translation(
                         self.locale, "frontend.ui.card.button.press")
