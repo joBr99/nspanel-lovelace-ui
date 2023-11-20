@@ -131,11 +131,9 @@ class LovelaceUIPanel:
                         self.privious_cards.append(
                             list(self.cards.values())[0])
                     self.current_card = self.privious_cards.pop()
-                    libs.panel_cmd.page_type(
-                        self.sendTopic, self.current_card.type)
-                    libs.panel_cmd.entityUpd(
-                        self.sendTopic, self.current_card.render()
-                    )
+                    libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
+                    libs.panel_cmd.entityUpd(self.sendTopic, self.current_card.render())
+                    return
 
                 # replace iid with real entity id
                 if entity_id.startswith("iid."):
