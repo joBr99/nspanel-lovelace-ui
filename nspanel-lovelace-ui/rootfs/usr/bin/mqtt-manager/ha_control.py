@@ -1,6 +1,7 @@
 import libs.home_assistant
 import logging
 import time
+from libs.helper import pos_to_color
 
 def wait_for_ha_cache():
     mustend = time.time() + 5
@@ -99,50 +100,54 @@ def handle_buttons(entity_id, btype, value):
                 call_ha_service(entity_id, "turn_on")
             else:
                 call_ha_service(entity_id, "turn_off")
-
+       case 'media-shuffle':
+            suffle = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get('shuffle')
+            service_data = {
+                "shuffle": not suffle
+            }
+            call_ha_service(entity_id, "set_value", service_data=service_data)
+       case 'volumeSlider':
+            pos = int(value)
+            # HA wants to have this value between 0 and 1 as float
+            pos = pos/100
+            service_data = {
+                "volume_level": pos
+            }
+            call_ha_service(entity_id, "volume_set", service_data=service_data)
+       case 'speaker-sel':
+            service_data = {
+                "volume_level": value
+            }
+            call_ha_service(entity_id, "select_source", service_data=service_data)
+       # for light detail page
+       case 'brightnessSlider':
+            # scale 0-100 to ha brightness range
+            brightness = int(scale(int(value), (0, 100), (0,255)))
+            service_data = {
+                "brightness": brightness
+            }
+            call_ha_service(entity_id, "turn_on", service_data=service_data)
+       case 'colorTempSlider':
+            attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
+            min_mireds = attr.get("min_mireds")
+            max_mireds = attr.get("max_mireds")
+            # scale 0-100 to ha brightness range
+            color_val = int(scale(int(value), (0, 100), (min_mireds, max_mireds)))
+            service_data = {
+                "color_temp": color_val
+            }
+            call_ha_service(entity_id, "turn_on", service_data=service_data)
+       case 'colorWheel':
+            value = value.split('|')
+            color = pos_to_color(int(value[0]), int(value[1]), int(value[2]))
+            service_data = {
+                "rgb_color": color
+            }
+            call_ha_service(entity_id, "turn_on", service_data=service_data)
        case _:
           logging.error("Not implemented: %s", btype)
 
-    #  if button_type == "media-OnOff":
-    #      if apis.ha_api.get_entity(entity_id).state == "off":
-    #          apis.ha_api.get_entity(entity_id).call_service("turn_on")
-    #      else:
-    #          apis.ha_api.get_entity(entity_id).call_service("turn_off")
-    #  if button_type == "media-shuffle":
-    #      suffle = not apis.ha_api.get_entity(entity_id).attributes.shuffle
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "shuffle_set", shuffle=suffle)
-    #  if button_type == "volumeSlider":
-    #      pos = int(value)
-    #      # HA wants this value between 0 and 1 as float
-    #      pos = pos/100
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "volume_set", volume_level=pos)
-    #  if button_type == "speaker-sel":
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "select_source", source=value)
-    #
-    #  # for light detail page
-    #  if button_type == "brightnessSlider":
-    #      # scale 0-100 to ha brightness range
-    #      brightness = int(scale(int(value), (0, 100), (0,255)))
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "turn_on", brightness=brightness)
-    #  if button_type == "colorTempSlider":
-    #      entity = apis.ha_api.get_entity(entity_id)
-    #      # scale 0-100 from slider to color range of lamp
-    #      color_val = scale(int(
-    #          value), (0, 100), (entity.attributes.min_mireds, entity.attributes.max_mireds))
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "turn_on", color_temp=color_val)
-    #  if button_type == "colorWheel":
-    #      apis.ha_api.log(value)
-    #      value = value.split('|')
-    #      color = pos_to_color(int(value[0]), int(value[1]), int(value[2]))
-    #      apis.ha_api.log(color)
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "turn_on", rgb_color=color)
-    #
+
     #  # for climate page
     #  if button_type == "tempUpd":
     #      temp = int(value)/10
@@ -277,12 +282,7 @@ def on_off(entity_id, value):
             service = "turn_off"
             if value == "1":
                 service = "turn_on"
-            libs.home_assistant.call_service(
-                entity_name=entity_id,
-                domain=etype,
-                service=service,
-                service_data={}
-            )
+            call_ha_service(entity_id, service)
         case _:
             logging.error(
                 "Control action on_off not implemented for %s", entity_id)
