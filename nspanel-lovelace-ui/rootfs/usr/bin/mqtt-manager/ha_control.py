@@ -1,5 +1,12 @@
 import libs.home_assistant
 import logging
+import time
+
+def wait_for_ha_cache():
+    mustend = time.time() + 5
+    while time.time() < mustend:
+        if len(libs.home_assistant.home_assistant_entity_state_cache) == 0:
+            time.sleep(0.1)
 
 def handle_buttons(entity_id, btype, value):
    match btype:
@@ -9,16 +16,12 @@ def handle_buttons(entity_id, btype, value):
            on_off(entity_id, value)
        case 'number-set':
             if entity_id.startswith('fan'):
-                logging.error("nuber-set fan not implemented")
-                #          entity = apis.ha_api.get_entity(entity_id)
-                #          value = float(value) * \
-                #              float(entity.attributes.get("percentage_step", 0))
-                #          entity.call_service("set_percentage", percentage=value)
-            else:
-                service_data = {
-                    "value": int(value)
-                }
-                call_ha_service(entity_id, "set_value", service_data=service_data)
+                attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
+                value = float(value) * float(attr.get(percentage_step, 0))
+            service_data = {
+                "value": int(value)
+            }
+            call_ha_service(entity_id, "set_value", service_data=service_data)
 
        case 'up' | 'stop' | 'down' | 'tiltOpen' | 'tiltStop' | 'tiltClose' | 'media-next' | 'media-back' | 'media-pause' | 'timer-cancel' | 'timer-pause' | 'timer-finish':
             action_service_mapping = {
@@ -48,67 +51,15 @@ def handle_buttons(entity_id, btype, value):
                 "tilt_position": int(value)
             }
             call_ha_service(entity_id, "set_cover_tilt_position", service_data=service_data)
+       case 'media-OnOff':
+            state = libs.home_assistant.get_entity_data(entity_id).get('state', '')
+            if state == "off":
+                call_ha_service(entity_id, "turn_on")
+            else:
+                call_ha_service(entity_id, "turn_off")
 
        case _:
           logging.error("Not implemented: %s", btype)
-
-def call_ha_service(entity_id, service, service_data = {}):
-    etype = entity_id.split(".")[0]
-    libs.home_assistant.call_service(
-        entity_name=entity_id,
-        domain=etype,
-        service=service,
-        service_data=service_data
-    )
-
-def button_press(entity_id, value):
-    etype = entity_id.split(".")[0]
-    match etype:
-        case 'scene' | 'script':
-            call_ha_service(entity_id, "turn_on")
-        case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan':
-            call_ha_service(entity_id, "toggle")
-        #case 'lock':
-    #      elif entity_id.startswith('lock'):
-    #          if apis.ha_api.get_entity(entity_id).state == "locked":
-    #              apis.ha_api.get_entity(entity_id).call_service("unlock")
-    #          else:
-    #              apis.ha_api.get_entity(entity_id).call_service("lock")
-        case 'button' | 'input_button':
-            call_ha_service(entity_id, "press")
-        case 'input_select' | 'select':
-            call_ha_service(entity_id, "select_next")
-        #case 'vacuum':
-    #      elif entity_id.startswith('vacuum'):
-    #          if apis.ha_api.get_entity(entity_id).state == "docked":
-    #              apis.ha_api.get_entity(entity_id).call_service("start")
-    #          else:
-    #              apis.ha_api.get_entity(
-    #                  entity_id).call_service("return_to_base")
-        case _:
-            logging.error("buttonpress for entity type %s not implemented", etype)
-
-    #      elif entity_id.startswith('service'):
-    #          apis.ha_api.call_service(entity_id.replace(
-    #              'service.', '', 1).replace('.', '/', 1), **entity_config.data)
-
-def on_off(entity_id, value):
-    etype = entity_id.split(".")[0]
-    match etype:
-        case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan':
-            service = "turn_off"
-            if value == "1":
-                service = "turn_on"
-            libs.home_assistant.call_service(
-                entity_name=entity_id,
-                domain=etype,
-                service=service,
-                service_data={}
-            )
-        case _:
-            logging.error(
-                "Control action on_off not implemented for %s", entity_id)
-
 
     #  if button_type == "media-OnOff":
     #      if apis.ha_api.get_entity(entity_id).state == "off":
@@ -238,3 +189,58 @@ def on_off(entity_id, value):
     #      else:
     #          apis.ha_api.get_entity(entity_id).call_service("start")
 
+def call_ha_service(entity_id, service, service_data = {}):
+    etype = entity_id.split(".")[0]
+    libs.home_assistant.call_service(
+        entity_name=entity_id,
+        domain=etype,
+        service=service,
+        service_data=service_data
+    )
+
+def button_press(entity_id, value):
+    etype = entity_id.split(".")[0]
+    match etype:
+        case 'scene' | 'script':
+            call_ha_service(entity_id, "turn_on")
+        case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan':
+            call_ha_service(entity_id, "toggle")
+        case 'lock':
+            state = libs.home_assistant.get_entity_data(entity_id).get('state', '')
+            if state == "locked":
+                call_ha_service(entity_id, "unlock")
+            else:
+                call_ha_service(entity_id, "lock")
+        case 'button' | 'input_button':
+            call_ha_service(entity_id, "press")
+        case 'input_select' | 'select':
+            call_ha_service(entity_id, "select_next")
+        case 'vacuum':
+            state = libs.home_assistant.get_entity_data(entity_id).get('state', '')
+            if state == "docked":
+                call_ha_service(entity_id, "start")
+            else:
+                call_ha_service(entity_id, "return_to_base")
+        case _:
+            logging.error("buttonpress for entity type %s not implemented", etype)
+
+    #      elif entity_id.startswith('service'):
+    #          apis.ha_api.call_service(entity_id.replace(
+    #              'service.', '', 1).replace('.', '/', 1), **entity_config.data)
+
+def on_off(entity_id, value):
+    etype = entity_id.split(".")[0]
+    match etype:
+        case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan':
+            service = "turn_off"
+            if value == "1":
+                service = "turn_on"
+            libs.home_assistant.call_service(
+                entity_name=entity_id,
+                domain=etype,
+                service=service,
+                service_data={}
+            )
+        case _:
+            logging.error(
+                "Control action on_off not implemented for %s", entity_id)

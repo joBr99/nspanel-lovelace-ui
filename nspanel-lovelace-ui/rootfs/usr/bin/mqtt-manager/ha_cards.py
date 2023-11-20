@@ -4,6 +4,10 @@ import ha_colors
 from libs.localization import get_translation
 import panel_cards
 import logging
+import dateutil.parser as dp
+import babel
+from libs.icon_mapping import get_icon_char
+from libs.helper import rgb_dec565
 
 class HAEntity(panel_cards.Entity):
     def __init__(self, locale, config, panel):
@@ -15,7 +19,7 @@ class HAEntity(panel_cards.Entity):
         if data:
             self.state = data.get("state")
             self.attributes = data.get("attributes", [])
-            print(data)
+            #print(data)
 
         # HA Entities
         entity_type_panel = "text"
@@ -145,37 +149,51 @@ class HAEntity(panel_cards.Entity):
                 value = value + unit_of_measurement
                 if cardType in ["cardGrid", "cardGrid2"] and not self.icon_overwrite:
                     icon_char = value
-
             case 'binary_sensor':
                 device_class = self.attributes.get("device_class", "")
                 value = get_translation(self.locale, f"backend.component.binary_sensor.state.{device_class}.{entity.state}")
+            case 'weather':
+                attr = self.config.get("attribute", "temperature")
+                value = str(self.attributes.get(attr, self.state))
 
+                # settings for forecast
+                forecast_type = None
+                if self.config.get("day"):
+                    forecast_type = "daily"
+                    pos = self.config.get("day")
+                    datetime_format = "E"
+                if self.config.get("hour"):
+                    forecast_type = "hourly"
+                    pos = self.config.get("hour")
+                    datetime_format = "H:mm"
+                if forecast_type:
+                    forecast = libs.home_assistant.execute_script(
+                        entity_name=self.entity_id,
+                        domain='weather',
+                        service="get_forecast",
+                        service_data={
+                            'type': forecast_type
+                        }
+                    ).get("forecast", [])
+                    if len(forecast) > pos:
+                        forcast_pos = forecast[pos]
+                        forcast_condition = forcast_pos.get("condition", "")
+                        forcast_date = dp.parse(forcast_pos.get("datetime")).astimezone()
+
+                        icon_char = ha_icons.get_icon_ha(self.etype, forcast_condition)
+                        name = babel.dates.format_datetime(forcast_date, datetime_format, locale=self.locale)
+
+                        attr = self.config.get("attribute", "temperature")
+                        value = str(forcast_pos.get(attr, "not found"))
+                    else:
+                        name: "unknown"
+                # add units
+                if attr in ["temperature", "apparent_temperature", "templow"]:
+                    value += self.config.get("unit", "°C")
+                else:
+                    value += self.config.get("unit", "")
             case _:
                 name = "unsupported"
-
-        # elif entityType == "weather":
-        #    entityTypePanel = "text"
-        #    unit = get_attr_safe(entity, "temperature_unit", "")
-        #    if type(item.stype) == int and len(entity.attributes.forecast) >= item.stype:
-        #        fdate = dp.parse(
-        #            entity.attributes.forecast[item.stype]['datetime'])
-        #        global babel_spec
-        #        if babel_spec is not None:
-        #            dateformat = "E" if item.nameOverride is None else item.nameOverride
-        #            name = babel.dates.format_datetime(
-        #                fdate.astimezone(), dateformat, locale=self._locale)
-        #        else:
-        #            dateformat = "%a" if item.nameOverride is None else item.nameOverride
-        #            name = fdate.astimezone().strftime(dateformat)
-        #        icon_id = get_icon_ha(
-        #            entityId, stateOverwrite=entity.attributes.forecast[item.stype]['condition'])
-        #        value = f'{entity.attributes.forecast[item.stype].get("temperature", "")}{unit}'
-        #        color = self.get_entity_color(
-        #            entity, ha_type=entityType, stateOverwrite=entity.attributes.forecast[item.stype]['condition'], overwrite=colorOverride)
-        #    else:
-        #        value = f'{get_attr_safe(entity, "temperature", "")}{unit}'
-        # else:
-        #
 
         return f"~{entity_type_panel}~iid.{self.iid}~{icon_char}~{color}~{name}~{value}"
 
@@ -184,6 +202,9 @@ class HACard(panel_cards.Card):
         super().__init__(locale, config, panel)
         # Generate Entity for each Entity in Config
         self.entities = []
+        if "entity" in config:
+            iid, entity = entity_factory(locale, config, panel)
+            self.entities.append(entity)
         if "entities" in config:
             for e in config.get("entities"):
                 iid, entity = entity_factory(locale, e, panel)
@@ -257,10 +278,144 @@ class PowerCard(HACard):
             result += f"~{speed}"
         return result
 
-class Screensaver(HACard):
+class MediaCard(HACard):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
 
+    def render(self):
+        main_entity = self.entities[0]
+        media_icon = main_entity.render()
+        if not self.title:
+            self.title = main_entity.attributes.get("friendly_name", "unknown")
+        title = main_entity.attributes.get("media_title", "")
+        author = main_entity.attributes.get("media_artist", "")
+        volume = int(main_entity.attributes.get("media_artist", 0)*100)
+        iconplaypause = get_icon_char("pause") if main_entity.state == "playing" else get_icon_char("play")
+        onoffbutton = "disable"
+        shuffleBtn = "disable"
+
+        bits = main_entity.attributes.get("supported_features")
+        if bits & 0b10000000:
+            if main_entity.state == "off":
+                onoffbutton = 1374
+            else:
+                onoffbutton = rgb_dec565([255,152,0])
+
+        if bits & 0b100000000000000:
+            shuffle = main_entity.attributes.get("shuffle", "")
+            if shuffle == False:
+                shuffleBtn = get_icon_char('shuffle-disabled')
+            elif shuffle == True:
+                shuffleBtn = get_icon_char('shuffle')
+
+        # generate button entities
+        button_str = ""
+        for e in self.entities[1:]:
+            button_str += e.render()
+        result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{button_str}"
+        return result
+
+class ClimateCard(HACard):
+    def __init__(self, locale, config, panel):
+        super().__init__(locale, config, panel)
+
+    def render(self):
+        main_entity = self.entities[0]
+
+        #TODO: temp unit
+        temp_unit = "celsius"
+        if(temp_unit == "celsius"):
+            temperature_unit_icon = get_icon_char("temperature-celsius")
+            temperature_unit = "°C"
+
+        else:
+            temperature_unit_icon = get_icon_char("temperature-fahrenheit")
+            temperature_unit = "°F"
+
+        main_entity.render()
+        if not self.title:
+            self.title = main_entity.attributes.get("friendly_name", "unknown")
+        current_temp = main_entity.attributes.get("current_temperature", "")
+        dest_temp    = main_entity.attributes.get("temperature", None)
+        dest_temp2   = ""
+        if dest_temp is None:
+            dest_temp    = main_entity.attributes.get("target_temp_high", 0)
+            dest_temp2   = main_entity.attributes.get("target_temp_low", None)
+            if dest_temp2 != None and dest_temp2 != "null":
+                dest_temp2   = int(dest_temp2*10)
+            else:
+                dest_temp2 = ""
+        dest_temp    = int(dest_temp*10)
+
+        hvac_action  = main_entity.attributes.get("hvac_action", "")
+        state_value  = ""
+        if hvac_action != "":
+            state_value = get_translation(self.locale, f"frontend.state_attributes.climate.hvac_action.{hvac_action}")
+            state_value += "\r\n("
+        state_value += get_translation(self.locale, f"backend.component.climate.state._.{main_entity.state}")
+        if hvac_action != "":
+            state_value += ")"
+
+        min_temp     = int(main_entity.attributes.get("min_temp", 0)*10)
+        max_temp     = int(main_entity.attributes.get("max_temp", 0)*10)
+        step_temp    = int(main_entity.attributes.get("target_temp_step", 0.5)*10)
+        icon_res_list = []
+        icon_res = ""
+
+        hvac_modes = main_entity.attributes.get("hvac_modes", [])
+        if main_entity.config.get("supported_modes"):
+            hvac_modes = main_entity.config.get("supported_modes")
+        for mode in hvac_modes:
+            icon_id = ha_icons.get_icon_ha("climate", mode)
+            color_on = 64512
+            if mode in ["auto", "heat_cool"]:
+                color_on = 1024
+            if mode == "heat":
+                color_on = 64512
+            if mode == "off":
+                color_on = 35921
+            if mode == "cool":
+                color_on = 11487
+            if mode == "dry":
+                color_on = 60897
+            if mode == "fan_only":
+                color_on = 35921
+            state = 0
+            if(mode == main_entity.state):
+                state = 1
+
+            icon_res_list.append(f"~{icon_id}~{color_on}~{state}~{mode}")
+
+        icon_res = "".join(icon_res_list)
+
+        if len(icon_res_list) == 1 and not self.panel.model == "us-p":
+            icon_res = "~"*4 + icon_res_list[0] + "~"*4*6
+        elif len(icon_res_list) == 2 and not self.panel.model == "us-p":
+            icon_res = "~"*4*2 + icon_res_list[0] + "~"*4*2 + icon_res_list[1] + "~"*4*2
+        elif len(icon_res_list) == 3 and not self.panel.model == "us-p":
+            icon_res = "~"*4*2 + icon_res_list[0] + "~"*4 + icon_res_list[1] + "~"*4 + icon_res_list[2] + "~"*4
+        elif len(icon_res_list) == 4 and not self.panel.model == "us-p":
+            icon_res = "~"*4 + icon_res_list[0] + "~"*4 + icon_res_list[1] + "~"*4 + icon_res_list[2] + "~"*4 + icon_res_list[3]
+        elif len(icon_res_list) >= 5 or self.panel.model == "us-p":
+            icon_res = "".join(icon_res_list) + "~"*4*(8-len(icon_res_list))
+
+        currently_translation = get_translation(self.locale, "frontend.ui.card.climate.currently")
+        state_translation = get_translation(self.locale, "frontend.ui.panel.config.devices.entities.state")
+        action_translation = get_translation(self.locale, "frontend.ui.card.climate.operation").replace(' ','\r\n')
+
+        detailPage = "1"
+        if any(x in ["preset_modes", "swing_modes", "fan_modes"] for x in main_entity.attributes):
+            detailPage = "0"
+
+        result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
+        return result
+
+
+class Screensaver(HACard):
+    def __init__(self, locale, config, panel):
+        super().__init__(locale, config, panel)
+        if not self.type:
+            self.type = "screensaver"
     def render(self):
         result = ""
         for e in self.entities:
@@ -276,6 +431,10 @@ def card_factory(locale, settings, panel):
             card = QRCard(locale, settings, panel)
         case 'cardPower':
             card = PowerCard(locale, settings, panel)
+        case 'cardMedia':
+            card = MediaCard(locale, settings, panel)
+        case 'cardThermo':
+            card = ClimateCard(locale, settings, panel)
         case _:
             logging.error("card type %s not implemented", settings["type"])
             return "NotImplemented", None
