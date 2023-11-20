@@ -4747,7 +4747,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'armed' || entityState == 'triggered') {
-                arm1 = 'Deaktivieren';                                      //arm1*~*
+                arm1 = findLocale('alarm_control_panel', 'disarm') //'Deaktivieren';                                      //arm1*~*
                 arm1ActionName = 'D1';                                      //arm1ActionName*~*
                 arm2 = '';                                                  //arm2*~*
                 arm2ActionName = '';                                        //arm2ActionName*~*
@@ -4758,13 +4758,13 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'disarmed' || entityState == 'arming' || entityState == 'pending') {
-                arm1 = 'Vollschutz';                                        //arm1*~*
+                arm1 = findLocale('alarm_control_panel','arm_away');        //'Vollschutz'       //arm1*~*
                 arm1ActionName = 'A1';                                      //arm1ActionName*~*
-                arm2 = 'Zuhause';                                           //arm2*~*
+                arm2 = findLocale('alarm_control_panel', 'arm_home');       //'Zuhause';         //arm2*~*
                 arm2ActionName = 'A2';                                      //arm2ActionName*~*
-                arm3 = 'Nacht';                                             //arm3*~*
+                arm3 = findLocale('alarm_control_panel', 'arm_night');      //'Nacht';           //arm3*~*
                 arm3ActionName = 'A3';                                      //arm3ActionName*~*
-                arm4 = 'Besuch';                                            //arm4*~*
+                arm4 =  findLocale('alarm_control_panel', 'arm_vacation')   //'Besuch';          //arm4*~*
                 arm4ActionName = 'A4';                                      //arm4ActionName*~*
             }
 
