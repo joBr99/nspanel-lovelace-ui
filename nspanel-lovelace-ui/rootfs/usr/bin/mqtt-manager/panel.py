@@ -143,7 +143,7 @@ class LovelaceUIPanel:
             backgroundColor = 0
         fontColor = ""
         featExperimentalSliders = self.settings.get("featExperimentalSliders", 0)
-        libs.panel_cmddimmode(self.sendTopic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders)
+        libs.panel_cmd.dimmode(self.sendTopic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders)
 
 
     def customrecv_event_callback(self, msg):
