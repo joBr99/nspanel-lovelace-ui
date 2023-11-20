@@ -272,7 +272,7 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
       "subPage": false,
       "items": [
           <PageItem>{ id: 'alias.0.NSPanel.Alarm',
-          actionStringArray: ['Vollschhutz','Zuhause','Nacht','Besuch','Ausschalten'],
+          actionStringArray: ['Vollschutz','Zuhause','Nacht','Besuch','Ausschalten'],
           autoCreateALias: true }
       ]
   }
@@ -834,7 +834,7 @@ let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 let isSetOptionActive: boolean = false;
 
-const scriptVersion: string = 'v4.3.3.5';
+const scriptVersion: string = 'v4.3.3.6';
 let nodeVersion: string = '';
 let javaScriptVersion: string = '';
 
