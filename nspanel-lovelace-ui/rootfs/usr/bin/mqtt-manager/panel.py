@@ -10,7 +10,6 @@ import babel.dates
 from ha_cards import Screensaver, EntitiesCard, card_factory
 import ha_control
 
-
 class LovelaceUIPanel:
 
     def __init__(self, mqtt_client_from_manager, name_panel, settings_panel):
@@ -87,7 +86,6 @@ class LovelaceUIPanel:
         libs.panel_cmd.send_date(self.sendTopic, date_string)
 
     def searchCard(self, iid):
-        print(f"searchcard {iid} {self.navigate_keys}")
         if iid in self.navigate_keys:
             iid = self.navigate_keys[iid]
         if iid in self.cards:
@@ -110,18 +108,17 @@ class LovelaceUIPanel:
                 self.update_date()
                 self.update_time()
 
-                libs.panel_cmd.page_type(self.sendTopic, "screensaver")
-                self.current_card = Screensaver(
-                    self.settings["locale"], self.settings["screensaver"], self)
-                libs.panel_cmd.weatherUpdate(
-                    self.sendTopic, self.current_card.render())
+                # check if ha state cache is already populated
+                ha_control.wait_for_ha_cache()
+
+                self.current_card = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
+                libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
+                libs.panel_cmd.weatherUpdate(self.sendTopic, self.current_card.render())
             if msg[1] == "sleepReached":
                 self.privious_cards.append(self.current_card)
-                libs.panel_cmd.page_type(self.sendTopic, "screensaver")
-                self.current_card = Screensaver(
-                    self.settings["locale"], self.settings["screensaver"], self)
-                libs.panel_cmd.weatherUpdate(
-                    self.sendTopic, self.current_card.render())
+                self.current_card = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
+                libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
+                libs.panel_cmd.weatherUpdate(self.sendTopic, self.current_card.render())
             if msg[1] == "buttonPress2":
                 entity_id = msg[2]
                 btype = msg[3]

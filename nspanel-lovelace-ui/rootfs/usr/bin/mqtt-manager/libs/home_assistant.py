@@ -14,6 +14,7 @@ next_id = 0
 request_all_states_id = 0
 ws_connected = False
 home_assistant_entity_state_cache = {}
+response_buffer = {}
 
 ON_CONNECT_HANDLER = None
 ON_DISCONNECT_HANDLER = None
@@ -42,7 +43,7 @@ def register_on_disconnect_handler(handler):
 
 
 def on_message(ws, message):
-    global auth_ok, request_all_states_id, home_assistant_entity_state_cache
+    global auth_ok, request_all_states_id, home_assistant_entity_state_cache, response_buffer
     json_msg = json.loads(message)
     if json_msg["type"] == "auth_required":
         authenticate_client()
@@ -63,9 +64,11 @@ def on_message(ws, message):
     elif json_msg["type"] == "result" and json_msg["success"]:
         if json_msg["id"] == request_all_states_id:
             for entity in json_msg["result"]:
-                # logging.debug(f"test {entity['entity_id']}")
                 home_assistant_entity_state_cache[entity["entity_id"]] = entity
-            # logging.debug(f"request_all_states_id {json_msg['result']}")
+        else:
+            if json_msg["id"] in response_buffer:
+                response_buffer[json_msg["id"]] = json_msg["result"]
+
         return None  # Ignore success result messages
     else:
         logging.debug(message)
@@ -138,107 +141,10 @@ def _get_all_states():
     request_all_states_id = next_id
     send_message(json.dumps(msg))
 
-# Got new value from Home Assistant, publish to MQTT
-
-
+# Got new value from Home Assistant, send update to callback method
 def send_entity_update(entity_id):
     global on_ha_update
     on_ha_update(entity_id)
-
-def set_entity_brightness(home_assistant_name: str, light_level: int, color_temp: int) -> bool:
-    """Set entity brightness"""
-    global next_id
-    try:
-        # Format Home Assistant state update
-        msg = None
-        if home_assistant_name.startswith("light."):
-            msg = {
-                "id": next_id,
-                "type": "call_service",
-                "domain": "light",
-                "service": "turn_on",
-                "service_data": {
-                    "brightness_pct": light_level,
-                },
-                "target": {
-                    "entity_id": home_assistant_name
-                }
-            }
-            if color_temp > 0:
-                msg["service_data"]["kelvin"] = color_temp
-        elif home_assistant_name.startswith("switch."):
-            msg = {
-                "id": next_id,
-                "type": "call_service",
-                "domain": "switch",
-                "service": "turn_on" if light_level > 0 else "turn_off",
-                "target": {
-                    "entity_id": home_assistant_name
-                }
-            }
-
-        if msg:
-            send_message(json.dumps(msg))
-            return True
-        else:
-            logging.error(F"{home_assistant_name} is now a recognized domain.")
-            return False
-    except:
-        logging.exception("Failed to send entity update to Home Assisatant.")
-        return False
-
-
-def set_entity_color_temp(entity_name: str, color_temp: int) -> bool:
-    """Set entity brightness"""
-    global next_id
-    try:
-        # Format Home Assistant state update
-        msg = {
-            "id": next_id,
-            "type": "call_service",
-            "domain": "light",
-            "service": "turn_on",
-            "service_data": {
-                "kelvin": color_temp
-            },
-            "target": {
-                "entity_id": entity_name
-            }
-        }
-        send_message(json.dumps(msg))
-        return True
-    except:
-        logging.exception("Failed to send entity update to Home Assisatant.")
-        return False
-
-
-def set_entity_color_saturation(entity_name: str, light_level: int, color_saturation: int, color_hue: int) -> bool:
-    """Set entity brightness"""
-    global next_id
-    try:
-        # Format Home Assistant state update
-        msg = {
-            "id": next_id,
-            "type": "call_service",
-            "domain": "light",
-            "service": "turn_on",
-            "service_data": {
-                "hs_color": [
-                    color_hue,
-                    color_saturation
-                ],
-                "brightness_pct": light_level
-            },
-            "target": {
-                "entity_id": entity_name
-            }
-        }
-        send_message(json.dumps(msg))
-        return True
-    except Exception as e:
-        logging.exception("Failed to send entity update to Home Assisatant.")
-        return False
-
 
 def call_service(entity_name: str, domain: str, service: str, service_data: dict) -> bool:
     global next_id
@@ -251,14 +157,51 @@ def call_service(entity_name: str, domain: str, service: str, service_data: dict
             "service_data": service_data,
             "target": {
                 "entity_id": entity_name
-            }
+            },
         }
         send_message(json.dumps(msg))
         return True
     except Exception as e:
-        logging.exception("Failed to send entity update to Home Assisatant.")
+        logging.exception("Failed to call Home Assisatant service.")
         return False
 
+def execute_script(entity_name: str, domain: str, service: str, service_data: dict) -> str:
+    global next_id, response_buffer
+    try:
+        call_id = next_id
+        # request answer for this call
+        response_buffer[call_id] = True
+        msg = {
+            "id": call_id,
+            "type": "execute_script",
+            "sequence": [
+               {
+                   "service": f"{domain}.{service}",
+                   "data": service_data,
+                   "target": {
+                       "entity_id": [entity_name]
+                    },
+                   "response_variable": "service_result"
+                },
+               {
+                   "stop": "done",
+                   "response_variable": "service_result"
+                }
+            ]
+        }
+        send_message(json.dumps(msg))
+        # busy waiting for response with a timeout of 0.2 seconds - maybe there's a better way of doing this
+        mustend = time.time() + 0.2
+        while time.time() < mustend:
+            if response_buffer[call_id] == True:
+                #print(f'loooooooooop {time.time()}')
+                time.sleep(0.0001)
+            else:
+                return response_buffer[call_id]["response"]
+        raise TimeoutError("Did not recive respose in time to HA script call")
+    except Exception as e:
+        logging.exception("Failed to call Home Assisatant script.")
+        return False
 
 def get_entity_data(entity_id: str):
     if entity_id in home_assistant_entity_state_cache:

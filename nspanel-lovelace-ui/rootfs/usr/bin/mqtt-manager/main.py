@@ -66,6 +66,11 @@ def on_message(client, userdata, msg):
             logging.error(
                 "Something went wrong when processing the exception message, couldn't decode payload to utf-8.")
 
+def get_config_file():
+    CONFIG_FILE = os.getenv('CONFIG_FILE')
+    if not CONFIG_FILE:
+        CONFIG_FILE = './config.yml'
+    return CONFIG_FILE
 
 def get_config(file):
     global settings
@@ -92,9 +97,9 @@ def get_config(file):
             settings["home_assistant_address"] = "http://supervisor"
             settings["is_addon"] = True
 
-    print(settings["home_assistant_token"])
-    print(settings["home_assistant_address"])
-    print(settings["is_addon"])
+    #print(settings["home_assistant_token"])
+    #print(settings["home_assistant_address"])
+    #print(settings["is_addon"])
 
 def connect():
     global settings, home_assistant, client
@@ -164,24 +169,21 @@ def config_watch():
 
     logging.info('Watching for changes in config file')
     project_files = []
-    project_files.append("/share/config.yml")
+    project_files.append(get_config_file())
     handler = ConfigChangeEventHandler(project_files)
     observer = Observer()
-    observer.schedule(handler, path='/share', recursive=True)
+    observer.schedule(handler, path=os.path.dirname(get_config_file()), recursive=True)
     observer.start()
     while True:
         time.sleep(1)
 
 def signal_handler(signum, frame):
-    print(f"Received signal {signum}. Initiating restart...")
+    logging.info(f"Received signal {signum}. Initiating restart...")
     python = sys.executable
     os.execl(python, python, *sys.argv)
 
 if __name__ == '__main__':
-    CONFIG_FILE = os.getenv('CONFIG_FILE')
-    if not CONFIG_FILE:
-        CONFIG_FILE = 'config.yml'
-    get_config(CONFIG_FILE)
+    get_config(get_config_file())
     signal.signal(signal.SIGTERM, signal_handler)
     threading.Thread(target=config_watch).start()
     connect()

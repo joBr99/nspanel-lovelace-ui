@@ -24,6 +24,7 @@ class Entity:
         self.locale = locale
         self.entity_id = config["entity"]
         self.etype = self.entity_id.split(".")[0]
+        self.config = config
         self.panel = panel
         self.icon_overwrite = config.get("icon", None)
         self.name_overwrite = config.get("name", None)
