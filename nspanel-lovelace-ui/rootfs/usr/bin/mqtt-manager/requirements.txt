@@ -6,3 +6,4 @@ django-environ
 python-dateutil
 scheduler
 babel
+watchdog

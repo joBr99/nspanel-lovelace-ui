@@ -10,6 +10,11 @@ import yaml
 from uuid import getnode as get_mac
 from panel import LovelaceUIPanel
 import os
+import threading
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
+import signal
+import sys
 
 
 
@@ -141,36 +146,48 @@ def setup_panels():
         libs.panel_cmd.page_type(
             settings_panel["panelSendTopic"], "pageStartup")
 
-#if __name__ == '__main__':
-#    CONFIG_FILE = os.getenv('CONFIG_FILE')
-#    if not CONFIG_FILE:
-#        CONFIG_FILE = 'config.yml'
-#    get_config(CONFIG_FILE)
-    #connect()
-    #loop()
-import time
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+def config_watch():
+    class ConfigChangeEventHandler(FileSystemEventHandler):
+        def __init__(self, base_paths):
+            self.base_paths = base_paths
 
-class  MyHandler(FileSystemEventHandler):
-    def  on_modified(self,  event):
-         print(f'event type: {event.event_type} path : {event.src_path}')
-    def  on_created(self,  event):
-         print(f'event type: {event.event_type} path : {event.src_path}')
-    def  on_deleted(self,  event):
-         print(f'event type: {event.event_type} path : {event.src_path}')
+        def dispatch(self, event):
+            for base_path in self.base_paths:
+                if event.src_path.endswith(base_path):
+                    super(ConfigChangeEventHandler, self).dispatch(event)
+                    return
 
-if __name__ ==  "__main__":
-    event_handler = MyHandler()
+        def on_modified(self, event):
+            logging.info('Modification detected. Reloading panels.')
+            pid = os.getpid()
+            os.kill(pid, signal.SIGTERM)
+
+    logging.info('Watching for changes in config file')
+    project_files = []
+    project_files.append("/share/config.yml")
+    handler = ConfigChangeEventHandler(project_files)
     observer = Observer()
-    observer.schedule(event_handler,  path='config.yml',  recursive=False)
+    observer.schedule(handler, path='/share', recursive=True)
     observer.start()
+    while True:
+        time.sleep(1)
 
-    try:
-        while  True:
-            time.sleep(1)
-    except  KeyboardInterrupt:
-        observer.stop()
-    observer.join()
+def signal_handler(signum, frame):
+    # Handle the signal (e.g., SIGHUP) for triggering a restart
+    print(f"Received signal {signum}. Initiating restart...")
+    restart_program()
 
+def restart_program():
+    print("Restarting the program...")
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
 
+if __name__ == '__main__':
+    CONFIG_FILE = os.getenv('CONFIG_FILE')
+    if not CONFIG_FILE:
+        CONFIG_FILE = 'config.yml'
+    get_config(CONFIG_FILE)
+    signal.signal(signal.SIGTERM, signal_handler)
+    threading.Thread(target=config_watch).start()
+    connect()
+    loop()
