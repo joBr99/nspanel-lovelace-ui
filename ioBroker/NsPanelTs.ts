@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -53,7 +53,10 @@ ReleaseNotes:
         - 13.11.2023 - v4.3.3.3  if setOption = false, do not create autoAlias (Functional/Servicemenu) and Datapoints
         - 15.11.2023 - v4.3.3.4  New Service Page -> ioBroker Info 
         - 16.11.2023 - v4.3.3.5  Add Multilingualism to Service Menu (39 languages)
-	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardQR, popupFan, popupTimer (39 languages)
+    	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardQR, popupFan, popupTimer (39 languages)
+        - 18.11.2023 - v4.3.3.6  Add autoCreateALias to PageAlarm
+        - 20.11.2023 - v4.3.3.6  Add actionStringArray to PageAlarm
+
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -269,7 +272,7 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
       "subPage": false,
       "items": [
           <PageItem>{ id: 'alias.0.NSPanel.Alarm',
-          actionArray: ['Vollschhutz','Zuhause','Nacht','Besuch','Ausschalten'],
+          actionStringArray: ['Vollschhutz','Zuhause','Nacht','Besuch','Ausschalten'],
           autoCreateALias: true }
       ]
   }
@@ -4758,8 +4761,8 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'armed' || entityState == 'triggered') {
-                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[4] !== '') {
-                    arm1 = page.items[0].actionArray[4];
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[4] !== '') {
+                    arm1 = page.items[0].actionStringArray[4];
                 } else {
                     arm1 = findLocale('alarm_control_panel', 'disarm');      //'Deaktivieren'; //arm1*~*
                 } 
@@ -4773,30 +4776,30 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'disarmed' || entityState == 'arming' || entityState == 'pending') {
-                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[0] !== '') {
-                    arm1 = page.items[0].actionArray[0];
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[0] !== '') {
+                    arm1 = page.items[0].actionStringArray[0];
                 } else {
-                    arm1 = findLocale('alarm_control_panel', 'arm_away');                               //'Vollschutz'       //arm1*~*
+                    arm1 = findLocale('alarm_control_panel', 'arm_away');                                           //'Vollschutz' //arm1*~*
                 }
-                arm1ActionName = 'A1';                                                                  //arm1ActionName*~*
-                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[1] !== '') {
-                    arm2 = page.items[0].actionArray[1];
+                arm1ActionName = 'A1';                                                                              //arm1ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[1] !== '') {
+                    arm2 = page.items[0].actionStringArray[1];
                 } else {
-                    arm2 = findLocale('alarm_control_panel', 'arm_home');                               //'Zuhause';         //arm2*~*
+                    arm2 = findLocale('alarm_control_panel', 'arm_home');                                           //'Zuhause';   //arm2*~*
                 }    
-                arm2ActionName = 'A2';                                                                  //arm2ActionName*~*
-                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[2] !== '') {
-                    arm3 = page.items[0].actionArray[2];
+                arm2ActionName = 'A2';                                                                              //arm2ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[2] !== '') {
+                    arm3 = page.items[0].actionStringArray[2];
                 } else {
-                    arm3 = findLocale('alarm_control_panel', 'arm_night');                              //'Nacht';           //arm3*~*
+                    arm3 = findLocale('alarm_control_panel', 'arm_night');                                          //'Nacht';     //arm3*~*
                 }
-                arm3ActionName = 'A3';                                                                  //arm3ActionName*~*
-                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[3] !== '') {
-                    arm4 = page.items[0].actionArray[3];
+                arm3ActionName = 'A3';                                                                              //arm3ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[3] !== '') {
+                    arm4 = page.items[0].actionStringArray[3];
                 } else {
-                    arm4 = findLocale('alarm_control_panel', 'arm_vacation');                           //'Besuch';          //arm4*~*
+                    arm4 = findLocale('alarm_control_panel', 'arm_vacation');                                       //'Besuch';    //arm4*~*
                 }
-                arm4ActionName = 'A4';                                                                  //arm4ActionName*~*
+                arm4ActionName = 'A4';                                                                              //arm4ActionName*~*
             }
 
             if (Debug) {
@@ -8303,7 +8306,7 @@ type PageItem = {
     inSel_ChoiceState: (boolean | undefined),
     iconArray: (string[] | undefined),
     fontSize: (number | undefined),
-    actionArray: (string[] | undefined),    
+    actionStringArray: (string[] | undefined),    
 }
 
 type DimMode = {
