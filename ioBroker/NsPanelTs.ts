@@ -261,7 +261,18 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
 //-- Anfang der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -----------------------
   //-- siehe https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
-
+  let Alarmseite = <PageAlarm>
+  {
+      "type": "cardAlarm",
+      "heading": "Alarm",
+      "useColor": true,
+      "subPage": false,
+      "items": [
+          <PageItem>{ id: 'alias.0.NSPanel.Alarm',
+          actionArray: ['Vollschhutz','Zuhause','Nacht','Besuch','Ausschalten'],
+          autoCreateALias: true }
+      ]
+  }
 //-- ENDE der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -------------------------
 
 
@@ -757,7 +768,7 @@ export const config = <Config> {
     defaultColor: Off,
     defaultBackgroundColor: HMIDark,    // Default-Hintergrundfarbe HMIDark oder Black
     pages: [
-
+            Alarmseite,
             NSPanel_Service         	//Auto-Alias Service Page
 	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
@@ -4747,7 +4758,11 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'armed' || entityState == 'triggered') {
-                arm1 = findLocale('alarm_control_panel', 'disarm') //'Deaktivieren';                                      //arm1*~*
+                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[4] !== '') {
+                    arm1 = page.items[0].actionArray[4];
+                } else {
+                    arm1 = findLocale('alarm_control_panel', 'disarm');      //'Deaktivieren'; //arm1*~*
+                } 
                 arm1ActionName = 'D1';                                      //arm1ActionName*~*
                 arm2 = '';                                                  //arm2*~*
                 arm2ActionName = '';                                        //arm2ActionName*~*
@@ -4758,14 +4773,34 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'disarmed' || entityState == 'arming' || entityState == 'pending') {
-                arm1 = findLocale('alarm_control_panel','arm_away');        //'Vollschutz'       //arm1*~*
-                arm1ActionName = 'A1';                                      //arm1ActionName*~*
-                arm2 = findLocale('alarm_control_panel', 'arm_home');       //'Zuhause';         //arm2*~*
-                arm2ActionName = 'A2';                                      //arm2ActionName*~*
-                arm3 = findLocale('alarm_control_panel', 'arm_night');      //'Nacht';           //arm3*~*
-                arm3ActionName = 'A3';                                      //arm3ActionName*~*
-                arm4 =  findLocale('alarm_control_panel', 'arm_vacation')   //'Besuch';          //arm4*~*
-                arm4ActionName = 'A4';                                      //arm4ActionName*~*
+                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[0] !== '') {
+                    arm1 = page.items[0].actionArray[0];
+                } else {
+                    arm1 = findLocale('alarm_control_panel', 'arm_away');                               //'Vollschutz'       //arm1*~*
+                }
+                arm1ActionName = 'A1';                                                                  //arm1ActionName*~*
+                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[1] !== '') {
+                    arm2 = page.items[0].actionArray[1];
+                } else {
+                    arm2 = findLocale('alarm_control_panel', 'arm_home');                               //'Zuhause';         //arm2*~*
+                }    
+                arm2ActionName = 'A2';                                                                  //arm2ActionName*~*
+                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[2] !== '') {
+                    arm3 = page.items[0].actionArray[2];
+                } else {
+                    arm3 = findLocale('alarm_control_panel', 'arm_night');                              //'Nacht';           //arm3*~*
+                }
+                arm3ActionName = 'A3';                                                                  //arm3ActionName*~*
+                if (page.items[0].actionArray !== undefined && page.items[0].actionArray[3] !== '') {
+                    arm4 = page.items[0].actionArray[3];
+                } else {
+                    arm4 = findLocale('alarm_control_panel', 'arm_vacation');                           //'Besuch';          //arm4*~*
+                }
+                arm4ActionName = 'A4';                                                                  //arm4ActionName*~*
+            }
+
+            if (Debug) {
+                console.log('GenerateAlarmPage String for arm1: ' + arm1 + ', arm2: ' + arm2 + ', arm3: ' + arm3 + ', arm4: ' + arm4);
             }
 
             if (entityState == 'armed') {
@@ -8268,6 +8303,7 @@ type PageItem = {
     inSel_ChoiceState: (boolean | undefined),
     iconArray: (string[] | undefined),
     fontSize: (number | undefined),
+    actionArray: (string[] | undefined),    
 }
 
 type DimMode = {
