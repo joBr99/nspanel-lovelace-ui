@@ -23,8 +23,7 @@ class HAEntity(panel_cards.Entity):
 
         # HA Entities
         entity_type_panel = "text"
-        icon_char = ha_icons.get_icon_ha(self.etype, self.state, self.attributes.get(
-            "device_class", None), self.attributes.get("media_content_type", None))
+        icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.config.get("icon"))
         color = ha_colors.get_entity_color(
             self.etype, self.state, self.attributes)
         name = self.attributes.get("friendly_name", "unknown")

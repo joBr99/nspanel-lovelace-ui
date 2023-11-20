@@ -141,6 +141,8 @@ def setup_panels():
             settings_panel["timeZone"] = settings.get("timeZone", "Europe/Berlin")
         if "locale" not in settings_panel:
             settings_panel["timezone"] = settings.get("locale", "en_US")
+        if "hiddenCards" not in settings_panel:
+            settings_panel["hiddenCards"] = settings.get("hiddenCards", [])
 
         panels[name] = LovelaceUIPanel(client, name, settings_panel)
         libs.panel_cmd.page_type(
