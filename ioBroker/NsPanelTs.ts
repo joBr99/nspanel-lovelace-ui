@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.9 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -59,6 +59,7 @@ ReleaseNotes:
         - 20.11.2023 - v4.3.3.6  Add Multilingualism to cardAlarm (39 languages)
         - 20.11.2023 - v4.3.3.7  Add Multilingualism to cardMedia (39 languages)
         - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism), some Minor Fixes
+	- 20.11.2023 - v4.3.3.9  Add ScreensaverEntityOnColor, ...OffColor, ...OnText, ...OffText
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -855,7 +856,7 @@ let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 let isSetOptionActive: boolean = false;
 
-const scriptVersion: string = 'v4.3.3.8';
+const scriptVersion: string = 'v4.3.3.9';
 let nodeVersion: string = '';
 let javaScriptVersion: string = '';
 
@@ -7318,6 +7319,13 @@ function HandleScreensaverUpdate(): void {
                         if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
                             icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff)
                         }
+                        if (val && config.bottomScreensaverEntity[i].ScreensaverEntityOnText !=undefined) {
+                            val = config.bottomScreensaverEntity[i].ScreensaverEntityOnText;
+                        }
+                        if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityOffText !=undefined) {
+                            val = config.bottomScreensaverEntity[i].ScreensaverEntityOffText;
+                        }
+
                     }
                     else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
@@ -7731,10 +7739,27 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
                     colorReturn = rgb_dec565(configElement.ScreensaverEntityIconColor);
                 }
             } else {
+
                 colorReturn = rgb_dec565(White);
             }
         } else {
-            colorReturn = rgb_dec565(White);
+            if (typeof getState(configElement.ScreensaverEntity).val == 'boolean') {
+                if (getState(configElement.ScreensaverEntity).val) {
+                    if (configElement.ScreensaverEntityOnColor != undefined) {
+                        colorReturn = rgb_dec565(configElement.ScreensaverEntityOnColor);
+                    } else {
+                        colorReturn = rgb_dec565(White);
+                    }
+                } else {
+                    if (configElement.ScreensaverEntityOffColor != undefined) {
+                        colorReturn = rgb_dec565(configElement.ScreensaverEntityOffColor);
+                    } else {
+                        colorReturn = rgb_dec565(White);
+                    }
+                }
+            } else {
+                colorReturn = rgb_dec565(White);
+            }
         }
         return colorReturn;
     } catch (err) {
@@ -8406,6 +8431,10 @@ type ScreenSaverElement = {
     ScreensaverEntityText: string | null,
     ScreensaverEntityUnitText: string | null,
     ScreensaverEntityIconColor: any | null
+    ScreensaverEntityOnColor: any | null
+    ScreensaverEntityOffColor: any | null
+    ScreensaverEntityOnText: string | null,
+    ScreensaverEntityOffText: string | null,
 }
 
 type ScreenSaverMRElement = {
