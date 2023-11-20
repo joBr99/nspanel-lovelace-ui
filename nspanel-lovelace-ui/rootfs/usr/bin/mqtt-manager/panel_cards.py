@@ -28,10 +28,11 @@ class Entity:
         self.panel = panel
         self.icon_overwrite = config.get("icon", None)
         self.name_overwrite = config.get("name", None)
+        self.color_overwrite = config.get("color", None)
 
     def render(self, cardType=""):
         icon_char = self.icon_overwrite or ""
-        color = rgb_dec565([255, 255, 255])
+        color = rgb_dec565([68, 115, 158])
         name = self.name_overwrite or ""
         value = ""
         match self.etype:
@@ -41,7 +42,8 @@ class Entity:
                 page_search_res = self.panel.searchCard(
                     self.entity_id.split(".")[1])
                 if page_search_res is not None:
-                    name = name if name is not None else page_search_res.title
+                    if name is "":
+                        name = page_search_res.title
                     value = get_translation(
                         self.locale, "frontend.ui.card.button.press")
                     return f"~button~{self.entity_id}~{get_icon_char(icon_char)}~{color}~{name}~{value}"

@@ -27,6 +27,8 @@ class HAEntity(panel_cards.Entity):
         color = ha_colors.get_entity_color(
             self.etype, self.state, self.attributes)
         name = self.config.get("name", self.attributes.get("friendly_name", "unknown"))
+        if self.name_overwrite:
+            name = self.name_overwrite
         value = ""
 
         match self.etype:
