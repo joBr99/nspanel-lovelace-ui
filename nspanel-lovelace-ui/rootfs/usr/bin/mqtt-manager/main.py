@@ -173,12 +173,7 @@ def config_watch():
         time.sleep(1)
 
 def signal_handler(signum, frame):
-    # Handle the signal (e.g., SIGHUP) for triggering a restart
     print(f"Received signal {signum}. Initiating restart...")
-    restart_program()
-
-def restart_program():
-    print("Restarting the program...")
     python = sys.executable
     os.execl(python, python, *sys.argv)
 
