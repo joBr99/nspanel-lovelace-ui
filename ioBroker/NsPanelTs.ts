@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -53,7 +53,12 @@ ReleaseNotes:
         - 13.11.2023 - v4.3.3.3  if setOption = false, do not create autoAlias (Functional/Servicemenu) and Datapoints
         - 15.11.2023 - v4.3.3.4  New Service Page -> ioBroker Info 
         - 16.11.2023 - v4.3.3.5  Add Multilingualism to Service Menu (39 languages)
-	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardQR, popupFan, popupTimer (39 languages)
+     	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardUnlock, cardQR, popupFan, popupTimer (39 languages)
+        - 18.11.2023 - v4.3.3.6  Add autoCreateALias to PageAlarm
+        - 20.11.2023 - v4.3.3.6  Add actionStringArray to PageAlarm
+        - 20.11.2023 - v4.3.3.6  Add Multilingualism to cardAlarm (39 languages)
+        - 20.11.2023 - v4.3.3.7  Add Multilingualism to cardMedia (39 languages)
+        - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism)
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -261,7 +266,18 @@ const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
 //-- Anfang der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -----------------------
   //-- siehe https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
-
+  let Alarmseite = <PageAlarm>
+  {
+      "type": "cardAlarm",
+      "heading": "Alarm",
+      "useColor": true,
+      "subPage": false,
+      "items": [
+          <PageItem>{ id: 'alias.0.NSPanel.Alarm',
+          actionStringArray: ['Vollschutz','Zuhause','Nacht','Besuch','Ausschalten'],
+          autoCreateALias: true }
+      ]
+  }
 //-- ENDE der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -------------------------
 
 
@@ -757,7 +773,7 @@ export const config = <Config> {
     defaultColor: Off,
     defaultBackgroundColor: HMIDark,    // Default-Hintergrundfarbe HMIDark oder Black
     pages: [
-
+	    Alarmseite,                 //Auto-Alias Service Page
             NSPanel_Service         	//Auto-Alias Service Page
 	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
@@ -802,50 +818,28 @@ export const config = <Config> {
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
 const request = require('request');
+const dayjs = require('dayjs');
 const moment  = require('moment');
 const parseFormat = require('moment-parseformat');
 moment.locale(getState(NSPanel_Path + 'Config.locale').val);
-const dayjs = require('dayjs');
-require('dayjs/locale/en');
-require('dayjs/locale/de');
-require('dayjs/locale/nl');
-require('dayjs/locale/da');
-require('dayjs/locale/es');
-require('dayjs/locale/fr');
-require('dayjs/locale/it');
-require('dayjs/locale/ru');
-require('dayjs/locale/nb');
-require('dayjs/locale/nn');
-require('dayjs/locale/pl');
-require('dayjs/locale/pt');
-require('dayjs/locale/af');
-require('dayjs/locale/ar');
-require('dayjs/locale/bg');
-require('dayjs/locale/ca');
-require('dayjs/locale/cs');
-require('dayjs/locale/el');
-require('dayjs/locale/et');
-require('dayjs/locale/fa');
-require('dayjs/locale/fi');
-require('dayjs/locale/he');
-require('dayjs/locale/hr');
-require('dayjs/locale/hu');
-require('dayjs/locale/hy-am');
-require('dayjs/locale/id');
-require('dayjs/locale/is');
-require('dayjs/locale/lb');
-require('dayjs/locale/lt');
-require('dayjs/locale/ro');
-require('dayjs/locale/sk');
-require('dayjs/locale/sl');
-require('dayjs/locale/sv');
-require('dayjs/locale/th');
-require('dayjs/locale/tr');
-require('dayjs/locale/uk');
-require('dayjs/locale/vi');
-require('dayjs/locale/zh-cn');
-require('dayjs/locale/zh-tw');
-dayjs.locale(getDayjsLocale());
+
+async function Init_dayjs() {
+    try {
+        //Loading dayjs
+        const dayjs = require('dayjs');
+        const dayjsLanguages: any = ['en','de','nl','da','es','fr','it','ru','nb','nn',
+                                     'pl','pt','af','ar','bg','ca','cs','el','et','fa',
+                                     'fi','he','hr','hu','hy-am','id','is','lb','lt','ro',
+                                     'sk','sl','sv','th','tr','uk','vi','zh-cn','zh-tw']
+        for (let i=0; i<dayjsLanguages.length;i++) {
+        require('dayjs/locale/'+ dayjsLanguages[i]);     
+        } 
+        dayjs.locale(getDayjsLocale());
+    } catch (err) { 
+        console.warn('error at function init_dayjs: ' + err.message); 
+    }        
+}
+Init_dayjs();
 
 //Desired Firmware
 const tft_version: string = 'v4.3.3';
@@ -861,10 +855,9 @@ let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 let isSetOptionActive: boolean = false;
 
-const scriptVersion: string = 'v4.3.3.5';
+const scriptVersion: string = 'v4.3.3.8';
 let nodeVersion: string = '';
 let javaScriptVersion: string = '';
-
 
 let scheduleInitDimModeDay: any;
 let scheduleInitDimModeNight: any; 
@@ -877,6 +870,7 @@ onStop (function scriptStop () {
     if (scheduleCheckUpdates!=null) clearSchedule(scheduleCheckUpdates);
     if (scheduleInitDimModeDay!=null) clearSchedule(scheduleInitDimModeDay);
     if (scheduleInitDimModeNight!=null) clearSchedule(scheduleInitDimModeNight);
+    UnsubscribeWatcher();
 }, 1000);
 
 async function CheckConfigParameters() {
@@ -1464,9 +1458,11 @@ async function InitDateformat() {
     try {
         if (isSetOptionActive) {
             if (existsState(NSPanel_Path + 'Config.Dateformat.weekday') == false ||
-                existsState(NSPanel_Path + 'Config.Dateformat.month') == false) {
+                existsState(NSPanel_Path + 'Config.Dateformat.month') == false ||
+                existsState(NSPanel_Path + 'Config.Dateformat.customFormat') == false) {
                 await createStateAsync(NSPanel_Path + 'Config.Dateformat.weekday', 'long', { type: 'string' });
                 await createStateAsync(NSPanel_Path + 'Config.Dateformat.month', 'long', { type: 'string' });
+                await createStateAsync(NSPanel_Path + 'Config.Dateformat.customFormat', '', { type: 'string' });
             }
             if (existsState(NSPanel_Path + 'Config.Dateformat.Switch.weekday') == false ||
                 existsState(NSPanel_Path + 'Config.Dateformat.Switch.month') == false) {
@@ -1973,11 +1969,16 @@ setTimeout(async function () {
 //------------------Begin Update Functions
 
 function getDayjsLocale(): String {
-	let locale = getState(NSPanel_Path + 'Config.locale').val;
-	if (locale == "hy-AM" || locale == "zh-CN" || locale == "zh-TW")
-		return locale.toLowerCase();
-	else
-		return locale.substring(0, 2);
+    try {
+        let locale = getState(NSPanel_Path + 'Config.locale').val;
+        if (locale == "hy-AM" || locale == "zh-CN" || locale == "zh-TW") {
+            return locale.toLowerCase();
+        } else {
+            return locale.substring(0, 2);
+        }
+    } catch (err) {
+        console.warn('error in function getDayjsLocale: ' + err.message);
+    }
 }
 
 function get_locales() {
@@ -4424,7 +4425,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     author = getState(id + '.ARTIST').val;
                 }
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';
+                    author = findLocale('media','no_music_to_control');
                 }
             }
 
@@ -4438,7 +4439,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
                 author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';
+                    author = findLocale('media','no_music_to_control');
                 }
             }
 
@@ -4471,7 +4472,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     author = getState(id + '.ARTIST').val;
                 }
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';
+                    author = findLocale('media','no_music_to_control');
                 }
             }
 
@@ -4521,7 +4522,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
             }
 
-            let currentSpeaker = 'kein Speaker gefunden';
+            let currentSpeaker = findLocale('media','no_speaker_found');
 
             if (v2Adapter == 'alexa2') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', page.items[0].mediaDevice, '.Info.name'].join(''))).val;
@@ -4575,7 +4576,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                     id + '?speakerlist' + '~' + 
                                     Icons.GetIcon('speaker') + '~' + 
                                     speakerListIconCol + '~' + 
-                                    'Speaker' + '~' + 
+                                    findLocale('media','speaker') + '~' + 
                                     'media0~'
             }
 
@@ -4603,7 +4604,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                     id + '?playlist' + '~' + 
                                     Icons.GetIcon('playlist-play') + '~' + 
                                     playListIconCol + '~' + 
-                                    'PlayL ' + page.heading + '~' + 
+                                    //'PlayL ' + page.heading + '~' + 
+                                    findLocale('media','playlist') + '~' +
                                     'media1~'
             } 
 
@@ -4636,7 +4638,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                     id + '?tracklist' + '~' + 
                                     Icons.GetIcon('animation-play-outline') + '~' + 
                                     trackListIconCol + '~' + 
-                                    'Tracklist' + '~' + 
+                                    findLocale('media','tracklist') + '~' + + '~' + 
                                     'media2~'
             }
 
@@ -4649,7 +4651,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                         id + '?equalizer' + '~' + 
                                         Icons.GetIcon('equalizer-outline') + '~' + 
                                         equalizerListIconCol + '~' + 
-                                        'Equalizer' + '~' + 
+                                        findLocale('media','equalizer') + '~' + + '~' + 
                                         'media3~'
             }
 
@@ -4739,6 +4741,34 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
     }
 }
 
+async function createAutoAlarmAlias (id: string, nsPath: string){
+    try {
+        if (Debug){
+            console.log('Alarm Alias Path: ' + id);
+            console.log('Alarm 0_userdata Path: ' + nsPath);
+        }
+        if (autoCreateAlias) {
+            if (isSetOptionActive) {
+                if (existsState(nsPath + '.AlarmPin') == false || existsState(nsPath + '.AlarmState') == false || existsState(nsPath + '.AlarmType') == false || existsState(nsPath + '.PIN_Failed') == false || existsState(nsPath + '.PANEL') == false) {
+                    await createStateAsync(nsPath + '.AlarmPin', '0000', { type: 'string' });
+                    await createStateAsync(nsPath + '.AlarmState', 'disarmed', { type: 'string' });
+                    await createStateAsync(nsPath + '.AlarmType', 'D1', { type: 'string' });
+                    await createStateAsync(nsPath + '.PIN_Failed', 0, { type: 'number' });
+                    await createStateAsync(nsPath + '.PANEL', NSPanel_Path, { type: 'string' });     
+                    setObject(id, {_id: id, type: 'channel', common: {role: 'sensor.fire.alarm', name:'alarm'}, native: {}});
+                    await createAliasAsync(id + '.ACTUAL', nsPath + '.AlarmState', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                    await createAliasAsync(id + '.PIN', nsPath + '.AlarmPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN' });
+                    await createAliasAsync(id + '.TYPE', nsPath + '.AlarmType', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'TYPE' });
+                    await createAliasAsync(id + '.PIN_Failed', nsPath + '.PIN_Failed', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'PIN_Failed' });
+                    await createAliasAsync(id + '.PANEL', nsPath + '.PANEL', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PANEL' });
+                }
+            }
+        }
+    } catch (err) {
+        console.warn('error at function createAutoAlarmAlias: ' + err.message);
+    }
+}
+
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
     try {
         activePage = page;
@@ -4747,19 +4777,15 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
 
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
-        let nsPath = NSPanel_Alarm_Path + 'Alarm.';
+        let nsPath = NSPanel_Alarm_Path + 'Alarm';
 
-        if (existsState(nsPath + 'AlarmPin') == false || existsState(nsPath + 'AlarmState') == false || existsState(nsPath + 'AlarmType') == false || existsState(nsPath + 'PIN_Failed') == false || existsState(nsPath + 'PANEL') == false) {
-            createState(nsPath + 'AlarmPin', '0000', { type: 'string' }, function () { setState(nsPath + 'AlarmPin', '0000') });
-            createState(nsPath + 'AlarmState', 'disarmed', { type: 'string' }, function () { setState(nsPath + 'AlarmState', 'disarmed') });
-            createState(nsPath + 'AlarmType', 'D1', { type: 'string' }, function () { setState(nsPath + 'AlarmType', 'D1') });
-            createState(nsPath + 'PIN_Failed', 0, { type: 'number' }, function () { setState(nsPath + 'PIN_Failed', 0) });
-            createState(nsPath + 'PANEL', NSPanel_Path, { type: 'string' }, function () { setState(nsPath + 'PANEL', NSPanel_Path) });
+        if (page.items[0].autoCreateALias) {
+            createAutoAlarmAlias(id, nsPath);
         }
 
-        if (existsState(nsPath + 'AlarmPin') && existsState(nsPath + 'AlarmState') && existsState(nsPath + 'AlarmType')) {
+        if (existsState(nsPath + '.AlarmPin') && existsState(nsPath + '.AlarmState') && existsState(nsPath + '.AlarmType')) {
             //let entityPin = getState(nsPath + 'AlarmPin').val;
-            let entityState = getState(nsPath + 'AlarmState').val;
+            let entityState = getState(nsPath + '.AlarmState').val;
             //let entityType = getState(nsPath + 'AlarmType').val;
             let arm1: string, arm2: string, arm3: string, arm4: string;
             let arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
@@ -4773,7 +4799,11 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'armed' || entityState == 'triggered') {
-                arm1 = 'Deaktivieren';                                      //arm1*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[4] !== '') {
+                    arm1 = page.items[0].actionStringArray[4];
+                } else {
+                    arm1 = findLocale('alarm_control_panel', 'disarm');      //'Deaktivieren'; //arm1*~*
+                } 
                 arm1ActionName = 'D1';                                      //arm1ActionName*~*
                 arm2 = '';                                                  //arm2*~*
                 arm2ActionName = '';                                        //arm2ActionName*~*
@@ -4784,14 +4814,34 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (entityState == 'disarmed' || entityState == 'arming' || entityState == 'pending') {
-                arm1 = 'Vollschutz';                                        //arm1*~*
-                arm1ActionName = 'A1';                                      //arm1ActionName*~*
-                arm2 = 'Zuhause';                                           //arm2*~*
-                arm2ActionName = 'A2';                                      //arm2ActionName*~*
-                arm3 = 'Nacht';                                             //arm3*~*
-                arm3ActionName = 'A3';                                      //arm3ActionName*~*
-                arm4 = 'Besuch';                                            //arm4*~*
-                arm4ActionName = 'A4';                                      //arm4ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[0] !== '') {
+                    arm1 = page.items[0].actionStringArray[0];
+                } else {
+                    arm1 = formatInSelText(findLocale('alarm_control_panel', 'arm_away'));                                           //'Vollschutz' //arm1*~*
+                }
+                arm1ActionName = 'A1';                                                                              //arm1ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[1] !== '') {
+                    arm2 = page.items[0].actionStringArray[1];
+                } else {
+                    arm2 = formatInSelText(findLocale('alarm_control_panel', 'arm_home'));                                           //'Zuhause';   //arm2*~*
+                }    
+                arm2ActionName = 'A2';                                                                              //arm2ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[2] !== '') {
+                    arm3 = page.items[0].actionStringArray[2];
+                } else {
+                    arm3 = formatInSelText(findLocale('alarm_control_panel', 'arm_night'));                                          //'Nacht';     //arm3*~*
+                }
+                arm3ActionName = 'A3';                                                                              //arm3ActionName*~*
+                if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[3] !== '') {
+                    arm4 = page.items[0].actionStringArray[3];
+                } else {
+                    arm4 = formatInSelText(findLocale('alarm_control_panel', 'arm_vacation'));                                       //'Besuch';    //arm4*~*
+                }
+                arm4ActionName = 'A4';                                                                              //arm4ActionName*~*
+            }
+
+            if (Debug) {
+                console.log('GenerateAlarmPage String for arm1: ' + arm1 + ', arm2: ' + arm2 + ', arm3: ' + arm3 + ', arm4: ' + arm4);
             }
 
             if (entityState == 'armed') {
@@ -7052,6 +7102,10 @@ function HandleScreensaverUpdate(): void {
                         icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
                     } 
 
+                    if (parseFloat(val+"") == val) {     
+                        val = parseFloat(val);
+                    }
+                    
                     if (typeof(val) == 'number') {
                         val = (val * config.leftScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
@@ -7195,6 +7249,9 @@ function HandleScreensaverUpdate(): void {
                 //Alternativ Layout bekommt zusätzlichen Status
                 if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
                     let val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
+                    if (parseFloat(val+"") == val) {     
+                        val = parseFloat(val);
+                    }
                     let iconColor = rgb_dec565(White);
                     if (typeof(val) == 'number') {
                         val = (val * config.bottomScreensaverEntity[4].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[4].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[4].ScreensaverEntityUnitText;
@@ -7205,6 +7262,7 @@ function HandleScreensaverUpdate(): void {
                     }
                     else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
+
                         let pformat = parseFormat(val);
                         if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
                         if (moment(val, pformat, true).isValid()) { 
@@ -7215,6 +7273,7 @@ function HandleScreensaverUpdate(): void {
                                 val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
                             }
                         }                
+
                     }
                     if (existsObject(config.bottomScreensaverEntity[4].ScreensaverEntityIconColor)) {
                         iconColor = getState(config.bottomScreensaverEntity[4].ScreensaverEntityIconColor).val;
@@ -7238,6 +7297,9 @@ function HandleScreensaverUpdate(): void {
                     RegisterScreensaverEntityWatcher(config.bottomScreensaverEntity[i].ScreensaverEntity)
                     
                     let val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
+                    if (parseFloat(val+"") == val) {     
+                        val = parseFloat(val);
+                    }
                     let iconColor = rgb_dec565(White);
 		    let icon;
                     if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn)) {
@@ -7302,6 +7364,9 @@ function HandleScreensaverUpdate(): void {
                     RegisterScreensaverEntityWatcher(config.indicatorScreensaverEntity[i].ScreensaverEntity)
 
                     let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
+                    if (parseFloat(val+"") == val) {     
+                        val = parseFloat(val);
+                    }
                     let iconColor = rgb_dec565(White);
             
                     let icon;
@@ -8294,6 +8359,7 @@ type PageItem = {
     inSel_ChoiceState: (boolean | undefined),
     iconArray: (string[] | undefined),
     fontSize: (number | undefined),
+    actionStringArray: (string[] | undefined),
 }
 
 type DimMode = {
