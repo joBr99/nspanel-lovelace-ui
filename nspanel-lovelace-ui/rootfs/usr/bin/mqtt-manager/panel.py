@@ -126,7 +126,7 @@ class LovelaceUIPanel:
         libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
         self.dimmode()
 
-    def dimmode():
+    def dimmode(self):
         # send dimmode
         dimValue, dimValueNormal = ha_control.calculate_dim_values(
             self.settings.get("sleepTracking"),
