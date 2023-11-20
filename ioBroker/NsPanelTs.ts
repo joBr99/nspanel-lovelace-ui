@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -56,7 +56,8 @@ ReleaseNotes:
     	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardQR, popupFan, popupTimer (39 languages)
         - 18.11.2023 - v4.3.3.6  Add autoCreateALias to PageAlarm
         - 20.11.2023 - v4.3.3.6  Add actionStringArray to PageAlarm
-
+        - 20.11.2023 - v4.3.3.6  Add Add Multilingualism to cardAlarm (39 languages)
+        - 20.11.2023 - v4.3.3.7  Add Add Multilingualism to cardMedia (39 languages)
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -834,7 +835,7 @@ let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 let isSetOptionActive: boolean = false;
 
-const scriptVersion: string = 'v4.3.3.6';
+const scriptVersion: string = 'v4.3.3.7';
 let nodeVersion: string = '';
 let javaScriptVersion: string = '';
 
@@ -4388,7 +4389,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     author = getState(id + '.ARTIST').val;
                 }
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';
+                    author = findLocale('media','no_music_to_control');
                 }
             }
 
@@ -4402,7 +4403,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
                 author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';
+                    author = findLocale('media','no_music_to_control');
                 }
             }
 
@@ -4435,7 +4436,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     author = getState(id + '.ARTIST').val;
                 }
                 if ((getState(id + '.ARTIST').val).length == 0) {
-                    author = 'no music to control';
+                    author = findLocale('media','no_music_to_control');
                 }
             }
 
@@ -4485,7 +4486,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
             }
 
-            let currentSpeaker = 'kein Speaker gefunden';
+            let currentSpeaker = findLocale('media','no_speaker_found');
 
             if (v2Adapter == 'alexa2') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', page.items[0].mediaDevice, '.Info.name'].join(''))).val;
@@ -4539,7 +4540,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                     id + '?speakerlist' + '~' + 
                                     Icons.GetIcon('speaker') + '~' + 
                                     speakerListIconCol + '~' + 
-                                    'Speaker' + '~' + 
+                                    findLocale('media','speaker') + '~' + 
                                     'media0~'
             }
 
@@ -4567,7 +4568,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                     id + '?playlist' + '~' + 
                                     Icons.GetIcon('playlist-play') + '~' + 
                                     playListIconCol + '~' + 
-                                    'PlayL ' + page.heading + '~' + 
+                                    //'PlayL ' + page.heading + '~' + 
+                                    findLocale('media','playlist') + '~' +
                                     'media1~'
             } 
 
@@ -4600,7 +4602,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                     id + '?tracklist' + '~' + 
                                     Icons.GetIcon('animation-play-outline') + '~' + 
                                     trackListIconCol + '~' + 
-                                    'Tracklist' + '~' + 
+                                    findLocale('media','tracklist') + '~' + + '~' + 
                                     'media2~'
             }
 
@@ -4613,7 +4615,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                         id + '?equalizer' + '~' + 
                                         Icons.GetIcon('equalizer-outline') + '~' + 
                                         equalizerListIconCol + '~' + 
-                                        'Equalizer' + '~' + 
+                                        findLocale('media','equalizer') + '~' + + '~' + 
                                         'media3~'
             }
 
