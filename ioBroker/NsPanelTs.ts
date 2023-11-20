@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -53,11 +53,12 @@ ReleaseNotes:
         - 13.11.2023 - v4.3.3.3  if setOption = false, do not create autoAlias (Functional/Servicemenu) and Datapoints
         - 15.11.2023 - v4.3.3.4  New Service Page -> ioBroker Info 
         - 16.11.2023 - v4.3.3.5  Add Multilingualism to Service Menu (39 languages)
-    	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardQR, popupFan, popupTimer (39 languages)
+     	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardUnlock, cardQR, popupFan, popupTimer (39 languages)
         - 18.11.2023 - v4.3.3.6  Add autoCreateALias to PageAlarm
         - 20.11.2023 - v4.3.3.6  Add actionStringArray to PageAlarm
-        - 20.11.2023 - v4.3.3.6  Add Add Multilingualism to cardAlarm (39 languages)
-        - 20.11.2023 - v4.3.3.7  Add Add Multilingualism to cardMedia (39 languages)
+        - 20.11.2023 - v4.3.3.6  Add Multilingualism to cardAlarm (39 languages)
+        - 20.11.2023 - v4.3.3.7  Add Multilingualism to cardMedia (39 languages)
+        - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism), some Minor Fixes
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -772,7 +773,7 @@ export const config = <Config> {
     defaultColor: Off,
     defaultBackgroundColor: HMIDark,    // Default-Hintergrundfarbe HMIDark oder Black
     pages: [
-            Alarmseite,
+	    Alarmseite,                 //Auto-Alias Service Page
             NSPanel_Service         	//Auto-Alias Service Page
 	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
@@ -817,9 +818,28 @@ export const config = <Config> {
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
 const request = require('request');
+const dayjs = require('dayjs');
 const moment  = require('moment');
 const parseFormat = require('moment-parseformat');
 moment.locale(getState(NSPanel_Path + 'Config.locale').val);
+
+async function Init_dayjs() {
+    try {
+        //Loading dayjs
+        const dayjs = require('dayjs');
+        const dayjsLanguages: any = ['en','de','nl','da','es','fr','it','ru','nb','nn',
+                                     'pl','pt','af','ar','bg','ca','cs','el','et','fa',
+                                     'fi','he','hr','hu','hy-am','id','is','lb','lt','ro',
+                                     'sk','sl','sv','th','tr','uk','vi','zh-cn','zh-tw']
+        for (let i=0; i<dayjsLanguages.length;i++) {
+        require('dayjs/locale/'+ dayjsLanguages[i]);     
+        } 
+        dayjs.locale(getDayjsLocale());
+    } catch (err) { 
+        console.warn('error at function init_dayjs: ' + err.message); 
+    }        
+}
+Init_dayjs();
 
 //Desired Firmware
 const tft_version: string = 'v4.3.3';
@@ -835,10 +855,9 @@ let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 let isSetOptionActive: boolean = false;
 
-const scriptVersion: string = 'v4.3.3.7';
+const scriptVersion: string = 'v4.3.3.8';
 let nodeVersion: string = '';
 let javaScriptVersion: string = '';
-
 
 let scheduleInitDimModeDay: any;
 let scheduleInitDimModeNight: any; 
@@ -851,6 +870,7 @@ onStop (function scriptStop () {
     if (scheduleCheckUpdates!=null) clearSchedule(scheduleCheckUpdates);
     if (scheduleInitDimModeDay!=null) clearSchedule(scheduleInitDimModeDay);
     if (scheduleInitDimModeNight!=null) clearSchedule(scheduleInitDimModeNight);
+    UnsubscribeWatcher();
 }, 1000);
 
 async function CheckConfigParameters() {
@@ -1438,9 +1458,11 @@ async function InitDateformat() {
     try {
         if (isSetOptionActive) {
             if (existsState(NSPanel_Path + 'Config.Dateformat.weekday') == false ||
-                existsState(NSPanel_Path + 'Config.Dateformat.month') == false) {
+                existsState(NSPanel_Path + 'Config.Dateformat.month') == false ||
+                existsState(NSPanel_Path + 'Config.Dateformat.customFormat') == false) {
                 await createStateAsync(NSPanel_Path + 'Config.Dateformat.weekday', 'long', { type: 'string' });
                 await createStateAsync(NSPanel_Path + 'Config.Dateformat.month', 'long', { type: 'string' });
+                await createStateAsync(NSPanel_Path + 'Config.Dateformat.customFormat', '', { type: 'string' });
             }
             if (existsState(NSPanel_Path + 'Config.Dateformat.Switch.weekday') == false ||
                 existsState(NSPanel_Path + 'Config.Dateformat.Switch.month') == false) {
@@ -1945,6 +1967,19 @@ setTimeout(async function () {
 */
 
 //------------------Begin Update Functions
+
+function getDayjsLocale(): String {
+    try {
+        let locale = getState(NSPanel_Path + 'Config.locale').val;
+        if (locale == "hy-AM" || locale == "zh-CN" || locale == "zh-TW") {
+            return locale.toLowerCase();
+        } else {
+            return locale.substring(0, 2);
+        }
+    } catch (err) {
+        console.warn('error in function getDayjsLocale: ' + err.message);
+    }
+}
 
 function get_locales() {
     try {
@@ -2806,10 +2841,11 @@ function SendDate(): void {
         if (existsObject(NSPanel_Path + 'Config.locale')) {
             let dpWeekday = existsObject(NSPanel_Path + 'Config.Dateformat.weekday') ? getState(NSPanel_Path + 'Config.Dateformat.weekday').val : 'short';
             let dpMonth = existsObject(NSPanel_Path + 'Config.Dateformat.month') ? getState(NSPanel_Path + 'Config.Dateformat.month').val : 'short';
+			let dpCustomFormat = existsObject(NSPanel_Path + 'Config.Dateformat.customFormat') ? getState(NSPanel_Path + 'Config.Dateformat.customFormat').val : '';
 
             const date = new Date();
             const options: any = { weekday: dpWeekday, year: 'numeric', month: dpMonth, day: 'numeric' };
-            const _SendDate = date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
+            const _SendDate = dpCustomFormat != '' ? dayjs().format(dpCustomFormat) : date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
 
             SendToPanel(<Payload>{ payload: 'date~' + _SendDate });
         }
@@ -4781,25 +4817,25 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
                 if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[0] !== '') {
                     arm1 = page.items[0].actionStringArray[0];
                 } else {
-                    arm1 = findLocale('alarm_control_panel', 'arm_away');                                           //'Vollschutz' //arm1*~*
+                    arm1 = formatInSelText(findLocale('alarm_control_panel', 'arm_away'));                                           //'Vollschutz' //arm1*~*
                 }
                 arm1ActionName = 'A1';                                                                              //arm1ActionName*~*
                 if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[1] !== '') {
                     arm2 = page.items[0].actionStringArray[1];
                 } else {
-                    arm2 = findLocale('alarm_control_panel', 'arm_home');                                           //'Zuhause';   //arm2*~*
+                    arm2 = formatInSelText(findLocale('alarm_control_panel', 'arm_home'));                                           //'Zuhause';   //arm2*~*
                 }    
                 arm2ActionName = 'A2';                                                                              //arm2ActionName*~*
                 if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[2] !== '') {
                     arm3 = page.items[0].actionStringArray[2];
                 } else {
-                    arm3 = findLocale('alarm_control_panel', 'arm_night');                                          //'Nacht';     //arm3*~*
+                    arm3 = formatInSelText(findLocale('alarm_control_panel', 'arm_night'));                                          //'Nacht';     //arm3*~*
                 }
                 arm3ActionName = 'A3';                                                                              //arm3ActionName*~*
                 if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[3] !== '') {
                     arm4 = page.items[0].actionStringArray[3];
                 } else {
-                    arm4 = findLocale('alarm_control_panel', 'arm_vacation');                                       //'Besuch';    //arm4*~*
+                    arm4 = formatInSelText(findLocale('alarm_control_panel', 'arm_vacation'));                                       //'Besuch';    //arm4*~*
                 }
                 arm4ActionName = 'A4';                                                                              //arm4ActionName*~*
             }
@@ -7066,6 +7102,10 @@ function HandleScreensaverUpdate(): void {
                         icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
                     } 
 
+                    if (parseFloat(val+"") == val) {     
+                        val = parseFloat(val);
+                    }
+                    
                     if (typeof(val) == 'number') {
                         val = (val * config.leftScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
@@ -7209,6 +7249,9 @@ function HandleScreensaverUpdate(): void {
                 //Alternativ Layout bekommt zusätzlichen Status
                 if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
                     let val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
+                    if (parseFloat(val+"") == val) {     
+                        val = parseFloat(val);
+                    }
                     let iconColor = rgb_dec565(White);
                     if (typeof(val) == 'number') {
                         val = (val * config.bottomScreensaverEntity[4].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[4].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[4].ScreensaverEntityUnitText;
@@ -7219,6 +7262,7 @@ function HandleScreensaverUpdate(): void {
                     }
                     else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
+
                         let pformat = parseFormat(val);
                         if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
                         if (moment(val, pformat, true).isValid()) { 
@@ -7229,6 +7273,7 @@ function HandleScreensaverUpdate(): void {
                                 val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
                             }
                         }                
+
                     }
                     if (existsObject(config.bottomScreensaverEntity[4].ScreensaverEntityIconColor)) {
                         iconColor = getState(config.bottomScreensaverEntity[4].ScreensaverEntityIconColor).val;
@@ -7252,6 +7297,9 @@ function HandleScreensaverUpdate(): void {
                     RegisterScreensaverEntityWatcher(config.bottomScreensaverEntity[i].ScreensaverEntity)
                     
                     let val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
+                    if (parseFloat(val+"") == val) {     
+                        val = parseFloat(val);
+                    }
                     let iconColor = rgb_dec565(White);
 		    let icon;
                     if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn)) {
@@ -7316,6 +7364,9 @@ function HandleScreensaverUpdate(): void {
                     RegisterScreensaverEntityWatcher(config.indicatorScreensaverEntity[i].ScreensaverEntity)
 
                     let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
+                    if (parseFloat(val+"") == val) {     
+                        val = parseFloat(val);
+                    }
                     let iconColor = rgb_dec565(White);
             
                     let icon;
@@ -8308,7 +8359,7 @@ type PageItem = {
     inSel_ChoiceState: (boolean | undefined),
     iconArray: (string[] | undefined),
     fontSize: (number | undefined),
-    actionStringArray: (string[] | undefined),    
+    actionStringArray: (string[] | undefined),
 }
 
 type DimMode = {
