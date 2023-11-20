@@ -26,35 +26,30 @@ has_sent_reload_command = False
 mqtt_client_name = "NSPanelLovelaceManager_" + str(get_mac())
 client = mqtt.Client(mqtt_client_name)
 logging.basicConfig(level=logging.DEBUG)
-
+panel_mqtt_recv_topics = {}
 
 def on_connect(client, userdata, flags, rc):
-    global panels
-    # global settings
+    global panels, panel_mqtt_recv_topics
     logging.info("Connected to MQTT Server")
-    # for panel in settings["nspanels"].values():
-    #    print(panel)
-    #    client.subscribe(panel["panelRecvTopic"])
-    client.subscribe("tele/tasmota_nspdev2/RESULT")
+    for name, panel in panels.items():
+        panel_mqtt_recv_topics[panel.recvTopic] = panel
+        client.subscribe(panel.recvTopic)
 
 def on_ha_update(entity_id):
     for panel in panels.values():
         panel.ha_event_callback(entity_id)
 
 def on_message(client, userdata, msg):
-    global panels
+    global panels, panel_mqtt_recv_topics
     try:
         if msg.payload.decode() == "":
             return
         parts = msg.topic.split('/')
-        if msg.topic == "tele/tasmota_nspdev2/RESULT":
+        if msg.topic in panel_mqtt_recv_topics.keys():
             data = json.loads(msg.payload.decode('utf-8'))
             if "CustomRecv" in data:
-                if parts[1] in panels:
-                    panels[parts[1]].customrecv_event_callback(data["CustomRecv"])
-                else:
-                    logging.error(
-                        "Got message for unknown panel: %s - %s", parts[1], data["CustomRecv"])
+                panel = panel_mqtt_recv_topics[msg.topic]
+                panel.customrecv_event_callback(data["CustomRecv"])
         else:
             logging.debug("Received unhandled message on topic: %s", msg.topic)
 

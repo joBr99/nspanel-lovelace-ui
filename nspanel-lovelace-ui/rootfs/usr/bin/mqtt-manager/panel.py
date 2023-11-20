@@ -17,6 +17,7 @@ class LovelaceUIPanel:
         self.name = name_panel
         self.settings = settings_panel
         self.sendTopic = self.settings["panelSendTopic"]
+        self.recvTopic = self.settings["panelRecvTopic"]
         self.model = self.settings.get("model", "eu")
 
 
