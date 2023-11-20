@@ -124,13 +124,14 @@ class LovelaceUIPanel:
                 entity_id = msg[2]
                 btype = msg[3]
                 value = msg[4] if len(msg) > 4 else None
-
                 if btype == "bExit":
-                    # TODO: Impelement default card
+                    if entity_id=="screensaver" and self.settings.get("screensaver").get("doubleTapToUnlock") and value == "1":
+                        return
+
                     # in case privious_cards is empty add a default card
                     if len(self.privious_cards) == 0:
                         self.privious_cards.append(
-                            list(self.cards.values())[0])
+                            list(self.cards.values())[0]) # TODO: Impelement default card config
                     self.current_card = self.privious_cards.pop()
                     libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
                     libs.panel_cmd.entityUpd(self.sendTopic, self.current_card.render())
