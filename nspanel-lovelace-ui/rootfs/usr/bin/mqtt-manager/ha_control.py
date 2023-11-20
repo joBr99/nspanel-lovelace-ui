@@ -18,7 +18,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
             dimmode = sleepBrightness
         elif libs.home_assistant.is_existent(sleepBrightness):
             involved_entities.append(sleepBrightness)
-            dimValueNormal = int(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10))
+            dimmode = int(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10))
 
     if screenBrightness:
         if isinstance(screenBrightness, int):

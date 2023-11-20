@@ -135,6 +135,7 @@ class LovelaceUIPanel:
             self.settings.get("screenBrightness"),
             self.settings.get("sleepOverride"),
         )
+        print(dimValue, dimValueNormal)
 
         backgroundColor = self.settings.get("defaultBackgroundColor", "ha-dark")
         if backgroundColor == "ha-dark":
