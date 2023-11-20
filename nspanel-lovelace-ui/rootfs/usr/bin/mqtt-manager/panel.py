@@ -108,7 +108,7 @@ class LovelaceUIPanel:
             return_involved_entities=True
         )
         if entity_id in involved_entities:
-            dimmode()
+            self.dimmode()
 
 
     def render_current_page(self, switchPages=False):
@@ -124,7 +124,7 @@ class LovelaceUIPanel:
         if self.current_card.config.get("sleepTimeout"):
             sleepTimeout = self.current_card.config.get("sleepTimeout")
         libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
-        dimmode()
+        self.dimmode()
 
     def dimmode():
         # send dimmode
