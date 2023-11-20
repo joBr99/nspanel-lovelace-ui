@@ -2497,16 +2497,16 @@
          "de-DE":"Keine Musik zum Steuern"
       },
       "speaker":{
-         "en-US":"Equalizer",
-         "de-DE":"Equalizer"
+         "en-US":"Speakerlist",
+         "de-DE":"Wiedergabegeräte"
       },
       "playlist":{
          "en-US":"Playlist",
          "de-DE":"Playlist"
       },
       "tracklist":{
-         "en-US":"Tracks",
-         "de-DE":"Titel"
+         "en-US":"Tracklist",
+         "de-DE":"Titelliste"
       },
       "equalizer":{
          "en-US":"Equalizer",
