@@ -7,7 +7,7 @@ import logging
 import dateutil.parser as dp
 import babel
 from libs.icon_mapping import get_icon_char
-from libs.helper import rgb_dec565
+from libs.helper import rgb_dec565, scale
 
 class HAEntity(panel_cards.Entity):
     def __init__(self, locale, config, panel):
@@ -19,7 +19,6 @@ class HAEntity(panel_cards.Entity):
         if data:
             self.state = data.get("state")
             self.attributes = data.get("attributes", [])
-            #print(data)
 
         # HA Entities
         entity_type_panel = "text"
@@ -449,3 +448,62 @@ def entity_factory(locale, settings, panel):
     else:
         entity = HAEntity(locale, settings, panel)
     return entity.iid, entity
+
+def detail_open(locale, detail_type, ha_entity_id, entity_id):
+    data = libs.home_assistant.get_entity_data(ha_entity_id)
+    if data:
+        state = data.get("state")
+        attributes = data.get("attributes", [])
+    else:
+        logging.error("popup entity %s not found", ha_entity_id)
+        return
+
+    match detail_type:
+        case 'popupShutter' | 'cover':
+            print(f"not implemented {detail_type}")
+        case 'popupLight' | 'light':
+            switch_val = 1 if state == "on" else 0
+            icon_color = 6666
+            brightness = "disable"
+            color_temp = "disable"
+            color = "disable"
+            effect_supported = "disable"
+
+            if "onoff" not in attributes.get("supported_color_modes"):
+                brightness = 0
+            if state == "on":
+                if "brightness" in attributes and attributes.get("brightness"):
+                    # scale 0-255 brightness from ha to 0-100
+                    brightness = int(scale(attributes.get("brightness"),(0,255),(0,100)))
+                else:
+                    brightness = "disable"
+                if "color_temp" in attributes.get("supported_color_modes"):
+                    if "color_temp" in attributes and attributes.get("color_temp"):
+                        # scale ha color temp range to 0-100
+                        color_temp = int(scale(attributes.get("color_temp"), (attributes.get("min_mireds"), attributes.get("max_mireds")),(0,100)))
+                    else:
+                        color_temp = "unknown"
+                else:
+                    color_temp = "disable"
+                list_color_modes = ["xy", "rgb", "rgbw", "hs"]
+                if any(item in list_color_modes for item in attributes.get("supported_color_modes")):
+                    color = "enable"
+                else:
+                    color = "disable"
+                if "effect_list" in attributes:
+                    effect_supported = "enable"
+            color_translation      = "Color"
+            brightness_translation = get_translation(locale, "frontend.ui.card.light.brightness")
+            color_temp_translation = get_translation(locale, "frontend.ui.card.light.color_temperature")
+            return f'{entity_id}~~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}~{effect_supported}'
+        case 'popupFan' | 'fan':
+            print(f"not implemented {detail_type}")
+        case 'popupThermo' | 'climate':
+            print(f"not implemented {detail_type}")
+        case 'popupInSel' | 'input_select' | 'select':
+            print(f"not implemented {detail_type}")
+        case 'popupTimer' | 'timer':
+            print(f"not implemented {detail_type}")
+        case _:
+            logging.error("popup type %s not implemented", detail_type)
+            return "NotImplemented", None

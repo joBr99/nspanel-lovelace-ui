@@ -38,3 +38,6 @@ def dimmode(topic, dimValue, dimValueNormal, backgroundColor, fontColor, featExp
     if dimValue==dimValueNormal:
         dimValue=dimValue-1
     custom_send(topic, f"dimmode~{dimValue}~{dimValueNormal}~{backgroundColor}~{fontColor}~{featExperimentalSliders}")
+
+def entityUpdateDetail(topic, data):
+    custom_send(topic, f"entityUpdateDetail~{data}")

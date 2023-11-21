@@ -1,7 +1,7 @@
 import libs.home_assistant
 import logging
 import time
-from libs.helper import pos_to_color
+from libs.helper import pos_to_color, scale
 
 def wait_for_ha_cache():
     mustend = time.time() + 5
@@ -83,7 +83,14 @@ def handle_buttons(entity_id, btype, value):
             }
             service = action_service_mapping[btype]
             call_ha_service(entity_id, service)
-
+       case 'timer-start':
+            if value:
+                service_data = {
+                    "duration": value
+                }
+                call_ha_service(entity_id, "start", service_data=service_data)
+            else:
+                call_ha_service(entity_id, "start")
        case 'positionSlider':
             service_data = {
                 "position": int(value)
@@ -144,8 +151,40 @@ def handle_buttons(entity_id, btype, value):
                 "rgb_color": color
             }
             call_ha_service(entity_id, "turn_on", service_data=service_data)
+       case 'disarm' | 'arm_home' | 'arm_away' | 'arm_night' | 'arm_vacation':
+            service_data = {
+                "code": value
+            }
+            call_ha_service(entity_id, f"alarm_{button_type}", service_data=service_data)
+       case 'mode-preset_modes' | 'mode-swing_modes' | 'mode-fan_modes':
+            mapping = {
+                'mode-preset_modes': 'preset_modes',
+                'mode-swing_modes': 'swing_modes',
+                'mode-fan_modes': 'fan_mode'
+            }
+            if btype in mapping:
+                modes = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get(mapping[btype], [])
+                if modes:
+                    mode = modes[int(value)]
+                    service_data = {
+                        mapping[btype]: mode
+                    }
+                    call_ha_service(entity_id, f"set_{mapping[btype]}", service_data=service_data)
+       case 'mode-input_select' | 'mode-select':
+            if btype in mapping:
+                modes = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get(options, [])
+                if options:
+                    option = options[int(value)]
+                    service_data = {
+                        "option": option
+                    }
+                    call_ha_service(entity_id, "select_option", service_data=service_data)
+
        case _:
           logging.error("Not implemented: %s", btype)
+
+
+
 
 
     #  # for climate page
@@ -163,19 +202,6 @@ def handle_buttons(entity_id, btype, value):
     #      apis.ha_api.get_entity(entity_id).call_service(
     #          "set_hvac_mode", hvac_mode=value)
     #
-    #  # for alarm page
-    #  if button_type in ["disarm", "arm_home", "arm_away", "arm_night", "arm_vacation"]:
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          f"alarm_{button_type}", code=value)
-    #  if button_type == "opnSensorNotify":
-    #      msg = ""
-    #      entity = apis.ha_api.get_entity(entity_id)
-    #      if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
-    #          for e in entity.attributes.open_sensors:
-    #              msg += f"- {apis.ha_api.get_entity(e).attributes.friendly_name}\r\n"
-    #      self._pages_gen.send_message_page(
-    #          "opnSensorNotifyRes", "", msg, "", "")
-    #
     #  # for cardUnlock
     #  if button_type == "cardUnlock-unlock":
     #      curCard = self._config.get_card_by_uuid(
@@ -190,25 +216,6 @@ def handle_buttons(entity_id, btype, value):
     #                  self._current_card = dstCard
     #                  self._pages_gen.render_card(self._current_card)
     #
-    #  if button_type == "mode-preset_modes":
-    #      entity = apis.ha_api.get_entity(entity_id)
-    #      preset_mode = entity.attributes.preset_modes[int(value)]
-    #      entity.call_service("set_preset_mode", preset_mode=preset_mode)
-    #
-    #  if button_type == "mode-swing_modes":
-    #      entity = apis.ha_api.get_entity(entity_id)
-    #      swing_mode = entity.attributes.swing_modes[int(value)]
-    #      entity.call_service("set_swing_mode", swing_mode=swing_mode)
-    #
-    #  if button_type == "mode-fan_modes":
-    #      entity = apis.ha_api.get_entity(entity_id)
-    #      fan_mode = entity.attributes.fan_modes[int(value)]
-    #      entity.call_service("set_fan_mode", fan_mode=fan_mode)
-    #
-    #  if button_type in ["mode-input_select", "mode-select"]:
-    #      entity = apis.ha_api.get_entity(entity_id)
-    #      option = entity.attributes.options[int(value)]
-    #      entity.call_service("select_option", option=option)
     #
     #  if button_type == "mode-light":
     #      if entity_id.startswith('uuid'):
@@ -227,14 +234,15 @@ def handle_buttons(entity_id, btype, value):
     #      entity = apis.ha_api.get_entity(entity_id)
     #      option = entity.attributes.source_list[int(value)]
     #      entity.call_service("select_source", source=option)
-    #
-    #  # timer detail page
-    #  if button_type == "timer-start":
-    #      if value is not None:
-    #          apis.ha_api.get_entity(entity_id).call_service(
-    #              "start", duration=value)
-    #      else:
-    #          apis.ha_api.get_entity(entity_id).call_service("start")
+
+    #  if button_type == "opnSensorNotify":
+    #      msg = ""
+    #      entity = apis.ha_api.get_entity(entity_id)
+    #      if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
+    #          for e in entity.attributes.open_sensors:
+    #              msg += f"- {apis.ha_api.get_entity(e).attributes.friendly_name}\r\n"
+    #      self._pages_gen.send_message_page(
+    #          "opnSensorNotifyRes", "", msg, "", "")
 
 def call_ha_service(entity_id, service, service_data = {}):
     etype = entity_id.split(".")[0]

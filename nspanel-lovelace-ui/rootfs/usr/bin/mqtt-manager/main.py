@@ -15,8 +15,7 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 import signal
 import sys
-
-
+logging.getLogger("watchdog").propagate = False
 
 settings = {}
 panels = {}

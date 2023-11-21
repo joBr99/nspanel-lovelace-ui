@@ -7,7 +7,7 @@ from scheduler import Scheduler
 import scheduler.trigger as trigger
 import time
 import babel.dates
-from ha_cards import Screensaver, EntitiesCard, card_factory
+from ha_cards import Screensaver, EntitiesCard, card_factory, detail_open
 import ha_control
 
 class LovelaceUIPanel:
@@ -99,6 +99,16 @@ class LovelaceUIPanel:
         if entity_id in self.current_card.get_entities():
             self.render_current_page()
 
+            # send update for detail popup in case it's open
+            etype = entity_id.split('.')[0]
+            if etype in ['light', 'timer', 'cover', 'input_select', 'select', 'fan']:
+                # figure out iid of entity
+                entity_id_iid = ""
+                for e in self.current_card.get_iid_entities():
+                    if entity_id == e[1]:
+                        entity_id_iid = f'iid.{e[0]}'
+                libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid))
+
         involved_entities = ha_control.calculate_dim_values(
             self.settings.get("sleepTracking"),
             self.settings.get("sleepTrackingZones", ["not_home", "off"]),
@@ -135,7 +145,6 @@ class LovelaceUIPanel:
             self.settings.get("screenBrightness"),
             self.settings.get("sleepOverride"),
         )
-        print(dimValue, dimValueNormal)
 
         backgroundColor = self.settings.get("defaultBackgroundColor", "ha-dark")
         if backgroundColor == "ha-dark":
@@ -205,4 +214,10 @@ class LovelaceUIPanel:
                         ha_control.handle_buttons(entity_id, btype, value)
 
             if msg[1] == "pageOpenDetail":
-                print("pageOpenDetail")
+                entity_id = msg[3]
+                # replace iid with real entity id
+                if entity_id.startswith("iid."):
+                    iid = entity_id.split(".")[1]
+                    if iid in self.entity_iids:
+                        entity_id = self.entity_iids[iid]
+                libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3]))
