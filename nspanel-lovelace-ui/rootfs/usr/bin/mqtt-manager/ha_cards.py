@@ -410,6 +410,75 @@ class ClimateCard(HACard):
         result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
         return result
 
+class AlarmCard(HACard):
+    def __init__(self, locale, config, panel):
+        super().__init__(locale, config, panel)
+
+    def render(self):
+        main_entity = self.entities[0]
+        main_entity.render()
+
+        icon = get_icon_char("shield-off")
+        color = rgb_dec565([255,255,255])
+        supported_modes = []
+        numpad = "enable"
+        if main_entity.state == "disarmed":
+            color = rgb_dec565([13,160,53])
+            icon = get_icon_char("shield-off")
+            if not main_entity.attributes.get("code_arm_required", False):
+                numpad = "disable"
+            if self.config.get("supported_modes") is None:
+                bits = main_entity.attributes.get("supported_features")
+                if bits & 0b000001:
+                    supported_modes.append("arm_home")
+                if bits & 0b000010:
+                    supported_modes.append("arm_away")
+                if bits & 0b000100:
+                    supported_modes.append("arm_night")
+                if bits & 0b100000:
+                    supported_modes.append("arm_vacation")
+            else:
+                supported_modes = self.config.get("supported_modes")
+        else:
+            supported_modes.append("disarm")
+
+        if main_entity.state == "armed_home":
+            color = rgb_dec565([223,76,30])
+            icon = get_icon_char("shield-home")
+        if main_entity.state == "armed_away":
+            color = rgb_dec565([223,76,30])
+            icon = get_icon_char("shield-lock")
+        if main_entity.state == "armed_night":
+            color = rgb_dec565([223,76,30])
+            icon = get_icon_char("weather-night")
+        if main_entity.state == "armed_vacation":
+            color = rgb_dec565([223,76,30])
+            icon = get_icon_char("shield-airplane")
+
+        flashing = "disable"
+        if main_entity.state in ["arming", "pending"]:
+            color = rgb_dec565([243,179,0])
+            icon = get_icon_char("shield")
+            flashing = "enable"
+        if main_entity.state == "triggered":
+            color = rgb_dec565([223,76,30])
+            icon = get_icon_char("bell-ring")
+            flashing = "enable"
+
+        #add button to show sensor state
+        add_btn = ""
+        if "open_sensors" in main_entity.attributes and main_entity.attributes.get("open_sensors") is not None:
+            add_btn=f"{get_icon_char('progress-alert')}~{rgb_dec565([243,179,0])}~"
+
+        # add padding to arm buttons
+        arm_buttons = ""
+        for b in supported_modes:
+            modeName = f"frontend.ui.card.alarm_control_panel.{b}"
+            arm_buttons += f"~{get_translation(self.locale, modeName)}~{b}"
+        if len(supported_modes) < 4:
+            arm_buttons += "~"*((4-len(supported_modes))*2)
+        result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}~{add_btn}"
+        return result
 
 class Screensaver(HACard):
     def __init__(self, locale, config, panel):
@@ -435,6 +504,8 @@ def card_factory(locale, settings, panel):
             card = MediaCard(locale, settings, panel)
         case 'cardThermo':
             card = ClimateCard(locale, settings, panel)
+        case 'cardAlarm':
+            card = AlarmCard(locale, settings, panel)
         case _:
             logging.error("card type %s not implemented", settings["type"])
             return "NotImplemented", None

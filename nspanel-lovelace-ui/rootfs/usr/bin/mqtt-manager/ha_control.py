@@ -154,7 +154,7 @@ def handle_buttons(entity_id, btype, value):
             service_data = {
                 "code": value
             }
-            call_ha_service(entity_id, f"alarm_{button_type}", service_data=service_data)
+            call_ha_service(entity_id, f"alarm_{btype}", service_data=service_data)
         case 'mode-preset_modes' | 'mode-swing_modes' | 'mode-fan_modes':
             mapping = {
                 'mode-preset_modes': 'preset_modes',
