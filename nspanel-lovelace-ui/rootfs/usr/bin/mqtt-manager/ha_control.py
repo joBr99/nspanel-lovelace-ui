@@ -52,12 +52,12 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
         return dimmode, dimValueNormal
 
 def handle_buttons(entity_id, btype, value):
-   match btype:
-       case 'button':
-           button_press(entity_id, value)
-       case 'OnOff':
-           on_off(entity_id, value)
-       case 'number-set':
+    match btype:
+        case 'button':
+            button_press(entity_id, value)
+        case 'OnOff':
+            on_off(entity_id, value)
+        case 'number-set':
             if entity_id.startswith('fan'):
                 attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
                 value = float(value) * float(attr.get(percentage_step, 0))
@@ -65,8 +65,7 @@ def handle_buttons(entity_id, btype, value):
                 "value": int(value)
             }
             call_ha_service(entity_id, "set_value", service_data=service_data)
-
-       case 'up' | 'stop' | 'down' | 'tiltOpen' | 'tiltStop' | 'tiltClose' | 'media-next' | 'media-back' | 'media-pause' | 'timer-cancel' | 'timer-pause' | 'timer-finish':
+        case 'up' | 'stop' | 'down' | 'tiltOpen' | 'tiltStop' | 'tiltClose' | 'media-next' | 'media-back' | 'media-pause' | 'timer-cancel' | 'timer-pause' | 'timer-finish':
             action_service_mapping = {
                 'up': 'open_cover',
                 'stop': 'stop_cover',
@@ -83,7 +82,7 @@ def handle_buttons(entity_id, btype, value):
             }
             service = action_service_mapping[btype]
             call_ha_service(entity_id, service)
-       case 'timer-start':
+        case 'timer-start':
             if value:
                 service_data = {
                     "duration": value
@@ -91,29 +90,29 @@ def handle_buttons(entity_id, btype, value):
                 call_ha_service(entity_id, "start", service_data=service_data)
             else:
                 call_ha_service(entity_id, "start")
-       case 'positionSlider':
+        case 'positionSlider':
             service_data = {
                 "position": int(value)
             }
             call_ha_service(entity_id, "set_cover_position", service_data=service_data)
-       case 'tiltSlider':
+        case 'tiltSlider':
             service_data = {
                 "tilt_position": int(value)
             }
             call_ha_service(entity_id, "set_cover_tilt_position", service_data=service_data)
-       case 'media-OnOff':
+        case 'media-OnOff':
             state = libs.home_assistant.get_entity_data(entity_id).get('state', '')
             if state == "off":
                 call_ha_service(entity_id, "turn_on")
             else:
                 call_ha_service(entity_id, "turn_off")
-       case 'media-shuffle':
+        case 'media-shuffle':
             suffle = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get('shuffle')
             service_data = {
                 "shuffle": not suffle
             }
             call_ha_service(entity_id, "set_value", service_data=service_data)
-       case 'volumeSlider':
+        case 'volumeSlider':
             pos = int(value)
             # HA wants to have this value between 0 and 1 as float
             pos = pos/100
@@ -121,20 +120,20 @@ def handle_buttons(entity_id, btype, value):
                 "volume_level": pos
             }
             call_ha_service(entity_id, "volume_set", service_data=service_data)
-       case 'speaker-sel':
+        case 'speaker-sel':
             service_data = {
                 "volume_level": value
             }
             call_ha_service(entity_id, "select_source", service_data=service_data)
-       # for light detail page
-       case 'brightnessSlider':
+        # for light detail page
+        case 'brightnessSlider':
             # scale 0-100 to ha brightness range
             brightness = int(scale(int(value), (0, 100), (0,255)))
             service_data = {
                 "brightness": brightness
             }
             call_ha_service(entity_id, "turn_on", service_data=service_data)
-       case 'colorTempSlider':
+        case 'colorTempSlider':
             attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
             min_mireds = attr.get("min_mireds")
             max_mireds = attr.get("max_mireds")
@@ -144,19 +143,19 @@ def handle_buttons(entity_id, btype, value):
                 "color_temp": color_val
             }
             call_ha_service(entity_id, "turn_on", service_data=service_data)
-       case 'colorWheel':
+        case 'colorWheel':
             value = value.split('|')
             color = pos_to_color(int(value[0]), int(value[1]), int(value[2]))
             service_data = {
                 "rgb_color": color
             }
             call_ha_service(entity_id, "turn_on", service_data=service_data)
-       case 'disarm' | 'arm_home' | 'arm_away' | 'arm_night' | 'arm_vacation':
+        case 'disarm' | 'arm_home' | 'arm_away' | 'arm_night' | 'arm_vacation':
             service_data = {
                 "code": value
             }
             call_ha_service(entity_id, f"alarm_{button_type}", service_data=service_data)
-       case 'mode-preset_modes' | 'mode-swing_modes' | 'mode-fan_modes':
+        case 'mode-preset_modes' | 'mode-swing_modes' | 'mode-fan_modes':
             mapping = {
                 'mode-preset_modes': 'preset_modes',
                 'mode-swing_modes': 'swing_modes',
@@ -170,38 +169,54 @@ def handle_buttons(entity_id, btype, value):
                         mapping[btype]: mode
                     }
                     call_ha_service(entity_id, f"set_{mapping[btype]}", service_data=service_data)
-       case 'mode-input_select' | 'mode-select':
-            if btype in mapping:
-                modes = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get(options, [])
-                if options:
-                    option = options[int(value)]
-                    service_data = {
-                        "option": option
-                    }
-                    call_ha_service(entity_id, "select_option", service_data=service_data)
+        case 'mode-input_select' | 'mode-select':
+            options = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get("options", [])
+            if options:
+                option = options[int(value)]
+                service_data = {
+                    "option": option
+                }
+                call_ha_service(entity_id, "select_option", service_data=service_data)
+        case 'mode-media_player':
+            options = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get("source_list", [])
+            if options:
+                option = options[int(value)]
+                service_data = {
+                    "source": option
+                }
+                call_ha_service(entity_id, "select_source", service_data=service_data)
+        case 'mode-light':
+            options = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get("effect_list", [])
+            if options:
+                option = options[int(value)]
+                service_data = {
+                    "effect": option
+                }
+                call_ha_service(entity_id, "turn_on", service_data=service_data)
+        case 'tempUpd':
+            temp = int(value)/10
+            service_data = {
+                "temperature": temp
+            }
+            call_ha_service(entity_id, "set_temperature", service_data=service_data)
+        case 'tempUpdHighLow':
+            value = value.split("|")
+            temp_high = int(value[0])/10
+            temp_low = int(value[1])/10
+            service_data = {
+                "target_temp_high": temp_high,
+                "target_temp_low": temp_low,
+            }
+            call_ha_service(entity_id, "set_temperature", service_data=service_data)
+        case 'hvac_action':
+            service_data = {
+                "hvac_mode": value
+            }
+            call_ha_service(entity_id, "set_hvac_mode", service_data=service_data)
+        case _:
+           logging.error("Not implemented: %s", btype)
 
-       case _:
-          logging.error("Not implemented: %s", btype)
 
-
-
-
-
-    #  # for climate page
-    #  if button_type == "tempUpd":
-    #      temp = int(value)/10
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "set_temperature", temperature=temp)
-    #  if button_type == "tempUpdHighLow":
-    #      value = value.split("|")
-    #      temp_high = int(value[0])/10
-    #      temp_low = int(value[1])/10
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "set_temperature", target_temp_high=temp_high, target_temp_low=temp_low)
-    #  if button_type == "hvac_action":
-    #      apis.ha_api.get_entity(entity_id).call_service(
-    #          "set_hvac_mode", hvac_mode=value)
-    #
     #  # for cardUnlock
     #  if button_type == "cardUnlock-unlock":
     #      curCard = self._config.get_card_by_uuid(
@@ -215,25 +230,6 @@ def handle_buttons(entity_id, btype, value):
     #                      self._previous_cards.append(self._current_card)
     #                  self._current_card = dstCard
     #                  self._pages_gen.render_card(self._current_card)
-    #
-    #
-    #  if button_type == "mode-light":
-    #      if entity_id.startswith('uuid'):
-    #          entity_config = self._config._config_entites_table.get(
-    #              entity_id)
-    #          entity_id = entity_config.entityId
-    #      entity = apis.ha_api.get_entity(entity_id)
-    #      options_list = entity_config.entity_input_config.get("effectList")
-    #      if options_list is not None:
-    #          option = options_list[int(value)]
-    #      else:
-    #          option = entity.attributes.effect_list[int(value)]
-    #      entity.call_service("turn_on", effect=option)
-    #
-    #  if button_type == "mode-media_player":
-    #      entity = apis.ha_api.get_entity(entity_id)
-    #      option = entity.attributes.source_list[int(value)]
-    #      entity.call_service("select_source", source=option)
 
     #  if button_type == "opnSensorNotify":
     #      msg = ""
