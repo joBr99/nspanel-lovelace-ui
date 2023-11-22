@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.9 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.10 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -60,6 +60,7 @@ ReleaseNotes:
         - 20.11.2023 - v4.3.3.7  Add Multilingualism to cardMedia (39 languages)
         - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism), some Minor Fixes
 	- 20.11.2023 - v4.3.3.9  Add ScreensaverEntityOnColor, ...OffColor, ...OnText, ...OffText
+        - 21.11.2023 - v4.3.3.10 Code optimization
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -156,130 +157,165 @@ Upgrades in Konsole:
 ---------------------------------------------------------------------------------------
 */
 
-let Icons = new IconsSelector();
-let timeoutSlider: any;
-let vwIconColor = [];
-let weatherForecast: boolean;
-let Debug: boolean;
+/******************************* Begin CONFIG Parameter *******************************/
 
-// Ab hier Anpassungen vornehmen
+// liefert bei true detailliertere Meldundgen im Log.
+let Debug: boolean = false;
 
-const autoCreateAlias = true;                               // Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.  
-const weatherAdapterInstance: string = 'accuweather.0.';    // Möglich 'accuweather.0.' oder 'daswetter.0.'
-const weatherScreensaverTempMinMax: string = 'MinMax';      // Mögliche Werte: 'Min', 'Max' oder 'MinMax'
 
-const tasmota_web_admin_user: string = 'admin';             // ändern, falls der User im Tasmota vor dem Kompilieren umbenannt wurde (Standard Tasmota: admin)
-const tasmota_web_admin_password: string = '';              // setzten, falls "Web Admin Password" in Tasmote vergeben
+/***** 1. Tasmota-Config *****/
 
-// Setzen der bevorzugten Tasmota32-Version
-const tasmotaOtaVersion: string = 'tasmota32-DE.bin';
-// Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
-// 'tasmota32-nspanel.bin' oder 'tasmota32.bin' oder 'tasmota32-DE.bin' oder etc.
+    // Anpassen an die Verzeichnisse der MQTT-Adapter-Instanz
+    const NSPanelReceiveTopic: string = 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT';
+    const NSPanelSendTopic: string = 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend';
 
-const NSPanel_Path = '0_userdata.0.NSPanel.1.';       // Anpassen an das jewilige NSPanel
-const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.';     // Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm)
+    // nur ändern, falls der User im Tasmota vor dem Kompilieren umbenannt wurde (Standard Tasmota: admin)
+    const tasmota_web_admin_user: string = 'admin';
+    
+    // setzten, falls "Web Admin Password" in Tasmota vergeben
+    const tasmota_web_admin_password: string = '';
 
-const AliasPath: string = 'alias.0.' + NSPanel_Path.substring(13, NSPanel_Path.length);
+    // Setzen der bevorzugten Tasmota32-Version (für Updates)
+    const tasmotaOtaVersion: string = 'tasmota32-DE.bin';
+        // Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
+        // 'tasmota32-nspanel.bin' oder 'tasmota32.bin' oder 'tasmota32-DE.bin' oder etc.
 
-// Farbkonstanten zur Nutzung in den PageItems
-const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blau-Off - Original Entity Off
-const HMIOn:            RGB = { red:   3, green: 169, blue: 244 };     // Blau-On
-const HMIDark:          RGB = { red:  29, green:  29, blue:  29 };     // Original Background Color
-const Off:              RGB = { red: 253, green: 128, blue:   0 };     // Orange-Off - schönere Farbübergänge
-const On:               RGB = { red: 253, green: 216, blue:  53 };
-const MSRed:            RGB = { red: 251, green: 105, blue:  98 };
-const MSYellow:         RGB = { red: 255, green: 235, blue: 156 };
-const MSGreen:          RGB = { red: 121, green: 222, blue: 121 };
-const Red:              RGB = { red: 255, green:   0, blue:   0 };
-const White:            RGB = { red: 255, green: 255, blue: 255 };
-const Yellow:           RGB = { red: 255, green: 255, blue:   0 };
-const Green:            RGB = { red:   0, green: 255, blue:   0 };
-const Blue:             RGB = { red:   0, green:   0, blue: 255 };
-const DarkBlue:         RGB = { red:   0, green:   0, blue: 136 };
-const Gray:             RGB = { red: 136, green: 136, blue: 136 };
-const Black:            RGB = { red:   0, green:   0, blue:   0 };
-const colorSpotify:     RGB = { red:  30, green: 215, blue:  96 };
-const colorAlexa:       RGB = { red:  49, green: 196, blue: 243 };
-const colorRadio:       RGB = { red: 255, green: 127, blue:   0 };
-const BatteryFull:      RGB = { red:  96, green: 176, blue:  62 };
-const BatteryEmpty:     RGB = { red: 179, green:  45, blue:  25 };
 
-//Menu Icon Colors
-const Menu:             RGB = { red: 150, green: 150, blue: 100 };
-const MenuLowInd:       RGB = { red: 255, green: 235, blue: 156 };
-const MenuHighInd:      RGB = { red: 251, green: 105, blue:  98 };
+/***** 2. Verzeichnisse in 0_userdata.0... *****/
 
-//Dynamische Indikatoren (Abstufung grün nach gelb nach rot)
-const colorScale0:      RGB = { red:  99, green: 190, blue: 123 };
-const colorScale1:      RGB = { red: 129, green: 199, blue: 126 };
-const colorScale2:      RGB = { red: 161, green: 208, blue: 127 };
-const colorScale3:      RGB = { red: 129, green: 217, blue: 126 };
-const colorScale4:      RGB = { red: 222, green: 226, blue: 131 };
-const colorScale5:      RGB = { red: 254, green: 235, blue: 132 };
-const colorScale6:      RGB = { red: 255, green: 210, blue: 129 };
-const colorScale7:      RGB = { red: 251, green: 185, blue: 124 };
-const colorScale8:      RGB = { red: 251, green: 158, blue: 117 };
-const colorScale9:      RGB = { red: 248, green: 131, blue: 111 };
-const colorScale10:     RGB = { red: 248, green: 105, blue: 107 };
+    // Anpassen an das jeweilige NSPanel
+    const NSPanel_Path = '0_userdata.0.NSPanel.1.';
 
-//Screensaver Default Theme Colors
-const scbackground:     RGB = { red:   0, green:   0, blue:   0};
-const scbackgroundInd1: RGB = { red: 255, green:   0, blue:   0};
-const scbackgroundInd2: RGB = { red: 121, green: 222, blue: 121};
-const scbackgroundInd3: RGB = { red: 255, green: 255, blue:   0};
-const sctime:           RGB = { red: 255, green: 255, blue: 255};
-const sctimeAMPM:       RGB = { red: 255, green: 255, blue: 255};
-const scdate:           RGB = { red: 255, green: 255, blue: 255};
-const sctMainIcon:      RGB = { red: 255, green: 255, blue: 255};
-const sctMainText:      RGB = { red: 255, green: 255, blue: 255};
-const sctForecast1:     RGB = { red: 255, green: 255, blue: 255};
-const sctForecast2:     RGB = { red: 255, green: 255, blue: 255};
-const sctForecast3:     RGB = { red: 255, green: 255, blue: 255};
-const sctForecast4:     RGB = { red: 255, green: 255, blue: 255};
-const sctF1Icon:        RGB = { red: 255, green: 235, blue: 156};
-const sctF2Icon:        RGB = { red: 255, green: 235, blue: 156};
-const sctF3Icon:        RGB = { red: 255, green: 235, blue: 156};
-const sctF4Icon:        RGB = { red: 255, green: 235, blue: 156};
-const sctForecast1Val:  RGB = { red: 255, green: 255, blue: 255};
-const sctForecast2Val:  RGB = { red: 255, green: 255, blue: 255};
-const sctForecast3Val:  RGB = { red: 255, green: 255, blue: 255};
-const sctForecast4Val:  RGB = { red: 255, green: 255, blue: 255};
-const scbar:            RGB = { red: 255, green: 255, blue: 255};
-const sctMainIconAlt:   RGB = { red: 255, green: 255, blue: 255};
-const sctMainTextAlt:   RGB = { red: 255, green: 255, blue: 255};
-const sctTimeAdd:       RGB = { red: 255, green: 255, blue: 255};
+    // Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm/cardUnlock)
+    const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.';
 
-//Auto-Weather-Colors
-const swClearNight:     RGB = { red: 150, green: 150, blue: 100};
-const swCloudy:         RGB = { red:  75, green:  75, blue:  75};
-const swExceptional:    RGB = { red: 255, green:  50, blue:  50};
-const swFog:            RGB = { red: 150, green: 150, blue: 150};
-const swHail:           RGB = { red: 200, green: 200, blue: 200};
-const swLightning:      RGB = { red: 200, green: 200, blue:   0};
-const swLightningRainy: RGB = { red: 200, green: 200, blue: 150};
-const swPartlycloudy:   RGB = { red: 150, green: 150, blue: 150};
-const swPouring:        RGB = { red:  50, green:  50, blue: 255};
-const swRainy:          RGB = { red: 100, green: 100, blue: 255};
-const swSnowy:          RGB = { red: 150, green: 150, blue: 150};
-const swSnowyRainy:     RGB = { red: 150, green: 150, blue: 255};
-const swSunny:          RGB = { red: 255, green: 255, blue:   0};
-const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
-//-- Anfang der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -----------------------
+/***** 3. Wetteradapter Config *****/
+
+    // Mögliche Wetteradapter 'accuweather.0.' oder 'daswetter.0.'
+    const weatherAdapterInstance: string = 'accuweather.0.';
+    
+    // Mögliche Werte: 'Min', 'Max' oder 'MinMax' im Screensaver
+    const weatherScreensaverTempMinMax: string = 'MinMax';
+
+    // Dieser Alias wird automatisch für den gewählten Wetter erstellt und kann entsprechend angepasst werden
+    const weatherEntityPath: string = 'alias.0.Wetter';
+
+
+/***** 4. Farbkonstanten zur Nutzung in den PageItems *****/
+
+    // Bei Bedarf können weitere Farben definiert werden
+    const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blau-Off - Original Entity Off
+    const HMIOn:            RGB = { red:   3, green: 169, blue: 244 };     // Blau-On
+    const HMIDark:          RGB = { red:  29, green:  29, blue:  29 };     // Original Background Color
+    const Off:              RGB = { red: 253, green: 128, blue:   0 };     // Orange-Off - schönere Farbübergänge
+    const On:               RGB = { red: 253, green: 216, blue:  53 };
+    const MSRed:            RGB = { red: 251, green: 105, blue:  98 };
+    const MSYellow:         RGB = { red: 255, green: 235, blue: 156 };
+    const MSGreen:          RGB = { red: 121, green: 222, blue: 121 };
+    const Red:              RGB = { red: 255, green:   0, blue:   0 };
+    const White:            RGB = { red: 255, green: 255, blue: 255 };
+    const Yellow:           RGB = { red: 255, green: 255, blue:   0 };
+    const Green:            RGB = { red:   0, green: 255, blue:   0 };
+    const Blue:             RGB = { red:   0, green:   0, blue: 255 };
+    const DarkBlue:         RGB = { red:   0, green:   0, blue: 136 };
+    const Gray:             RGB = { red: 136, green: 136, blue: 136 };
+    const Black:            RGB = { red:   0, green:   0, blue:   0 };
+    const colorSpotify:     RGB = { red:  30, green: 215, blue:  96 };
+    const colorAlexa:       RGB = { red:  49, green: 196, blue: 243 };
+    const colorRadio:       RGB = { red: 255, green: 127, blue:   0 };
+    const BatteryFull:      RGB = { red:  96, green: 176, blue:  62 };
+    const BatteryEmpty:     RGB = { red: 179, green:  45, blue:  25 };
+
+    //Menu Icon Colors
+    const Menu:             RGB = { red: 150, green: 150, blue: 100 };
+    const MenuLowInd:       RGB = { red: 255, green: 235, blue: 156 };
+    const MenuHighInd:      RGB = { red: 251, green: 105, blue:  98 };
+
+    //Dynamische Indikatoren (Abstufung grün nach gelb nach rot)
+    const colorScale0:      RGB = { red:  99, green: 190, blue: 123 };
+    const colorScale1:      RGB = { red: 129, green: 199, blue: 126 };
+    const colorScale2:      RGB = { red: 161, green: 208, blue: 127 };
+    const colorScale3:      RGB = { red: 129, green: 217, blue: 126 };
+    const colorScale4:      RGB = { red: 222, green: 226, blue: 131 };
+    const colorScale5:      RGB = { red: 254, green: 235, blue: 132 };
+    const colorScale6:      RGB = { red: 255, green: 210, blue: 129 };
+    const colorScale7:      RGB = { red: 251, green: 185, blue: 124 };
+    const colorScale8:      RGB = { red: 251, green: 158, blue: 117 };
+    const colorScale9:      RGB = { red: 248, green: 131, blue: 111 };
+    const colorScale10:     RGB = { red: 248, green: 105, blue: 107 };
+
+    //Screensaver Default Theme Colors
+    const scbackground:     RGB = { red:   0, green:   0, blue:   0};
+    const scbackgroundInd1: RGB = { red: 255, green:   0, blue:   0};
+    const scbackgroundInd2: RGB = { red: 121, green: 222, blue: 121};
+    const scbackgroundInd3: RGB = { red: 255, green: 255, blue:   0};
+    const sctime:           RGB = { red: 255, green: 255, blue: 255};
+    const sctimeAMPM:       RGB = { red: 255, green: 255, blue: 255};
+    const scdate:           RGB = { red: 255, green: 255, blue: 255};
+    const sctMainIcon:      RGB = { red: 255, green: 255, blue: 255};
+    const sctMainText:      RGB = { red: 255, green: 255, blue: 255};
+    const sctForecast1:     RGB = { red: 255, green: 255, blue: 255};
+    const sctForecast2:     RGB = { red: 255, green: 255, blue: 255};
+    const sctForecast3:     RGB = { red: 255, green: 255, blue: 255};
+    const sctForecast4:     RGB = { red: 255, green: 255, blue: 255};
+    const sctF1Icon:        RGB = { red: 255, green: 235, blue: 156};
+    const sctF2Icon:        RGB = { red: 255, green: 235, blue: 156};
+    const sctF3Icon:        RGB = { red: 255, green: 235, blue: 156};
+    const sctF4Icon:        RGB = { red: 255, green: 235, blue: 156};
+    const sctForecast1Val:  RGB = { red: 255, green: 255, blue: 255};
+    const sctForecast2Val:  RGB = { red: 255, green: 255, blue: 255};
+    const sctForecast3Val:  RGB = { red: 255, green: 255, blue: 255};
+    const sctForecast4Val:  RGB = { red: 255, green: 255, blue: 255};
+    const scbar:            RGB = { red: 255, green: 255, blue: 255};
+    const sctMainIconAlt:   RGB = { red: 255, green: 255, blue: 255};
+    const sctMainTextAlt:   RGB = { red: 255, green: 255, blue: 255};
+    const sctTimeAdd:       RGB = { red: 255, green: 255, blue: 255};
+
+    //Auto-Weather-Colors
+    const swClearNight:     RGB = { red: 150, green: 150, blue: 100};
+    const swCloudy:         RGB = { red:  75, green:  75, blue:  75};
+    const swExceptional:    RGB = { red: 255, green:  50, blue:  50};
+    const swFog:            RGB = { red: 150, green: 150, blue: 150};
+    const swHail:           RGB = { red: 200, green: 200, blue: 200};
+    const swLightning:      RGB = { red: 200, green: 200, blue:   0};
+    const swLightningRainy: RGB = { red: 200, green: 200, blue: 150};
+    const swPartlycloudy:   RGB = { red: 150, green: 150, blue: 150};
+    const swPouring:        RGB = { red:  50, green:  50, blue: 255};
+    const swRainy:          RGB = { red: 100, green: 100, blue: 255};
+    const swSnowy:          RGB = { red: 150, green: 150, blue: 150};
+    const swSnowyRainy:     RGB = { red: 150, green: 150, blue: 255};
+    const swSunny:          RGB = { red: 255, green: 255, blue:   0};
+    const swWindy:          RGB = { red: 150, green: 150, blue: 150};
+
+
+/***** 5. Script - Parameter *****/
+ 
+    // Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.
+    const autoCreateAlias = true;
+
+    //Verzeichnis für Auto-Aliase (wird per Default aus dem NSPanel-Verzeichnis gebildet und muss nicht verändert werden)
+    const AliasPath: string = 'alias.0.' + NSPanel_Path.substring(13, NSPanel_Path.length);
+
+    // Default-Farbe für Off-Zustände
+    const defaultOffColorParam: any = Off;
+    
+    // Default-Farbe für On-Zustände
+    const defaultOnColorParam: any = On;
+
+    const defaultColorParam: any = Off;
+    
+    // Default-Hintergrundfarbe HMIDark oder Black
+    const defaultBackgroundColorParam: any = HMIDark;
+
+/******************************** End CONFIG Parameter ********************************/
+
+//-- Anfang für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich ----------------
   //-- siehe https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
-  let Alarmseite = <PageAlarm>
-  {
-      "type": "cardAlarm",
-      "heading": "Alarm",
-      "useColor": true,
-      "subPage": false,
-      "items": [
-          <PageItem>{ id: 'alias.0.NSPanel.Alarm',
-          actionStringArray: ['Vollschutz','Zuhause','Nacht','Besuch','Ausschalten'],
-          autoCreateALias: true }
-      ]
-  }
-//-- ENDE der Beispiele für Seitengestaltung -- Selbstdefinierte Aliase erforderlich -------------------------
+
+
+
+//-- ENDE für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich -------------------------
 
 
 /***********************************************************************************************
@@ -671,12 +707,46 @@ let NSPanel_Service_SubPage = <PageEntities>
  ***********************************************************************/
 
 export const config = <Config> {
-    panelRecvTopic: 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT',       // Bitte anpassen
-    panelSendTopic: 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend',   // Bitte anpassen
 
+    // Seiteneinteilung / Page division
+    // Hauptseiten / Mainpages
+    pages: [
+ 
+        NSPanel_Service         	//Auto-Alias Service Page
+	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
+    ],
+
+    // Unterseiten / Subpages
+    subPages: [
+	    
+                NSPanel_Service_SubPage,                //Auto-Alias Service Page (only used with cardUnlock)
+                NSPanel_Infos,                          //Auto-Alias Service Page
+                    NSPanel_Wifi_Info_1,                //Auto-Alias Service Page
+                    NSPanel_Wifi_Info_2,                //Auto-Alias Service Page
+                    NSPanel_Sensoren,                   //Auto-Alias Service Page
+                    NSPanel_Hardware,                   //Auto-Alias Service Page
+                    NSPanel_IoBroker,                   //Auot-Alias Service Page
+                NSPanel_Einstellungen,                  //Auto-Alias Service Page
+                    NSPanel_Screensaver,                //Auto-Alias Service Page
+                        NSPanel_ScreensaverDimmode,     //Auto-Alias Service Page
+                        NSPanel_ScreensaverBrightness,  //Auto-Alias Service Page
+                        NSPanel_ScreensaverLayout,      //Auto-Alias Service Page
+                        NSPanel_ScreensaverWeather,     //Auto-Alias Service Page
+                        NSPanel_ScreensaverDateformat,  //Auto-Alias Service Page
+                        NSPanel_ScreensaverIndicators,  //Auto-Alias Service Page
+                    NSPanel_Relays,                     //Auto-Alias Service Page
+                    NSPanel_Script,                     //Auto-Alias Service Page
+                NSPanel_Firmware,                       //Auto-Alias Service Page
+                    NSPanel_FirmwareTasmota,            //Auto-Alias Service Page
+                    NSPanel_FirmwareBerry,              //Auto-Alias Service Page
+                    NSPanel_FirmwareNextion,            //Auto-Alias Service Page
+    ],
+
+//---- Anfang     Screensaver Einstellungen / Screensaver settings ---------------------
     leftScreensaverEntity:
         [
-		// Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 	
+             // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+
         ],
 
     bottomScreensaverEntity :  
@@ -737,6 +807,16 @@ export const config = <Config> {
                 ScreensaverEntityUnitText: '%',
                 ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65}
             },
+            // bottomScreensaverEntity 6 (for Advanced Screensaver)
+            {
+             ScreensaverEntity: NSPanel_Path + 'Relay.1',
+             ScreensaverEntityIconOn: 'coach-lamp-variant',
+             ScreensaverEntityText: 'Street',
+             ScreensaverEntityOnColor: Yellow,
+             ScreensaverEntityOffColor: White,
+             ScreensaverEntityOnText: 'Is ON',
+             ScreensaverEntityOffText: 'Not ON'
+         },
  	        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
         ],
 
@@ -745,6 +825,7 @@ export const config = <Config> {
 		// Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
         ],
 
+        // Status Icon 
     mrIcon1ScreensaverEntity: 
         { 
             ScreensaverEntity: NSPanel_Path + 'Relay.1', 
@@ -767,41 +848,11 @@ export const config = <Config> {
             ScreensaverEntityOnColor: On, 
             ScreensaverEntityOffColor: HMIOff 
         },
+// ------ Ende der Screensaver Einstellungen --------------------
 
-    weatherEntity: 'alias.0.Wetter',    // Dieser Alias wird automatisch für den gewählten Wetter erstellt und kann entsprechend angepasst werden
-    defaultOffColor: Off,               // Default-Farbe für Off-Zustände
-    defaultOnColor: On,                 // Default-Farbe für On-Zustände
-    defaultColor: Off,
-    defaultBackgroundColor: HMIDark,    // Default-Hintergrundfarbe HMIDark oder Black
-    pages: [
-	    Alarmseite,                 //Auto-Alias Service Page
-            NSPanel_Service         	//Auto-Alias Service Page
-	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
-    ],
-    subPages: [
-	    
-                NSPanel_Service_SubPage,                //Auto-Alias Service Page (only used with cardUnlock)
-                NSPanel_Infos,                          //Auto-Alias Service Page
-                    NSPanel_Wifi_Info_1,                //Auto-Alias Service Page
-                    NSPanel_Wifi_Info_2,                //Auto-Alias Service Page
-                    NSPanel_Sensoren,                   //Auto-Alias Service Page
-                    NSPanel_Hardware,                   //Auto-Alias Service Page
-                    NSPanel_IoBroker,                   //Auot-Alias Service Page
-                NSPanel_Einstellungen,                  //Auto-Alias Service Page
-                    NSPanel_Screensaver,                //Auto-Alias Service Page
-                        NSPanel_ScreensaverDimmode,     //Auto-Alias Service Page
-                        NSPanel_ScreensaverBrightness,  //Auto-Alias Service Page
-                        NSPanel_ScreensaverLayout,      //Auto-Alias Service Page
-                        NSPanel_ScreensaverWeather,     //Auto-Alias Service Page
-                        NSPanel_ScreensaverDateformat,  //Auto-Alias Service Page
-                        NSPanel_ScreensaverIndicators,  //Auto-Alias Service Page
-                    NSPanel_Relays,                     //Auto-Alias Service Page
-                    NSPanel_Script,                     //Auto-Alias Service Page
-                NSPanel_Firmware,                       //Auto-Alias Service Page
-                    NSPanel_FirmwareTasmota,            //Auto-Alias Service Page
-                    NSPanel_FirmwareBerry,              //Auto-Alias Service Page
-                    NSPanel_FirmwareNextion,            //Auto-Alias Service Page
-    ],
+
+
+//-------Anfang     Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
     button1: {
         mode: null,     // Mögliche Werte wenn Rule2 definiert: 'page', 'toggle', 'set' - Wenn nicht definiert --> mode: null
         page: null,     // Zielpage - Verwendet wenn mode = page (bisher button1Page)
@@ -813,10 +864,33 @@ export const config = <Config> {
         page: null,     // Zielpage - Verwendet wenn mode = page (bisher button2Page)
         entity: null,   // Zielentity - Verwendet wenn mode = set oder toggle
         setValue: null  // Zielwert - Verwendet wenn mode = set
-    }
+    },
+//--------- Ende   Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+
+
+    // WICHTIG !! Parameter nicht ändern  WICHTIG!! 
+    panelRecvTopic: NSPanelReceiveTopic,
+    panelSendTopic: NSPanelSendTopic,
+    weatherEntity: weatherEntityPath,
+    defaultOffColor: defaultOffColorParam,
+    defaultOnColor: defaultOnColorParam,
+    defaultColor: defaultColorParam,
+    defaultBackgroundColor: defaultBackgroundColorParam,
 };
 
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
+
+const scriptVersion: string = 'v4.3.3.10';
+const tft_version: string = 'v4.3.3';
+const desired_display_firmware_version = 53;
+const berry_driver_version = 9;
+
+const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
+
+const Icons = new IconsSelector();
+let timeoutSlider: any;
+let vwIconColor = [];
+let weatherForecast: boolean;
 
 const request = require('request');
 const dayjs = require('dayjs');
@@ -842,12 +916,6 @@ async function Init_dayjs() {
 }
 Init_dayjs();
 
-//Desired Firmware
-const tft_version: string = 'v4.3.3';
-const desired_display_firmware_version = 53;
-const berry_driver_version = 9;
-const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
-
 let useMediaEvents: boolean = false;
 let timeoutMedia: any;
 let timeoutPower: any;
@@ -856,7 +924,7 @@ let globalTracklist: any;
 let weatherAdapterInstanceNumber: number = 0;
 let isSetOptionActive: boolean = false;
 
-const scriptVersion: string = 'v4.3.3.9';
+
 let nodeVersion: string = '';
 let javaScriptVersion: string = '';
 
