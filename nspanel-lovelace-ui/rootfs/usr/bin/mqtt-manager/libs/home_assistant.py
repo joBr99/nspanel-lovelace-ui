@@ -54,6 +54,9 @@ def on_message(ws, message):
         _get_all_states()
         if ON_CONNECT_HANDLER is not None:
             ON_CONNECT_HANDLER()
+    # for templates
+    elif json_msg["type"] == "event" and json_msg["id"] in response_buffer:
+        response_buffer[json_msg["id"]] = json_msg["event"]
     elif json_msg["type"] == "event" and json_msg["event"]["event_type"] == "state_changed":
         entity_id = json_msg["event"]["data"]["entity_id"]
         home_assistant_entity_state_cache[entity_id] = json_msg["event"]["data"]["new_state"]
@@ -68,7 +71,6 @@ def on_message(ws, message):
         else:
             if json_msg["id"] in response_buffer:
                 response_buffer[json_msg["id"]] = json_msg["result"]
-
         return None  # Ignore success result messages
     else:
         logging.debug(message)
@@ -202,6 +204,33 @@ def execute_script(entity_name: str, domain: str, service: str, service_data: di
     except Exception as e:
         logging.exception("Failed to call Home Assisatant script.")
         return False
+
+def render_template(template):
+    global next_id, response_buffer
+    try:
+        call_id = next_id
+        # request answer for this call
+        response_buffer[call_id] = True
+        msg = {
+            "id": next_id,
+            "type": "render_template",
+            "template": 'template'
+        }
+        print(json.dumps(msg))
+        send_message(json.dumps(msg))
+        # busy waiting for response with a timeout of 0.2 seconds - maybe there's a better way of doing this
+        mustend = time.time() + 0.2
+        while time.time() < mustend:
+            if response_buffer[call_id] == True or response_buffer[call_id] is None:
+                #print(f'loooooooooop {time.time()}')
+                time.sleep(0.0001)
+            else:
+                return response_buffer[call_id]["result"]
+        raise TimeoutError("Did not recive respose in time to HA template render call")
+    except Exception as e:
+        logging.exception("Failed to render template.")
+        return False
+    return ""
 
 def get_entity_data(entity_id: str):
     if entity_id in home_assistant_entity_state_cache:

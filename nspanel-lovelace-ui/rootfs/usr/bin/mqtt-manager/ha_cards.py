@@ -14,11 +14,22 @@ class HAEntity(panel_cards.Entity):
         super().__init__(locale, config, panel)
 
     def render(self, cardType=""):
+
+        if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
+            out = libs.home_assistant.render_template(self.icon_overwrite[3:])
+            self.icon_overwrite = out
+
+        if self.etype in ["delete", "navigate", "iText"]:
+            out = super().render()
+            return out
+
         # get data from HA
         data = libs.home_assistant.get_entity_data(self.entity_id)
         if data:
             self.state = data.get("state")
             self.attributes = data.get("attributes", [])
+        else:
+            return "~text~iid.404~X~6666~not found~"
 
         # HA Entities
         entity_type_panel = "text"
@@ -203,11 +214,11 @@ class HACard(panel_cards.Card):
         # Generate Entity for each Entity in Config
         self.entities = []
         if "entity" in config:
-            iid, entity = entity_factory(locale, config, panel)
+            entity = HAEntity(locale, config, panel)
             self.entities.append(entity)
         if "entities" in config:
             for e in config.get("entities"):
-                iid, entity = entity_factory(locale, e, panel)
+                entity = HAEntity(locale, e, panel)
                 self.entities.append(entity)
 
     def get_iid_entities(self):
@@ -246,7 +257,7 @@ class EntitiesCard(HACard):
         result = f"{self.title}~{self.gen_nav()}"
         for e in self.entities:
             result += e.render(cardType=self.type)
-        return result
+        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
 
 class QRCard(HACard):
     def __init__(self, locale, config, panel):
@@ -258,7 +269,7 @@ class QRCard(HACard):
         result = f"{self.title}~{self.gen_nav()}~{self.qrcode}"
         for e in self.entities:
             result += e.render()
-        return result
+        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
 
 class PowerCard(HACard):
     def __init__(self, locale, config, panel):
@@ -276,7 +287,7 @@ class PowerCard(HACard):
             #    if isinstance(speed, str):
             #        speed = apis.ha_api.render_template(speed)
             result += f"~{speed}"
-        return result
+        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
 
 class MediaCard(HACard):
     def __init__(self, locale, config, panel):
@@ -313,7 +324,7 @@ class MediaCard(HACard):
         for e in self.entities[1:]:
             button_str += e.render()
         result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{button_str}"
-        return result
+        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
 
 class ClimateCard(HACard):
     def __init__(self, locale, config, panel):
@@ -408,7 +419,7 @@ class ClimateCard(HACard):
             detailPage = "0"
 
         result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
-        return result
+        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
 
 class AlarmCard(HACard):
     def __init__(self, locale, config, panel):
@@ -478,18 +489,54 @@ class AlarmCard(HACard):
         if len(supported_modes) < 4:
             arm_buttons += "~"*((4-len(supported_modes))*2)
         result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}~{add_btn}"
-        return result
+        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
 
 class Screensaver(HACard):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
+
         if not self.type:
             self.type = "screensaver"
+
+        self.statusIcon1 = None
+        if "statusIcon1" in config:
+            self.statusIcon1 = HAEntity(locale, config.get("statusIcon1"), panel)
+        self.statusIcon2 = None
+        if "statusIcon2" in config:
+            self.statusIcon2 = HAEntity(locale, config.get("statusIcon2"), panel)
+
+    def get_entities(self):
+        ent = [e.entity_id for e in self.entities]
+        if self.statusIcon1:
+            ent.append(self.statusIcon1.entity_id)
+        if self.statusIcon2:
+            ent.append(self.statusIcon2.entity_id)
+        return ent
+
     def render(self):
         result = ""
         for e in self.entities:
             result += e.render(cardType=self.type)
-        return result[1:]
+        libs.panel_cmd.weatherUpdate(self.panel.sendTopic, result[1:])
+
+        statusUpdateResult = ""
+        icon1font = ""
+        icon2font = ""
+        if self.statusIcon1:
+            si1 = self.statusIcon1.render().split('~')
+            statusUpdateResult += f"{si1[3]}~{si1[4]}"
+            icon1font = self.statusIcon1.font
+        else:
+            statusUpdateResult += "~"
+        if self.statusIcon2:
+            si2 = self.statusIcon2.render().split('~')
+            statusUpdateResult += f"~{si2[3]}~{si2[4]}"
+            icon2font = self.statusIcon2.font
+        else:
+            statusUpdateResult += "~~"
+
+        libs.panel_cmd.statusUpdate(self.panel.sendTopic, f"{statusUpdateResult}~{icon1font}~{icon2font}")
+
 
 
 def card_factory(locale, settings, panel):
@@ -510,15 +557,6 @@ def card_factory(locale, settings, panel):
             logging.error("card type %s not implemented", settings["type"])
             return "NotImplemented", None
     return card.iid, card
-
-
-def entity_factory(locale, settings, panel):
-    etype = settings["entity"].split(".")[0]
-    if etype in ["delete", "navigate", "iText"]:
-        entity = panel_cards.Entity(locale, settings, panel)
-    else:
-        entity = HAEntity(locale, settings, panel)
-    return entity.iid, entity
 
 def detail_open(locale, detail_type, ha_entity_id, entity_id):
     data = libs.home_assistant.get_entity_data(ha_entity_id)

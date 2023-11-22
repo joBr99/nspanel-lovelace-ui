@@ -125,10 +125,7 @@ class LovelaceUIPanel:
         if switchPages:
             libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
 
-        if self.current_card.type in ["screensaver", "screensaver2"]:
-            libs.panel_cmd.weatherUpdate(self.sendTopic, self.current_card.render())
-        else:
-            libs.panel_cmd.entityUpd(self.sendTopic, self.current_card.render())
+        self.current_card.render()
         # send sleepTimeout
         sleepTimeout = self.settings.get("sleepTimeout", 20)
         if self.current_card.config.get("sleepTimeout"):

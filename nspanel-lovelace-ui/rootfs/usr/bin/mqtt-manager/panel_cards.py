@@ -30,6 +30,13 @@ class Entity:
         self.icon_overwrite = config.get("icon", None)
         self.name_overwrite = config.get("name", None)
         self.color_overwrite = config.get("color", None)
+        font_mapping = {
+            "small": "1",
+            "medium": "2",
+            "medium-icon": "3",
+            "large": "4",
+        }
+        self.font = font_mapping.get(config.get("font", ""), "")
 
     def render(self, cardType=""):
         icon_char = self.icon_overwrite or ""
