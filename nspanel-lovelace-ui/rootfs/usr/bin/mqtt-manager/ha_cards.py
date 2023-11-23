@@ -246,6 +246,14 @@ class HACard(panel_cards.Card):
                                               'color': [255, 255, 255],
                                           }, self.panel
                                           ).render()[1:]
+        if not self.iid_prev and not self.iid_next:
+            leftBtn = panel_cards.Entity(self.locale,
+                                         {
+                                             'entity': f'navigate.UP',
+                                             'icon': 'mdi:arrow-left-bold',
+                                             'color': [255, 255, 255],
+                                         }, self.panel
+                                         ).render()[1:]
         result = f"{leftBtn}~{rightBtn}"
         return result
 

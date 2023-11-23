@@ -199,11 +199,15 @@ class LovelaceUIPanel:
                         match entity_id.split(".")[0]:
                             # handle internal stuff
                             case 'navigate':
-                                iid = entity_id.split(".")[1]
-                                self.privious_cards.append(self.current_card)
-                                self.current_card = self.searchCard(iid)
-                                self.render_current_page(switchPages=True)
-
+                                card_iid = entity_id.split(".")[1]
+                                if card_iid == "UP":
+                                    self.current_card = self.privious_cards.pop()
+                                    # TODO Handle privious_cards empty with default card
+                                    self.render_current_page(switchPages=True)
+                                else:
+                                    self.privious_cards.append(self.current_card)
+                                    self.current_card = self.searchCard(card_iid)
+                                    self.render_current_page(switchPages=True)
                             # send ha stuff to ha
                             case _:
                                 ha_control.handle_buttons(entity_id, btype, value)
