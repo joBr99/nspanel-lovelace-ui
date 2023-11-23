@@ -53,6 +53,7 @@ class LovelaceUIPanel:
         # generate cards for input settings
         for c in self.settings.get("hiddenCards", []):
             iid, card = card_factory(self.settings["locale"], c, self)
+            card.hidden = True
             self.hidden_cards[iid] = card
             # collect nav keys of cards
             if card.navigate_key:

@@ -14,6 +14,7 @@ class Card:
         self.type = config.get("type", "")
         self.config = config
         self.panel = panel
+        self.hidden = False
 
     def render(self):
         raise NotImplementedError
