@@ -22,9 +22,11 @@ class HAEntity(panel_cards.Entity):
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
             if self.etype == "navigate" and "status" in self.config:
-                self.config["entity"] = self.config.pop("status")
-                self.__init__(self.locale, self.config, self.panel)
-                status_out = self.render().split("~")
+                status_out = HAEntity(self.locale,
+                                    {
+                                        'entity': f'{self.config.get("status")}',
+                                    }, self.panel
+                                ).render().split("~")
                 status_out[2] = out.split("~")[2]
                 status_out = "~".join(status_out)
                 return status_out
