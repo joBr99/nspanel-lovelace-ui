@@ -255,7 +255,7 @@ class HACard(panel_cards.Card):
                                               'color': [255, 255, 255],
                                           }, self.panel
                                           ).render()[1:]
-        if self.hidden
+        if self.hidden:
             leftBtn = panel_cards.Entity(self.locale,
                                          {
                                              'entity': f'navigate.UP',
