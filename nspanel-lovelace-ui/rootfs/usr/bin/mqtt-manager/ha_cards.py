@@ -21,6 +21,12 @@ class HAEntity(panel_cards.Entity):
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
+            if self.etype == "navigate" and "status" in self.config:
+                config["entity"] = config["status"]
+                status_out = self.render().split("~")
+                status_out[2] = out.split("~")[2]
+                status_out = status_out.join("~")
+                return status_out
             return out
 
         # get data from HA
