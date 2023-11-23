@@ -41,22 +41,27 @@ class Entity:
     def render(self, cardType=""):
         icon_char = self.icon_overwrite or ""
         color = rgb_dec565([68, 115, 158])
+        if self.color_overwrite:
+            color = rgb_dec565(self.color_overwrite)
         name = self.name_overwrite or ""
         value = ""
         match self.etype:
             case 'delete':
                 return f"~delete~~~~~"
             case 'navigate':
-                page_search_res = self.panel.searchCard(
-                    self.entity_id.split(".")[1])
-                if page_search_res is not None:
-                    if name == "":
-                        name = page_search_res.title
-                    value = get_translation(
-                        self.locale, "frontend.ui.card.button.press")
+                card_iid = self.entity_id.split(".")[1]
+                if card_iid == "UP":
                     return f"~button~{self.entity_id}~{get_icon_char(icon_char)}~{color}~{name}~{value}"
                 else:
-                    return f"~text~{self.entity_id}~{get_icon_char('mdi:alert-circle-outline')}~17299~page not found~"
+                    page_search_res = self.panel.searchCard(card_iid)
+                    if page_search_res is not None:
+                        if name == "":
+                            name = page_search_res.title
+                        value = get_translation(
+                            self.locale, "frontend.ui.card.button.press")
+                        return f"~button~{self.entity_id}~{get_icon_char(icon_char)}~{color}~{name}~{value}"
+                    else:
+                        return f"~text~{self.entity_id}~{get_icon_char('mdi:alert-circle-outline')}~17299~page not found~"
             case 'iText':
                 # TODO: Render as HA Template
                 value = self.entity_id.split(".")[1]

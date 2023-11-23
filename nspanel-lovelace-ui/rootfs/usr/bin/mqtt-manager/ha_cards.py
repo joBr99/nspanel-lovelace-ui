@@ -22,10 +22,11 @@ class HAEntity(panel_cards.Entity):
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
             if self.etype == "navigate" and "status" in self.config:
-                config["entity"] = config["status"]
+                self.config["entity"] = self.config.pop("status")
+                self.__init__(self.locale, self.config, self.panel)
                 status_out = self.render().split("~")
                 status_out[2] = out.split("~")[2]
-                status_out = status_out.join("~")
+                status_out = "~".join(status_out)
                 return status_out
             return out
 
@@ -42,6 +43,8 @@ class HAEntity(panel_cards.Entity):
         icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.config.get("icon"))
         color = ha_colors.get_entity_color(
             self.etype, self.state, self.attributes)
+        if self.color_overwrite:
+            color = rgb_dec565(self.color_overwrite)
         name = self.config.get("name", self.attributes.get("friendly_name", "unknown"))
         if self.name_overwrite:
             name = self.name_overwrite
@@ -252,11 +255,11 @@ class HACard(panel_cards.Card):
                                               'color': [255, 255, 255],
                                           }, self.panel
                                           ).render()[1:]
-        if not self.iid_prev and not self.iid_next:
+        if not self.iid_prev and not self.iid_next and len(self.panel.cards) != 1:
             leftBtn = panel_cards.Entity(self.locale,
                                          {
                                              'entity': f'navigate.UP',
-                                             'icon': 'mdi:arrow-left-bold',
+                                             'icon': 'mdi:arrow-up-bold',
                                              'color': [255, 255, 255],
                                          }, self.panel
                                          ).render()[1:]
