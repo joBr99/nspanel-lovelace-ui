@@ -69,8 +69,22 @@ def get_config_file():
 def get_config(file):
     global settings
 
-    with open(file, 'r', encoding="utf8") as file:
-        settings = yaml.safe_load(file)
+    try:
+        with open(file, 'r', encoding="utf8") as file:
+            settings = yaml.safe_load(file)
+    except yaml.YAMLError as exc:
+        print ("Error while parsing YAML file:")
+        if hasattr(exc, 'problem_mark'):
+            if exc.context != None:
+                print ('  parser says\n' + str(exc.problem_mark) + '\n  ' +
+                    str(exc.problem) + ' ' + str(exc.context) +
+                    '\nPlease correct data and retry.')
+            else:
+                print ('  parser says\n' + str(exc.problem_mark) + '\n  ' +
+                    str(exc.problem) + '\nPlease correct data and retry.')
+        else:
+            print ("Something went wrong while parsing yaml file")
+        return False
 
     if not settings.get("mqtt_username"):
         settings["mqtt_username"] = os.getenv('MQTT_USER')
@@ -90,10 +104,7 @@ def get_config(file):
             settings["home_assistant_token"] = st
             settings["home_assistant_address"] = "http://supervisor"
             settings["is_addon"] = True
-
-    #print(settings["home_assistant_token"])
-    #print(settings["home_assistant_address"])
-    #print(settings["is_addon"])
+    return True
 
 def connect():
     global settings, home_assistant, client
@@ -179,8 +190,11 @@ def signal_handler(signum, frame):
     os.execl(python, python, *sys.argv)
 
 if __name__ == '__main__':
-    get_config(get_config_file())
     signal.signal(signal.SIGTERM, signal_handler)
     threading.Thread(target=config_watch).start()
-    connect()
-    loop()
+    if (get_config(get_config_file())):
+        connect()
+        loop()
+    else:
+        while True:
+          time.sleep(100)
