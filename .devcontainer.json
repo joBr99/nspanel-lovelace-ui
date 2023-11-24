@@ -2,6 +2,7 @@
   "name": "NSPanel Lovelace UI Home Assistant add-on repository",
   "image": "ghcr.io/home-assistant/devcontainer:addons",
   "appPort": ["7123:8123", "7357:4357"],
+  "postCreateCommand": "apt install -y python3 python3-pip && pip install -r nspanel-lovelace-ui/rootfs/usr/bin/mqtt-manager/requirements.txt --break-system-packages",
   "postStartCommand": "bash devcontainer_bootstrap",
   "runArgs": ["-e", "GIT_EDITOR=code --wait", "--privileged"],
   "remoteUser":"root",
