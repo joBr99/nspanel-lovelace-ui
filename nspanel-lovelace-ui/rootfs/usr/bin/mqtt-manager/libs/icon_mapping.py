@@ -6904,16 +6904,14 @@ icons = {
 def get_icon_id(ma_name):
     if isinstance(ma_name, re.Match):
         ma_name = ma_name.group(0).replace('<I>', '').replace('</I>', '')
-        print(f"testxxxx  {ma_name}")
 
     if "text:" in ma_name:
         return ma_name.replace("text:", "")
-    if "<I>" in ma_name and "</I>" in ma_name:
-        print(f"testdddd  {ma_name}")
-        if isinstance(ma_name, str):
-            ma_name = re.sub(r'<I>.+?<\/I>', get_icon_id, ma_name)
-            print(f"test123d  {ma_name}")
-        return ma_name
+    if "ha:" in ma_name:
+        if "<I>" in ma_name and "</I>" in ma_name:
+            if isinstance(ma_name, str):
+                ma_name = re.sub(r'<I>.+?<\/I>', get_icon_id, ma_name)
+        return ma_name.replace("ha:", "")
 
     ma_name = ma_name.replace("mdi:", "")
     if ma_name in icons:

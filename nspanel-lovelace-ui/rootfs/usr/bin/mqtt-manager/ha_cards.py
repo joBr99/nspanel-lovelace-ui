@@ -18,7 +18,7 @@ class HAEntity(panel_cards.Entity):
 
         if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
             #icon_char = libs.home_assistant.render_template(self.icon_overwrite[3:])
-            self.icon_overwrite = ha_template.render(self.icon_overwrite[3:])
+            self.icon_overwrite = ha_template.render(self.icon_overwrite)
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
