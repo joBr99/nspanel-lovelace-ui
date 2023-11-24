@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-11-24 17:58:09.082084526 +0000
++++ /dev/fd/62	2023-11-24 18:12:20.682875887 +0000
 +le list
 + +1,9 @@
 +.s.txt
@@ -77,6 +77,34 @@
 +     vis bPrev,0
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     dim=dimValueNormal
++     //wup=cardEntities
++     //remove background & activate reparse mode
++     vis p0,0
++     recmod=1
++     baud=115200
++     //debug stuff
 +6 +60,36 @@
 +     //ui e6
 +     vis btOnOff6,0
@@ -129,13 +157,13 @@
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 38
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 38
 +14 +185,26 @@
 +e (string) type6
@@ -1532,6 +1560,34 @@
 +                             {
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     recmod=1
++     baud=115200
++     vis tInstruction,0
++     vis tTmp,0
++     vis p0,0
++     vis tNotifyHead,0
++     vis tNotifyText,0
 +7 +28,14 @@
 +     }
 +     tDate.txt=pageIcons.vaDate.txt
@@ -1626,6 +1682,34 @@
 +                                 if(tTime.bco!=screensaver.bco)
 +I/n2t-out/screensaver2.txt
 ++ HMI/US/portrait/n2t-out/screensaver2.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     recmod=1
++     baud=115200
++     vis tInstruction,0
++     vis tTmp,0
++     vis p0,0
++     vis tNotifyHead,0
++     vis tNotifyText,0
 +7 +28,14 @@
 +     }
 +     tDate.txt=pageIcons.vaDate.txt
