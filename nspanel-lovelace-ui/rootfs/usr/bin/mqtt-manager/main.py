@@ -100,7 +100,7 @@ def get_config(file):
 
     if not settings.get("home_assistant_token"):
         st = os.getenv('SUPERVISOR_TOKEN')
-        if st is not None:
+        if st and "home_assistant_token" not in settings and "home_assistant_address" not in settings:
             settings["home_assistant_token"] = st
             settings["home_assistant_address"] = "http://supervisor"
             settings["is_addon"] = True
