@@ -15,40 +15,43 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 import signal
 import sys
+from queue import Queue
+
 logging.getLogger("watchdog").propagate = False
 
 settings = {}
 panels = {}
+panel_queues = {}
 last_settings_file_mtime = 0
 mqtt_connect_time = 0
 has_sent_reload_command = False
 mqtt_client_name = "NSPanelLovelaceManager_" + str(get_mac())
 client = mqtt.Client(mqtt_client_name)
 logging.basicConfig(level=logging.DEBUG)
-panel_mqtt_recv_topics = {}
 
 def on_connect(client, userdata, flags, rc):
-    global panels, panel_mqtt_recv_topics
+    global settings
     logging.info("Connected to MQTT Server")
-    for name, panel in panels.items():
-        panel_mqtt_recv_topics[panel.recvTopic] = panel
-        client.subscribe(panel.recvTopic)
+    # subscribe to panelRecvTopic of each panel
+    for settings_panel in settings["nspanels"].values():
+        client.subscribe(settings_panel["panelRecvTopic"])
 
 def on_ha_update(entity_id):
-    for panel in panels.values():
-        panel.ha_event_callback(entity_id)
+    global panel_queues
+    for queue in panel_queues.values():
+        queue.put(("HA:", entity_id))
 
 def on_message(client, userdata, msg):
-    global panels, panel_mqtt_recv_topics
+    global panel_queues
     try:
         if msg.payload.decode() == "":
             return
         parts = msg.topic.split('/')
-        if msg.topic in panel_mqtt_recv_topics.keys():
+        if msg.topic in panel_queues.keys():
             data = json.loads(msg.payload.decode('utf-8'))
             if "CustomRecv" in data:
-                panel = panel_mqtt_recv_topics[msg.topic]
-                panel.customrecv_event_callback(data["CustomRecv"])
+                queue = panel_queues[msg.topic]
+                queue.put(("MQTT:", data["CustomRecv"]))
         else:
             logging.debug("Received unhandled message on topic: %s", msg.topic)
 
@@ -144,7 +147,7 @@ def loop():
     client.loop_forever()
 
 def setup_panels():
-    global settings, panels
+    global settings, panel_queues
     # Create NsPanel object
     for name, settings_panel in settings["nspanels"].items():
         if "timeZone" not in settings_panel:
@@ -154,9 +157,30 @@ def setup_panels():
         if "hiddenCards" not in settings_panel:
             settings_panel["hiddenCards"] = settings.get("hiddenCards", [])
 
-        panels[name] = LovelaceUIPanel(name, settings_panel)
-        libs.panel_cmd.page_type(
-            settings_panel["panelSendTopic"], "pageStartup")
+        #panels[name] = LovelaceUIPanel(name, settings_panel)
+
+        mqtt_queue = Queue(maxsize=20)
+        panel_queues[settings_panel["panelRecvTopic"]] = mqtt_queue
+        panel_thread = threading.Thread(target=panel_thread_target, args=(mqtt_queue, name, settings_panel))
+        panel_thread.daemon = True
+
+        panel_thread.start()
+
+def panel_thread_target(queue, name, settings_panel):
+    panel = LovelaceUIPanel(name, settings_panel)
+    while True:
+        msg = queue.get()
+        #print(msg)
+        if msg[0] == "MQTT:":
+            panel.customrecv_event_callback(msg[1])
+        elif msg[0] == "HA:":
+            panel.ha_event_callback(msg[1])
+
+
+
+
+
+
 
 def config_watch():
     class ConfigChangeEventHandler(FileSystemEventHandler):
