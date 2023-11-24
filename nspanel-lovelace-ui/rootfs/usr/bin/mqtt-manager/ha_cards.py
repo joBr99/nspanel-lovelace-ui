@@ -322,7 +322,7 @@ class MediaCard(HACard):
             self.title = main_entity.attributes.get("friendly_name", "unknown")
         title = main_entity.attributes.get("media_title", "")
         author = main_entity.attributes.get("media_artist", "")
-        volume = int(main_entity.attributes.get("media_artist", 0)*100)
+        volume = int(main_entity.attributes.get("volume_level", 0)*100)
         iconplaypause = get_icon_char("pause") if main_entity.state == "playing" else get_icon_char("play")
         onoffbutton = "disable"
         shuffleBtn = "disable"
