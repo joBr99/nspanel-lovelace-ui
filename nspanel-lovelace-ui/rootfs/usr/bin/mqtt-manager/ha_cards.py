@@ -37,6 +37,10 @@ class HAEntity(panel_cards.Entity):
         else:
             return "~text~iid.404~X~6666~not found~"
 
+        if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
+            #icon_char = libs.home_assistant.render_template(self.icon_overwrite[3:])
+            icon_char = ha_template.render(self.icon_overwrite[3:])
+
         # HA Entities
         entity_type_panel = "text"
         icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.config.get("icon"))
@@ -211,11 +215,6 @@ class HAEntity(panel_cards.Entity):
                     value += self.config.get("unit", "")
             case _:
                 name = "unsupported"
-
-
-        if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
-            #icon_char = libs.home_assistant.render_template(self.icon_overwrite[3:])
-            icon_char = ha_template.render(self.icon_overwrite[3:])
 
         if self.value_overwrite and self.value_overwrite.startswith("ha:"):
             value = ha_template.render(self.value_overwrite[3:])

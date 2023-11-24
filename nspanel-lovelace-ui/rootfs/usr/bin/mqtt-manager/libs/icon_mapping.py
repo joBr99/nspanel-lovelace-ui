@@ -6913,6 +6913,7 @@ def get_icon_id(ma_name):
         if isinstance(ma_name, str):
             ma_name = re.sub(r'<I>.+?<\/I>', get_icon_id, ma_name)
             print(f"test123d  {ma_name}")
+        return ma_name
 
     ma_name = ma_name.replace("mdi:", "")
     if ma_name in icons:
