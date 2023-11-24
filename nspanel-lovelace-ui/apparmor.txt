@@ -6,6 +6,7 @@ profile example flags=(attach_disconnected,mediate_deleted) {
   # Capabilities
   file,
   signal (send) set=(kill,term,int,hup,cont),
+  network,
 
   # S6-Overlay
   /init ix,
