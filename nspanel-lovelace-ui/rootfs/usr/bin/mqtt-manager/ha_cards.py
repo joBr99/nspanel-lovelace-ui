@@ -8,16 +8,13 @@ import dateutil.parser as dp
 import babel
 from libs.icon_mapping import get_icon_char
 from libs.helper import rgb_dec565, scale
+import ha_template
 
 class HAEntity(panel_cards.Entity):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
 
     def render(self, cardType=""):
-
-        if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
-            out = libs.home_assistant.render_template(self.icon_overwrite[3:])
-            self.icon_overwrite = out
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
@@ -44,9 +41,7 @@ class HAEntity(panel_cards.Entity):
         entity_type_panel = "text"
         icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.config.get("icon"))
         color = ha_colors.get_entity_color(
-            self.etype, self.state, self.attributes)
-        if self.color_overwrite:
-            color = rgb_dec565(self.color_overwrite)
+            self.etype, self.state, self.attributes, self.color_overwrite)
         name = self.config.get("name", self.attributes.get("friendly_name", "unknown"))
         if self.name_overwrite:
             name = self.name_overwrite
@@ -216,6 +211,14 @@ class HAEntity(panel_cards.Entity):
                     value += self.config.get("unit", "")
             case _:
                 name = "unsupported"
+
+
+        if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
+            #icon_char = libs.home_assistant.render_template(self.icon_overwrite[3:])
+            icon_char = ha_template.render(self.icon_overwrite[3:])
+
+        if self.value_overwrite and self.value_overwrite.startswith("ha:"):
+            value = ha_template.render(self.value_overwrite[3:])
 
         return f"~{entity_type_panel}~iid.{self.iid}~{icon_char}~{color}~{name}~{value}"
 

@@ -31,6 +31,7 @@ class Entity:
         self.icon_overwrite = config.get("icon", None)
         self.name_overwrite = config.get("name", None)
         self.color_overwrite = config.get("color", None)
+        self.value_overwrite = config.get("value", None)
         font_mapping = {
             "small": "1",
             "medium": "2",
