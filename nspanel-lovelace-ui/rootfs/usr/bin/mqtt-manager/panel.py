@@ -122,11 +122,11 @@ class LovelaceUIPanel:
             self.dimmode()
 
 
-    def render_current_page(self, switchPages=False):
+    def render_current_page(self, switchPages=False, requested=False):
         if switchPages:
             libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
-
-        self.current_card.render()
+        if requested:
+            self.current_card.render()
         # send sleepTimeout
         sleepTimeout = self.settings.get("sleepTimeout", 20)
         if self.current_card.config.get("sleepTimeout"):
@@ -155,7 +155,7 @@ class LovelaceUIPanel:
 
 
     def customrecv_event_callback(self, msg):
-        logging.debug("Recv Message from NsPanel: %s", msg)
+        logging.debug("Recv Message from NsPanel (%s): %s", self.name, msg)
         msg = msg.split(",")
         # run action based on received command
         if msg[0] == "event":
@@ -173,6 +173,8 @@ class LovelaceUIPanel:
                 self.privious_cards.append(self.current_card)
                 self.current_card = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
                 self.render_current_page(switchPages=True)
+            if msg[1] == "renderCurrentPage":
+                self.render_current_page(requested=True)
             if msg[1] == "buttonPress2":
                 entity_id = msg[2]
                 btype = msg[3]

@@ -8,7 +8,7 @@ def init(mqtt_client_from_manager):
 def custom_send(topic, msg):
     global mqtt_client
     mqtt_client.publish(topic, msg)
-    logging.debug("Sent Message to NsPanel: %s", msg)
+    logging.debug("Sent Message to NsPanel (%s): %s", topic, msg)
 
 
 def page_type(topic, target_page):
