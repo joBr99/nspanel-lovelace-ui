@@ -16,6 +16,10 @@ class HAEntity(panel_cards.Entity):
 
     def render(self, cardType=""):
 
+        if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
+            #icon_char = libs.home_assistant.render_template(self.icon_overwrite[3:])
+            self.icon_overwrite = ha_template.render(self.icon_overwrite[3:])
+
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
             if self.etype == "navigate" and "status" in self.config:
@@ -37,13 +41,9 @@ class HAEntity(panel_cards.Entity):
         else:
             return "~text~iid.404~X~6666~not found~"
 
-        if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
-            #icon_char = libs.home_assistant.render_template(self.icon_overwrite[3:])
-            icon_char = ha_template.render(self.icon_overwrite[3:])
-
         # HA Entities
         entity_type_panel = "text"
-        icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.config.get("icon"))
+        icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.icon_overwrite)
         color = ha_colors.get_entity_color(
             self.etype, self.state, self.attributes, self.color_overwrite)
         name = self.config.get("name", self.attributes.get("friendly_name", "unknown"))
