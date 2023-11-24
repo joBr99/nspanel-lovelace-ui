@@ -98,7 +98,7 @@ class LovelaceUIPanel:
     def ha_event_callback(self, entity_id):
         #logging.debug(f"{entity_id} updated/state changed")
         if entity_id in self.current_card.get_entities():
-            self.render_current_page()
+            self.render_current_page(requested=True)
 
             # send update for detail popup in case it's open
             etype = entity_id.split('.')[0]
