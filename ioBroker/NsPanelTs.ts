@@ -59,7 +59,7 @@ ReleaseNotes:
         - 20.11.2023 - v4.3.3.6  Add Multilingualism to cardAlarm (39 languages)
         - 20.11.2023 - v4.3.3.7  Add Multilingualism to cardMedia (39 languages)
         - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism), some Minor Fixes
-	    - 20.11.2023 - v4.3.3.9  Add ScreensaverEntityOnColor, ...OffColor, ...OnText, ...OffText
+	- 20.11.2023 - v4.3.3.9  Add ScreensaverEntityOnColor, ...OffColor, ...OnText, ...OffText
         - 21.11.2023 - v4.3.3.10 Code optimization
         - 24.11.2023 - v4.3.3.11 Add autoCreateALias to PageQR
         
