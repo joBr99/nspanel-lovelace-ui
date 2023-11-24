@@ -6904,16 +6904,16 @@ icons = {
 def get_icon_id(ma_name):
     if isinstance(ma_name, re.Match):
         ma_name = ma_name.group(0).replace('<I>', '').replace('</I>', '')
+        print(f"testxxxx  {ma_name}")
 
     if "text:" in ma_name:
         return ma_name.replace("text:", "")
-    # if "ha:" in ma_name:
-    #    splitted_string = ma_name.replace("ha:","").rpartition('}')
-    #    template_string = f"{splitted_string[0]}{splitted_string[1]}"
-    #    templates_result = apis.ha_api.render_template(template_string)
-    #    if isinstance(templates_result, str):
-    #        templates_result = re.sub(r"<I>.+?<\/I>", get_icon_id, templates_result)
-    #    return f"{templates_result}{splitted_string[2]}"
+    if "<I>" in ma_name and "</I>" in ma_name:
+        print(f"testdddd  {ma_name}")
+        if isinstance(ma_name, str):
+            ma_name = re.sub(r'<I>.+?<\/I>', get_icon_id, ma_name)
+            print(f"test123d  {ma_name}")
+
 
     ma_name = ma_name.replace("mdi:", "")
     if ma_name in icons:

@@ -41,7 +41,7 @@ class Entity:
         self.font = font_mapping.get(config.get("font", ""), "")
 
     def render(self, cardType=""):
-        icon_char = self.icon_overwrite or ""
+        icon_char = self.icon_overwrite or "mdi:gesture-tap-button"
         color = rgb_dec565([68, 115, 158])
         if self.color_overwrite:
             color = rgb_dec565(self.color_overwrite)
