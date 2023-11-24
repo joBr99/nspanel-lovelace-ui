@@ -26,6 +26,267 @@
 │ +    //lcd_dev fffb 0002 0000 0020
 │      printh 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port
 │      page pageStartup
+│   --- HMI/n2t-out/cardAlarm.txt
+├── +++ HMI/US/landscape/n2t-out/cardAlarm.txt
+│ @@ -7,26 +7,14 @@
+│          Swide up page ID   : disabled
+│          Swide down page ID : disabled
+│          Swide left page ID : disabled
+│          Swide right page ID: disabled
+│      
+│      Events
+│          Preinitialize Event
+│ -            tSend.txt="event,renderCurrentPage"
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│              dim=dimValueNormal
+│              vis p0,0
+│              vis tSend,0
+│              vis tInstruction,0
+│              vis tTmp,0
+│              vis tId,0
+│              vis arm1,0
+│   --- HMI/n2t-out/cardChart.txt
+├── +++ HMI/US/landscape/n2t-out/cardChart.txt
+│ @@ -7,26 +7,14 @@
+│          Swide up page ID   : disabled
+│          Swide down page ID : disabled
+│          Swide left page ID : disabled
+│          Swide right page ID: disabled
+│      
+│      Events
+│          Preinitialize Event
+│ -            tSend.txt="event,renderCurrentPage"
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│              dim=dimValueNormal
+│              vis p0,0
+│              vis tSend,0
+│              vis tInstruction,0
+│              vis tTmp,0
+│              vis tId,0
+│              vis bPrev,0
+│   --- HMI/n2t-out/cardGrid.txt
+├── +++ HMI/US/landscape/n2t-out/cardGrid.txt
+│ @@ -7,26 +7,14 @@
+│          Swide up page ID   : disabled
+│          Swide down page ID : disabled
+│          Swide left page ID : disabled
+│          Swide right page ID: disabled
+│      
+│      Events
+│          Preinitialize Event
+│ -            tSend.txt="event,renderCurrentPage"
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│              dim=dimValueNormal
+│              //remove background & activate reparse mode
+│              vis p0,0
+│              recmod=1
+│              baud=115200
+│              //debug stuff
+│              vis tTmp,0
+│   --- HMI/n2t-out/cardGrid2.txt
+├── +++ HMI/US/landscape/n2t-out/cardGrid2.txt
+│ @@ -7,26 +7,14 @@
+│          Swide up page ID   : disabled
+│          Swide down page ID : disabled
+│          Swide left page ID : disabled
+│          Swide right page ID: disabled
+│      
+│      Events
+│          Preinitialize Event
+│ -            tSend.txt="event,renderCurrentPage"
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│              dim=dimValueNormal
+│              //remove background & activate reparse mode
+│              vis p0,0
+│              recmod=1
+│              baud=115200
+│              //debug stuff
+│              vis tTmp,0
+│   --- HMI/n2t-out/cardLChart.txt
+├── +++ HMI/US/landscape/n2t-out/cardLChart.txt
+│ @@ -7,26 +7,14 @@
+│          Swide up page ID   : disabled
+│          Swide down page ID : disabled
+│          Swide left page ID : disabled
+│          Swide right page ID: disabled
+│      
+│      Events
+│          Preinitialize Event
+│ -            tSend.txt="event,renderCurrentPage"
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│              dim=dimValueNormal
+│              vis p0,0
+│              vis tSend,0
+│              vis tInstruction,0
+│              vis tTmp,0
+│              vis tId,0
+│              vis bPrev,0
+│   --- HMI/n2t-out/cardMedia.txt
+├── +++ HMI/US/landscape/n2t-out/cardMedia.txt
+│ @@ -7,26 +7,14 @@
+│          Swide up page ID   : disabled
+│          Swide down page ID : disabled
+│          Swide left page ID : disabled
+│          Swide right page ID: disabled
+│      
+│      Events
+│          Preinitialize Event
+│ -            tSend.txt="event,renderCurrentPage"
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│              dim=dimValueNormal
+│              vis p0,0
+│              vis tSend,0
+│              vis tInstruction,0
+│              vis tTmp,0
+│              vis tId,0
+│              vis t5,0
+│   --- HMI/n2t-out/cardPower.txt
+├── +++ HMI/US/landscape/n2t-out/cardPower.txt
+│ @@ -7,26 +7,14 @@
+│          Swide up page ID   : disabled
+│          Swide down page ID : disabled
+│          Swide left page ID : disabled
+│          Swide right page ID: disabled
+│      
+│      Events
+│          Preinitialize Event
+│ -            tSend.txt="event,renderCurrentPage"
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│              dim=dimValueNormal
+│              vis p0,0
+│              vis tSend,0
+│              vis tInstruction,0
+│              vis tTmp,0
+│              vis tId,0
+│              vis bPrev,0
+│   --- HMI/n2t-out/cardQR.txt
+├── +++ HMI/US/landscape/n2t-out/cardQR.txt
+│ @@ -7,26 +7,14 @@
+│          Swide up page ID   : disabled
+│          Swide down page ID : disabled
+│          Swide left page ID : disabled
+│          Swide right page ID: disabled
+│      
+│      Events
+│          Preinitialize Event
+│ -            tSend.txt="event,renderCurrentPage"
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│              dim=dimValueNormal
+│              vis p0,0
+│              vis tSend,0
+│              vis tInstruction,0
+│              vis tTmp,0
+│              vis tId,0
+│              vis bPrev,0
+│   --- HMI/n2t-out/cardThermo.txt
+├── +++ HMI/US/landscape/n2t-out/cardThermo.txt
+│ @@ -7,26 +7,14 @@
+│          Swide up page ID   : disabled
+│          Swide down page ID : disabled
+│          Swide left page ID : disabled
+│          Swide right page ID: disabled
+│      
+│      Events
+│          Preinitialize Event
+│ -            tSend.txt="event,renderCurrentPage"
+│ -            //send calc crc
+│ -            btlen tSend.txt,sys0
+│ -            crcrest 1,0xffff // reset CRC
+│ -            crcputh 55 bb
+│ -            crcputs sys0,2
+│ -            crcputs tSend.txt,0
+│ -            //send cmd
+│ -            printh 55 bb
+│ -            prints sys0,2
+│ -            prints tSend.txt,0
+│ -            prints crcval,2
+│              dim=dimValueNormal
+│              vis p0,0
+│              vis tSend,0
+│              vis tInstruction,0
+│              vis tTmp,0
+│              vis tId,0
+│              vis xTempMin1,0
 │   --- HMI/n2t-out/pageStartup.txt
 ├── +++ HMI/US/landscape/n2t-out/pageStartup.txt
 │ @@ -164,15 +164,15 @@

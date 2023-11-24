@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2023-11-20 12:00:30.030688688 +0000
++++ /dev/fd/62	2023-11-24 17:58:09.082084526 +0000
 +le list
 + +1,9 @@
 +.s.txt
@@ -17,6 +17,64 @@
 +eature flags
 + featNewSliders=0
 +nth 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port
++I/n2t-out/cardAlarm.txt
+++ HMI/US/portrait/n2t-out/cardAlarm.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     vis p0,0
++     vis tSend,0
++     vis tInstruction,0
++     vis tTmp,0
++     vis tId,0
++     vis arm1,0
++I/n2t-out/cardChart.txt
+++ HMI/US/portrait/n2t-out/cardChart.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     vis p0,0
++     vis tSend,0
++     vis tInstruction,0
++     vis tTmp,0
++     vis tId,0
++     vis bPrev,0
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
 +6 +60,36 @@
@@ -612,8 +670,71 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
++                             }
++                             if(tInstruction.txt=="pageType")
++                             {
++                                 sleepValue=0
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
++I/n2t-out/cardGrid.txt
+++ HMI/US/portrait/n2t-out/cardGrid.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     //remove background & activate reparse mode
++     vis p0,0
++     recmod=1
++     baud=115200
++     //debug stuff
++     vis tTmp,0
 +I/n2t-out/cardGrid2.txt
 ++ HMI/US/portrait/n2t-out/cardGrid2.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     //remove background & activate reparse mode
++     vis p0,0
++     recmod=1
++     baud=115200
++     //debug stuff
++     vis tTmp,0
 +6 +25,28 @@
 +     vis bEntity2,0
 +     vis bEntity3,0
@@ -644,7 +765,7 @@
 +             b[sys0].pco=defaultFontColor
 +         }
 +     }
-+4 +95,20 @@
++14 +95,20 @@
 +
 +e (string) entn8
 +ributes
@@ -809,15 +930,93 @@
 +                                     spstr strCommand.txt,tEntity9.txt,"~",66
 +                                     vis tEntity9,1
 +                                 }
-+                             }
-+                             if(tInstruction.txt=="pageType")
-+                             {
-+                                 sleepValue=0
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
++I/n2t-out/cardLChart.txt
+++ HMI/US/portrait/n2t-out/cardLChart.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     vis p0,0
++     vis tSend,0
++     vis tInstruction,0
++     vis tTmp,0
++     vis tId,0
++     vis bPrev,0
++I/n2t-out/cardMedia.txt
+++ HMI/US/portrait/n2t-out/cardMedia.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     vis p0,0
++     vis tSend,0
++     vis tInstruction,0
++     vis tTmp,0
++     vis tId,0
++     vis t5,0
 +I/n2t-out/cardPower.txt
 ++ HMI/US/portrait/n2t-out/cardPower.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     vis p0,0
++     vis tSend,0
++     vis tInstruction,0
++     vis tTmp,0
++     vis tId,0
++     vis bPrev,0
 +6 +45,16 @@
 +             b[sys0].bco=defaultBcoColor
 +             b[sys0].pco=defaultFontColor
@@ -1160,6 +1359,64 @@
 +                                 // get set time to global variable
 +                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 +                             }
++I/n2t-out/cardQR.txt
+++ HMI/US/portrait/n2t-out/cardQR.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     vis p0,0
++     vis tSend,0
++     vis tInstruction,0
++     vis tTmp,0
++     vis tId,0
++     vis bPrev,0
++I/n2t-out/cardThermo.txt
+++ HMI/US/portrait/n2t-out/cardThermo.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     vis p0,0
++     vis tSend,0
++     vis tInstruction,0
++     vis tTmp,0
++     vis tId,0
++     vis xTempMin1,0
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 +0 +34,14 @@
