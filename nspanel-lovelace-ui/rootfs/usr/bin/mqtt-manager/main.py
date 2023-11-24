@@ -154,7 +154,7 @@ def setup_panels():
         if "hiddenCards" not in settings_panel:
             settings_panel["hiddenCards"] = settings.get("hiddenCards", [])
 
-        panels[name] = LovelaceUIPanel(client, name, settings_panel)
+        panels[name] = LovelaceUIPanel(name, settings_panel)
         libs.panel_cmd.page_type(
             settings_panel["panelSendTopic"], "pageStartup")
 

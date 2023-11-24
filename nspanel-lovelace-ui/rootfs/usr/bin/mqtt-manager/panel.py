@@ -12,8 +12,7 @@ import ha_control
 
 class LovelaceUIPanel:
 
-    def __init__(self, mqtt_client_from_manager, name_panel, settings_panel):
-        self.mqtt_client = mqtt_client_from_manager
+    def __init__(self, name_panel, settings_panel):
         self.name = name_panel
         self.settings = settings_panel
         self.sendTopic = self.settings["panelSendTopic"]
@@ -70,6 +69,8 @@ class LovelaceUIPanel:
         schedule_thread.daemon = True
         schedule_thread.start()
 
+        libs.panel_cmd.page_type(self.sendTopic, "pageStartup")
+
     def schedule_thread_target(self):
         while True:
             self.schedule.exec_jobs()
@@ -96,8 +97,8 @@ class LovelaceUIPanel:
             return self.hidden_cards[iid]
 
     def ha_event_callback(self, entity_id):
-        #logging.debug(f"{self.name} {entity_id} updated/state changed")
-        if entity_id in self.current_card.get_entities():
+        logging.debug(f"{self.name} {entity_id} updated/state changed")
+        if self.current_card and entity_id in self.current_card.get_entities():
             self.render_current_page(requested=True)
 
             # send update for detail popup in case it's open
