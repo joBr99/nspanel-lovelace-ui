@@ -96,7 +96,7 @@ class LovelaceUIPanel:
             return self.hidden_cards[iid]
 
     def ha_event_callback(self, entity_id):
-        #logging.debug(f"{entity_id} updated/state changed")
+        logging.debug(f"{self.name} {entity_id} updated/state changed")
         if entity_id in self.current_card.get_entities():
             self.render_current_page(requested=True)
 
@@ -128,11 +128,11 @@ class LovelaceUIPanel:
         if requested:
             self.current_card.render()
         # send sleepTimeout
-        sleepTimeout = self.settings.get("sleepTimeout", 20)
-        if self.current_card.config.get("sleepTimeout"):
-            sleepTimeout = self.current_card.config.get("sleepTimeout")
-        libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
-        self.dimmode()
+        #sleepTimeout = self.settings.get("sleepTimeout", 20)
+        #if self.current_card.config.get("sleepTimeout"):
+        #    sleepTimeout = self.current_card.config.get("sleepTimeout")
+        #libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
+        #self.dimmode()
 
     def dimmode(self):
         # send dimmode
@@ -169,6 +169,14 @@ class LovelaceUIPanel:
 
                 self.current_card = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
                 self.render_current_page(switchPages=True)
+
+                # send sleepTimeout
+                sleepTimeout = self.settings.get("sleepTimeout", 20)
+                if self.current_card.config.get("sleepTimeout"):
+                    sleepTimeout = self.current_card.config.get("sleepTimeout")
+                libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
+
+                self.dimmode()
             if msg[1] == "sleepReached":
                 self.privious_cards.append(self.current_card)
                 self.current_card = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
