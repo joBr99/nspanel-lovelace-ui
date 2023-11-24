@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.10 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.11 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -61,6 +61,7 @@ ReleaseNotes:
         - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism), some Minor Fixes
 	- 20.11.2023 - v4.3.3.9  Add ScreensaverEntityOnColor, ...OffColor, ...OnText, ...OffText
         - 21.11.2023 - v4.3.3.10 Code optimization
+        - 24.11.2023 - v4.3.3.11 Add autoCreateALias to PageQR
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -711,8 +712,8 @@ export const config = <Config> {
     // Seiteneinteilung / Page division
     // Hauptseiten / Mainpages
     pages: [
- 
-        NSPanel_Service         	//Auto-Alias Service Page
+
+        NSPanel_Service,         	//Auto-Alias Service Page
 	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
 
@@ -880,7 +881,7 @@ export const config = <Config> {
 
 // _________________________________ Ab hier keine Konfiguration mehr _____________________________________
 
-const scriptVersion: string = 'v4.3.3.10';
+const scriptVersion: string = 'v4.3.3.11';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -4968,20 +4969,26 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
 }
 
 async function createAutoUnlockAlias(id: string, dpPath: string) {
-    if (autoCreateAlias) {
-        if (isSetOptionActive) {
-            if (existsState(dpPath + 'UnlockPin') == false) {            
-                createState(dpPath + 'UnlockPin', '0000', { type: 'string' }, function () { setState(dpPath + 'UnlockPin', '0000') });
-            }
-            if (existsState(dpPath + 'Access') == false) {
-                createState(dpPath + 'Access', 'false', { type: 'boolean' }, function () { setState(dpPath + 'Access', 'false') });
-            }
-
-            setObject(id, {_id: id, type: 'channel', common: {role: 'sensor.fire.alarm', name:'sensor.fire.alarm'}, native: {}});
-            await createAliasAsync(id + '.PIN', dpPath + 'UnlockPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN'});
-            await createAliasAsync(id + '.ACTUAL', dpPath + 'Access', true, <iobJS.StateCommon>{ type: 'boolean', role: 'sensor.fire.alarm', name: 'ACTUAL'});
+    try {
+        if (Debug){
+            console.log('Unlock Alias Path: ' + id);
+            console.log('Unlock 0_userdata Path: ' + dpPath);
         }
+        if (autoCreateAlias) {
+            if (isSetOptionActive) {
+                if (existsState(dpPath + 'UnlockPin') == false || existsState(dpPath + 'Access') == false) {
+                    await createStateAsync(dpPath + 'UnlockPin', '0000', { type: 'string' });
+                    await createStateAsync(dpPath + 'Access', 'false', { type: 'boolean' });
+                    setObject(id, { _id: id, type: 'channel', common: { role: 'sensor.fire.alarm', name: 'sensor.fire.alarm' }, native: {} });
+                    await createAliasAsync(id + '.PIN', dpPath + 'UnlockPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN' });
+                    await createAliasAsync(id + '.ACTUAL', dpPath + 'Access', true, <iobJS.StateCommon>{ type: 'boolean', role: 'sensor.fire.alarm', name: 'ACTUAL' });
+                }
+            }
+        }
+    } catch (err) {
+        console.warn('error at function createAutoUnlockAlias: ' + err.message);
     }
+    
 }
 
 function GenerateUnlockPage(page: PageUnlock): Payload[] {
@@ -5041,6 +5048,29 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
     }
 }
 
+async function createAutoQRAlias(id:string, dpPath:string) {
+    try {
+        if (Debug){
+            console.log('QRPage Alias Path: ' + id);
+            console.log('QRPage 0_userdata Path: ' + dpPath);
+        }
+        if (autoCreateAlias) {
+            if (isSetOptionActive) {
+                if (existsState(dpPath + 'Daten') == false) {
+                    await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', { type: 'string' });
+                    setObject(id, { _id: id, type: 'channel', common: { role: 'info', name: 'QR Page' }, native: {} });
+                    await createAliasAsync(id + '.ACTUAL', dpPath + 'Daten', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                    console.warn('Daten für die QR Page unter ' + dpPath + 'Daten anpassen. Hinweise im Wiki beachten.');
+                }
+            }
+        }
+    } catch (err) {
+        console.warn('error at function createAutoQRkAlias: ' + err.message);
+    } 
+}
+
+
+
 function GenerateQRPage(page: PageQR): Payload[] {
     try {
         activePage = page;
@@ -5048,6 +5078,17 @@ function GenerateQRPage(page: PageQR): Payload[] {
         let id = page.items[0].id;
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardQR' });
+
+        let dpPath : string = ''
+        let dpTempPath: any = NSPanel_Path.split('.');
+        for (let i=0; i < dpTempPath.length - 2; i++) {
+            dpPath = dpPath + dpTempPath[i] + '.';
+        } 
+        dpPath = (dpPath + 'GuestWiFi.');
+
+        if (page.items[0].autoCreateALias) {
+            createAutoQRAlias(id, dpPath)            
+        }
 
         let o = getObject(id);
 
@@ -5062,8 +5103,11 @@ function GenerateQRPage(page: PageQR): Payload[] {
         let optionalValue1: any;
         let optionalValue2: any;
         for (let w = 0; w < tempstr.length - 1; w++) {
+            if (tempstr[w].substring(5, 6) == 'T') {
+                tempstr[w].slice(7) == 'undefined' ? console.warn('Daten (T) für die QR Page unter ' + dpPath + 'Daten anpassen. Hinweise im Wiki beachten.') : '' ;
+            }            
             if (tempstr[w].substring(0, 1) == 'S') {
-                optionalValue1 = tempstr[w].slice(2);
+                tempstr[w].slice(2) == 'undefined' ? console.warn('Daten (S) für die QR Page unter ' + dpPath + 'Daten anpassen. Hinweise im Wiki beachten.') : optionalValue1 = tempstr[w].slice(2);
             }
             if (tempstr[w].substring(0, 1) == 'P') {
                 optionalValue2 = tempstr[w].slice(2);
