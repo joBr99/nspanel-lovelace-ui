@@ -141,11 +141,9 @@ class HAEntity(panel_cards.Entity):
                 icon_down_status = "disable"
                 bits = self.attributes.get("supported_features")
                 pos = self.attributes.get("current_position")
+                assumed_state = self.attributes.get("assumed_state", False)
                 if pos is None:
-                    pos_status = self.state
                     pos = "disable"
-                else:
-                    pos_status = pos
                 if bits & 0b00000001:  # SUPPORT_OPEN
                     if (pos != 100 and not (self.state == "open" and pos == "disable")):
                         icon_up_status = "enable"
@@ -160,6 +158,10 @@ class HAEntity(panel_cards.Entity):
                     icon_stop = ha_icons.get_action_icon(
                         etype=self.etype, action="stop", device_class=device_class)
                     icon_stop_status = "enable"
+                if assumed_state:
+                    icon_up_status = "enable"
+                    icon_stop_status = "enable"
+                    icon_down_status = "enable"
                 value = f"{icon_up}|{icon_stop}|{icon_down}|{icon_up_status}|{icon_stop_status}|{icon_down_status}"
             case 'sensor':
                 device_class = self.attributes.get("device_class", "")
