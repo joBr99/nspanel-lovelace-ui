@@ -97,7 +97,7 @@ class LovelaceUIPanel:
             return self.hidden_cards[iid]
 
     def ha_event_callback(self, entity_id):
-        logging.debug(f"{self.name} {entity_id} updated/state changed")
+        #logging.debug(f"{self.name} {entity_id} updated/state changed")
         if self.current_card and entity_id in self.current_card.get_entities():
             self.render_current_page(requested=True)
 
