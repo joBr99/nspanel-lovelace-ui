@@ -8,6 +8,9 @@ import dateutil.parser as dp
 import babel
 from libs.icon_mapping import get_icon_char
 from libs.helper import rgb_dec565, scale
+import time
+import threading
+import datetime
 
 class HAEntity(panel_cards.Entity):
     def __init__(self, locale, config, panel):
@@ -591,7 +594,7 @@ def card_factory(locale, settings, panel):
             return "NotImplemented", None
     return card.iid, card
 
-def detail_open(locale, detail_type, ha_entity_id, entity_id):
+def detail_open(locale, detail_type, ha_entity_id, entity_id, sendTopic=None):
     data = libs.home_assistant.get_entity_data(ha_entity_id)
     if data:
         state = data.get("state")
@@ -732,7 +735,46 @@ def detail_open(locale, detail_type, ha_entity_id, entity_id):
         case 'popupInSel' | 'input_select' | 'select':
             print(f"not implemented {detail_type}")
         case 'popupTimer' | 'timer':
-            print(f"not implemented {detail_type}")
+            icon_color = ha_colors.get_entity_color("timer", state, attributes)
+            if state in ["idle", "paused"]:
+                editable = 1
+                if state == "paused":
+                    time_remaining = attributes.get("remaining")
+                else:
+                    time_remaining = attributes.get("duration")
+                min_remaining = time_remaining.split(":")[1]
+                sec_remaining = time_remaining.split(":")[2]
+                action1 = ""
+                action2 = "start"
+                action3 = ""
+                label1  = ""
+                label2  = get_translation(locale, "frontend.ui.card.timer.actions.start")
+                label3  = ""
+            else: #active
+                editable = 0
+
+                #update timer in a second
+                def update_time():
+                    time.sleep(1)
+                    out = detail_open(locale, detail_type, ha_entity_id, entity_id, sendTopic=sendTopic)
+                    libs.panel_cmd.entityUpdateDetail(sendTopic, out)
+                tt = threading.Thread(target=update_time, args=())
+                tt.daemon = True
+                tt.start()
+
+                finishes_at = dp.parse(attributes.get("finishes_at"))
+                delta = finishes_at - datetime.datetime.now(datetime.timezone.utc)
+                hours, remainder = divmod(delta.total_seconds(), 3600)
+                minutes, seconds = divmod(remainder, 60)
+                min_remaining = int(minutes)
+                sec_remaining = int(seconds)
+                action1 = "pause"
+                action2 = "cancel"
+                action3 = "finish"
+                label1  = get_translation(locale, "frontend.ui.card.timer.actions.pause")
+                label2  = get_translation(locale, "frontend.ui.card.timer.actions.cancel")
+                label3  = get_translation(locale, "frontend.ui.card.timer.actions.finish")
+            return f'{entity_id}~~{icon_color}~{entity_id}~{min_remaining}~{sec_remaining}~{editable}~{action1}~{action2}~{action3}~{label1}~{label2}~{label3}'
         case _:
             logging.error("popup type %s not implemented", detail_type)
             return "NotImplemented", None

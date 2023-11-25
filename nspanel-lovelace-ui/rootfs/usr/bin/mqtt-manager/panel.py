@@ -131,7 +131,7 @@ class LovelaceUIPanel:
                 for e in self.current_card.get_iid_entities():
                     if entity_id == e[1]:
                         entity_id_iid = f'iid.{e[0]}'
-                libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid))
+                libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, sendTopic=self.sendTopic))
 
         involved_entities = ha_control.calculate_dim_values(
             self.settings.get("sleepTracking"),
@@ -252,4 +252,4 @@ class LovelaceUIPanel:
                     iid = entity_id.split(".")[1]
                     if iid in self.entity_iids:
                         entity_id = self.entity_iids[iid]
-                libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3]))
+                libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], sendTopic=self.sendTopic))
