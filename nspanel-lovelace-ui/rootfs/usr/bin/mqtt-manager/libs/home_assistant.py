@@ -14,7 +14,9 @@ next_id = 0
 request_all_states_id = 0
 ws_connected = False
 home_assistant_entity_state_cache = {}
+template_cache = {}
 response_buffer = {}
+
 
 ON_CONNECT_HANDLER = None
 ON_DISCONNECT_HANDLER = None
@@ -43,7 +45,7 @@ def register_on_disconnect_handler(handler):
 
 
 def on_message(ws, message):
-    global auth_ok, request_all_states_id, home_assistant_entity_state_cache, response_buffer
+    global auth_ok, request_all_states_id, home_assistant_entity_state_cache, response_buffer, template_cache
     json_msg = json.loads(message)
     if json_msg["type"] == "auth_required":
         authenticate_client()
@@ -56,11 +58,19 @@ def on_message(ws, message):
             ON_CONNECT_HANDLER()
     # for templates
     elif json_msg["type"] == "event" and json_msg["id"] in response_buffer:
-        response_buffer[json_msg["id"]] = json_msg["event"]
+        template_cache[response_buffer[json_msg["id"]]] = {
+            "result": json_msg["event"]["result"],
+            "listener-entities": json_msg["event"]["listeners"]["entities"]
+        }
     elif json_msg["type"] == "event" and json_msg["event"]["event_type"] == "state_changed":
         entity_id = json_msg["event"]["data"]["entity_id"]
         home_assistant_entity_state_cache[entity_id] = json_msg["event"]["data"]["new_state"]
         send_entity_update(entity_id)
+        # rerender template
+        for template, template_cache_entry in template_cache.items():
+            if entity_id in template_cache_entry.get("listener-entities", []):
+                cache_template(template)
+
     elif json_msg["type"] == "result" and not json_msg["success"]:
         logging.error("Failed result: ")
         logging.error(json_msg)
@@ -69,7 +79,7 @@ def on_message(ws, message):
             for entity in json_msg["result"]:
                 home_assistant_entity_state_cache[entity["entity_id"]] = entity
         else:
-            if json_msg["id"] in response_buffer:
+            if json_msg["id"] in response_buffer and json_msg.get("result"):
                 response_buffer[json_msg["id"]] = json_msg["result"]
         return None  # Ignore success result messages
     else:
@@ -205,32 +215,34 @@ def execute_script(entity_name: str, domain: str, service: str, service_data: di
         logging.exception("Failed to call Home Assisatant script.")
         return False
 
-def render_template(template):
+def cache_template(template):
     global next_id, response_buffer
     try:
         call_id = next_id
-        # request answer for this call
-        response_buffer[call_id] = True
+        response_buffer[call_id] = template
         msg = {
-            "id": next_id,
+            "id": call_id,
             "type": "render_template",
-            "template": 'template'
+            "template": template
         }
-        print(json.dumps(msg))
         send_message(json.dumps(msg))
-        # busy waiting for response with a timeout of 0.2 seconds - maybe there's a better way of doing this
-        mustend = time.time() + 0.2
-        while time.time() < mustend:
-            if response_buffer[call_id] == True or response_buffer[call_id] is None:
-                #print(f'loooooooooop {time.time()}')
-                time.sleep(0.0001)
-            else:
-                return response_buffer[call_id]["result"]
-        raise TimeoutError("Did not recive respose in time to HA template render call")
+        return True
     except Exception as e:
         logging.exception("Failed to render template.")
         return False
-    return ""
+
+def get_template(template):
+    global template_cache
+    print(f"xxxxxxxxxxxx: {template_cache}")
+    if template in template_cache:
+        return template_cache[template].get("result")
+    else:
+        mustend = time.time() + 0.5
+        while time.time() < mustend:
+            if template not in template_cache:
+                time.sleep(0.0001)
+            else:
+                return template_cache.get(template, []).get("result", "404")
 
 def get_entity_data(entity_id: str):
     if entity_id in home_assistant_entity_state_cache:

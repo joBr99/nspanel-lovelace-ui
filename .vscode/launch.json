@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "main.py",
-            "cwd": "${fileDirname}",
+            "cwd": "/workspaces/nspanel-lovelace-ui/nspanel-lovelace-ui/rootfs/usr/bin/mqtt-manager",
             "console": "integratedTerminal",
             "justMyCode": true
         }

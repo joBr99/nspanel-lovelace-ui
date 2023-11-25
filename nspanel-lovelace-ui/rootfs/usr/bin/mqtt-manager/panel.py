@@ -24,6 +24,7 @@ class LovelaceUIPanel:
         self.privious_cards = []
         self.cards = {}
         self.hidden_cards = {}
+        self.screensaver = None
         self.navigate_keys = {}
         self.entity_iids = {}
 
@@ -69,7 +70,28 @@ class LovelaceUIPanel:
         schedule_thread.daemon = True
         schedule_thread.start()
 
+        # check if ha state cache is already populated
+        ha_control.wait_for_ha_cache()
+
+        #request templates on cards
+        for c in self.cards.values():
+            if hasattr(c, "qrcode"):
+                if c.qrcode.startswith("ha:"):
+                    libs.home_assistant.cache_template(c.qrcode)
+            for e in c.entities:
+                e.prerender()
+        for c in self.hidden_cards.values():
+            if hasattr(c, "qrcode"):
+                if c.qrcode.startswith("ha:"):
+                    libs.home_assistant.cache_template(c.qrcode)
+            for e in c.entities:
+                e.prerender()
+        self.screensaver = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
+        for e in self.screensaver.entities:
+            e.prerender()
+
         libs.panel_cmd.page_type(self.sendTopic, "pageStartup")
+
 
     def schedule_thread_target(self):
         while True:
@@ -165,10 +187,7 @@ class LovelaceUIPanel:
                 self.update_date()
                 self.update_time()
 
-                # check if ha state cache is already populated
-                ha_control.wait_for_ha_cache()
-
-                self.current_card = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
+                self.current_card = self.screensaver
                 self.render_current_page(switchPages=True)
 
                 # send sleepTimeout
@@ -176,11 +195,11 @@ class LovelaceUIPanel:
                 if self.current_card.config.get("sleepTimeout"):
                     sleepTimeout = self.current_card.config.get("sleepTimeout")
                 libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
-
                 self.dimmode()
+
             if msg[1] == "sleepReached":
                 self.privious_cards.append(self.current_card)
-                self.current_card = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
+                self.current_card = self.screensaver
                 self.render_current_page(switchPages=True)
             if msg[1] == "renderCurrentPage":
                 self.render_current_page(requested=True)

@@ -8,17 +8,24 @@ import dateutil.parser as dp
 import babel
 from libs.icon_mapping import get_icon_char
 from libs.helper import rgb_dec565, scale
-import ha_template
 
 class HAEntity(panel_cards.Entity):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
 
+    def prerender(self):
+        # pre render templates
+        for p in ["color_overwrite", "icon_overwrite", "value_overwrite"]:
+            val = getattr(self, p)
+            if val and "ha:" in val:
+                print(f"yyyyyyyyyyy {val}")
+                libs.home_assistant.cache_template(val)
+
     def render(self, cardType=""):
 
         if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
-            #icon_char = libs.home_assistant.render_template(self.icon_overwrite[3:])
-            self.icon_overwrite = ha_template.render(self.icon_overwrite)
+            self.icon_overwrite = libs.home_assistant.get_template(self.icon_overwrite)
+
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
@@ -217,7 +224,8 @@ class HAEntity(panel_cards.Entity):
                 name = "unsupported"
 
         if self.value_overwrite and self.value_overwrite.startswith("ha:"):
-            value = ha_template.render(self.value_overwrite[3:])
+            value = libs.home_assistant.get_template(self.value_overwrite)[3:]
+
 
         return f"~{entity_type_panel}~iid.{self.iid}~{icon_char}~{color}~{name}~{value}"
 
@@ -273,6 +281,8 @@ class HACard(panel_cards.Card):
 class EntitiesCard(HACard):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
+        if len(self.entities) > 6 and self.type == "cardGrid":
+            self.type = "cardGrid2"
 
     def render(self):
         result = f"{self.title}~{self.gen_nav()}"
@@ -287,6 +297,8 @@ class QRCard(HACard):
     def render(self):
         # TODO: Render QRCode as HomeAssistant Template
         #qrcode = apis.ha_api.render_template(qrcode)
+        if self.qrcode.startswith("ha:"):
+            self.qrcode = libs.home_assistant.get_template(self.qrcode)[3:]
         result = f"{self.title}~{self.gen_nav()}~{self.qrcode}"
         for e in self.entities:
             result += e.render()
@@ -557,7 +569,6 @@ class Screensaver(HACard):
             statusUpdateResult += "~~"
 
         libs.panel_cmd.statusUpdate(self.panel.sendTopic, f"{statusUpdateResult}~{icon1font}~{icon2font}")
-
 
 
 def card_factory(locale, settings, panel):
